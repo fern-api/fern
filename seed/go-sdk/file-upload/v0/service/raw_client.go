@@ -98,7 +98,7 @@ func (r *RawClient) Post(
 		}
 	}
 	if request.OptionalObjectType != nil {
-		if err := writer.WriteJSON("optional_object_type", *request.OptionalObjectType); err != nil {
+		if err := writer.WriteJSON("optional_object_type", string(request.OptionalObjectType)); err != nil {
 			return nil, err
 		}
 	}
@@ -432,7 +432,7 @@ func (r *RawClient) WithFormEncodedContainers(
 		}
 	}
 	if request.OptionalObjectType != nil {
-		if err := writer.WriteJSON("optional_object_type", *request.OptionalObjectType); err != nil {
+		if err := writer.WriteJSON("optional_object_type", string(request.OptionalObjectType)); err != nil {
 			return nil, err
 		}
 	}

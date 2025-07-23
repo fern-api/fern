@@ -1,3 +1,6 @@
+// service_headers
+"/headers"
+
 // service_inlined-request
 "/inlined"
 

@@ -9762,6 +9762,15 @@
         ]
       }
     },
+    "delete-account_create_Response_200": {
+      "description": "Empty response body",
+      "name": "delete-account_create_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "EmployeePayrollRunsGetParametersExpand": {
       "name": "EmployeePayrollRunsGetParametersExpand",
       "shape": {
@@ -11569,6 +11578,15 @@
             "value": "marital_status"
           }
         ]
+      }
+    },
+    "employees_ignoreCreate_Response_200": {
+      "description": "Empty response body",
+      "name": "employees_ignoreCreate_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "EmploymentsGetParametersExpand": {
@@ -14219,6 +14237,17 @@
               }
             }
           ],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "delete-account_create_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "No response body"
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -14229,7 +14258,12 @@
               "headers": {
                 "X-Account-Token": "X-Account-Token"
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -16073,6 +16107,17 @@
               }
             }
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "employees_ignoreCreate_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "No response body"
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -16094,7 +16139,12 @@
                   "reason": "GENERAL_CUSTOMER_REQUEST"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {

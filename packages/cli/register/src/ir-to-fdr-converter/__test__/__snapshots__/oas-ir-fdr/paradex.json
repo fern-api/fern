@@ -7129,6 +7129,15 @@
         ]
       }
     },
+    "Algos_cancel-algo-order_Response_204": {
+      "description": "Empty response body",
+      "name": "Algos_cancel-algo-order_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "Account_get-balance_Response_200": {
       "name": "Account_get-balance_Response_200",
       "shape": {
@@ -7314,6 +7323,15 @@
         ]
       }
     },
+    "Authentication_onboarding_Response_200": {
+      "description": "Empty response body",
+      "name": "Authentication_onboarding_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "Orders_get-open-orders_Response_200": {
       "name": "Orders_get-open-orders_Response_200",
       "shape": {
@@ -7336,6 +7354,15 @@
             }
           }
         ]
+      }
+    },
+    "Orders_cancelAll_Response_200": {
+      "description": "Empty response body",
+      "name": "Orders_cancelAll_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "OrdersHistoryGetParametersSide": {
@@ -7425,6 +7452,24 @@
         ]
       }
     },
+    "Orders_cancelByClientId_Response_204": {
+      "description": "Empty response body",
+      "name": "Orders_cancelByClientId_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Orders_cancel_Response_204": {
+      "description": "Empty response body",
+      "name": "Orders_cancel_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "Account_get-positions_Response_200": {
       "name": "Account_get-positions_Response_200",
       "shape": {
@@ -7447,6 +7492,15 @@
             }
           }
         ]
+      }
+    },
+    "Referrals_get-referral-qr-code_Response_200": {
+      "description": "Empty response body",
+      "name": "Referrals_get-referral-qr-code_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "Referrals_get-referrals-summary_Response_200": {
@@ -15949,6 +16003,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Algos_cancel-algo-order_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No Content"
+          },
           "errorsV2": [
             {
               "type": {
@@ -15973,7 +16038,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -16217,6 +16287,17 @@
             },
             "description": "Onboarding user public_key"
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Authentication_onboarding_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "An empty response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -16261,7 +16342,12 @@
                 "type": "json",
                 "value": {}
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -17796,6 +17882,17 @@
             }
           ],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Orders_cancelAll_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "OK"
+          },
           "errorsV2": [
             {
               "type": {
@@ -17818,7 +17915,12 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -18610,6 +18712,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Orders_cancelByClientId_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No Content"
+          },
           "errorsV2": [
             {
               "type": {
@@ -18634,7 +18747,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -19041,6 +19159,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Orders_cancel_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No Content"
+          },
           "errorsV2": [
             {
               "type": {
@@ -19065,7 +19194,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -19234,6 +19368,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Referrals_get-referral-qr-code_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "QR code image"
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -19242,7 +19387,12 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {

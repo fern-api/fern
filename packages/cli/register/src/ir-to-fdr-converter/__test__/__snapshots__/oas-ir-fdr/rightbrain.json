@@ -8433,6 +8433,15 @@
         ]
       }
     },
+    "org_invitesDeleteOrgOrgIdInviteOrgInviteIdDelete_Response_204": {
+      "description": "Empty response body",
+      "name": "org_invitesDeleteOrgOrgIdInviteOrgInviteIdDelete_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "Org_invites_delete_org__org_id__invite__org_invite_id__deleteRequestForbiddenError": {
       "name": "Org_invites_delete_org__org_id__invite__org_invite_id__deleteRequestForbiddenError",
       "shape": {
@@ -13591,6 +13600,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "org_invitesDeleteOrgOrgIdInviteOrgInviteIdDelete_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -13642,7 +13662,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {

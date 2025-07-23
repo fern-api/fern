@@ -3272,6 +3272,7 @@
                         },
                         "status-code": null
                     },
+                    "v2Responses": null,
                     "errors": [],
                     "userSpecifiedExamples": [
                         {
@@ -4761,6 +4762,7 @@
                         },
                         "status-code": null
                     },
+                    "v2Responses": null,
                     "errors": [],
                     "userSpecifiedExamples": [
                         {

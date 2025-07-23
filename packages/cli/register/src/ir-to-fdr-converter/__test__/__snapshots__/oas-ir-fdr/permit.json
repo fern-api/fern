@@ -6862,6 +6862,33 @@
         ]
       }
     },
+    "Organizations_delete_organization_Response_204": {
+      "description": "Empty response body",
+      "name": "Organizations_delete_organization_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Projects_delete_project_Response_204": {
+      "description": "Empty response body",
+      "name": "Projects_delete_project_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Environments_delete_environment_Response_204": {
+      "description": "Empty response body",
+      "name": "Environments_delete_environment_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "ResourcesListResourcesResponse2001": {
       "name": "ResourcesListResourcesResponse2001",
       "shape": {
@@ -6898,6 +6925,60 @@
             "displayName": "ResourcesListResourcesResponse2001"
           }
         ]
+      }
+    },
+    "Resources_delete_resource_Response_204": {
+      "description": "Empty response body",
+      "name": "Resources_delete_resource_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Resource Actions_delete_resource_action_Response_204": {
+      "description": "Empty response body",
+      "name": "Resource Actions_delete_resource_action_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Resource Action Groups_delete_resource_action_group_Response_204": {
+      "description": "Empty response body",
+      "name": "Resource Action Groups_delete_resource_action_group_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Resource Roles_delete_resource_role_Response_204": {
+      "description": "Empty response body",
+      "name": "Resource Roles_delete_resource_role_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Resource Attributes_delete_resource_attribute_Response_204": {
+      "description": "Empty response body",
+      "name": "Resource Attributes_delete_resource_attribute_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "User Attributes_delete_user_attribute_Response_204": {
+      "description": "Empty response body",
+      "name": "User Attributes_delete_user_attribute_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "RolesListRolesResponse2001": {
@@ -6938,6 +7019,15 @@
         ]
       }
     },
+    "Roles_delete_role_Response_204": {
+      "description": "Empty response body",
+      "name": "Roles_delete_role_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "ConditionSetsListConditionSetsResponse2001": {
       "name": "ConditionSetsListConditionSetsResponse2001",
       "shape": {
@@ -6976,6 +7066,33 @@
         ]
       }
     },
+    "Condition Sets_delete_condition_set_Response_204": {
+      "description": "Empty response body",
+      "name": "Condition Sets_delete_condition_set_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Users_delete_user_Response_204": {
+      "description": "Empty response body",
+      "name": "Users_delete_user_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Users_unassign_role_from_user_Response_204": {
+      "description": "Empty response body",
+      "name": "Users_unassign_role_from_user_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "TenantsListTenantsResponse2001": {
       "name": "TenantsListTenantsResponse2001",
       "shape": {
@@ -7012,6 +7129,51 @@
             "displayName": "TenantsListTenantsResponse2001"
           }
         ]
+      }
+    },
+    "Tenants_delete_tenant_Response_204": {
+      "description": "Empty response body",
+      "name": "Tenants_delete_tenant_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Tenants_delete_tenant_user_Response_204": {
+      "description": "Empty response body",
+      "name": "Tenants_delete_tenant_user_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Role Assignments_unassign_role_Response_204": {
+      "description": "Empty response body",
+      "name": "Role Assignments_unassign_role_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Condition Set Rules_unassign_set_permissions_Response_204": {
+      "description": "Empty response body",
+      "name": "Condition Set Rules_unassign_set_permissions_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Resource Instances_delete_resource_instance_Response_204": {
+      "description": "Empty response body",
+      "name": "Resource Instances_delete_resource_instance_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     }
   },
@@ -7426,6 +7588,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Organizations_delete_organization_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -7450,7 +7623,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -8106,6 +8284,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Projects_delete_project_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -8130,7 +8319,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -9102,6 +9296,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Environments_delete_environment_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -9127,7 +9332,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -10449,6 +10659,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Resources_delete_resource_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -10475,7 +10696,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -11370,6 +11596,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Resource Actions_delete_resource_action_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -11397,7 +11634,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -12295,6 +12537,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Resource Action Groups_delete_resource_action_group_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -12322,7 +12575,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -13240,6 +13498,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Resource Roles_delete_resource_role_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -13267,7 +13536,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -15007,6 +15281,17 @@
             }
           ],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Resource Attributes_delete_resource_attribute_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -15034,7 +15319,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -15925,6 +16215,17 @@
             }
           ],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "User Attributes_delete_user_attribute_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -15951,7 +16252,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -16815,6 +17121,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Roles_delete_role_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -16841,7 +17158,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -18548,6 +18870,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Condition Sets_delete_condition_set_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -18574,7 +18907,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -20345,6 +20683,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Users_delete_user_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -20371,7 +20720,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -20893,6 +21247,17 @@
               }
             }
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Users_unassign_role_from_user_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -20930,7 +21295,12 @@
                   "tenant": "google-inc"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -21839,6 +22209,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Tenants_delete_tenant_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -21865,7 +22246,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -22157,6 +22543,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Tenants_delete_tenant_user_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -22184,7 +22581,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -22660,6 +23062,17 @@
               }
             }
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Role Assignments_unassign_role_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -22698,7 +23111,12 @@
                   "user": "jane@coolcompany.com"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -23477,6 +23895,17 @@
               }
             }
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Condition Set Rules_unassign_set_permissions_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -23515,7 +23944,12 @@
                   "resource_set": "private_repos"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -24140,6 +24574,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Resource Instances_delete_resource_instance_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -24166,7 +24611,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {

@@ -15,9 +15,7 @@ public class Example5
         await client.QueryParam.SendAsync(
             new SendEnumAsQueryParamRequest{
                 Operand = Operand.GreaterThan,
-                MaybeOperand = Operand.GreaterThan,
-                OperandOrColor = Color.Red,
-                MaybeOperandOrColor = Color.Red
+                OperandOrColor = Color.Red
             }
         );
     }

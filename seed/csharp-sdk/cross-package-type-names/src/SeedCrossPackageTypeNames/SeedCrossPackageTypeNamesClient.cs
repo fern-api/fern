@@ -1,7 +1,5 @@
 using SeedCrossPackageTypeNames.Core;
 using SeedCrossPackageTypeNames.FolderA;
-using SeedCrossPackageTypeNames.FolderB;
-using SeedCrossPackageTypeNames.FolderC;
 using SeedCrossPackageTypeNames.FolderD;
 
 namespace SeedCrossPackageTypeNames;
@@ -30,21 +28,12 @@ public partial class SeedCrossPackageTypeNamesClient
             }
         }
         _client = new RawClient(clientOptions);
-        Commons = new CommonsClient(_client);
         FolderA = new FolderAClient(_client);
-        FolderB = new FolderBClient(_client);
-        FolderC = new FolderCClient(_client);
         FolderD = new FolderDClient(_client);
         Foo = new FooClient(_client);
     }
 
-    public CommonsClient Commons { get; }
-
     public FolderAClient FolderA { get; }
-
-    public FolderBClient FolderB { get; }
-
-    public FolderCClient FolderC { get; }
 
     public FolderDClient FolderD { get; }
 

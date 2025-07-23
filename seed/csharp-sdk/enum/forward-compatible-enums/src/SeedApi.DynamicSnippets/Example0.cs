@@ -12,9 +12,10 @@ public class Example0
             }
         );
 
-        await client.InlinedRequest.SendAsync(
-            new SendEnumInlinedRequest{
+        await client.Headers.SendAsync(
+            new SendEnumAsHeaderRequest{
                 Operand = Operand.GreaterThan,
+                MaybeOperand = Operand.GreaterThan,
                 OperandOrColor = Color.Red
             }
         );

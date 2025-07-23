@@ -1,7 +1,6 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractSwiftGeneratorCli, SwiftFile } from "@fern-api/swift-base";
-import { generateModels } from "@fern-api/swift-model";
+import { generateInlinedRequestModels, generateModels } from "@fern-api/swift-model";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
@@ -81,6 +80,10 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         // Schemas/**/*.swift
         const modelFiles = generateModels({ context });
         files.push(...modelFiles);
+
+        // Requests/**/*.swift
+        const inlinedRequestFiles = generateInlinedRequestModels({ context });
+        files.push(...inlinedRequestFiles);
 
         return files;
     }

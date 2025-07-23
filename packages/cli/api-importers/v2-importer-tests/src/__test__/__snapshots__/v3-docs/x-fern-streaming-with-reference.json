@@ -597,6 +597,48 @@
               }
             },
             "userSpecifiedExamples": {}
+          },
+          "v2Responses": {
+            "responses": [
+              {
+                "statusCode": 200,
+                "body": {
+                  "value": {
+                    "responseBodyType": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "Completion",
+                        "camelCase": {
+                          "unsafeName": "completion",
+                          "safeName": "completion"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "completion",
+                          "safeName": "completion"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "COMPLETION",
+                          "safeName": "COMPLETION"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "Completion",
+                          "safeName": "Completion"
+                        }
+                      },
+                      "typeId": "Completion",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "docs": "Success!",
+                    "type": "response"
+                  },
+                  "type": "json"
+                }
+              }
+            ]
           }
         },
         {
@@ -819,6 +861,48 @@
               }
             },
             "userSpecifiedExamples": {}
+          },
+          "v2Responses": {
+            "responses": [
+              {
+                "statusCode": 200,
+                "body": {
+                  "value": {
+                    "responseBodyType": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "Completion",
+                        "camelCase": {
+                          "unsafeName": "completion",
+                          "safeName": "completion"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "completion",
+                          "safeName": "completion"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "COMPLETION",
+                          "safeName": "COMPLETION"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "Completion",
+                          "safeName": "Completion"
+                        }
+                      },
+                      "typeId": "Completion",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "docs": "Success!",
+                    "type": "response"
+                  },
+                  "type": "json"
+                }
+              }
+            ]
           }
         }
       ]

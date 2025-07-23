@@ -7,6 +7,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 
 import {
+    EnumTypeDeclaration,
     ErrorDeclaration,
     ErrorId,
     FernFilepath,
@@ -24,13 +25,10 @@ import {
 } from "@fern-fern/ir-sdk/api";
 
 import { BaseGoCustomConfigSchema, go, resolveRootImportPath } from "@fern-api/go-ast";
+import { GoProject } from "../project/GoProject";
 import { GoTypeMapper } from "./GoTypeMapper";
 import { GoValueFormatter } from "./GoValueFormatter";
 import { GoZeroValueMapper } from "./GoZeroValueMapper";
-import { GoProject } from "../project/GoProject";
-import { ModuleConfigWriter } from "../module/ModuleConfigWriter";
-import { ModuleConfig } from "..";
-import { GithubOutputMode, OutputMode } from "@fern-fern/generator-exec-sdk/api";
 
 export interface FileLocation {
     importPath: string;
@@ -136,6 +134,7 @@ export abstract class AbstractGoGeneratorContext<
 
     public maybeUnwrapIterable(typeReference: TypeReference): TypeReference | undefined {
         switch (typeReference.type) {
+            // biome-ignore lint/suspicious/noFallthroughSwitchClause: allow fall through
             case "container": {
                 const container = typeReference.container;
                 switch (container.type) {
@@ -155,6 +154,7 @@ export abstract class AbstractGoGeneratorContext<
                 }
                 break;
             }
+            // biome-ignore lint/suspicious/noFallthroughSwitchClause: allow fall through
             case "named": {
                 const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId).shape;
                 switch (typeDeclaration.type) {
@@ -180,6 +180,7 @@ export abstract class AbstractGoGeneratorContext<
 
     public maybeUnwrapOptionalOrNullable(typeReference: TypeReference): TypeReference | undefined {
         switch (typeReference.type) {
+            // biome-ignore lint/suspicious/noFallthroughSwitchClause: allow fall through
             case "container": {
                 const container = typeReference.container;
                 switch (container.type) {
@@ -215,6 +216,7 @@ export abstract class AbstractGoGeneratorContext<
      */
     public needsOptionalDereference(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
+            // biome-ignore lint/suspicious/noFallthroughSwitchClause: allow fall through
             case "named": {
                 const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId).shape;
                 switch (typeDeclaration.type) {
@@ -231,6 +233,7 @@ export abstract class AbstractGoGeneratorContext<
                 }
                 break;
             }
+            // biome-ignore lint/suspicious/noFallthroughSwitchClause: allow fall through
             case "container": {
                 const containerType = typeReference.container;
                 switch (containerType.type) {
@@ -392,8 +395,54 @@ export abstract class AbstractGoGeneratorContext<
         return this.maybePrimitive(typeReference) === primitive;
     }
 
+    public maybeEnum(typeReference: TypeReference): EnumTypeDeclaration | undefined {
+        switch (typeReference.type) {
+            // biome-ignore lint/suspicious/noFallthroughSwitchClause: allow fall through
+            case "named": {
+                const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                switch (declaration.shape.type) {
+                    case "enum":
+                        return declaration.shape;
+                    case "alias":
+                        return this.maybeEnum(declaration.shape.aliasOf);
+                    case "object":
+                    case "union":
+                    case "undiscriminatedUnion":
+                        return undefined;
+                    default:
+                        assertNever(declaration.shape);
+                }
+                break;
+            }
+            // biome-ignore lint/suspicious/noFallthroughSwitchClause: allow fall through
+            case "container": {
+                const container = typeReference.container;
+                switch (container.type) {
+                    case "optional":
+                        return this.maybeEnum(container.optional);
+                    case "nullable":
+                        return this.maybeEnum(container.nullable);
+                    case "list":
+                    case "set":
+                    case "literal":
+                    case "map":
+                        return undefined;
+                    default:
+                        assertNever(container);
+                }
+                break;
+            }
+            case "primitive":
+            case "unknown":
+                return undefined;
+            default:
+                assertNever(typeReference);
+        }
+    }
+
     public maybePrimitive(typeReference: TypeReference): PrimitiveTypeV1 | undefined {
         switch (typeReference.type) {
+            // biome-ignore lint/suspicious/noFallthroughSwitchClause: allow fall through
             case "container": {
                 const container = typeReference.container;
                 switch (container.type) {

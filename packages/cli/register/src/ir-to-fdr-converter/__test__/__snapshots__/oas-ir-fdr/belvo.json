@@ -25861,6 +25861,15 @@
         ]
       }
     },
+    "Links_DestroyLink_Response_204": {
+      "description": "Empty response body",
+      "name": "Links_DestroyLink_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "ApiLinksIdPatchResponsesContentApplicationJsonSchemaItems": {
       "name": "ApiLinksIdPatchResponsesContentApplicationJsonSchemaItems",
       "shape": {
@@ -26149,6 +26158,15 @@
         ]
       }
     },
+    "Accounts_DestroyAccount_Response_204": {
+      "description": "Empty response body",
+      "name": "Accounts_DestroyAccount_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "ApiTransactionsPostParametersXBelvoRequestMode": {
       "description": "Recommended header parameter to make your POST request to retrieve transactions asynchronous (thus preventing timeouts).\n\nWhen you make a asynchronous request, Belvo responds with a `202 - Accepted` payload, including the `request_id`. Once we have retrieved the transaction information, you will receive a `new_transactions_available` webhook with the link and request IDs.\n\n\n**Note**: This parameter is case sensitive (in other words, if you write `ASYNC`, then Belvo will default to a synchronous call).\n",
       "name": "ApiTransactionsPostParametersXBelvoRequestMode",
@@ -26353,6 +26371,15 @@
         ]
       }
     },
+    "Transactions_DestroyTransaction_Response_204": {
+      "description": "Empty response body",
+      "name": "Transactions_DestroyTransaction_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "ApiBalancesPostResponsesContentApplicationJsonSchemaItems": {
       "name": "ApiBalancesPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
@@ -26545,6 +26572,15 @@
         ]
       }
     },
+    "Balances_DestroyBalance_Response_204": {
+      "description": "Empty response body",
+      "name": "Balances_DestroyBalance_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "ApiOwnersPostResponsesContentApplicationJsonSchemaItems": {
       "name": "ApiOwnersPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
@@ -26735,6 +26771,15 @@
             "displayName": "Unconfirmed Link"
           }
         ]
+      }
+    },
+    "Owners_DestroyOwner_Response_204": {
+      "description": "Empty response body",
+      "name": "Owners_DestroyOwner_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "ApiInvoicesPostResponsesContentApplicationJsonSchemaItems": {
@@ -26953,6 +26998,15 @@
         ]
       }
     },
+    "Invoices_DestroyInvoice_Response_204": {
+      "description": "Empty response body",
+      "name": "Invoices_DestroyInvoice_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "Tax returns_ListTaxReturns_Response_200": {
       "name": "Tax returns_ListTaxReturns_Response_200",
       "shape": {
@@ -27153,8 +27207,41 @@
         ]
       }
     },
+    "Tax returns_DestroyTaxReturn_Response_204": {
+      "description": "Empty response body",
+      "name": "Tax returns_DestroyTaxReturn_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "Tax status_RetrieveTaxStatus_Response_200": {
       "name": "Tax status_RetrieveTaxStatus_Response_200",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "TaxStatusSat",
+            "type": {
+              "type": "id",
+              "value": "TaxStatusSat"
+            },
+            "displayName": "SAT 🇲🇽 Mexico"
+          },
+          {
+            "typeName": "TaxStatusDian",
+            "type": {
+              "type": "id",
+              "value": "TaxStatusDian"
+            },
+            "displayName": "DIAN 🇨🇴 Colombia"
+          }
+        ]
+      }
+    },
+    "Tax status_RetrieveTaxStatus_Response_201": {
+      "name": "Tax status_RetrieveTaxStatus_Response_201",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -27297,6 +27384,15 @@
         ]
       }
     },
+    "Tax status_DestroyTaxStatus_Response_204": {
+      "description": "Empty response body",
+      "name": "Tax status_DestroyTaxStatus_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "ApiTaxComplianceStatusPostResponsesContentApplicationJsonSchemaItems": {
       "name": "ApiTaxComplianceStatusPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
@@ -27391,6 +27487,15 @@
             "displayName": "Unconfirmed Link"
           }
         ]
+      }
+    },
+    "Tax compliance status_DestroyTaxComplianceStatus_Response_204": {
+      "description": "Empty response body",
+      "name": "Tax compliance status_DestroyTaxComplianceStatus_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "ApiIncomesPostResponsesContentApplicationJsonSchemaItems": {
@@ -27585,6 +27690,15 @@
         ]
       }
     },
+    "Incomes_DestroyIncomes_Response_204": {
+      "description": "Empty response body",
+      "name": "Incomes_DestroyIncomes_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "ApiRecurringExpensesPostResponsesContentApplicationJsonSchemaItems": {
       "name": "ApiRecurringExpensesPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
@@ -27775,6 +27889,15 @@
             "displayName": "Unconfirmed Link"
           }
         ]
+      }
+    },
+    "Recurring Expenses_DestroyRecurringExpense_Response_204": {
+      "description": "Empty response body",
+      "name": "Recurring Expenses_DestroyRecurringExpense_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "InvestmentsPortfoliosPostResponsesContentApplicationJsonSchemaItems": {
@@ -27969,6 +28092,15 @@
         ]
       }
     },
+    "Investment Portfolios_DestroyPortfolio_Response_204": {
+      "description": "Empty response body",
+      "name": "Investment Portfolios_DestroyPortfolio_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "ReceivablesTransactionsPostResponsesContentApplicationJsonSchemaItems": {
       "name": "ReceivablesTransactionsPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
@@ -28063,6 +28195,15 @@
             "displayName": "Unconfirmed Link"
           }
         ]
+      }
+    },
+    "Receivable Transactions_DestroyReceivableTransaction_Response_204": {
+      "description": "Empty response body",
+      "name": "Receivable Transactions_DestroyReceivableTransaction_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "ApiRiskInsightsPostResponsesContentApplicationJsonSchemaItems": {
@@ -28257,6 +28398,15 @@
         ]
       }
     },
+    "Risk Insights_DestroyRiskInsights_Response_204": {
+      "description": "Empty response body",
+      "name": "Risk Insights_DestroyRiskInsights_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "ApiTaxRetentionsPostResponsesContentApplicationJsonSchemaItems": {
       "name": "ApiTaxRetentionsPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
@@ -28351,6 +28501,15 @@
             "displayName": "Unconfirmed Link"
           }
         ]
+      }
+    },
+    "Tax retentions_DestroyTaxRetention_Response_204": {
+      "description": "Empty response body",
+      "name": "Tax retentions_DestroyTaxRetention_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "Tax declarations_ListTaxDeclarations_Response_200": {
@@ -28497,6 +28656,15 @@
         ]
       }
     },
+    "Tax declarations_DestroyTaxDeclaration_Response_204": {
+      "description": "Empty response body",
+      "name": "Tax declarations_DestroyTaxDeclaration_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "ApiEmploymentRecordsPostResponsesContentApplicationJsonSchemaItems": {
       "name": "ApiEmploymentRecordsPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
@@ -28591,6 +28759,15 @@
             "displayName": "Unconfirmed Link"
           }
         ]
+      }
+    },
+    "Employment Records_DestroyEmploymentRecord_Response_204": {
+      "description": "Empty response body",
+      "name": "Employment Records_DestroyEmploymentRecord_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "ApiEnrichIncomesPostResponsesContentApplicationJsonSchemaItems": {
@@ -28975,6 +29152,15 @@
             "displayName": "Unconfirmed Link"
           }
         ]
+      }
+    },
+    "Payment Webhooks_DeletePaymentWebhooks_Response_204": {
+      "description": "Empty response body",
+      "name": "Payment Webhooks_DeletePaymentWebhooks_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "Customers_CreateCustomer_Request": {
@@ -31078,6 +31264,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Links_DestroyLink_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No content"
+          },
           "errorsV2": [
             {
               "type": {
@@ -31121,7 +31318,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -34316,6 +34518,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Accounts_DestroyAccount_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No content"
+          },
           "errorsV2": [
             {
               "type": {
@@ -34359,7 +34572,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -37378,6 +37596,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Transactions_DestroyTransaction_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No content"
+          },
           "errorsV2": [
             {
               "type": {
@@ -37421,7 +37650,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -38802,6 +39036,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Balances_DestroyBalance_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No content"
+          },
           "errorsV2": [
             {
               "type": {
@@ -38845,7 +39090,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -40566,6 +40816,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Owners_DestroyOwner_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No content"
+          },
           "errorsV2": [
             {
               "type": {
@@ -40609,7 +40870,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -44135,6 +44401,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Invoices_DestroyInvoice_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No content"
+          },
           "errorsV2": [
             {
               "type": {
@@ -44178,7 +44455,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -51481,6 +51763,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Tax returns_DestroyTaxReturn_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No content"
+          },
           "errorsV2": [
             {
               "type": {
@@ -51524,7 +51817,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -53137,6 +53435,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Tax status_DestroyTaxStatus_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No content"
+          },
           "errorsV2": [
             {
               "type": {
@@ -53180,7 +53489,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -53907,6 +54221,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Tax compliance status_DestroyTaxComplianceStatus_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No content"
+          },
           "errorsV2": [
             {
               "type": {
@@ -53950,7 +54275,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -55122,6 +55452,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Incomes_DestroyIncomes_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No content"
+          },
           "errorsV2": [
             {
               "type": {
@@ -55165,7 +55506,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -56921,6 +57267,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Recurring Expenses_DestroyRecurringExpense_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No content"
+          },
           "errorsV2": [
             {
               "type": {
@@ -56964,7 +57321,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -58187,6 +58549,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Investment Portfolios_DestroyPortfolio_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No content"
+          },
           "errorsV2": [
             {
               "type": {
@@ -58230,7 +58603,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -59166,6 +59544,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Receivable Transactions_DestroyReceivableTransaction_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No content"
+          },
           "errorsV2": [
             {
               "type": {
@@ -59209,7 +59598,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -60668,6 +61062,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Risk Insights_DestroyRiskInsights_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No content"
+          },
           "errorsV2": [
             {
               "type": {
@@ -60711,7 +61116,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -61551,6 +61961,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Tax retentions_DestroyTaxRetention_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No content"
+          },
           "errorsV2": [
             {
               "type": {
@@ -61594,7 +62015,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -62788,6 +63214,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Tax declarations_DestroyTaxDeclaration_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No content"
+          },
           "errorsV2": [
             {
               "type": {
@@ -62831,7 +63268,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -63763,6 +64205,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Employment Records_DestroyEmploymentRecord_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No content"
+          },
           "errorsV2": [
             {
               "type": {
@@ -63806,7 +64259,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -65158,6 +65616,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Payment Webhooks_DeletePaymentWebhooks_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No content"
+          },
           "errorsV2": [
             {
               "type": {
@@ -65201,7 +65670,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {

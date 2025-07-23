@@ -274,7 +274,7 @@ public class AsyncRawUsersClient {
                         Optional<String> startingAfter =
                                 parsedResponse.getPage().flatMap(Page::getNext).map(NextPage::getStartingAfter);
                         Optional<WithCursor> pagination = request.getPagination()
-                                .map(pagination_ -> WithCursor.builder()
+                                .map((WithCursor pagination_) -> WithCursor.builder()
                                         .from(pagination_)
                                         .cursor(startingAfter)
                                         .build());
@@ -367,8 +367,9 @@ public class AsyncRawUsersClient {
                     if (response.isSuccessful()) {
                         ListUsersPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
                                 responseBody.string(), ListUsersPaginationResponse.class);
-                        int newPageNumber =
-                                request.getPage().map(page -> page + 1).orElse(1);
+                        int newPageNumber = request.getPage()
+                                .map((Integer page) -> page + 1)
+                                .orElse(1);
                         ListUsersOffsetPaginationRequest nextRequest = ListUsersOffsetPaginationRequest.builder()
                                 .from(request)
                                 .page(newPageNumber)
@@ -457,8 +458,9 @@ public class AsyncRawUsersClient {
                     if (response.isSuccessful()) {
                         ListUsersPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
                                 responseBody.string(), ListUsersPaginationResponse.class);
-                        double newPageNumber =
-                                request.getPage().map(page -> page + 1.0).orElse(1.0);
+                        double newPageNumber = request.getPage()
+                                .map((Double page) -> page + 1.0)
+                                .orElse(1.0);
                         ListUsersDoubleOffsetPaginationRequest nextRequest =
                                 ListUsersDoubleOffsetPaginationRequest.builder()
                                         .from(request)
@@ -543,12 +545,13 @@ public class AsyncRawUsersClient {
                                 responseBody.string(), ListUsersPaginationResponse.class);
                         int newPageNumber = request.getPagination()
                                 .flatMap(WithPage::getPage)
-                                .map(page -> page + 1)
+                                .map((Integer page) -> page + 1)
                                 .orElse(1);
-                        Optional<WithPage> pagination = request.getPagination().map(pagination_ -> WithPage.builder()
-                                .from(pagination_)
-                                .page(newPageNumber)
-                                .build());
+                        Optional<WithPage> pagination = request.getPagination()
+                                .map((WithPage pagination_) -> WithPage.builder()
+                                        .from(pagination_)
+                                        .page(newPageNumber)
+                                        .build());
                         ListUsersBodyOffsetPaginationRequest nextRequest =
                                 ListUsersBodyOffsetPaginationRequest.builder()
                                         .from(request)
@@ -634,8 +637,9 @@ public class AsyncRawUsersClient {
                     if (response.isSuccessful()) {
                         ListUsersPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
                                 responseBody.string(), ListUsersPaginationResponse.class);
-                        int newPageNumber =
-                                request.getPage().map(page -> page + 1).orElse(1);
+                        int newPageNumber = request.getPage()
+                                .map((Integer page) -> page + 1)
+                                .orElse(1);
                         ListUsersOffsetStepPaginationRequest nextRequest =
                                 ListUsersOffsetStepPaginationRequest.builder()
                                         .from(request)
@@ -722,8 +726,9 @@ public class AsyncRawUsersClient {
                     if (response.isSuccessful()) {
                         ListUsersPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
                                 responseBody.string(), ListUsersPaginationResponse.class);
-                        int newPageNumber =
-                                request.getPage().map(page -> page + 1).orElse(1);
+                        int newPageNumber = request.getPage()
+                                .map((Integer page) -> page + 1)
+                                .orElse(1);
                         ListWithOffsetPaginationHasNextPageRequest nextRequest =
                                 ListWithOffsetPaginationHasNextPageRequest.builder()
                                         .from(request)
@@ -1033,8 +1038,9 @@ public class AsyncRawUsersClient {
                     if (response.isSuccessful()) {
                         UsernameContainer parsedResponse =
                                 ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UsernameContainer.class);
-                        int newPageNumber =
-                                request.getOffset().map(page -> page + 1).orElse(1);
+                        int newPageNumber = request.getOffset()
+                                .map((Integer page) -> page + 1)
+                                .orElse(1);
                         ListWithGlobalConfigRequest nextRequest = ListWithGlobalConfigRequest.builder()
                                 .from(request)
                                 .offset(newPageNumber)

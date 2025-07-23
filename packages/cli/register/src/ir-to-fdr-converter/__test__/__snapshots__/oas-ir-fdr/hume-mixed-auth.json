@@ -2201,6 +2201,168 @@
           }
         ]
       }
+    },
+    "Tools_deleteToolVersion_Response_200": {
+      "description": "Empty response body",
+      "name": "Tools_deleteToolVersion_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Tools_deleteToolVersion_Response_204": {
+      "description": "Empty response body",
+      "name": "Tools_deleteToolVersion_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Tools_updateToolName_Response_200": {
+      "description": "Empty response body",
+      "name": "Tools_updateToolName_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Prompts_deletePromptVersion_Response_200": {
+      "description": "Empty response body",
+      "name": "Prompts_deletePromptVersion_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Prompts_deletePromptVersion_Response_204": {
+      "description": "Empty response body",
+      "name": "Prompts_deletePromptVersion_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Prompts_updatePromptName_Response_200": {
+      "description": "Empty response body",
+      "name": "Prompts_updatePromptName_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Custom Voices_deleteCustomVoice_Response_200": {
+      "description": "Empty response body",
+      "name": "Custom Voices_deleteCustomVoice_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Custom Voices_deleteCustomVoice_Response_204": {
+      "description": "Empty response body",
+      "name": "Custom Voices_deleteCustomVoice_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Custom Voices_updateCustomVoiceName_Response_200": {
+      "description": "Empty response body",
+      "name": "Custom Voices_updateCustomVoiceName_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Configs_deleteConfig_Response_200": {
+      "description": "Empty response body",
+      "name": "Configs_deleteConfig_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Configs_deleteConfig_Response_204": {
+      "description": "Empty response body",
+      "name": "Configs_deleteConfig_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Configs_updateConfigName_Response_200": {
+      "description": "Empty response body",
+      "name": "Configs_updateConfigName_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Tools_deleteToolVersion_1_Response_200": {
+      "description": "Empty response body",
+      "name": "Tools_deleteToolVersion_1_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Tools_deleteToolVersion_1_Response_204": {
+      "description": "Empty response body",
+      "name": "Tools_deleteToolVersion_1_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Prompts_deletePromptVersion_1_Response_200": {
+      "description": "Empty response body",
+      "name": "Prompts_deletePromptVersion_1_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Prompts_deletePromptVersion_1_Response_204": {
+      "description": "Empty response body",
+      "name": "Prompts_deletePromptVersion_1_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Configs_deleteConfigVersion_Response_200": {
+      "description": "Empty response body",
+      "name": "Configs_deleteConfigVersion_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Configs_deleteConfigVersion_Response_204": {
+      "description": "Empty response body",
+      "name": "Configs_deleteConfigVersion_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
     }
   },
   "subpackages": {
@@ -2877,6 +3039,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Tools_deleteToolVersion_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "OK"
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -2887,7 +3060,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -2954,6 +3132,17 @@
               }
             }
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Tools_updateToolName_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "Success"
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -2967,7 +3156,12 @@
               "requestBodyV3": {
                 "type": "json"
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -3134,6 +3328,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Tools_deleteToolVersion_1_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "OK"
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -3145,7 +3350,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -3710,6 +3920,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Prompts_deletePromptVersion_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "OK"
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -3720,7 +3941,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -3787,6 +4013,17 @@
               }
             }
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Prompts_updatePromptName_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "Success"
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -3800,7 +4037,12 @@
               "requestBodyV3": {
                 "type": "json"
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -3967,6 +4209,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Prompts_deletePromptVersion_1_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "OK"
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -3978,7 +4231,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -4491,6 +4749,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Custom Voices_deleteCustomVoice_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "OK"
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -4501,7 +4770,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -4568,6 +4842,17 @@
               }
             }
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Custom Voices_updateCustomVoiceName_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "Success"
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -4581,7 +4866,12 @@
               "requestBodyV3": {
                 "type": "json"
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -5038,6 +5328,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Configs_deleteConfig_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "OK"
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -5048,7 +5349,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -5115,6 +5421,17 @@
               }
             }
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Configs_updateConfigName_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "Success"
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -5128,7 +5445,12 @@
               "requestBodyV3": {
                 "type": "json"
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -5295,6 +5617,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Configs_deleteConfigVersion_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "OK"
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -5306,7 +5639,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {

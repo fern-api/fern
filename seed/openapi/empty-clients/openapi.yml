@@ -1,0 +1,78 @@
+openapi: 3.0.1
+info:
+  title: empty-clients
+  version: ''
+paths: {}
+components:
+  schemas:
+    level1level2Person:
+      title: level1level2Person
+      type: object
+      properties:
+        name:
+          type: string
+        address:
+          $ref: '#/components/schemas/level1level2Address'
+      required:
+        - name
+        - address
+    level1level2Address:
+      title: level1level2Address
+      type: object
+      properties:
+        line1:
+          type: string
+        line2:
+          type: string
+          nullable: true
+        city:
+          type: string
+        state:
+          type: string
+        zip:
+          type: string
+        country:
+          type: string
+          const: USA
+      required:
+        - line1
+        - city
+        - state
+        - zip
+        - country
+    level1Person:
+      title: level1Person
+      type: object
+      properties:
+        name:
+          type: string
+        address:
+          $ref: '#/components/schemas/level1Address'
+      required:
+        - name
+        - address
+    level1Address:
+      title: level1Address
+      type: object
+      properties:
+        line1:
+          type: string
+        line2:
+          type: string
+          nullable: true
+        city:
+          type: string
+        state:
+          type: string
+        zip:
+          type: string
+        country:
+          type: string
+          const: USA
+      required:
+        - line1
+        - city
+        - state
+        - zip
+        - country
+  securitySchemes: {}

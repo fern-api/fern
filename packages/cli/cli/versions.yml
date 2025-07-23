@@ -1,6 +1,30 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Support multiple 2XX responses on http endpoints.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-23"
+  version: 0.65.27
+
+- changelogEntry:
+    - summary: |
+        Support RBAC roles across products.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-22"
+  version: 0.65.26
+
+- changelogEntry:
+    - summary: |
+         IR gen fix: added default response example for 2xx status codes.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-22"
+  version: 0.65.25
+
+- changelogEntry:
+    - summary: |
          improved grabbing of read only property of allOf schemas
       type: fix
   irVersion: 58

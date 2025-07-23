@@ -1068,6 +1068,48 @@
               }
             },
             "userSpecifiedExamples": {}
+          },
+          "v2Responses": {
+            "responses": [
+              {
+                "statusCode": 200,
+                "body": {
+                  "value": {
+                    "responseBodyType": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "User",
+                        "camelCase": {
+                          "unsafeName": "user",
+                          "safeName": "user"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "user",
+                          "safeName": "user"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "USER",
+                          "safeName": "USER"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "User",
+                          "safeName": "User"
+                        }
+                      },
+                      "typeId": "User",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "docs": "Success!",
+                    "type": "response"
+                  },
+                  "type": "json"
+                }
+              }
+            ]
           }
         },
         {
@@ -1800,6 +1842,48 @@
               }
             },
             "userSpecifiedExamples": {}
+          },
+          "v2Responses": {
+            "responses": [
+              {
+                "statusCode": 200,
+                "body": {
+                  "value": {
+                    "responseBodyType": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "User",
+                        "camelCase": {
+                          "unsafeName": "user",
+                          "safeName": "user"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "user",
+                          "safeName": "user"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "USER",
+                          "safeName": "USER"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "User",
+                          "safeName": "User"
+                        }
+                      },
+                      "typeId": "User",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "docs": "Success!",
+                    "type": "response"
+                  },
+                  "type": "json"
+                }
+              }
+            ]
           }
         }
       ]

@@ -77,6 +77,7 @@ export {
     GoTypeReference as TypeReference,
     Method,
     MethodInvocation,
+    MultiNode,
     Parameter,
     Pointer,
     Selector,
