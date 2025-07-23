@@ -27240,6 +27240,30 @@
         ]
       }
     },
+    "Tax status_RetrieveTaxStatus_Response_201": {
+      "name": "Tax status_RetrieveTaxStatus_Response_201",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "TaxStatusSat",
+            "type": {
+              "type": "id",
+              "value": "TaxStatusSat"
+            },
+            "displayName": "SAT 🇲🇽 Mexico"
+          },
+          {
+            "typeName": "TaxStatusDian",
+            "type": {
+              "type": "id",
+              "value": "TaxStatusDian"
+            },
+            "displayName": "DIAN 🇨🇴 Colombia"
+          }
+        ]
+      }
+    },
     "ApiTaxStatusPostResponsesContentApplicationJsonSchemaItems": {
       "name": "ApiTaxStatusPostResponsesContentApplicationJsonSchemaItems",
       "shape": {

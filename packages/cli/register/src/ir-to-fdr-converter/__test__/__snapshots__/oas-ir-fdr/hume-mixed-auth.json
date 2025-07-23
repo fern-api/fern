@@ -2211,6 +2211,15 @@
         "properties": []
       }
     },
+    "Tools_deleteToolVersion_Response_204": {
+      "description": "Empty response body",
+      "name": "Tools_deleteToolVersion_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "Tools_updateToolName_Response_200": {
       "description": "Empty response body",
       "name": "Tools_updateToolName_Response_200",
@@ -2223,6 +2232,15 @@
     "Prompts_deletePromptVersion_Response_200": {
       "description": "Empty response body",
       "name": "Prompts_deletePromptVersion_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Prompts_deletePromptVersion_Response_204": {
+      "description": "Empty response body",
+      "name": "Prompts_deletePromptVersion_Response_204",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2247,6 +2265,15 @@
         "properties": []
       }
     },
+    "Custom Voices_deleteCustomVoice_Response_204": {
+      "description": "Empty response body",
+      "name": "Custom Voices_deleteCustomVoice_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "Custom Voices_updateCustomVoiceName_Response_200": {
       "description": "Empty response body",
       "name": "Custom Voices_updateCustomVoiceName_Response_200",
@@ -2259,6 +2286,15 @@
     "Configs_deleteConfig_Response_200": {
       "description": "Empty response body",
       "name": "Configs_deleteConfig_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Configs_deleteConfig_Response_204": {
+      "description": "Empty response body",
+      "name": "Configs_deleteConfig_Response_204",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2283,6 +2319,15 @@
         "properties": []
       }
     },
+    "Tools_deleteToolVersion_1_Response_204": {
+      "description": "Empty response body",
+      "name": "Tools_deleteToolVersion_1_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "Prompts_deletePromptVersion_1_Response_200": {
       "description": "Empty response body",
       "name": "Prompts_deletePromptVersion_1_Response_200",
@@ -2292,9 +2337,27 @@
         "properties": []
       }
     },
+    "Prompts_deletePromptVersion_1_Response_204": {
+      "description": "Empty response body",
+      "name": "Prompts_deletePromptVersion_1_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "Configs_deleteConfigVersion_Response_200": {
       "description": "Empty response body",
       "name": "Configs_deleteConfigVersion_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Configs_deleteConfigVersion_Response_204": {
+      "description": "Empty response body",
+      "name": "Configs_deleteConfigVersion_Response_204",
       "shape": {
         "type": "object",
         "extends": [],

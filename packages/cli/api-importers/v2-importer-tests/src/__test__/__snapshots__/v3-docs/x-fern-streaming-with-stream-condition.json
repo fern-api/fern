@@ -764,6 +764,48 @@
               }
             },
             "userSpecifiedExamples": {}
+          },
+          "v2Responses": {
+            "responses": [
+              {
+                "statusCode": 200,
+                "body": {
+                  "value": {
+                    "responseBodyType": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "ChatFullResponse",
+                        "camelCase": {
+                          "unsafeName": "chatFullResponse",
+                          "safeName": "chatFullResponse"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "chat_full_response",
+                          "safeName": "chat_full_response"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "CHAT_FULL_RESPONSE",
+                          "safeName": "CHAT_FULL_RESPONSE"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "ChatFullResponse",
+                          "safeName": "ChatFullResponse"
+                        }
+                      },
+                      "typeId": "ChatFullResponse",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "docs": "A response to a chat request.",
+                    "type": "response"
+                  },
+                  "type": "json"
+                }
+              }
+            ]
           }
         },
         {
@@ -1091,6 +1133,48 @@
               }
             },
             "userSpecifiedExamples": {}
+          },
+          "v2Responses": {
+            "responses": [
+              {
+                "statusCode": 200,
+                "body": {
+                  "value": {
+                    "responseBodyType": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "name": {
+                        "originalName": "ChatFullResponse",
+                        "camelCase": {
+                          "unsafeName": "chatFullResponse",
+                          "safeName": "chatFullResponse"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "chat_full_response",
+                          "safeName": "chat_full_response"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "CHAT_FULL_RESPONSE",
+                          "safeName": "CHAT_FULL_RESPONSE"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "ChatFullResponse",
+                          "safeName": "ChatFullResponse"
+                        }
+                      },
+                      "typeId": "ChatFullResponse",
+                      "inline": false,
+                      "type": "named"
+                    },
+                    "docs": "A response to a chat request.",
+                    "type": "response"
+                  },
+                  "type": "json"
+                }
+              }
+            ]
           }
         }
       ]
