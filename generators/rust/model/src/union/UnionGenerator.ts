@@ -1,7 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { Attribute, rust } from "@fern-api/rust-codegen";
-import { SingleUnionType, TypeDeclaration, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { SingleUnionType, TypeDeclaration, TypeReference, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference";
 import {
     isCollectionType,
@@ -237,7 +237,7 @@ export class UnionGenerator {
         return this.hasFieldsOfType(isUnknownType);
     }
 
-    private hasFieldsOfType(predicate: (typeRef: any) => boolean): boolean {
+    private hasFieldsOfType(predicate: (typeRef: TypeReference) => boolean): boolean {
         // Check base properties
         if (this.unionTypeDeclaration.baseProperties.some((prop) => predicate(prop.valueType))) {
             return true;

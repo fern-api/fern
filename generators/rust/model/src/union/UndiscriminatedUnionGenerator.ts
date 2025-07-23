@@ -4,6 +4,7 @@ import { Attribute, rust } from "@fern-api/rust-codegen";
 
 import {
     TypeDeclaration,
+    TypeReference,
     UndiscriminatedUnionMember,
     UndiscriminatedUnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
@@ -239,7 +240,7 @@ export class UndiscriminatedUnionGenerator {
         return this.hasFieldsOfType(isUnknownType);
     }
 
-    private hasFieldsOfType(predicate: (typeRef: any) => boolean): boolean {
+    private hasFieldsOfType(predicate: (typeRef: TypeReference) => boolean): boolean {
         return this.undiscriminatedUnionTypeDeclaration.members.some((member) => predicate(member.type));
     }
 }
