@@ -36,7 +36,10 @@ export declare namespace OperationConverter {
         examples?: Record<string, OpenAPIV3_1.ExampleObject>;
     }
 
-    type BaseEndpoint = Omit<HttpEndpoint, "requestBody" | "response" | "v2Responses" | "name" | "docs" | "id" | "v2Examples">;
+    type BaseEndpoint = Omit<
+        HttpEndpoint,
+        "requestBody" | "response" | "v2Responses" | "name" | "docs" | "id" | "v2Examples"
+    >;
 }
 
 export class OperationConverter extends AbstractOperationConverter {
@@ -201,7 +204,7 @@ export class OperationConverter extends AbstractOperationConverter {
                 },
                 v2Responses: {
                     responses: convertedResponseBody?.v2Responses
-                },
+                }
             },
             streamEndpoint:
                 streamResponse != null && streamResponse.body != null
@@ -284,7 +287,6 @@ export class OperationConverter extends AbstractOperationConverter {
                 });
                 const converted = responseBodyConverter.convert();
                 if (converted != null) {
-
                     this.inlinedTypes = {
                         ...this.inlinedTypes,
                         ...converted.inlinedTypes
@@ -302,7 +304,6 @@ export class OperationConverter extends AbstractOperationConverter {
                             statusCode: statusCodeNum,
                             body: converted.streamResponseBody
                         };
-    
                     }
 
                     convertedResponseBody.v2Responses = [
