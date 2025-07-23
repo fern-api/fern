@@ -186,9 +186,8 @@ export class GeneratedQueryParams {
         if (this.queryParameters != null && this.queryParameters.length > 0) {
             return ts.factory.createObjectLiteralExpression(
                 [
-                    ts.factory.createShorthandPropertyAssignment(
-                        ts.factory.createIdentifier(GeneratedQueryParams.QUERY_PARAMS_VARIABLE_NAME),
-                        undefined
+                    ts.factory.createSpreadAssignment(
+                        ts.factory.createIdentifier(GeneratedQueryParams.QUERY_PARAMS_VARIABLE_NAME)
                     ),
                     ts.factory.createSpreadAssignment(getRequestOptionsAdditionalQueryParameters)
                 ],

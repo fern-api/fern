@@ -1170,7 +1170,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 }),
                 {
                     name: REQUEST_OPTIONS_ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME,
-                    type: "Record<string, string | string[] | object | object[] | null | undefined>",
+                    type: "Record<string, unknown>",
                     hasQuestionToken: true,
                     docs: ["Additional query string parameters to include in the request."]
                 },
