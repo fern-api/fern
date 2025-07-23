@@ -1,0 +1,61 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  # Basic undiscriminated union with primitive types
+  StringOrNumber:
+    union:
+      string: string
+      number: integer
+
+  # Undiscriminated union with mixed types
+  FlexibleValue:
+    union:
+      string: string
+      integer: integer
+      double: double
+      boolean: boolean
+      stringList: list<string>
+
+  # Undiscriminated union with complex types
+  SearchResult:
+    union:
+      user: User
+      product: Product
+      category: Category
+
+  User:
+    properties:
+      id: string
+      name: string
+      email: string
+
+  Product:
+    properties:
+      id: string
+      title: string
+      price: double
+      in_stock: boolean
+
+  Category:
+    properties:
+      id: string
+      name: string
+      description: string
+      parent_id: optional<string>
+
+  # Simple response union
+  Response:
+    union:
+      success: SuccessResponse
+      error: ErrorResponse
+
+  SuccessResponse:
+    properties:
+      data: string
+      status: integer
+
+  ErrorResponse:
+    properties:
+      error: string
+      code: integer
+      details: optional<list<string>> 

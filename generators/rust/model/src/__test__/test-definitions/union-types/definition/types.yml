@@ -1,0 +1,102 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  # Basic discriminated union
+  Animal:
+    discriminant: type
+    union:
+      dog:
+        type: Dog
+      cat:
+        type: Cat
+      bird:
+        type: Bird
+
+  Dog:
+    properties:
+      name: string
+      breed: string
+      age: integer
+
+  Cat:
+    properties:
+      name: string
+      is_indoor: boolean
+      lives_remaining: integer
+
+  Bird:
+    properties:
+      name: string
+      can_fly: boolean
+      wing_span: optional<double>
+
+  # Union with base properties
+  Vehicle:
+    discriminant: vehicle_type
+    base-properties:
+      id: string
+      manufacturer: string
+      year: integer
+    union:
+      car:
+        type: Car
+      motorcycle:
+        type: Motorcycle
+      truck:
+        type: Truck
+
+  Car:
+    properties:
+      doors: integer
+      fuel_type: string
+
+  Motorcycle:
+    properties:
+      engine_size: double
+      has_sidecar: boolean
+
+  Truck:
+    properties:
+      payload_capacity: double
+      axles: integer
+
+  # Union with primitive types
+  Shape:
+    discriminant: kind
+    union:
+      circle: double
+      rectangle:
+        type: Rectangle
+      square: double
+
+  Rectangle:
+    properties:
+      width: double
+      height: double
+
+  # Union with no-properties variant
+  PaymentMethod:
+    discriminant: type
+    union:
+      cash: {}
+      credit_card:
+        type: CreditCard
+      bank_transfer:
+        type: BankTransfer
+
+  CreditCard:
+    properties:
+      card_number: string
+      expiry_date: string
+
+  BankTransfer:
+    properties:
+      account_number: string
+      routing_number: string
+
+  FileFormat:
+    enum:
+      - JSON
+      - CSV
+      - XML
+      - YAML 
