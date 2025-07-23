@@ -2,8 +2,7 @@
 
 module Imdb
     module Types
-        class Movie < Internal::Types::Model
-            field :id, MovieId, optional: true, nullable: true
+        class CreateMovieRequest < Internal::Types::Model
             field :title, String, optional: true, nullable: true
             field :rating, Float, optional: true, nullable: true
         end
