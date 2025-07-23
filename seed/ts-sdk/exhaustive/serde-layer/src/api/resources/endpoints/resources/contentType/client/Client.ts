@@ -25,6 +25,8 @@ export declare namespace ContentType {
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional query string parameters to include in the request. */
+        queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
         headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
@@ -84,6 +86,7 @@ export class ContentType {
                 requestOptions?.headers,
             ),
             contentType: "application/json-patch+json",
+            queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -171,6 +174,7 @@ export class ContentType {
                 requestOptions?.headers,
             ),
             contentType: "application/json-patch+json; charset=utf-8",
+            queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",

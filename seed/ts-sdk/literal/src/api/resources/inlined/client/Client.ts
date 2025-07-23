@@ -31,6 +31,8 @@ export declare namespace Inlined {
         version?: "02-02-2024";
         /** Override the X-API-Enable-Audit-Logging header */
         auditLogging?: true;
+        /** Additional query string parameters to include in the request. */
+        queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
         headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
@@ -87,6 +89,7 @@ export class Inlined {
                 requestOptions?.headers,
             ),
             contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: {
                 ...request,

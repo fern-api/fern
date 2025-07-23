@@ -64,6 +64,7 @@ import { getNonVariablePathParameters } from "./endpoints/utils/getNonVariablePa
 import { getLiteralValueForHeader, isLiteralHeader } from "./endpoints/utils/isLiteralHeader";
 import { OAuthTokenProviderGenerator } from "./oauth-generator/OAuthTokenProviderGenerator";
 import { GeneratedDefaultWebsocketImplementation } from "./websocket/GeneratedDefaultWebsocketImplementation";
+import { REQUEST_OPTIONS_ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME } from "./endpoints/utils/requestOptionsParameter";
 
 export declare namespace GeneratedSdkClientClassImpl {
     export interface Init {
@@ -1167,6 +1168,12 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         docs: [`Override the ${header.name.wireValue} header`]
                     };
                 }),
+                {
+                    name: REQUEST_OPTIONS_ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME,
+                    type: "Record<string, unknown>",
+                    hasQuestionToken: true,
+                    docs: ["Additional query string parameters to include in the request."]
+                },
                 {
                     name: "headers",
                     type: "Record<string, string | core.Supplier<string | undefined> | undefined>",

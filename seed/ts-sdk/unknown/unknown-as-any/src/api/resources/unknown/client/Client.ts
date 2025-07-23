@@ -23,6 +23,8 @@ export declare namespace Unknown {
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional query string parameters to include in the request. */
+        queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
         headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
@@ -56,6 +58,7 @@ export class Unknown {
             method: "POST",
             headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
             contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -122,6 +125,7 @@ export class Unknown {
             method: "POST",
             headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
             contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
