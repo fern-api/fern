@@ -16,8 +16,6 @@ import com.seed.pagination.resources.users.requests.ListUsersExtendedRequestForO
 import com.seed.pagination.resources.users.requests.ListUsersMixedTypeCursorPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersOffsetPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;
-import com.seed.pagination.resources.users.requests.ListUsersOptionalNullableDoubleRequest;
-import com.seed.pagination.resources.users.requests.ListUsersOptionalNullableIntegerRequest;
 import com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;
 import com.seed.pagination.resources.users.requests.ListWithOffsetPaginationHasNextPageRequest;
 import com.seed.pagination.resources.users.types.User;
@@ -209,53 +207,5 @@ public class UsersClient {
     public SyncPagingIterable<String> listWithGlobalConfig(
             ListWithGlobalConfigRequest request, RequestOptions requestOptions) {
         return this.rawClient.listWithGlobalConfig(request, requestOptions).body();
-    }
-
-    /**
-     * Test pagination with nullable double parameter wrapped in optional
-     */
-    public SyncPagingIterable<User> listWithOptionalNullableDouble() {
-        return this.rawClient.listWithOptionalNullableDouble().body();
-    }
-
-    /**
-     * Test pagination with nullable double parameter wrapped in optional
-     */
-    public SyncPagingIterable<User> listWithOptionalNullableDouble(ListUsersOptionalNullableDoubleRequest request) {
-        return this.rawClient.listWithOptionalNullableDouble(request).body();
-    }
-
-    /**
-     * Test pagination with nullable double parameter wrapped in optional
-     */
-    public SyncPagingIterable<User> listWithOptionalNullableDouble(
-            ListUsersOptionalNullableDoubleRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .listWithOptionalNullableDouble(request, requestOptions)
-                .body();
-    }
-
-    /**
-     * Test pagination with nullable integer parameter wrapped in optional
-     */
-    public SyncPagingIterable<User> listWithOptionalNullableInteger() {
-        return this.rawClient.listWithOptionalNullableInteger().body();
-    }
-
-    /**
-     * Test pagination with nullable integer parameter wrapped in optional
-     */
-    public SyncPagingIterable<User> listWithOptionalNullableInteger(ListUsersOptionalNullableIntegerRequest request) {
-        return this.rawClient.listWithOptionalNullableInteger(request).body();
-    }
-
-    /**
-     * Test pagination with nullable integer parameter wrapped in optional
-     */
-    public SyncPagingIterable<User> listWithOptionalNullableInteger(
-            ListUsersOptionalNullableIntegerRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .listWithOptionalNullableInteger(request, requestOptions)
-                .body();
     }
 }

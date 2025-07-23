@@ -168,32 +168,6 @@
                 "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithGlobalConfig(\n            ListWithGlobalConfigRequest\n                .builder()\n                .offset(1)\n                .build()\n        );\n    }\n}\n",
                 "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithGlobalConfig(\n            ListWithGlobalConfigRequest\n                .builder()\n                .offset(1)\n                .build()\n        );\n    }\n}\n"
             }
-        },
-        {
-            "example_identifier": "b2e5f175",
-            "id": {
-                "method": "GET",
-                "path": "/users/nullable-double",
-                "identifier_override": "endpoint_users.listWithOptionalNullableDouble"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersOptionalNullableDoubleRequest;\nimport com.seed.pagination.resources.users.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithOptionalNullableDouble(\n            ListUsersOptionalNullableDoubleRequest\n                .builder()\n                .page(1.1)\n                .perPage(1)\n                .order(Order.ASC)\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersOptionalNullableDoubleRequest;\nimport com.seed.pagination.resources.users.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithOptionalNullableDouble(\n            ListUsersOptionalNullableDoubleRequest\n                .builder()\n                .page(1.1)\n                .perPage(1)\n                .order(Order.ASC)\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "a39544d5",
-            "id": {
-                "method": "GET",
-                "path": "/users/nullable-integer",
-                "identifier_override": "endpoint_users.listWithOptionalNullableInteger"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersOptionalNullableIntegerRequest;\nimport com.seed.pagination.resources.users.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithOptionalNullableInteger(\n            ListUsersOptionalNullableIntegerRequest\n                .builder()\n                .page(1)\n                .perPage(1)\n                .order(Order.ASC)\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersOptionalNullableIntegerRequest;\nimport com.seed.pagination.resources.users.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithOptionalNullableInteger(\n            ListUsersOptionalNullableIntegerRequest\n                .builder()\n                .page(1)\n                .perPage(1)\n                .order(Order.ASC)\n                .build()\n        );\n    }\n}\n"
-            }
         }
     ],
     "types": {}
