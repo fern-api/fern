@@ -1,0 +1,29 @@
+## 0.43.5
+**`(fix):`** If you use the `x-fern-streaming` extension and want to provide different descriptions
+for the streaming endpoint, then you can now specify `streaming-description`.
+
+```yml openapi.yml
+x-fern-streaming:
+  stream-condition: $request.stream
+  stream-description: The streaming version of this endpoint returns a series of chunks ...
+  response:
+    $ref: #/components/schemas/Response
+  stream-response:
+    $ref: #/components/schemas/ResponseChunk
+```
+
+
+## 0.43.4
+**`(fix):`** The OpenAPI parser now respects the content type in your OpenAPI spec, instead of always sending
+`application/json`. With this upgrade, your SDKs will also start to send the correct content type.
+
+
+## 0.43.3
+**`(chore):`** The CLI now passes in the API definition ID once again, this is necessary so that generated snippet templates
+may reference schemas within the API. This was a regression that was recently introduced.
+
+
+## 0.43.2
+**`(fix):`** The CLI now prints which API cannot be registered if `fern generate --docs` fails.
+
+

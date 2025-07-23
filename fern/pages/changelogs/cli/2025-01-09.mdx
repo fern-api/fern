@@ -1,0 +1,17 @@
+## 0.47.1
+**`(feat):`** Fixes a bug where the OpenAPI parser stopped respecting the =`unions: v1` setting in your `generators.yml` which configures the parser to generate more
+idiomatic discriminated unions.
+```yml
+api:
+  specs:
+    - openapi: ./path/to/openapi.yml
+      settings:
+        unions: v1
+```
+
+
+## 0.47.0
+**`(feat):`** The CLI now supports publishing docs using the improved OpenAPI v2 parser. You can set `openapi-parser-v2: true`
+in your `docs.yml` to use the new parser.
+
+

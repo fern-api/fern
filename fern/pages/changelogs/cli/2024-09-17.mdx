@@ -1,0 +1,41 @@
+## 0.42.1
+**`(fix):`** Make sure to check for optionality when parsing stdout and stderr in CLI. This
+removes the error: `Cannot read properties of undefined (reading 'includes')`.
+
+
+## 0.42.0
+**`(fix):`** If you merge multiple OpenAPI specs with namespaces, `fern check` will no longer
+complain about duplicate schema names across namespaces.
+In the example below, both OpenAPI specs can have duplicative schema names and
+that is okay.
+```yml
+api:
+  specs:
+    - openapi: openapi-bar.yml
+      namespace: bar
+    - openapi: openapi-foo.yml
+      namespace: foo
+```
+
+
+## 0.41.16
+**`(fix):`** Previously the OpenAPI converter would incorrectly mark
+the values of `additionalProperties` as optional. Now, we have
+introduced a feature flag to turn this behavior off.
+
+The feature flag can be configured in generators.yml:
+```yml
+api:
+  specs:
+    - openapi: /path/to/openapi
+      settings:
+        optional-additional-properties: false
+```
+
+
+## 0.41.15
+**`(internal):`** Performance improvements for stringifiying large Intermediate Representations. If
+you have a large OpenAPI spec or Fern Definition, this can potentially shave off
+minutes from `fern generate`.
+
+
