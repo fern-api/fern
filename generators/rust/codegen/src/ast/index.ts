@@ -1,4 +1,7 @@
 export { AstNode } from "./AstNode";
+export { Expression } from "./Expression";
+export { Statement } from "./Statement";
+export { CodeBlock } from "./CodeBlock";
 export { Writer } from "./Writer";
 export { Type } from "./Type";
 export { Reference } from "./Reference";
@@ -8,6 +11,9 @@ export { Struct } from "./Struct";
 export { NewtypeStruct } from "./NewtypeStruct";
 export { Enum } from "./Enum";
 export { EnumVariant } from "./EnumVariant";
+export { Method } from "./Method";
+export type { FunctionParameter } from "./Method";
+export { ImplBlock } from "./ImplBlock";
 export {
     PrimitiveType,
     PUBLIC,

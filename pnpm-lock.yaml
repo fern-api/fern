@@ -2494,6 +2494,12 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/core-utils
+      '@fern-fern/ir-sdk':
+        specifier: 58.2.0
+        version: 58.2.0
     devDependencies:
       '@types/node':
         specifier: ^18.7.18
@@ -2588,6 +2594,9 @@ importers:
       '@fern-api/rust-base':
         specifier: workspace:*
         version: link:../base
+      '@fern-api/rust-codegen':
+        specifier: workspace:*
+        version: link:../codegen
       '@fern-api/rust-model':
         specifier: workspace:*
         version: link:../model

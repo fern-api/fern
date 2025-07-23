@@ -7,6 +7,8 @@ import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { ErrorGenerator } from "./error/ErrorGenerator";
 import { generateModels } from "@fern-api/rust-model";
+import { RootClientGenerator } from "./client/RootClientGenerator";
+import { SubClientGenerator } from "./client/SubClientGenerator";
 
 export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -47,179 +49,106 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
-        // Generate lib.rs
-        const libContent = this.generateLibRs(context);
-        const libFile = new RustFile({
-            filename: "lib.rs",
-            directory: RelativeFilePath.of("src"),
-            fileContents: libContent
-        });
-
-        // Generate client.rs
-        const clientContent = this.generateClientRs(context);
-        const clientFile = new RustFile({
-            filename: "client.rs",
-            directory: RelativeFilePath.of("src"),
-            fileContents: clientContent
-        });
-
-        // Generate error.rs
-        const errorContent = this.generateErrorRs(context);
-        const errorFile = new RustFile({
-            filename: "error.rs",
-            directory: RelativeFilePath.of("src"),
-            fileContents: errorContent
-        });
-
-        const files = [libFile, clientFile, errorFile];
-
-        // Generate types if they exist
-        if (Object.keys(context.ir.types).length > 0) {
-            const modelFiles = generateModels({ context: context.toModelGeneratorContext() });
-            // Place type files in types/ directory
-            const typeFiles = modelFiles.map(
-                (file) =>
-                    new RustFile({
-                        filename: file.filename,
-                        directory: RelativeFilePath.of("src/types"),
-                        fileContents:
-                            typeof file.fileContents === "string" ? file.fileContents : file.fileContents.toString()
-                    })
-            );
-            files.push(...typeFiles);
-
-            // Create a types module file that exports all generated types
-            const typesModContent = this.generateTypesModRs(context);
-            const typesModFile = new RustFile({
-                filename: "mod.rs",
-                directory: RelativeFilePath.of("src/types"),
-                fileContents: typesModContent
-            });
-            files.push(typesModFile);
-        }
-
-        // Generate services
-        for (const [serviceId, service] of Object.entries(context.ir.services)) {
-            const serviceName = service.name.fernFilepath.allParts
-                .map((part: { snakeCase: { safeName: string } }) => part.snakeCase.safeName)
-                .join("_");
-            const serviceContent = this.generateServiceRs(context, service);
-            const serviceFile = new RustFile({
-                filename: `${serviceName}.rs`,
-                directory: RelativeFilePath.of("src"),
-                fileContents: serviceContent
-            });
-            files.push(serviceFile);
-        }
-
+        const files = this.generateProjectFiles(context);
         context.project.addSourceFiles(...files);
         await context.project.persist();
     }
 
-    private generateLibRs(context: SdkGeneratorContext): string {
+    private generateProjectFiles(context: SdkGeneratorContext): RustFile[] {
+        const files: RustFile[] = [];
+
+        // Core files
+        files.push(this.generateLibFile(context));
+        files.push(this.generateErrorFile(context));
+
+        // Client hierarchy - simple like Swift!
+        files.push(new RootClientGenerator(context).generate());
+
+        // Sub-clients for each service
+        Object.values(context.ir.subpackages).forEach(subpackage => {
+            if (subpackage.service != null || subpackage.hasEndpointsInTree) {
+                files.push(new SubClientGenerator(context, subpackage).generate());
+            }
+        });
+
+        // Generate types if they exist
+        if (Object.keys(context.ir.types).length > 0) {
+            files.push(...this.generateTypeFiles(context));
+        }
+
+        return files;
+    }
+
+    private generateLibFile(context: SdkGeneratorContext): RustFile {
         const hasTypes = Object.keys(context.ir.types).length > 0;
-        const services = Object.values(context.ir.services);
+        const clientName = context.getClientName();
 
-        let modules = "pub mod client;\npub mod error;";
-
-        if (hasTypes) {
-            modules += "\npub mod types;";
-        }
-
-        for (const service of services) {
-            const serviceName = service.name.fernFilepath.allParts
-                .map((part: { snakeCase: { safeName: string } }) => part.snakeCase.safeName)
-                .join("_");
-            modules += `\npub mod ${serviceName};`;
-        }
-
-        return `//! ${context.ir.apiName.pascalCase.safeName} SDK
+        const content = `//! ${context.ir.apiName.pascalCase.safeName} SDK
 //!
 //! Generated by Fern
 
-${modules}
+pub mod client;
+pub mod error;
+${hasTypes ? "pub mod types;" : ""}
 
-pub use client::${context.getClientName()};
+// Re-export the main client and builder  
+pub use client::{${clientName}, ApiClientBuilder, ClientConfig, HttpClient, RequestOptions};
 pub use error::ApiError;
 ${hasTypes ? "pub use types::*;" : ""}
 `;
+
+        return new RustFile({
+            filename: "lib.rs",
+            directory: RelativeFilePath.of("src"),
+            fileContents: content
+        });
     }
 
-    private generateClientRs(context: SdkGeneratorContext): string {
-        const clientName = context.getClientName();
-        return `use crate::error::ApiError;
-use reqwest::{Client, RequestBuilder};
-use serde::{Deserialize, Serialize};
 
-pub struct ${clientName} {
-    client: Client,
-    base_url: String,
-}
 
-impl ${clientName} {
-    pub fn new(base_url: impl Into<String>) -> Self {
-        Self {
-            client: Client::new(),
-            base_url: base_url.into(),
-        }
-    }
-
-    pub fn with_client(client: Client, base_url: impl Into<String>) -> Self {
-        Self {
-            client,
-            base_url: base_url.into(),
-        }
-    }
-
-    // TODO: Add API methods here
-}
-`;
-    }
-
-    private generateErrorRs(context: SdkGeneratorContext): string {
+    private generateErrorFile(context: SdkGeneratorContext): RustFile {
         const errorGenerator = new ErrorGenerator(context);
-        return errorGenerator.generateErrorRs();
+        return new RustFile({
+            filename: "error.rs",
+            directory: RelativeFilePath.of("src"),
+            fileContents: errorGenerator.generateErrorRs()
+        });
     }
 
     private async generateGitHub({ context }: { context: SdkGeneratorContext }): Promise<void> {
         await context.generatorAgent.pushToGitHub({ context });
     }
 
-    private generateTypesModRs(context: SdkGeneratorContext): string {
-        let content = "// Generated types module\n\n";
+    private generateTypeFiles(context: SdkGeneratorContext): RustFile[] {
+        const files: RustFile[] = [];
 
-        // Export all generated type files
+        // Generate model files
+        const modelFiles = generateModels({ context: context.toModelGeneratorContext() });
+        const typeFiles = modelFiles.map((file: any) =>
+            new RustFile({
+                filename: file.filename,
+                directory: RelativeFilePath.of("src/types"),
+                fileContents: typeof file.fileContents === "string" ? file.fileContents : file.fileContents.toString()
+            })
+        );
+        files.push(...typeFiles);
+
+        // Generate types module file
+        let modContent = "// Generated types module\n\n";
         for (const [_typeId, typeDeclaration] of Object.entries(context.ir.types)) {
             const moduleName = typeDeclaration.name.name.snakeCase.unsafeName;
-            content += `pub mod ${moduleName};\n`;
-            content += `pub use ${moduleName}::*;\n`;
+            modContent += `pub mod ${moduleName};\n`;
+            modContent += `pub use ${moduleName}::*;\n`;
         }
 
-        return content;
+        files.push(new RustFile({
+            filename: "mod.rs",
+            directory: RelativeFilePath.of("src/types"),
+            fileContents: modContent
+        }));
+
+        return files;
     }
 
-    private generateServiceRs(
-        context: SdkGeneratorContext,
-        service: {
-            displayName?: string;
-            name: { fernFilepath: { allParts: Array<{ pascalCase: { safeName: string } }> } };
-        }
-    ): string {
-        const clientName = context.getClientName();
-        const serviceName =
-            service.displayName ||
-            service.name.fernFilepath.allParts
-                .map((part: { pascalCase: { safeName: string } }) => part.pascalCase.safeName)
-                .join(" ");
 
-        return `use crate::client::${clientName};
-use crate::error::ApiError;
-
-impl ${clientName} {
-    // ${serviceName} methods
-    
-    // TODO: Generate actual service methods based on endpoints
-}
-`;
-    }
 }
