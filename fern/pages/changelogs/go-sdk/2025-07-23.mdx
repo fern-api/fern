@@ -1,0 +1,14 @@
+## 0.28.1
+**`(fix):`** Fix an issue where optional, allow-multiple query parameter snippets were not rendered.
+
+**`(fix):`** Fix an issue where service headers were not included in the generated in-lined request.
+
+**`(fix):`** Fix an issue where literal types were included as path parameter arguments.
+
+## 0.28.0
+**`(feat):`** Add support for the exportedClientName configuration, which can be used to customize the generated client name and constructor included in snippets.
+Note that this configuration option assumes that the SDK includes a hand-written client constructor defined in the client package.
+
+## 0.27.0
+**`(feat):`** Add support for SSE (Server-Sent Events) streaming responses. The user-facing interface for streaming responses remains the same between standard HTTP streaming and SSE.
+
