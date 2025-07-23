@@ -450,7 +450,7 @@ async function getNavigationConfiguration({
                 featureFlags: convertFeatureFlag(product.featureFlag)
             });
         }
-        
+
         return {
             type: "productgroup",
             products: productNavbars
