@@ -93,7 +93,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             });
             files.push(environmentGenerator.generate());
         } else {
-            // TODO: Handle multiple environments
+            // TODO(kafkas): Handle multiple environments
         }
 
         return files;

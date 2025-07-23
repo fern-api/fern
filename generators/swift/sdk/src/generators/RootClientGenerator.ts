@@ -95,7 +95,7 @@ export class RootClientGenerator {
                 });
             }
         } else {
-            // TODO: Handle multiple environments
+            // TODO(kafkas): Handle multiple environments
         }
 
         return swift.initializer({
