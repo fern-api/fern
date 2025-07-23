@@ -62,7 +62,7 @@ features:
   - id: ADDITIONAL_QUERY_STRING_PARAMETERS
     advanced: true
     description: |
-      If you would like to send additional query string paramaters as part of the request, use the `queryParams` request option.
+      If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
 
   - id: RETRIES
     advanced: true
