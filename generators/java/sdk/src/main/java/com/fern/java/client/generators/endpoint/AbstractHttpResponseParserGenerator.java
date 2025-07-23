@@ -1183,9 +1183,21 @@ public abstract class AbstractHttpResponseParserGenerator {
                 }
             }
 
-            com.fern.ir.model.types.TypeReference numberType = pageType.getContainer()
-                    .map(containerType -> containerType.visit(new TypeReferenceUtils.ContainerTypeToUnderlyingType()))
-                    .orElse(pageType);
+            // Extract the actual underlying type from Optional<> or Nullable<>
+            com.fern.ir.model.types.TypeReference numberType;
+            if (pageIsOptional
+                    && pageType.getContainer().isPresent()
+                    && pageType.getContainer().get().isOptional()) {
+                numberType = pageType.getContainer().get().getOptional().get();
+
+                if (numberType.getContainer().isPresent()
+                        && numberType.getContainer().get().isNullable()) {
+                    numberType = numberType.getContainer().get().getNullable().get();
+                }
+            } else {
+                numberType = pageType;
+            }
+
             TypeName numberTypeName =
                     clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, numberType);
 
@@ -1195,11 +1207,19 @@ public abstract class AbstractHttpResponseParserGenerator {
             }
 
             if (pageIsOptional) {
+                String zero = one.equals(DECIMAL_ONE) ? "0.0" : "0";
+
+                TypeName lambdaParamType = numberTypeName;
+                if (numberTypeName.isPrimitive()) {
+                    lambdaParamType = numberTypeName.box();
+                }
+
                 httpResponseBuilder.addStatement(CodeBlock.of(
-                        "$T $L = $L.map(page -> page + $L).orElse($L)",
+                        "$T $L = $L.map(($T page) -> page + $L).orElse($L)",
                         numberTypeName,
                         variables.getNewPageNumberVariableName(),
                         newNumberGetter,
+                        lambdaParamType,
                         one,
                         one));
             } else {
