@@ -151,6 +151,7 @@ export abstract class AbstractGoGeneratorContext<
                     default:
                         assertNever(container);
                 }
+                break;
             }
             case "named": {
                 const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId).shape;
@@ -165,6 +166,7 @@ export abstract class AbstractGoGeneratorContext<
                     default:
                         assertNever(typeDeclaration);
                 }
+                break;
             }
             case "primitive":
             case "unknown":
@@ -191,6 +193,7 @@ export abstract class AbstractGoGeneratorContext<
                     default:
                         assertNever(container);
                 }
+                break;
             }
             case "named":
             case "primitive":
@@ -224,6 +227,7 @@ export abstract class AbstractGoGeneratorContext<
                     default:
                         assertNever(typeDeclaration);
                 }
+                break;
             }
             case "container": {
                 const containerType = typeReference.container;
@@ -241,6 +245,7 @@ export abstract class AbstractGoGeneratorContext<
                     default:
                         assertNever(containerType);
                 }
+                break;
             }
             case "primitive":
                 return true;
@@ -401,6 +406,7 @@ export abstract class AbstractGoGeneratorContext<
                     default:
                         assertNever(declaration.shape);
                 }
+                break;
             }
             case "container": {
                 const container = typeReference.container;
@@ -417,6 +423,7 @@ export abstract class AbstractGoGeneratorContext<
                     default:
                         assertNever(container);
                 }
+                break;
             }
             case "primitive":
             case "unknown":
@@ -443,6 +450,7 @@ export abstract class AbstractGoGeneratorContext<
                     default:
                         assertNever(container);
                 }
+                break;
             }
             case "named": {
                 const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
