@@ -120,7 +120,7 @@ describe("Expression", () => {
                 ]
             });
 
-            expect(dictionaryLiteral.toString()).toMatchInlineSnapshot(`"["host": "localhost", "port": "8080"]"`);
+            expect(dictionaryLiteral.toString()).toMatchInlineSnapshot('"["host": "localhost", "port": "8080"]"');
         });
 
         it("should correctly write dictionary literal with multiple entries (multiline)", () => {

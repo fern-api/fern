@@ -23,9 +23,11 @@ Instantiate and use the client with the following:
 import { SeedEnumClient } from "@fern/enum";
 
 const client = new SeedEnumClient({ environment: "YOUR_BASE_URL" });
-await client.inlinedRequest.send({
+await client.headers.send({
     operand: ">",
+    maybeOperand: ">",
     operandOrColor: "red",
+    maybeOperandOrColor: undefined,
 });
 ```
 
@@ -37,7 +39,7 @@ following namespace:
 ```typescript
 import { SeedEnum } from "@fern/enum";
 
-const request: SeedEnum.SendEnumInlinedRequest = {
+const request: SeedEnum.SendEnumAsHeaderRequest = {
     ...
 };
 ```
@@ -51,7 +53,7 @@ will be thrown.
 import { SeedEnumError } from "@fern/enum";
 
 try {
-    await client.inlinedRequest.send(...);
+    await client.headers.send(...);
 } catch (err) {
     if (err instanceof SeedEnumError) {
         console.log(err.statusCode);
@@ -69,7 +71,7 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-const response = await client.inlinedRequest.send(..., {
+const response = await client.headers.send(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -91,7 +93,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.inlinedRequest.send(..., {
+const response = await client.headers.send(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -101,7 +103,7 @@ const response = await client.inlinedRequest.send(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.inlinedRequest.send(..., {
+const response = await client.headers.send(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -112,7 +114,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.inlinedRequest.send(..., {
+const response = await client.headers.send(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -124,7 +126,7 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
 
 ```typescript
-const { data, rawResponse } = await client.inlinedRequest.send(...).withRawResponse();
+const { data, rawResponse } = await client.headers.send(...).withRawResponse();
 
 console.log(data);
 console.log(rawResponse.headers['X-My-Header']);
@@ -132,8 +134,7 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
-The SDK defaults to `node-fetch` but will use the global fetch client if present. The SDK works in the following
-runtimes:
+The SDK works in the following runtimes:
 
 - Node.js 18+
 - Vercel

@@ -191,6 +191,87 @@
     }
   },
   "subpackages": {
+    "subpackage_headers": {
+      "subpackageId": "subpackage_headers",
+      "name": "headers",
+      "endpoints": [
+        {
+          "auth": false,
+          "method": "POST",
+          "id": "send",
+          "originalEndpointId": "endpoint_headers.send",
+          "name": "Send",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/headers"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [
+            {
+              "key": "operand",
+              "type": {
+                "type": "id",
+                "value": "type_:Operand"
+              }
+            },
+            {
+              "key": "maybeOperand",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_:Operand"
+                }
+              }
+            },
+            {
+              "key": "operandOrColor",
+              "type": {
+                "type": "id",
+                "value": "type_:ColorOrOperand"
+              }
+            },
+            {
+              "key": "maybeOperandOrColor",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_:ColorOrOperand"
+                }
+              }
+            }
+          ],
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/headers",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {
+                "operand": ">",
+                "operandOrColor": "red"
+              },
+              "responseStatusCode": 204,
+              "codeSamples": []
+            }
+          ]
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    },
     "subpackage_inlined-request": {
       "subpackageId": "subpackage_inlined-request",
       "name": "inlined-request",
@@ -541,6 +622,7 @@
       "type_:SpecialEnum"
     ],
     "subpackages": [
+      "subpackage_headers",
       "subpackage_inlined-request",
       "subpackage_path-param",
       "subpackage_query-param",

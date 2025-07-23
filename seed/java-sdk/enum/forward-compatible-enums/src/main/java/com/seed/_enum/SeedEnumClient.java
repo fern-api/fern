@@ -5,6 +5,7 @@ package com.seed._enum;
 
 import com.seed._enum.core.ClientOptions;
 import com.seed._enum.core.Suppliers;
+import com.seed._enum.resources.headers.HeadersClient;
 import com.seed._enum.resources.inlinedrequest.InlinedRequestClient;
 import com.seed._enum.resources.pathparam.PathParamClient;
 import com.seed._enum.resources.queryparam.QueryParamClient;
@@ -12,6 +13,8 @@ import java.util.function.Supplier;
 
 public class SeedEnumClient {
     protected final ClientOptions clientOptions;
+
+    protected final Supplier<HeadersClient> headersClient;
 
     protected final Supplier<InlinedRequestClient> inlinedRequestClient;
 
@@ -21,9 +24,14 @@ public class SeedEnumClient {
 
     public SeedEnumClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.headersClient = Suppliers.memoize(() -> new HeadersClient(clientOptions));
         this.inlinedRequestClient = Suppliers.memoize(() -> new InlinedRequestClient(clientOptions));
         this.pathParamClient = Suppliers.memoize(() -> new PathParamClient(clientOptions));
         this.queryParamClient = Suppliers.memoize(() -> new QueryParamClient(clientOptions));
+    }
+
+    public HeadersClient headers() {
+        return this.headersClient.get();
     }
 
     public InlinedRequestClient inlinedRequest() {

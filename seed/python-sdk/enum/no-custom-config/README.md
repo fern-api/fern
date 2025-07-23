@@ -25,8 +25,9 @@ from seed import SeedEnum
 client = SeedEnum(
     base_url="https://yourhost.com/path/to/api",
 )
-client.inlined_request.send(
+client.headers.send(
     operand=">",
+    maybe_operand=">",
     operand_or_color="red",
 )
 ```
@@ -46,8 +47,9 @@ client = AsyncSeedEnum(
 
 
 async def main() -> None:
-    await client.inlined_request.send(
+    await client.headers.send(
         operand=">",
+        maybe_operand=">",
         operand_or_color="red",
     )
 
@@ -64,7 +66,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.inlined_request.send(...)
+    client.headers.send(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -83,7 +85,7 @@ from seed import SeedEnum
 client = SeedEnum(
     ...,
 )
-response = client.inlined_request.with_raw_response.send(...)
+response = client.headers.with_raw_response.send(...)
 print(response.headers)  # access the response headers
 print(response.data)  # access the underlying object
 ```
@@ -103,7 +105,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.inlined_request.send(..., request_options={
+client.headers.send(..., request_options={
     "max_retries": 1
 })
 ```
@@ -123,7 +125,7 @@ client = SeedEnum(
 
 
 # Override timeout for a specific method
-client.inlined_request.send(..., request_options={
+client.headers.send(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

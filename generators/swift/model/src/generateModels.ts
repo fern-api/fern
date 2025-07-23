@@ -10,7 +10,13 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
         const file = typeDeclaration.shape._visit<SwiftFile | undefined>({
             alias: () => undefined,
             enum: (etd) => new StringEnumGenerator(typeDeclaration, etd).generate(),
-            object: (otd) => new ObjectGenerator(typeDeclaration, otd).generate(),
+            object: (otd) =>
+                new ObjectGenerator(
+                    typeDeclaration.name.name.pascalCase.unsafeName,
+                    "schema",
+                    otd.properties,
+                    otd.extendedProperties
+                ).generate(),
             undiscriminatedUnion: () => undefined,
             union: () => undefined,
             _other: () => undefined

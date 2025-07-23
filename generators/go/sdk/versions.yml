@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.5.1
+  changelogEntry:
+    - summary: |
+        Enum headers are now correctly serialized in API requests. When an endpoint specifies an enum type for a header
+        parameter, the SDK will automatically serialize the enum value to its string representation as expected by the API.
+      type: fix
+  createdAt: '2025-07-21'
+  irVersion: 58
+
 - version: 1.5.0
   changelogEntry:
     - summary: |

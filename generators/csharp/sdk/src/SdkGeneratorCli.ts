@@ -131,6 +131,11 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
 
         Object.entries(context.ir.subpackages).forEach(([_, subpackage]) => {
             const service = subpackage.service != null ? context.getHttpServiceOrThrow(subpackage.service) : undefined;
+            // skip subpackages that have no endpoints (recursively)
+            if (!context.subPackageHasEndpoints(subpackage)) {
+                return;
+            }
+
             const subClient = new SubPackageClientGenerator({
                 context,
                 subpackage,
