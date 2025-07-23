@@ -37,6 +37,8 @@ export class ObjectGenerator {
                 return RelativeFilePath.of("Requests");
             default:
                 assertNever(this.objectType);
+                // This line will never be reached, but TypeScript requires a return statement
+                return RelativeFilePath.of("");
         }
     }
 
