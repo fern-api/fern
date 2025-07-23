@@ -83,7 +83,7 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
             MethodSpec endpointWithRequestOptions) {
 
         StringBuilder params = new StringBuilder();
-        
+
         for (ParameterSpec param : byteArrayBaseMethodSpec.parameters) {
             if (!param.equals(requestParameterSpec)) {
                 if (params.length() > 0) {
@@ -92,12 +92,12 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
                 params.append(param.name);
             }
         }
-        
+
         if (params.length() > 0) {
             params.append(", ");
         }
         params.append("new $T($L)");
-        
+
         return methodBodyBuilder
                 .add(
                         "return $L(" + params.toString(),

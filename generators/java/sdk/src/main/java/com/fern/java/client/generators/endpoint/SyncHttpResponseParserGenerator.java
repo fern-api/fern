@@ -71,9 +71,9 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
             MethodSpec byteArrayBaseMethodSpec,
             ParameterSpec requestParameterSpec,
             MethodSpec endpointWithRequestOptions) {
-                
+
         StringBuilder params = new StringBuilder();
-        
+
         for (ParameterSpec param : byteArrayBaseMethodSpec.parameters) {
             if (!param.equals(requestParameterSpec)) {
                 if (params.length() > 0) {
@@ -82,12 +82,12 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
                 params.append(param.name);
             }
         }
-        
+
         if (params.length() > 0) {
             params.append(", ");
         }
         params.append("new $T($L)");
-        
+
         return methodBodyBuilder
                 .add(
                         "return $L(" + params.toString(),
