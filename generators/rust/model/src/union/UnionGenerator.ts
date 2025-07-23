@@ -1,9 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
-import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
-
+import { Attribute, rust } from "@fern-api/rust-codegen";
 import { SingleUnionType, TypeDeclaration, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
-
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference";
 import {
     isCollectionType,

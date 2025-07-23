@@ -77,13 +77,17 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         if (Object.keys(context.ir.types).length > 0) {
             const modelFiles = generateModels({ context: context.toModelGeneratorContext() });
             // Place type files in types/ directory
-            const typeFiles = modelFiles.map(file => new RustFile({
-                filename: file.filename,
-                directory: RelativeFilePath.of("src/types"),
-                fileContents: typeof file.fileContents === 'string' ? file.fileContents : file.fileContents.toString()
-            }));
+            const typeFiles = modelFiles.map(
+                (file) =>
+                    new RustFile({
+                        filename: file.filename,
+                        directory: RelativeFilePath.of("src/types"),
+                        fileContents:
+                            typeof file.fileContents === "string" ? file.fileContents : file.fileContents.toString()
+                    })
+            );
             files.push(...typeFiles);
-            
+
             // Create a types module file that exports all generated types
             const typesModContent = this.generateTypesModRs(context);
             const typesModFile = new RustFile({
@@ -181,22 +185,18 @@ impl ${clientName} {
         await context.generatorAgent.pushToGitHub({ context });
     }
 
-
-
     private generateTypesModRs(context: SdkGeneratorContext): string {
         let content = "// Generated types module\n\n";
-        
+
         // Export all generated type files
         for (const [_typeId, typeDeclaration] of Object.entries(context.ir.types)) {
             const moduleName = typeDeclaration.name.name.snakeCase.unsafeName;
             content += `pub mod ${moduleName};\n`;
             content += `pub use ${moduleName}::*;\n`;
         }
-        
+
         return content;
     }
-
-
 
     private generateServiceRs(
         context: SdkGeneratorContext,

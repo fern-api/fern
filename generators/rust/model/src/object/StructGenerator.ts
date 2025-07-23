@@ -79,7 +79,7 @@ export class StructGenerator {
 
         // Add imports for parent types
         if (this.objectTypeDeclaration.extends.length > 0) {
-            this.objectTypeDeclaration.extends.forEach(parentType => {
+            this.objectTypeDeclaration.extends.forEach((parentType) => {
                 const parentTypeName = parentType.name.pascalCase.unsafeName;
                 writer.writeLine(`use crate::types::${parentType.name.snakeCase.unsafeName}::${parentTypeName};`);
             });
@@ -88,12 +88,14 @@ export class StructGenerator {
 
     private generateStructForTypeDeclaration(): rust.Struct {
         const fields: rust.Field[] = [];
-        
+
         // Add inheritance fields first (with serde flatten)
         fields.push(...this.generateInheritanceFields());
-        
+
         // Add regular properties
-        fields.push(...this.objectTypeDeclaration.properties.map((property) => this.generateRustFieldForProperty(property)));
+        fields.push(
+            ...this.objectTypeDeclaration.properties.map((property) => this.generateRustFieldForProperty(property))
+        );
 
         return rust.struct({
             name: this.typeDeclaration.name.name.pascalCase.unsafeName,
@@ -127,19 +129,21 @@ export class StructGenerator {
 
     private generateInheritanceFields(): rust.Field[] {
         const fields: rust.Field[] = [];
-        
+
         // Generate fields for inherited types using serde flatten
-        this.objectTypeDeclaration.extends.forEach(parentType => {
+        this.objectTypeDeclaration.extends.forEach((parentType) => {
             const parentTypeName = parentType.name.pascalCase.unsafeName;
-            
-            fields.push(rust.field({
-                name: `${parentType.name.snakeCase.unsafeName}_fields`,
-                type: rust.Type.reference(rust.reference({ name: parentTypeName })),
-                visibility: PUBLIC,
-                attributes: [Attribute.serde.flatten()]
-            }));
+
+            fields.push(
+                rust.field({
+                    name: `${parentType.name.snakeCase.unsafeName}_fields`,
+                    type: rust.Type.reference(rust.reference({ name: parentTypeName })),
+                    visibility: PUBLIC,
+                    attributes: [Attribute.serde.flatten()]
+                })
+            );
         });
-        
+
         return fields;
     }
 
