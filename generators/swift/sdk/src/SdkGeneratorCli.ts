@@ -1,8 +1,4 @@
-import { readFile } from "node:fs/promises";
-import { dirname, resolve } from "node:path";
-
 import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { RelativeFilePath, getAllFilesInDirectoryRelative, getFilename } from "@fern-api/fs-utils";
 import { AbstractSwiftGeneratorCli, SwiftFile } from "@fern-api/swift-base";
 import { generateInlinedRequestModels, generateModels } from "@fern-api/swift-model";
 
@@ -62,8 +58,8 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         const files: SwiftFile[] = [];
 
         // Core/**/*.swift and Public/**/*.swift
-        const staticFiles = await this.generateStaticFiles();
-        files.push(...staticFiles);
+        // const staticFiles = await this.generateStaticFiles();
+        // files.push(...staticFiles);
 
         // Resources/**/*.swift
         Object.entries(context.ir.subpackages).forEach(([_, subpackage]) => {
@@ -96,24 +92,24 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         return files;
     }
 
-    private async generateStaticFiles(): Promise<SwiftFile[]> {
-        const pathToStaticDir = resolve(__dirname, "../static");
-        const relativeFilePathStrings = await getAllFilesInDirectoryRelative(pathToStaticDir);
-        return Promise.all(
-            relativeFilePathStrings.map(async (relativeFilePathString) => {
-                const relativeFilePath = RelativeFilePath.of(relativeFilePathString);
-                const filename = getFilename(relativeFilePath);
-                if (filename == null) {
-                    throw new Error(`Static file name is nullish for '${relativeFilePathString}'`);
-                }
-                const absoluteFilePath = resolve(pathToStaticDir, relativeFilePathString);
-                const fileContents = await readFile(absoluteFilePath, "utf-8");
-                return new SwiftFile({
-                    filename,
-                    directory: RelativeFilePath.of(dirname(relativeFilePathString)),
-                    fileContents
-                });
-            })
-        );
-    }
+    // private async generateStaticFiles(): Promise<SwiftFile[]> {
+    //     const pathToStaticDir = resolve(__dirname, "../static");
+    //     const relativeFilePathStrings = await getAllFilesInDirectoryRelative(pathToStaticDir);
+    //     return Promise.all(
+    //         relativeFilePathStrings.map(async (relativeFilePathString) => {
+    //             const relativeFilePath = RelativeFilePath.of(relativeFilePathString);
+    //             const filename = getFilename(relativeFilePath);
+    //             if (filename == null) {
+    //                 throw new Error(`Static file name is nullish for '${relativeFilePathString}'`);
+    //             }
+    //             const absoluteFilePath = resolve(pathToStaticDir, relativeFilePathString);
+    //             const fileContents = await readFile(absoluteFilePath, "utf-8");
+    //             return new SwiftFile({
+    //                 filename,
+    //                 directory: RelativeFilePath.of(dirname(relativeFilePathString)),
+    //                 fileContents
+    //             });
+    //         })
+    //     );
+    // }
 }
