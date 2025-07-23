@@ -2,12 +2,189 @@
 
 package enum
 
+import (
+	fmt "fmt"
+)
+
 // Tests enum name and value can be
 // different.
 type Operand string
 
+const (
+	OperandGreaterThan = ">"
+	OperandEqualTo     = "="
+	OperandLessThan    = "less_than"
+)
+
+func NewOperandFromString(s string) (Operand, error) {
+	switch s {
+	case ">":
+		return OperandGreaterThan, nil
+	case "=":
+		return OperandEqualTo, nil
+	case "less_than":
+		return OperandLessThan, nil
+	}
+	var t Operand
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (o Operand) Ptr() *Operand {
+	return &o
+}
+
 type Color string
+
+const (
+	ColorRed  = "red"
+	ColorBlue = "blue"
+)
+
+func NewColorFromString(s string) (Color, error) {
+	switch s {
+	case "red":
+		return ColorRed, nil
+	case "blue":
+		return ColorBlue, nil
+	}
+	var t Color
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c Color) Ptr() *Color {
+	return &c
+}
 
 type EnumWithCustom string
 
+const (
+	EnumWithCustomSafe   = "safe"
+	EnumWithCustomCustom = "Custom"
+)
+
+func NewEnumWithCustomFromString(s string) (EnumWithCustom, error) {
+	switch s {
+	case "safe":
+		return EnumWithCustomSafe, nil
+	case "Custom":
+		return EnumWithCustomCustom, nil
+	}
+	var t EnumWithCustom
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EnumWithCustom) Ptr() *EnumWithCustom {
+	return &e
+}
+
 type SpecialEnum string
+
+const (
+	SpecialEnumA  = ""
+	SpecialEnumB  = `Hello \"World\"`
+	SpecialEnumC  = "Hello 'World'"
+	SpecialEnumD  = "Hello\\World"
+	SpecialEnumE  = "Hello\nWorld"
+	SpecialEnumF  = "Hello\rWorld"
+	SpecialEnumH  = "Hello\tWorld"
+	SpecialEnumI  = "Hello\fWorld"
+	SpecialEnumJ  = "Hello\u0008World"
+	SpecialEnumK  = "Hello\vWorld"
+	SpecialEnumL  = "Hello\x00World"
+	SpecialEnumM  = "Hello\u0007World"
+	SpecialEnumN  = "Hello\u0001World"
+	SpecialEnumO  = "Hello\u0002World"
+	SpecialEnumP  = "Hello\u001FWorld"
+	SpecialEnumQ  = "Hello\u007FWorld"
+	SpecialEnumR  = "Hello\u009FWorld"
+	SpecialEnumS  = `Line 1\n"Quote"\tTab\\Backslash\r\nLine 2\0Null`
+	SpecialEnumT  = "\n\r\t\x00\u0008\f\v\u0007"
+	SpecialEnumU  = "Hello 世界"
+	SpecialEnumV  = "café"
+	SpecialEnumW  = "🚀"
+	SpecialEnumX  = "\\n"
+	SpecialEnumY  = "\\"
+	SpecialEnumZ  = `{"name": "John", "age": 30, "city": "New York"}`
+	SpecialEnumAa = "SELECT * FROM users WHERE name = 'John O\\'Reilly'"
+	SpecialEnumBb = "C:\\Users\\John\\Documents\\file.txt"
+	SpecialEnumCc = "/usr/local/bin/app"
+	SpecialEnumDd = "\\d{3}-\\d{2}-\\d{4}"
+	SpecialEnumEe = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"
+	SpecialEnumFf = `transcript[transcriptType="final"]`
+	SpecialEnumGg = "transcript[transcriptType='final']"
+)
+
+func NewSpecialEnumFromString(s string) (SpecialEnum, error) {
+	switch s {
+	case "":
+		return SpecialEnumA, nil
+	case `Hello \"World\"`:
+		return SpecialEnumB, nil
+	case "Hello 'World'":
+		return SpecialEnumC, nil
+	case "Hello\\World":
+		return SpecialEnumD, nil
+	case "Hello\nWorld":
+		return SpecialEnumE, nil
+	case "Hello\rWorld":
+		return SpecialEnumF, nil
+	case "Hello\tWorld":
+		return SpecialEnumH, nil
+	case "Hello\fWorld":
+		return SpecialEnumI, nil
+	case "Hello\u0008World":
+		return SpecialEnumJ, nil
+	case "Hello\vWorld":
+		return SpecialEnumK, nil
+	case "Hello\x00World":
+		return SpecialEnumL, nil
+	case "Hello\u0007World":
+		return SpecialEnumM, nil
+	case "Hello\u0001World":
+		return SpecialEnumN, nil
+	case "Hello\u0002World":
+		return SpecialEnumO, nil
+	case "Hello\u001FWorld":
+		return SpecialEnumP, nil
+	case "Hello\u007FWorld":
+		return SpecialEnumQ, nil
+	case "Hello\u009FWorld":
+		return SpecialEnumR, nil
+	case `Line 1\n"Quote"\tTab\\Backslash\r\nLine 2\0Null`:
+		return SpecialEnumS, nil
+	case "\n\r\t\x00\u0008\f\v\u0007":
+		return SpecialEnumT, nil
+	case "Hello 世界":
+		return SpecialEnumU, nil
+	case "café":
+		return SpecialEnumV, nil
+	case "🚀":
+		return SpecialEnumW, nil
+	case "\\n":
+		return SpecialEnumX, nil
+	case "\\":
+		return SpecialEnumY, nil
+	case `{"name": "John", "age": 30, "city": "New York"}`:
+		return SpecialEnumZ, nil
+	case "SELECT * FROM users WHERE name = 'John O\\'Reilly'":
+		return SpecialEnumAa, nil
+	case "C:\\Users\\John\\Documents\\file.txt":
+		return SpecialEnumBb, nil
+	case "/usr/local/bin/app":
+		return SpecialEnumCc, nil
+	case "\\d{3}-\\d{2}-\\d{4}":
+		return SpecialEnumDd, nil
+	case "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}":
+		return SpecialEnumEe, nil
+	case `transcript[transcriptType="final"]`:
+		return SpecialEnumFf, nil
+	case "transcript[transcriptType='final']":
+		return SpecialEnumGg, nil
+	}
+	var t SpecialEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (s SpecialEnum) Ptr() *SpecialEnum {
+	return &s
+}

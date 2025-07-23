@@ -2,4 +2,34 @@
 
 package types
 
+import (
+	fmt "fmt"
+)
+
 type WeatherReport string
+
+const (
+	WeatherReportSunny   = "SUNNY"
+	WeatherReportCloudy  = "CLOUDY"
+	WeatherReportRaining = "RAINING"
+	WeatherReportSnowing = "SNOWING"
+)
+
+func NewWeatherReportFromString(s string) (WeatherReport, error) {
+	switch s {
+	case "SUNNY":
+		return WeatherReportSunny, nil
+	case "CLOUDY":
+		return WeatherReportCloudy, nil
+	case "RAINING":
+		return WeatherReportRaining, nil
+	case "SNOWING":
+		return WeatherReportSnowing, nil
+	}
+	var t WeatherReport
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (w WeatherReport) Ptr() *WeatherReport {
+	return &w
+}

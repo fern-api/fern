@@ -2,6 +2,74 @@
 
 package pagination
 
+import (
+	fmt "fmt"
+)
+
 type MultipleFilterSearchRequestOperator string
 
+const (
+	MultipleFilterSearchRequestOperatorAnd = "AND"
+	MultipleFilterSearchRequestOperatorOr  = "OR"
+)
+
+func NewMultipleFilterSearchRequestOperatorFromString(s string) (MultipleFilterSearchRequestOperator, error) {
+	switch s {
+	case "AND":
+		return MultipleFilterSearchRequestOperatorAnd, nil
+	case "OR":
+		return MultipleFilterSearchRequestOperatorOr, nil
+	}
+	var t MultipleFilterSearchRequestOperator
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (m MultipleFilterSearchRequestOperator) Ptr() *MultipleFilterSearchRequestOperator {
+	return &m
+}
+
 type SingleFilterSearchRequestOperator string
+
+const (
+	SingleFilterSearchRequestOperatorEquals         = "="
+	SingleFilterSearchRequestOperatorNotEquals      = "!="
+	SingleFilterSearchRequestOperatorIn             = "IN"
+	SingleFilterSearchRequestOperatorNotIn          = "NIN"
+	SingleFilterSearchRequestOperatorLessThan       = "<"
+	SingleFilterSearchRequestOperatorGreaterThan    = ">"
+	SingleFilterSearchRequestOperatorContains       = "~"
+	SingleFilterSearchRequestOperatorDoesNotContain = "!~"
+	SingleFilterSearchRequestOperatorStartsWith     = "^"
+	SingleFilterSearchRequestOperatorEndsWith       = "$"
+)
+
+func NewSingleFilterSearchRequestOperatorFromString(s string) (SingleFilterSearchRequestOperator, error) {
+	switch s {
+	case "=":
+		return SingleFilterSearchRequestOperatorEquals, nil
+	case "!=":
+		return SingleFilterSearchRequestOperatorNotEquals, nil
+	case "IN":
+		return SingleFilterSearchRequestOperatorIn, nil
+	case "NIN":
+		return SingleFilterSearchRequestOperatorNotIn, nil
+	case "<":
+		return SingleFilterSearchRequestOperatorLessThan, nil
+	case ">":
+		return SingleFilterSearchRequestOperatorGreaterThan, nil
+	case "~":
+		return SingleFilterSearchRequestOperatorContains, nil
+	case "!~":
+		return SingleFilterSearchRequestOperatorDoesNotContain, nil
+	case "^":
+		return SingleFilterSearchRequestOperatorStartsWith, nil
+	case "$":
+		return SingleFilterSearchRequestOperatorEndsWith, nil
+	}
+	var t SingleFilterSearchRequestOperator
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (s SingleFilterSearchRequestOperator) Ptr() *SingleFilterSearchRequestOperator {
+	return &s
+}

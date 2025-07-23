@@ -2,4 +2,28 @@
 
 package pagination
 
+import (
+	fmt "fmt"
+)
+
 type Order string
+
+const (
+	OrderAsc  = "asc"
+	OrderDesc = "desc"
+)
+
+func NewOrderFromString(s string) (Order, error) {
+	switch s {
+	case "asc":
+		return OrderAsc, nil
+	case "desc":
+		return OrderDesc, nil
+	}
+	var t Order
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (o Order) Ptr() *Order {
+	return &o
+}

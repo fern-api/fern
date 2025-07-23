@@ -2,8 +2,78 @@
 
 package examples
 
+import (
+	fmt "fmt"
+)
+
 type BasicType string
+
+const (
+	BasicTypePrimitive = "primitive"
+	BasicTypeLiteral   = "literal"
+)
+
+func NewBasicTypeFromString(s string) (BasicType, error) {
+	switch s {
+	case "primitive":
+		return BasicTypePrimitive, nil
+	case "literal":
+		return BasicTypeLiteral, nil
+	}
+	var t BasicType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (b BasicType) Ptr() *BasicType {
+	return &b
+}
 
 type ComplexType string
 
+const (
+	ComplexTypeObject  = "object"
+	ComplexTypeUnion   = "union"
+	ComplexTypeUnknown = "unknown"
+)
+
+func NewComplexTypeFromString(s string) (ComplexType, error) {
+	switch s {
+	case "object":
+		return ComplexTypeObject, nil
+	case "union":
+		return ComplexTypeUnion, nil
+	case "unknown":
+		return ComplexTypeUnknown, nil
+	}
+	var t ComplexType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ComplexType) Ptr() *ComplexType {
+	return &c
+}
+
 type MigrationStatus string
+
+const (
+	MigrationStatusRunning  = "RUNNING"
+	MigrationStatusFailed   = "FAILED"
+	MigrationStatusFinished = "FINISHED"
+)
+
+func NewMigrationStatusFromString(s string) (MigrationStatus, error) {
+	switch s {
+	case "RUNNING":
+		return MigrationStatusRunning, nil
+	case "FAILED":
+		return MigrationStatusFailed, nil
+	case "FINISHED":
+		return MigrationStatusFinished, nil
+	}
+	var t MigrationStatus
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (m MigrationStatus) Ptr() *MigrationStatus {
+	return &m
+}

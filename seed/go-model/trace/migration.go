@@ -2,4 +2,31 @@
 
 package trace
 
+import (
+	fmt "fmt"
+)
+
 type MigrationStatus string
+
+const (
+	MigrationStatusRunning  = "RUNNING"
+	MigrationStatusFailed   = "FAILED"
+	MigrationStatusFinished = "FINISHED"
+)
+
+func NewMigrationStatusFromString(s string) (MigrationStatus, error) {
+	switch s {
+	case "RUNNING":
+		return MigrationStatusRunning, nil
+	case "FAILED":
+		return MigrationStatusFailed, nil
+	case "FINISHED":
+		return MigrationStatusFinished, nil
+	}
+	var t MigrationStatus
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (m MigrationStatus) Ptr() *MigrationStatus {
+	return &m
+}

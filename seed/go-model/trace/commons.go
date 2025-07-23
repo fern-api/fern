@@ -2,4 +2,31 @@
 
 package trace
 
+import (
+	fmt "fmt"
+)
+
 type Language string
+
+const (
+	LanguageJava       = "JAVA"
+	LanguageJavascript = "JAVASCRIPT"
+	LanguagePython     = "PYTHON"
+)
+
+func NewLanguageFromString(s string) (Language, error) {
+	switch s {
+	case "JAVA":
+		return LanguageJava, nil
+	case "JAVASCRIPT":
+		return LanguageJavascript, nil
+	case "PYTHON":
+		return LanguagePython, nil
+	}
+	var t Language
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (l Language) Ptr() *Language {
+	return &l
+}

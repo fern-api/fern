@@ -2,4 +2,28 @@
 
 package trace
 
+import (
+	fmt "fmt"
+)
+
 type ReservedKeywordEnum string
+
+const (
+	ReservedKeywordEnumIs = "is"
+	ReservedKeywordEnumAs = "as"
+)
+
+func NewReservedKeywordEnumFromString(s string) (ReservedKeywordEnum, error) {
+	switch s {
+	case "is":
+		return ReservedKeywordEnumIs, nil
+	case "as":
+		return ReservedKeywordEnumAs, nil
+	}
+	var t ReservedKeywordEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (r ReservedKeywordEnum) Ptr() *ReservedKeywordEnum {
+	return &r
+}

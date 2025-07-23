@@ -2,6 +2,80 @@
 
 package endpoints
 
+import (
+	fmt "fmt"
+)
+
 type ErrorCategory string
 
+const (
+	ErrorCategoryApiError            = "API_ERROR"
+	ErrorCategoryAuthenticationError = "AUTHENTICATION_ERROR"
+	ErrorCategoryInvalidRequestError = "INVALID_REQUEST_ERROR"
+)
+
+func NewErrorCategoryFromString(s string) (ErrorCategory, error) {
+	switch s {
+	case "API_ERROR":
+		return ErrorCategoryApiError, nil
+	case "AUTHENTICATION_ERROR":
+		return ErrorCategoryAuthenticationError, nil
+	case "INVALID_REQUEST_ERROR":
+		return ErrorCategoryInvalidRequestError, nil
+	}
+	var t ErrorCategory
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e ErrorCategory) Ptr() *ErrorCategory {
+	return &e
+}
+
 type ErrorCode string
+
+const (
+	ErrorCodeInternalServerError = "INTERNAL_SERVER_ERROR"
+	ErrorCodeUnauthorized        = "UNAUTHORIZED"
+	ErrorCodeForbidden           = "FORBIDDEN"
+	ErrorCodeBadRequest          = "BAD_REQUEST"
+	ErrorCodeConflict            = "CONFLICT"
+	ErrorCodeGone                = "GONE"
+	ErrorCodeUnprocessableEntity = "UNPROCESSABLE_ENTITY"
+	ErrorCodeNotImplemented      = "NOT_IMPLEMENTED"
+	ErrorCodeBadGateway          = "BAD_GATEWAY"
+	ErrorCodeServiceUnavailable  = "SERVICE_UNAVAILABLE"
+	ErrorCodeUnknown             = "Unknown"
+)
+
+func NewErrorCodeFromString(s string) (ErrorCode, error) {
+	switch s {
+	case "INTERNAL_SERVER_ERROR":
+		return ErrorCodeInternalServerError, nil
+	case "UNAUTHORIZED":
+		return ErrorCodeUnauthorized, nil
+	case "FORBIDDEN":
+		return ErrorCodeForbidden, nil
+	case "BAD_REQUEST":
+		return ErrorCodeBadRequest, nil
+	case "CONFLICT":
+		return ErrorCodeConflict, nil
+	case "GONE":
+		return ErrorCodeGone, nil
+	case "UNPROCESSABLE_ENTITY":
+		return ErrorCodeUnprocessableEntity, nil
+	case "NOT_IMPLEMENTED":
+		return ErrorCodeNotImplemented, nil
+	case "BAD_GATEWAY":
+		return ErrorCodeBadGateway, nil
+	case "SERVICE_UNAVAILABLE":
+		return ErrorCodeServiceUnavailable, nil
+	case "Unknown":
+		return ErrorCodeUnknown, nil
+	}
+	var t ErrorCode
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e ErrorCode) Ptr() *ErrorCode {
+	return &e
+}

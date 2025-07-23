@@ -2,4 +2,31 @@
 
 package validation
 
+import (
+	fmt "fmt"
+)
+
 type Shape string
+
+const (
+	ShapeSquare   = "SQUARE"
+	ShapeCircle   = "CIRCLE"
+	ShapeTriangle = "TRIANGLE"
+)
+
+func NewShapeFromString(s string) (Shape, error) {
+	switch s {
+	case "SQUARE":
+		return ShapeSquare, nil
+	case "CIRCLE":
+		return ShapeCircle, nil
+	case "TRIANGLE":
+		return ShapeTriangle, nil
+	}
+	var t Shape
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (s Shape) Ptr() *Shape {
+	return &s
+}
