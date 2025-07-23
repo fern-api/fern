@@ -2056,6 +2056,9 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.57.1
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
       prettier:
         specifier: ^3.4.2
         version: 3.5.3
