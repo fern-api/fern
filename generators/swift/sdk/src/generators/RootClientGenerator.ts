@@ -51,7 +51,7 @@ export class RootClientGenerator {
         });
         const fileContents = swiftClass.toString();
         return new SwiftFile({
-            filename: "Client.swift",
+            filename: `${this.projectNamePascalCase}Client.swift`,
             directory: RelativeFilePath.of(""),
             fileContents
         });
