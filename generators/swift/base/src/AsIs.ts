@@ -1,34 +1,36 @@
 import { readFile } from "node:fs/promises";
-import { resolve } from "node:path";
+import path from "node:path";
 
 import { entries } from "@fern-api/core-utils";
+import { RelativeFilePath, getFilename } from "@fern-api/fs-utils";
 
 export const AsIsFileNames = {
     // Core/Networking
-    Http: "HTTP.swift",
-    HttpClient: "HTTPClient.swift",
-    QueryParameter: "QueryParameter.swift",
+    Http: "Core/Networking/HTTP.swift",
+    HttpClient: "Core/Networking/HTTPClient.swift",
+    QueryParameter: "Core/Networking/QueryParameter.swift",
 
     // Core/Serde
-    DecoderPlusAdditionalProperties: "Decoder+AdditionalProperties.swift",
-    EncoderPlusAdditionalProperties: "Encoder+AdditionalProperties.swift",
-    Serde: "Serde.swift",
-    StringKey: "StringKey.swift",
+    DecoderPlusAdditionalProperties: "Core/Serde/Decoder+AdditionalProperties.swift",
+    EncoderPlusAdditionalProperties: "Core/Serde/Encoder+AdditionalProperties.swift",
+    Serde: "Core/Serde/Serde.swift",
+    StringKey: "Core/Serde/StringKey.swift",
 
     // Core
-    Prelude: "Prelude.swift",
-    StringPlusUrlEncoding: "String+URLEncoding.swift",
+    Prelude: "Core/Prelude.swift",
+    StringPlusUrlEncoding: "Core/String+URLEncoding.swift",
 
     // Public
-    APIErrorResponse: "APIErrorResponse.swift",
-    ClientConfig: "ClientConfig.swift",
-    ClientError: "ClientError.swift",
-    JsonValue: "JSONValue.swift",
-    RequestOptions: "RequestOptions.swift"
+    APIErrorResponse: "Public/APIErrorResponse.swift",
+    ClientConfig: "Public/ClientConfig.swift",
+    ClientError: "Public/ClientError.swift",
+    JsonValue: "Public/JSONValue.swift",
+    RequestOptions: "Public/RequestOptions.swift"
 };
 
 export interface AsIsFileDefinition {
     filename: string;
+    directory: RelativeFilePath;
     loadContents: () => Promise<string>;
 }
 
@@ -43,11 +45,16 @@ export const AsIsFiles = createAsIsFiles();
 function createAsIsFiles(): AsIsFileDefinitionsById {
     const result = {} as AsIsFileDefinitionsById;
 
-    for (const [key, filename] of entries(AsIsFileNames)) {
+    for (const [key, relativePathToFile] of entries(AsIsFileNames)) {
+        const filename = getFilename(RelativeFilePath.of(relativePathToFile));
+        if (filename === undefined) {
+            throw new Error(`Missing filename for as is file '${relativePathToFile}'`);
+        }
         result[key] = {
             filename,
+            directory: RelativeFilePath.of(path.dirname(relativePathToFile)),
             loadContents: () => {
-                const absolutePath = resolve(__dirname, "../../asIs", filename);
+                const absolutePath = path.join(__dirname, "asIs", filename);
                 return readFile(absolutePath, "utf-8");
             }
         };
