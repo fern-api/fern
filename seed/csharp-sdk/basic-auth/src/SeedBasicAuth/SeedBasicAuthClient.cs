@@ -31,10 +31,7 @@ public partial class SeedBasicAuthClient
         }
         _client = new RawClient(clientOptions);
         BasicAuth = new BasicAuthClient(_client);
-        Errors = new ErrorsClient(_client);
     }
 
     public BasicAuthClient BasicAuth { get; }
-
-    public ErrorsClient Errors { get; }
 }

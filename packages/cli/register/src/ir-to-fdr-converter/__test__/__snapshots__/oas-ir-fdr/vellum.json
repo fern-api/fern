@@ -6299,6 +6299,33 @@
           }
         ]
       }
+    },
+    "sandboxes_delete_sandbox_scenario_Response_204": {
+      "description": "Empty response body",
+      "name": "sandboxes_delete_sandbox_scenario_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "submit-completion-actuals_Response_200": {
+      "description": "Empty response body",
+      "name": "submit-completion-actuals_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "test-suites_delete_test_suite_test_case_Response_204": {
+      "description": "Empty response body",
+      "name": "test-suites_delete_test_suite_test_case_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
     }
   },
   "subpackages": {
@@ -7903,6 +7930,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "sandboxes_delete_sandbox_scenario_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No response body"
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -7914,7 +7952,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -8119,6 +8162,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "test-suites_delete_test_suite_test_case_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No response body"
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -8130,7 +8184,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -9068,6 +9127,17 @@
             }
           }
         },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "id",
+              "value": "submit-completion-actuals_Response_200"
+            }
+          },
+          "statusCode": 200,
+          "description": "No response body"
+        },
         "errorsV2": [
           {
             "type": {
@@ -9129,7 +9199,12 @@
                 ]
               }
             },
-            "responseStatusCode": 200
+            "responseStatusCode": 200,
+            "responseBody": {},
+            "responseBodyV3": {
+              "type": "json",
+              "value": {}
+            }
           }
         ],
         "protocol": {

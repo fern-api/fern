@@ -1507,6 +1507,15 @@
         ]
       }
     },
+    "AppV1_DeleteApp_Response_204": {
+      "description": "Empty response body",
+      "name": "AppV1_DeleteApp_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "AuthV1_LoginAnonymous_Response_200": {
       "name": "AuthV1_LoginAnonymous_Response_200",
       "shape": {
@@ -1561,6 +1570,15 @@
         ]
       }
     },
+    "BuildV1_DeleteBuild_Response_204": {
+      "description": "Empty response body",
+      "name": "BuildV1_DeleteBuild_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "LobbyV2AppIdCreatePrivatePostRequestBodyContentApplicationJsonSchemaInitialConfig": {
       "name": "LobbyV2AppIdCreatePrivatePostRequestBodyContentApplicationJsonSchemaInitialConfig",
       "shape": {
@@ -1612,6 +1630,24 @@
     },
     "LobbyV2AppIdSetStateRoomIdPostRequestBodyContentApplicationJsonSchemaState": {
       "name": "LobbyV2AppIdSetStateRoomIdPostRequestBodyContentApplicationJsonSchemaState",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "RoomV1_DestroyRoom_Response_204": {
+      "description": "Empty response body",
+      "name": "RoomV1_DestroyRoom_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "RoomV1_SuspendRoom_Response_204": {
+      "description": "Empty response body",
+      "name": "RoomV1_SuspendRoom_Response_204",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2259,6 +2295,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "AppV1_DeleteApp_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No content"
+          },
           "errorsV2": [
             {
               "type": {
@@ -2300,7 +2347,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -3365,6 +3417,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "BuildV1_DeleteBuild_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No content"
+          },
           "errorsV2": [
             {
               "type": {
@@ -3422,7 +3485,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -7709,6 +7777,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "RoomV1_DestroyRoom_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No content"
+          },
           "errorsV2": [
             {
               "type": {
@@ -7751,7 +7830,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -7821,6 +7905,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "RoomV1_SuspendRoom_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No content"
+          },
           "errorsV2": [
             {
               "type": {
@@ -7863,7 +7958,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {

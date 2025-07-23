@@ -3404,6 +3404,15 @@
           }
         ]
       }
+    },
+    "transfers_deleteTransfer_Response_204": {
+      "description": "Empty response body",
+      "name": "transfers_deleteTransfer_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
     }
   },
   "subpackages": {
@@ -7640,6 +7649,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "transfers_deleteTransfer_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No Content. The operation succeeded but returned no response body."
+          },
           "errorsV2": [
             {
               "type": {
@@ -7703,7 +7723,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {

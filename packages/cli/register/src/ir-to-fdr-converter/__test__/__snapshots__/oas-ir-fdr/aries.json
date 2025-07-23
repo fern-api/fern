@@ -18578,6 +18578,15 @@
         ]
       }
     },
+    "revocation_download_tails_file_sparse_Response_200": {
+      "description": "Empty response body",
+      "name": "revocation_download_tails_file_sparse_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "TransactionsConnIdSetEndorserRolePostParametersTransactionMyJob": {
       "name": "TransactionsConnIdSetEndorserRolePostParametersTransactionMyJob",
       "shape": {
@@ -37670,6 +37679,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "revocation_download_tails_file_sparse_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "tails file"
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -37680,7 +37700,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {

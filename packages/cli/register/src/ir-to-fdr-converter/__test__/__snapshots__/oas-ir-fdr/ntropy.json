@@ -5105,6 +5105,51 @@
           }
         }
       }
+    },
+    "Transactions_delete_transaction_v3_transactions__id__delete_Response_204": {
+      "description": "Empty response body",
+      "name": "Transactions_delete_transaction_v3_transactions__id__delete_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Bank statements_delete_bank_statement_v3_bank_statements__id__delete_Response_204": {
+      "description": "Empty response body",
+      "name": "Bank statements_delete_bank_statement_v3_bank_statements__id__delete_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Account Holders_delete_account_holder_v3_account_holders__id__delete_Response_204": {
+      "description": "Empty response body",
+      "name": "Account Holders_delete_account_holder_v3_account_holders__id__delete_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Webhooks_delete_webhook_v3_webhooks__id__delete_Response_204": {
+      "description": "Empty response body",
+      "name": "Webhooks_delete_webhook_v3_webhooks__id__delete_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Reports_delete_report_v3_reports__id__delete_Response_204": {
+      "description": "Empty response body",
+      "name": "Reports_delete_report_v3_reports__id__delete_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
     }
   },
   "subpackages": {
@@ -5368,6 +5413,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Transactions_delete_transaction_v3_transactions__id__delete_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Deletion successful"
+          },
           "errorsV2": [
             {
               "type": {
@@ -5404,7 +5460,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -7254,6 +7315,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Bank statements_delete_bank_statement_v3_bank_statements__id__delete_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Deletion successful"
+          },
           "errorsV2": [
             {
               "type": {
@@ -7290,7 +7362,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -7777,6 +7854,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Account Holders_delete_account_holder_v3_account_holders__id__delete_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Deletion successful"
+          },
           "errorsV2": [
             {
               "type": {
@@ -7813,7 +7901,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -8660,6 +8753,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Webhooks_delete_webhook_v3_webhooks__id__delete_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Deletion successful"
+          },
           "errorsV2": [
             {
               "type": {
@@ -8696,7 +8800,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -9901,6 +10010,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Reports_delete_report_v3_reports__id__delete_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Deletion successful"
+          },
           "errorsV2": [
             {
               "type": {
@@ -9937,7 +10057,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {

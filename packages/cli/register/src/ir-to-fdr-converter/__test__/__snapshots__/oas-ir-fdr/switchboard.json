@@ -1745,6 +1745,33 @@
         ]
       }
     },
+    "Auth_andRedirect_Response_204": {
+      "description": "Empty response body",
+      "name": "Auth_andRedirect_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Extensions_delete_Response_204": {
+      "description": "Empty response body",
+      "name": "Extensions_delete_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Profiles_delete_Response_204": {
+      "description": "Empty response body",
+      "name": "Profiles_delete_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "SessionsGetParametersStatus": {
       "description": "status of the session to get",
       "name": "SessionsGetParametersStatus",
@@ -1764,6 +1791,15 @@
             "value": "ended"
           }
         ]
+      }
+    },
+    "Sessions_terminate_Response_204": {
+      "description": "Empty response body",
+      "name": "Sessions_terminate_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "SessionsEventsResponse2000": {
@@ -1962,6 +1998,17 @@
               }
             }
           ],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Auth_andRedirect_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No Content"
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -1970,7 +2017,12 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -2287,6 +2339,17 @@
             }
           ],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Extensions_delete_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No Content"
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -2297,7 +2360,12 @@
                 "name": "Widget"
               },
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -2832,6 +2900,17 @@
             }
           ],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Profiles_delete_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No Content"
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -2846,7 +2925,12 @@
                 ]
               },
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -3729,6 +3813,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Sessions_terminate_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No Content"
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -3739,7 +3834,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {

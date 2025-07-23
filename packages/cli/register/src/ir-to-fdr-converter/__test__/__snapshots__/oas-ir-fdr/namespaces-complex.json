@@ -428,6 +428,51 @@
         ]
       }
     },
+    "pet_deletePet_Response_200": {
+      "description": "Empty response body",
+      "name": "pet_deletePet_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "store_deleteOrder_Response_200": {
+      "description": "Empty response body",
+      "name": "store_deleteOrder_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "user_logoutUser_Response_200": {
+      "description": "Empty response body",
+      "name": "user_logoutUser_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "user_updateUser_Response_200": {
+      "description": "Empty response body",
+      "name": "user_updateUser_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "user_deleteUser_Response_200": {
+      "description": "Empty response body",
+      "name": "user_deleteUser_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "PetComplexFindByStatusGetParametersStatus": {
       "name": "PetComplexFindByStatusGetParametersStatus",
       "shape": {
@@ -1407,6 +1452,17 @@
               }
             }
           ],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "pet_deletePet_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "Pet deleted"
+          },
           "errorsV2": [
             {
               "type": {
@@ -1430,7 +1486,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -1939,6 +2000,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "store_deleteOrder_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "order deleted"
+          },
           "errorsV2": [
             {
               "type": {
@@ -1974,7 +2046,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -2324,6 +2401,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "user_logoutUser_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "successful operation"
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -2332,7 +2420,12 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -2526,6 +2619,17 @@
             },
             "description": "Update an existent user in the store"
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "user_updateUser_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "successful operation"
+          },
           "errorsV2": [
             {
               "type": {
@@ -2566,7 +2670,12 @@
                 "type": "json",
                 "value": {}
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -2621,6 +2730,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "user_deleteUser_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "User deleted"
+          },
           "errorsV2": [
             {
               "type": {
@@ -2656,7 +2776,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -3634,6 +3759,17 @@
               }
             }
           ],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "pet_deletePet_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "Pet deleted"
+          },
           "errorsV2": [
             {
               "type": {
@@ -3657,7 +3793,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -4723,6 +4864,17 @@
               }
             }
           ],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "pet_deletePet_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "Pet deleted"
+          },
           "errorsV2": [
             {
               "type": {
@@ -4746,7 +4898,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -5255,6 +5412,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "store_deleteOrder_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "order deleted"
+          },
           "errorsV2": [
             {
               "type": {
@@ -5290,7 +5458,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -5640,6 +5813,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "user_logoutUser_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "successful operation"
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -5648,7 +5832,12 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -5842,6 +6031,17 @@
             },
             "description": "Update an existent user in the store"
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "user_updateUser_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "successful operation"
+          },
           "errorsV2": [
             {
               "type": {
@@ -5882,7 +6082,12 @@
                 "type": "json",
                 "value": {}
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -5937,6 +6142,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "user_deleteUser_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "User deleted"
+          },
           "errorsV2": [
             {
               "type": {
@@ -5972,7 +6188,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
