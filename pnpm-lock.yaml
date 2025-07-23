@@ -9491,7 +9491,7 @@ importers:
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
 
   packages/commons/test-utils:
-    dependencies:
+    devDependencies:
       '@fern-api/cli-source-resolver':
         specifier: workspace:*
         version: link:../../cli/cli-source-resolver
@@ -9516,7 +9516,6 @@ importers:
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
         version: 58.2.0
-    devDependencies:
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
