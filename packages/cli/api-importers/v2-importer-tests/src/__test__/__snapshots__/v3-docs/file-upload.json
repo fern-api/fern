@@ -317,7 +317,8 @@
               }
             },
             "userSpecifiedExamples": {}
-          }
+          },
+          "v2Responses": {}
         },
         {
           "displayName": "Upload a list of files",
@@ -479,7 +480,8 @@
               }
             },
             "userSpecifiedExamples": {}
-          }
+          },
+          "v2Responses": {}
         },
         {
           "displayName": "Upload a file with a content type",
@@ -774,7 +776,8 @@
               }
             },
             "userSpecifiedExamples": {}
-          }
+          },
+          "v2Responses": {}
         }
       ]
     }

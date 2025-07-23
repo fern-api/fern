@@ -151,6 +151,7 @@ export function convertHttpService({
                     propertyResolver
                 }),
                 response: convertHttpResponse({ endpoint, file, typeResolver }),
+                v2Responses: undefined,
                 errors: [...convertResponseErrors({ errors: endpoint.errors, file }), ...globalErrors],
                 userSpecifiedExamples:
                     endpoint.examples != null
