@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Support multiple 2XX responses on http endpoints.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-23"
+  version: 0.65.27
+
+- changelogEntry:
+    - summary: |
         Support RBAC roles across products.
       type: feat
   irVersion: 58
