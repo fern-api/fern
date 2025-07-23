@@ -7,7 +7,15 @@ public final class AudiencesClient: Sendable {
     public let foo: FooClient
     private let config: ClientConfig
 
-    public init(baseURL: String = AudiencesEnvironment.default.rawValue, apiKey qpiKey: String, token: String? = nil, headers: [String: String]? = [:], timeout: Int? = nil, maxRetries: Int? = nil, urlSession: URLSession? = nil) {
+    public init(
+        baseURL: String = AudiencesEnvironment.default.rawValue,
+        apiKey qpiKey: String,
+        token: String? = nil,
+        headers: [String: String]? = [:],
+        timeout: Int? = nil,
+        maxRetries: Int? = nil,
+        urlSession: URLSession? = nil
+    ) {
         self.config = ClientConfig(
             baseURL: baseURL,
             apiKey: apiKey,

@@ -175,7 +175,8 @@ export class RootClientGenerator {
                         })
                     );
                 })
-            ])
+            ]),
+            multiline: true
         });
     }
 
