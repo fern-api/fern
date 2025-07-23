@@ -27,10 +27,8 @@ jobs:
           ref: main
           path: docs
 
-      - name: test docs update
-        run: |
-          cd docs/fern/products/sdks/overview/go/changelog
-          echo "this is a test" > 2025-07-23.mdx
+      - name: update go-sdk changelog
+        run: rsync -avu --delete "fern/pages/changelogs/go-sdk" "docs/fern/products/sdks/overview/go/changelog"
 
       - name: create PR
         id: cpr
