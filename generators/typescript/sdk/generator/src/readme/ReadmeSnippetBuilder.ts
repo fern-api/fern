@@ -31,6 +31,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static readonly PAGINATION_FEATURE_ID: FernGeneratorCli.FeatureId = "PAGINATION";
     private static readonly RAW_RESPONSES_FEATURE_ID: FernGeneratorCli.FeatureId = "ACCESS_RAW_RESPONSE_DATA";
     private static readonly ADDITIONAL_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_HEADERS";
+    private static readonly ADDITIONAL_QUERY_STRING_PARAMETERS_FEATURE_ID: FernGeneratorCli.FeatureId =
+        "ADDITIONAL_QUERY_STRING_PARAMETERS";
     public static readonly BINARY_RESPONSE_FEATURE_ID: FernGeneratorCli.FeatureId = "BINARY_RESPONSE";
     public static readonly FILE_UPLOAD_REQUEST_FEATURE_ID: FernGeneratorCli.FeatureId = "FILE_UPLOADS";
 
@@ -85,6 +87,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[ReadmeSnippetBuilder.BINARY_RESPONSE_FEATURE_ID] = this.buildBinaryResponseSnippet();
         snippets[ReadmeSnippetBuilder.RAW_RESPONSES_FEATURE_ID] = this.buildRawResponseSnippets();
         snippets[ReadmeSnippetBuilder.ADDITIONAL_HEADERS_FEATURE_ID] = this.buildAdditionalHeadersSnippets();
+        snippets[ReadmeSnippetBuilder.ADDITIONAL_QUERY_STRING_PARAMETERS_FEATURE_ID] =
+            this.buildAdditionalQueryStringParametersSnippets();
 
         if (this.isPaginationEnabled) {
             snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets();
@@ -220,6 +224,23 @@ console.log(rawResponse.headers['X-My-Header']);
 const response = await ${this.getMethodCall(headerEndpoint)}(..., {
     headers: {
         'X-Custom-Header': 'custom value'
+    }
+});
+`
+            )
+        );
+    }
+
+    private buildAdditionalQueryStringParametersSnippets(): string[] {
+        const queryStringEndpoints = this.getEndpointsForFeature(
+            ReadmeSnippetBuilder.ADDITIONAL_QUERY_STRING_PARAMETERS_FEATURE_ID
+        );
+        return queryStringEndpoints.map((queryStringEndpoint) =>
+            this.writeCode(
+                code`
+const response = await ${this.getMethodCall(queryStringEndpoint)}(..., {
+    queryParams: {
+        'customQueryParamKey': 'custom query param value'
     }
 });
 `

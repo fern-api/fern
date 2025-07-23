@@ -78,6 +78,18 @@ const response = await client.getRoot(..., {
 });
 ```
 
+### Additional Query String Parameters
+
+If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
+
+```typescript
+const response = await client.getRoot(..., {
+    queryParams: {
+        'customQueryParamKey': 'custom query param value'
+    }
+});
+```
+
 ### Retries
 
 The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
