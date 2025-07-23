@@ -30,6 +30,7 @@ export * from "./SdkRequest";
 export * from "./SdkRequestShape";
 export * from "./SdkRequestWrapper";
 export * from "./HttpResponse";
+export * from "./V2HttpResponses";
 export * from "./NonStreamHttpResponseBody";
 export * from "./HttpResponseBody";
 export * from "./JsonResponse";

@@ -58,7 +58,7 @@ types:
       requestBody: optional<HttpRequestBody>
       sdkRequest: optional<SdkRequest>
       response: optional<HttpResponse>
-      v2Responses: optional<list<HttpResponse>>
+      v2Responses: optional<V2HttpResponses>
       errors: ResponseErrors
       auth: boolean
       idempotent: boolean
@@ -254,6 +254,10 @@ types:
     properties:
       status-code: optional<integer>
       body: optional<HttpResponseBody>
+
+  V2HttpResponses:
+    properties:
+      responses: optional<list<HttpResponse>>
 
   NonStreamHttpResponseBody:
     union:
