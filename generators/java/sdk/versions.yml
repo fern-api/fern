@@ -1,3 +1,11 @@
+- version: 2.38.7
+  changelogEntry:
+    - summary: |
+        Swap InputStreamRequestBody arguments to match constructor
+      type: fix
+  createdAt: '2025-07-23'
+  irVersion: 58
+
 - version: 2.38.6
   changelogEntry:
     - summary: |
@@ -5,7 +13,7 @@
       type: fix
   createdAt: '2025-07-21'
   irVersion: 58
-
+  
 - version: 2.38.5
   changelogEntry:
     - summary: |
