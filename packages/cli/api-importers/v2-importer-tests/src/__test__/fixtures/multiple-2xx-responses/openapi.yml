@@ -1,0 +1,29 @@
+openapi: 3.1.0
+info:
+  title: Multiple 2xx Responses API
+  version: 1.0.0
+paths:
+  /status:
+    get:
+      operationId: getStatus
+      responses:
+        '200':
+          description: OK response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "All systems operational"
+        '201':
+          description: Created response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "New status created"
