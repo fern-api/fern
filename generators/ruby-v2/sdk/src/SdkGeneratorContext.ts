@@ -21,6 +21,29 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     }
 
     public getCoreAsIsFiles(): string[] {
-        return [AsIsFiles.ModelField, AsIsFiles.Model, AsIsFiles.Array];
+        const files = [
+            // Errors
+            AsIsFiles.ErrorsConstraint, AsIsFiles.ErrorsType, 
+            
+            // HTTP
+            AsIsFiles.HttpBaseRequest, AsIsFiles.HttpRawClient,
+
+            // JSON
+            AsIsFiles.JsonRequest, 
+            AsIsFiles.JsonSerializable, 
+            
+            // Multipart
+            AsIsFiles.MultipartEncoder, 
+            AsIsFiles.MultipartFormDataPart,
+            AsIsFiles.MultipartFormData, 
+            AsIsFiles.MultipartRequest, 
+            
+            // Types
+            AsIsFiles.TypesModelField, AsIsFiles.TypesArray,
+            AsIsFiles.TypesBoolean, AsIsFiles.TypesEnum, AsIsFiles.TypesHash, AsIsFiles.TypesModel, AsIsFiles.TypesType,
+            AsIsFiles.TypesUnion, AsIsFiles.TypesUnknown, AsIsFiles.TypesUtils
+        ];
+
+        return files;
     }
 }

@@ -19,4 +19,7 @@ export abstract class AbstractRubyGeneratorContext<
     ) {
         super(config, generatorNotificationService);
     }
+
+    public abstract getCoreAsIsFiles(): string[];
+    
 }

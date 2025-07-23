@@ -4,7 +4,7 @@ module <%= gem_namespace %>
   module Internal
     module Types
       module Unknown
-        include Type
+        include <%= gem_namespace %>::Internal::Types::Type
 
         def coerce(value)
           value

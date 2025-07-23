@@ -93,7 +93,8 @@ function replaceTemplate({ contents, variables }: { contents: string; variables:
 
 function getTemplateVariables({ gemNamespace }: { gemNamespace: string }): Record<string, unknown> {
     return {
-        gem_namespace: gemNamespace
+        gem_namespace: gemNamespace,
+        sdkName: gemNamespace.toLowerCase()
     };
 }
 

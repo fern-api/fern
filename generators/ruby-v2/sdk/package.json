@@ -34,7 +34,7 @@
     "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "depcheck": "depcheck",
-    "dist:cli": "pnpm compile && tsup ./src/cli.ts --format cjs && cp -r ../base/lib/asIs ./dist/asIs",
+    "dist:cli": "pnpm compile && tsup ./src/cli.ts --format cjs && cp -r ../base/src/asIs ./dist/asIs",
     "publish:cli": "pnpm dist:cli && cd dist && yarn npm publish",
     "test": "vitest --passWithNoTests --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",

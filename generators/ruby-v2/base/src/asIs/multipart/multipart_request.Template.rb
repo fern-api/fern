@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module <%= gemNamespace %>
+module <%= gem_namespace %>
   module Internal
     module Multipart
       # @api private
-      class Request < <%= gemNamespace %>::Internal::Http::BaseRequest
+      class Request <%= gem_namespace %>::Internal::Http::BaseRequest
         attr_reader :body
 
         # @param base_url [String] The base URL for the request
@@ -13,7 +13,7 @@ module <%= gemNamespace %>
         # @param headers [Hash] Additional headers for the request (optional)
         # @param query [Hash] Query parameters for the request (optional)
         # @param body [MultipartFormData, nil] The multipart form data for the request (optional)
-        # @param request_options [<%= gemNamespace %>::RequestOptions, Hash{Symbol=>Object}, nil]
+        # @param request_options [<%= gem_namespace %>::RequestOptions, Hash{Symbol=>Object}, nil]
         def initialize(base_url:, path:, method:, headers: {}, query: {}, body: nil, request_options: {})
           super(base_url:, path:, method:, headers:, query:, request_options:)
 
