@@ -3,3 +3,5 @@ export { AbstractGoGeneratorContext, type FileLocation } from "./context/Abstrac
 export { GoFile } from "./project/GoFile";
 export { GoProject } from "./project/GoProject";
 export { FileGenerator } from "./FileGenerator";
+export { ModuleConfigWriter } from "./module/ModuleConfigWriter";
+export { ModuleConfig } from "./module/ModuleConfig";

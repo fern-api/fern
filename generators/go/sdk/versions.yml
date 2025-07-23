@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.5.2
+  changelogEntry:
+    - summary: |
+        Make sure that optional headers and query params are properly dereferenced before being sent to the server.
+      type: fix
+  createdAt: '2025-07-21'
+  irVersion: 58
+
 - version: 1.5.1
   changelogEntry:
     - summary: |

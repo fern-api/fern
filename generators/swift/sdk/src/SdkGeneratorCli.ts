@@ -49,21 +49,13 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
-        const projectFiles = this.generateProjectFiles(context);
+        const projectFiles = await this.generateProjectFiles(context);
         context.project.addSourceFiles(...projectFiles);
         await context.project.persist();
     }
 
-    private generateProjectFiles(context: SdkGeneratorContext): SwiftFile[] {
+    private async generateProjectFiles(context: SdkGeneratorContext): Promise<SwiftFile[]> {
         const files: SwiftFile[] = [];
-
-        // Client.swift
-        const rootClientGenerator = new RootClientGenerator({
-            projectNamePascalCase: context.ir.apiName.pascalCase.unsafeName,
-            package_: context.ir.rootPackage,
-            context
-        });
-        files.push(rootClientGenerator.generate());
 
         // Resources/**/*.swift
         Object.entries(context.ir.subpackages).forEach(([_, subpackage]) => {
@@ -77,13 +69,21 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             files.push(subclientGenerator.generate());
         });
 
+        // Requests/**/*.swift
+        const inlinedRequestFiles = generateInlinedRequestModels({ context });
+        files.push(...inlinedRequestFiles);
+
         // Schemas/**/*.swift
         const modelFiles = generateModels({ context });
         files.push(...modelFiles);
 
-        // Requests/**/*.swift
-        const inlinedRequestFiles = generateInlinedRequestModels({ context });
-        files.push(...inlinedRequestFiles);
+        // Client.swift
+        const rootClientGenerator = new RootClientGenerator({
+            projectNamePascalCase: context.ir.apiName.pascalCase.unsafeName,
+            package_: context.ir.rootPackage,
+            context
+        });
+        files.push(rootClientGenerator.generate());
 
         return files;
     }

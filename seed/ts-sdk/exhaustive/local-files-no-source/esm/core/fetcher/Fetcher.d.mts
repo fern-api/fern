@@ -7,7 +7,7 @@ export declare namespace Fetcher {
         method: string;
         contentType?: string;
         headers?: Record<string, string | Supplier<string | undefined> | undefined>;
-        queryParameters?: Record<string, string | string[] | object | object[] | null>;
+        queryParameters?: Record<string, unknown>;
         body?: unknown;
         timeoutMs?: number;
         maxRetries?: number;

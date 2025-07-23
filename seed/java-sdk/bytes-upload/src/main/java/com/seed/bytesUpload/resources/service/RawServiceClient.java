@@ -65,10 +65,10 @@ public class RawServiceClient {
     }
 
     public SeedBytesUploadHttpResponse<Void> upload(byte[] request) {
-        upload(new ByteArrayInputStream(request));
+        return upload(new ByteArrayInputStream(request));
     }
 
     public SeedBytesUploadHttpResponse<Void> upload(byte[] request, RequestOptions requestOptions) {
-        upload(new ByteArrayInputStream(request), requestOptions);
+        return upload(new ByteArrayInputStream(request), requestOptions);
     }
 }

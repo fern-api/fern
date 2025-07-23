@@ -33,13 +33,13 @@ export class SubClientGenerator {
         this.service = service;
     }
 
-    private get subClientName() {
+    private getSubClientName() {
         return `${this.subpackage.name.pascalCase.unsafeName}Client`;
     }
 
     public generate(): SwiftFile {
         const swiftClass = swift.class_({
-            name: this.subClientName,
+            name: this.getSubClientName(),
             final: true,
             accessLevel: swift.AccessLevel.Public,
             conformances: [swift.Protocol.Sendable],
