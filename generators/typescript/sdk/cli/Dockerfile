@@ -13,7 +13,7 @@ RUN yarn add \
   @types/node@^18.19.70 \
   readable-stream@^4.6.0 \
   @types/readable-stream@^4.0.18 \
-  form-data@^4.0.0 \
+  form-data@4.0.4 \
   formdata-node@^6.0.3 \
   jest-environment-jsdom@^29.7.0 \
   prettier@^3.4.2 \
