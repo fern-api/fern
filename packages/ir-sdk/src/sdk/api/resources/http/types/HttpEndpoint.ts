@@ -22,6 +22,7 @@ export interface HttpEndpoint extends FernIr.Declaration {
     requestBody: FernIr.HttpRequestBody | undefined;
     sdkRequest: FernIr.SdkRequest | undefined;
     response: FernIr.HttpResponse | undefined;
+    v2Responses: FernIr.HttpResponse[] | undefined;
     errors: FernIr.ResponseErrors;
     auth: boolean;
     idempotent: boolean;

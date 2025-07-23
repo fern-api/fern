@@ -46,6 +46,7 @@ export const HttpEndpoint: core.serialization.ObjectSchema<serializers.HttpEndpo
             requestBody: HttpRequestBody.optional(),
             sdkRequest: SdkRequest.optional(),
             response: HttpResponse.optional(),
+            v2Responses: core.serialization.list(HttpResponse).optional(),
             errors: ResponseErrors,
             auth: core.serialization.boolean(),
             idempotent: core.serialization.boolean(),
@@ -77,6 +78,7 @@ export declare namespace HttpEndpoint {
         requestBody?: HttpRequestBody.Raw | null;
         sdkRequest?: SdkRequest.Raw | null;
         response?: HttpResponse.Raw | null;
+        v2Responses?: HttpResponse.Raw[] | null;
         errors: ResponseErrors.Raw;
         auth: boolean;
         idempotent: boolean;

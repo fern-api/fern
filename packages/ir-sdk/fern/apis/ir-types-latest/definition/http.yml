@@ -58,6 +58,7 @@ types:
       requestBody: optional<HttpRequestBody>
       sdkRequest: optional<SdkRequest>
       response: optional<HttpResponse>
+      v2Responses: optional<list<HttpResponse>>
       errors: ResponseErrors
       auth: boolean
       idempotent: boolean
