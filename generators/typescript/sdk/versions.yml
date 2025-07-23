@@ -2,10 +2,10 @@
 - version: 2.6.0
   changelogEntry:
     - summary: |
-        Users can now pass in `additionalQueryParams` as part of the request options.
+        Users can now pass in `queryParams` as part of the request options.
         ```ts
         await client.foo.bar(..., {
-          additionalQueryParams: {
+          queryParams: {
             foo: "bar"
           }
         });
