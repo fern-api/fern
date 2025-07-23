@@ -16,8 +16,6 @@ import com.seed.pagination.resources.users.requests.ListUsersExtendedRequestForO
 import com.seed.pagination.resources.users.requests.ListUsersMixedTypeCursorPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersOffsetPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;
-import com.seed.pagination.resources.users.requests.ListUsersOptionalNullableDoubleRequest;
-import com.seed.pagination.resources.users.requests.ListUsersOptionalNullableIntegerRequest;
 import com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;
 import com.seed.pagination.resources.users.requests.ListWithOffsetPaginationHasNextPageRequest;
 import com.seed.pagination.resources.users.types.User;
@@ -217,55 +215,5 @@ public class AsyncUsersClient {
     public CompletableFuture<SyncPagingIterable<String>> listWithGlobalConfig(
             ListWithGlobalConfigRequest request, RequestOptions requestOptions) {
         return this.rawClient.listWithGlobalConfig(request, requestOptions).thenApply(response -> response.body());
-    }
-
-    /**
-     * Test pagination with nullable double parameter wrapped in optional
-     */
-    public CompletableFuture<SyncPagingIterable<User>> listWithOptionalNullableDouble() {
-        return this.rawClient.listWithOptionalNullableDouble().thenApply(response -> response.body());
-    }
-
-    /**
-     * Test pagination with nullable double parameter wrapped in optional
-     */
-    public CompletableFuture<SyncPagingIterable<User>> listWithOptionalNullableDouble(
-            ListUsersOptionalNullableDoubleRequest request) {
-        return this.rawClient.listWithOptionalNullableDouble(request).thenApply(response -> response.body());
-    }
-
-    /**
-     * Test pagination with nullable double parameter wrapped in optional
-     */
-    public CompletableFuture<SyncPagingIterable<User>> listWithOptionalNullableDouble(
-            ListUsersOptionalNullableDoubleRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .listWithOptionalNullableDouble(request, requestOptions)
-                .thenApply(response -> response.body());
-    }
-
-    /**
-     * Test pagination with nullable integer parameter wrapped in optional
-     */
-    public CompletableFuture<SyncPagingIterable<User>> listWithOptionalNullableInteger() {
-        return this.rawClient.listWithOptionalNullableInteger().thenApply(response -> response.body());
-    }
-
-    /**
-     * Test pagination with nullable integer parameter wrapped in optional
-     */
-    public CompletableFuture<SyncPagingIterable<User>> listWithOptionalNullableInteger(
-            ListUsersOptionalNullableIntegerRequest request) {
-        return this.rawClient.listWithOptionalNullableInteger(request).thenApply(response -> response.body());
-    }
-
-    /**
-     * Test pagination with nullable integer parameter wrapped in optional
-     */
-    public CompletableFuture<SyncPagingIterable<User>> listWithOptionalNullableInteger(
-            ListUsersOptionalNullableIntegerRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .listWithOptionalNullableInteger(request, requestOptions)
-                .thenApply(response -> response.body());
     }
 }
