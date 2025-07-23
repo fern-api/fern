@@ -2,9 +2,10 @@ import { File } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseGoCustomConfigSchema } from "@fern-api/go-ast";
 import { AbstractGoGeneratorContext } from "./context/AbstractGoGeneratorContext";
+import { GoFile } from "./project";
 
 export abstract class FileGenerator<
-    GeneratedFile extends File,
+    GeneratedFile extends File | GoFile,
     CustomConfig extends BaseGoCustomConfigSchema,
     Context extends AbstractGoGeneratorContext<CustomConfig>
 > {

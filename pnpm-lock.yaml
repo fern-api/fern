@@ -695,6 +695,9 @@ importers:
       '@fern-api/logging-execa':
         specifier: workspace:*
         version: link:../../../packages/commons/logging-execa
+      '@fern-fern/generator-exec-sdk':
+        specifier: ^0.0.1045
+        version: 0.0.1045
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
         version: 58.2.0
@@ -707,6 +710,9 @@ importers:
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
         version: 3.0.0-rc.15(esbuild@0.25.5)
+      dedent:
+        specifier: ^1.5.1
+        version: 1.6.0
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -837,6 +843,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/fs-utils
       '@fern-api/go-ast':
         specifier: workspace:*
         version: link:../ast
