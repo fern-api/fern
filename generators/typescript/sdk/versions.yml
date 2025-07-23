@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.6.0
+  changelogEntry:
+    - summary: |
+        Users can now pass in `additionalQueryParams` as part of the request options.
+        ```ts
+        await client.foo.bar(..., {
+          additionalQueryParams: {
+            foo: "bar"
+          }
+        });
+        ```
+      type: feat
+  createdAt: "2025-07-23"
+  irVersion: 58
+
 - version: 2.5.1
   changelogEntry:
     - summary: Update README.md generation to be more accurate
