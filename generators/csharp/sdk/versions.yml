@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.1.1
+  changelogEntry:
+    - summary: |
+        Ensures that clients that have no endpoints are not generated.
+        This recursively looks to see that there are no endpoints in subpackages to ensure that the behavior is correct
+      type: fix
+  createdAt: '2025-07-23'
+  irVersion: 58
 - version: 2.1.0
   changelogEntry:
     - summary: |
