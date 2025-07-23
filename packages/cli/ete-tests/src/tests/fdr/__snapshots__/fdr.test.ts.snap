@@ -394,6 +394,7 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                             }
                         }
                     },
+                    "responsesV2": {},
                     "errorsV2": [
                         {
                             "statusCode": 400,
@@ -549,6 +550,7 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                             }
                         }
                     },
+                    "responsesV2": {},
                     "errorsV2": [
                         {
                             "type": {
@@ -689,6 +691,7 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                     },
                     "queryParameters": [],
                     "headers": [],
+                    "responsesV2": {},
                     "errorsV2": [
                         {
                             "statusCode": 400,
@@ -774,6 +777,7 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                             "isOptional": false
                         }
                     },
+                    "responsesV2": {},
                     "errorsV2": [
                         {
                             "statusCode": 400,
@@ -1223,6 +1227,7 @@ exports[`fdr > {"name":"simple"} 1`] = `
                             }
                         }
                     },
+                    "responsesV2": {},
                     "errorsV2": [
                         {
                             "statusCode": 400,
@@ -1378,6 +1383,7 @@ exports[`fdr > {"name":"simple"} 1`] = `
                             }
                         }
                     },
+                    "responsesV2": {},
                     "errorsV2": [
                         {
                             "type": {
@@ -1518,6 +1524,7 @@ exports[`fdr > {"name":"simple"} 1`] = `
                     },
                     "queryParameters": [],
                     "headers": [],
+                    "responsesV2": {},
                     "errorsV2": [
                         {
                             "statusCode": 400,
@@ -1603,6 +1610,7 @@ exports[`fdr > {"name":"simple"} 1`] = `
                             "isOptional": false
                         }
                     },
+                    "responsesV2": {},
                     "errorsV2": [
                         {
                             "statusCode": 400,
