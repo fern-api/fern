@@ -4,7 +4,7 @@ public final class AnyAuthClient: Sendable {
     private let config: ClientConfig
 
     public init(
-        baseURL: String = AnyAuthEnvironment.default.rawValue,
+        baseURL: String,
         apiKey qpiKey: String,
         token: String? = nil,
         headers: [String: String]? = [:],

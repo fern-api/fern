@@ -12,7 +12,7 @@ public final class TraceClient: Sendable {
     private let config: ClientConfig
 
     public init(
-        baseURL: String = TraceEnvironment.default.rawValue,
+        baseURL: String = TraceEnvironment.prod.rawValue,
         apiKey qpiKey: String,
         token: String? = nil,
         headers: [String: String]? = [:],

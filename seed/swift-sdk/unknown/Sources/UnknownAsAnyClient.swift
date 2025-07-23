@@ -3,7 +3,7 @@ public final class UnknownAsAnyClient: Sendable {
     private let config: ClientConfig
 
     public init(
-        baseURL: String = UnknownAsAnyEnvironment.default.rawValue,
+        baseURL: String,
         apiKey qpiKey: String,
         token: String? = nil,
         headers: [String: String]? = [:],

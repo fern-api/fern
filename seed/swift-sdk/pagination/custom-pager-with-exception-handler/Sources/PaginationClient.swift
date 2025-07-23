@@ -4,7 +4,7 @@ public final class PaginationClient: Sendable {
     private let config: ClientConfig
 
     public init(
-        baseURL: String = PaginationEnvironment.default.rawValue,
+        baseURL: String,
         apiKey qpiKey: String,
         token: String? = nil,
         headers: [String: String]? = [:],

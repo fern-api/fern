@@ -3,7 +3,7 @@ public final class MixedCaseClient: Sendable {
     private let config: ClientConfig
 
     public init(
-        baseURL: String = MixedCaseEnvironment.default.rawValue,
+        baseURL: String,
         apiKey qpiKey: String,
         token: String? = nil,
         headers: [String: String]? = [:],

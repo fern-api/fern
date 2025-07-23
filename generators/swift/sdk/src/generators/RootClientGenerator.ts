@@ -79,6 +79,25 @@ export class RootClientGenerator {
     }
 
     private generateInitializer(): swift.Initializer {
+        let defaultBaseUrlValue: swift.Expression | undefined;
+
+        if (this.context.ir.environments && this.context.ir.environments.environments.type === "singleBaseUrl") {
+            const defaultEnvId = this.context.ir.environments.defaultEnvironment;
+
+            // If no default environment is specified, use the first environment
+            const defaultEnvironment = this.context.ir.environments.environments.environments.find((e, idx) =>
+                defaultEnvId == null ? idx === 0 : e.id === defaultEnvId
+            );
+            if (defaultEnvironment != null) {
+                defaultBaseUrlValue = swift.Expression.memberAccess({
+                    target: swift.Expression.reference(`${this.projectNamePascalCase}Environment`),
+                    memberName: `${defaultEnvironment.name.camelCase.unsafeName}.rawValue`
+                });
+            }
+        } else {
+            // TODO: Handle multiple environments
+        }
+
         return swift.initializer({
             accessLevel: swift.AccessLevel.Public,
             parameters: [
@@ -86,10 +105,7 @@ export class RootClientGenerator {
                     argumentLabel: "baseURL",
                     unsafeName: "baseURL",
                     type: swift.Type.string(),
-                    defaultValue: swift.Expression.memberAccess({
-                        target: swift.Expression.reference(`${this.projectNamePascalCase}Environment`),
-                        memberName: "default.rawValue"
-                    })
+                    defaultValue: defaultBaseUrlValue
                 }),
                 swift.functionParameter({
                     argumentLabel: "apiKey",

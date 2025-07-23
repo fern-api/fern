@@ -7,7 +7,7 @@ public final class LiteralClient: Sendable {
     private let config: ClientConfig
 
     public init(
-        baseURL: String = LiteralEnvironment.default.rawValue,
+        baseURL: String,
         apiKey qpiKey: String,
         token: String? = nil,
         headers: [String: String]? = [:],

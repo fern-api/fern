@@ -3,7 +3,7 @@ public final class OauthClientCredentialsEnvironmentVariablesClient: Sendable {
     private let config: ClientConfig
 
     public init(
-        baseURL: String = OauthClientCredentialsEnvironmentVariablesEnvironment.default.rawValue,
+        baseURL: String,
         apiKey qpiKey: String,
         token: String? = nil,
         headers: [String: String]? = [:],

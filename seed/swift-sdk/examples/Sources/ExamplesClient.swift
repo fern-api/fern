@@ -7,7 +7,7 @@ public final class ExamplesClient: Sendable {
     private let config: ClientConfig
 
     public init(
-        baseURL: String = ExamplesEnvironment.default.rawValue,
+        baseURL: String = ExamplesEnvironment.production.rawValue,
         apiKey qpiKey: String,
         token: String? = nil,
         headers: [String: String]? = [:],

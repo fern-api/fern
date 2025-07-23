@@ -3,7 +3,7 @@ public final class VersionClient: Sendable {
     private let config: ClientConfig
 
     public init(
-        baseURL: String = VersionEnvironment.default.rawValue,
+        baseURL: String,
         apiKey qpiKey: String,
         token: String? = nil,
         headers: [String: String]? = [:],

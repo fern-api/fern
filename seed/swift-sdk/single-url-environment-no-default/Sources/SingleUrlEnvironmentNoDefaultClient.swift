@@ -3,7 +3,7 @@ public final class SingleUrlEnvironmentNoDefaultClient: Sendable {
     private let config: ClientConfig
 
     public init(
-        baseURL: String = SingleUrlEnvironmentNoDefaultEnvironment.default.rawValue,
+        baseURL: String = SingleUrlEnvironmentNoDefaultEnvironment.production.rawValue,
         apiKey qpiKey: String,
         token: String? = nil,
         headers: [String: String]? = [:],

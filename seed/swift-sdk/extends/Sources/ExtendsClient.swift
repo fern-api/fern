@@ -2,7 +2,7 @@ public final class ExtendsClient: Sendable {
     private let config: ClientConfig
 
     public init(
-        baseURL: String = ExtendsEnvironment.default.rawValue,
+        baseURL: String,
         apiKey qpiKey: String,
         token: String? = nil,
         headers: [String: String]? = [:],

@@ -2,7 +2,7 @@ public final class ApiClient: Sendable {
     private let config: ClientConfig
 
     public init(
-        baseURL: String = ApiEnvironment.default.rawValue,
+        baseURL: String,
         apiKey qpiKey: String,
         token: String? = nil,
         headers: [String: String]? = [:],

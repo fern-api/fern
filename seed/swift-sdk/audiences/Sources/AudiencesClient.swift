@@ -8,7 +8,7 @@ public final class AudiencesClient: Sendable {
     private let config: ClientConfig
 
     public init(
-        baseURL: String = AudiencesEnvironment.default.rawValue,
+        baseURL: String = AudiencesEnvironment.environmentA.rawValue,
         apiKey qpiKey: String,
         token: String? = nil,
         headers: [String: String]? = [:],
