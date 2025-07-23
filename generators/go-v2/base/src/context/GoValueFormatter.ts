@@ -43,11 +43,20 @@ export class GoValueFormatter {
         let isPrimitive = false;
 
         const optionalOrNullableType = this.context.maybeUnwrapOptionalOrNullable(reference);
+        const enumType = this.context.maybeEnum(reference);
+
         if (optionalOrNullableType != null) {
             if (this.context.needsOptionalDereference(reference)) {
                 prefix = go.codeblock("*");
+                if (enumType != null) {
+                    prefix = go.codeblock("string(*");
+                    suffix = go.codeblock(")");
+                }
             }
             isOptional = true;
+        } else if (enumType != null) {
+            prefix = go.codeblock("string(");
+            suffix = go.codeblock(")");
         }
 
         const primitive = this.context.maybePrimitive(reference);
@@ -111,12 +120,6 @@ export class GoValueFormatter {
                     assertNever(primitive);
             }
             isPrimitive = true;
-        }
-
-        const enumType = this.context.maybeEnum(reference);
-        if (enumType != null) {
-            prefix = go.codeblock("string(");
-            suffix = go.codeblock(")");
         }
 
         return {
