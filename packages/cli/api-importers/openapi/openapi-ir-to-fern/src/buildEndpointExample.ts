@@ -41,15 +41,18 @@ export function buildEndpointExample({
 
     if (hasEndpointHeaders || hasGlobalHeaders) {
         const namedFullExamples: NamedFullExample[] = [
-            ...(endpointExample.headers ?? []),
+            // ignore auth headers
+            ...(endpointExample.headers ?? []).filter((header) => header.name !== context.builder.getAuthHeaderName()),
+
+            // include global headers that are not already in the endpoint headers
             ...(Object.entries(context.builder.getGlobalHeaders())
                 .filter(([header]) => !endpointHeaderNames.has(header))
-                .map(([header, schema]) => ({
+                .map(([header, _]) => ({
                     name: header,
                     value: FullExample.primitive(PrimitiveExample.string(header))
                 })) ?? [])
         ];
-
+        // create examples for all headers
         example.headers = convertHeaderExamples({
             context,
             namedFullExamples
