@@ -19,6 +19,8 @@ export declare namespace Enum {
         name: string;
         /* The value of the enum field */
         value: string;
+        /* The docs of the Go enum member, if any */
+        docs?: string;
     }
 }
 
@@ -68,6 +70,7 @@ export class Enum extends AstNode {
         writer.writeLine("const (");
         writer.indent();
         for (const member of this.members) {
+            writer.writeNode(new Comment({ docs: member.docs }));
             writer.writeNode(Enum.getMemberIdentifier({ name: this.name, member }));
             writer.write(" = ");
             writer.writeNode(TypeInstantiation.string(member.value));

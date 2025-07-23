@@ -53,7 +53,8 @@ export class EnumGenerator extends FileGenerator<GoFile, ModelCustomConfigSchema
     private getMembers(): go.Enum.Member[] {
         return this.enumDeclaration.values.map((value) => ({
             name: this.context.getClassName(value.name.name),
-            value: value.name.wireValue
+            value: value.name.wireValue,
+            docs: value.docs
         }));
     }
 

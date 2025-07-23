@@ -9,7 +9,9 @@ import (
 type MigrationStatus string
 
 const (
-	MigrationStatusRunning  = "RUNNING"
+	// The migration is running
+	MigrationStatusRunning = "RUNNING"
+	// The migration is failed
 	MigrationStatusFailed   = "FAILED"
 	MigrationStatusFinished = "FINISHED"
 )

@@ -56,7 +56,9 @@ func (c ComplexType) Ptr() *ComplexType {
 type MigrationStatus string
 
 const (
-	MigrationStatusRunning  = "RUNNING"
+	// The migration is running.
+	MigrationStatusRunning = "RUNNING"
+	// The migration failed.
 	MigrationStatusFailed   = "FAILED"
 	MigrationStatusFinished = "FINISHED"
 )

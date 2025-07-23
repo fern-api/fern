@@ -13,7 +13,9 @@ type Operand string
 const (
 	OperandGreaterThan = ">"
 	OperandEqualTo     = "="
-	OperandLessThan    = "less_than"
+	// The name and value should be similar
+	// are similar for less than.
+	OperandLessThan = "less_than"
 )
 
 func NewOperandFromString(s string) (Operand, error) {

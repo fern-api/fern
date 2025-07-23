@@ -9,7 +9,9 @@ import (
 type FileInfo string
 
 const (
-	FileInfoRegular   = "REGULAR"
+	// A regular file (e.g. foo.txt).
+	FileInfoRegular = "REGULAR"
+	// A directory (e.g. foo/).
 	FileInfoDirectory = "DIRECTORY"
 )
 
