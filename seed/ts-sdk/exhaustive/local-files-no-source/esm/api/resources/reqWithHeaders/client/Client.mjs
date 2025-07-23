@@ -44,6 +44,7 @@ export class ReqWithHeaders {
                     "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader,
                 }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
                 contentType: "application/json",
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.additionalQueryParams,
                 requestType: "json",
                 body: _body,
                 timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,

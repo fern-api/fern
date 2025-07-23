@@ -29,6 +29,8 @@ export declare namespace Admin {
         abortSignal?: AbortSignal;
         /** Override the X-Random-Header header */
         xRandomHeader?: string | undefined;
+        /** Additional query string parameters to include in the request. */
+        additionalQueryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
         headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
@@ -83,6 +85,7 @@ export class Admin {
                 requestOptions?.headers,
             ),
             contentType: "application/json",
+            queryParameters: requestOptions?.additionalQueryParams,
             requestType: "json",
             body: serializers.TestSubmissionStatus.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -160,6 +163,7 @@ export class Admin {
                 requestOptions?.headers,
             ),
             contentType: "application/json",
+            queryParameters: requestOptions?.additionalQueryParams,
             requestType: "json",
             body: serializers.TestSubmissionUpdate.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -233,6 +237,7 @@ export class Admin {
                 requestOptions?.headers,
             ),
             contentType: "application/json",
+            queryParameters: requestOptions?.additionalQueryParams,
             requestType: "json",
             body: serializers.WorkspaceSubmissionStatus.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -310,6 +315,7 @@ export class Admin {
                 requestOptions?.headers,
             ),
             contentType: "application/json",
+            queryParameters: requestOptions?.additionalQueryParams,
             requestType: "json",
             body: serializers.WorkspaceSubmissionUpdate.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -471,6 +477,7 @@ export class Admin {
                 requestOptions?.headers,
             ),
             contentType: "application/json",
+            queryParameters: requestOptions?.additionalQueryParams,
             requestType: "json",
             body: serializers.StoreTracedTestCaseRequest.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -621,6 +628,7 @@ export class Admin {
                 requestOptions?.headers,
             ),
             contentType: "application/json",
+            queryParameters: requestOptions?.additionalQueryParams,
             requestType: "json",
             body: serializers.admin.storeTracedTestCaseV2.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -774,6 +782,7 @@ export class Admin {
                 requestOptions?.headers,
             ),
             contentType: "application/json",
+            queryParameters: requestOptions?.additionalQueryParams,
             requestType: "json",
             body: serializers.StoreTracedWorkspaceRequest.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -921,6 +930,7 @@ export class Admin {
                 requestOptions?.headers,
             ),
             contentType: "application/json",
+            queryParameters: requestOptions?.additionalQueryParams,
             requestType: "json",
             body: serializers.admin.storeTracedWorkspaceV2.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",

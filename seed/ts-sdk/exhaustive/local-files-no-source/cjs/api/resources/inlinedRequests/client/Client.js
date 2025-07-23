@@ -96,6 +96,7 @@ class InlinedRequests {
                 method: "POST",
                 headers: (0, headers_js_1.mergeHeaders)((_b = this._options) === null || _b === void 0 ? void 0 : _b.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
                 contentType: "application/json",
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.additionalQueryParams,
                 requestType: "json",
                 body: request,
                 timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,

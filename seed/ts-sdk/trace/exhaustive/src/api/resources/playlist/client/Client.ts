@@ -28,6 +28,8 @@ export declare namespace Playlist {
         abortSignal?: AbortSignal;
         /** Override the X-Random-Header header */
         xRandomHeader?: string | undefined;
+        /** Additional query string parameters to include in the request. */
+        additionalQueryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
         headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
@@ -94,7 +96,7 @@ export class Playlist {
                 requestOptions?.headers,
             ),
             contentType: "application/json",
-            queryParameters: _queryParams,
+            queryParameters: { ..._queryParams, ...requestOptions?.additionalQueryParams },
             requestType: "json",
             body: _body,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
@@ -191,7 +193,7 @@ export class Playlist {
                 }),
                 requestOptions?.headers,
             ),
-            queryParameters: _queryParams,
+            queryParameters: { ..._queryParams, ...requestOptions?.additionalQueryParams },
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
@@ -258,6 +260,7 @@ export class Playlist {
                 }),
                 requestOptions?.headers,
             ),
+            queryParameters: requestOptions?.additionalQueryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
@@ -352,6 +355,7 @@ export class Playlist {
                 requestOptions?.headers,
             ),
             contentType: "application/json",
+            queryParameters: requestOptions?.additionalQueryParams,
             requestType: "json",
             body: request != null ? request : undefined,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
@@ -434,6 +438,7 @@ export class Playlist {
                 }),
                 requestOptions?.headers,
             ),
+            queryParameters: requestOptions?.additionalQueryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,

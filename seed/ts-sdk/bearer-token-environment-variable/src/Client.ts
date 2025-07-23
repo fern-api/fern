@@ -27,6 +27,8 @@ export declare namespace SeedBearerTokenEnvironmentVariableClient {
         abortSignal?: AbortSignal;
         /** Override the X-API-Version header */
         version?: "1.0.0";
+        /** Additional query string parameters to include in the request. */
+        additionalQueryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
         headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
