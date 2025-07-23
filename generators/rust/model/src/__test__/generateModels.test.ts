@@ -3,7 +3,13 @@ import { describe, it, expect } from "vitest";
 import { generateModels } from "../generateModels";
 import { createSampleGeneratorContext } from "./util/createSampleGeneratorContext";
 
-const testDefinitions = ["basic-object", "enum-types", "alias-types", "union-types", "undiscriminated-union-types"] as const;
+const testDefinitions = [
+    "basic-object",
+    "enum-types",
+    "alias-types",
+    "union-types",
+    "undiscriminated-union-types"
+] as const;
 
 describe.each(testDefinitions)("generateModels - %s", (testDefinitionName) => {
     it("should correctly generate model files", async () => {
@@ -91,15 +97,13 @@ describe("generateModels type-specific tests", () => {
             (file) =>
                 file.fileContents.includes("pub enum") &&
                 (file.fileContents.includes("Animal") ||
-                 file.fileContents.includes("Vehicle") ||
-                 file.fileContents.includes("Shape"))
+                    file.fileContents.includes("Vehicle") ||
+                    file.fileContents.includes("Shape"))
         );
         expect(hasUnionContent).toBeTruthy();
 
         // Should have discriminated union attributes
-        const hasTaggedUnion = files.some(
-            (file) => file.fileContents.includes('#[serde(tag =')
-        );
+        const hasTaggedUnion = files.some((file) => file.fileContents.includes("#[serde(tag ="));
         expect(hasTaggedUnion).toBeTruthy();
     });
 
@@ -114,15 +118,13 @@ describe("generateModels type-specific tests", () => {
             (file) =>
                 file.fileContents.includes("pub enum") &&
                 (file.fileContents.includes("StringOrNumber") ||
-                 file.fileContents.includes("FlexibleValue") ||
-                 file.fileContents.includes("SearchResult"))
+                    file.fileContents.includes("FlexibleValue") ||
+                    file.fileContents.includes("SearchResult"))
         );
         expect(hasUnionContent).toBeTruthy();
 
         // Should have tagged union attributes (Fern creates discriminated unions)
-        const hasTaggedUnion = files.some(
-            (file) => file.fileContents.includes('#[serde(tag =')
-        );
+        const hasTaggedUnion = files.some((file) => file.fileContents.includes("#[serde(tag ="));
         expect(hasTaggedUnion).toBeTruthy();
     });
 });
