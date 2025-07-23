@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.6.1
+  changelogEntry:
+    - summary: |
+        Add additional query string parameters section to the generated README.md file.
+      type: chore
+  createdAt: "2025-07-23"
+  irVersion: 58
+
 - version: 2.6.0
   changelogEntry:
     - summary: |
