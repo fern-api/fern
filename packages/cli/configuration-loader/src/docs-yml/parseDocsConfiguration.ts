@@ -444,9 +444,13 @@ async function getNavigationConfiguration({
                 slug: product.slug,
                 subtitle: product.subtitle,
                 icon: product.icon || "fa-solid fa-code",
-                image: productImageFile
+                image: productImageFile,
+                viewers: parseRoles(product.viewers),
+                orphaned: product.orphaned,
+                featureFlags: convertFeatureFlag(product.featureFlag)
             });
         }
+        
         return {
             type: "productgroup",
             products: productNavbars

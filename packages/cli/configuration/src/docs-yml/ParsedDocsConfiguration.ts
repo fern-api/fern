@@ -158,7 +158,9 @@ export interface VersionInfo
     slug: string | undefined;
 }
 
-export interface ProductInfo {
+export interface ProductInfo
+    extends CjsFdrSdk.navigation.v1.WithPermissions,
+        CjsFdrSdk.navigation.latest.WithFeatureFlags {
     landingPage: DocsNavigationItem.Page | undefined;
     subtitle: string | undefined;
     product: string;
