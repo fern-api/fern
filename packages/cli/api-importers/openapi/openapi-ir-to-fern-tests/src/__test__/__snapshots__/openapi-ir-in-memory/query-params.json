@@ -72,6 +72,22 @@
               }
             },
             {
+              "name": "after",
+              "in": "query",
+              "required": false,
+              "schema": {
+                "oneOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "string",
+                    "format": "date"
+                  }
+                ]
+              }
+            },
+            {
               "name": "tags",
               "in": "query",
               "required": false,

@@ -259,6 +259,49 @@
           }
         },
         {
+          "name": "after",
+          "schema": {
+            "generatedName": "SearchRequestAfter",
+            "value": {
+              "value": {
+                "generatedName": "SearchRequestAfter",
+                "schemas": [
+                  {
+                    "schema": {
+                      "type": "int"
+                    },
+                    "generatedName": "SearchRequestAfter",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  {
+                    "schema": {
+                      "format": "date",
+                      "type": "string"
+                    },
+                    "generatedName": "SearchRequestAfter",
+                    "groupName": [],
+                    "type": "primitive"
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "undiscriminated"
+              },
+              "type": "oneOf"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
           "name": "tags",
           "schema": {
             "generatedName": "SearchRequestTags",
