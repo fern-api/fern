@@ -1,0 +1,32 @@
+## 0.45.0-rc17
+**`(fix):`** - Improved union example generation by increasing depth for better handling of recursive structures.
+- Updated Conjure importer to represent binary types as bytes for requests and file for responses in Fern.
+- Added detailed error messages when 'fern docs dev' fails, accessible with --log-level debug.
+
+
+## 0.45.0-rc16
+**`(fix):`** The Conjure importer now correctly keys the union subvariant by the property of the discriminant.
+
+```conjure
+union:
+  discriminant: type
+  union:
+    square: Square
+    circle: Circle
+```
+
+is equal to the following Fern Definition:
+
+```yml fern
+union:
+  discriminant: type
+  types:
+    square:
+      type: Square
+      key: square
+    circle:
+      type: Circle
+      key: circle
+```
+
+

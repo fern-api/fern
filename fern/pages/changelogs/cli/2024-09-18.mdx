@@ -1,0 +1,85 @@
+## 0.42.8
+**`(fix):`** The API V2 configuration (in beta) now supports global header overrides.
+This fixes a bug where those header overrides were getting dropped in
+certain cases.
+
+```yml generators.yml
+api:
+  headers:
+    X-API-VERSION: string
+  specs:
+    - openapi: /path/to/openapi
+      overrides: /path/to/overrides
+```
+
+
+## 0.42.7
+**`(feat):`** The API V2 configuration (in beta) now supports global header
+overrides. To specify global headers that are not in your
+OpenAPI spec, simply add the following block in your `generators.yml`:
+
+```yml generators.yml
+api:
+  headers:
+    X-API-VERSION: string
+  specs:
+    - openapi: /path/to/openapi
+      overrides: /path/to/overrides
+```
+
+
+## 0.42.6
+**`(fix):`** Removes extraneous conditional error within namespacing configuration
+
+## 0.42.5
+**`(feat):`** Adds additional metadata retrievable by `fern generator get` so you can now get the language and the target repo.
+
+## 0.42.4
+**`(fix):`** Namespaced APIs now:
+  - No longer contain duplicative nesting of some endpoint within another package of the same name as the namespace
+  - Respect the `x-fern-sdk-group-name` annotation for endpoints
+
+
+## 0.42.3
+**`(fix):`** The OpenAPI importer now supports handling encoding on multipart requests.
+Previously, the generators would not respect the `contentType` field for
+each form input. But, now they do.
+```yml
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        properties:
+          file:
+            type: string
+            format: binary
+            description: The file to upload
+      encoding:
+        file:
+          contentType: "application/octet-stream"
+```
+
+
+**`(fix):`** The OpenAPI importer now correctly parses descriptions of multipart
+form requests. Previously these descriptions would be ignored.
+
+For example, previously the description `The file to upload` would be
+ignored in the example below.
+```yml
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        properties:
+          file:
+            type: string
+            format: binary
+            description: The file to upload
+```
+
+
+## 0.42.2
+**`(fix):`** Error bodies are now appropriately namespaced as well!
+
