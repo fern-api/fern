@@ -1,3 +1,11 @@
+- version: 2.38.8
+  changelogEntry:
+    - summary: |
+        Fix byte array convenience methods to include all parameters when delegating to InputStream methods
+      type: fix
+  createdAt: '2025-07-23'
+  irVersion: 58
+
 - version: 2.38.7
   changelogEntry:
     - summary: |

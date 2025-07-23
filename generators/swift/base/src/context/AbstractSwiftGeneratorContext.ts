@@ -3,6 +3,7 @@ import { BaseSwiftCustomConfigSchema } from "@fern-api/swift-codegen";
 
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
+import { AsIsFileDefinition } from "../AsIs";
 import { SwiftProject } from "../project";
 
 export abstract class AbstractSwiftGeneratorContext<
@@ -22,4 +23,6 @@ export abstract class AbstractSwiftGeneratorContext<
             name: this.ir.apiName.pascalCase.unsafeName
         });
     }
+
+    public abstract getCoreAsIsFiles(): AsIsFileDefinition[];
 }

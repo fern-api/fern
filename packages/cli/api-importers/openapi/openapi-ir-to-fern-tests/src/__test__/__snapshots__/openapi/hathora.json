@@ -2398,9 +2398,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "Authorization": "Authorization",
-                  },
+                  "headers": {},
                   "path-parameters": {
                     "appId": "appId",
                   },
@@ -2447,9 +2445,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "Authorization": "Authorization",
-                  },
+                  "headers": {},
                   "path-parameters": {
                     "appId": "appId",
                   },
@@ -2493,9 +2489,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "Authorization": "Authorization",
-                  },
+                  "headers": {},
                   "path-parameters": {
                     "appId": "appId",
                   },
@@ -2586,8 +2580,7 @@ service:
       examples:
         - path-parameters:
             appId: appId
-          headers:
-            Authorization: Authorization
+          headers: {}
           response:
             body: string
     CreatePublicLobbyDeprecated:
@@ -2619,8 +2612,7 @@ service:
       examples:
         - path-parameters:
             appId: appId
-          headers:
-            Authorization: Authorization
+          headers: {}
           response:
             body: string
     ListActivePublicLobbiesDeprecated:
@@ -2649,8 +2641,7 @@ service:
       examples:
         - path-parameters:
             appId: appId
-          headers:
-            Authorization: Authorization
+          headers: {}
           response:
             body:
               - state:
@@ -2690,9 +2681,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "Authorization": "Authorization",
-                  },
+                  "headers": {},
                   "path-parameters": {
                     "appId": "appId",
                   },
@@ -2766,9 +2755,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "Authorization": "Authorization",
-                  },
+                  "headers": {},
                   "path-parameters": {
                     "appId": "appId",
                   },
@@ -2840,9 +2827,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "Authorization": "Authorization",
-                  },
+                  "headers": {},
                   "path-parameters": {
                     "appId": "appId",
                   },
@@ -2914,9 +2899,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "Authorization": "Authorization",
-                  },
+                  "headers": {},
                   "path-parameters": {
                     "appId": "appId",
                   },
@@ -3193,8 +3176,7 @@ service:
       examples:
         - path-parameters:
             appId: appId
-          headers:
-            Authorization: Authorization
+          headers: {}
           request:
             initialConfig:
               key: value
@@ -3243,8 +3225,7 @@ service:
       examples:
         - path-parameters:
             appId: appId
-          headers:
-            Authorization: Authorization
+          headers: {}
           request:
             initialConfig:
               key: value
@@ -3293,8 +3274,7 @@ service:
       examples:
         - path-parameters:
             appId: appId
-          headers:
-            Authorization: Authorization
+          headers: {}
           request:
             initialConfig:
               key: value
@@ -3343,8 +3323,7 @@ service:
       examples:
         - path-parameters:
             appId: appId
-          headers:
-            Authorization: Authorization
+          headers: {}
           request:
             visibility: public
             initialConfig:

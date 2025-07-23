@@ -5,6 +5,14 @@
       type: feat
   irVersion: 58
   createdAt: "2025-07-23"
+  version: 0.65.29
+        
+- changelogEntry:
+    - summary: |
+        endpoint example creation ignores global auth headers 
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-23"
   version: 0.65.28
 
 - changelogEntry:
@@ -3700,7 +3708,7 @@
          specs:
            - openapi: ./path/to/openapi.yml
              settings:
-               object-query-paramaters: true
+               object-query-parameters: true
         ```
       type: fix
   irVersion: 53
