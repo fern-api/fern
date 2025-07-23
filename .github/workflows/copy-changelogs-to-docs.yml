@@ -28,7 +28,7 @@ jobs:
           path: docs
 
       - name: update go-sdk changelog
-        run: rsync -avu --delete "fern/pages/changelogs/go-sdk" "docs/fern/products/sdks/overview/go/changelog"
+        run: rsync -avu --delete "fern/pages/changelogs/go-sdk/" "docs/fern/products/sdks/overview/go/changelog"
 
       - name: create PR
         id: cpr
