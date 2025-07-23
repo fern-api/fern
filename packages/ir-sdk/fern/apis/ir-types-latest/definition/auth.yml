@@ -29,17 +29,31 @@ types:
   InferredAuthScheme:
     extends: commons.WithDocs
     properties:
-      authEndpoint: commons.EndpointReference
+      tokenEndpoint: InferredAuthSchemeTokenEndpoint
+      refreshEndpoint: optional<InferredAuthSchemeRefreshEndpoint>
+
+  InferredAuthSchemeTokenEndpoint:
+    properties:
+      endpoint: commons.EndpointReference
+      expiryProperty: optional<http.ResponseProperty>
       authenticatedRequestHeaders: list<InferredAuthenticatedRequestHeader>
+
+  InferredAuthSchemeRefreshEndpoint:
+    properties:
+      endpoint: commons.EndpointReference
+      expiryProperty: http.ResponseProperty
+      authenticatedRequestHeaders: 
+        type: list<InferredAuthenticatedRequestHeader>
+        docs: These headers will override the headers defined on the tokenEndpoint.
 
   InferredAuthenticatedRequestHeader:
     docs:
       A header that will be set on HTTP requests when the inferred auth scheme is applied to an endpoint.
       These are not headers for the authorization endpoint.
     properties:
-      authResponseProperty: 
+      responseProperty: 
         type: http.ResponseProperty
-        docs: The property to retrieve the header value from the auth response.
+        docs: The property to retrieve the header value from the get token or refresh endpoint response.
       headerName: 
         type: string
         docs: |
@@ -49,6 +63,7 @@ types:
         type: optional<string>
         docs: |
           Commonly used for setting the `Authorization` scheme, but could be used for other things.
+          For `Authorization` header, the default will be `Bearer `, but `undefined` for other headers.
 
   BearerAuthScheme:
     extends: commons.WithDocs

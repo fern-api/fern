@@ -11,14 +11,14 @@ export const InferredAuthenticatedRequestHeader: core.serialization.ObjectSchema
     serializers.InferredAuthenticatedRequestHeader.Raw,
     FernIr.InferredAuthenticatedRequestHeader
 > = core.serialization.objectWithoutOptionalProperties({
-    authResponseProperty: ResponseProperty,
+    responseProperty: ResponseProperty,
     headerName: core.serialization.string(),
     valuePrefix: core.serialization.string().optional(),
 });
 
 export declare namespace InferredAuthenticatedRequestHeader {
     export interface Raw {
-        authResponseProperty: ResponseProperty.Raw;
+        responseProperty: ResponseProperty.Raw;
         headerName: string;
         valuePrefix?: string | null;
     }

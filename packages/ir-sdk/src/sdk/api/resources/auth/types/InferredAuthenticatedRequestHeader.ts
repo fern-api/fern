@@ -8,13 +8,16 @@ import * as FernIr from "../../../index";
  * A header that will be set on HTTP requests when the inferred auth scheme is applied to an endpoint. These are not headers for the authorization endpoint.
  */
 export interface InferredAuthenticatedRequestHeader {
-    /** The property to retrieve the header value from the auth response. */
-    authResponseProperty: FernIr.ResponseProperty;
+    /** The property to retrieve the header value from the get token or refresh endpoint response. */
+    responseProperty: FernIr.ResponseProperty;
     /**
      * The header name to put the token in for any authenticated HTTP request.
      * Defaults to `Authorization`.
      */
     headerName: string;
-    /** Commonly used for setting the `Authorization` scheme, but could be used for other things. */
+    /**
+     * Commonly used for setting the `Authorization` scheme, but could be used for other things.
+     * For `Authorization` header, the default will be `Bearer `, but `undefined` for other headers.
+     */
     valuePrefix: string | undefined;
 }
