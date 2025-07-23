@@ -31,7 +31,7 @@ export declare namespace Problem {
         /** Override the X-Random-Header header */
         xRandomHeader?: string | undefined;
         /** Additional query string parameters to include in the request. */
-        additionalQueryParams?: Record<string, unknown>;
+        queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
         headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
@@ -153,7 +153,7 @@ export class Problem {
                 requestOptions?.headers,
             ),
             contentType: "application/json",
-            queryParameters: requestOptions?.additionalQueryParams,
+            queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.CreateProblemRequest.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -313,7 +313,7 @@ export class Problem {
                 requestOptions?.headers,
             ),
             contentType: "application/json",
-            queryParameters: requestOptions?.additionalQueryParams,
+            queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.CreateProblemRequest.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -399,7 +399,7 @@ export class Problem {
                 }),
                 requestOptions?.headers,
             ),
-            queryParameters: requestOptions?.additionalQueryParams,
+            queryParameters: requestOptions?.queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -488,7 +488,7 @@ export class Problem {
                 requestOptions?.headers,
             ),
             contentType: "application/json",
-            queryParameters: requestOptions?.additionalQueryParams,
+            queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.GetDefaultStarterFilesRequest.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",

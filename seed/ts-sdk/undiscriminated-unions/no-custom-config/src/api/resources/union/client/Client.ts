@@ -24,7 +24,7 @@ export declare namespace Union {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional query string parameters to include in the request. */
-        additionalQueryParams?: Record<string, unknown>;
+        queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
         headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
@@ -62,7 +62,7 @@ export class Union {
             method: "POST",
             headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
             contentType: "application/json",
-            queryParameters: requestOptions?.additionalQueryParams,
+            queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -121,7 +121,7 @@ export class Union {
             ),
             method: "GET",
             headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
-            queryParameters: requestOptions?.additionalQueryParams,
+            queryParameters: requestOptions?.queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -186,7 +186,7 @@ export class Union {
             method: "PUT",
             headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
             contentType: "application/json",
-            queryParameters: requestOptions?.additionalQueryParams,
+            queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -255,7 +255,7 @@ export class Union {
             method: "POST",
             headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
             contentType: "application/json",
-            queryParameters: requestOptions?.additionalQueryParams,
+            queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -318,7 +318,7 @@ export class Union {
             method: "POST",
             headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
             contentType: "application/json",
-            queryParameters: requestOptions?.additionalQueryParams,
+            queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -386,7 +386,7 @@ export class Union {
             method: "POST",
             headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
             contentType: "application/json",
-            queryParameters: requestOptions?.additionalQueryParams,
+            queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,

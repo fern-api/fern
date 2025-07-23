@@ -26,7 +26,7 @@ export declare namespace Object_ {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional query string parameters to include in the request. */
-        additionalQueryParams?: Record<string, unknown>;
+        queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
         headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
@@ -86,7 +86,7 @@ export class Object_ {
                 requestOptions?.headers,
             ),
             contentType: "application/json",
-            queryParameters: requestOptions?.additionalQueryParams,
+            queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -169,7 +169,7 @@ export class Object_ {
                 requestOptions?.headers,
             ),
             contentType: "application/json",
-            queryParameters: requestOptions?.additionalQueryParams,
+            queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.types.ObjectWithRequiredField.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -256,7 +256,7 @@ export class Object_ {
                 requestOptions?.headers,
             ),
             contentType: "application/json",
-            queryParameters: requestOptions?.additionalQueryParams,
+            queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.types.ObjectWithMapOfMap.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -358,7 +358,7 @@ export class Object_ {
                 requestOptions?.headers,
             ),
             contentType: "application/json",
-            queryParameters: requestOptions?.additionalQueryParams,
+            queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.types.NestedObjectWithOptionalField.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -463,7 +463,7 @@ export class Object_ {
                 requestOptions?.headers,
             ),
             contentType: "application/json",
-            queryParameters: requestOptions?.additionalQueryParams,
+            queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.types.NestedObjectWithRequiredField.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -584,7 +584,7 @@ export class Object_ {
                 requestOptions?.headers,
             ),
             contentType: "application/json",
-            queryParameters: requestOptions?.additionalQueryParams,
+            queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",

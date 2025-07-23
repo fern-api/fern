@@ -25,7 +25,7 @@ export declare namespace Service {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional query string parameters to include in the request. */
-        additionalQueryParams?: Record<string, unknown>;
+        queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
         headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
@@ -123,7 +123,7 @@ export class Service {
                 mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
                 requestOptions?.headers,
             ),
-            queryParameters: requestOptions?.additionalQueryParams,
+            queryParameters: requestOptions?.queryParams,
             requestType: "file",
             duplex: _maybeEncodedRequest.duplex,
             body: _maybeEncodedRequest.body,
@@ -190,7 +190,7 @@ export class Service {
                 mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
                 requestOptions?.headers,
             ),
-            queryParameters: requestOptions?.additionalQueryParams,
+            queryParameters: requestOptions?.queryParams,
             requestType: "file",
             duplex: _maybeEncodedRequest.duplex,
             body: _maybeEncodedRequest.body,
@@ -281,7 +281,7 @@ export class Service {
                 mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
                 requestOptions?.headers,
             ),
-            queryParameters: { ..._queryParams, ...requestOptions?.additionalQueryParams },
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             requestType: "file",
             duplex: _maybeEncodedRequest.duplex,
             body: _maybeEncodedRequest.body,
@@ -356,7 +356,7 @@ export class Service {
                 mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
                 requestOptions?.headers,
             ),
-            queryParameters: requestOptions?.additionalQueryParams,
+            queryParameters: requestOptions?.queryParams,
             requestType: "file",
             duplex: _maybeEncodedRequest.duplex,
             body: _maybeEncodedRequest.body,
@@ -431,7 +431,7 @@ export class Service {
                 mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
                 requestOptions?.headers,
             ),
-            queryParameters: requestOptions?.additionalQueryParams,
+            queryParameters: requestOptions?.queryParams,
             requestType: "file",
             duplex: _maybeEncodedRequest.duplex,
             body: _maybeEncodedRequest.body,
@@ -590,7 +590,7 @@ export class Service {
                 mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
                 requestOptions?.headers,
             ),
-            queryParameters: requestOptions?.additionalQueryParams,
+            queryParameters: requestOptions?.queryParams,
             requestType: "file",
             duplex: _maybeEncodedRequest.duplex,
             body: _maybeEncodedRequest.body,
@@ -664,7 +664,7 @@ export class Service {
                 mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
                 requestOptions?.headers,
             ),
-            queryParameters: requestOptions?.additionalQueryParams,
+            queryParameters: requestOptions?.queryParams,
             requestType: "file",
             duplex: _maybeEncodedRequest.duplex,
             body: _maybeEncodedRequest.body,
@@ -720,7 +720,7 @@ export class Service {
             ),
             method: "POST",
             headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
-            queryParameters: requestOptions?.additionalQueryParams,
+            queryParameters: requestOptions?.queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

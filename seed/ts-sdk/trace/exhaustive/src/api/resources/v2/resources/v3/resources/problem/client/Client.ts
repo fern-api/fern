@@ -29,7 +29,7 @@ export declare namespace Problem {
         /** Override the X-Random-Header header */
         xRandomHeader?: string | undefined;
         /** Additional query string parameters to include in the request. */
-        additionalQueryParams?: Record<string, unknown>;
+        queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
         headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
@@ -87,7 +87,7 @@ export class Problem {
                 }),
                 requestOptions?.headers,
             ),
-            queryParameters: requestOptions?.additionalQueryParams,
+            queryParameters: requestOptions?.queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
@@ -154,7 +154,7 @@ export class Problem {
                 }),
                 requestOptions?.headers,
             ),
-            queryParameters: requestOptions?.additionalQueryParams,
+            queryParameters: requestOptions?.queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
@@ -224,7 +224,7 @@ export class Problem {
                 }),
                 requestOptions?.headers,
             ),
-            queryParameters: requestOptions?.additionalQueryParams,
+            queryParameters: requestOptions?.queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
@@ -299,7 +299,7 @@ export class Problem {
                 }),
                 requestOptions?.headers,
             ),
-            queryParameters: requestOptions?.additionalQueryParams,
+            queryParameters: requestOptions?.queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,

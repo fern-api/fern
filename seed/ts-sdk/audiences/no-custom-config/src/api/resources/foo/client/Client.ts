@@ -25,7 +25,7 @@ export declare namespace Foo {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional query string parameters to include in the request. */
-        additionalQueryParams?: Record<string, unknown>;
+        queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
         headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
@@ -73,7 +73,7 @@ export class Foo {
             method: "POST",
             headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
             contentType: "application/json",
-            queryParameters: { ..._queryParams, ...requestOptions?.additionalQueryParams },
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             requestType: "json",
             body: _body,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
