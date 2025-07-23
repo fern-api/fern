@@ -3,7 +3,7 @@ import { resolve } from "node:path";
 
 import { entries } from "@fern-api/core-utils";
 
-const AsIsFileNames = {
+export const AsIsFileNames = {
     // Core/Networking
     Http: "HTTP.swift",
     HttpClient: "HTTPClient.swift",
@@ -32,17 +32,26 @@ export interface AsIsFileDefinition {
     loadContents: () => Promise<string>;
 }
 
-export const AsIsFiles = Object.fromEntries(
-    entries(AsIsFileNames).map(([key, filename]) => {
-        return [
-            key,
-            {
-                filename,
-                loadContents: () => {
-                    const absolutePath = resolve(__dirname, "../../asIs", filename);
-                    return readFile(absolutePath, "utf-8");
-                }
+export type AsIsFileId = keyof typeof AsIsFileNames;
+
+export type AsIsFileDefinitionsById = {
+    [K in AsIsFileId]: AsIsFileDefinition;
+};
+
+export const AsIsFiles = createAsIsFiles();
+
+function createAsIsFiles(): AsIsFileDefinitionsById {
+    const result = {} as AsIsFileDefinitionsById;
+
+    for (const [key, filename] of entries(AsIsFileNames)) {
+        result[key] = {
+            filename,
+            loadContents: () => {
+                const absolutePath = resolve(__dirname, "../../asIs", filename);
+                return readFile(absolutePath, "utf-8");
             }
-        ];
-    })
-);
+        };
+    }
+
+    return result;
+}
