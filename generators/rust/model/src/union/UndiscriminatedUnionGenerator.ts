@@ -1,34 +1,33 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
-import { rust, Attribute, PUBLIC } from "@fern-api/rust-codegen";
+import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 
-import { TypeDeclaration, UndiscriminatedUnionTypeDeclaration, UndiscriminatedUnionMember } from "@fern-fern/ir-sdk/api";
+import {
+    TypeDeclaration,
+    UndiscriminatedUnionMember,
+    UndiscriminatedUnionTypeDeclaration
+} from "@fern-fern/ir-sdk/api";
 
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference";
-import {
-    isDateTimeType,
-    isUuidType,
-    isCollectionType,
-    isUnknownType,
-    isOptionalType,
-    getInnerTypeFromOptional
-} from "../utils/primitiveTypeUtils";
+import { isCollectionType, isDateTimeType, isUnknownType, isUuidType } from "../utils/primitiveTypeUtils";
 
 export class UndiscriminatedUnionGenerator {
     private readonly typeDeclaration: TypeDeclaration;
     private readonly undiscriminatedUnionTypeDeclaration: UndiscriminatedUnionTypeDeclaration;
 
-    public constructor(typeDeclaration: TypeDeclaration, undiscriminatedUnionTypeDeclaration: UndiscriminatedUnionTypeDeclaration) {
+    public constructor(
+        typeDeclaration: TypeDeclaration,
+        undiscriminatedUnionTypeDeclaration: UndiscriminatedUnionTypeDeclaration
+    ) {
         this.typeDeclaration = typeDeclaration;
         this.undiscriminatedUnionTypeDeclaration = undiscriminatedUnionTypeDeclaration;
     }
 
     public generate(): RustFile {
-        const typeName = this.typeDeclaration.name.name.pascalCase.unsafeName;
         const filename = `${this.typeDeclaration.name.name.snakeCase.unsafeName}.rs`;
 
         const writer = new rust.Writer();
-        
+
         // Write use statements
         this.writeUseStatements(writer);
         writer.newLine();
@@ -38,7 +37,7 @@ export class UndiscriminatedUnionGenerator {
 
         return new RustFile({
             filename,
-            directory: RelativeFilePath.of("src/types"),
+            directory: RelativeFilePath.of("src"),
             fileContents: writer.toString()
         });
     }
@@ -72,7 +71,7 @@ export class UndiscriminatedUnionGenerator {
 
         // Generate union attributes
         const attributes = this.generateUnionAttributes();
-        attributes.forEach(attr => {
+        attributes.forEach((attr) => {
             attr.write(writer);
             writer.newLine();
         });
@@ -107,10 +106,10 @@ export class UndiscriminatedUnionGenerator {
 
     private generateUnionMember(writer: rust.Writer, member: UndiscriminatedUnionMember, index: number): void {
         const memberType = generateRustTypeForTypeReference(member.type);
-        
+
         // Generate variant name based on the type or index
         const variantName = this.getVariantNameForMember(member, index);
-        
+
         // Generate the variant as a tuple variant
         writer.writeLine(`    ${variantName}(${memberType.toString()}),`);
     }
@@ -118,7 +117,7 @@ export class UndiscriminatedUnionGenerator {
     private getVariantNameForMember(member: UndiscriminatedUnionMember, index: number): string {
         // Try to extract a meaningful name from the type reference
         const memberType = member.type;
-        
+
         if (memberType.type === "named") {
             return memberType.name.pascalCase.unsafeName;
         } else if (memberType.type === "primitive") {
@@ -179,7 +178,7 @@ export class UndiscriminatedUnionGenerator {
             // Generate helper methods to check variant types
             this.generateVariantCheckers(writer);
             writer.newLine();
-            
+
             // Generate conversion methods
             this.generateConversionMethods(writer);
         });
@@ -189,7 +188,7 @@ export class UndiscriminatedUnionGenerator {
         this.undiscriminatedUnionTypeDeclaration.members.forEach((member, index) => {
             const variantName = this.getVariantNameForMember(member, index);
             const methodName = `is_${variantName.toLowerCase()}`;
-            
+
             writer.writeBlock(`pub fn ${methodName}(&self) -> bool`, () => {
                 writer.writeLine(`matches!(self, Self::${variantName}(_))`);
             });
@@ -202,7 +201,7 @@ export class UndiscriminatedUnionGenerator {
             const variantName = this.getVariantNameForMember(member, index);
             const memberType = generateRustTypeForTypeReference(member.type);
             const methodName = `as_${variantName.toLowerCase()}`;
-            
+
             writer.writeBlock(`pub fn ${methodName}(&self) -> Option<&${memberType.toString()}>`, () => {
                 writer.writeLine("match self {");
                 writer.writeLine(`            Self::${variantName}(value) => Some(value),`);
@@ -210,7 +209,7 @@ export class UndiscriminatedUnionGenerator {
                 writer.writeLine("        }");
             });
             writer.newLine();
-            
+
             // Also generate owned conversion
             const ownedMethodName = `into_${variantName.toLowerCase()}`;
             writer.writeBlock(`pub fn ${ownedMethodName}(self) -> Option<${memberType.toString()}>`, () => {
@@ -241,8 +240,6 @@ export class UndiscriminatedUnionGenerator {
     }
 
     private hasFieldsOfType(predicate: (typeRef: any) => boolean): boolean {
-        return this.undiscriminatedUnionTypeDeclaration.members.some(member => 
-            predicate(member.type)
-        );
+        return this.undiscriminatedUnionTypeDeclaration.members.some((member) => predicate(member.type));
     }
-} 
+}

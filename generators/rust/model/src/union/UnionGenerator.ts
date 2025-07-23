@@ -1,17 +1,16 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
-import { rust, Attribute, PUBLIC } from "@fern-api/rust-codegen";
+import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 
-import { TypeDeclaration, UnionTypeDeclaration, SingleUnionType } from "@fern-fern/ir-sdk/api";
+import { SingleUnionType, TypeDeclaration, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference";
 import {
-    isDateTimeType,
-    isUuidType,
     isCollectionType,
-    isUnknownType,
+    isDateTimeType,
     isOptionalType,
-    getInnerTypeFromOptional
+    isUnknownType,
+    isUuidType
 } from "../utils/primitiveTypeUtils";
 
 export class UnionGenerator {
@@ -28,7 +27,7 @@ export class UnionGenerator {
         const filename = `${this.typeDeclaration.name.name.snakeCase.unsafeName}.rs`;
 
         const writer = new rust.Writer();
-        
+
         // Write use statements
         this.writeUseStatements(writer);
         writer.newLine();
@@ -38,7 +37,7 @@ export class UnionGenerator {
 
         return new RustFile({
             filename,
-            directory: RelativeFilePath.of("src/types"),
+            directory: RelativeFilePath.of("src"),
             fileContents: writer.toString()
         });
     }
@@ -73,7 +72,7 @@ export class UnionGenerator {
 
         // Generate union attributes
         const attributes = this.generateUnionAttributes();
-        attributes.forEach(attr => {
+        attributes.forEach((attr) => {
             attr.write(writer);
             writer.newLine();
         });
@@ -110,10 +109,10 @@ export class UnionGenerator {
     private generateUnionVariant(writer: rust.Writer, unionType: SingleUnionType): void {
         const variantName = unionType.discriminantValue.name.pascalCase.unsafeName;
         const discriminantValue = unionType.discriminantValue.wireValue;
-        
+
         // Generate variant attributes
         const variantAttributes = this.generateVariantAttributes(unionType);
-        variantAttributes.forEach(attr => {
+        variantAttributes.forEach((attr) => {
             writer.write("    ");
             attr.write(writer);
             writer.newLine();
@@ -127,25 +126,25 @@ export class UnionGenerator {
             singleProperty: (singleProperty) => {
                 const fieldType = generateRustTypeForTypeReference(singleProperty.type);
                 const fieldName = singleProperty.name.name.snakeCase.unsafeName;
-                
+
                 writer.writeLine(`    ${variantName} {`);
                 writer.writeLine(`        ${fieldName}: ${fieldType.toString()},`);
-                
+
                 // Add base properties if they exist
                 this.generateBaseProperties(writer);
-                
+
                 writer.writeLine(`    },`);
             },
             samePropertiesAsObject: (declaredTypeName) => {
                 const objectTypeName = declaredTypeName.name.pascalCase.unsafeName;
-                
+
                 writer.writeLine(`    ${variantName} {`);
                 writer.writeLine(`        #[serde(flatten)]`);
                 writer.writeLine(`        data: ${objectTypeName},`);
-                
+
                 // Add base properties if they exist
                 this.generateBaseProperties(writer);
-                
+
                 writer.writeLine(`    },`);
             },
             _other: () => {
@@ -153,10 +152,10 @@ export class UnionGenerator {
                 writer.writeLine(`    ${variantName} {`);
                 writer.writeLine(`        #[serde(flatten)]`);
                 writer.writeLine(`        data: serde_json::Value,`);
-                
+
                 // Add base properties if they exist
                 this.generateBaseProperties(writer);
-                
+
                 writer.writeLine(`    },`);
             }
         });
@@ -177,19 +176,19 @@ export class UnionGenerator {
 
     private generateBaseProperties(writer: rust.Writer): void {
         // Generate base properties that are common to all variants
-        this.unionTypeDeclaration.baseProperties.forEach(property => {
+        this.unionTypeDeclaration.baseProperties.forEach((property) => {
             const fieldName = property.name.name.snakeCase.unsafeName;
             const fieldType = generateRustTypeForTypeReference(property.valueType);
             const wireValue = property.name.wireValue;
-            
+
             if (fieldName !== wireValue) {
                 writer.writeLine(`        #[serde(rename = "${wireValue}")]`);
             }
-            
+
             if (isOptionalType(property.valueType)) {
                 writer.writeLine(`        #[serde(skip_serializing_if = "Option::is_none")]`);
             }
-            
+
             writer.writeLine(`        ${fieldName}: ${fieldType.toString()},`);
         });
     }
@@ -203,19 +202,19 @@ export class UnionGenerator {
         writer.newLine();
         writer.writeBlock(`impl ${typeName}`, () => {
             // Generate getter methods for base properties
-            this.unionTypeDeclaration.baseProperties.forEach(property => {
+            this.unionTypeDeclaration.baseProperties.forEach((property) => {
                 const fieldName = property.name.name.snakeCase.unsafeName;
                 const fieldType = generateRustTypeForTypeReference(property.valueType);
                 const methodName = `get_${fieldName}`;
-                
+
                 writer.writeBlock(`pub fn ${methodName}(&self) -> &${fieldType.toString()}`, () => {
                     writer.writeLine("match self {");
-                    
-                    this.unionTypeDeclaration.types.forEach(unionType => {
+
+                    this.unionTypeDeclaration.types.forEach((unionType) => {
                         const variantName = unionType.discriminantValue.name.pascalCase.unsafeName;
                         writer.writeLine(`            Self::${variantName} { ${fieldName}, .. } => ${fieldName},`);
                     });
-                    
+
                     writer.writeLine("        }");
                 });
                 writer.newLine();
@@ -242,12 +241,12 @@ export class UnionGenerator {
 
     private hasFieldsOfType(predicate: (typeRef: any) => boolean): boolean {
         // Check base properties
-        if (this.unionTypeDeclaration.baseProperties.some(prop => predicate(prop.valueType))) {
+        if (this.unionTypeDeclaration.baseProperties.some((prop) => predicate(prop.valueType))) {
             return true;
         }
 
         // Check variant properties
-        return this.unionTypeDeclaration.types.some(unionType => {
+        return this.unionTypeDeclaration.types.some((unionType) => {
             return unionType.shape._visit({
                 singleProperty: (singleProperty) => predicate(singleProperty.type),
                 samePropertiesAsObject: () => false, // Would need to resolve the object type
@@ -256,4 +255,4 @@ export class UnionGenerator {
             });
         });
     }
-} 
+}
