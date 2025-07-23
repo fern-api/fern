@@ -1,7 +1,7 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { MediaType } from "@fern-api/core-utils";
-import { HttpResponseBody, JsonResponse, StreamingResponse } from "@fern-api/ir-sdk";
+import { FernIr, HttpResponseBody, JsonResponse, StreamingResponse } from "@fern-api/ir-sdk";
 import { Converters, SchemaOrReferenceConverter } from "@fern-api/v2-importer-commons";
 
 import { FernStreamingExtension } from "../../extensions/x-fern-streaming";
@@ -147,6 +147,31 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
             if (this.shouldReturnTextResponse(contentType)) {
                 return this.returnTextResponse({
                     mediaTypeObject
+                });
+            }
+        }
+
+        // For success status codes (2xx), return an empty response instead of undefined
+        const statusCodeNum = parseInt(this.statusCode);
+        if (!isNaN(statusCodeNum) && statusCodeNum >= 200 && statusCodeNum < 300) {
+            const mediaTypeObject: OpenAPIV3_1.MediaTypeObject = {
+                schema: {
+                    type: 'object',
+                    description: 'Empty response body',
+                }
+            };
+
+            const convertedSchema = this.parseMediaTypeObject({
+                mediaTypeObject,
+                schemaId,
+                contentType: "application/json",
+                resolveSchema: true,
+            });
+
+            if (convertedSchema != null) {
+                return this.returnJsonResponse({
+                    mediaTypeObject,
+                    convertedSchema
                 });
             }
         }

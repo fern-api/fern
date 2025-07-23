@@ -16366,6 +16366,15 @@
           }
         ]
       }
+    },
+    "Webhooks_WebhookController_deleteById_Response_200": {
+      "description": "Empty response body",
+      "name": "Webhooks_WebhookController_deleteById_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
     }
   },
   "subpackages": {
@@ -37365,6 +37374,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Webhooks_WebhookController_deleteById_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "successful operation"
+          },
           "errorsV2": [
             {
               "type": {
@@ -37467,7 +37487,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {

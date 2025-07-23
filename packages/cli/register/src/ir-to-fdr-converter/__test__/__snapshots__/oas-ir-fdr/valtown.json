@@ -1671,6 +1671,24 @@
         ]
       }
     },
+    "blobs_store_Response_201": {
+      "description": "Empty response body",
+      "name": "blobs_store_Response_201",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "blobs_delete_Response_204": {
+      "description": "Empty response body",
+      "name": "blobs_delete_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "users_vals_Response_200": {
       "description": "A paginated result set",
       "name": "users_vals_Response_200",
@@ -2266,6 +2284,24 @@
             }
           }
         ]
+      }
+    },
+    "vals_runGet_Response_200": {
+      "description": "Empty response body",
+      "name": "vals_runGet_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "vals_runPost_Response_200": {
+      "description": "Empty response body",
+      "name": "vals_runPost_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaFrom1": {
@@ -3027,6 +3063,15 @@
         ]
       }
     },
+    "vals_put_Response_200": {
+      "description": "Empty response body",
+      "name": "vals_put_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "V1ValsValIdPutRequestBodyContentApplicationJsonSchemaPrivacy": {
       "description": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
       "name": "V1ValsValIdPutRequestBodyContentApplicationJsonSchemaPrivacy",
@@ -3061,6 +3106,24 @@
             "value": "email"
           }
         ]
+      }
+    },
+    "vals_update_Response_204": {
+      "description": "Empty response body",
+      "name": "vals_update_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "vals_delete_Response_204": {
+      "description": "Empty response body",
+      "name": "vals_delete_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "V1ValsValIdVersionsGetResponsesContentApplicationJsonSchemaDataItems": {
@@ -3166,6 +3229,15 @@
             "value": "email"
           }
         ]
+      }
+    },
+    "vals_deleteVersion_Response_204": {
+      "description": "Empty response body",
+      "name": "vals_deleteVersion_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "vals_cancel_Response_200": {
@@ -4430,6 +4502,17 @@
             },
             "description": "Binary input data"
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "blobs_store_Response_201"
+              }
+            },
+            "statusCode": 201,
+            "description": "Successfully stored as blob"
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -4445,7 +4528,12 @@
                 "type": "json",
                 "value": "string"
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 201,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -4502,6 +4590,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "blobs_delete_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Blob successfully deleted"
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -4512,7 +4611,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -5467,6 +5571,17 @@
             }
           ],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "vals_runGet_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "Default Response"
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -5477,7 +5592,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -5559,6 +5679,17 @@
             },
             "description": "Arguments to call the method with"
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "vals_runPost_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "Default Response"
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -5582,7 +5713,12 @@
                   ]
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -5852,6 +5988,17 @@
             },
             "description": "Create a new val, or version of a val, with new code"
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "vals_put_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "Default Response"
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -5871,7 +6018,12 @@
                   "name": "myVal"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -6117,6 +6269,17 @@
             },
             "description": "Note: you must supply at least one of the keys in this object in order to update a val"
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "vals_update_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Val successfully updated"
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -6139,7 +6302,12 @@
                   "readme": "# Updated readme"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             },
             {
               "name": "example2",
@@ -6159,7 +6327,12 @@
                   "type": "http"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -6215,6 +6388,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "vals_delete_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Val successfully deleted"
+          },
           "errorsV2": [
             {
               "type": {
@@ -6238,7 +6422,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -6844,6 +7033,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "vals_deleteVersion_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Version successfully deleted"
+          },
           "errorsV2": [
             {
               "type": {
@@ -6868,7 +7068,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
