@@ -57,10 +57,6 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     private async generateProjectFiles(context: SdkGeneratorContext): Promise<SwiftFile[]> {
         const files: SwiftFile[] = [];
 
-        // Core/**/*.swift and Public/**/*.swift
-        // const staticFiles = await this.generateStaticFiles();
-        // files.push(...staticFiles);
-
         // Resources/**/*.swift
         Object.entries(context.ir.subpackages).forEach(([_, subpackage]) => {
             const service = subpackage.service != null ? context.getHttpServiceOrThrow(subpackage.service) : undefined;
@@ -91,25 +87,4 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
 
         return files;
     }
-
-    // private async generateStaticFiles(): Promise<SwiftFile[]> {
-    //     const pathToStaticDir = resolve(__dirname, "../static");
-    //     const relativeFilePathStrings = await getAllFilesInDirectoryRelative(pathToStaticDir);
-    //     return Promise.all(
-    //         relativeFilePathStrings.map(async (relativeFilePathString) => {
-    //             const relativeFilePath = RelativeFilePath.of(relativeFilePathString);
-    //             const filename = getFilename(relativeFilePath);
-    //             if (filename == null) {
-    //                 throw new Error(`Static file name is nullish for '${relativeFilePathString}'`);
-    //             }
-    //             const absoluteFilePath = resolve(pathToStaticDir, relativeFilePathString);
-    //             const fileContents = await readFile(absoluteFilePath, "utf-8");
-    //             return new SwiftFile({
-    //                 filename,
-    //                 directory: RelativeFilePath.of(dirname(relativeFilePathString)),
-    //                 fileContents
-    //             });
-    //         })
-    //     );
-    // }
 }
