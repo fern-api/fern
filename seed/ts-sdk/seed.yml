@@ -215,9 +215,9 @@ fixtures:
   query-parameters-openapi:
     - customConfig: null
       outputFolder: no-custom-config
-    - customConfig:
-        noSerdeLayer: false
-      outputFolder: serde-layer-query
+  query-parameters-openapi-as-objects:
+    - customConfig: null
+      outputFolder: no-custom-config
   request-parameters:
     - customConfig: null
       outputFolder: no-custom-config
