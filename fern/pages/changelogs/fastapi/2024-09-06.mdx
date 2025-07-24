@@ -1,0 +1,20 @@
+## 1.4.8
+**`(chore):`** Remove Pydantic field aliases and leverage an internal representation
+
+### What's been fixed
+- Pydantic field aliases are removed and replaced with an internal representation. This allows for more robust handling of field aliases and prevents issues with Pydantic V2 and mypy.
+Previously, you'd have for V1 and V2 compatibility in Pydantic, you'd want to conditionally apply the config class within the base model, however this would lead to mypy errors when filling out a model with it's field alias. To solve this, We used the deprecated `class Config`, regardless of the Pydantic version to satisfy mypy, which lead to warnings in the console.
+Now, we've removed the field aliases and replaced them with an internal representation, which allows us to avoid pydantic config altogether.
+If you'd like to disable this feature, you can set `use_pydantic_field_aliases` to `true` in your configuration, which will preserve the existing behavior.
+To maintain parity with pre-3.11.0 behavior, update the flag to `true`:
+
+  ```yaml
+  - name: fernapi/fern-fastapi-server
+    version: 1.4.8
+    config:
+      pydantic_config:
+        use_pydantic_field_aliases: true
+  ```
+- Pydantic V2 `.dict` calls are updated to be back to pre-3.10.4 logic. This is fix a regression where nested literals were being omitted due to the Pydantic V2 serializers not respecting the recursive .dict logic, as Pydantic V2 shells out `model_dump` calls to Rust library and serializers, as opposed to recursively calling `model_dump`.
+It is expected that performance will not be degraded given the Rust-based serializers have optimized performance, compared to the Pydantic V1 .dict approach.
+
