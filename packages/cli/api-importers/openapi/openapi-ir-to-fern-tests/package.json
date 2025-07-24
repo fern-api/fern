@@ -19,7 +19,6 @@
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
     "test": "vitest --run",
-    "test:debug": "vitest --run --inspect-brk --no-file-parallelism",
     "test:update": "vitest --run -u",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
