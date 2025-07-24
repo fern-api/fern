@@ -144,7 +144,7 @@ export const MANIFEST: CoreUtility.Manifest = {
     pathInCoreUtilities: { nameOnDisk: "fetcher", exportDeclaration: { exportAll: true } },
     addDependencies: (dependencyManager: DependencyManager, { formDataSupport, streamType, fetchSupport }): void => {
         if (formDataSupport === "Node16") {
-            dependencyManager.addDependency("form-data", "^4.0.0");
+            dependencyManager.addDependency("form-data", "^4.0.4");
             dependencyManager.addDependency("formdata-node", "^6.0.3");
         }
 
