@@ -9,14 +9,16 @@ import { DynamicSnippetsGenerator } from "@fern-api/python-dynamic-snippets";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { ExampleEndpointCall, HttpEndpoint, HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
+import { SdkCustomConfigSchema } from "../SdkCustomConfig";
+
 export class PythonWireTestGenerator {
     private static readonly DEFAULT_BASE_URL = "http://example.test/";
     private static readonly DEFAULT_RESPONSE_VARIABLE_NAME = "response";
 
-    private context: AbstractPythonGeneratorContext<any>;
+    private context: AbstractPythonGeneratorContext<SdkCustomConfigSchema>;
     private dynamicSnippetsGenerator: DynamicSnippetsGenerator;
 
-    constructor(context: AbstractPythonGeneratorContext<any>) {
+    constructor(context: AbstractPythonGeneratorContext<SdkCustomConfigSchema>) {
         this.context = context;
 
         // Create dynamic snippets generator instance
@@ -426,7 +428,7 @@ export class PythonWireTestGenerator {
         return urlJoin(PythonWireTestGenerator.DEFAULT_BASE_URL, path);
     }
 
-    private extractResponseFromExample(example: ExampleEndpointCall): any {
+    private extractResponseFromExample(example: ExampleEndpointCall): unknown {
         if (example.response && example.response.type === "ok") {
             // For success responses, extract the jsonExample directly from the response body
             if (example.response.value && example.response.value.type === "body") {
@@ -443,7 +445,7 @@ export class PythonWireTestGenerator {
         return { message: "success" };
     }
 
-    private convertToPythonLiteral(value: any): string {
+    private convertToPythonLiteral(value: unknown): string {
         return python.TypeInstantiation.unknown(value).toString();
     }
 
@@ -560,15 +562,13 @@ export class PythonWireTestGenerator {
         }
 
         // assume compatibility
-        return ir.dynamic as any;
+        return ir.dynamic as dynamic.DynamicIntermediateRepresentation;
     }
 
-    private createGeneratorConfig(context: AbstractPythonGeneratorContext<any>): any {
-        return {
-            organization: context.config.organization,
-            workspaceName: context.config.workspaceName,
-            customConfig: context.customConfig || {}
-        };
+    private createGeneratorConfig(
+        context: AbstractPythonGeneratorContext<SdkCustomConfigSchema>
+    ): FernGeneratorExec.GeneratorConfig {
+        return context.config;
     }
 
     private getResponseStatusCode(example: ExampleEndpointCall, endpoint: HttpEndpoint): number {
