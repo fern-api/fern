@@ -1,5 +1,24 @@
 import PackageDescription
 
 let package = Package(
-    name: "Object"
+    name: "Object",
+    platforms: [
+        .iOS(.v15), 
+        .macOS(.v12), 
+        .tvOS(.v15), 
+        .watchOS(.v8)
+    ],
+    products: [
+        .library(
+            name: "Object",
+            targets: ["ObjectTarget"]
+        )
+    ],
+    dependencies: [],
+    targets: [
+        .target(
+            name: "ObjectTarget",
+            path: "Sources"
+        )
+    ]
 )

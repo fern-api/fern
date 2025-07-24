@@ -1,5 +1,24 @@
 import PackageDescription
 
 let package = Package(
-    name: "ServerSentEvents"
+    name: "ServerSentEvents",
+    platforms: [
+        .iOS(.v15), 
+        .macOS(.v12), 
+        .tvOS(.v15), 
+        .watchOS(.v8)
+    ],
+    products: [
+        .library(
+            name: "ServerSentEvents",
+            targets: ["ServerSentEventsTarget"]
+        )
+    ],
+    dependencies: [],
+    targets: [
+        .target(
+            name: "ServerSentEventsTarget",
+            path: "Sources"
+        )
+    ]
 )
