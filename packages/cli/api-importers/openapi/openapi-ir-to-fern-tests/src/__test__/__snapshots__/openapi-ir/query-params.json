@@ -329,6 +329,72 @@
       ],
       "headers": [],
       "generatedRequestName": "SearchRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "searchRequestBefore",
+              "key": "before",
+              "schema": {
+                "generatedName": "searchRequestBefore",
+                "value": {
+                  "value": {
+                    "generatedName": "SearchRequestBefore",
+                    "schemas": [
+                      {
+                        "schema": {
+                          "format": "date",
+                          "type": "string"
+                        },
+                        "generatedName": "SearchRequestBefore",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      {
+                        "schema": {
+                          "type": "int"
+                        },
+                        "generatedName": "SearchRequestBefore",
+                        "groupName": [],
+                        "type": "primitive"
+                      }
+                    ],
+                    "groupName": [],
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "undiscriminated"
+                  },
+                  "type": "oneOf"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "SearchRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
       "response": {
         "description": "Successful response",
         "schema": {
@@ -380,13 +446,17 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "method": "GET",
+      "method": "POST",
       "path": "/search",
       "examples": [
         {
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
           "response": {
             "value": {
               "properties": {

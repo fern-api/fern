@@ -4,7 +4,8 @@ info:
   version: 1.0.0
 paths:
   /search:
-    get:
+    # TODO: change to get before committing
+    post:
       operationId: search
       parameters:
         - name: filter
@@ -59,6 +60,19 @@ paths:
             type: array
             items:
               type: string
+      # TODO: Remove the request body before committing
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                before:
+                  oneOf:
+                    - type: string
+                      format: date
+                    - type: integer
       responses:
         200:
           description: Successful response

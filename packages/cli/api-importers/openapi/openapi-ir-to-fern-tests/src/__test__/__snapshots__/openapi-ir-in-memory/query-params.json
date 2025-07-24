@@ -8,7 +8,7 @@
     },
     "paths": {
       "/search": {
-        "get": {
+        "post": {
           "operationId": "search",
           "parameters": [
             {
@@ -99,6 +99,29 @@
               }
             }
           ],
+          "requestBody": {
+            "required": false,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "before": {
+                      "oneOf": [
+                        {
+                          "type": "string",
+                          "format": "date"
+                        },
+                        {
+                          "type": "integer"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
           "responses": {
             "200": {
               "description": "Successful response",
