@@ -33,119 +33,119 @@ export class PackageSwiftGenerator {
     }
 
     public generate(): SwiftFile {
-        const statements: swift.Statement[] = [
-            swift.Statement.import("PackageDescription"),
-            swift.Statement.constantDeclaration(
-                "package",
-                swift.Expression.classInitialization({
-                    unsafeName: "Package",
-                    arguments_: [
-                        swift.functionArgument({
-                            label: "name",
-                            value: swift.Expression.rawStringValue(this.packageName)
-                        }),
-                        swift.functionArgument({
-                            label: "platforms",
-                            value: swift.Expression.arrayLiteral({
-                                elements: [
-                                    swift.Expression.contextualMethodCall({
-                                        methodName: "iOS",
-                                        arguments_: [
-                                            swift.functionArgument({
-                                                value: swift.Expression.enumCaseShorthand("v15")
-                                            })
-                                        ]
-                                    }),
-                                    swift.Expression.contextualMethodCall({
-                                        methodName: "macOS",
-                                        arguments_: [
-                                            swift.functionArgument({
-                                                value: swift.Expression.enumCaseShorthand("v12")
-                                            })
-                                        ]
-                                    }),
-                                    swift.Expression.contextualMethodCall({
-                                        methodName: "tvOS",
-                                        arguments_: [
-                                            swift.functionArgument({
-                                                value: swift.Expression.enumCaseShorthand("v15")
-                                            })
-                                        ]
-                                    }),
-                                    swift.Expression.contextualMethodCall({
-                                        methodName: "watchOS",
-                                        arguments_: [
-                                            swift.functionArgument({
-                                                value: swift.Expression.enumCaseShorthand("v8")
-                                            })
-                                        ]
-                                    })
-                                ],
-                                multiline: true
-                            })
-                        }),
-                        swift.functionArgument({
-                            label: "products",
-                            value: swift.Expression.arrayLiteral({
-                                elements: [
-                                    swift.Expression.contextualMethodCall({
-                                        methodName: "library",
-                                        arguments_: [
-                                            swift.functionArgument({
-                                                label: "name",
-                                                value: swift.Expression.rawStringValue(this.libraryName)
-                                            }),
-                                            swift.functionArgument({
-                                                label: "targets",
-                                                value: swift.Expression.arrayLiteral({
-                                                    elements: [swift.Expression.rawStringValue(this.targetName)]
-                                                })
-                                            })
-                                        ],
-                                        multiline: true
-                                    })
-                                ],
-                                multiline: true
-                            })
-                        }),
-                        swift.functionArgument({
-                            label: "dependencies",
-                            value: swift.Expression.arrayLiteral({
-                                elements: []
-                            })
-                        }),
-                        swift.functionArgument({
-                            label: "targets",
-                            value: swift.Expression.arrayLiteral({
-                                elements: [
-                                    swift.Expression.contextualMethodCall({
-                                        methodName: "target",
-                                        arguments_: [
-                                            swift.functionArgument({
-                                                label: "name",
-                                                value: swift.Expression.rawStringValue(this.targetName)
-                                            }),
-                                            swift.functionArgument({
-                                                label: "path",
-                                                value: swift.Expression.rawStringValue("Sources")
-                                            })
-                                        ],
-                                        multiline: true
-                                    })
-                                ],
-                                multiline: true
-                            })
-                        })
-                    ],
-                    multiline: true
-                })
-            )
-        ];
-        const fileContents = statements.map((statement) => statement.toString()).join("\n");
         return new SwiftFile({
             filename: `Package.swift`,
             directory: RelativeFilePath.of(""),
-            fileContents
+            fileContents: [
+                swift.comment({ content: "swift-tools-version: 5.7" }),
+                swift.LineBreak.double(),
+                swift.Statement.import("PackageDescription"),
+                swift.Statement.constantDeclaration(
+                    "package",
+                    swift.Expression.classInitialization({
+                        unsafeName: "Package",
+                        arguments_: [
+                            swift.functionArgument({
+                                label: "name",
+                                value: swift.Expression.rawStringValue(this.packageName)
+                            }),
+                            swift.functionArgument({
+                                label: "platforms",
+                                value: swift.Expression.arrayLiteral({
+                                    elements: [
+                                        swift.Expression.contextualMethodCall({
+                                            methodName: "iOS",
+                                            arguments_: [
+                                                swift.functionArgument({
+                                                    value: swift.Expression.enumCaseShorthand("v15")
+                                                })
+                                            ]
+                                        }),
+                                        swift.Expression.contextualMethodCall({
+                                            methodName: "macOS",
+                                            arguments_: [
+                                                swift.functionArgument({
+                                                    value: swift.Expression.enumCaseShorthand("v12")
+                                                })
+                                            ]
+                                        }),
+                                        swift.Expression.contextualMethodCall({
+                                            methodName: "tvOS",
+                                            arguments_: [
+                                                swift.functionArgument({
+                                                    value: swift.Expression.enumCaseShorthand("v15")
+                                                })
+                                            ]
+                                        }),
+                                        swift.Expression.contextualMethodCall({
+                                            methodName: "watchOS",
+                                            arguments_: [
+                                                swift.functionArgument({
+                                                    value: swift.Expression.enumCaseShorthand("v8")
+                                                })
+                                            ]
+                                        })
+                                    ],
+                                    multiline: true
+                                })
+                            }),
+                            swift.functionArgument({
+                                label: "products",
+                                value: swift.Expression.arrayLiteral({
+                                    elements: [
+                                        swift.Expression.contextualMethodCall({
+                                            methodName: "library",
+                                            arguments_: [
+                                                swift.functionArgument({
+                                                    label: "name",
+                                                    value: swift.Expression.rawStringValue(this.libraryName)
+                                                }),
+                                                swift.functionArgument({
+                                                    label: "targets",
+                                                    value: swift.Expression.arrayLiteral({
+                                                        elements: [swift.Expression.rawStringValue(this.targetName)]
+                                                    })
+                                                })
+                                            ],
+                                            multiline: true
+                                        })
+                                    ],
+                                    multiline: true
+                                })
+                            }),
+                            swift.functionArgument({
+                                label: "dependencies",
+                                value: swift.Expression.arrayLiteral({
+                                    elements: []
+                                })
+                            }),
+                            swift.functionArgument({
+                                label: "targets",
+                                value: swift.Expression.arrayLiteral({
+                                    elements: [
+                                        swift.Expression.contextualMethodCall({
+                                            methodName: "target",
+                                            arguments_: [
+                                                swift.functionArgument({
+                                                    label: "name",
+                                                    value: swift.Expression.rawStringValue(this.targetName)
+                                                }),
+                                                swift.functionArgument({
+                                                    label: "path",
+                                                    value: swift.Expression.rawStringValue("Sources")
+                                                })
+                                            ],
+                                            multiline: true
+                                        })
+                                    ],
+                                    multiline: true
+                                })
+                            })
+                        ],
+                        multiline: true
+                    })
+                )
+            ]
         });
     }
 }
