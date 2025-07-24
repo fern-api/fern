@@ -7,7 +7,7 @@ import com.seed.noEnvironment.core.ClientOptions;
 import com.seed.noEnvironment.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class AsyncSeedNoEnvironmentClientBuilder {
+public class AsyncSeedNoEnvironmentClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private String token = null;
@@ -51,12 +51,16 @@ public final class AsyncSeedNoEnvironmentClientBuilder {
         return this;
     }
 
+    protected ClientOptions buildClientOptions() {
+        clientOptionsBuilder.environment(this.environment);
+        return clientOptionsBuilder.build();
+    }
+
     public AsyncSeedNoEnvironmentClient build() {
         if (token == null) {
             throw new RuntimeException("Please provide token");
         }
         this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + this.token);
-        clientOptionsBuilder.environment(this.environment);
-        return new AsyncSeedNoEnvironmentClient(clientOptionsBuilder.build());
+        return new AsyncSeedNoEnvironmentClient(buildClientOptions());
     }
 }

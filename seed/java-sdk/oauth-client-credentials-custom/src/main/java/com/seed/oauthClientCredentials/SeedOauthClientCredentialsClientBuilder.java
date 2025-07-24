@@ -9,7 +9,7 @@ import com.seed.oauthClientCredentials.core.OAuthTokenSupplier;
 import com.seed.oauthClientCredentials.resources.auth.AuthClient;
 import okhttp3.OkHttpClient;
 
-public final class SeedOauthClientCredentialsClientBuilder {
+public class SeedOauthClientCredentialsClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private String clientId = null;
@@ -63,12 +63,16 @@ public final class SeedOauthClientCredentialsClientBuilder {
         return this;
     }
 
+    protected ClientOptions buildClientOptions() {
+        clientOptionsBuilder.environment(this.environment);
+        return clientOptionsBuilder.build();
+    }
+
     public SeedOauthClientCredentialsClient build() {
         AuthClient authClient = new AuthClient(
                 ClientOptions.builder().environment(this.environment).build());
         OAuthTokenSupplier oAuthTokenSupplier = new OAuthTokenSupplier(clientId, clientSecret, authClient);
         this.clientOptionsBuilder.addHeader("Authorization", oAuthTokenSupplier);
-        clientOptionsBuilder.environment(this.environment);
-        return new SeedOauthClientCredentialsClient(clientOptionsBuilder.build());
+        return new SeedOauthClientCredentialsClient(buildClientOptions());
     }
 }

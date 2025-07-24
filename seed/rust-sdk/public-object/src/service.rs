@@ -1,5 +1,5 @@
 use crate::client::PublicObjectClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl PublicObjectClient {
     // Service methods

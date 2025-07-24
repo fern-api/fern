@@ -201,6 +201,21 @@
             "statusCode": 200,
             "description": "Successful token response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "auth_get-token_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful token response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {

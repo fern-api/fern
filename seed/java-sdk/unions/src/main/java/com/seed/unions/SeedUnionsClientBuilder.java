@@ -7,7 +7,7 @@ import com.seed.unions.core.ClientOptions;
 import com.seed.unions.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class SeedUnionsClientBuilder {
+public class SeedUnionsClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private Environment environment;
@@ -41,8 +41,12 @@ public final class SeedUnionsClientBuilder {
         return this;
     }
 
-    public SeedUnionsClient build() {
+    protected ClientOptions buildClientOptions() {
         clientOptionsBuilder.environment(this.environment);
-        return new SeedUnionsClient(clientOptionsBuilder.build());
+        return clientOptionsBuilder.build();
+    }
+
+    public SeedUnionsClient build() {
+        return new SeedUnionsClient(buildClientOptions());
     }
 }

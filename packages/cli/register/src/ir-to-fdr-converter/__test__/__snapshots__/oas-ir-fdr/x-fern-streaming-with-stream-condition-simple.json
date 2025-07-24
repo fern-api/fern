@@ -156,6 +156,21 @@
           "statusCode": 200,
           "description": "A response to a chat request."
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "FullResponse"
+                }
+              },
+              "statusCode": 200,
+              "description": "A response to a chat request."
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
@@ -252,6 +267,21 @@
           },
           "statusCode": 200,
           "description": "A response to a chat request."
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "FullResponse"
+                }
+              },
+              "statusCode": 200,
+              "description": "A response to a chat request."
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [

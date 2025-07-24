@@ -102,6 +102,21 @@
           "statusCode": 200,
           "description": "Successful operation"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "submitFormData_Response_200"
+                }
+              },
+              "statusCode": 200,
+              "description": "Successful operation"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {

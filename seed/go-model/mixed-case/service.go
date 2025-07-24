@@ -2,4 +2,28 @@
 
 package mixedcase
 
+import (
+	fmt "fmt"
+)
+
 type ResourceStatus string
+
+const (
+	ResourceStatusActive   = "ACTIVE"
+	ResourceStatusInactive = "INACTIVE"
+)
+
+func NewResourceStatusFromString(s string) (ResourceStatus, error) {
+	switch s {
+	case "ACTIVE":
+		return ResourceStatusActive, nil
+	case "INACTIVE":
+		return ResourceStatusInactive, nil
+	}
+	var t ResourceStatus
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (r ResourceStatus) Ptr() *ResourceStatus {
+	return &r
+}

@@ -16,7 +16,7 @@ RUN yarn add \
   url-join@^5.0.0 \
   readable-stream@^4.6.0 \
   @types/readable-stream@^4.0.18 \
-  form-data@^4.0.0 \
+  form-data@^4.0.4 \
   formdata-node@^6.0.3 \
   jest-environment-jsdom@^29.7.0 \
   js-base64@^3.7.7 \

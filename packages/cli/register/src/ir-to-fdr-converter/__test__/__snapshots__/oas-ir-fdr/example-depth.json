@@ -80,6 +80,21 @@
           "statusCode": 200,
           "description": "Successfully retrieved tree"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "TreeNode"
+                }
+              },
+              "statusCode": 200,
+              "description": "Successfully retrieved tree"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {

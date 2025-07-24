@@ -1,5 +1,5 @@
 use crate::client::AuthEnvironmentVariablesClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl AuthEnvironmentVariablesClient {
     // Service methods

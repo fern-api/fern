@@ -7,7 +7,7 @@ import com.seed.nullable.core.ClientOptions;
 import com.seed.nullable.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class AsyncSeedNullableClientBuilder {
+public class AsyncSeedNullableClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private Environment environment;
@@ -41,8 +41,12 @@ public final class AsyncSeedNullableClientBuilder {
         return this;
     }
 
-    public AsyncSeedNullableClient build() {
+    protected ClientOptions buildClientOptions() {
         clientOptionsBuilder.environment(this.environment);
-        return new AsyncSeedNullableClient(clientOptionsBuilder.build());
+        return clientOptionsBuilder.build();
+    }
+
+    public AsyncSeedNullableClient build() {
+        return new AsyncSeedNullableClient(buildClientOptions());
     }
 }

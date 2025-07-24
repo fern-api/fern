@@ -25,6 +25,8 @@ export declare namespace Method {
         typeReference?: GoTypeReference;
         /* Whether to write the invocation on multiple lines */
         multiline?: boolean;
+        /* The custom name of the receiver, if any */
+        receiver?: string;
         /* Whether this method should use a pointer receiver */
         pointerReceiver?: boolean;
     }
@@ -38,9 +40,20 @@ export class Method extends AstNode {
     public readonly docs: string | undefined;
     public readonly typeReference: GoTypeReference | undefined;
     public readonly multiline: boolean | undefined;
+    public readonly receiver: string | undefined;
     public readonly pointerReceiver: boolean | undefined;
 
-    constructor({ name, parameters, return_, body, docs, typeReference, multiline, pointerReceiver }: Method.Args) {
+    constructor({
+        name,
+        parameters,
+        return_,
+        body,
+        docs,
+        typeReference,
+        multiline,
+        receiver,
+        pointerReceiver
+    }: Method.Args) {
         super();
         this.name = name;
         this.parameters = parameters;
@@ -49,6 +62,7 @@ export class Method extends AstNode {
         this.docs = docs;
         this.typeReference = typeReference;
         this.multiline = multiline;
+        this.receiver = receiver;
         this.pointerReceiver = pointerReceiver;
     }
 
@@ -56,7 +70,7 @@ export class Method extends AstNode {
         writer.writeNode(new Comment({ docs: this.docs }));
         writer.write("func");
         if (this.typeReference != null) {
-            this.writeReceiver({ writer, typeReference: this.typeReference });
+            this.writeReceiver({ writer, typeReference: this.typeReference, receiver: this.receiver });
         }
         if (this.name != null) {
             writer.write(` ${this.name}`);
@@ -89,8 +103,16 @@ export class Method extends AstNode {
         writer.write("}");
     }
 
-    private writeReceiver({ writer, typeReference }: { writer: Writer; typeReference: GoTypeReference }): void {
-        writer.write(` (${this.getReceiverName(typeReference.name)} `);
+    private writeReceiver({
+        writer,
+        typeReference,
+        receiver
+    }: {
+        writer: Writer;
+        typeReference: GoTypeReference;
+        receiver?: string;
+    }): void {
+        writer.write(` (${this.getReceiverName({ typeReference, receiver })} `);
         if (this.pointerReceiver) {
             writer.write("*");
         }
@@ -98,7 +120,16 @@ export class Method extends AstNode {
         writer.write(")");
     }
 
-    private getReceiverName(s: string): string {
-        return s.charAt(0).toLowerCase();
+    private getReceiverName({
+        typeReference,
+        receiver
+    }: {
+        typeReference: GoTypeReference;
+        receiver?: string;
+    }): string {
+        if (receiver != null) {
+            return receiver;
+        }
+        return typeReference.name.charAt(0).toLowerCase();
     }
 }

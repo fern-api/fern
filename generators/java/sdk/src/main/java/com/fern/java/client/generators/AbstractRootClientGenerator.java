@@ -141,8 +141,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
     }
 
     private TypeSpec getClientBuilder() {
-        TypeSpec.Builder clientBuilder =
-                TypeSpec.classBuilder(builderName).addModifiers(Modifier.PUBLIC, Modifier.FINAL);
+        TypeSpec.Builder clientBuilder = TypeSpec.classBuilder(builderName).addModifiers(Modifier.PUBLIC);
         MethodSpec.Builder buildMethod =
                 MethodSpec.methodBuilder("build").addModifiers(Modifier.PUBLIC).returns(className());
 
@@ -254,13 +253,20 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 })
                 .forEach(clientBuilder::addMethod);
 
-        clientBuilder.addMethod(buildMethod
+        MethodSpec buildClientOptionsMethod = MethodSpec.methodBuilder("buildClientOptions")
+                .addModifiers(Modifier.PROTECTED)
+                .returns(generatedClientOptions.getClassName())
                 .addStatement(
                         "$L.$N(this.$N)",
                         CLIENT_OPTIONS_BUILDER_NAME,
                         generatedClientOptions.environment(),
                         environmentField)
-                .addStatement("return new $T($L.build())", className(), CLIENT_OPTIONS_BUILDER_NAME)
+                .addStatement("return $L.build()", CLIENT_OPTIONS_BUILDER_NAME)
+                .build();
+        clientBuilder.addMethod(buildClientOptionsMethod);
+
+        clientBuilder.addMethod(buildMethod
+                .addStatement("return new $T(buildClientOptions())", className())
                 .build());
 
         return clientBuilder.build();

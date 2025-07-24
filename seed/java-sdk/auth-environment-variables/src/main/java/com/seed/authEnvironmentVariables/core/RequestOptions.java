@@ -71,7 +71,7 @@ public final class RequestOptions {
         return new Builder();
     }
 
-    public static final class Builder {
+    public static class Builder {
         private String apiKey = null;
 
         private String xAnotherHeader = null;

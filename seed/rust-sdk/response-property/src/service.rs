@@ -1,5 +1,5 @@
 use crate::client::ResponsePropertyClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl ResponsePropertyClient {
     // Service methods

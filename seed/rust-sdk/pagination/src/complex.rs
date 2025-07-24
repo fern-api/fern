@@ -1,5 +1,5 @@
 use crate::client::PaginationClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl PaginationClient {
     // Conversations methods

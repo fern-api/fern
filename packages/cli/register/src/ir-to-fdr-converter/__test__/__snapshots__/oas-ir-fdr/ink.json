@@ -8596,6 +8596,7 @@
           },
           "description": "The block number of the most recently mined block as a hexadecimal string."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -8703,6 +8704,7 @@
           },
           "description": "The return value of the executed contract function, encoded as a hexadecimal string."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -8795,6 +8797,7 @@
           },
           "description": "The chain ID of the current network in hexadecimal format."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -8902,6 +8905,7 @@
           },
           "description": "The estimated amount of gas required for the transaction, as a hexadecimal string."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -8994,6 +8998,7 @@
           },
           "description": "The current gas price in wei, as a hexadecimal string."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -9101,6 +9106,7 @@
           },
           "description": "The balance of the account in wei, encoded as a hexadecimal string."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -9220,6 +9226,7 @@
           },
           "description": "The block object containing various properties of the block."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -9410,6 +9417,7 @@
           },
           "description": "The block object containing various properties of the block."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -9596,6 +9604,7 @@
           },
           "description": "The number of transactions in the block as a hexadecimal string."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -9703,6 +9712,7 @@
           },
           "description": "The number of transactions in the block as a hexadecimal string."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -9818,6 +9828,7 @@
           },
           "description": "The code from the specified address, as a hexadecimal string."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -9921,6 +9932,7 @@
           },
           "description": "An array of log objects matching the filter criteria."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -10111,6 +10123,7 @@
           },
           "description": "An object containing the account proof and storage proofs."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -10281,6 +10294,7 @@
           },
           "description": "The value stored at the given storage slot, encoded as a hexadecimal string."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -10403,6 +10417,7 @@
           },
           "description": "The transaction object containing various properties of the transaction."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -10552,6 +10567,7 @@
           },
           "description": "The transaction object containing various properties of the transaction."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -10693,6 +10709,7 @@
           },
           "description": "The transaction object containing various properties of the transaction."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -10840,6 +10857,7 @@
           },
           "description": "The number of transactions sent from the address, as a hexadecimal string."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -10949,6 +10967,7 @@
           },
           "description": "The transaction receipt object containing various properties of the transaction receipt."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -11087,6 +11106,7 @@
           },
           "description": "The hash of the submitted transaction, as a hexadecimal string."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -11168,6 +11188,7 @@
           },
           "description": "An object with synchronization status data when syncing, or `false` when not syncing."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -11263,6 +11284,7 @@
           },
           "description": "The network ID as a string. Common IDs are `\"1\"` for mainnet, `\"3\"` for Ropsten, etc."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -11338,6 +11360,7 @@
           },
           "description": "A string identifying the client software name, version, and platform."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -11437,6 +11460,7 @@
           },
           "description": "The Keccak-256 hash of the input data, as a hexadecimal string."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {

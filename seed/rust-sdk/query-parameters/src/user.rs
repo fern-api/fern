@@ -1,5 +1,5 @@
 use crate::client::QueryParametersClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl QueryParametersClient {
     // User methods

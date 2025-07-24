@@ -2,4 +2,28 @@
 
 package undiscriminatedunions
 
+import (
+	fmt "fmt"
+)
+
 type KeyType string
+
+const (
+	KeyTypeName  = "name"
+	KeyTypeValue = "value"
+)
+
+func NewKeyTypeFromString(s string) (KeyType, error) {
+	switch s {
+	case "name":
+		return KeyTypeName, nil
+	case "value":
+		return KeyTypeValue, nil
+	}
+	var t KeyType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (k KeyType) Ptr() *KeyType {
+	return &k
+}

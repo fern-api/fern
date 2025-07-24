@@ -7,7 +7,7 @@ import com.seed.unknownAsAny.core.ClientOptions;
 import com.seed.unknownAsAny.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class SeedUnknownAsAnyClientBuilder {
+public class SeedUnknownAsAnyClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private Environment environment;
@@ -41,8 +41,12 @@ public final class SeedUnknownAsAnyClientBuilder {
         return this;
     }
 
-    public SeedUnknownAsAnyClient build() {
+    protected ClientOptions buildClientOptions() {
         clientOptionsBuilder.environment(this.environment);
-        return new SeedUnknownAsAnyClient(clientOptionsBuilder.build());
+        return clientOptionsBuilder.build();
+    }
+
+    public SeedUnknownAsAnyClient build() {
+        return new SeedUnknownAsAnyClient(buildClientOptions());
     }
 }

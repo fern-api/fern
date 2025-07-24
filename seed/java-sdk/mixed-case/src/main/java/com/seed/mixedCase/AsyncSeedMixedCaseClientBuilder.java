@@ -7,7 +7,7 @@ import com.seed.mixedCase.core.ClientOptions;
 import com.seed.mixedCase.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class AsyncSeedMixedCaseClientBuilder {
+public class AsyncSeedMixedCaseClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private Environment environment;
@@ -41,8 +41,12 @@ public final class AsyncSeedMixedCaseClientBuilder {
         return this;
     }
 
-    public AsyncSeedMixedCaseClient build() {
+    protected ClientOptions buildClientOptions() {
         clientOptionsBuilder.environment(this.environment);
-        return new AsyncSeedMixedCaseClient(clientOptionsBuilder.build());
+        return clientOptionsBuilder.build();
+    }
+
+    public AsyncSeedMixedCaseClient build() {
+        return new AsyncSeedMixedCaseClient(buildClientOptions());
     }
 }

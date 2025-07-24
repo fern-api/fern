@@ -1,7 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { rust, Attribute, PUBLIC } from "@fern-api/rust-codegen";
-
 import { EnumTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 export class EnumGenerator {

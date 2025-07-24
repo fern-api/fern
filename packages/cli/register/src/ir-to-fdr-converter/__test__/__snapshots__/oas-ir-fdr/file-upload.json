@@ -86,6 +86,7 @@
             "contentType": "multipart/form-data"
           }
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -167,6 +168,7 @@
             "contentType": "multipart/form-data"
           }
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -281,6 +283,7 @@
             "contentType": "multipart/form-data"
           }
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {

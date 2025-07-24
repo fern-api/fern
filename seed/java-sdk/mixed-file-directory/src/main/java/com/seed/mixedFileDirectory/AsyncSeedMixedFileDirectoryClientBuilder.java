@@ -7,7 +7,7 @@ import com.seed.mixedFileDirectory.core.ClientOptions;
 import com.seed.mixedFileDirectory.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class AsyncSeedMixedFileDirectoryClientBuilder {
+public class AsyncSeedMixedFileDirectoryClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private Environment environment;
@@ -41,8 +41,12 @@ public final class AsyncSeedMixedFileDirectoryClientBuilder {
         return this;
     }
 
-    public AsyncSeedMixedFileDirectoryClient build() {
+    protected ClientOptions buildClientOptions() {
         clientOptionsBuilder.environment(this.environment);
-        return new AsyncSeedMixedFileDirectoryClient(clientOptionsBuilder.build());
+        return clientOptionsBuilder.build();
+    }
+
+    public AsyncSeedMixedFileDirectoryClient build() {
+        return new AsyncSeedMixedFileDirectoryClient(buildClientOptions());
     }
 }

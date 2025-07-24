@@ -2,4 +2,28 @@
 
 package fileupload
 
+import (
+	fmt "fmt"
+)
+
 type ObjectType string
+
+const (
+	ObjectTypeFoo = "FOO"
+	ObjectTypeBar = "BAR"
+)
+
+func NewObjectTypeFromString(s string) (ObjectType, error) {
+	switch s {
+	case "FOO":
+		return ObjectTypeFoo, nil
+	case "BAR":
+		return ObjectTypeBar, nil
+	}
+	var t ObjectType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (o ObjectType) Ptr() *ObjectType {
+	return &o
+}

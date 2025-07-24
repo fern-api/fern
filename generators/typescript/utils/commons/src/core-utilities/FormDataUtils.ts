@@ -32,7 +32,7 @@ export const MANIFEST: CoreUtility.Manifest = {
     pathInCoreUtilities: { nameOnDisk: "form-data-utils", exportDeclaration: { exportAll: true } },
     addDependencies: (dependencyManager: DependencyManager, { formDataSupport }): void => {
         if (formDataSupport === "Node16") {
-            dependencyManager.addDependency("form-data", "^4.0.0");
+            dependencyManager.addDependency("form-data", "^4.0.4");
             dependencyManager.addDependency("formdata-node", "^6.0.3");
             dependencyManager.addDependency("form-data-encoder", "^4.0.2");
         }

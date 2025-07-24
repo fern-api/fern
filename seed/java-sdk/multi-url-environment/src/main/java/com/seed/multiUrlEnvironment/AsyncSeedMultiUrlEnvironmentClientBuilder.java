@@ -7,7 +7,7 @@ import com.seed.multiUrlEnvironment.core.ClientOptions;
 import com.seed.multiUrlEnvironment.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class AsyncSeedMultiUrlEnvironmentClientBuilder {
+public class AsyncSeedMultiUrlEnvironmentClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private String token = null;
@@ -51,12 +51,16 @@ public final class AsyncSeedMultiUrlEnvironmentClientBuilder {
         return this;
     }
 
+    protected ClientOptions buildClientOptions() {
+        clientOptionsBuilder.environment(this.environment);
+        return clientOptionsBuilder.build();
+    }
+
     public AsyncSeedMultiUrlEnvironmentClient build() {
         if (token == null) {
             throw new RuntimeException("Please provide token");
         }
         this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + this.token);
-        clientOptionsBuilder.environment(this.environment);
-        return new AsyncSeedMultiUrlEnvironmentClient(clientOptionsBuilder.build());
+        return new AsyncSeedMultiUrlEnvironmentClient(buildClientOptions());
     }
 }

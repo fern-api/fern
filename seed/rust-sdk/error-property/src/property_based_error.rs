@@ -1,5 +1,5 @@
 use crate::client::ErrorPropertyClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl ErrorPropertyClient {
     // PropertyBasedError methods

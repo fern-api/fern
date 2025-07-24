@@ -1,5 +1,5 @@
 use crate::client::FileUploadClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl FileUploadClient {
     // Service methods

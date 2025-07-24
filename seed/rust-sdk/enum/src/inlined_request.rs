@@ -1,5 +1,5 @@
 use crate::client::EnumClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl EnumClient {
     // InlinedRequest methods

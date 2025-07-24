@@ -7,7 +7,7 @@ import com.seed.packageYml.core.ClientOptions;
 import com.seed.packageYml.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class SeedPackageYmlClientBuilder {
+public class SeedPackageYmlClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private Environment environment;
@@ -41,8 +41,12 @@ public final class SeedPackageYmlClientBuilder {
         return this;
     }
 
-    public SeedPackageYmlClient build() {
+    protected ClientOptions buildClientOptions() {
         clientOptionsBuilder.environment(this.environment);
-        return new SeedPackageYmlClient(clientOptionsBuilder.build());
+        return clientOptionsBuilder.build();
+    }
+
+    public SeedPackageYmlClient build() {
+        return new SeedPackageYmlClient(buildClientOptions());
     }
 }

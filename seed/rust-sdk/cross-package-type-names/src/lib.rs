@@ -11,5 +11,4 @@ pub mod foo;
 
 pub use client::CrossPackageTypeNamesClient;
 pub use error::ApiError;
-
 pub use types::*;

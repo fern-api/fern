@@ -7,7 +7,7 @@ import com.seed.fileDownload.core.ClientOptions;
 import com.seed.fileDownload.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class AsyncSeedFileDownloadClientBuilder {
+public class AsyncSeedFileDownloadClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private Environment environment;
@@ -41,8 +41,12 @@ public final class AsyncSeedFileDownloadClientBuilder {
         return this;
     }
 
-    public AsyncSeedFileDownloadClient build() {
+    protected ClientOptions buildClientOptions() {
         clientOptionsBuilder.environment(this.environment);
-        return new AsyncSeedFileDownloadClient(clientOptionsBuilder.build());
+        return clientOptionsBuilder.build();
+    }
+
+    public AsyncSeedFileDownloadClient build() {
+        return new AsyncSeedFileDownloadClient(buildClientOptions());
     }
 }

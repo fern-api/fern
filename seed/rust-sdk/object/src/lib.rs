@@ -8,5 +8,4 @@ pub mod types;
 
 pub use client::ObjectClient;
 pub use error::ApiError;
-
 pub use types::*;

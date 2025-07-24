@@ -7677,6 +7677,7 @@
           },
           "description": "Returns details of the account including balance, ownership, and other relevant data."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -7775,6 +7776,7 @@
           },
           "description": "Returns the balance in lamports of the account queried."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -7871,6 +7873,7 @@
           },
           "description": "Returns block information or null if the block is not confirmed."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -7956,6 +7959,7 @@
           },
           "description": "Returns the commitment and total active stake for the block."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -8044,6 +8048,7 @@
           },
           "description": "The current block height, as a u64 integer."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -8130,6 +8135,7 @@
           },
           "description": "Returns block production information for the specified range."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -8244,6 +8250,7 @@
           },
           "description": "Returns an array of u64 integers listing confirmed blocks."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -8359,6 +8366,7 @@
           },
           "description": "Returns an array of u64 integers listing confirmed blocks starting at the start_slot."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -8448,6 +8456,7 @@
           },
           "description": "The estimated production time of the block as a Unix timestamp."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -8514,6 +8523,7 @@
           },
           "description": "Returns an array of JSON objects, each containing information about a node in the cluster."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -8601,6 +8611,7 @@
           },
           "description": "Returns an object containing information about the current epoch."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -8664,6 +8675,7 @@
           },
           "description": "Returns an object containing information about the epoch schedule."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -8757,6 +8769,7 @@
           },
           "description": "The fee corresponding to the message at the specified blockhash."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -8822,6 +8835,7 @@
           },
           "description": "The slot number of the lowest confirmed block that is still available in the ledger."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -8884,6 +8898,7 @@
           },
           "description": "The genesis hash as a base-58 encoded string."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -8944,6 +8959,7 @@
           },
           "description": "If the node is healthy, the result is \"ok\"."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -9004,6 +9020,7 @@
           },
           "description": "Returns a JSON object with the highest full snapshot slot."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -9064,6 +9081,7 @@
           },
           "description": "The identity pubkey of the current node."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -9147,6 +9165,7 @@
           },
           "description": "Returns a JSON object containing the inflation governor parameters."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -9210,6 +9229,7 @@
           },
           "description": "Returns a JSON object containing the inflation values for the current epoch."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -9293,6 +9313,7 @@
           },
           "description": "Returns a JSON array with reward details for each address."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -9386,6 +9407,7 @@
           },
           "description": "An array of objects containing the address of the account and its lamport balance."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -9476,6 +9498,7 @@
           },
           "description": "RpcResponse object with blockhash information."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -9541,6 +9564,7 @@
           },
           "description": "The maximum slot number seen from the retransmit stage."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -9603,6 +9627,7 @@
           },
           "description": "The maximum slot number seen after shred insert."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -9696,6 +9721,7 @@
           },
           "description": "The minimum number of lamports required in the account to remain rent-free."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -9798,6 +9824,7 @@
           },
           "description": "An array of JSON objects containing account details."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -9901,6 +9928,7 @@
           },
           "description": "An array of JSON objects containing program account details."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -9996,6 +10024,7 @@
           },
           "description": "An array of performance sample data."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -10094,6 +10123,7 @@
           },
           "description": "An array of prioritization fees observed in recent blocks."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -10197,6 +10227,7 @@
           },
           "description": "An array of objects containing transaction signature information."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -10303,6 +10334,7 @@
           },
           "description": "An array containing the status of each transaction signature."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -10395,6 +10427,7 @@
           },
           "description": "The current slot at the specified commitment level."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -10483,6 +10516,7 @@
           },
           "description": "The node identity Pubkey as a base-58 encoded string."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -10583,6 +10617,7 @@
           },
           "description": "An array of node identity public keys as base-58 encoded strings."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -10673,6 +10708,7 @@
           },
           "description": "An RpcResponse JSON object containing the current supply information."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -10769,6 +10805,7 @@
           },
           "description": "The balance of the SPL Token account."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -10879,6 +10916,7 @@
           },
           "description": "An array of JSON objects representing the token accounts owned by the specified Pubkey."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -10979,6 +11017,7 @@
           },
           "description": "The total supply of the specified SPL Token."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -11075,6 +11114,7 @@
           },
           "description": "The details of a confirmed transaction."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -11138,6 +11178,7 @@
           },
           "description": "The current Solana version running on the node."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -11221,6 +11262,7 @@
           },
           "description": "Information about current and delinquent vote accounts."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -11319,6 +11361,7 @@
           },
           "description": "Indicates if the blockhash is still valid."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -11384,6 +11427,7 @@
           },
           "description": "The lowest slot number the node has information about."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -11489,6 +11533,7 @@
           },
           "description": "Transaction Signature of the airdrop."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -11587,6 +11632,7 @@
           },
           "description": "The first signature in the transaction, used as the transaction ID."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -11683,6 +11729,7 @@
           },
           "description": "The result of simulating the transaction."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {

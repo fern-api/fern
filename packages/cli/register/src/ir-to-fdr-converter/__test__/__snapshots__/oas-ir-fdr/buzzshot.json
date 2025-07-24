@@ -1793,6 +1793,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "api_listAccounts_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -1886,6 +1901,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Room"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -2015,6 +2045,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "api_listGames_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -2221,6 +2266,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Game"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -2381,6 +2441,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "api_listGroups_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -2625,6 +2700,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Group"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -2824,6 +2914,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "api_listPlayers_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -2944,6 +3049,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Player"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -3047,6 +3167,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "api_listLocations_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -3141,6 +3276,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Room"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -3217,6 +3367,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "api_listPhotos_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -3331,6 +3496,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Photo"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [

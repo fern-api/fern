@@ -10,5 +10,4 @@ pub mod service;
 
 pub use client::PackageYmlClient;
 pub use error::ApiError;
-
 pub use types::*;

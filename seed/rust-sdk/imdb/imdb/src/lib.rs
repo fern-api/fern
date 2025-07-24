@@ -9,5 +9,4 @@ pub mod imdb;
 
 pub use client::ImdbClient;
 pub use error::ApiError;
-
 pub use types::*;

@@ -14,7 +14,7 @@ enum SpecialEnum
     case I = "Hello\fWorld";
     case J = "Hello\u0008World";
     case K = "Hello\vWorld";
-    case L = "Hello\0World";
+    case L = "Hello\x00World";
     case M = "Hello\u0007World";
     case N = "Hello\u0001World";
     case O = "Hello\u0002World";
@@ -22,7 +22,7 @@ enum SpecialEnum
     case Q = "Hello\u007FWorld";
     case R = "Hello\u009FWorld";
     case S = "Line 1\n"Quote"\tTab\\Backslash\r\nLine 2\0Null";
-    case T = "\n\r\t\0\u0008\f\v\u0007";
+    case T = "\n\r\t\x00\u0008\f\v\u0007";
     case U = "Hello 世界";
     case V = "café";
     case W = "🚀";

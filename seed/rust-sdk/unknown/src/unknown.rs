@@ -1,5 +1,5 @@
 use crate::client::UnknownAsAnyClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl UnknownAsAnyClient {
     // Unknown methods

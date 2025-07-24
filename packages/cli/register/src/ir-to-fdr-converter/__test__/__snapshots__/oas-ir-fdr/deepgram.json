@@ -14708,6 +14708,21 @@
             "statusCode": 200,
             "description": "Successful transcription"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful transcription"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -15886,6 +15901,21 @@
             "statusCode": 200,
             "description": "Successful text analysis"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "text_response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful text analysis"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -16252,6 +16282,17 @@
             "statusCode": 200,
             "description": "Successful text to speech"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "fileDownload"
+                },
+                "statusCode": 200,
+                "description": "Successful text to speech"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -16551,6 +16592,21 @@
             "statusCode": 200,
             "description": "A list of projects"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Management API_listProjects_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A list of projects"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -16715,6 +16771,21 @@
             "statusCode": 200,
             "description": "A project"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Management API_getProject_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A project"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -16846,6 +16917,21 @@
             },
             "statusCode": 200,
             "description": "A project"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Management API_deleteProject_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A project"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -16987,6 +17073,21 @@
             "statusCode": 200,
             "description": "A project"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Management API_updateProject_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A project"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -17120,6 +17221,21 @@
             },
             "statusCode": 200,
             "description": "A list of outstanding balances"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Management API_getProjectBalances_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A list of outstanding balances"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -17278,6 +17394,21 @@
             "statusCode": 200,
             "description": "A specific balance"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Management API_getProjectBalance_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A specific balance"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -17420,6 +17551,21 @@
             },
             "statusCode": 200,
             "description": "A list of models"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Management API_listProjectModels_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A list of models"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -17620,6 +17766,21 @@
             "statusCode": 200,
             "description": "A specific model"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Management API_getProjectModel_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A specific model"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -17745,6 +17906,21 @@
             },
             "statusCode": 200,
             "description": "A list of API keys"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Management API_listProjectKeys_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A list of API keys"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -17907,6 +18083,21 @@
             "statusCode": 200,
             "description": "API key created successfully"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "key_created"
+                  }
+                },
+                "statusCode": 200,
+                "description": "API key created successfully"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -18063,6 +18254,21 @@
             },
             "statusCode": 200,
             "description": "A specific API key"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Management API_getProjectKey_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A specific API key"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -18225,6 +18431,21 @@
             "statusCode": 200,
             "description": "API key deleted"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Management API_deleteProjectKey_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "API key deleted"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -18337,6 +18558,21 @@
             },
             "statusCode": 200,
             "description": "A list of account objects"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Management API_listProjectMembers_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A list of account objects"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -18476,6 +18712,21 @@
             "statusCode": 200,
             "description": "Delete the specific member from the project"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Management API_deleteProjectMember_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Delete the specific member from the project"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -18606,6 +18857,21 @@
             },
             "statusCode": 200,
             "description": "A list of scopes for a specific member"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Management API_listProjectMemberScopes_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A list of scopes for a specific member"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -18757,6 +19023,21 @@
             "statusCode": 200,
             "description": "Updated the scopes for a specific member"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Management API_updateProjectMemberScopes_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Updated the scopes for a specific member"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -18879,6 +19160,21 @@
             "statusCode": 200,
             "description": "A list of invites for a specific project"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Management API_listProjectInvites_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A list of invites for a specific project"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -18988,6 +19284,21 @@
             },
             "statusCode": 200,
             "description": "The invite was successfully generated"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Management API_createProjectInvite_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "The invite was successfully generated"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -19130,6 +19441,21 @@
             "statusCode": 200,
             "description": "The invite was successfully deleted"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Management API_deleteProjectInvite_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "The invite was successfully deleted"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -19242,6 +19568,21 @@
             },
             "statusCode": 200,
             "description": "Successfully removed account from project"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Management API_deleteProjectLeave_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successfully removed account from project"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -19412,6 +19753,21 @@
             },
             "statusCode": 200,
             "description": "A list of requests for a specific project"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Management API_listProjectRequests_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A list of requests for a specific project"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -19589,6 +19945,21 @@
             "statusCode": 200,
             "description": "A specific request for a specific project"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Management API_getProjectRequest_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A specific request for a specific project"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -19734,6 +20105,21 @@
             },
             "statusCode": 200,
             "description": "Usage Summary"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Management API_getProjectUsage_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Usage Summary"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -19888,6 +20274,21 @@
             },
             "statusCode": 200,
             "description": "A list of fields for a specific project"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Management API_listProjectUsageFields_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A list of fields for a specific project"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -20095,6 +20496,21 @@
             "statusCode": 200,
             "description": "Usage breakdown response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Management API_getProjectUsageBreakdown_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Usage breakdown response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -20295,6 +20711,21 @@
             "statusCode": 200,
             "description": "Successful response with orders list"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Management API_listProjectPurchases_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful response with orders list"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -20406,6 +20837,21 @@
             },
             "statusCode": 200,
             "description": "A list of all public models"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Management API_listModels_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A list of all public models"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -20580,6 +21026,21 @@
             "statusCode": 200,
             "description": "A model object that can be either STT or TTS"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Management API_getModel_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A model object that can be either STT or TTS"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -20700,6 +21161,21 @@
             },
             "statusCode": 200,
             "description": "List of distribution credentials"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Management API_listSelfHostedDistCreds_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of distribution credentials"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -20884,6 +21360,7 @@
             },
             "description": "The set of distribution credentials to create"
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -20988,6 +21465,21 @@
             },
             "statusCode": 200,
             "description": "Single distribution credential"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Management API_getSelfHostedCredentials_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Single distribution credential"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -21145,6 +21637,21 @@
             },
             "statusCode": 200,
             "description": "Single distribution credential"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Management API_deleteSelfHostedDistCreds_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Single distribution credential"
+              }
+            ]
           },
           "errorsV2": [
             {

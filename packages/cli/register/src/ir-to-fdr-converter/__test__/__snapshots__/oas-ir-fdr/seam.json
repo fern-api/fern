@@ -25845,6 +25845,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "access_codes_create_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -26207,6 +26222,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "access_codes_create_multiple_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -26406,6 +26436,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "access_codes_delete_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -26538,6 +26583,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "access_codes_generate_code_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -26732,6 +26792,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "access_codes_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -26924,6 +26999,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "access_codes_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -27088,6 +27178,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "access_codes_pull_backup_access_code_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -27460,6 +27565,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "access_codes_update_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -27606,6 +27726,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "action_attempts_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -27741,6 +27876,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "action_attempts_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -27957,6 +28107,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "client_sessions_create_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -28106,6 +28271,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "client_sessions_delete_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -28238,6 +28418,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "client_sessions_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -28452,6 +28647,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "client_sessions_get_or_create_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -28660,6 +28870,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "client_sessions_grant_access_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -28859,6 +29084,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "client_sessions_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -29011,6 +29251,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "client_sessions_revoke_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -29233,6 +29488,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "connect_webviews_create_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -29398,6 +29668,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "connect_webviews_delete_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -29516,6 +29801,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "connect_webviews_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -29724,6 +30024,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "connect_webviews_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -29916,6 +30231,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "connected_accounts_delete_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -30025,6 +30355,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "connected_accounts_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -30188,6 +30533,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "connected_accounts_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -30373,6 +30733,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "connected_accounts_update_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -30536,6 +30911,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "devices_delete_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -30669,6 +31059,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "devices_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -31032,6 +31437,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "devices_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -31227,6 +31647,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "devices_list_device_providers_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -31419,6 +31854,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "devices_update_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -31578,6 +32028,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "events_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -31849,6 +32314,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "events_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -32020,6 +32500,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "locks_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -32459,6 +32954,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "locks_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -32747,6 +33257,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "locks_lock_door_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -32893,6 +33418,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "locks_unlock_door_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -33036,6 +33576,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "networks_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -33155,6 +33710,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "networks_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -33296,6 +33866,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "phones_deactivate_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -33417,6 +34002,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "phones_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -33680,6 +34280,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "thermostats_cool_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -33827,6 +34442,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "thermostats_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -34056,6 +34686,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "thermostats_heat_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -34249,6 +34894,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "thermostats_heat_cool_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -34554,6 +35214,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "thermostats_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -34762,6 +35437,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "thermostats_off_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -34928,6 +35618,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "thermostats_set_fan_mode_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -35067,6 +35772,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "thermostats_update_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -35210,6 +35930,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "user_identities_add_acs_user_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -35385,6 +36120,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "user_identities_create_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -35520,6 +36270,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "user_identities_delete_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -35629,6 +36394,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "user_identities_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -35779,6 +36559,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "user_identities_grant_access_to_device_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -35902,6 +36697,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "user_identities_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -36041,6 +36851,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "user_identities_list_accessible_devices_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -36321,6 +37146,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "user_identities_list_acs_systems_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -36502,6 +37342,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "user_identities_list_acs_users_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -36681,6 +37536,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "user_identities_remove_acs_user_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -36811,6 +37681,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "user_identities_revoke_access_to_device_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -36996,6 +37881,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "user_identities_update_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -37142,6 +38042,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "webhooks_create_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -37276,6 +38191,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "webhooks_delete_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -37394,6 +38324,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "webhooks_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -37506,6 +38451,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "webhooks_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -37647,6 +38607,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "webhooks_update_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -37845,6 +38820,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "workspaces_create_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -37956,6 +38946,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "workspaces_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -38057,6 +39062,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "workspaces_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -38163,6 +39183,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "workspaces_reset_sandbox_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -38318,6 +39353,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "access_codes_simulate_create_unmanaged_access_code_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -38529,6 +39579,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "access_codes_unmanaged_convert_to_managed_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -38660,6 +39725,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "access_codes_unmanaged_delete_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -38822,6 +39902,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "access_codes_unmanaged_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -38976,6 +40071,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "access_codes_unmanaged_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -39173,6 +40283,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "access_codes_unmanaged_update_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -39331,6 +40456,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "acs_access_groups_add_user_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -39451,6 +40591,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "acs_access_groups_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -39611,6 +40766,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "acs_access_groups_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -39753,6 +40923,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "acs_access_groups_list_users_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -39933,6 +41118,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "acs_access_groups_remove_user_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -40063,6 +41263,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "acs_credential_pools_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -40263,6 +41478,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "acs_credential_provisioning_automations_launch_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -40417,6 +41647,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "acs_credentials_assign_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -40723,6 +41968,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "acs_credentials_create_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -40930,6 +42190,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "acs_credentials_delete_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -41048,6 +42323,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "acs_credentials_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -41244,6 +42534,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "acs_credentials_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -41454,6 +42759,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "acs_credentials_list_accessible_entrances_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -41642,6 +42962,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "acs_credentials_unassign_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -41875,6 +43210,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "acs_credentials_update_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -42090,6 +43440,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "acs_entrances_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -42275,6 +43640,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "acs_entrances_grant_access_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -42411,6 +43791,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "acs_entrances_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -42599,6 +43994,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "acs_entrances_list_credentials_with_access_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -42819,6 +44229,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "acs_systems_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -42999,6 +44424,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "acs_systems_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -43175,6 +44615,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "acs_systems_list_compatible_credential_manager_acs_systems_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -43376,6 +44831,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "acs_users_add_to_access_group_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -43591,6 +45061,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "acs_users_create_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -43756,6 +45241,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "acs_users_delete_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -43874,6 +45374,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "acs_users_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -44083,6 +45598,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "acs_users_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -44247,6 +45777,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "acs_users_list_accessible_entrances_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -44437,6 +45982,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "acs_users_remove_from_access_group_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -44558,6 +46118,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "acs_users_revoke_access_to_all_entrances_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -44677,6 +46252,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "acs_users_suspend_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -44795,6 +46385,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "acs_users_unsuspend_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -44992,6 +46597,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "acs_users_update_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -45121,6 +46741,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "devices_simulate_connect_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -45240,6 +46875,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "devices_simulate_disconnect_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -45358,6 +47008,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "devices_simulate_remove_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -45502,6 +47167,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "devices_unmanaged_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -45907,6 +47587,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "devices_unmanaged_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -46153,6 +47848,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "devices_unmanaged_update_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -46363,6 +48073,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "noise_sensors_noise_thresholds_create_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -46541,6 +48266,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "noise_sensors_noise_thresholds_delete_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -46675,6 +48415,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "noise_sensors_noise_thresholds_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -46824,6 +48579,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "noise_sensors_noise_thresholds_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -47049,6 +48819,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "noise_sensors_noise_thresholds_update_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -47193,6 +48978,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "noise_sensors_simulate_trigger_noise_threshold_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -47354,6 +49154,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "phones_simulate_create_sandbox_phone_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -47711,6 +49526,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "thermostats_climate_setting_schedules_create_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -47870,6 +49700,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "thermostats_climate_setting_schedules_delete_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -48004,6 +49849,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "thermostats_climate_setting_schedules_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -48167,6 +50027,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "thermostats_climate_setting_schedules_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -48467,6 +50342,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "thermostats_climate_setting_schedules_update_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -48632,6 +50522,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "user_identities_enrollment_automations_delete_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -48750,6 +50655,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "user_identities_enrollment_automations_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -48932,6 +50852,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "user_identities_enrollment_automations_launch_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -49068,6 +51003,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "user_identities_enrollment_automations_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {

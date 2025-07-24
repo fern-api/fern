@@ -583,6 +583,21 @@
             "statusCode": 200,
             "description": "Successful operation"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Pet"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -731,6 +746,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Pet"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -893,6 +923,24 @@
             "statusCode": 200,
             "description": "successful operation"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -1024,6 +1072,24 @@
             "statusCode": 200,
             "description": "successful operation"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -1153,6 +1219,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Pet"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -1321,6 +1402,21 @@
             "statusCode": 200,
             "description": "successful operation"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Pet"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -1463,6 +1559,21 @@
             "statusCode": 200,
             "description": "Pet deleted"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "pet_deletePet_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Pet deleted"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -1577,6 +1688,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ApiResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -1695,6 +1821,32 @@
             "statusCode": 200,
             "description": "successful operation"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "map",
+                    "keyType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "valueType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -1767,6 +1919,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Order"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -1891,6 +2058,21 @@
             "statusCode": 200,
             "description": "successful operation"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Order"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -2011,6 +2193,21 @@
             "statusCode": 200,
             "description": "order deleted"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "store_deleteOrder_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "order deleted"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -2124,6 +2321,21 @@
             "statusCode": 200,
             "description": "successful operation"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "User"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -2222,6 +2434,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "User"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -2339,6 +2566,23 @@
             "statusCode": 200,
             "description": "successful operation"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -2411,6 +2655,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "user_logoutUser_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -2490,6 +2749,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "User"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -2630,6 +2904,21 @@
             "statusCode": 200,
             "description": "successful operation"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "user_updateUser_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -2740,6 +3029,21 @@
             },
             "statusCode": 200,
             "description": "User deleted"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "user_deleteUser_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "User deleted"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -2890,6 +3194,21 @@
             "statusCode": 200,
             "description": "Successful operation"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Pet"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -3038,6 +3357,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Pet"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -3200,6 +3534,24 @@
             "statusCode": 200,
             "description": "successful operation"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -3331,6 +3683,24 @@
             "statusCode": 200,
             "description": "successful operation"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -3460,6 +3830,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Pet"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -3628,6 +4013,21 @@
             "statusCode": 200,
             "description": "successful operation"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Pet"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -3770,6 +4170,21 @@
             "statusCode": 200,
             "description": "Pet deleted"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "pet_deletePet_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Pet deleted"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -3885,6 +4300,21 @@
             "statusCode": 200,
             "description": "successful operation"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ApiResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -3994,6 +4424,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Pet"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -4143,6 +4588,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Pet"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -4305,6 +4765,24 @@
             "statusCode": 200,
             "description": "successful operation"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -4436,6 +4914,24 @@
             "statusCode": 200,
             "description": "successful operation"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -4565,6 +5061,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Pet"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -4733,6 +5244,21 @@
             "statusCode": 200,
             "description": "successful operation"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Pet"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -4875,6 +5401,21 @@
             "statusCode": 200,
             "description": "Pet deleted"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "pet_deletePet_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Pet deleted"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -4989,6 +5530,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ApiResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -5107,6 +5663,32 @@
             "statusCode": 200,
             "description": "successful operation"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "map",
+                    "keyType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "valueType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -5179,6 +5761,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Order"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -5303,6 +5900,21 @@
             "statusCode": 200,
             "description": "successful operation"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Order"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -5423,6 +6035,21 @@
             "statusCode": 200,
             "description": "order deleted"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "store_deleteOrder_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "order deleted"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -5536,6 +6163,21 @@
             "statusCode": 200,
             "description": "successful operation"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "User"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -5634,6 +6276,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "User"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -5751,6 +6408,23 @@
             "statusCode": 200,
             "description": "successful operation"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -5823,6 +6497,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "user_logoutUser_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -5902,6 +6591,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "User"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -6042,6 +6746,21 @@
             "statusCode": 200,
             "description": "successful operation"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "user_updateUser_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -6152,6 +6871,21 @@
             },
             "statusCode": 200,
             "description": "User deleted"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "user_deleteUser_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "User deleted"
+              }
+            ]
           },
           "errorsV2": [
             {

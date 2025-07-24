@@ -7,7 +7,7 @@ import com.seed.trace.core.ClientOptions;
 import com.seed.trace.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class AsyncSeedTraceClientBuilder {
+public class AsyncSeedTraceClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private String token = null;
@@ -66,12 +66,16 @@ public final class AsyncSeedTraceClientBuilder {
         return this;
     }
 
+    protected ClientOptions buildClientOptions() {
+        clientOptionsBuilder.environment(this.environment);
+        return clientOptionsBuilder.build();
+    }
+
     public AsyncSeedTraceClient build() {
         this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + this.token);
         if (xRandomHeader != null) {
             this.clientOptionsBuilder.addHeader("X-Random-Header", this.xRandomHeader);
         }
-        clientOptionsBuilder.environment(this.environment);
-        return new AsyncSeedTraceClient(clientOptionsBuilder.build());
+        return new AsyncSeedTraceClient(buildClientOptions());
     }
 }

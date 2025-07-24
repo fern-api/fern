@@ -1,0 +1,36 @@
+// Generated types module
+
+pub mod error;
+pub use error::*;
+pub mod error_category;
+pub use error_category::*;
+pub mod error_code;
+pub use error_code::*;
+pub mod put_response;
+pub use put_response::*;
+pub mod bad_object_request_info;
+pub use bad_object_request_info::*;
+pub mod object_with_docs;
+pub use object_with_docs::*;
+pub mod weather_report;
+pub use weather_report::*;
+pub mod object_with_optional_field;
+pub use object_with_optional_field::*;
+pub mod object_with_required_field;
+pub use object_with_required_field::*;
+pub mod object_with_map_of_map;
+pub use object_with_map_of_map::*;
+pub mod nested_object_with_optional_field;
+pub use nested_object_with_optional_field::*;
+pub mod nested_object_with_required_field;
+pub use nested_object_with_required_field::*;
+pub mod double_optional;
+pub use double_optional::*;
+pub mod optional_alias;
+pub use optional_alias::*;
+pub mod animal;
+pub use animal::*;
+pub mod dog;
+pub use dog::*;
+pub mod cat;
+pub use cat::*;

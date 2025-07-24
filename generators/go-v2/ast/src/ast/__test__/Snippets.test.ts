@@ -289,8 +289,7 @@ describe("file", () => {
     it("import collision", () => {
         const file = new File();
         const foo = new Struct({
-            name: "Foo",
-            importPath: "github.com/acme/acme-go"
+            name: "Foo"
         });
         foo.addField(
             new Field({
@@ -304,8 +303,7 @@ describe("file", () => {
             })
         );
         const bar = new Struct({
-            name: "Bar",
-            importPath: "github.com/acme/acme-go"
+            name: "Bar"
         });
         bar.addField(
             new Field({

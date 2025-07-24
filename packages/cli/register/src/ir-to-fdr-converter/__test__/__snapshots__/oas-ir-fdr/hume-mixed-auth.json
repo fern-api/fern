@@ -2704,6 +2704,20 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -2768,6 +2782,20 @@
             },
             "statusCode": 201,
             "description": "Created"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -2884,6 +2912,20 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -2971,6 +3013,20 @@
             "statusCode": 201,
             "description": "Created"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -3049,6 +3105,32 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Tools_deleteToolVersion_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Tools_deleteToolVersion_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -3142,6 +3224,21 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Tools_updateToolName_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -3244,6 +3341,20 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -3338,6 +3449,32 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Tools_deleteToolVersion_1_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Tools_deleteToolVersion_1_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -3449,6 +3586,20 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -3585,6 +3736,20 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -3649,6 +3814,20 @@
             },
             "statusCode": 201,
             "description": "Created"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -3765,6 +3944,20 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -3852,6 +4045,20 @@
             "statusCode": 201,
             "description": "Created"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -3930,6 +4137,32 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Prompts_deletePromptVersion_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Prompts_deletePromptVersion_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -4023,6 +4256,21 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Prompts_updatePromptName_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -4125,6 +4373,20 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -4219,6 +4481,32 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Prompts_deletePromptVersion_1_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Prompts_deletePromptVersion_1_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -4330,6 +4618,20 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -4453,6 +4755,20 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -4517,6 +4833,20 @@
             },
             "statusCode": 201,
             "description": "Created"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -4593,6 +4923,20 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -4681,6 +5025,20 @@
             "statusCode": 201,
             "description": "Created"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -4759,6 +5117,32 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Custom Voices_deleteCustomVoice_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Custom Voices_deleteCustomVoice_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -4852,6 +5236,21 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Custom Voices_updateCustomVoiceName_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -4992,6 +5391,20 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -5056,6 +5469,20 @@
             },
             "statusCode": 201,
             "description": "Created"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -5173,6 +5600,20 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -5260,6 +5701,20 @@
             "statusCode": 201,
             "description": "Created"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -5338,6 +5793,32 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Configs_deleteConfig_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Configs_deleteConfig_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -5431,6 +5912,21 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Configs_updateConfigName_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -5533,6 +6029,20 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -5627,6 +6137,32 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Configs_deleteConfigVersion_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Configs_deleteConfigVersion_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -5738,6 +6274,20 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -5862,6 +6412,20 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -5975,6 +6539,20 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -6049,6 +6627,20 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -6169,6 +6761,20 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -6281,6 +6887,20 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -6397,6 +7017,20 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -6512,6 +7146,20 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -6576,6 +7224,20 @@
           },
           "statusCode": 200,
           "description": "A list of available language models with details about their providers and built-in tools."
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 200,
+              "description": "A list of available language models with details about their providers and built-in tools."
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [
@@ -6667,6 +7329,20 @@
           },
           "statusCode": 200,
           "description": "Successful Response"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 200,
+              "description": "Successful Response"
+            }
+          ]
         },
         "errorsV2": [
           {
@@ -6774,6 +7450,20 @@
           "statusCode": 200,
           "description": "Successful Response"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 200,
+              "description": "Successful Response"
+            }
+          ]
+        },
         "errorsV2": [
           {
             "type": {
@@ -6872,6 +7562,20 @@
           "statusCode": 200,
           "description": "Successful Response"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 200,
+              "description": "Successful Response"
+            }
+          ]
+        },
         "errorsV2": [
           {
             "type": {
@@ -6941,6 +7645,20 @@
           },
           "statusCode": 200,
           "description": "A list of available voice names and sample audio file URLs."
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 200,
+              "description": "A list of available voice names and sample audio file URLs."
+            }
+          ]
         },
         "errorsV2": [
           {

@@ -7,7 +7,7 @@ import com.seed.examples.core.ClientOptions;
 import com.seed.examples.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class SeedExamplesClientBuilder {
+public class SeedExamplesClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private String token = null;
@@ -56,9 +56,13 @@ public final class SeedExamplesClientBuilder {
         return this;
     }
 
+    protected ClientOptions buildClientOptions() {
+        clientOptionsBuilder.environment(this.environment);
+        return clientOptionsBuilder.build();
+    }
+
     public SeedExamplesClient build() {
         this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + this.token);
-        clientOptionsBuilder.environment(this.environment);
-        return new SeedExamplesClient(clientOptionsBuilder.build());
+        return new SeedExamplesClient(buildClientOptions());
     }
 }

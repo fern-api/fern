@@ -7,7 +7,7 @@ import com.seed.websocket.core.ClientOptions;
 import com.seed.websocket.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class AsyncSeedWebsocketClientBuilder {
+public class AsyncSeedWebsocketClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private Environment environment;
@@ -41,8 +41,12 @@ public final class AsyncSeedWebsocketClientBuilder {
         return this;
     }
 
-    public AsyncSeedWebsocketClient build() {
+    protected ClientOptions buildClientOptions() {
         clientOptionsBuilder.environment(this.environment);
-        return new AsyncSeedWebsocketClient(clientOptionsBuilder.build());
+        return clientOptionsBuilder.build();
+    }
+
+    public AsyncSeedWebsocketClient build() {
+        return new AsyncSeedWebsocketClient(buildClientOptions());
     }
 }

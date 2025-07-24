@@ -40,5 +40,20 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
         for (const file of this.sourceFiles) {
             await file.write(absolutePathToSrcDirectory);
         }
+        await this.persistAsIsFiles();
+    }
+
+    private async persistAsIsFiles(): Promise<void> {
+        const { absolutePathToSrcDirectory } = this;
+        await Promise.all(
+            this.context.getCoreAsIsFiles().map(async (def) => {
+                const swiftFile = new SwiftFile({
+                    filename: def.filename,
+                    directory: def.directory,
+                    fileContents: await def.loadContents()
+                });
+                await swiftFile.write(absolutePathToSrcDirectory);
+            })
+        );
     }
 }

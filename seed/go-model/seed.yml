@@ -50,11 +50,4 @@ scripts:
     commands:
       - CGO_ENABLED=0 go test ./...
 
-allowedFailures:
-  - enum
-  - exhaustive
-  - literal
-  - mixed-case
-  - reserved-keywords
-  - trace
-  - request-parameters
+allowedFailures: []

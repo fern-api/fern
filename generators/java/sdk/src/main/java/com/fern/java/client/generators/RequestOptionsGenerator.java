@@ -88,7 +88,7 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
         TypeSpec.Builder requestOptionsTypeSpec =
                 TypeSpec.classBuilder(className).addModifiers(Modifier.PUBLIC, Modifier.FINAL);
         TypeSpec.Builder builderTypeSpec =
-                TypeSpec.classBuilder(builderClassName).addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL);
+                TypeSpec.classBuilder(builderClassName).addModifiers(Modifier.PUBLIC, Modifier.STATIC);
 
         CodeBlock.Builder getHeadersCodeBlock = CodeBlock.builder()
                 .addStatement(

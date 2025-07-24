@@ -1,5 +1,5 @@
 use crate::client::LicenseClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl LicenseClient {
     //  methods

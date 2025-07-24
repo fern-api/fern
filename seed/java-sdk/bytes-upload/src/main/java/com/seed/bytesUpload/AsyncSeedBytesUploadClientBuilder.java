@@ -7,7 +7,7 @@ import com.seed.bytesUpload.core.ClientOptions;
 import com.seed.bytesUpload.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class AsyncSeedBytesUploadClientBuilder {
+public class AsyncSeedBytesUploadClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private Environment environment;
@@ -41,8 +41,12 @@ public final class AsyncSeedBytesUploadClientBuilder {
         return this;
     }
 
-    public AsyncSeedBytesUploadClient build() {
+    protected ClientOptions buildClientOptions() {
         clientOptionsBuilder.environment(this.environment);
-        return new AsyncSeedBytesUploadClient(clientOptionsBuilder.build());
+        return clientOptionsBuilder.build();
+    }
+
+    public AsyncSeedBytesUploadClient build() {
+        return new AsyncSeedBytesUploadClient(buildClientOptions());
     }
 }

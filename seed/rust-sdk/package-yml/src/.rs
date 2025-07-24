@@ -1,5 +1,5 @@
 use crate::client::PackageYmlClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl PackageYmlClient {
     //  methods

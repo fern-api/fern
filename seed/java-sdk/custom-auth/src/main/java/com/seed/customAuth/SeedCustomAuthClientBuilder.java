@@ -7,7 +7,7 @@ import com.seed.customAuth.core.ClientOptions;
 import com.seed.customAuth.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class SeedCustomAuthClientBuilder {
+public class SeedCustomAuthClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private String customAuthScheme = null;
@@ -51,12 +51,16 @@ public final class SeedCustomAuthClientBuilder {
         return this;
     }
 
+    protected ClientOptions buildClientOptions() {
+        clientOptionsBuilder.environment(this.environment);
+        return clientOptionsBuilder.build();
+    }
+
     public SeedCustomAuthClient build() {
         if (customAuthScheme == null) {
             throw new RuntimeException("Please provide customAuthScheme");
         }
         this.clientOptionsBuilder.addHeader("X-API-KEY", this.customAuthScheme);
-        clientOptionsBuilder.environment(this.environment);
-        return new SeedCustomAuthClient(clientOptionsBuilder.build());
+        return new SeedCustomAuthClient(buildClientOptions());
     }
 }

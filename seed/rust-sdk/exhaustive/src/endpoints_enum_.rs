@@ -1,5 +1,5 @@
 use crate::client::ExhaustiveClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl ExhaustiveClient {
     // Endpoints Enum methods

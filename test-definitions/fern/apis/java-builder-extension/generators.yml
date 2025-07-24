@@ -1,0 +1,11 @@
+default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-java-sdk
+        version: 2.38.1
+        output:
+          location: local-file-system
+          path: ../../../../../../seed/java-sdk/builder-extension
+        config:
+          client-class-name: BaseClient

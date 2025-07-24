@@ -9,7 +9,7 @@ import com.seed.oauthClientCredentialsDefault.core.OAuthTokenSupplier;
 import com.seed.oauthClientCredentialsDefault.resources.auth.AuthClient;
 import okhttp3.OkHttpClient;
 
-public final class AsyncSeedOauthClientCredentialsDefaultClientBuilder {
+public class AsyncSeedOauthClientCredentialsDefaultClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private String clientId = null;
@@ -63,12 +63,16 @@ public final class AsyncSeedOauthClientCredentialsDefaultClientBuilder {
         return this;
     }
 
+    protected ClientOptions buildClientOptions() {
+        clientOptionsBuilder.environment(this.environment);
+        return clientOptionsBuilder.build();
+    }
+
     public AsyncSeedOauthClientCredentialsDefaultClient build() {
         AuthClient authClient = new AuthClient(
                 ClientOptions.builder().environment(this.environment).build());
         OAuthTokenSupplier oAuthTokenSupplier = new OAuthTokenSupplier(clientId, clientSecret, authClient);
         this.clientOptionsBuilder.addHeader("Authorization", oAuthTokenSupplier);
-        clientOptionsBuilder.environment(this.environment);
-        return new AsyncSeedOauthClientCredentialsDefaultClient(clientOptionsBuilder.build());
+        return new AsyncSeedOauthClientCredentialsDefaultClient(buildClientOptions());
     }
 }

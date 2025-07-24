@@ -1,5 +1,5 @@
 use crate::client::SingleUrlEnvironmentDefaultClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl SingleUrlEnvironmentDefaultClient {
     // Dummy methods

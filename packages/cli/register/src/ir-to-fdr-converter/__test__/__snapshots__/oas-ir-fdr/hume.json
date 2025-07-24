@@ -4914,6 +4914,17 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "fileDownload"
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -4989,6 +5000,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Job_Request"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -5398,6 +5424,24 @@
           "statusCode": 200,
           "description": ""
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "Job_Request"
+                  }
+                }
+              },
+              "statusCode": 200,
+              "description": ""
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
@@ -5583,6 +5627,21 @@
           "statusCode": 200,
           "description": ""
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "JobId"
+                }
+              },
+              "statusCode": 200,
+              "description": ""
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
@@ -5673,6 +5732,24 @@
           },
           "statusCode": 200,
           "description": ""
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "SourceResult"
+                  }
+                }
+              },
+              "statusCode": 200,
+              "description": ""
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [

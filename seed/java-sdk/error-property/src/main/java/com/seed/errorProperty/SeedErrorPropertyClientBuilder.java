@@ -7,7 +7,7 @@ import com.seed.errorProperty.core.ClientOptions;
 import com.seed.errorProperty.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class SeedErrorPropertyClientBuilder {
+public class SeedErrorPropertyClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private Environment environment;
@@ -41,8 +41,12 @@ public final class SeedErrorPropertyClientBuilder {
         return this;
     }
 
-    public SeedErrorPropertyClient build() {
+    protected ClientOptions buildClientOptions() {
         clientOptionsBuilder.environment(this.environment);
-        return new SeedErrorPropertyClient(clientOptionsBuilder.build());
+        return clientOptionsBuilder.build();
+    }
+
+    public SeedErrorPropertyClient build() {
+        return new SeedErrorPropertyClient(buildClientOptions());
     }
 }

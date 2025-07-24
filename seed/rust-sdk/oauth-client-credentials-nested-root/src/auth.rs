@@ -1,5 +1,5 @@
 use crate::client::OauthClientCredentialsClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl OauthClientCredentialsClient {
     // Auth methods

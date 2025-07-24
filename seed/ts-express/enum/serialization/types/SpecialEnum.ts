@@ -18,7 +18,7 @@ export const SpecialEnum: core.serialization.Schema<serializers.SpecialEnum.Raw,
         "Hello\\fWorld",
         "Hello\\u0008World",
         "Hello\\vWorld",
-        "Hello\\0World",
+        "Hello\\x00World",
         "Hello\\u0007World",
         "Hello\\u0001World",
         "Hello\\u0002World",
@@ -26,7 +26,7 @@ export const SpecialEnum: core.serialization.Schema<serializers.SpecialEnum.Raw,
         "Hello\\u007FWorld",
         "Hello\\u009FWorld",
         'Line 1\\n"Quote"\\tTab\\\\Backslash\\r\\nLine 2\\0Null',
-        "\\n\\r\\t\\0\\u0008\\f\\v\\u0007",
+        "\\n\\r\\t\\x00\\u0008\\f\\v\\u0007",
         "Hello \u4E16\u754C",
         "caf\u00E9",
         "\uD83D\uDE80",
@@ -54,7 +54,7 @@ export declare namespace SpecialEnum {
         | "Hello\\fWorld"
         | "Hello\\u0008World"
         | "Hello\\vWorld"
-        | "Hello\\0World"
+        | "Hello\\x00World"
         | "Hello\\u0007World"
         | "Hello\\u0001World"
         | "Hello\\u0002World"
@@ -62,7 +62,7 @@ export declare namespace SpecialEnum {
         | "Hello\\u007FWorld"
         | "Hello\\u009FWorld"
         | 'Line 1\\n"Quote"\\tTab\\\\Backslash\\r\\nLine 2\\0Null'
-        | "\\n\\r\\t\\0\\u0008\\f\\v\\u0007"
+        | "\\n\\r\\t\\x00\\u0008\\f\\v\\u0007"
         | "Hello \u4E16\u754C"
         | "caf\u00E9"
         | "\uD83D\uDE80"

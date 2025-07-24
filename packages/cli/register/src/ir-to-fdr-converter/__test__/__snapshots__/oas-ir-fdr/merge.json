@@ -12446,6 +12446,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AccountDetails"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -12563,6 +12578,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AccountToken"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -12678,6 +12708,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AvailableActions"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -13034,6 +13079,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PaginatedBankInfoList"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -13234,6 +13294,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BankInfo"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -13515,6 +13590,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PaginatedBenefitList"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -13693,6 +13783,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Benefit"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -13950,6 +14055,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PaginatedCompanyList"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -14116,6 +14236,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Company"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -14247,6 +14382,21 @@
             },
             "statusCode": 200,
             "description": "No response body"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "delete-account_create_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "No response body"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -14551,6 +14701,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PaginatedEmployeePayrollRunList"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -14786,6 +14951,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EmployeePayrollRun"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -15357,6 +15537,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PaginatedEmployeeList"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -15587,6 +15782,21 @@
             },
             "statusCode": 201,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EmployeeResponse"
+                  }
+                },
+                "statusCode": 201,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -15911,6 +16121,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Employee"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -16118,6 +16343,21 @@
             "statusCode": 200,
             "description": "No response body"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "employees_ignoreCreate_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "No response body"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -16205,6 +16445,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "MetaResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -16491,6 +16746,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PaginatedEmploymentList"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -16700,6 +16970,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Employment"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -16843,6 +17128,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RemoteKey"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -17102,6 +17402,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PaginatedGroupList"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -17283,6 +17598,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Group"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -17569,6 +17899,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PaginatedIssueList"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -17690,6 +18035,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Issue"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -17803,6 +18163,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "LinkToken"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -18073,6 +18448,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PaginatedAccountDetailsAndActionsList"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -18396,6 +18786,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PaginatedLocationList"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -18590,6 +18995,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Location"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -18741,6 +19161,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RemoteResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -18979,6 +19414,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PaginatedPayGroupList"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -19132,6 +19582,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PayGroup"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -19464,6 +19929,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PaginatedPayrollRunList"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -19650,6 +20130,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PayrollRun"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -19783,6 +20278,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RemoteKey"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -19886,6 +20396,24 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "LinkedAccountSelectiveSyncConfiguration"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -20005,6 +20533,24 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "LinkedAccountSelectiveSyncConfiguration"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -20191,6 +20737,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PaginatedConditionSchemaList"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -20354,6 +20915,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PaginatedSyncStatusList"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -20474,6 +21050,24 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "SyncStatus"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -20729,6 +21323,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PaginatedTeamList"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -20897,6 +21506,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Team"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -21225,6 +21849,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PaginatedTimeOffList"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -21406,6 +22045,21 @@
             },
             "statusCode": 201,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TimeOffResponse"
+                  }
+                },
+                "statusCode": 201,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -21671,6 +22325,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TimeOff"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -21799,6 +22468,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "MetaResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -22085,6 +22769,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PaginatedTimeOffBalanceList"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -22282,6 +22981,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TimeOffBalance"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -22415,6 +23129,24 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "WebhookReceiver"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -22516,6 +23248,21 @@
             },
             "statusCode": 201,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "WebhookReceiver"
+                  }
+                },
+                "statusCode": 201,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [

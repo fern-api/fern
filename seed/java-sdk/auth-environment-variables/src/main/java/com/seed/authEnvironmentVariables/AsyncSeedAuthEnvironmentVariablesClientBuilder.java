@@ -7,7 +7,7 @@ import com.seed.authEnvironmentVariables.core.ClientOptions;
 import com.seed.authEnvironmentVariables.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class AsyncSeedAuthEnvironmentVariablesClientBuilder {
+public class AsyncSeedAuthEnvironmentVariablesClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private String apiKey = System.getenv("FERN_API_KEY");
@@ -72,6 +72,11 @@ public final class AsyncSeedAuthEnvironmentVariablesClientBuilder {
         return this;
     }
 
+    protected ClientOptions buildClientOptions() {
+        clientOptionsBuilder.environment(this.environment);
+        return clientOptionsBuilder.build();
+    }
+
     public AsyncSeedAuthEnvironmentVariablesClient build() {
         if (apiKey == null) {
             throw new RuntimeException("Please provide apiKey or set the FERN_API_KEY environment variable.");
@@ -82,7 +87,6 @@ public final class AsyncSeedAuthEnvironmentVariablesClientBuilder {
         }
         this.clientOptionsBuilder.addHeader("X-Another-Header", this.xAnotherHeader);
         this.clientOptionsBuilder.addHeader("X-API-Version", this.xApiVersion);
-        clientOptionsBuilder.environment(this.environment);
-        return new AsyncSeedAuthEnvironmentVariablesClient(clientOptionsBuilder.build());
+        return new AsyncSeedAuthEnvironmentVariablesClient(buildClientOptions());
     }
 }

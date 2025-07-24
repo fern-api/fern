@@ -9,7 +9,7 @@ import com.seed.oauthClientCredentialsEnvironmentVariables.core.OAuthTokenSuppli
 import com.seed.oauthClientCredentialsEnvironmentVariables.resources.auth.AuthClient;
 import okhttp3.OkHttpClient;
 
-public final class AsyncSeedOauthClientCredentialsEnvironmentVariablesClientBuilder {
+public class AsyncSeedOauthClientCredentialsEnvironmentVariablesClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private String clientId = System.getenv("CLIENT_ID");
@@ -65,12 +65,16 @@ public final class AsyncSeedOauthClientCredentialsEnvironmentVariablesClientBuil
         return this;
     }
 
+    protected ClientOptions buildClientOptions() {
+        clientOptionsBuilder.environment(this.environment);
+        return clientOptionsBuilder.build();
+    }
+
     public AsyncSeedOauthClientCredentialsEnvironmentVariablesClient build() {
         AuthClient authClient = new AuthClient(
                 ClientOptions.builder().environment(this.environment).build());
         OAuthTokenSupplier oAuthTokenSupplier = new OAuthTokenSupplier(clientId, clientSecret, authClient);
         this.clientOptionsBuilder.addHeader("Authorization", oAuthTokenSupplier);
-        clientOptionsBuilder.environment(this.environment);
-        return new AsyncSeedOauthClientCredentialsEnvironmentVariablesClient(clientOptionsBuilder.build());
+        return new AsyncSeedOauthClientCredentialsEnvironmentVariablesClient(buildClientOptions());
     }
 }

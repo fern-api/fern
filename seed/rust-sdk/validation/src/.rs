@@ -1,5 +1,5 @@
 use crate::client::ValidationClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl ValidationClient {
     //  methods

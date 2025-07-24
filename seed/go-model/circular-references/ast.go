@@ -2,4 +2,28 @@
 
 package api
 
+import (
+	fmt "fmt"
+)
+
 type PrimitiveValue string
+
+const (
+	PrimitiveValueString = "STRING"
+	PrimitiveValueNumber = "NUMBER"
+)
+
+func NewPrimitiveValueFromString(s string) (PrimitiveValue, error) {
+	switch s {
+	case "STRING":
+		return PrimitiveValueString, nil
+	case "NUMBER":
+		return PrimitiveValueNumber, nil
+	}
+	var t PrimitiveValue
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (p PrimitiveValue) Ptr() *PrimitiveValue {
+	return &p
+}

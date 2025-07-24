@@ -7,7 +7,7 @@ import com.seed.alias.core.ClientOptions;
 import com.seed.alias.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class SeedAliasClientBuilder {
+public class SeedAliasClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private Environment environment;
@@ -41,8 +41,12 @@ public final class SeedAliasClientBuilder {
         return this;
     }
 
-    public SeedAliasClient build() {
+    protected ClientOptions buildClientOptions() {
         clientOptionsBuilder.environment(this.environment);
-        return new SeedAliasClient(clientOptionsBuilder.build());
+        return clientOptionsBuilder.build();
+    }
+
+    public SeedAliasClient build() {
+        return new SeedAliasClient(buildClientOptions());
     }
 }

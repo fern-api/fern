@@ -98,7 +98,7 @@ export abstract class AbstractGoGeneratorContext<
     }
 
     public getReceiverName(name: Name): string {
-        return name.camelCase.unsafeName.charAt(0).toUpperCase();
+        return name.camelCase.unsafeName.charAt(0).toLowerCase();
     }
 
     public getRootImportPath(): string {
@@ -130,6 +130,14 @@ export abstract class AbstractGoGeneratorContext<
 
     public getParameterName(name: Name): string {
         return name.camelCase.safeName;
+    }
+
+    public callFmtErrorf(format: string, args: go.AstNode[]): go.FuncInvocation {
+        return go.invokeFunc({
+            func: go.typeReference({ name: "Errorf", importPath: "fmt" }),
+            arguments_: [go.TypeInstantiation.string(format), ...args],
+            multiline: false
+        });
     }
 
     public maybeUnwrapIterable(typeReference: TypeReference): TypeReference | undefined {
