@@ -11,9 +11,7 @@ import { UndiscriminatedUnionGenerator } from "./union/UndiscriminatedUnionGener
 export function generateModels(context: ModelGeneratorContext): void {
     for (const typeDeclaration of Object.values(context.ir.types)) {
         const generator = buildModelGenerator({ context, typeDeclaration });
-        if (generator != null) {
-            context.project.addGoFiles(generator.generate());
-        }
+        context.project.addGoFiles(generator.generate());
     }
 }
 
@@ -23,7 +21,7 @@ function buildModelGenerator({
 }: {
     context: ModelGeneratorContext;
     typeDeclaration: TypeDeclaration;
-}): AbstractModelGenerator | undefined {
+}): AbstractModelGenerator {
     switch (typeDeclaration.shape.type) {
         case "alias":
             return new AliasGenerator(context, typeDeclaration, typeDeclaration.shape);
