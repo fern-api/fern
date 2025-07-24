@@ -6,9 +6,9 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class SearchRequestFilterLocationCoordinates(UniversalBaseModel):
-    latitude: typing.Optional[float] = None
-    longitude: typing.Optional[float] = None
+class User(UniversalBaseModel):
+    name: typing.Optional[str] = None
+    tags: typing.Optional[typing.List[str]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

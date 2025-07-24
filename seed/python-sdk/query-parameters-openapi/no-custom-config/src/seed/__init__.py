@@ -2,8 +2,16 @@
 
 # isort: skip_file
 
-from .types import SearchRequestSort, SearchResponse
+from .types import NestedUser, SearchRequestNeighborRequired, SearchResponse, User
 from .client import AsyncSeedApi, SeedApi
 from .version import __version__
 
-__all__ = ["AsyncSeedApi", "SearchRequestSort", "SearchResponse", "SeedApi", "__version__"]
+__all__ = [
+    "AsyncSeedApi",
+    "NestedUser",
+    "SearchRequestNeighborRequired",
+    "SearchResponse",
+    "SeedApi",
+    "User",
+    "__version__",
+]

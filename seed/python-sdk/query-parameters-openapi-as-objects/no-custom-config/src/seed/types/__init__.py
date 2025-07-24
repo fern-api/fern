@@ -2,18 +2,10 @@
 
 # isort: skip_file
 
-from .search_request_after import SearchRequestAfter
-from .search_request_filter import SearchRequestFilter
-from .search_request_filter_location import SearchRequestFilterLocation
-from .search_request_filter_location_coordinates import SearchRequestFilterLocationCoordinates
-from .search_request_sort import SearchRequestSort
+from .nested_user import NestedUser
+from .search_request_neighbor import SearchRequestNeighbor
+from .search_request_neighbor_required import SearchRequestNeighborRequired
 from .search_response import SearchResponse
+from .user import User
 
-__all__ = [
-    "SearchRequestAfter",
-    "SearchRequestFilter",
-    "SearchRequestFilterLocation",
-    "SearchRequestFilterLocationCoordinates",
-    "SearchRequestSort",
-    "SearchResponse",
-]
+__all__ = ["NestedUser", "SearchRequestNeighbor", "SearchRequestNeighborRequired", "SearchResponse", "User"]

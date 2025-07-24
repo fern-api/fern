@@ -12,12 +12,59 @@
 <dd>
 
 ```python
-from seed import SeedApi
+import datetime
+
+from seed import NestedUser, SeedApi, User
 
 client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
-client.search()
+client.search(
+    limit=1,
+    id="id",
+    date="date",
+    deadline=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    bytes="bytes",
+    user=User(
+        name="name",
+        tags=["tags", "tags"],
+    ),
+    user_list=User(
+        name="name",
+        tags=["tags", "tags"],
+    ),
+    optional_deadline=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    key_value={"keyValue": "keyValue"},
+    optional_string="optionalString",
+    nested_user=NestedUser(
+        name="name",
+        user=User(
+            name="name",
+            tags=["tags", "tags"],
+        ),
+    ),
+    optional_user=User(
+        name="name",
+        tags=["tags", "tags"],
+    ),
+    exclude_user=User(
+        name="name",
+        tags=["tags", "tags"],
+    ),
+    filter="filter",
+    neighbor=User(
+        name="name",
+        tags=["tags", "tags"],
+    ),
+    neighbor_required=User(
+        name="name",
+        tags=["tags", "tags"],
+    ),
+)
 
 ```
 </dd>
@@ -33,7 +80,7 @@ client.search()
 <dl>
 <dd>
 
-**filter:** `typing.Optional[SearchRequestFilter]` 
+**limit:** `int` 
     
 </dd>
 </dl>
@@ -41,7 +88,7 @@ client.search()
 <dl>
 <dd>
 
-**sort:** `typing.Optional[SearchRequestSort]` 
+**id:** `str` 
     
 </dd>
 </dl>
@@ -49,7 +96,7 @@ client.search()
 <dl>
 <dd>
 
-**limit:** `typing.Optional[int]` 
+**date:** `str` 
     
 </dd>
 </dl>
@@ -57,7 +104,7 @@ client.search()
 <dl>
 <dd>
 
-**after:** `typing.Optional[SearchRequestAfter]` 
+**deadline:** `dt.datetime` 
     
 </dd>
 </dl>
@@ -65,7 +112,95 @@ client.search()
 <dl>
 <dd>
 
-**tags:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` 
+**bytes:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user:** `User` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**neighbor_required:** `SearchRequestNeighborRequired` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_list:** `typing.Optional[typing.Union[User, typing.Sequence[User]]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**optional_deadline:** `typing.Optional[dt.datetime]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**key_value:** `typing.Optional[typing.Dict[str, typing.Optional[str]]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**optional_string:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**nested_user:** `typing.Optional[NestedUser]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**optional_user:** `typing.Optional[User]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**exclude_user:** `typing.Optional[typing.Union[User, typing.Sequence[User]]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filter:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**neighbor:** `typing.Optional[SearchRequestNeighbor]` 
     
 </dd>
 </dl>

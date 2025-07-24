@@ -2,7 +2,9 @@
 
 # isort: skip_file
 
-from .search_request_sort import SearchRequestSort
+from .nested_user import NestedUser
+from .search_request_neighbor_required import SearchRequestNeighborRequired
 from .search_response import SearchResponse
+from .user import User
 
-__all__ = ["SearchRequestSort", "SearchResponse"]
+__all__ = ["NestedUser", "SearchRequestNeighborRequired", "SearchResponse", "User"]

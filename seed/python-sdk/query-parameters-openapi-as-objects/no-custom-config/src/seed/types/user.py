@@ -4,13 +4,11 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .search_request_filter_location_coordinates import SearchRequestFilterLocationCoordinates
 
 
-class SearchRequestFilterLocation(UniversalBaseModel):
-    city: typing.Optional[str] = None
-    country: typing.Optional[str] = None
-    coordinates: typing.Optional[SearchRequestFilterLocationCoordinates] = None
+class User(UniversalBaseModel):
+    name: typing.Optional[str] = None
+    tags: typing.Optional[typing.List[str]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

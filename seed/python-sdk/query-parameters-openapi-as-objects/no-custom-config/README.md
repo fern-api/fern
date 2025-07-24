@@ -20,12 +20,59 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedApi
+import datetime
+
+from seed import NestedUser, SeedApi, User
 
 client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
-client.search()
+client.search(
+    limit=1,
+    id="id",
+    date="date",
+    deadline=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    bytes="bytes",
+    user=User(
+        name="name",
+        tags=["tags", "tags"],
+    ),
+    user_list=User(
+        name="name",
+        tags=["tags", "tags"],
+    ),
+    optional_deadline=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    key_value={"keyValue": "keyValue"},
+    optional_string="optionalString",
+    nested_user=NestedUser(
+        name="name",
+        user=User(
+            name="name",
+            tags=["tags", "tags"],
+        ),
+    ),
+    optional_user=User(
+        name="name",
+        tags=["tags", "tags"],
+    ),
+    exclude_user=User(
+        name="name",
+        tags=["tags", "tags"],
+    ),
+    filter="filter",
+    neighbor=User(
+        name="name",
+        tags=["tags", "tags"],
+    ),
+    neighbor_required=User(
+        name="name",
+        tags=["tags", "tags"],
+    ),
+)
 ```
 
 ## Async Client
@@ -34,8 +81,9 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 
 ```python
 import asyncio
+import datetime
 
-from seed import AsyncSeedApi
+from seed import AsyncSeedApi, NestedUser, User
 
 client = AsyncSeedApi(
     base_url="https://yourhost.com/path/to/api",
@@ -43,7 +91,52 @@ client = AsyncSeedApi(
 
 
 async def main() -> None:
-    await client.search()
+    await client.search(
+        limit=1,
+        id="id",
+        date="date",
+        deadline=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        bytes="bytes",
+        user=User(
+            name="name",
+            tags=["tags", "tags"],
+        ),
+        user_list=User(
+            name="name",
+            tags=["tags", "tags"],
+        ),
+        optional_deadline=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        key_value={"keyValue": "keyValue"},
+        optional_string="optionalString",
+        nested_user=NestedUser(
+            name="name",
+            user=User(
+                name="name",
+                tags=["tags", "tags"],
+            ),
+        ),
+        optional_user=User(
+            name="name",
+            tags=["tags", "tags"],
+        ),
+        exclude_user=User(
+            name="name",
+            tags=["tags", "tags"],
+        ),
+        filter="filter",
+        neighbor=User(
+            name="name",
+            tags=["tags", "tags"],
+        ),
+        neighbor_required=User(
+            name="name",
+            tags=["tags", "tags"],
+        ),
+    )
 
 
 asyncio.run(main())
