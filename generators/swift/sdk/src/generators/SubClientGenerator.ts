@@ -49,7 +49,7 @@ export class SubClientGenerator {
         });
         const fileContents = swiftClass.toString();
         return new SwiftFile({
-            filename: this.subpackage.name.pascalCase.safeName + ".swift",
+            filename: `${this.subpackage.name.pascalCase.safeName}Client.swift`,
             directory: RelativeFilePath.of("Resources"),
             fileContents
         });

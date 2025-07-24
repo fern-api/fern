@@ -8,7 +8,7 @@ public final class ExamplesClient: Sendable {
 
     public init(
         baseURL: String = ExamplesEnvironment.production.rawValue,
-        apiKey qpiKey: String,
+        apiKey: String,
         token: String? = nil,
         headers: [String: String]? = [:],
         timeout: Int? = nil,

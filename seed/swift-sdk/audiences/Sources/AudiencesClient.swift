@@ -9,7 +9,7 @@ public final class AudiencesClient: Sendable {
 
     public init(
         baseURL: String = AudiencesEnvironment.environmentA.rawValue,
-        apiKey qpiKey: String,
+        apiKey: String,
         token: String? = nil,
         headers: [String: String]? = [:],
         timeout: Int? = nil,

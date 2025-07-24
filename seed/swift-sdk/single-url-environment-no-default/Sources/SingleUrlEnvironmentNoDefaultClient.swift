@@ -4,7 +4,7 @@ public final class SingleUrlEnvironmentNoDefaultClient: Sendable {
 
     public init(
         baseURL: String = SingleUrlEnvironmentNoDefaultEnvironment.production.rawValue,
-        apiKey qpiKey: String,
+        apiKey: String,
         token: String? = nil,
         headers: [String: String]? = [:],
         timeout: Int? = nil,

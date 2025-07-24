@@ -8,7 +8,7 @@ public final class EnumClient: Sendable {
 
     public init(
         baseURL: String,
-        apiKey qpiKey: String,
+        apiKey: String,
         token: String? = nil,
         headers: [String: String]? = [:],
         timeout: Int? = nil,
