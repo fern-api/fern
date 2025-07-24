@@ -7,7 +7,12 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
-import { RootClientGenerator, SingleUrlEnvironmentGenerator, SubClientGenerator } from "./generators";
+import {
+    PackageSwiftGenerator,
+    RootClientGenerator,
+    SingleUrlEnvironmentGenerator,
+    SubClientGenerator
+} from "./generators";
 
 export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -49,12 +54,26 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
-        const projectFiles = await this.generateProjectFiles(context);
-        context.project.addSourceFiles(...projectFiles);
+        const [rootFiles, sourceFiles] = await Promise.all([
+            this.generateRootFiles(context),
+            this.generateSourceFiles(context)
+        ]);
+        context.project.addRootFiles(...rootFiles);
+        context.project.addSourceFiles(...sourceFiles);
         await context.project.persist();
     }
 
-    private async generateProjectFiles(context: SdkGeneratorContext): Promise<SwiftFile[]> {
+    private async generateRootFiles(context: SdkGeneratorContext): Promise<SwiftFile[]> {
+        const files: SwiftFile[] = [];
+        const packageSwiftGenerator = new PackageSwiftGenerator({
+            projectNamePascalCase: context.ir.apiName.pascalCase.unsafeName,
+            context
+        });
+        files.push(packageSwiftGenerator.generate());
+        return files;
+    }
+
+    private async generateSourceFiles(context: SdkGeneratorContext): Promise<SwiftFile[]> {
         const files: SwiftFile[] = [];
 
         // Resources/**/*.swift
