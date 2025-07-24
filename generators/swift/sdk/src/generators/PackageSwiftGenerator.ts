@@ -38,8 +38,9 @@ export class PackageSwiftGenerator {
             directory: RelativeFilePath.of(""),
             fileContents: [
                 swift.comment({ content: "swift-tools-version: 5.7" }),
-                swift.LineBreak.double(),
+                swift.LineBreak.single(),
                 swift.Statement.import("PackageDescription"),
+                swift.LineBreak.single(),
                 swift.Statement.constantDeclaration(
                     "package",
                     swift.Expression.classInitialization({

@@ -16,11 +16,9 @@ export class Comment extends AstNode {
 
     public write(writer: Writer): void {
         const lines = this.content.split("\n");
-        lines.forEach((line, index) => {
+        lines.forEach((line) => {
             writer.write(`// ${line}`);
-            if (index !== lines.length - 1) {
-                writer.newLine();
-            }
+            writer.newLine();
         });
     }
 }
