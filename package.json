@@ -16,7 +16,7 @@
     "compile": "turbo compile",
     "compile:win": "pnpm -r compile",
     "test": "turbo test --filter=!@fern-api/ete-tests",
-    "test:update": "turbo test:update --filter=!@fern-api/ete-tests --filter=!@fern-api/swift-sdk --filter=!@fern-api/ir-generator-tests",
+    "test:update": "turbo test:update --filter=!@fern-api/ete-tests",
     "test:ete": "pnpm --filter @fern-api/cli dist:cli:dev && pnpm --filter @fern-api/seed-cli dist:cli && pnpm --filter @fern-api/ete-tests test",
     "test:ete:update": "pnpm --filter @fern-api/cli dist:cli:dev && pnpm --filter @fern-api/seed-cli dist:cli && pnpm --filter @fern-api/ete-tests test -- -u",
     "lint:biome": "pnpm exec biome lint",
