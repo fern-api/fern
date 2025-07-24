@@ -53,8 +53,8 @@ export class AuthProvider extends AbstractAuthProvider {
 
     private async getRequestParameters(): Promise<GetTokenRequest> {
         return {
-            client_id: await core.Supplier.get(this.options.client_id),
-            client_secret: await core.Supplier.get(this.options.client_secret),
+            client_id: await core.Supplier.get(this.options.clientId),
+            client_secret: await core.Supplier.get(this.options.clientSecret),
             scope: await core.Supplier.get(this.options.scope),
         };
     }

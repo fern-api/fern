@@ -3,18 +3,20 @@
  */
 
 import * as core from "./core/index.js";
-import * as SeedOauthClientCredentials from "./api/index.js";
 import { mergeHeaders } from "./core/headers.js";
 import { Auth } from "./api/resources/auth/client/Client.js";
 
 export declare namespace SeedOauthClientCredentialsClient {
-    export type Options = core.PropertiesSupplier<SeedOauthClientCredentials.GetTokenRequest> & {
+    export interface Options {
         environment: core.Supplier<string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         /** Additional headers to include in requests. */
         headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
-    };
+        clientId: core.Supplier<string>;
+        clientSecret: core.Supplier<string>;
+        scope?: core.Supplier<string>;
+    }
 
     export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
