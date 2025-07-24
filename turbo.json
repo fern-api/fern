@@ -20,6 +20,11 @@
       "outputs": ["lib/**"],
       "inputs": ["src/**", "tests/**", "package.json", "tsconfig.json"]
     },
+    "compile:debug": {
+      "dependsOn": ["^compile:debug"],
+      "outputs": ["lib/**"],
+      "inputs": ["src/**", "tests/**", "package.json", "tsconfig.json"]
+    },
     "depcheck": {
       "outputs": [],
       "inputs": ["src/**", "tests/**", "package.json", ".depcheckrc.json", "$TURBO_ROOT$/.depcheckrc.json"]
