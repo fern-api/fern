@@ -9,5 +9,4 @@ pub mod property_based_error;
 
 pub use client::ErrorPropertyClient;
 pub use error::ApiError;
-
 pub use types::*;

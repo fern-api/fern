@@ -2597,6 +2597,9 @@ importers:
       '@fern-api/rust-base':
         specifier: workspace:*
         version: link:../base
+      '@fern-api/rust-model':
+        specifier: workspace:*
+        version: link:../model
       '@fern-fern/generator-cli-sdk':
         specifier: 0.0.28
         version: 0.0.28

@@ -1,5 +1,5 @@
 use crate::client::UnionsClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl UnionsClient {
     // Union methods

@@ -1,5 +1,5 @@
 use crate::client::AliasExtendsClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl AliasExtendsClient {
     //  methods

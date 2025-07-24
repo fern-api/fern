@@ -1,5 +1,5 @@
 use crate::client::MultiUrlEnvironmentNoDefaultClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl MultiUrlEnvironmentNoDefaultClient {
     // Ec2 methods

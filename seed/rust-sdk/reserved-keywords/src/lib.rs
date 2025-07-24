@@ -9,5 +9,4 @@ pub mod package;
 
 pub use client::NurseryApiClient;
 pub use error::ApiError;
-
 pub use types::*;

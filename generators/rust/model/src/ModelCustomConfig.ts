@@ -1,5 +1,4 @@
 import { z } from "zod";
-
 import { BaseRustCustomConfigSchema } from "@fern-api/rust-base";
 
 export const ModelCustomConfigSchema = BaseRustCustomConfigSchema.extend({

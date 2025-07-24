@@ -1,5 +1,5 @@
 use crate::client::BearerTokenEnvironmentVariableClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl BearerTokenEnvironmentVariableClient {
     // Service methods

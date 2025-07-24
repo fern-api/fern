@@ -9,5 +9,4 @@ pub mod user;
 
 pub use client::VersionClient;
 pub use error::ApiError;
-
 pub use types::*;

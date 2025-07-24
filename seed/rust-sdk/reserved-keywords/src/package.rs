@@ -1,5 +1,5 @@
 use crate::client::NurseryApiClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl NurseryApiClient {
     // Package methods

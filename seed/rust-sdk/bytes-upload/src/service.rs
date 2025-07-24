@@ -1,5 +1,5 @@
 use crate::client::BytesUploadClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl BytesUploadClient {
     // Service methods

@@ -10,5 +10,4 @@ pub mod user;
 
 pub use client::PathParametersClient;
 pub use error::ApiError;
-
 pub use types::*;

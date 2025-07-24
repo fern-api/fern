@@ -10,5 +10,4 @@ pub mod union_;
 
 pub use client::UnionsClient;
 pub use error::ApiError;
-
 pub use types::*;

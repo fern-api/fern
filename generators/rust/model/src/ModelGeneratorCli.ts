@@ -2,10 +2,8 @@ import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Writer } from "@fern-api/rust-codegen";
 import { AbstractRustGeneratorCli, RustFile } from "@fern-api/rust-base";
-
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation, TypeDeclaration } from "@fern-fern/ir-sdk/api";
-
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { generateModels } from "./generateModels";

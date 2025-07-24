@@ -1,9 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { rust, Attribute, PUBLIC } from "@fern-api/rust-codegen";
-
 import { AliasTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
-
 import { generateRustTypeForTypeReference } from "../converters";
 import { isChronoType, isUuidType, isCollectionType, isUnknownType, isDateTimeType } from "../utils/primitiveTypeUtils";
 

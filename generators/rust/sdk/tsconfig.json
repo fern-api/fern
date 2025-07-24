@@ -12,6 +12,7 @@
     { "path": "../../../packages/commons/test-utils" },
     { "path": "../../base" },
     { "path": "../codegen" },
-    { "path": "../base" }
+    { "path": "../base" },
+    { "path": "../model" }
   ]
 } 

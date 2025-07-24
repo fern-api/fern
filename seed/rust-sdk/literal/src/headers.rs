@@ -1,5 +1,5 @@
 use crate::client::LiteralClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl LiteralClient {
     // Headers methods

@@ -1,11 +1,9 @@
 import { RustFile } from "@fern-api/rust-base";
-
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { StructGenerator } from "./object";
 import { EnumGenerator } from "./enum";
 import { AliasGenerator } from "./alias";
+import { UnionGenerator, UndiscriminatedUnionGenerator } from "./union";
 
 export function generateModels({ context }: { context: ModelGeneratorContext }): RustFile[] {
     const files: RustFile[] = [];
@@ -22,14 +20,13 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
                 return new StructGenerator(typeDeclaration, objectTypeDeclaration).generate();
             },
             union: (unionTypeDeclaration) => {
-                // TODO: Implement UnionGenerator for discriminated unions
-                // For now, skip union types
-                return undefined;
+                return new UnionGenerator(typeDeclaration, unionTypeDeclaration).generate();
             },
             undiscriminatedUnion: (undiscriminatedUnionTypeDeclaration) => {
-                // TODO: Implement UndiscriminatedUnionGenerator
-                // For now, skip undiscriminated union types
-                return undefined;
+                return new UndiscriminatedUnionGenerator(
+                    typeDeclaration,
+                    undiscriminatedUnionTypeDeclaration
+                ).generate();
             },
             _other: () => {
                 // Unknown type shape, skip for now

@@ -3,7 +3,13 @@ import { describe, it, expect } from "vitest";
 import { generateModels } from "../generateModels";
 import { createSampleGeneratorContext } from "./util/createSampleGeneratorContext";
 
-const testDefinitions = ["basic-object", "enum-types", "alias-types"] as const;
+const testDefinitions = [
+    "basic-object",
+    "enum-types",
+    "alias-types",
+    "union-types",
+    "undiscriminated-union-types"
+] as const;
 
 describe.each(testDefinitions)("generateModels - %s", (testDefinitionName) => {
     it("should correctly generate model files", async () => {
@@ -78,5 +84,47 @@ describe("generateModels type-specific tests", () => {
                 file.fileContents.includes("UserProfile")
         );
         expect(hasAliasContent).toBeTruthy();
+    });
+
+    it("should generate discriminated unions for union types", async () => {
+        const context = await createSampleGeneratorContext("union-types");
+        const files = generateModels({ context });
+
+        expect(files.length).toBeGreaterThan(0);
+
+        // Should have union-related content
+        const hasUnionContent = files.some(
+            (file) =>
+                file.fileContents.includes("pub enum") &&
+                (file.fileContents.includes("Animal") ||
+                    file.fileContents.includes("Vehicle") ||
+                    file.fileContents.includes("Shape"))
+        );
+        expect(hasUnionContent).toBeTruthy();
+
+        // Should have discriminated union attributes
+        const hasTaggedUnion = files.some((file) => file.fileContents.includes("#[serde(tag ="));
+        expect(hasTaggedUnion).toBeTruthy();
+    });
+
+    it("should generate unions for union types (all are discriminated in Fern)", async () => {
+        const context = await createSampleGeneratorContext("undiscriminated-union-types");
+        const files = generateModels({ context });
+
+        expect(files.length).toBeGreaterThan(0);
+
+        // Should have union content
+        const hasUnionContent = files.some(
+            (file) =>
+                file.fileContents.includes("pub enum") &&
+                (file.fileContents.includes("StringOrNumber") ||
+                    file.fileContents.includes("FlexibleValue") ||
+                    file.fileContents.includes("SearchResult"))
+        );
+        expect(hasUnionContent).toBeTruthy();
+
+        // Should have tagged union attributes (Fern creates discriminated unions)
+        const hasTaggedUnion = files.some((file) => file.fileContents.includes("#[serde(tag ="));
+        expect(hasTaggedUnion).toBeTruthy();
     });
 });

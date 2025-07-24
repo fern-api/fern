@@ -9,5 +9,4 @@ pub mod ;
 
 pub use client::AliasExtendsClient;
 pub use error::ApiError;
-
 pub use types::*;

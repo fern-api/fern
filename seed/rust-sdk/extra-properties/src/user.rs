@@ -1,5 +1,5 @@
 use crate::client::ExtraPropertiesClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl ExtraPropertiesClient {
     // User methods
