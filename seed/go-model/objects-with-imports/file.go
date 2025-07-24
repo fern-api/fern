@@ -2,4 +2,30 @@
 
 package objectswithimports
 
+import (
+	fmt "fmt"
+)
+
 type FileInfo string
+
+const (
+	// A regular file (e.g. foo.txt).
+	FileInfoRegular = "REGULAR"
+	// A directory (e.g. foo/).
+	FileInfoDirectory = "DIRECTORY"
+)
+
+func NewFileInfoFromString(s string) (FileInfo, error) {
+	switch s {
+	case "REGULAR":
+		return FileInfoRegular, nil
+	case "DIRECTORY":
+		return FileInfoDirectory, nil
+	}
+	var t FileInfo
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FileInfo) Ptr() *FileInfo {
+	return &f
+}

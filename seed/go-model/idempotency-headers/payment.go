@@ -2,4 +2,28 @@
 
 package idempotencyheaders
 
+import (
+	fmt "fmt"
+)
+
 type Currency string
+
+const (
+	CurrencyUsd = "USD"
+	CurrencyYen = "YEN"
+)
+
+func NewCurrencyFromString(s string) (Currency, error) {
+	switch s {
+	case "USD":
+		return CurrencyUsd, nil
+	case "YEN":
+		return CurrencyYen, nil
+	}
+	var t Currency
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c Currency) Ptr() *Currency {
+	return &c
+}

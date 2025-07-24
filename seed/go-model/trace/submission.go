@@ -2,9 +2,91 @@
 
 package trace
 
+import (
+	fmt "fmt"
+)
+
 // Keep in sync with SubmissionType.
 type SubmissionTypeEnum string
 
+const (
+	SubmissionTypeEnumTest = "TEST"
+)
+
+func NewSubmissionTypeEnumFromString(s string) (SubmissionTypeEnum, error) {
+	switch s {
+	case "TEST":
+		return SubmissionTypeEnumTest, nil
+	}
+	var t SubmissionTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (s SubmissionTypeEnum) Ptr() *SubmissionTypeEnum {
+	return &s
+}
+
 type RunningSubmissionState string
 
+const (
+	RunningSubmissionStateQueueingSubmission           = "QUEUEING_SUBMISSION"
+	RunningSubmissionStateKillingHistoricalSubmissions = "KILLING_HISTORICAL_SUBMISSIONS"
+	RunningSubmissionStateWritingSubmissionToFile      = "WRITING_SUBMISSION_TO_FILE"
+	RunningSubmissionStateCompilingSubmission          = "COMPILING_SUBMISSION"
+	RunningSubmissionStateRunningSubmission            = "RUNNING_SUBMISSION"
+)
+
+func NewRunningSubmissionStateFromString(s string) (RunningSubmissionState, error) {
+	switch s {
+	case "QUEUEING_SUBMISSION":
+		return RunningSubmissionStateQueueingSubmission, nil
+	case "KILLING_HISTORICAL_SUBMISSIONS":
+		return RunningSubmissionStateKillingHistoricalSubmissions, nil
+	case "WRITING_SUBMISSION_TO_FILE":
+		return RunningSubmissionStateWritingSubmissionToFile, nil
+	case "COMPILING_SUBMISSION":
+		return RunningSubmissionStateCompilingSubmission, nil
+	case "RUNNING_SUBMISSION":
+		return RunningSubmissionStateRunningSubmission, nil
+	}
+	var t RunningSubmissionState
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (r RunningSubmissionState) Ptr() *RunningSubmissionState {
+	return &r
+}
+
 type ExecutionSessionStatus string
+
+const (
+	ExecutionSessionStatusCreatingContainer     = "CREATING_CONTAINER"
+	ExecutionSessionStatusProvisioningContainer = "PROVISIONING_CONTAINER"
+	ExecutionSessionStatusPendingContainer      = "PENDING_CONTAINER"
+	ExecutionSessionStatusRunningContainer      = "RUNNING_CONTAINER"
+	ExecutionSessionStatusLiveContainer         = "LIVE_CONTAINER"
+	ExecutionSessionStatusFailedToLaunch        = "FAILED_TO_LAUNCH"
+)
+
+func NewExecutionSessionStatusFromString(s string) (ExecutionSessionStatus, error) {
+	switch s {
+	case "CREATING_CONTAINER":
+		return ExecutionSessionStatusCreatingContainer, nil
+	case "PROVISIONING_CONTAINER":
+		return ExecutionSessionStatusProvisioningContainer, nil
+	case "PENDING_CONTAINER":
+		return ExecutionSessionStatusPendingContainer, nil
+	case "RUNNING_CONTAINER":
+		return ExecutionSessionStatusRunningContainer, nil
+	case "LIVE_CONTAINER":
+		return ExecutionSessionStatusLiveContainer, nil
+	case "FAILED_TO_LAUNCH":
+		return ExecutionSessionStatusFailedToLaunch, nil
+	}
+	var t ExecutionSessionStatus
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e ExecutionSessionStatus) Ptr() *ExecutionSessionStatus {
+	return &e
+}

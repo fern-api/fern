@@ -2,6 +2,35 @@
 
 package multilinedocs
 
+import (
+	fmt "fmt"
+)
+
 // Tests enum name and value can be
 // different.
 type Operand string
+
+const (
+	OperandGreaterThan = ">"
+	OperandEqualTo     = "="
+	// The name and value should be similar
+	// are similar for less than.
+	OperandLessThan = "less_than"
+)
+
+func NewOperandFromString(s string) (Operand, error) {
+	switch s {
+	case ">":
+		return OperandGreaterThan, nil
+	case "=":
+		return OperandEqualTo, nil
+	case "less_than":
+		return OperandLessThan, nil
+	}
+	var t Operand
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (o Operand) Ptr() *Operand {
+	return &o
+}
