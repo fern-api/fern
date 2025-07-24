@@ -138,7 +138,7 @@ public readonly record struct SpecialEnum : IStringEnum
 
         public const string K = "Hello\\vWorld";
 
-        public const string L = "Hello\\0World";
+        public const string L = "Hello\\x00World";
 
         public const string M = "Hello\\u0007World";
 
@@ -154,7 +154,7 @@ public readonly record struct SpecialEnum : IStringEnum
 
         public const string S = "Line 1\\n\"Quote\"\\tTab\\\\Backslash\\r\\nLine 2\\0Null";
 
-        public const string T = "\\n\\r\\t\\0\\u0008\\f\\v\\u0007";
+        public const string T = "\\n\\r\\t\\x00\\u0008\\f\\v\\u0007";
 
         public const string U = "Hello 世界";
 
