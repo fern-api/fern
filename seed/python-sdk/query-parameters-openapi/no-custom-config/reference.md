@@ -33,14 +33,6 @@ client.search()
 <dl>
 <dd>
 
-**filter:** `typing.Optional[SearchRequestFilter]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **sort:** `typing.Optional[SearchRequestSort]` 
     
 </dd>
@@ -57,7 +49,7 @@ client.search()
 <dl>
 <dd>
 
-**after:** `typing.Optional[SearchRequestAfter]` 
+**after:** `typing.Optional[int]` 
     
 </dd>
 </dl>

@@ -6,6 +6,8 @@ import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.request_options import RequestOptions
 from .raw_client import AsyncRawSeedApi, RawSeedApi
+from .types.search_request_after import SearchRequestAfter
+from .types.search_request_filter import SearchRequestFilter
 from .types.search_request_sort import SearchRequestSort
 from .types.search_response import SearchResponse
 
@@ -78,20 +80,23 @@ class SeedApi:
     def search(
         self,
         *,
+        filter: typing.Optional[SearchRequestFilter] = None,
         sort: typing.Optional[SearchRequestSort] = None,
         limit: typing.Optional[int] = None,
-        after: typing.Optional[int] = None,
+        after: typing.Optional[SearchRequestAfter] = None,
         tags: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SearchResponse:
         """
         Parameters
         ----------
+        filter : typing.Optional[SearchRequestFilter]
+
         sort : typing.Optional[SearchRequestSort]
 
         limit : typing.Optional[int]
 
-        after : typing.Optional[int]
+        after : typing.Optional[SearchRequestAfter]
 
         tags : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
@@ -113,7 +118,7 @@ class SeedApi:
         client.search()
         """
         _response = self._raw_client.search(
-            sort=sort, limit=limit, after=after, tags=tags, request_options=request_options
+            filter=filter, sort=sort, limit=limit, after=after, tags=tags, request_options=request_options
         )
         return _response.data
 
@@ -186,20 +191,23 @@ class AsyncSeedApi:
     async def search(
         self,
         *,
+        filter: typing.Optional[SearchRequestFilter] = None,
         sort: typing.Optional[SearchRequestSort] = None,
         limit: typing.Optional[int] = None,
-        after: typing.Optional[int] = None,
+        after: typing.Optional[SearchRequestAfter] = None,
         tags: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SearchResponse:
         """
         Parameters
         ----------
+        filter : typing.Optional[SearchRequestFilter]
+
         sort : typing.Optional[SearchRequestSort]
 
         limit : typing.Optional[int]
 
-        after : typing.Optional[int]
+        after : typing.Optional[SearchRequestAfter]
 
         tags : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
@@ -229,6 +237,6 @@ class AsyncSeedApi:
         asyncio.run(main())
         """
         _response = await self._raw_client.search(
-            sort=sort, limit=limit, after=after, tags=tags, request_options=request_options
+            filter=filter, sort=sort, limit=limit, after=after, tags=tags, request_options=request_options
         )
         return _response.data

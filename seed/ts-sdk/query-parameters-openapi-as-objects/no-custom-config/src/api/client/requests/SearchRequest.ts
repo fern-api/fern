@@ -9,8 +9,9 @@ import * as SeedApi from "../../index.js";
  *     {}
  */
 export interface SearchRequest {
+    filter?: SeedApi.SearchRequestFilter;
     sort?: SeedApi.SearchRequestSort;
     limit?: number;
-    after?: number;
+    after?: SeedApi.SearchRequestAfter;
     tags?: string | string[];
 }

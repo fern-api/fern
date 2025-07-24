@@ -59,6 +59,138 @@
                                 {
                                     "value": {
                                         "imports": [],
+                                        "templateString": "filter: {\n\t\t\t$FERN_INPUT\n\t\t}",
+                                        "isOptional": true,
+                                        "inputDelimiter": ",\n\t\t\t",
+                                        "templateInputs": [
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "name: $FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "QUERY",
+                                                            "path": "filter.name",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            },
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "age: $FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "QUERY",
+                                                            "path": "filter.age",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            },
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "location: {\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
+                                                    "isOptional": true,
+                                                    "inputDelimiter": ",\n\t\t\t\t",
+                                                    "templateInputs": [
+                                                        {
+                                                            "value": {
+                                                                "imports": [],
+                                                                "templateString": "city: $FERN_INPUT",
+                                                                "isOptional": true,
+                                                                "templateInputs": [
+                                                                    {
+                                                                        "location": "QUERY",
+                                                                        "path": "filter.location.city",
+                                                                        "type": "payload"
+                                                                    }
+                                                                ],
+                                                                "type": "generic"
+                                                            },
+                                                            "type": "template"
+                                                        },
+                                                        {
+                                                            "value": {
+                                                                "imports": [],
+                                                                "templateString": "country: $FERN_INPUT",
+                                                                "isOptional": true,
+                                                                "templateInputs": [
+                                                                    {
+                                                                        "location": "QUERY",
+                                                                        "path": "filter.location.country",
+                                                                        "type": "payload"
+                                                                    }
+                                                                ],
+                                                                "type": "generic"
+                                                            },
+                                                            "type": "template"
+                                                        },
+                                                        {
+                                                            "value": {
+                                                                "imports": [],
+                                                                "templateString": "coordinates: {\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t}",
+                                                                "isOptional": true,
+                                                                "inputDelimiter": ",\n\t\t\t\t\t",
+                                                                "templateInputs": [
+                                                                    {
+                                                                        "value": {
+                                                                            "imports": [],
+                                                                            "templateString": "latitude: $FERN_INPUT",
+                                                                            "isOptional": true,
+                                                                            "templateInputs": [
+                                                                                {
+                                                                                    "location": "QUERY",
+                                                                                    "path": "filter.location.coordinates.latitude",
+                                                                                    "type": "payload"
+                                                                                }
+                                                                            ],
+                                                                            "type": "generic"
+                                                                        },
+                                                                        "type": "template"
+                                                                    },
+                                                                    {
+                                                                        "value": {
+                                                                            "imports": [],
+                                                                            "templateString": "longitude: $FERN_INPUT",
+                                                                            "isOptional": true,
+                                                                            "templateInputs": [
+                                                                                {
+                                                                                    "location": "QUERY",
+                                                                                    "path": "filter.location.coordinates.longitude",
+                                                                                    "type": "payload"
+                                                                                }
+                                                                            ],
+                                                                            "type": "generic"
+                                                                        },
+                                                                        "type": "template"
+                                                                    }
+                                                                ],
+                                                                "type": "generic"
+                                                            },
+                                                            "type": "template"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
                                         "isOptional": true,
                                         "values": {
                                             "asc": "\"asc\"",
@@ -93,16 +225,56 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "after: $FERN_INPUT",
                                         "isOptional": true,
-                                        "templateInputs": [
+                                        "templateString": "after: $FERN_INPUT",
+                                        "members": [
                                             {
-                                                "location": "QUERY",
-                                                "path": "after",
-                                                "type": "payload"
+                                                "template": {
+                                                    "imports": [],
+                                                    "templateString": "$FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "RELATIVE",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": {
+                                                    "value": {
+                                                        "type": "integer"
+                                                    },
+                                                    "type": "primitive"
+                                                }
+                                            },
+                                            {
+                                                "template": {
+                                                    "imports": [],
+                                                    "templateString": "$FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "RELATIVE",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": {
+                                                    "value": {
+                                                        "type": "string"
+                                                    },
+                                                    "type": "primitive"
+                                                }
                                             }
                                         ],
-                                        "type": "generic"
+                                        "templateInput": {
+                                            "location": "QUERY",
+                                            "path": "after",
+                                            "type": "payload"
+                                        },
+                                        "type": "union_v2"
                                     },
                                     "type": "template"
                                 },

@@ -12,8 +12,19 @@ import { SeedApiClient } from "@fern/query-parameters-openapi-as-objects";
 
 const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 await client.search({
+  filter: {
+    name: "name",
+    age: 1,
+    location: {
+      city: "city",
+      country: "country",
+      coordinates: {
+        latitude: 1.1,
+        longitude: 1.1,
+      },
+    },
+  },
   limit: 100,
-  after: 1,
   tags: "tags",
 });
 

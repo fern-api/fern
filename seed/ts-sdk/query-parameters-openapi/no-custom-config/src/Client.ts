@@ -5,7 +5,6 @@
 import * as core from "./core/index.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as SeedApi from "./api/index.js";
-import { toJson } from "./core/json.js";
 import * as errors from "./errors/index.js";
 
 export declare namespace SeedApiClient {
@@ -69,12 +68,8 @@ export class SeedApiClient {
         request: SeedApi.SearchRequest = {},
         requestOptions?: SeedApiClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedApi.SearchResponse>> {
-        const { filter, sort, limit, after, tags } = request;
+        const { sort, limit, after, tags } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (filter != null) {
-            _queryParams["filter"] = filter;
-        }
-
         if (sort != null) {
             _queryParams["sort"] = sort;
         }
@@ -84,7 +79,7 @@ export class SeedApiClient {
         }
 
         if (after != null) {
-            _queryParams["after"] = typeof after === "string" ? after : toJson(after);
+            _queryParams["after"] = after.toString();
         }
 
         if (tags != null) {
