@@ -22,9 +22,9 @@ public final class SpecialEnum {
 
     public static final SpecialEnum H = new SpecialEnum(Value.H, "Hello\\tWorld");
 
-    public static final SpecialEnum E = new SpecialEnum(Value.E, "Hello\\nWorld");
+    public static final SpecialEnum L = new SpecialEnum(Value.L, "Hello\\x00World");
 
-    public static final SpecialEnum T = new SpecialEnum(Value.T, "\\n\\r\\t\\0\\u0008\\f\\v\\u0007");
+    public static final SpecialEnum E = new SpecialEnum(Value.E, "Hello\\nWorld");
 
     public static final SpecialEnum N = new SpecialEnum(Value.N, "Hello\\u0001World");
 
@@ -72,7 +72,7 @@ public final class SpecialEnum {
     public static final SpecialEnum S =
             new SpecialEnum(Value.S, "Line 1\\n\"Quote\"\\tTab\\\\Backslash\\r\\nLine 2\\0Null");
 
-    public static final SpecialEnum L = new SpecialEnum(Value.L, "Hello\\0World");
+    public static final SpecialEnum T = new SpecialEnum(Value.T, "\\n\\r\\t\\x00\\u0008\\f\\v\\u0007");
 
     private final Value value;
 
@@ -119,10 +119,10 @@ public final class SpecialEnum {
                 return visitor.visitI();
             case H:
                 return visitor.visitH();
+            case L:
+                return visitor.visitL();
             case E:
                 return visitor.visitE();
-            case T:
-                return visitor.visitT();
             case N:
                 return visitor.visitN();
             case X:
@@ -167,8 +167,8 @@ public final class SpecialEnum {
                 return visitor.visitEe();
             case S:
                 return visitor.visitS();
-            case L:
-                return visitor.visitL();
+            case T:
+                return visitor.visitT();
             case UNKNOWN:
             default:
                 return visitor.visitUnknown(string);
@@ -192,10 +192,10 @@ public final class SpecialEnum {
                 return I;
             case "Hello\\tWorld":
                 return H;
+            case "Hello\\x00World":
+                return L;
             case "Hello\\nWorld":
                 return E;
-            case "\\n\\r\\t\\0\\u0008\\f\\v\\u0007":
-                return T;
             case "Hello\\u0001World":
                 return N;
             case "\\\\n":
@@ -240,8 +240,8 @@ public final class SpecialEnum {
                 return EE;
             case "Line 1\\n\"Quote\"\\tTab\\\\Backslash\\r\\nLine 2\\0Null":
                 return S;
-            case "Hello\\0World":
-                return L;
+            case "\\n\\r\\t\\x00\\u0008\\f\\v\\u0007":
+                return T;
             default:
                 return new SpecialEnum(Value.UNKNOWN, value);
         }
