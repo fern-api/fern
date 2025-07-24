@@ -18324,7 +18324,7 @@
           ],
           "examples": [
             {
-              "name": "Successful response",
+              "name": "Successful response_200",
               "description": "",
               "path": "/admins/1/away",
               "pathParameters": {
@@ -18369,7 +18369,7 @@
               }
             },
             {
-              "name": "Admin not found",
+              "name": "Admin not found_Successful response_200",
               "description": "",
               "path": "/admins/1/away",
               "pathParameters": {
@@ -18388,10 +18388,33 @@
                   "away_mode_reassign": true
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "admin",
+                "id": "991267391",
+                "name": "Ciaran2 Lee",
+                "email": "admin2@email.com",
+                "away_mode_enabled": true,
+                "away_mode_reassign": true,
+                "has_inbox_seat": true,
+                "team_ids": []
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "admin",
+                  "id": "991267391",
+                  "name": "Ciaran2 Lee",
+                  "email": "admin2@email.com",
+                  "away_mode_enabled": true,
+                  "away_mode_reassign": true,
+                  "has_inbox_seat": true,
+                  "team_ids": []
+                }
+              }
             },
             {
-              "name": "Unauthorized",
+              "name": "Unauthorized_Successful response_200",
               "description": "",
               "path": "/admins/1/away",
               "pathParameters": {
@@ -18410,7 +18433,30 @@
                   "away_mode_reassign": true
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "admin",
+                "id": "991267391",
+                "name": "Ciaran2 Lee",
+                "email": "admin2@email.com",
+                "away_mode_enabled": true,
+                "away_mode_reassign": true,
+                "has_inbox_seat": true,
+                "team_ids": []
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "admin",
+                  "id": "991267391",
+                  "name": "Ciaran2 Lee",
+                  "email": "admin2@email.com",
+                  "away_mode_enabled": true,
+                  "away_mode_reassign": true,
+                  "has_inbox_seat": true,
+                  "team_ids": []
+                }
+              }
             }
           ],
           "protocol": {
@@ -19350,7 +19396,7 @@
           ],
           "examples": [
             {
-              "name": "article created",
+              "name": "article created_200",
               "description": "",
               "path": "/articles",
               "pathParameters": {},
@@ -19451,7 +19497,7 @@
               }
             },
             {
-              "name": "Bad Request",
+              "name": "Bad Request_article created_200",
               "description": "",
               "path": "/articles",
               "pathParameters": {},
@@ -19474,7 +19520,60 @@
                   "state": "published"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "statistics": {
+                  "type": "article_statistics",
+                  "views": 0,
+                  "conversations": 0,
+                  "reactions": 0,
+                  "happy_reaction_percentage": 0,
+                  "neutral_reaction_percentage": 0,
+                  "sad_reaction_percentage": 0
+                },
+                "type": "article",
+                "id": "42",
+                "workspace_id": "this_is_an_id37_that_should_be_at_least_4",
+                "title": "Thanks for everything",
+                "description": "Description of the Article",
+                "body": "<p class=\"no-margin\">Body of the Article</p>",
+                "author_id": 991267407,
+                "state": "published",
+                "created_at": 1719492710,
+                "updated_at": 1719492710,
+                "url": "http://help-center.test/myapp-37/en/articles/42-thanks-for-everything",
+                "parent_id": 145,
+                "parent_ids": [],
+                "parent_type": "collection"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "statistics": {
+                    "type": "article_statistics",
+                    "views": 0,
+                    "conversations": 0,
+                    "reactions": 0,
+                    "happy_reaction_percentage": 0,
+                    "neutral_reaction_percentage": 0,
+                    "sad_reaction_percentage": 0
+                  },
+                  "type": "article",
+                  "id": "42",
+                  "workspace_id": "this_is_an_id37_that_should_be_at_least_4",
+                  "title": "Thanks for everything",
+                  "description": "Description of the Article",
+                  "body": "<p class=\"no-margin\">Body of the Article</p>",
+                  "author_id": 991267407,
+                  "state": "published",
+                  "created_at": 1719492710,
+                  "updated_at": 1719492710,
+                  "url": "http://help-center.test/myapp-37/en/articles/42-thanks-for-everything",
+                  "parent_id": 145,
+                  "parent_ids": [],
+                  "parent_type": "collection"
+                }
+              }
             }
           ],
           "protocol": {
@@ -19875,7 +19974,7 @@
           ],
           "examples": [
             {
-              "name": "successful",
+              "name": "successful_200",
               "description": "",
               "path": "/articles/123",
               "pathParameters": {
@@ -19950,7 +20049,7 @@
               }
             },
             {
-              "name": "Article Not Found",
+              "name": "Article Not Found_successful_200",
               "description": "",
               "path": "/articles/123",
               "pathParameters": {
@@ -19969,7 +20068,60 @@
                   "body": "<p>New gifts in store for the jolly season</p>"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "statistics": {
+                  "type": "article_statistics",
+                  "views": 0,
+                  "conversations": 0,
+                  "reactions": 0,
+                  "happy_reaction_percentage": 0,
+                  "neutral_reaction_percentage": 0,
+                  "sad_reaction_percentage": 0
+                },
+                "type": "article",
+                "id": "48",
+                "workspace_id": "this_is_an_id49_that_should_be_at_least_4",
+                "title": "Christmas is here!",
+                "description": "",
+                "body": "<p class=\"no-margin\">New gifts in store for the jolly season</p>",
+                "author_id": 991267418,
+                "state": "published",
+                "created_at": 1719492714,
+                "updated_at": 1719492714,
+                "url": "http://help-center.test/myapp-49/en/articles/48-christmas-is-here",
+                "parent_id": 151,
+                "parent_ids": [],
+                "parent_type": "collection"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "statistics": {
+                    "type": "article_statistics",
+                    "views": 0,
+                    "conversations": 0,
+                    "reactions": 0,
+                    "happy_reaction_percentage": 0,
+                    "neutral_reaction_percentage": 0,
+                    "sad_reaction_percentage": 0
+                  },
+                  "type": "article",
+                  "id": "48",
+                  "workspace_id": "this_is_an_id49_that_should_be_at_least_4",
+                  "title": "Christmas is here!",
+                  "description": "",
+                  "body": "<p class=\"no-margin\">New gifts in store for the jolly season</p>",
+                  "author_id": 991267418,
+                  "state": "published",
+                  "created_at": 1719492714,
+                  "updated_at": 1719492714,
+                  "url": "http://help-center.test/myapp-49/en/articles/48-christmas-is-here",
+                  "parent_id": 151,
+                  "parent_ids": [],
+                  "parent_type": "collection"
+                }
+              }
             }
           ],
           "protocol": {
@@ -20763,7 +20915,7 @@
           ],
           "examples": [
             {
-              "name": "collection created",
+              "name": "collection created_200",
               "description": "",
               "path": "/help_center/collections",
               "pathParameters": {},
@@ -20810,7 +20962,7 @@
               }
             },
             {
-              "name": "Bad Request",
+              "name": "Bad Request_collection created_200",
               "description": "",
               "path": "/help_center/collections",
               "pathParameters": {},
@@ -20827,7 +20979,36 @@
                   "description": "Missing required parameter"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "id": "165",
+                "workspace_id": "this_is_an_id69_that_should_be_at_least_4",
+                "name": "Thanks for everything",
+                "description": "",
+                "created_at": 1719492721,
+                "updated_at": 1719492721,
+                "url": "http://help-center.test/myapp-69/",
+                "icon": "book-bookmark",
+                "order": 1,
+                "parent_id": null,
+                "help_center_id": 81
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "id": "165",
+                  "workspace_id": "this_is_an_id69_that_should_be_at_least_4",
+                  "name": "Thanks for everything",
+                  "description": "",
+                  "created_at": 1719492721,
+                  "updated_at": 1719492721,
+                  "url": "http://help-center.test/myapp-69/",
+                  "icon": "book-bookmark",
+                  "order": 1,
+                  "parent_id": null,
+                  "help_center_id": 81
+                }
+              }
             }
           ],
           "protocol": {
@@ -21204,7 +21385,7 @@
           ],
           "examples": [
             {
-              "name": "successful",
+              "name": "successful_200",
               "description": "",
               "path": "/help_center/collections/123",
               "pathParameters": {
@@ -21253,7 +21434,7 @@
               }
             },
             {
-              "name": "Collection Not Found",
+              "name": "Collection Not Found_successful_200",
               "description": "",
               "path": "/help_center/collections/123",
               "pathParameters": {
@@ -21270,7 +21451,36 @@
                   "name": "Update collection name"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "id": "176",
+                "workspace_id": "this_is_an_id81_that_should_be_at_least_4",
+                "name": "Update collection name",
+                "description": "english collection description",
+                "created_at": 1719492724,
+                "updated_at": 1719492724,
+                "url": "http://help-center.test/myapp-81/collection-25",
+                "icon": "folder",
+                "order": 25,
+                "parent_id": null,
+                "help_center_id": 87
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "id": "176",
+                  "workspace_id": "this_is_an_id81_that_should_be_at_least_4",
+                  "name": "Update collection name",
+                  "description": "english collection description",
+                  "created_at": 1719492724,
+                  "updated_at": 1719492724,
+                  "url": "http://help-center.test/myapp-81/collection-25",
+                  "icon": "folder",
+                  "order": 25,
+                  "parent_id": null,
+                  "help_center_id": 87
+                }
+              }
             }
           ],
           "protocol": {
@@ -22256,7 +22466,7 @@
           ],
           "examples": [
             {
-              "name": "Successful",
+              "name": "Successful_200",
               "description": "",
               "path": "/companies",
               "pathParameters": {},
@@ -22331,7 +22541,7 @@
               }
             },
             {
-              "name": "Bad Request",
+              "name": "Bad Request_Successful_200",
               "description": "",
               "path": "/companies",
               "pathParameters": {},
@@ -22346,7 +22556,60 @@
                   "test": "invalid"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "company",
+                "id": "667d607c8a68186f43bafd1e",
+                "name": "my company",
+                "app_id": "this_is_an_id116_that_should_be_at_least_",
+                "plan": {},
+                "company_id": "company_remote_id",
+                "remote_created_at": 1374138000,
+                "created_at": 1719492732,
+                "updated_at": 1719492732,
+                "monthly_spend": 0,
+                "session_count": 0,
+                "user_count": 0,
+                "custom_attributes": {
+                  "creation_source": "api"
+                },
+                "tags": {
+                  "type": "tag.list",
+                  "tags": []
+                },
+                "segments": {
+                  "type": "segment.list",
+                  "segments": []
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "company",
+                  "id": "667d607c8a68186f43bafd1e",
+                  "name": "my company",
+                  "app_id": "this_is_an_id116_that_should_be_at_least_",
+                  "plan": {},
+                  "company_id": "company_remote_id",
+                  "remote_created_at": 1374138000,
+                  "created_at": 1719492732,
+                  "updated_at": 1719492732,
+                  "monthly_spend": 0,
+                  "session_count": 0,
+                  "user_count": 0,
+                  "custom_attributes": {
+                    "creation_source": "api"
+                  },
+                  "tags": {
+                    "type": "tag.list",
+                    "tags": []
+                  },
+                  "segments": {
+                    "type": "segment.list",
+                    "segments": []
+                  }
+                }
+              }
             }
           ],
           "protocol": {
@@ -24002,7 +24265,7 @@
           ],
           "examples": [
             {
-              "name": "Successful",
+              "name": "Successful_200",
               "description": "",
               "path": "/contacts/id/companies",
               "pathParameters": {
@@ -24071,7 +24334,7 @@
               }
             },
             {
-              "name": "Company Not Found",
+              "name": "Company Not Found_Successful_200",
               "description": "",
               "path": "/contacts/id/companies",
               "pathParameters": {
@@ -24088,7 +24351,56 @@
                   "id": "123"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "company",
+                "id": "667d608d8a68186f43bafd70",
+                "name": "company6",
+                "app_id": "this_is_an_id166_that_should_be_at_least_",
+                "plan": {},
+                "company_id": "1",
+                "remote_created_at": 1719492749,
+                "created_at": 1719492749,
+                "updated_at": 1719492749,
+                "monthly_spend": 0,
+                "session_count": 0,
+                "user_count": 1,
+                "custom_attributes": {},
+                "tags": {
+                  "type": "tag.list",
+                  "tags": []
+                },
+                "segments": {
+                  "type": "segment.list",
+                  "segments": []
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "company",
+                  "id": "667d608d8a68186f43bafd70",
+                  "name": "company6",
+                  "app_id": "this_is_an_id166_that_should_be_at_least_",
+                  "plan": {},
+                  "company_id": "1",
+                  "remote_created_at": 1719492749,
+                  "created_at": 1719492749,
+                  "updated_at": 1719492749,
+                  "monthly_spend": 0,
+                  "session_count": 0,
+                  "user_count": 1,
+                  "custom_attributes": {},
+                  "tags": {
+                    "type": "tag.list",
+                    "tags": []
+                  },
+                  "segments": {
+                    "type": "segment.list",
+                    "segments": []
+                  }
+                }
+              }
             }
           ],
           "protocol": {
@@ -27843,7 +28155,7 @@
           ],
           "examples": [
             {
-              "name": "Successful response",
+              "name": "Successful response_200",
               "description": "",
               "path": "/contacts/123/notes",
               "pathParameters": {
@@ -27906,7 +28218,7 @@
               }
             },
             {
-              "name": "Admin not found",
+              "name": "Admin not found_Successful response_200",
               "description": "",
               "path": "/contacts/123/notes",
               "pathParameters": {
@@ -27927,10 +28239,49 @@
                   "admin_id": "123"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "note",
+                "id": "34",
+                "created_at": 1719492759,
+                "contact": {
+                  "type": "contact",
+                  "id": "667d60978a68186f43bafd9e"
+                },
+                "author": {
+                  "type": "admin",
+                  "id": "991267493",
+                  "name": "Ciaran103 Lee",
+                  "email": "admin103@email.com",
+                  "away_mode_enabled": false,
+                  "away_mode_reassign": false
+                },
+                "body": "<p>Hello</p>"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "note",
+                  "id": "34",
+                  "created_at": 1719492759,
+                  "contact": {
+                    "type": "contact",
+                    "id": "667d60978a68186f43bafd9e"
+                  },
+                  "author": {
+                    "type": "admin",
+                    "id": "991267493",
+                    "name": "Ciaran103 Lee",
+                    "email": "admin103@email.com",
+                    "away_mode_enabled": false,
+                    "away_mode_reassign": false
+                  },
+                  "body": "<p>Hello</p>"
+                }
+              }
             },
             {
-              "name": "Contact not found",
+              "name": "Contact not found_Successful response_200",
               "description": "",
               "path": "/contacts/123/notes",
               "pathParameters": {
@@ -27951,7 +28302,46 @@
                   "admin_id": "991267495"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "note",
+                "id": "34",
+                "created_at": 1719492759,
+                "contact": {
+                  "type": "contact",
+                  "id": "667d60978a68186f43bafd9e"
+                },
+                "author": {
+                  "type": "admin",
+                  "id": "991267493",
+                  "name": "Ciaran103 Lee",
+                  "email": "admin103@email.com",
+                  "away_mode_enabled": false,
+                  "away_mode_reassign": false
+                },
+                "body": "<p>Hello</p>"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "note",
+                  "id": "34",
+                  "created_at": 1719492759,
+                  "contact": {
+                    "type": "contact",
+                    "id": "667d60978a68186f43bafd9e"
+                  },
+                  "author": {
+                    "type": "admin",
+                    "id": "991267493",
+                    "name": "Ciaran103 Lee",
+                    "email": "admin103@email.com",
+                    "away_mode_enabled": false,
+                    "away_mode_reassign": false
+                  },
+                  "body": "<p>Hello</p>"
+                }
+              }
             }
           ],
           "protocol": {
@@ -28383,7 +28773,7 @@
           ],
           "examples": [
             {
-              "name": "Successful",
+              "name": "Successful_200",
               "description": "",
               "path": "/contacts/63a07ddf05a32042dffac965/subscriptions",
               "pathParameters": {
@@ -28450,7 +28840,7 @@
               }
             },
             {
-              "name": "Contact not found",
+              "name": "Contact not found_Successful_200",
               "description": "",
               "path": "/contacts/63a07ddf05a32042dffac965/subscriptions",
               "pathParameters": {
@@ -28469,10 +28859,55 @@
                   "consent_type": "opt_in"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "subscription",
+                "id": "108",
+                "state": "live",
+                "default_translation": {
+                  "name": "Newsletters",
+                  "description": "Lorem ipsum dolor sit amet",
+                  "locale": "en"
+                },
+                "translations": [
+                  {
+                    "name": "Newsletters",
+                    "description": "Lorem ipsum dolor sit amet",
+                    "locale": "en"
+                  }
+                ],
+                "consent_type": "opt_in",
+                "content_types": [
+                  "sms_message"
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "subscription",
+                  "id": "108",
+                  "state": "live",
+                  "default_translation": {
+                    "name": "Newsletters",
+                    "description": "Lorem ipsum dolor sit amet",
+                    "locale": "en"
+                  },
+                  "translations": [
+                    {
+                      "name": "Newsletters",
+                      "description": "Lorem ipsum dolor sit amet",
+                      "locale": "en"
+                    }
+                  ],
+                  "consent_type": "opt_in",
+                  "content_types": [
+                    "sms_message"
+                  ]
+                }
+              }
             },
             {
-              "name": "Resource not found",
+              "name": "Resource not found_Successful_200",
               "description": "",
               "path": "/contacts/63a07ddf05a32042dffac965/subscriptions",
               "pathParameters": {
@@ -28491,7 +28926,52 @@
                   "consent_type": "opt_in"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "subscription",
+                "id": "108",
+                "state": "live",
+                "default_translation": {
+                  "name": "Newsletters",
+                  "description": "Lorem ipsum dolor sit amet",
+                  "locale": "en"
+                },
+                "translations": [
+                  {
+                    "name": "Newsletters",
+                    "description": "Lorem ipsum dolor sit amet",
+                    "locale": "en"
+                  }
+                ],
+                "consent_type": "opt_in",
+                "content_types": [
+                  "sms_message"
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "subscription",
+                  "id": "108",
+                  "state": "live",
+                  "default_translation": {
+                    "name": "Newsletters",
+                    "description": "Lorem ipsum dolor sit amet",
+                    "locale": "en"
+                  },
+                  "translations": [
+                    {
+                      "name": "Newsletters",
+                      "description": "Lorem ipsum dolor sit amet",
+                      "locale": "en"
+                    }
+                  ],
+                  "consent_type": "opt_in",
+                  "content_types": [
+                    "sms_message"
+                  ]
+                }
+              }
             }
           ],
           "protocol": {
@@ -29129,7 +29609,7 @@
           ],
           "examples": [
             {
-              "name": "successful",
+              "name": "successful_200",
               "description": "",
               "path": "/contacts/63a07ddf05a32042dffac965/tags",
               "pathParameters": {
@@ -29162,7 +29642,7 @@
               }
             },
             {
-              "name": "Contact not found",
+              "name": "Contact not found_successful_200",
               "description": "",
               "path": "/contacts/63a07ddf05a32042dffac965/tags",
               "pathParameters": {
@@ -29179,10 +29659,23 @@
                   "id": "95"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "tag",
+                "id": "94",
+                "name": "Manual tag"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "tag",
+                  "id": "94",
+                  "name": "Manual tag"
+                }
+              }
             },
             {
-              "name": "Tag not found",
+              "name": "Tag not found_successful_200",
               "description": "",
               "path": "/contacts/63a07ddf05a32042dffac965/tags",
               "pathParameters": {
@@ -29199,7 +29692,20 @@
                   "id": "123"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "tag",
+                "id": "94",
+                "name": "Manual tag"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "tag",
+                  "id": "94",
+                  "name": "Manual tag"
+                }
+              }
             }
           ],
           "protocol": {
@@ -29614,7 +30120,7 @@
           ],
           "examples": [
             {
-              "name": "successful",
+              "name": "successful_200",
               "description": "",
               "path": "/conversations/64619700005694/tags",
               "pathParameters": {
@@ -29649,7 +30155,7 @@
               }
             },
             {
-              "name": "Conversation not found",
+              "name": "Conversation not found_successful_200",
               "description": "",
               "path": "/conversations/64619700005694/tags",
               "pathParameters": {
@@ -29668,7 +30174,20 @@
                   "admin_id": "991267528"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "tag",
+                "id": "99",
+                "name": "Manual tag"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "tag",
+                  "id": "99",
+                  "name": "Manual tag"
+                }
+              }
             }
           ],
           "protocol": {
@@ -29888,7 +30407,7 @@
           ],
           "examples": [
             {
-              "name": "successful",
+              "name": "successful_200",
               "description": "",
               "path": "/conversations/64619700005694/tags/7522907",
               "pathParameters": {
@@ -29922,7 +30441,7 @@
               }
             },
             {
-              "name": "Conversation not found",
+              "name": "Conversation not found_successful_200",
               "description": "",
               "path": "/conversations/64619700005694/tags/7522907",
               "pathParameters": {
@@ -29940,10 +30459,23 @@
                   "admin_id": "991267532"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "tag",
+                "id": "102",
+                "name": "Manual tag"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "tag",
+                  "id": "102",
+                  "name": "Manual tag"
+                }
+              }
             },
             {
-              "name": "Tag not found",
+              "name": "Tag not found_successful_200",
               "description": "",
               "path": "/conversations/64619700005694/tags/7522907",
               "pathParameters": {
@@ -29961,7 +30493,20 @@
                   "admin_id": "991267533"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "tag",
+                "id": "102",
+                "name": "Manual tag"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "tag",
+                  "id": "102",
+                  "name": "Manual tag"
+                }
+              }
             }
           ],
           "protocol": {
@@ -30308,7 +30853,7 @@
           ],
           "examples": [
             {
-              "name": "Action successful",
+              "name": "Action successful_200",
               "description": "",
               "path": "/tags",
               "pathParameters": {},
@@ -30339,7 +30884,7 @@
               }
             },
             {
-              "name": "Invalid parameters",
+              "name": "Invalid parameters_Action successful_200",
               "description": "",
               "path": "/tags",
               "pathParameters": {},
@@ -30356,10 +30901,23 @@
                   "test": "invalid"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "tag",
+                "id": "118",
+                "name": "test"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "tag",
+                  "id": "118",
+                  "name": "test"
+                }
+              }
             },
             {
-              "name": "Company not found",
+              "name": "Company not found_Action successful_200",
               "description": "",
               "path": "/tags",
               "pathParameters": {},
@@ -30384,10 +30942,23 @@
                   ]
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "tag",
+                "id": "118",
+                "name": "test"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "tag",
+                  "id": "118",
+                  "name": "test"
+                }
+              }
             },
             {
-              "name": "User  not found",
+              "name": "User  not found_Action successful_200",
               "description": "",
               "path": "/tags",
               "pathParameters": {},
@@ -30412,7 +30983,20 @@
                   ]
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "tag",
+                "id": "118",
+                "name": "test"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "tag",
+                  "id": "118",
+                  "name": "test"
+                }
+              }
             }
           ],
           "protocol": {
@@ -30998,7 +31582,7 @@
           ],
           "examples": [
             {
-              "name": "successful",
+              "name": "successful_200",
               "description": "",
               "path": "/tickets/64619700005694/tags",
               "pathParameters": {
@@ -31033,7 +31617,7 @@
               }
             },
             {
-              "name": "Ticket not found",
+              "name": "Ticket not found_successful_200",
               "description": "",
               "path": "/tickets/64619700005694/tags",
               "pathParameters": {
@@ -31052,7 +31636,20 @@
                   "admin_id": "991267847"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "tag",
+                "id": "134",
+                "name": "Manual tag"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "tag",
+                  "id": "134",
+                  "name": "Manual tag"
+                }
+              }
             }
           ],
           "protocol": {
@@ -31272,7 +31869,7 @@
           ],
           "examples": [
             {
-              "name": "successful",
+              "name": "successful_200",
               "description": "",
               "path": "/tickets/64619700005694/tags/7522907",
               "pathParameters": {
@@ -31306,7 +31903,7 @@
               }
             },
             {
-              "name": "Ticket not found",
+              "name": "Ticket not found_successful_200",
               "description": "",
               "path": "/tickets/64619700005694/tags/7522907",
               "pathParameters": {
@@ -31324,10 +31921,23 @@
                   "admin_id": "991267856"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "tag",
+                "id": "137",
+                "name": "Manual tag"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "tag",
+                  "id": "137",
+                  "name": "Manual tag"
+                }
+              }
             },
             {
-              "name": "Tag not found",
+              "name": "Tag not found_successful_200",
               "description": "",
               "path": "/tickets/64619700005694/tags/7522907",
               "pathParameters": {
@@ -31345,7 +31955,20 @@
                   "admin_id": "991267859"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "tag",
+                "id": "137",
+                "name": "Manual tag"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "tag",
+                  "id": "137",
+                  "name": "Manual tag"
+                }
+              }
             }
           ],
           "protocol": {
@@ -31871,7 +32494,7 @@
           ],
           "examples": [
             {
-              "name": "conversation created",
+              "name": "conversation created_200",
               "description": "",
               "path": "/conversations",
               "pathParameters": {},
@@ -31916,7 +32539,7 @@
               }
             },
             {
-              "name": "Contact Not Found",
+              "name": "Contact Not Found_conversation created_200",
               "description": "",
               "path": "/conversations",
               "pathParameters": {},
@@ -31939,7 +32562,26 @@
                   "body": "Hello there"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "user_message",
+                "id": "403918251",
+                "created_at": 1719492819,
+                "body": "Hello there",
+                "message_type": "inapp",
+                "conversation_id": "363"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "user_message",
+                  "id": "403918251",
+                  "created_at": 1719492819,
+                  "body": "Hello there",
+                  "message_type": "inapp",
+                  "conversation_id": "363"
+                }
+              }
             }
           ],
           "protocol": {
@@ -32512,7 +33154,7 @@
           ],
           "examples": [
             {
-              "name": "conversation found",
+              "name": "conversation found_200",
               "description": "",
               "path": "/conversations/123",
               "pathParameters": {
@@ -32761,7 +33403,7 @@
               }
             },
             {
-              "name": "Not found",
+              "name": "Not found_conversation found_200",
               "description": "",
               "path": "/conversations/123",
               "pathParameters": {
@@ -32788,7 +33430,226 @@
                   }
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "conversation",
+                "id": "371",
+                "title": null,
+                "created_at": 1719492832,
+                "updated_at": 1719492834,
+                "waiting_since": null,
+                "snoozed_until": null,
+                "open": false,
+                "state": "closed",
+                "read": true,
+                "priority": "not_priority",
+                "admin_assignee_id": null,
+                "team_assignee_id": null,
+                "tags": {
+                  "type": "tag.list",
+                  "tags": []
+                },
+                "source": {
+                  "type": "conversation",
+                  "id": "403918259",
+                  "delivered_as": "admin_initiated",
+                  "subject": "",
+                  "body": "<p>this is the message body</p>",
+                  "author": {
+                    "type": "admin",
+                    "id": "991267561",
+                    "name": "Ciaran157 Lee",
+                    "email": "admin157@email.com"
+                  },
+                  "attachments": [],
+                  "url": null,
+                  "redacted": false
+                },
+                "contacts": {
+                  "type": "contact.list",
+                  "contacts": [
+                    {
+                      "type": "contact",
+                      "id": "667d60e08a68186f43bafde5",
+                      "external_id": "70"
+                    }
+                  ]
+                },
+                "custom_attributes": {
+                  "issue_type": "Billing",
+                  "priority": "High"
+                },
+                "conversation_parts": {
+                  "type": "conversation_part.list",
+                  "conversation_parts": [
+                    {
+                      "type": "conversation_part",
+                      "id": "96",
+                      "part_type": "conversation_attribute_updated_by_admin",
+                      "body": null,
+                      "created_at": 1719492834,
+                      "updated_at": 1719492834,
+                      "notified_at": 1719492834,
+                      "assigned_to": {},
+                      "author": {
+                        "type": "bot",
+                        "id": "991267562",
+                        "name": "Operator",
+                        "email": "operator+this_is_an_id321_that_should_be_at_least_@intercom.io"
+                      },
+                      "attachments": [],
+                      "external_id": null,
+                      "redacted": false
+                    },
+                    {
+                      "type": "conversation_part",
+                      "id": "97",
+                      "part_type": "conversation_attribute_updated_by_admin",
+                      "body": null,
+                      "created_at": 1719492834,
+                      "updated_at": 1719492834,
+                      "notified_at": 1719492834,
+                      "assigned_to": {},
+                      "author": {
+                        "type": "bot",
+                        "id": "991267562",
+                        "name": "Operator",
+                        "email": "operator+this_is_an_id321_that_should_be_at_least_@intercom.io"
+                      },
+                      "attachments": [],
+                      "external_id": null,
+                      "redacted": false
+                    }
+                  ],
+                  "total_count": 2
+                },
+                "linked_objects": {
+                  "type": "list",
+                  "total_count": 0,
+                  "has_more": false,
+                  "data": []
+                },
+                "ai_agent_participated": false,
+                "ai_agent": {},
+                "first_contact_reply": {},
+                "sla_applied": {},
+                "statistics": {},
+                "conversation_rating": {},
+                "teammates": {},
+                "topics": {},
+                "ticket": {}
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "conversation",
+                  "id": "371",
+                  "title": null,
+                  "created_at": 1719492832,
+                  "updated_at": 1719492834,
+                  "waiting_since": null,
+                  "snoozed_until": null,
+                  "open": false,
+                  "state": "closed",
+                  "read": true,
+                  "priority": "not_priority",
+                  "admin_assignee_id": null,
+                  "team_assignee_id": null,
+                  "tags": {
+                    "type": "tag.list",
+                    "tags": []
+                  },
+                  "source": {
+                    "type": "conversation",
+                    "id": "403918259",
+                    "delivered_as": "admin_initiated",
+                    "subject": "",
+                    "body": "<p>this is the message body</p>",
+                    "author": {
+                      "type": "admin",
+                      "id": "991267561",
+                      "name": "Ciaran157 Lee",
+                      "email": "admin157@email.com"
+                    },
+                    "attachments": [],
+                    "url": null,
+                    "redacted": false
+                  },
+                  "contacts": {
+                    "type": "contact.list",
+                    "contacts": [
+                      {
+                        "type": "contact",
+                        "id": "667d60e08a68186f43bafde5",
+                        "external_id": "70"
+                      }
+                    ]
+                  },
+                  "custom_attributes": {
+                    "issue_type": "Billing",
+                    "priority": "High"
+                  },
+                  "conversation_parts": {
+                    "type": "conversation_part.list",
+                    "conversation_parts": [
+                      {
+                        "type": "conversation_part",
+                        "id": "96",
+                        "part_type": "conversation_attribute_updated_by_admin",
+                        "body": null,
+                        "created_at": 1719492834,
+                        "updated_at": 1719492834,
+                        "notified_at": 1719492834,
+                        "assigned_to": {},
+                        "author": {
+                          "type": "bot",
+                          "id": "991267562",
+                          "name": "Operator",
+                          "email": "operator+this_is_an_id321_that_should_be_at_least_@intercom.io"
+                        },
+                        "attachments": [],
+                        "external_id": null,
+                        "redacted": false
+                      },
+                      {
+                        "type": "conversation_part",
+                        "id": "97",
+                        "part_type": "conversation_attribute_updated_by_admin",
+                        "body": null,
+                        "created_at": 1719492834,
+                        "updated_at": 1719492834,
+                        "notified_at": 1719492834,
+                        "assigned_to": {},
+                        "author": {
+                          "type": "bot",
+                          "id": "991267562",
+                          "name": "Operator",
+                          "email": "operator+this_is_an_id321_that_should_be_at_least_@intercom.io"
+                        },
+                        "attachments": [],
+                        "external_id": null,
+                        "redacted": false
+                      }
+                    ],
+                    "total_count": 2
+                  },
+                  "linked_objects": {
+                    "type": "list",
+                    "total_count": 0,
+                    "has_more": false,
+                    "data": []
+                  },
+                  "ai_agent_participated": false,
+                  "ai_agent": {},
+                  "first_contact_reply": {},
+                  "sla_applied": {},
+                  "statistics": {},
+                  "conversation_rating": {},
+                  "teammates": {},
+                  "topics": {},
+                  "ticket": {}
+                }
+              }
             }
           ],
           "protocol": {
@@ -33279,7 +34140,7 @@
           ],
           "examples": [
             {
-              "name": "User reply",
+              "name": "User reply_200",
               "description": "",
               "path": "/conversations/123%20or%20%22last%22/reply",
               "pathParameters": {
@@ -33488,7 +34349,7 @@
               }
             },
             {
-              "name": "Admin note reply",
+              "name": "Admin note reply_200",
               "description": "",
               "path": "/conversations/123%20or%20%22last%22/reply",
               "pathParameters": {
@@ -33689,7 +34550,7 @@
               }
             },
             {
-              "name": "User last conversation reply",
+              "name": "User last conversation reply_200",
               "description": "",
               "path": "/conversations/123%20or%20%22last%22/reply",
               "pathParameters": {
@@ -33898,7 +34759,7 @@
               }
             },
             {
-              "name": "Not found",
+              "name": "Not found_User reply_200",
               "description": "",
               "path": "/conversations/123%20or%20%22last%22/reply",
               "pathParameters": {
@@ -33921,7 +34782,190 @@
                   "body": "Thanks again :)"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "conversation",
+                "id": "387",
+                "title": null,
+                "created_at": 1719492849,
+                "updated_at": 1719492850,
+                "waiting_since": 1719492850,
+                "snoozed_until": null,
+                "open": true,
+                "state": "open",
+                "read": false,
+                "priority": "not_priority",
+                "admin_assignee_id": null,
+                "team_assignee_id": null,
+                "tags": {
+                  "type": "tag.list",
+                  "tags": []
+                },
+                "source": {
+                  "type": "conversation",
+                  "id": "403918269",
+                  "delivered_as": "admin_initiated",
+                  "subject": "",
+                  "body": "<p>this is the message body</p>",
+                  "author": {
+                    "type": "admin",
+                    "id": "991267594",
+                    "name": "Ciaran182 Lee",
+                    "email": "admin182@email.com"
+                  },
+                  "attachments": [],
+                  "url": null,
+                  "redacted": false
+                },
+                "contacts": {
+                  "type": "contact.list",
+                  "contacts": [
+                    {
+                      "type": "contact",
+                      "id": "667d60f18a68186f43bafdf4",
+                      "external_id": "70"
+                    }
+                  ]
+                },
+                "custom_attributes": {},
+                "first_contact_reply": {
+                  "created_at": 1719492850,
+                  "type": "conversation",
+                  "url": null
+                },
+                "conversation_parts": {
+                  "type": "conversation_part.list",
+                  "conversation_parts": [
+                    {
+                      "type": "conversation_part",
+                      "id": "99",
+                      "part_type": "open",
+                      "body": "<p>Thanks again :)</p>",
+                      "created_at": 1719492850,
+                      "updated_at": 1719492850,
+                      "notified_at": 1719492850,
+                      "assigned_to": {},
+                      "author": {
+                        "type": "user",
+                        "id": "667d60f18a68186f43bafdf4",
+                        "name": "Joe Bloggs",
+                        "email": "joe@bloggs.com"
+                      },
+                      "attachments": [],
+                      "external_id": null,
+                      "redacted": false
+                    }
+                  ],
+                  "total_count": 1
+                },
+                "linked_objects": {
+                  "type": "list",
+                  "total_count": 0,
+                  "has_more": false,
+                  "data": []
+                },
+                "ai_agent_participated": false,
+                "ai_agent": {},
+                "sla_applied": {},
+                "statistics": {},
+                "conversation_rating": {},
+                "teammates": {},
+                "topics": {},
+                "ticket": {}
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "conversation",
+                  "id": "387",
+                  "title": null,
+                  "created_at": 1719492849,
+                  "updated_at": 1719492850,
+                  "waiting_since": 1719492850,
+                  "snoozed_until": null,
+                  "open": true,
+                  "state": "open",
+                  "read": false,
+                  "priority": "not_priority",
+                  "admin_assignee_id": null,
+                  "team_assignee_id": null,
+                  "tags": {
+                    "type": "tag.list",
+                    "tags": []
+                  },
+                  "source": {
+                    "type": "conversation",
+                    "id": "403918269",
+                    "delivered_as": "admin_initiated",
+                    "subject": "",
+                    "body": "<p>this is the message body</p>",
+                    "author": {
+                      "type": "admin",
+                      "id": "991267594",
+                      "name": "Ciaran182 Lee",
+                      "email": "admin182@email.com"
+                    },
+                    "attachments": [],
+                    "url": null,
+                    "redacted": false
+                  },
+                  "contacts": {
+                    "type": "contact.list",
+                    "contacts": [
+                      {
+                        "type": "contact",
+                        "id": "667d60f18a68186f43bafdf4",
+                        "external_id": "70"
+                      }
+                    ]
+                  },
+                  "custom_attributes": {},
+                  "first_contact_reply": {
+                    "created_at": 1719492850,
+                    "type": "conversation",
+                    "url": null
+                  },
+                  "conversation_parts": {
+                    "type": "conversation_part.list",
+                    "conversation_parts": [
+                      {
+                        "type": "conversation_part",
+                        "id": "99",
+                        "part_type": "open",
+                        "body": "<p>Thanks again :)</p>",
+                        "created_at": 1719492850,
+                        "updated_at": 1719492850,
+                        "notified_at": 1719492850,
+                        "assigned_to": {},
+                        "author": {
+                          "type": "user",
+                          "id": "667d60f18a68186f43bafdf4",
+                          "name": "Joe Bloggs",
+                          "email": "joe@bloggs.com"
+                        },
+                        "attachments": [],
+                        "external_id": null,
+                        "redacted": false
+                      }
+                    ],
+                    "total_count": 1
+                  },
+                  "linked_objects": {
+                    "type": "list",
+                    "total_count": 0,
+                    "has_more": false,
+                    "data": []
+                  },
+                  "ai_agent_participated": false,
+                  "ai_agent": {},
+                  "sla_applied": {},
+                  "statistics": {},
+                  "conversation_rating": {},
+                  "teammates": {},
+                  "topics": {},
+                  "ticket": {}
+                }
+              }
             }
           ],
           "protocol": {
@@ -34128,7 +35172,7 @@
           ],
           "examples": [
             {
-              "name": "Close a conversation",
+              "name": "Close a conversation_200",
               "description": "",
               "path": "/conversations/123/parts",
               "pathParameters": {
@@ -34329,7 +35373,7 @@
               }
             },
             {
-              "name": "Snooze a conversation",
+              "name": "Snooze a conversation_200",
               "description": "",
               "path": "/conversations/123/parts",
               "pathParameters": {
@@ -34528,7 +35572,7 @@
               }
             },
             {
-              "name": "Open a conversation",
+              "name": "Open a conversation_200",
               "description": "",
               "path": "/conversations/123/parts",
               "pathParameters": {
@@ -34725,7 +35769,7 @@
               }
             },
             {
-              "name": "Assign a conversation",
+              "name": "Assign a conversation_200",
               "description": "",
               "path": "/conversations/123/parts",
               "pathParameters": {
@@ -34932,7 +35976,7 @@
               }
             },
             {
-              "name": "Not found",
+              "name": "Not found_Close a conversation_200",
               "description": "",
               "path": "/conversations/123/parts",
               "pathParameters": {
@@ -34955,7 +35999,182 @@
                   "body": "Goodbye :)"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "conversation",
+                "id": "394",
+                "title": null,
+                "created_at": 1719492862,
+                "updated_at": 1719492862,
+                "waiting_since": null,
+                "snoozed_until": null,
+                "open": false,
+                "state": "closed",
+                "read": false,
+                "priority": "not_priority",
+                "admin_assignee_id": null,
+                "team_assignee_id": null,
+                "tags": {
+                  "type": "tag.list",
+                  "tags": []
+                },
+                "source": {
+                  "type": "conversation",
+                  "id": "403918276",
+                  "delivered_as": "admin_initiated",
+                  "subject": "",
+                  "body": "<p>this is the message body</p>",
+                  "author": {
+                    "type": "admin",
+                    "id": "991267608",
+                    "name": "Ciaran189 Lee",
+                    "email": "admin189@email.com"
+                  },
+                  "attachments": [],
+                  "url": null,
+                  "redacted": false
+                },
+                "contacts": {
+                  "type": "contact.list",
+                  "contacts": [
+                    {
+                      "type": "contact",
+                      "id": "667d60fd8a68186f43bafdfb",
+                      "external_id": "70"
+                    }
+                  ]
+                },
+                "custom_attributes": {},
+                "conversation_parts": {
+                  "type": "conversation_part.list",
+                  "conversation_parts": [
+                    {
+                      "type": "conversation_part",
+                      "id": "102",
+                      "part_type": "close",
+                      "body": "<p>Goodbye :)</p>",
+                      "created_at": 1719492862,
+                      "updated_at": 1719492862,
+                      "notified_at": 1719492862,
+                      "assigned_to": {},
+                      "author": {
+                        "type": "admin",
+                        "id": "991267608",
+                        "name": "Ciaran189 Lee",
+                        "email": "admin189@email.com"
+                      },
+                      "attachments": [],
+                      "external_id": null,
+                      "redacted": false
+                    }
+                  ],
+                  "total_count": 1
+                },
+                "linked_objects": {
+                  "type": "list",
+                  "total_count": 0,
+                  "has_more": false,
+                  "data": []
+                },
+                "ai_agent_participated": false,
+                "ai_agent": {},
+                "first_contact_reply": {},
+                "sla_applied": {},
+                "statistics": {},
+                "conversation_rating": {},
+                "teammates": {},
+                "topics": {},
+                "ticket": {}
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "conversation",
+                  "id": "394",
+                  "title": null,
+                  "created_at": 1719492862,
+                  "updated_at": 1719492862,
+                  "waiting_since": null,
+                  "snoozed_until": null,
+                  "open": false,
+                  "state": "closed",
+                  "read": false,
+                  "priority": "not_priority",
+                  "admin_assignee_id": null,
+                  "team_assignee_id": null,
+                  "tags": {
+                    "type": "tag.list",
+                    "tags": []
+                  },
+                  "source": {
+                    "type": "conversation",
+                    "id": "403918276",
+                    "delivered_as": "admin_initiated",
+                    "subject": "",
+                    "body": "<p>this is the message body</p>",
+                    "author": {
+                      "type": "admin",
+                      "id": "991267608",
+                      "name": "Ciaran189 Lee",
+                      "email": "admin189@email.com"
+                    },
+                    "attachments": [],
+                    "url": null,
+                    "redacted": false
+                  },
+                  "contacts": {
+                    "type": "contact.list",
+                    "contacts": [
+                      {
+                        "type": "contact",
+                        "id": "667d60fd8a68186f43bafdfb",
+                        "external_id": "70"
+                      }
+                    ]
+                  },
+                  "custom_attributes": {},
+                  "conversation_parts": {
+                    "type": "conversation_part.list",
+                    "conversation_parts": [
+                      {
+                        "type": "conversation_part",
+                        "id": "102",
+                        "part_type": "close",
+                        "body": "<p>Goodbye :)</p>",
+                        "created_at": 1719492862,
+                        "updated_at": 1719492862,
+                        "notified_at": 1719492862,
+                        "assigned_to": {},
+                        "author": {
+                          "type": "admin",
+                          "id": "991267608",
+                          "name": "Ciaran189 Lee",
+                          "email": "admin189@email.com"
+                        },
+                        "attachments": [],
+                        "external_id": null,
+                        "redacted": false
+                      }
+                    ],
+                    "total_count": 1
+                  },
+                  "linked_objects": {
+                    "type": "list",
+                    "total_count": 0,
+                    "has_more": false,
+                    "data": []
+                  },
+                  "ai_agent_participated": false,
+                  "ai_agent": {},
+                  "first_contact_reply": {},
+                  "sla_applied": {},
+                  "statistics": {},
+                  "conversation_rating": {},
+                  "teammates": {},
+                  "topics": {},
+                  "ticket": {}
+                }
+              }
             }
           ],
           "protocol": {
@@ -35544,7 +36763,7 @@
           ],
           "examples": [
             {
-              "name": "Attach a contact to a conversation",
+              "name": "Attach a contact to a conversation_200",
               "description": "",
               "path": "/conversations/123/customers",
               "pathParameters": {
@@ -35589,7 +36808,7 @@
               }
             },
             {
-              "name": "Not found",
+              "name": "Not found_Attach a contact to a conversation_200",
               "description": "",
               "path": "/conversations/123/customers",
               "pathParameters": {
@@ -35612,7 +36831,26 @@
                   }
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "customers": [
+                  {
+                    "type": "user",
+                    "id": "667d61168a68186f43bafe0d"
+                  }
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "customers": [
+                    {
+                      "type": "user",
+                      "id": "667d61168a68186f43bafe0d"
+                    }
+                  ]
+                }
+              }
             }
           ],
           "protocol": {
@@ -35883,7 +37121,7 @@
           ],
           "examples": [
             {
-              "name": "Detach a contact from a group conversation",
+              "name": "Detach a contact from a group conversation_200",
               "description": "",
               "path": "/conversations/123/customers/123",
               "pathParameters": {
@@ -35929,7 +37167,7 @@
               }
             },
             {
-              "name": "Conversation not found",
+              "name": "Conversation not found_Detach a contact from a group conversation_200",
               "description": "",
               "path": "/conversations/123/customers/123",
               "pathParameters": {
@@ -35953,10 +37191,29 @@
                   }
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "customers": [
+                  {
+                    "type": "user",
+                    "id": "667d61228a68186f43bafe19"
+                  }
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "customers": [
+                    {
+                      "type": "user",
+                      "id": "667d61228a68186f43bafe19"
+                    }
+                  ]
+                }
+              }
             },
             {
-              "name": "Contact not found",
+              "name": "Contact not found_Detach a contact from a group conversation_200",
               "description": "",
               "path": "/conversations/123/customers/123",
               "pathParameters": {
@@ -35980,10 +37237,29 @@
                   }
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "customers": [
+                  {
+                    "type": "user",
+                    "id": "667d61228a68186f43bafe19"
+                  }
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "customers": [
+                    {
+                      "type": "user",
+                      "id": "667d61228a68186f43bafe19"
+                    }
+                  ]
+                }
+              }
             },
             {
-              "name": "Last customer",
+              "name": "Last customer_Detach a contact from a group conversation_200",
               "description": "",
               "path": "/conversations/123/customers/123",
               "pathParameters": {
@@ -36007,7 +37283,26 @@
                   }
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "customers": [
+                  {
+                    "type": "user",
+                    "id": "667d61228a68186f43bafe19"
+                  }
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "customers": [
+                    {
+                      "type": "user",
+                      "id": "667d61228a68186f43bafe19"
+                    }
+                  ]
+                }
+              }
             }
           ],
           "protocol": {
@@ -36165,7 +37460,7 @@
           ],
           "examples": [
             {
-              "name": "Redact a conversation part",
+              "name": "Redact a conversation part_200",
               "description": "",
               "path": "/conversations/redact",
               "pathParameters": {},
@@ -36370,7 +37665,7 @@
               }
             },
             {
-              "name": "Not found",
+              "name": "Not found_Redact a conversation part_200",
               "description": "",
               "path": "/conversations/redact",
               "pathParameters": {},
@@ -36389,7 +37684,190 @@
                   "conversation_part_id": "really_123_doesnt_exist"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "conversation",
+                "id": "471",
+                "title": null,
+                "created_at": 1719492938,
+                "updated_at": 1719492940,
+                "waiting_since": 1719492939,
+                "snoozed_until": null,
+                "open": true,
+                "state": "open",
+                "read": true,
+                "priority": "not_priority",
+                "admin_assignee_id": null,
+                "team_assignee_id": null,
+                "tags": {
+                  "type": "tag.list",
+                  "tags": []
+                },
+                "source": {
+                  "type": "conversation",
+                  "id": "403918311",
+                  "delivered_as": "admin_initiated",
+                  "subject": "",
+                  "body": "<p>this is the message body</p>",
+                  "author": {
+                    "type": "admin",
+                    "id": "991267657",
+                    "name": "Ciaran217 Lee",
+                    "email": "admin217@email.com"
+                  },
+                  "attachments": [],
+                  "url": null,
+                  "redacted": false
+                },
+                "contacts": {
+                  "type": "contact.list",
+                  "contacts": [
+                    {
+                      "type": "contact",
+                      "id": "667d614a8a68186f43bafe42",
+                      "external_id": "70"
+                    }
+                  ]
+                },
+                "custom_attributes": {},
+                "first_contact_reply": {
+                  "created_at": 1719492939,
+                  "type": "conversation",
+                  "url": null
+                },
+                "conversation_parts": {
+                  "type": "conversation_part.list",
+                  "conversation_parts": [
+                    {
+                      "type": "conversation_part",
+                      "id": "115",
+                      "part_type": "open",
+                      "body": "<p><i>This message was deleted</i></p>",
+                      "created_at": 1719492939,
+                      "updated_at": 1719492940,
+                      "notified_at": 1719492939,
+                      "assigned_to": {},
+                      "author": {
+                        "type": "user",
+                        "id": "667d614a8a68186f43bafe42",
+                        "name": "Joe Bloggs",
+                        "email": "joe@bloggs.com"
+                      },
+                      "attachments": [],
+                      "external_id": null,
+                      "redacted": true
+                    }
+                  ],
+                  "total_count": 1
+                },
+                "linked_objects": {
+                  "type": "list",
+                  "total_count": 0,
+                  "has_more": false,
+                  "data": []
+                },
+                "ai_agent_participated": false,
+                "ai_agent": {},
+                "sla_applied": {},
+                "statistics": {},
+                "conversation_rating": {},
+                "teammates": {},
+                "topics": {},
+                "ticket": {}
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "conversation",
+                  "id": "471",
+                  "title": null,
+                  "created_at": 1719492938,
+                  "updated_at": 1719492940,
+                  "waiting_since": 1719492939,
+                  "snoozed_until": null,
+                  "open": true,
+                  "state": "open",
+                  "read": true,
+                  "priority": "not_priority",
+                  "admin_assignee_id": null,
+                  "team_assignee_id": null,
+                  "tags": {
+                    "type": "tag.list",
+                    "tags": []
+                  },
+                  "source": {
+                    "type": "conversation",
+                    "id": "403918311",
+                    "delivered_as": "admin_initiated",
+                    "subject": "",
+                    "body": "<p>this is the message body</p>",
+                    "author": {
+                      "type": "admin",
+                      "id": "991267657",
+                      "name": "Ciaran217 Lee",
+                      "email": "admin217@email.com"
+                    },
+                    "attachments": [],
+                    "url": null,
+                    "redacted": false
+                  },
+                  "contacts": {
+                    "type": "contact.list",
+                    "contacts": [
+                      {
+                        "type": "contact",
+                        "id": "667d614a8a68186f43bafe42",
+                        "external_id": "70"
+                      }
+                    ]
+                  },
+                  "custom_attributes": {},
+                  "first_contact_reply": {
+                    "created_at": 1719492939,
+                    "type": "conversation",
+                    "url": null
+                  },
+                  "conversation_parts": {
+                    "type": "conversation_part.list",
+                    "conversation_parts": [
+                      {
+                        "type": "conversation_part",
+                        "id": "115",
+                        "part_type": "open",
+                        "body": "<p><i>This message was deleted</i></p>",
+                        "created_at": 1719492939,
+                        "updated_at": 1719492940,
+                        "notified_at": 1719492939,
+                        "assigned_to": {},
+                        "author": {
+                          "type": "user",
+                          "id": "667d614a8a68186f43bafe42",
+                          "name": "Joe Bloggs",
+                          "email": "joe@bloggs.com"
+                        },
+                        "attachments": [],
+                        "external_id": null,
+                        "redacted": true
+                      }
+                    ],
+                    "total_count": 1
+                  },
+                  "linked_objects": {
+                    "type": "list",
+                    "total_count": 0,
+                    "has_more": false,
+                    "data": []
+                  },
+                  "ai_agent_participated": false,
+                  "ai_agent": {},
+                  "sla_applied": {},
+                  "statistics": {},
+                  "conversation_rating": {},
+                  "teammates": {},
+                  "topics": {},
+                  "ticket": {}
+                }
+              }
             }
           ],
           "protocol": {
@@ -36536,7 +38014,7 @@
           ],
           "examples": [
             {
-              "name": "successful",
+              "name": "successful_200",
               "description": "",
               "path": "/conversations/123/convert",
               "pathParameters": {
@@ -36735,7 +38213,7 @@
               }
             },
             {
-              "name": "Bad request",
+              "name": "Bad request_successful_200",
               "description": "",
               "path": "/conversations/123/convert",
               "pathParameters": {
@@ -36752,7 +38230,186 @@
                   "ticket_type_id": "80"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "ticket",
+                "id": "474",
+                "ticket_id": "37",
+                "category": "Customer",
+                "ticket_attributes": {},
+                "ticket_state": "submitted",
+                "ticket_type": {
+                  "type": "ticket_type",
+                  "id": "79",
+                  "category": "Customer",
+                  "name": "my-ticket-type-1",
+                  "description": "my ticket type description is awesome.",
+                  "icon": "🦁",
+                  "workspace_id": "this_is_an_id404_that_should_be_at_least_",
+                  "ticket_type_attributes": {
+                    "type": "list",
+                    "data": []
+                  },
+                  "archived": false,
+                  "created_at": 1719492947,
+                  "updated_at": 1719492947,
+                  "is_internal": false
+                },
+                "contacts": {
+                  "type": "contact.list",
+                  "contacts": [
+                    {
+                      "type": "contact",
+                      "id": "667d61518a68186f43bafe45",
+                      "external_id": "70"
+                    }
+                  ]
+                },
+                "admin_assignee_id": "0",
+                "team_assignee_id": "0",
+                "created_at": 1719492945,
+                "updated_at": 1719492947,
+                "open": true,
+                "linked_objects": {
+                  "type": "list",
+                  "total_count": 0,
+                  "has_more": false,
+                  "data": []
+                },
+                "ticket_parts": {
+                  "type": "ticket_part.list",
+                  "ticket_parts": [
+                    {
+                      "type": "ticket_part",
+                      "id": "117",
+                      "part_type": "comment",
+                      "body": "<p>Comment for message</p>",
+                      "created_at": 1719492945,
+                      "updated_at": 1719492945,
+                      "author": {
+                        "type": "user",
+                        "id": "667d61518a68186f43bafe45",
+                        "name": "Joe Bloggs",
+                        "email": "joe@bloggs.com"
+                      },
+                      "attachments": [],
+                      "redacted": false
+                    },
+                    {
+                      "type": "ticket_part",
+                      "id": "118",
+                      "part_type": "ticket_state_updated_by_admin",
+                      "previous_ticket_state": "submitted",
+                      "ticket_state": "submitted",
+                      "created_at": 1719492947,
+                      "updated_at": 1719492947,
+                      "author": {
+                        "type": "bot",
+                        "id": "991267667",
+                        "name": "Operator",
+                        "email": "operator+this_is_an_id404_that_should_be_at_least_@intercom.io"
+                      },
+                      "attachments": [],
+                      "redacted": false
+                    }
+                  ],
+                  "total_count": 2
+                },
+                "is_shared": true,
+                "ticket_state_internal_label": "Submitted",
+                "ticket_state_external_label": "Submitted"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "ticket",
+                  "id": "474",
+                  "ticket_id": "37",
+                  "category": "Customer",
+                  "ticket_attributes": {},
+                  "ticket_state": "submitted",
+                  "ticket_type": {
+                    "type": "ticket_type",
+                    "id": "79",
+                    "category": "Customer",
+                    "name": "my-ticket-type-1",
+                    "description": "my ticket type description is awesome.",
+                    "icon": "🦁",
+                    "workspace_id": "this_is_an_id404_that_should_be_at_least_",
+                    "ticket_type_attributes": {
+                      "type": "list",
+                      "data": []
+                    },
+                    "archived": false,
+                    "created_at": 1719492947,
+                    "updated_at": 1719492947,
+                    "is_internal": false
+                  },
+                  "contacts": {
+                    "type": "contact.list",
+                    "contacts": [
+                      {
+                        "type": "contact",
+                        "id": "667d61518a68186f43bafe45",
+                        "external_id": "70"
+                      }
+                    ]
+                  },
+                  "admin_assignee_id": "0",
+                  "team_assignee_id": "0",
+                  "created_at": 1719492945,
+                  "updated_at": 1719492947,
+                  "open": true,
+                  "linked_objects": {
+                    "type": "list",
+                    "total_count": 0,
+                    "has_more": false,
+                    "data": []
+                  },
+                  "ticket_parts": {
+                    "type": "ticket_part.list",
+                    "ticket_parts": [
+                      {
+                        "type": "ticket_part",
+                        "id": "117",
+                        "part_type": "comment",
+                        "body": "<p>Comment for message</p>",
+                        "created_at": 1719492945,
+                        "updated_at": 1719492945,
+                        "author": {
+                          "type": "user",
+                          "id": "667d61518a68186f43bafe45",
+                          "name": "Joe Bloggs",
+                          "email": "joe@bloggs.com"
+                        },
+                        "attachments": [],
+                        "redacted": false
+                      },
+                      {
+                        "type": "ticket_part",
+                        "id": "118",
+                        "part_type": "ticket_state_updated_by_admin",
+                        "previous_ticket_state": "submitted",
+                        "ticket_state": "submitted",
+                        "created_at": 1719492947,
+                        "updated_at": 1719492947,
+                        "author": {
+                          "type": "bot",
+                          "id": "991267667",
+                          "name": "Operator",
+                          "email": "operator+this_is_an_id404_that_should_be_at_least_@intercom.io"
+                        },
+                        "attachments": [],
+                        "redacted": false
+                      }
+                    ],
+                    "total_count": 2
+                  },
+                  "is_shared": true,
+                  "ticket_state_internal_label": "Submitted",
+                  "ticket_state_external_label": "Submitted"
+                }
+              }
             }
           ],
           "protocol": {
@@ -37629,7 +39286,7 @@
           ],
           "examples": [
             {
-              "name": "Successful",
+              "name": "Successful_200",
               "description": "",
               "path": "/data_attributes",
               "pathParameters": {},
@@ -37688,7 +39345,7 @@
               }
             },
             {
-              "name": "Same name already exists",
+              "name": "Same name already exists_Successful_200",
               "description": "",
               "path": "/data_attributes",
               "pathParameters": {},
@@ -37707,10 +39364,47 @@
                   "data_type": "integer"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "data_attribute",
+                "id": 37,
+                "model": "company",
+                "name": "Mithril Shirt",
+                "full_name": "custom_attributes.Mithril Shirt",
+                "label": "Mithril Shirt",
+                "data_type": "string",
+                "api_writable": true,
+                "messenger_writable": false,
+                "ui_writable": false,
+                "custom": true,
+                "archived": false,
+                "created_at": 1719492955,
+                "updated_at": 1719492955,
+                "admin_id": "991267686"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "data_attribute",
+                  "id": 37,
+                  "model": "company",
+                  "name": "Mithril Shirt",
+                  "full_name": "custom_attributes.Mithril Shirt",
+                  "label": "Mithril Shirt",
+                  "data_type": "string",
+                  "api_writable": true,
+                  "messenger_writable": false,
+                  "ui_writable": false,
+                  "custom": true,
+                  "archived": false,
+                  "created_at": 1719492955,
+                  "updated_at": 1719492955,
+                  "admin_id": "991267686"
+                }
+              }
             },
             {
-              "name": "Invalid name",
+              "name": "Invalid name_Successful_200",
               "description": "",
               "path": "/data_attributes",
               "pathParameters": {},
@@ -37729,10 +39423,47 @@
                   "data_type": "string"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "data_attribute",
+                "id": 37,
+                "model": "company",
+                "name": "Mithril Shirt",
+                "full_name": "custom_attributes.Mithril Shirt",
+                "label": "Mithril Shirt",
+                "data_type": "string",
+                "api_writable": true,
+                "messenger_writable": false,
+                "ui_writable": false,
+                "custom": true,
+                "archived": false,
+                "created_at": 1719492955,
+                "updated_at": 1719492955,
+                "admin_id": "991267686"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "data_attribute",
+                  "id": 37,
+                  "model": "company",
+                  "name": "Mithril Shirt",
+                  "full_name": "custom_attributes.Mithril Shirt",
+                  "label": "Mithril Shirt",
+                  "data_type": "string",
+                  "api_writable": true,
+                  "messenger_writable": false,
+                  "ui_writable": false,
+                  "custom": true,
+                  "archived": false,
+                  "created_at": 1719492955,
+                  "updated_at": 1719492955,
+                  "admin_id": "991267686"
+                }
+              }
             },
             {
-              "name": "Attribute already exists",
+              "name": "Attribute already exists_Successful_200",
               "description": "",
               "path": "/data_attributes",
               "pathParameters": {},
@@ -37751,10 +39482,47 @@
                   "data_type": "string"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "data_attribute",
+                "id": 37,
+                "model": "company",
+                "name": "Mithril Shirt",
+                "full_name": "custom_attributes.Mithril Shirt",
+                "label": "Mithril Shirt",
+                "data_type": "string",
+                "api_writable": true,
+                "messenger_writable": false,
+                "ui_writable": false,
+                "custom": true,
+                "archived": false,
+                "created_at": 1719492955,
+                "updated_at": 1719492955,
+                "admin_id": "991267686"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "data_attribute",
+                  "id": 37,
+                  "model": "company",
+                  "name": "Mithril Shirt",
+                  "full_name": "custom_attributes.Mithril Shirt",
+                  "label": "Mithril Shirt",
+                  "data_type": "string",
+                  "api_writable": true,
+                  "messenger_writable": false,
+                  "ui_writable": false,
+                  "custom": true,
+                  "archived": false,
+                  "created_at": 1719492955,
+                  "updated_at": 1719492955,
+                  "admin_id": "991267686"
+                }
+              }
             },
             {
-              "name": "Invalid Data Type",
+              "name": "Invalid Data Type_Successful_200",
               "description": "",
               "path": "/data_attributes",
               "pathParameters": {},
@@ -37773,10 +39541,47 @@
                   "data_type": "string"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "data_attribute",
+                "id": 37,
+                "model": "company",
+                "name": "Mithril Shirt",
+                "full_name": "custom_attributes.Mithril Shirt",
+                "label": "Mithril Shirt",
+                "data_type": "string",
+                "api_writable": true,
+                "messenger_writable": false,
+                "ui_writable": false,
+                "custom": true,
+                "archived": false,
+                "created_at": 1719492955,
+                "updated_at": 1719492955,
+                "admin_id": "991267686"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "data_attribute",
+                  "id": 37,
+                  "model": "company",
+                  "name": "Mithril Shirt",
+                  "full_name": "custom_attributes.Mithril Shirt",
+                  "label": "Mithril Shirt",
+                  "data_type": "string",
+                  "api_writable": true,
+                  "messenger_writable": false,
+                  "ui_writable": false,
+                  "custom": true,
+                  "archived": false,
+                  "created_at": 1719492955,
+                  "updated_at": 1719492955,
+                  "admin_id": "991267686"
+                }
+              }
             },
             {
-              "name": "Too few options for list",
+              "name": "Too few options for list_Successful_200",
               "description": "",
               "path": "/data_attributes",
               "pathParameters": {},
@@ -37805,7 +39610,44 @@
                   "archived": false
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "data_attribute",
+                "id": 37,
+                "model": "company",
+                "name": "Mithril Shirt",
+                "full_name": "custom_attributes.Mithril Shirt",
+                "label": "Mithril Shirt",
+                "data_type": "string",
+                "api_writable": true,
+                "messenger_writable": false,
+                "ui_writable": false,
+                "custom": true,
+                "archived": false,
+                "created_at": 1719492955,
+                "updated_at": 1719492955,
+                "admin_id": "991267686"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "data_attribute",
+                  "id": 37,
+                  "model": "company",
+                  "name": "Mithril Shirt",
+                  "full_name": "custom_attributes.Mithril Shirt",
+                  "label": "Mithril Shirt",
+                  "data_type": "string",
+                  "api_writable": true,
+                  "messenger_writable": false,
+                  "ui_writable": false,
+                  "custom": true,
+                  "archived": false,
+                  "created_at": 1719492955,
+                  "updated_at": 1719492955,
+                  "admin_id": "991267686"
+                }
+              }
             }
           ],
           "protocol": {
@@ -38042,7 +39884,7 @@
           ],
           "examples": [
             {
-              "name": "Successful",
+              "name": "Successful_200",
               "description": "",
               "path": "/data_attributes/1",
               "pathParameters": {
@@ -38119,7 +39961,7 @@
               }
             },
             {
-              "name": "Too few options in list",
+              "name": "Too few options in list_Successful_200",
               "description": "",
               "path": "/data_attributes/1",
               "pathParameters": {
@@ -38144,10 +39986,57 @@
                   ]
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "data_attribute",
+                "id": 44,
+                "model": "company",
+                "name": "The One Ring",
+                "full_name": "custom_attributes.The One Ring",
+                "label": "The One Ring",
+                "description": "Just a plain old ring",
+                "data_type": "string",
+                "options": [
+                  "1-10",
+                  "11-20"
+                ],
+                "api_writable": true,
+                "messenger_writable": true,
+                "ui_writable": false,
+                "custom": true,
+                "archived": false,
+                "created_at": 1719492958,
+                "updated_at": 1719492959,
+                "admin_id": "991267693"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "data_attribute",
+                  "id": 44,
+                  "model": "company",
+                  "name": "The One Ring",
+                  "full_name": "custom_attributes.The One Ring",
+                  "label": "The One Ring",
+                  "description": "Just a plain old ring",
+                  "data_type": "string",
+                  "options": [
+                    "1-10",
+                    "11-20"
+                  ],
+                  "api_writable": true,
+                  "messenger_writable": true,
+                  "ui_writable": false,
+                  "custom": true,
+                  "archived": false,
+                  "created_at": 1719492958,
+                  "updated_at": 1719492959,
+                  "admin_id": "991267693"
+                }
+              }
             },
             {
-              "name": "Attribute Not Found",
+              "name": "Attribute Not Found_Successful_200",
               "description": "",
               "path": "/data_attributes/1",
               "pathParameters": {
@@ -38174,10 +40063,57 @@
                   ]
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "data_attribute",
+                "id": 44,
+                "model": "company",
+                "name": "The One Ring",
+                "full_name": "custom_attributes.The One Ring",
+                "label": "The One Ring",
+                "description": "Just a plain old ring",
+                "data_type": "string",
+                "options": [
+                  "1-10",
+                  "11-20"
+                ],
+                "api_writable": true,
+                "messenger_writable": true,
+                "ui_writable": false,
+                "custom": true,
+                "archived": false,
+                "created_at": 1719492958,
+                "updated_at": 1719492959,
+                "admin_id": "991267693"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "data_attribute",
+                  "id": 44,
+                  "model": "company",
+                  "name": "The One Ring",
+                  "full_name": "custom_attributes.The One Ring",
+                  "label": "The One Ring",
+                  "description": "Just a plain old ring",
+                  "data_type": "string",
+                  "options": [
+                    "1-10",
+                    "11-20"
+                  ],
+                  "api_writable": true,
+                  "messenger_writable": true,
+                  "ui_writable": false,
+                  "custom": true,
+                  "archived": false,
+                  "created_at": 1719492958,
+                  "updated_at": 1719492959,
+                  "admin_id": "991267693"
+                }
+              }
             },
             {
-              "name": "Has Dependant Object",
+              "name": "Has Dependant Object_Successful_200",
               "description": "",
               "path": "/data_attributes/1",
               "pathParameters": {
@@ -38196,7 +40132,54 @@
                   "description": "Trying to archieve"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "data_attribute",
+                "id": 44,
+                "model": "company",
+                "name": "The One Ring",
+                "full_name": "custom_attributes.The One Ring",
+                "label": "The One Ring",
+                "description": "Just a plain old ring",
+                "data_type": "string",
+                "options": [
+                  "1-10",
+                  "11-20"
+                ],
+                "api_writable": true,
+                "messenger_writable": true,
+                "ui_writable": false,
+                "custom": true,
+                "archived": false,
+                "created_at": 1719492958,
+                "updated_at": 1719492959,
+                "admin_id": "991267693"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "data_attribute",
+                  "id": 44,
+                  "model": "company",
+                  "name": "The One Ring",
+                  "full_name": "custom_attributes.The One Ring",
+                  "label": "The One Ring",
+                  "description": "Just a plain old ring",
+                  "data_type": "string",
+                  "options": [
+                    "1-10",
+                    "11-20"
+                  ],
+                  "api_writable": true,
+                  "messenger_writable": true,
+                  "ui_writable": false,
+                  "custom": true,
+                  "archived": false,
+                  "created_at": 1719492958,
+                  "updated_at": 1719492959,
+                  "admin_id": "991267693"
+                }
+              }
             }
           ],
           "protocol": {
@@ -39418,7 +41401,7 @@
           ],
           "examples": [
             {
-              "name": "user message created",
+              "name": "user message created_200",
               "description": "",
               "path": "/messages",
               "pathParameters": {},
@@ -39451,7 +41434,7 @@
               }
             },
             {
-              "name": "lead message created",
+              "name": "lead message created_200",
               "description": "",
               "path": "/messages",
               "pathParameters": {},
@@ -39484,7 +41467,7 @@
               }
             },
             {
-              "name": "admin message created",
+              "name": "admin message created_200",
               "description": "",
               "path": "/messages",
               "pathParameters": {},
@@ -39533,7 +41516,7 @@
               }
             },
             {
-              "name": "No body supplied for message",
+              "name": "No body supplied for message_user message created_200",
               "description": "",
               "path": "/messages",
               "pathParameters": {},
@@ -39544,10 +41527,29 @@
                 "type": "json",
                 "value": null
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "user_message",
+                "id": "403918316",
+                "created_at": 1719492969,
+                "body": "heyy",
+                "message_type": "inapp",
+                "conversation_id": "476"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "user_message",
+                  "id": "403918316",
+                  "created_at": 1719492969,
+                  "body": "heyy",
+                  "message_type": "inapp",
+                  "conversation_id": "476"
+                }
+              }
             },
             {
-              "name": "No subject supplied for email message",
+              "name": "No subject supplied for email message_user message created_200",
               "description": "",
               "path": "/messages",
               "pathParameters": {},
@@ -39558,10 +41560,29 @@
                 "type": "json",
                 "value": null
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "user_message",
+                "id": "403918316",
+                "created_at": 1719492969,
+                "body": "heyy",
+                "message_type": "inapp",
+                "conversation_id": "476"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "user_message",
+                  "id": "403918316",
+                  "created_at": 1719492969,
+                  "body": "heyy",
+                  "message_type": "inapp",
+                  "conversation_id": "476"
+                }
+              }
             },
             {
-              "name": "No body supplied for email message",
+              "name": "No body supplied for email message_user message created_200",
               "description": "",
               "path": "/messages",
               "pathParameters": {},
@@ -39572,7 +41593,26 @@
                 "type": "json",
                 "value": null
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "user_message",
+                "id": "403918316",
+                "created_at": 1719492969,
+                "body": "heyy",
+                "message_type": "inapp",
+                "conversation_id": "476"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "user_message",
+                  "id": "403918316",
+                  "created_at": 1719492969,
+                  "body": "heyy",
+                  "message_type": "inapp",
+                  "conversation_id": "476"
+                }
+              }
             }
           ],
           "protocol": {
@@ -40454,7 +42494,7 @@
           ],
           "examples": [
             {
-              "name": "successful",
+              "name": "successful_200",
               "description": "",
               "path": "/news/news_items/123",
               "pathParameters": {
@@ -40527,7 +42567,7 @@
               }
             },
             {
-              "name": "News Item Not Found",
+              "name": "News Item Not Found_successful_200",
               "description": "",
               "path": "/news/news_items/123",
               "pathParameters": {
@@ -40556,7 +42596,48 @@
                   ]
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "news-item",
+                "id": "37",
+                "workspace_id": "this_is_an_id508_that_should_be_at_least_",
+                "title": "Christmas is here!",
+                "body": "<p>New gifts in store for the jolly season</p>",
+                "sender_id": 991267745,
+                "state": "live",
+                "newsfeed_assignments": [],
+                "labels": [],
+                "cover_image_url": null,
+                "reactions": [
+                  "😝",
+                  "😂"
+                ],
+                "deliver_silently": false,
+                "created_at": 1719492982,
+                "updated_at": 1719492982
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "news-item",
+                  "id": "37",
+                  "workspace_id": "this_is_an_id508_that_should_be_at_least_",
+                  "title": "Christmas is here!",
+                  "body": "<p>New gifts in store for the jolly season</p>",
+                  "sender_id": 991267745,
+                  "state": "live",
+                  "newsfeed_assignments": [],
+                  "labels": [],
+                  "cover_image_url": null,
+                  "reactions": [
+                    "😝",
+                    "😂"
+                  ],
+                  "deliver_silently": false,
+                  "created_at": 1719492982,
+                  "updated_at": 1719492982
+                }
+              }
             }
           ],
           "protocol": {
@@ -41758,7 +43839,7 @@
           ],
           "examples": [
             {
-              "name": "successful",
+              "name": "successful_200",
               "description": "",
               "path": "/phone_call_redirects",
               "pathParameters": {},
@@ -41795,7 +43876,7 @@
               }
             },
             {
-              "name": "bad request - exception sending sms",
+              "name": "bad request - exception sending sms_successful_200",
               "description": "",
               "path": "/phone_call_redirects",
               "pathParameters": {},
@@ -41818,10 +43899,21 @@
                   }
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "phone_call_redirect",
+                "url": "http://via.intercom.io/msgr/6eb60123-dadb-4881-80fd-4fc2cf272b12"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "phone_call_redirect",
+                  "url": "http://via.intercom.io/msgr/6eb60123-dadb-4881-80fd-4fc2cf272b12"
+                }
+              }
             },
             {
-              "name": "bad request - invalid number",
+              "name": "bad request - invalid number_successful_200",
               "description": "",
               "path": "/phone_call_redirects",
               "pathParameters": {},
@@ -41844,10 +43936,21 @@
                   }
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "phone_call_redirect",
+                "url": "http://via.intercom.io/msgr/6eb60123-dadb-4881-80fd-4fc2cf272b12"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "phone_call_redirect",
+                  "url": "http://via.intercom.io/msgr/6eb60123-dadb-4881-80fd-4fc2cf272b12"
+                }
+              }
             },
             {
-              "name": "unprocessable entity",
+              "name": "unprocessable entity_successful_200",
               "description": "",
               "path": "/phone_call_redirects",
               "pathParameters": {},
@@ -41870,7 +43973,18 @@
                   }
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "phone_call_redirect",
+                "url": "http://via.intercom.io/msgr/6eb60123-dadb-4881-80fd-4fc2cf272b12"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "phone_call_redirect",
+                  "url": "http://via.intercom.io/msgr/6eb60123-dadb-4881-80fd-4fc2cf272b12"
+                }
+              }
             }
           ],
           "protocol": {
@@ -44056,33 +46170,7 @@
           ],
           "examples": [
             {
-              "name": "User reply",
-              "description": "",
-              "path": "/tickets/123/reply",
-              "pathParameters": {
-                "id": "123"
-              },
-              "queryParameters": {},
-              "headers": {},
-              "requestBody": {
-                "intercom_user_id": "667d619d8a68186f43bafe82",
-                "message_type": "comment",
-                "type": "user",
-                "body": "Thanks again :)"
-              },
-              "requestBodyV3": {
-                "type": "json",
-                "value": {
-                  "intercom_user_id": "667d619d8a68186f43bafe82",
-                  "message_type": "comment",
-                  "type": "user",
-                  "body": "Thanks again :)"
-                }
-              },
-              "responseStatusCode": 200
-            },
-            {
-              "name": "Admin note reply",
+              "name": "Admin note reply_200",
               "description": "",
               "path": "/tickets/123/reply",
               "pathParameters": {
@@ -44143,7 +46231,7 @@
               }
             },
             {
-              "name": "Admin quick_reply reply",
+              "name": "Admin quick_reply reply_200",
               "description": "",
               "path": "/tickets/123/reply",
               "pathParameters": {
@@ -44220,7 +46308,68 @@
               }
             },
             {
-              "name": "Not found",
+              "name": "User reply_Admin note reply_200",
+              "description": "",
+              "path": "/tickets/123/reply",
+              "pathParameters": {
+                "id": "123"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "intercom_user_id": "667d619d8a68186f43bafe82",
+                "message_type": "comment",
+                "type": "user",
+                "body": "Thanks again :)"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "intercom_user_id": "667d619d8a68186f43bafe82",
+                  "message_type": "comment",
+                  "type": "user",
+                  "body": "Thanks again :)"
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "ticket_part",
+                "id": "122",
+                "part_type": "note",
+                "body": "<h2>An Unordered HTML List</h2>\n<ul>\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ul>\n<h2>An Ordered HTML List</h2>\n<ol>\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ol>",
+                "created_at": 1719493024,
+                "updated_at": 1719493024,
+                "author": {
+                  "type": "admin",
+                  "id": "991267829",
+                  "name": "Ciaran375 Lee",
+                  "email": "admin375@email.com"
+                },
+                "attachments": [],
+                "redacted": false
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "ticket_part",
+                  "id": "122",
+                  "part_type": "note",
+                  "body": "<h2>An Unordered HTML List</h2>\n<ul>\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ul>\n<h2>An Ordered HTML List</h2>\n<ol>\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ol>",
+                  "created_at": 1719493024,
+                  "updated_at": 1719493024,
+                  "author": {
+                    "type": "admin",
+                    "id": "991267829",
+                    "name": "Ciaran375 Lee",
+                    "email": "admin375@email.com"
+                  },
+                  "attachments": [],
+                  "redacted": false
+                }
+              }
+            },
+            {
+              "name": "Not found_Admin note reply_200",
               "description": "",
               "path": "/tickets/123/reply",
               "pathParameters": {
@@ -44243,7 +46392,42 @@
                   "body": "Thanks again :)"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "ticket_part",
+                "id": "122",
+                "part_type": "note",
+                "body": "<h2>An Unordered HTML List</h2>\n<ul>\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ul>\n<h2>An Ordered HTML List</h2>\n<ol>\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ol>",
+                "created_at": 1719493024,
+                "updated_at": 1719493024,
+                "author": {
+                  "type": "admin",
+                  "id": "991267829",
+                  "name": "Ciaran375 Lee",
+                  "email": "admin375@email.com"
+                },
+                "attachments": [],
+                "redacted": false
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "ticket_part",
+                  "id": "122",
+                  "part_type": "note",
+                  "body": "<h2>An Unordered HTML List</h2>\n<ul>\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ul>\n<h2>An Ordered HTML List</h2>\n<ol>\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ol>",
+                  "created_at": 1719493024,
+                  "updated_at": 1719493024,
+                  "author": {
+                    "type": "admin",
+                    "id": "991267829",
+                    "name": "Ciaran375 Lee",
+                    "email": "admin375@email.com"
+                  },
+                  "attachments": [],
+                  "redacted": false
+                }
+              }
             }
           ],
           "protocol": {
@@ -45153,7 +47337,7 @@
           ],
           "examples": [
             {
-              "name": "Successful response",
+              "name": "Successful response_200",
               "description": "",
               "path": "/tickets/id",
               "pathParameters": {
@@ -45588,7 +47772,7 @@
               }
             },
             {
-              "name": "Admin not found",
+              "name": "Admin not found_Successful response_200",
               "description": "",
               "path": "/tickets/id",
               "pathParameters": {
@@ -45621,10 +47805,405 @@
                   }
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "ticket",
+                "id": "490",
+                "ticket_id": "49",
+                "category": "Back-office",
+                "ticket_attributes": {
+                  "_default_title_": "example",
+                  "_default_description_": "there is a problem"
+                },
+                "ticket_state": "in_progress",
+                "ticket_type": {
+                  "type": "ticket_type",
+                  "id": "108",
+                  "category": "Back-office",
+                  "name": "my-ticket-type-17",
+                  "description": "my ticket type description is awesome.",
+                  "icon": "🦁",
+                  "workspace_id": "this_is_an_id652_that_should_be_at_least_",
+                  "ticket_type_attributes": {
+                    "type": "list",
+                    "data": [
+                      {
+                        "type": "ticket_type_attribute",
+                        "id": "257",
+                        "workspace_id": "this_is_an_id652_that_should_be_at_least_",
+                        "name": "_default_title_",
+                        "description": "ola",
+                        "data_type": "string",
+                        "input_options": null,
+                        "order": 0,
+                        "required_to_create": true,
+                        "required_to_create_for_contacts": false,
+                        "visible_on_create": true,
+                        "visible_to_contacts": false,
+                        "default": false,
+                        "ticket_type_id": 108,
+                        "archived": false,
+                        "created_at": 1719493050,
+                        "updated_at": 1719493050
+                      },
+                      {
+                        "type": "ticket_type_attribute",
+                        "id": "258",
+                        "workspace_id": "this_is_an_id652_that_should_be_at_least_",
+                        "name": "_default_description_",
+                        "description": "ola",
+                        "data_type": "string",
+                        "input_options": null,
+                        "order": 0,
+                        "required_to_create": true,
+                        "required_to_create_for_contacts": false,
+                        "visible_on_create": true,
+                        "visible_to_contacts": false,
+                        "default": false,
+                        "ticket_type_id": 108,
+                        "archived": false,
+                        "created_at": 1719493050,
+                        "updated_at": 1719493050
+                      }
+                    ]
+                  },
+                  "archived": false,
+                  "created_at": 1719493050,
+                  "updated_at": 1719493050,
+                  "is_internal": false
+                },
+                "contacts": {
+                  "type": "contact.list",
+                  "contacts": [
+                    {
+                      "type": "contact",
+                      "id": "667d61bb8a68186f43bafe8e",
+                      "external_id": "cd63b6b5-ea75-4ad9-b72c-9d7a647baf08"
+                    }
+                  ]
+                },
+                "admin_assignee_id": "991267885",
+                "team_assignee_id": "0",
+                "created_at": 1719493051,
+                "updated_at": 1719493054,
+                "open": true,
+                "snoozed_until": 1719590400,
+                "linked_objects": {
+                  "type": "list",
+                  "total_count": 0,
+                  "has_more": false,
+                  "data": []
+                },
+                "ticket_parts": {
+                  "type": "ticket_part.list",
+                  "ticket_parts": [
+                    {
+                      "type": "ticket_part",
+                      "id": "126",
+                      "part_type": "ticket_state_updated_by_admin",
+                      "previous_ticket_state": "submitted",
+                      "ticket_state": "submitted",
+                      "created_at": 1719493051,
+                      "updated_at": 1719493051,
+                      "author": {
+                        "type": "admin",
+                        "id": "991267883",
+                        "name": "Ciaran419 Lee",
+                        "email": "admin419@email.com"
+                      },
+                      "attachments": [],
+                      "redacted": false
+                    },
+                    {
+                      "type": "ticket_part",
+                      "id": "127",
+                      "part_type": "ticket_attribute_updated_by_admin",
+                      "created_at": 1719493053,
+                      "updated_at": 1719493053,
+                      "author": {
+                        "type": "bot",
+                        "id": "991267884",
+                        "name": "Operator",
+                        "email": "operator+this_is_an_id652_that_should_be_at_least_@intercom.io"
+                      },
+                      "attachments": [],
+                      "redacted": false
+                    },
+                    {
+                      "type": "ticket_part",
+                      "id": "128",
+                      "part_type": "ticket_attribute_updated_by_admin",
+                      "created_at": 1719493053,
+                      "updated_at": 1719493053,
+                      "author": {
+                        "type": "bot",
+                        "id": "991267884",
+                        "name": "Operator",
+                        "email": "operator+this_is_an_id652_that_should_be_at_least_@intercom.io"
+                      },
+                      "attachments": [],
+                      "redacted": false
+                    },
+                    {
+                      "type": "ticket_part",
+                      "id": "129",
+                      "part_type": "ticket_state_updated_by_admin",
+                      "previous_ticket_state": "submitted",
+                      "ticket_state": "in_progress",
+                      "created_at": 1719493053,
+                      "updated_at": 1719493053,
+                      "author": {
+                        "type": "bot",
+                        "id": "991267884",
+                        "name": "Operator",
+                        "email": "operator+this_is_an_id652_that_should_be_at_least_@intercom.io"
+                      },
+                      "attachments": [],
+                      "redacted": false
+                    },
+                    {
+                      "type": "ticket_part",
+                      "id": "130",
+                      "part_type": "assignment",
+                      "created_at": 1719493054,
+                      "updated_at": 1719493054,
+                      "assigned_to": {
+                        "type": "admin",
+                        "id": "991267885"
+                      },
+                      "author": {
+                        "type": "admin",
+                        "id": "991267883",
+                        "name": "Ciaran419 Lee",
+                        "email": "admin419@email.com"
+                      },
+                      "attachments": [],
+                      "redacted": false
+                    },
+                    {
+                      "type": "ticket_part",
+                      "id": "131",
+                      "part_type": "snoozed",
+                      "created_at": 1719493054,
+                      "updated_at": 1719493054,
+                      "author": {
+                        "type": "bot",
+                        "id": "991267884",
+                        "name": "Operator",
+                        "email": "operator+this_is_an_id652_that_should_be_at_least_@intercom.io"
+                      },
+                      "attachments": [],
+                      "redacted": false
+                    }
+                  ],
+                  "total_count": 6
+                },
+                "is_shared": false,
+                "ticket_state_internal_label": "In progress",
+                "ticket_state_external_label": "In progress"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "ticket",
+                  "id": "490",
+                  "ticket_id": "49",
+                  "category": "Back-office",
+                  "ticket_attributes": {
+                    "_default_title_": "example",
+                    "_default_description_": "there is a problem"
+                  },
+                  "ticket_state": "in_progress",
+                  "ticket_type": {
+                    "type": "ticket_type",
+                    "id": "108",
+                    "category": "Back-office",
+                    "name": "my-ticket-type-17",
+                    "description": "my ticket type description is awesome.",
+                    "icon": "🦁",
+                    "workspace_id": "this_is_an_id652_that_should_be_at_least_",
+                    "ticket_type_attributes": {
+                      "type": "list",
+                      "data": [
+                        {
+                          "type": "ticket_type_attribute",
+                          "id": "257",
+                          "workspace_id": "this_is_an_id652_that_should_be_at_least_",
+                          "name": "_default_title_",
+                          "description": "ola",
+                          "data_type": "string",
+                          "input_options": null,
+                          "order": 0,
+                          "required_to_create": true,
+                          "required_to_create_for_contacts": false,
+                          "visible_on_create": true,
+                          "visible_to_contacts": false,
+                          "default": false,
+                          "ticket_type_id": 108,
+                          "archived": false,
+                          "created_at": 1719493050,
+                          "updated_at": 1719493050
+                        },
+                        {
+                          "type": "ticket_type_attribute",
+                          "id": "258",
+                          "workspace_id": "this_is_an_id652_that_should_be_at_least_",
+                          "name": "_default_description_",
+                          "description": "ola",
+                          "data_type": "string",
+                          "input_options": null,
+                          "order": 0,
+                          "required_to_create": true,
+                          "required_to_create_for_contacts": false,
+                          "visible_on_create": true,
+                          "visible_to_contacts": false,
+                          "default": false,
+                          "ticket_type_id": 108,
+                          "archived": false,
+                          "created_at": 1719493050,
+                          "updated_at": 1719493050
+                        }
+                      ]
+                    },
+                    "archived": false,
+                    "created_at": 1719493050,
+                    "updated_at": 1719493050,
+                    "is_internal": false
+                  },
+                  "contacts": {
+                    "type": "contact.list",
+                    "contacts": [
+                      {
+                        "type": "contact",
+                        "id": "667d61bb8a68186f43bafe8e",
+                        "external_id": "cd63b6b5-ea75-4ad9-b72c-9d7a647baf08"
+                      }
+                    ]
+                  },
+                  "admin_assignee_id": "991267885",
+                  "team_assignee_id": "0",
+                  "created_at": 1719493051,
+                  "updated_at": 1719493054,
+                  "open": true,
+                  "snoozed_until": 1719590400,
+                  "linked_objects": {
+                    "type": "list",
+                    "total_count": 0,
+                    "has_more": false,
+                    "data": []
+                  },
+                  "ticket_parts": {
+                    "type": "ticket_part.list",
+                    "ticket_parts": [
+                      {
+                        "type": "ticket_part",
+                        "id": "126",
+                        "part_type": "ticket_state_updated_by_admin",
+                        "previous_ticket_state": "submitted",
+                        "ticket_state": "submitted",
+                        "created_at": 1719493051,
+                        "updated_at": 1719493051,
+                        "author": {
+                          "type": "admin",
+                          "id": "991267883",
+                          "name": "Ciaran419 Lee",
+                          "email": "admin419@email.com"
+                        },
+                        "attachments": [],
+                        "redacted": false
+                      },
+                      {
+                        "type": "ticket_part",
+                        "id": "127",
+                        "part_type": "ticket_attribute_updated_by_admin",
+                        "created_at": 1719493053,
+                        "updated_at": 1719493053,
+                        "author": {
+                          "type": "bot",
+                          "id": "991267884",
+                          "name": "Operator",
+                          "email": "operator+this_is_an_id652_that_should_be_at_least_@intercom.io"
+                        },
+                        "attachments": [],
+                        "redacted": false
+                      },
+                      {
+                        "type": "ticket_part",
+                        "id": "128",
+                        "part_type": "ticket_attribute_updated_by_admin",
+                        "created_at": 1719493053,
+                        "updated_at": 1719493053,
+                        "author": {
+                          "type": "bot",
+                          "id": "991267884",
+                          "name": "Operator",
+                          "email": "operator+this_is_an_id652_that_should_be_at_least_@intercom.io"
+                        },
+                        "attachments": [],
+                        "redacted": false
+                      },
+                      {
+                        "type": "ticket_part",
+                        "id": "129",
+                        "part_type": "ticket_state_updated_by_admin",
+                        "previous_ticket_state": "submitted",
+                        "ticket_state": "in_progress",
+                        "created_at": 1719493053,
+                        "updated_at": 1719493053,
+                        "author": {
+                          "type": "bot",
+                          "id": "991267884",
+                          "name": "Operator",
+                          "email": "operator+this_is_an_id652_that_should_be_at_least_@intercom.io"
+                        },
+                        "attachments": [],
+                        "redacted": false
+                      },
+                      {
+                        "type": "ticket_part",
+                        "id": "130",
+                        "part_type": "assignment",
+                        "created_at": 1719493054,
+                        "updated_at": 1719493054,
+                        "assigned_to": {
+                          "type": "admin",
+                          "id": "991267885"
+                        },
+                        "author": {
+                          "type": "admin",
+                          "id": "991267883",
+                          "name": "Ciaran419 Lee",
+                          "email": "admin419@email.com"
+                        },
+                        "attachments": [],
+                        "redacted": false
+                      },
+                      {
+                        "type": "ticket_part",
+                        "id": "131",
+                        "part_type": "snoozed",
+                        "created_at": 1719493054,
+                        "updated_at": 1719493054,
+                        "author": {
+                          "type": "bot",
+                          "id": "991267884",
+                          "name": "Operator",
+                          "email": "operator+this_is_an_id652_that_should_be_at_least_@intercom.io"
+                        },
+                        "attachments": [],
+                        "redacted": false
+                      }
+                    ],
+                    "total_count": 6
+                  },
+                  "is_shared": false,
+                  "ticket_state_internal_label": "In progress",
+                  "ticket_state_external_label": "In progress"
+                }
+              }
             },
             {
-              "name": "Assignee not found",
+              "name": "Assignee not found_Successful response_200",
               "description": "",
               "path": "/tickets/id",
               "pathParameters": {
@@ -45657,7 +48236,402 @@
                   }
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "ticket",
+                "id": "490",
+                "ticket_id": "49",
+                "category": "Back-office",
+                "ticket_attributes": {
+                  "_default_title_": "example",
+                  "_default_description_": "there is a problem"
+                },
+                "ticket_state": "in_progress",
+                "ticket_type": {
+                  "type": "ticket_type",
+                  "id": "108",
+                  "category": "Back-office",
+                  "name": "my-ticket-type-17",
+                  "description": "my ticket type description is awesome.",
+                  "icon": "🦁",
+                  "workspace_id": "this_is_an_id652_that_should_be_at_least_",
+                  "ticket_type_attributes": {
+                    "type": "list",
+                    "data": [
+                      {
+                        "type": "ticket_type_attribute",
+                        "id": "257",
+                        "workspace_id": "this_is_an_id652_that_should_be_at_least_",
+                        "name": "_default_title_",
+                        "description": "ola",
+                        "data_type": "string",
+                        "input_options": null,
+                        "order": 0,
+                        "required_to_create": true,
+                        "required_to_create_for_contacts": false,
+                        "visible_on_create": true,
+                        "visible_to_contacts": false,
+                        "default": false,
+                        "ticket_type_id": 108,
+                        "archived": false,
+                        "created_at": 1719493050,
+                        "updated_at": 1719493050
+                      },
+                      {
+                        "type": "ticket_type_attribute",
+                        "id": "258",
+                        "workspace_id": "this_is_an_id652_that_should_be_at_least_",
+                        "name": "_default_description_",
+                        "description": "ola",
+                        "data_type": "string",
+                        "input_options": null,
+                        "order": 0,
+                        "required_to_create": true,
+                        "required_to_create_for_contacts": false,
+                        "visible_on_create": true,
+                        "visible_to_contacts": false,
+                        "default": false,
+                        "ticket_type_id": 108,
+                        "archived": false,
+                        "created_at": 1719493050,
+                        "updated_at": 1719493050
+                      }
+                    ]
+                  },
+                  "archived": false,
+                  "created_at": 1719493050,
+                  "updated_at": 1719493050,
+                  "is_internal": false
+                },
+                "contacts": {
+                  "type": "contact.list",
+                  "contacts": [
+                    {
+                      "type": "contact",
+                      "id": "667d61bb8a68186f43bafe8e",
+                      "external_id": "cd63b6b5-ea75-4ad9-b72c-9d7a647baf08"
+                    }
+                  ]
+                },
+                "admin_assignee_id": "991267885",
+                "team_assignee_id": "0",
+                "created_at": 1719493051,
+                "updated_at": 1719493054,
+                "open": true,
+                "snoozed_until": 1719590400,
+                "linked_objects": {
+                  "type": "list",
+                  "total_count": 0,
+                  "has_more": false,
+                  "data": []
+                },
+                "ticket_parts": {
+                  "type": "ticket_part.list",
+                  "ticket_parts": [
+                    {
+                      "type": "ticket_part",
+                      "id": "126",
+                      "part_type": "ticket_state_updated_by_admin",
+                      "previous_ticket_state": "submitted",
+                      "ticket_state": "submitted",
+                      "created_at": 1719493051,
+                      "updated_at": 1719493051,
+                      "author": {
+                        "type": "admin",
+                        "id": "991267883",
+                        "name": "Ciaran419 Lee",
+                        "email": "admin419@email.com"
+                      },
+                      "attachments": [],
+                      "redacted": false
+                    },
+                    {
+                      "type": "ticket_part",
+                      "id": "127",
+                      "part_type": "ticket_attribute_updated_by_admin",
+                      "created_at": 1719493053,
+                      "updated_at": 1719493053,
+                      "author": {
+                        "type": "bot",
+                        "id": "991267884",
+                        "name": "Operator",
+                        "email": "operator+this_is_an_id652_that_should_be_at_least_@intercom.io"
+                      },
+                      "attachments": [],
+                      "redacted": false
+                    },
+                    {
+                      "type": "ticket_part",
+                      "id": "128",
+                      "part_type": "ticket_attribute_updated_by_admin",
+                      "created_at": 1719493053,
+                      "updated_at": 1719493053,
+                      "author": {
+                        "type": "bot",
+                        "id": "991267884",
+                        "name": "Operator",
+                        "email": "operator+this_is_an_id652_that_should_be_at_least_@intercom.io"
+                      },
+                      "attachments": [],
+                      "redacted": false
+                    },
+                    {
+                      "type": "ticket_part",
+                      "id": "129",
+                      "part_type": "ticket_state_updated_by_admin",
+                      "previous_ticket_state": "submitted",
+                      "ticket_state": "in_progress",
+                      "created_at": 1719493053,
+                      "updated_at": 1719493053,
+                      "author": {
+                        "type": "bot",
+                        "id": "991267884",
+                        "name": "Operator",
+                        "email": "operator+this_is_an_id652_that_should_be_at_least_@intercom.io"
+                      },
+                      "attachments": [],
+                      "redacted": false
+                    },
+                    {
+                      "type": "ticket_part",
+                      "id": "130",
+                      "part_type": "assignment",
+                      "created_at": 1719493054,
+                      "updated_at": 1719493054,
+                      "assigned_to": {
+                        "type": "admin",
+                        "id": "991267885"
+                      },
+                      "author": {
+                        "type": "admin",
+                        "id": "991267883",
+                        "name": "Ciaran419 Lee",
+                        "email": "admin419@email.com"
+                      },
+                      "attachments": [],
+                      "redacted": false
+                    },
+                    {
+                      "type": "ticket_part",
+                      "id": "131",
+                      "part_type": "snoozed",
+                      "created_at": 1719493054,
+                      "updated_at": 1719493054,
+                      "author": {
+                        "type": "bot",
+                        "id": "991267884",
+                        "name": "Operator",
+                        "email": "operator+this_is_an_id652_that_should_be_at_least_@intercom.io"
+                      },
+                      "attachments": [],
+                      "redacted": false
+                    }
+                  ],
+                  "total_count": 6
+                },
+                "is_shared": false,
+                "ticket_state_internal_label": "In progress",
+                "ticket_state_external_label": "In progress"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "ticket",
+                  "id": "490",
+                  "ticket_id": "49",
+                  "category": "Back-office",
+                  "ticket_attributes": {
+                    "_default_title_": "example",
+                    "_default_description_": "there is a problem"
+                  },
+                  "ticket_state": "in_progress",
+                  "ticket_type": {
+                    "type": "ticket_type",
+                    "id": "108",
+                    "category": "Back-office",
+                    "name": "my-ticket-type-17",
+                    "description": "my ticket type description is awesome.",
+                    "icon": "🦁",
+                    "workspace_id": "this_is_an_id652_that_should_be_at_least_",
+                    "ticket_type_attributes": {
+                      "type": "list",
+                      "data": [
+                        {
+                          "type": "ticket_type_attribute",
+                          "id": "257",
+                          "workspace_id": "this_is_an_id652_that_should_be_at_least_",
+                          "name": "_default_title_",
+                          "description": "ola",
+                          "data_type": "string",
+                          "input_options": null,
+                          "order": 0,
+                          "required_to_create": true,
+                          "required_to_create_for_contacts": false,
+                          "visible_on_create": true,
+                          "visible_to_contacts": false,
+                          "default": false,
+                          "ticket_type_id": 108,
+                          "archived": false,
+                          "created_at": 1719493050,
+                          "updated_at": 1719493050
+                        },
+                        {
+                          "type": "ticket_type_attribute",
+                          "id": "258",
+                          "workspace_id": "this_is_an_id652_that_should_be_at_least_",
+                          "name": "_default_description_",
+                          "description": "ola",
+                          "data_type": "string",
+                          "input_options": null,
+                          "order": 0,
+                          "required_to_create": true,
+                          "required_to_create_for_contacts": false,
+                          "visible_on_create": true,
+                          "visible_to_contacts": false,
+                          "default": false,
+                          "ticket_type_id": 108,
+                          "archived": false,
+                          "created_at": 1719493050,
+                          "updated_at": 1719493050
+                        }
+                      ]
+                    },
+                    "archived": false,
+                    "created_at": 1719493050,
+                    "updated_at": 1719493050,
+                    "is_internal": false
+                  },
+                  "contacts": {
+                    "type": "contact.list",
+                    "contacts": [
+                      {
+                        "type": "contact",
+                        "id": "667d61bb8a68186f43bafe8e",
+                        "external_id": "cd63b6b5-ea75-4ad9-b72c-9d7a647baf08"
+                      }
+                    ]
+                  },
+                  "admin_assignee_id": "991267885",
+                  "team_assignee_id": "0",
+                  "created_at": 1719493051,
+                  "updated_at": 1719493054,
+                  "open": true,
+                  "snoozed_until": 1719590400,
+                  "linked_objects": {
+                    "type": "list",
+                    "total_count": 0,
+                    "has_more": false,
+                    "data": []
+                  },
+                  "ticket_parts": {
+                    "type": "ticket_part.list",
+                    "ticket_parts": [
+                      {
+                        "type": "ticket_part",
+                        "id": "126",
+                        "part_type": "ticket_state_updated_by_admin",
+                        "previous_ticket_state": "submitted",
+                        "ticket_state": "submitted",
+                        "created_at": 1719493051,
+                        "updated_at": 1719493051,
+                        "author": {
+                          "type": "admin",
+                          "id": "991267883",
+                          "name": "Ciaran419 Lee",
+                          "email": "admin419@email.com"
+                        },
+                        "attachments": [],
+                        "redacted": false
+                      },
+                      {
+                        "type": "ticket_part",
+                        "id": "127",
+                        "part_type": "ticket_attribute_updated_by_admin",
+                        "created_at": 1719493053,
+                        "updated_at": 1719493053,
+                        "author": {
+                          "type": "bot",
+                          "id": "991267884",
+                          "name": "Operator",
+                          "email": "operator+this_is_an_id652_that_should_be_at_least_@intercom.io"
+                        },
+                        "attachments": [],
+                        "redacted": false
+                      },
+                      {
+                        "type": "ticket_part",
+                        "id": "128",
+                        "part_type": "ticket_attribute_updated_by_admin",
+                        "created_at": 1719493053,
+                        "updated_at": 1719493053,
+                        "author": {
+                          "type": "bot",
+                          "id": "991267884",
+                          "name": "Operator",
+                          "email": "operator+this_is_an_id652_that_should_be_at_least_@intercom.io"
+                        },
+                        "attachments": [],
+                        "redacted": false
+                      },
+                      {
+                        "type": "ticket_part",
+                        "id": "129",
+                        "part_type": "ticket_state_updated_by_admin",
+                        "previous_ticket_state": "submitted",
+                        "ticket_state": "in_progress",
+                        "created_at": 1719493053,
+                        "updated_at": 1719493053,
+                        "author": {
+                          "type": "bot",
+                          "id": "991267884",
+                          "name": "Operator",
+                          "email": "operator+this_is_an_id652_that_should_be_at_least_@intercom.io"
+                        },
+                        "attachments": [],
+                        "redacted": false
+                      },
+                      {
+                        "type": "ticket_part",
+                        "id": "130",
+                        "part_type": "assignment",
+                        "created_at": 1719493054,
+                        "updated_at": 1719493054,
+                        "assigned_to": {
+                          "type": "admin",
+                          "id": "991267885"
+                        },
+                        "author": {
+                          "type": "admin",
+                          "id": "991267883",
+                          "name": "Ciaran419 Lee",
+                          "email": "admin419@email.com"
+                        },
+                        "attachments": [],
+                        "redacted": false
+                      },
+                      {
+                        "type": "ticket_part",
+                        "id": "131",
+                        "part_type": "snoozed",
+                        "created_at": 1719493054,
+                        "updated_at": 1719493054,
+                        "author": {
+                          "type": "bot",
+                          "id": "991267884",
+                          "name": "Operator",
+                          "email": "operator+this_is_an_id652_that_should_be_at_least_@intercom.io"
+                        },
+                        "attachments": [],
+                        "redacted": false
+                      }
+                    ],
+                    "total_count": 6
+                  },
+                  "is_shared": false,
+                  "ticket_state_internal_label": "In progress",
+                  "ticket_state_external_label": "In progress"
+                }
+              }
             }
           ],
           "protocol": {
@@ -46481,7 +49455,7 @@
           ],
           "examples": [
             {
-              "name": "successful",
+              "name": "successful_200",
               "description": "",
               "path": "/visitors",
               "pathParameters": {},
@@ -46598,7 +49572,7 @@
               }
             },
             {
-              "name": "visitor Not Found",
+              "name": "visitor Not Found_successful_200",
               "description": "",
               "path": "/visitors",
               "pathParameters": {},
@@ -46609,7 +49583,110 @@
                 "type": "json",
                 "value": null
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "visitor",
+                "id": "667d61cc8a68186f43bafe95",
+                "user_id": "3ecf64d0-9ed1-4e9f-88e1-da7d6e6782f3",
+                "anonymous": true,
+                "email": "",
+                "phone": null,
+                "name": "Gareth Bale",
+                "pseudonym": "Indigo Ghost",
+                "avatar": {
+                  "type": "avatar",
+                  "image_url": "https://static.intercomassets.com/app/pseudonym_avatars_2019/indigo-ghost.png"
+                },
+                "app_id": "this_is_an_id671_that_should_be_at_least_",
+                "companies": {
+                  "type": "company.list",
+                  "companies": []
+                },
+                "location_data": {},
+                "created_at": 1719493068,
+                "remote_created_at": 1719493068,
+                "signed_up_at": 1719493068,
+                "updated_at": 1719493068,
+                "session_count": 0,
+                "social_profiles": {
+                  "type": "social_profile.list",
+                  "social_profiles": []
+                },
+                "owner_id": null,
+                "unsubscribed_from_emails": false,
+                "marked_email_as_spam": false,
+                "has_hard_bounced": false,
+                "tags": {
+                  "type": "tag.list",
+                  "tags": []
+                },
+                "segments": {
+                  "type": "segment.list",
+                  "segments": []
+                },
+                "custom_attributes": {},
+                "referrer": null,
+                "utm_campaign": null,
+                "utm_content": null,
+                "utm_medium": null,
+                "utm_source": null,
+                "utm_term": null,
+                "do_not_track": null,
+                "last_request_at": {}
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "visitor",
+                  "id": "667d61cc8a68186f43bafe95",
+                  "user_id": "3ecf64d0-9ed1-4e9f-88e1-da7d6e6782f3",
+                  "anonymous": true,
+                  "email": "",
+                  "phone": null,
+                  "name": "Gareth Bale",
+                  "pseudonym": "Indigo Ghost",
+                  "avatar": {
+                    "type": "avatar",
+                    "image_url": "https://static.intercomassets.com/app/pseudonym_avatars_2019/indigo-ghost.png"
+                  },
+                  "app_id": "this_is_an_id671_that_should_be_at_least_",
+                  "companies": {
+                    "type": "company.list",
+                    "companies": []
+                  },
+                  "location_data": {},
+                  "created_at": 1719493068,
+                  "remote_created_at": 1719493068,
+                  "signed_up_at": 1719493068,
+                  "updated_at": 1719493068,
+                  "session_count": 0,
+                  "social_profiles": {
+                    "type": "social_profile.list",
+                    "social_profiles": []
+                  },
+                  "owner_id": null,
+                  "unsubscribed_from_emails": false,
+                  "marked_email_as_spam": false,
+                  "has_hard_bounced": false,
+                  "tags": {
+                    "type": "tag.list",
+                    "tags": []
+                  },
+                  "segments": {
+                    "type": "segment.list",
+                    "segments": []
+                  },
+                  "custom_attributes": {},
+                  "referrer": null,
+                  "utm_campaign": null,
+                  "utm_content": null,
+                  "utm_medium": null,
+                  "utm_source": null,
+                  "utm_term": null,
+                  "do_not_track": null,
+                  "last_request_at": {}
+                }
+              }
             }
           ],
           "protocol": {

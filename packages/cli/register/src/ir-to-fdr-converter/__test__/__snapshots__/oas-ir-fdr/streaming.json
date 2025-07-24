@@ -533,17 +533,10 @@
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
-            "responseBody": [
-              {}
-            ],
+            "responseBody": {},
             "responseBodyV3": {
-              "type": "stream",
-              "value": [
-                {
-                  "type": "json",
-                  "value": {}
-                }
-              ]
+              "type": "json",
+              "value": {}
             }
           }
         ],
