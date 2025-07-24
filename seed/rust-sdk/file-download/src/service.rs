@@ -1,5 +1,5 @@
 use crate::client::FileDownloadClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl FileDownloadClient {
     // Service methods

@@ -1,6 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
 import { rust } from "@fern-api/rust-codegen";
-
 import { PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api";
 
 export function generateRustTypeForTypeReference(typeReference: TypeReference): rust.Type {

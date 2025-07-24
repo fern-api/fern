@@ -1,5 +1,5 @@
 use crate::client::MixedCaseClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl MixedCaseClient {
     // Service methods

@@ -8,7 +8,7 @@ export declare namespace GoTypeReference {
         /* The name of the Go type */
         name: string;
         /* The import path of the Go type */
-        importPath: string;
+        importPath?: string;
         /* The generic type parameters, if any */
         generics?: Type[] | undefined;
     }
@@ -16,7 +16,7 @@ export declare namespace GoTypeReference {
 
 export class GoTypeReference extends AstNode {
     public readonly name: string;
-    public readonly importPath: string;
+    public readonly importPath: string | undefined;
     public readonly generics: Type[] | undefined;
 
     constructor({ name, importPath, generics }: GoTypeReference.Args) {
@@ -27,7 +27,7 @@ export class GoTypeReference extends AstNode {
     }
 
     public write(writer: Writer): void {
-        if (writer.importPath === this.importPath) {
+        if (this.importPath == null || writer.importPath === this.importPath) {
             writer.write(this.name);
             return;
         }

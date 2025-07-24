@@ -1,5 +1,5 @@
 use crate::client::ExamplesClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl ExamplesClient {
     // File Service methods

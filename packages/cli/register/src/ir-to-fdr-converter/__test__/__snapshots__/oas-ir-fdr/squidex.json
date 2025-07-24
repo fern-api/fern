@@ -11987,6 +11987,21 @@
             "statusCode": 200,
             "description": "Users returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "UsersDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Users returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -12104,6 +12119,21 @@
             },
             "statusCode": 201,
             "description": "User created."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "UserDto"
+                  }
+                },
+                "statusCode": 201,
+                "description": "User created."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -12247,6 +12277,21 @@
             "statusCode": 200,
             "description": "User returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "UserDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "User returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -12385,6 +12430,21 @@
             },
             "statusCode": 200,
             "description": "User created."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "UserDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "User created."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -12540,6 +12600,21 @@
             "statusCode": 204,
             "description": "User deleted."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "userManagement_deleteUser_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "User deleted."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -12671,6 +12746,21 @@
             },
             "statusCode": 200,
             "description": "User locked."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "UserDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "User locked."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -12822,6 +12912,21 @@
             "statusCode": 200,
             "description": "User unlocked."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "UserDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "User unlocked."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -12964,6 +13069,21 @@
             "statusCode": 200,
             "description": "User resources returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ResourcesDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "User resources returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -13058,6 +13178,24 @@
             },
             "statusCode": 200,
             "description": "Users returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "UserDto"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Users returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -13172,6 +13310,21 @@
             },
             "statusCode": 200,
             "description": "User found."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "UserDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "User found."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -13292,6 +13445,17 @@
             },
             "statusCode": 200,
             "description": "User found and image or fallback returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "fileDownload"
+                },
+                "statusCode": 200,
+                "description": "User found and image or fallback returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -13420,6 +13584,21 @@
             "statusCode": 200,
             "description": "Text translated."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TranslationDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Text translated."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -13536,6 +13715,21 @@
             "statusCode": 200,
             "description": "Templates returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TemplatesDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Templates returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -13649,6 +13843,21 @@
             },
             "statusCode": 200,
             "description": "Template returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TemplateDetailsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Template returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -13772,6 +13981,21 @@
             },
             "statusCode": 200,
             "description": "Contributors returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContributorsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Contributors returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -13923,6 +14147,21 @@
             },
             "statusCode": 201,
             "description": "Contributor assigned to team."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContributorsDto"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Contributor assigned to team."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -14081,6 +14320,21 @@
             },
             "statusCode": 200,
             "description": "Contributor removed."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContributorsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Contributor removed."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -14249,6 +14503,21 @@
             "statusCode": 200,
             "description": "Contributor removed."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContributorsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Contributor removed."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -14384,6 +14653,24 @@
             "statusCode": 200,
             "description": "Teams returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "TeamDto"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Teams returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -14492,6 +14779,21 @@
             },
             "statusCode": 201,
             "description": "Team created."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TeamDto"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Team created."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -14636,6 +14938,21 @@
             "statusCode": 200,
             "description": "Teams returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TeamDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Teams returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -14772,6 +15089,21 @@
             },
             "statusCode": 200,
             "description": "Team updated."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TeamDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Team updated."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -14928,6 +15260,21 @@
             "statusCode": 200,
             "description": "Usage tracking results returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "LogDownloadDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Usage tracking results returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -15075,6 +15422,21 @@
             },
             "statusCode": 200,
             "description": "API call returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "CallsUsageDtoDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "API call returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -15242,6 +15604,21 @@
             "statusCode": 200,
             "description": "API call returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "CallsUsageDtoDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "API call returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -15370,6 +15747,21 @@
             "statusCode": 200,
             "description": "Storage usage returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "CurrentStorageDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Storage usage returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -15481,6 +15873,21 @@
             },
             "statusCode": 200,
             "description": "Storage usage returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "CurrentStorageDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Storage usage returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -15634,6 +16041,24 @@
             },
             "statusCode": 200,
             "description": "Storage usage returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "StorageUsagePerDateDto"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Storage usage returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -15796,6 +16221,24 @@
             "statusCode": 200,
             "description": "Storage usage returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "StorageUsagePerDateDto"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Storage usage returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -15943,6 +16386,24 @@
             },
             "statusCode": 200,
             "description": "Search results returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "SearchResultDto"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Search results returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -16107,6 +16568,21 @@
             },
             "statusCode": 201,
             "description": "Schema field created."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SchemaDto"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Schema field created."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -16499,6 +16975,21 @@
             "statusCode": 201,
             "description": "Schema field created."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SchemaDto"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Schema field created."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -16873,6 +17364,21 @@
             "statusCode": 200,
             "description": "Schema UI fields defined."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SchemaDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Schema UI fields defined."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -17216,6 +17722,21 @@
             },
             "statusCode": 200,
             "description": "Schema fields reordered."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SchemaDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Schema fields reordered."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -17586,6 +18107,21 @@
             },
             "statusCode": 200,
             "description": "Schema fields reordered."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SchemaDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Schema fields reordered."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -17958,6 +18494,21 @@
             "statusCode": 200,
             "description": "Schema field updated."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SchemaDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Schema field updated."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -18319,6 +18870,21 @@
             },
             "statusCode": 200,
             "description": "Schema field deleted."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SchemaDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Schema field deleted."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -18695,6 +19261,21 @@
             },
             "statusCode": 200,
             "description": "Schema field updated."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SchemaDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Schema field updated."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -19077,6 +19658,21 @@
             "statusCode": 200,
             "description": "Schema field deleted."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SchemaDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Schema field deleted."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -19421,6 +20017,21 @@
             },
             "statusCode": 200,
             "description": "Schema field shown."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SchemaDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Schema field shown."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -19784,6 +20395,21 @@
             "statusCode": 200,
             "description": "Schema field hidden."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SchemaDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Schema field hidden."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -20128,6 +20754,21 @@
             },
             "statusCode": 200,
             "description": "Schema field hidden."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SchemaDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Schema field hidden."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -20491,6 +21132,21 @@
             "statusCode": 200,
             "description": "Schema field hidden."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SchemaDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Schema field hidden."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -20835,6 +21491,21 @@
             },
             "statusCode": 200,
             "description": "Schema field shown."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SchemaDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Schema field shown."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -21198,6 +21869,21 @@
             "statusCode": 200,
             "description": "Schema field shown."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SchemaDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Schema field shown."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -21542,6 +22228,21 @@
             },
             "statusCode": 200,
             "description": "Schema field enabled."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SchemaDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Schema field enabled."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -21905,6 +22606,21 @@
             "statusCode": 200,
             "description": "Schema field enabled."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SchemaDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Schema field enabled."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -22249,6 +22965,21 @@
             },
             "statusCode": 200,
             "description": "Schema field disabled."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SchemaDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Schema field disabled."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -22612,6 +23343,21 @@
             "statusCode": 200,
             "description": "Schema field disabled."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SchemaDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Schema field disabled."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -22919,6 +23665,21 @@
             },
             "statusCode": 200,
             "description": "Schemas returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SchemasDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Schemas returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -23236,6 +23997,21 @@
             },
             "statusCode": 201,
             "description": "Schema created."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SchemaDto"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Schema created."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -23576,6 +24352,21 @@
             "statusCode": 200,
             "description": "Schema found."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SchemaDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Schema found."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -23901,6 +24692,21 @@
             },
             "statusCode": 200,
             "description": "Schema updated."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SchemaDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Schema updated."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -24235,6 +25041,21 @@
             "statusCode": 204,
             "description": "Schema deleted."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "schemas_deleteSchema_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Schema deleted."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -24387,6 +25208,21 @@
             },
             "statusCode": 200,
             "description": "Schema updated."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SchemaDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Schema updated."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -24740,6 +25576,21 @@
             "statusCode": 200,
             "description": "Schema updated."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SchemaDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Schema updated."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -25083,6 +25934,21 @@
             },
             "statusCode": 200,
             "description": "Schema updated."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SchemaDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Schema updated."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -25428,6 +26294,21 @@
             "statusCode": 200,
             "description": "Schema updated."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SchemaDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Schema updated."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -25772,6 +26653,21 @@
             "statusCode": 200,
             "description": "Schema updated."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SchemaDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Schema updated."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -26101,6 +26997,21 @@
             "statusCode": 200,
             "description": "Schema published."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SchemaDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Schema published."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -26425,6 +27336,21 @@
             "statusCode": 200,
             "description": "Schema unpublished."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SchemaDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Schema unpublished."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -26732,6 +27658,30 @@
             "statusCode": 200,
             "description": "Rule actions returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "map",
+                    "keyType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "valueType": {
+                      "type": "id",
+                      "value": "RuleElementDto"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Rule actions returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -26823,6 +27773,21 @@
             },
             "statusCode": 200,
             "description": "Rules returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RulesDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Rules returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -26994,6 +27959,21 @@
             },
             "statusCode": 201,
             "description": "Rule created."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RuleDto"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Rule created."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -27171,6 +28151,21 @@
             "statusCode": 204,
             "description": "Rule run cancelled."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "rules_deleteRuleRun_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Rule run cancelled."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -27310,6 +28305,21 @@
             },
             "statusCode": 200,
             "description": "Rule updated."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RuleDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Rule updated."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -27492,6 +28502,21 @@
             "statusCode": 204,
             "description": "Rule deleted."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "rules_deleteRule_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Rule deleted."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -27629,6 +28654,21 @@
             },
             "statusCode": 200,
             "description": "Rule enabled."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RuleDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Rule enabled."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -27806,6 +28846,21 @@
             "statusCode": 200,
             "description": "Rule disabled."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RuleDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Rule disabled."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -27982,6 +29037,21 @@
             "statusCode": 204,
             "description": "Rule triggered."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "rules_triggerRule_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Rule triggered."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -28135,6 +29205,21 @@
             "statusCode": 204,
             "description": "Rule started."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "rules_putRuleRun_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Rule started."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -28261,6 +29346,21 @@
             "statusCode": 204,
             "description": "Rule events cancelled."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "rules_deleteRuleEvents_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Rule events cancelled."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -28383,6 +29483,21 @@
             },
             "statusCode": 200,
             "description": "Rule simulated."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SimulatedRuleEventsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Rule simulated."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -28576,6 +29691,21 @@
             "statusCode": 200,
             "description": "Rule simulated."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SimulatedRuleEventsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Rule simulated."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -28761,6 +29891,21 @@
             "statusCode": 200,
             "description": "Rule events returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RuleEventsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Rule events returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -28901,6 +30046,21 @@
             "statusCode": 204,
             "description": "Events cancelled."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "rules_deleteEvents_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Events cancelled."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -29025,6 +30185,21 @@
             },
             "statusCode": 204,
             "description": "Rule enqueued."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "rules_putEvent_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Rule enqueued."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -29164,6 +30339,21 @@
             "statusCode": 204,
             "description": "Rule deqeued."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "rules_deleteEvent_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Rule deqeued."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -29270,6 +30460,26 @@
             "statusCode": 200,
             "description": "Rule events returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Rule events returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -29364,6 +30574,20 @@
             },
             "statusCode": 200,
             "description": "Rule event type found."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Rule event type found."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -29476,6 +30700,21 @@
             },
             "statusCode": 200,
             "description": "App plan information returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PlansDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "App plan information returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -29648,6 +30887,21 @@
             "statusCode": 200,
             "description": "Plan changed or redirect url returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PlanChangedDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Plan changed or redirect url returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -29779,6 +31033,21 @@
             },
             "statusCode": 200,
             "description": "Team plan information returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PlansDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Team plan information returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -29951,6 +31220,21 @@
             "statusCode": 200,
             "description": "Plan changed or redirect url returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PlanChangedDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Plan changed or redirect url returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -30075,6 +31359,21 @@
             "statusCode": 200,
             "description": "Infos returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ExposedValues"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Infos returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -30148,6 +31447,21 @@
             },
             "statusCode": 204,
             "description": "Service ping successful."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ping_getPing_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Service ping successful."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -30241,6 +31555,21 @@
             },
             "statusCode": 204,
             "description": "Service ping successful."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ping_getAppPing_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Service ping successful."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -30342,6 +31671,21 @@
             },
             "statusCode": 200,
             "description": "Latest features returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "FeaturesDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Latest features returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -30446,6 +31790,24 @@
             },
             "statusCode": 200,
             "description": "Supported language codes returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "LanguageDto"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Supported language codes returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -30578,6 +31940,24 @@
             },
             "statusCode": 200,
             "description": "Events returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "HistoryEventDto"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Events returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -30720,6 +32100,24 @@
             "statusCode": 200,
             "description": "Events returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "HistoryEventDto"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Events returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -30834,6 +32232,21 @@
             },
             "statusCode": 200,
             "description": "Event consumers returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EventConsumersDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Event consumers returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -30952,6 +32365,21 @@
             },
             "statusCode": 200,
             "description": "Event consumer started asynchronously."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EventConsumerDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Event consumer started asynchronously."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -31088,6 +32516,21 @@
             "statusCode": 200,
             "description": "Event consumer stopped asynchronously."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EventConsumerDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Event consumer stopped asynchronously."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -31223,6 +32666,21 @@
             "statusCode": 200,
             "description": "Event consumer resetted asynchronously."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EventConsumerDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Event consumer resetted asynchronously."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -31350,6 +32808,21 @@
             "statusCode": 204,
             "description": "Dump created successful."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "diagnostics_getDump_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Dump created successful."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -31435,6 +32908,21 @@
             },
             "statusCode": 204,
             "description": "Dump created successful."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "diagnostics_getGCDump_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Dump created successful."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -31597,6 +33085,21 @@
             },
             "statusCode": 200,
             "description": "Contents returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContentsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Contents returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -31949,6 +33452,21 @@
             "statusCode": 201,
             "description": "Content created."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContentsDto"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Content created."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -32277,6 +33795,21 @@
             },
             "statusCode": 200,
             "description": "Contents returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContentsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Contents returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -32625,6 +34158,21 @@
             "statusCode": 200,
             "description": "Content returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContentDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Content returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -32970,6 +34518,21 @@
             },
             "statusCode": 200,
             "description": "Content created or updated."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContentsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Content created or updated."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -33318,6 +34881,21 @@
             },
             "statusCode": 200,
             "description": "Content updated."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContentsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Content updated."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -33679,6 +35257,21 @@
             "statusCode": 204,
             "description": "Content deleted."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "contents_deleteContent_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Content deleted."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -33851,6 +35444,21 @@
             },
             "statusCode": 200,
             "description": "Content patched."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContentsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Content patched."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -34185,6 +35793,21 @@
             "statusCode": 204,
             "description": "Content is valid."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "contents_getContentValidity_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Content is valid."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -34356,6 +35979,21 @@
             },
             "statusCode": 200,
             "description": "Contents returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContentsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Contents returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -34685,6 +36323,21 @@
             },
             "statusCode": 200,
             "description": "Content returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContentsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Content returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -35016,6 +36669,17 @@
             "statusCode": 200,
             "description": "Content version returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "fileDownload"
+                },
+                "statusCode": 200,
+                "description": "Content version returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -35157,6 +36821,24 @@
             },
             "statusCode": 200,
             "description": "Contents created."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "BulkResultDto"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Contents created."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -35359,6 +37041,24 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "BulkResultDto"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -35576,6 +37276,21 @@
             },
             "statusCode": 200,
             "description": "Content status changed."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContentsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Content status changed."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -35914,6 +37629,21 @@
             "statusCode": 200,
             "description": "Content status change cancelled."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContentsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Content status change cancelled."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -36241,6 +37971,21 @@
             },
             "statusCode": 200,
             "description": "Content draft created."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContentsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Content draft created."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -36570,6 +38315,21 @@
             "statusCode": 200,
             "description": "Content draft deleted."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContentsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Content draft deleted."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -36895,6 +38655,26 @@
             "statusCode": 200,
             "description": "Watching users returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Watching users returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -37039,6 +38819,21 @@
             },
             "statusCode": 200,
             "description": "Comments returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "CommentsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Comments returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -37225,6 +39020,21 @@
             },
             "statusCode": 201,
             "description": "Comment created."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "CommentDto"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Comment created."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -37418,6 +39228,21 @@
             "statusCode": 204,
             "description": "Comment updated."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "comments_putComment_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Comment updated."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -37584,6 +39409,21 @@
             "statusCode": 204,
             "description": "Comment deleted."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "comments_deleteComment_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Comment deleted."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -37731,6 +39571,21 @@
             },
             "statusCode": 200,
             "description": "All comments returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "CommentsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "All comments returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -37890,6 +39745,21 @@
             "statusCode": 204,
             "description": "Comment deleted."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "notifications_deleteComment_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Comment deleted."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -38035,6 +39905,17 @@
             "statusCode": 200,
             "description": "Backup found and content returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "fileDownload"
+                },
+                "statusCode": 200,
+                "description": "Backup found and content returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -38154,6 +40035,21 @@
             },
             "statusCode": 204,
             "description": "Backup deleted."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "backups_deleteBackup_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Backup deleted."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -38299,6 +40195,17 @@
             "statusCode": 200,
             "description": "Backup found and content returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "fileDownload"
+                },
+                "statusCode": 200,
+                "description": "Backup found and content returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -38399,6 +40306,21 @@
             },
             "statusCode": 200,
             "description": "Backups returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BackupJobsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Backups returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -38532,6 +40454,21 @@
             "statusCode": 204,
             "description": "Backup started."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "backups_postBackup_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Backup started."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -38631,6 +40568,21 @@
             },
             "statusCode": 200,
             "description": "Status returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RestoreJobDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Status returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -38735,6 +40687,21 @@
             },
             "statusCode": 204,
             "description": "Restore operation started."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "backups_postRestoreJob_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Restore operation started."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -39072,6 +41039,17 @@
             "statusCode": 200,
             "description": "Asset found and content or (resized) image returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "fileDownload"
+                },
+                "statusCode": 200,
+                "description": "Asset found and content or (resized) image returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -39351,6 +41329,17 @@
             "statusCode": 200,
             "description": "Asset found and content or (resized) image returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "fileDownload"
+                },
+                "statusCode": 200,
+                "description": "Asset found and content or (resized) image returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -39477,6 +41466,21 @@
             },
             "statusCode": 200,
             "description": "Asset folders returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AssetFoldersDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Asset folders returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -39640,6 +41644,21 @@
             },
             "statusCode": 201,
             "description": "Asset folder created."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AssetFolderDto"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Asset folder created."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -39814,6 +41833,21 @@
             "statusCode": 200,
             "description": "Asset folder updated."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AssetFolderDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Asset folder updated."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -39973,6 +42007,21 @@
             "statusCode": 204,
             "description": "Asset folder deleted."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "assets_deleteAssetFolder_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Asset folder deleted."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -40126,6 +42175,21 @@
             "statusCode": 200,
             "description": "Asset folder moved."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AssetFolderDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Asset folder moved."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -40274,6 +42338,32 @@
             },
             "statusCode": 200,
             "description": "Assets tags returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "map",
+                    "keyType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "valueType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Assets tags returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -40424,6 +42514,32 @@
             },
             "statusCode": 200,
             "description": "Asset tag renamed and new tags returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "map",
+                    "keyType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "valueType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Asset tag renamed and new tags returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -40646,6 +42762,21 @@
             },
             "statusCode": 200,
             "description": "Assets returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AssetsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Assets returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -40886,6 +43017,21 @@
             "statusCode": 201,
             "description": "Asset created."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AssetDto"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Asset created."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -41104,6 +43250,21 @@
             "statusCode": 200,
             "description": "Assets returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AssetsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Assets returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -41317,6 +43478,21 @@
             },
             "statusCode": 200,
             "description": "Asset found."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AssetDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Asset found."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -41550,6 +43726,21 @@
             },
             "statusCode": 200,
             "description": "Asset created or updated."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AssetDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Asset created or updated."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -41787,6 +43978,21 @@
             "statusCode": 200,
             "description": "Asset updated."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AssetDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Asset updated."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -42017,6 +44223,21 @@
             "statusCode": 204,
             "description": "Asset deleted."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "assets_deleteAsset_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Asset deleted."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -42154,6 +44375,24 @@
             },
             "statusCode": 200,
             "description": "Assets created, update or delete."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "BulkResultDto"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Assets created, update or delete."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -42349,6 +44588,21 @@
             },
             "statusCode": 200,
             "description": "Asset updated."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AssetDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Asset updated."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -42586,6 +44840,21 @@
             "statusCode": 200,
             "description": "Asset moved."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AssetDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Asset moved."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -42782,6 +45051,21 @@
             "statusCode": 200,
             "description": "Asset scripts returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AssetScriptsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Asset scripts returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -42922,6 +45206,21 @@
             },
             "statusCode": 200,
             "description": "Asset scripts updated."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AssetScriptsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Asset scripts updated."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -43067,6 +45366,21 @@
             },
             "statusCode": 200,
             "description": "Clients returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ClientsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Clients returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -43217,6 +45531,21 @@
             },
             "statusCode": 201,
             "description": "Client created."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ClientsDto"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Client created."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -43408,6 +45737,21 @@
             "statusCode": 200,
             "description": "Client updated."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ClientsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Client updated."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -43580,6 +45924,21 @@
             "statusCode": 200,
             "description": "Client deleted."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ClientsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Client deleted."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -43727,6 +46086,21 @@
             },
             "statusCode": 200,
             "description": "Contributors returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContributorsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Contributors returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -43878,6 +46252,21 @@
             },
             "statusCode": 201,
             "description": "Contributor assigned to app."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContributorsDto"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Contributor assigned to app."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -44036,6 +46425,21 @@
             },
             "statusCode": 200,
             "description": "Contributor removed."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContributorsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Contributor removed."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -44204,6 +46608,21 @@
             "statusCode": 200,
             "description": "Contributor removed."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContributorsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Contributor removed."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -44350,6 +46769,17 @@
             "statusCode": 200,
             "description": "App image found and content or (resized) image returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "fileDownload"
+                },
+                "statusCode": 200,
+                "description": "App image found and content or (resized) image returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -44470,6 +46900,21 @@
             },
             "statusCode": 200,
             "description": "App image uploaded."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AppDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "App image uploaded."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -44634,6 +47079,21 @@
             "statusCode": 200,
             "description": "App image removed."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AppDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "App image removed."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -44787,6 +47247,21 @@
             "statusCode": 200,
             "description": "Languages returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AppLanguagesDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Languages returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -44935,6 +47410,21 @@
             },
             "statusCode": 201,
             "description": "Language created."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AppLanguagesDto"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Language created."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -45125,6 +47615,21 @@
             "statusCode": 200,
             "description": "Language updated."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AppLanguagesDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Language updated."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -45296,6 +47801,21 @@
             "statusCode": 200,
             "description": "Language deleted."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AppLanguagesDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Language deleted."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -45443,6 +47963,21 @@
             },
             "statusCode": 200,
             "description": "Roles returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RolesDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Roles returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -45594,6 +48129,21 @@
             },
             "statusCode": 201,
             "description": "Role created."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RolesDto"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Role created."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -45758,6 +48308,26 @@
             "statusCode": 200,
             "description": "App permissions returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "App permissions returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -45900,6 +48470,21 @@
             },
             "statusCode": 200,
             "description": "Role updated."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RolesDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Role updated."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -46082,6 +48667,21 @@
             "statusCode": 200,
             "description": "Role deleted."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RolesDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Role deleted."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -46217,6 +48817,24 @@
             "statusCode": 200,
             "description": "Apps returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "AppDto"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Apps returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -46343,6 +48961,21 @@
             },
             "statusCode": 201,
             "description": "App created."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AppDto"
+                  }
+                },
+                "statusCode": 201,
+                "description": "App created."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -46509,6 +49142,24 @@
             "statusCode": 200,
             "description": "Apps returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "AppDto"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Apps returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -46640,6 +49291,21 @@
             },
             "statusCode": 200,
             "description": "Apps returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AppDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Apps returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -46795,6 +49461,21 @@
             },
             "statusCode": 200,
             "description": "App updated."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AppDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "App updated."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -46954,6 +49635,21 @@
             "statusCode": 204,
             "description": "App deleted."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "apps_deleteApp_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "App deleted."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -47087,6 +49783,21 @@
             },
             "statusCode": 200,
             "description": "App transferred."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AppDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "App transferred."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -47246,6 +49957,21 @@
             "statusCode": 200,
             "description": "App settings returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AppSettingsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "App settings returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -47402,6 +50128,21 @@
             },
             "statusCode": 200,
             "description": "App updated."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AppSettingsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "App updated."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -47589,6 +50330,21 @@
             "statusCode": 200,
             "description": "Workflows returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "WorkflowsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Workflows returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -47743,6 +50499,21 @@
             },
             "statusCode": 200,
             "description": "Workflow created."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "WorkflowsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Workflow created."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -47939,6 +50710,21 @@
             "statusCode": 200,
             "description": "Workflow updated."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "WorkflowsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Workflow updated."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -48121,6 +50907,21 @@
             },
             "statusCode": 200,
             "description": "Workflow deleted."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "WorkflowsDto"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Workflow deleted."
+              }
+            ]
           },
           "errorsV2": [
             {

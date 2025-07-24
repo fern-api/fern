@@ -9,5 +9,4 @@ pub mod completions;
 
 pub use client::ServerSentEventsClient;
 pub use error::ApiError;
-
 pub use types::*;

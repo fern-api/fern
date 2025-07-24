@@ -168,6 +168,7 @@
           },
           "description": "A paged array of pets"
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -292,6 +293,7 @@
           },
           "description": "The id of the pet to retrieve"
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -391,6 +393,7 @@
           },
           "description": "Expected response to a valid request"
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {

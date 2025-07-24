@@ -9,8 +9,6 @@ export declare namespace Struct {
     interface Args {
         /* The name of the Go struct */
         name: string;
-        /* The import path of the Go struct */
-        importPath: string;
         /* Docs associated with the class */
         docs?: string;
     }
@@ -25,17 +23,15 @@ export declare namespace Struct {
 
 export class Struct extends AstNode {
     public readonly name: string;
-    public readonly importPath: string;
     public readonly docs: string | undefined;
 
     public constructor_: Struct.Constructor | undefined;
     public readonly fields: Field[] = [];
     public readonly methods: Method[] = [];
 
-    constructor({ name, importPath, docs }: Struct.Args) {
+    constructor({ name, docs }: Struct.Args) {
         super();
         this.name = name;
-        this.importPath = importPath;
         this.docs = docs;
     }
 

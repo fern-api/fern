@@ -1,5 +1,5 @@
 use crate::client::AcceptClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl AcceptClient {
     // Service methods

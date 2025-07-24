@@ -22590,6 +22590,21 @@
             "statusCode": 200,
             "description": "The created booking amendment"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BookingAmendment_booking_amendment_create_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "The created booking amendment"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -23140,6 +23155,21 @@
             "statusCode": 200,
             "description": "collection of booking line items"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BookingLineItem_booking_line_item_index_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "collection of booking line items"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -23282,6 +23312,21 @@
             },
             "statusCode": 200,
             "description": "The created booking line item"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BookingLineItem_booking_line_item_create_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "The created booking line item"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -23443,6 +23488,21 @@
             },
             "statusCode": 200,
             "description": "A collection of booking line items"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BookingLineItem_booking_line_item_show_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A collection of booking line items"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -23830,6 +23890,21 @@
             },
             "statusCode": 200,
             "description": "collection of bookings"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Booking_bookings_index_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "collection of bookings"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -24350,6 +24425,21 @@
             },
             "statusCode": 200,
             "description": "The created booking"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Booking_create_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "The created booking"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -25132,6 +25222,21 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Booking_show_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -25683,6 +25788,21 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Carbon Calculation_create_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -25914,6 +26034,21 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Commercial Invoices_index_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -26179,6 +26314,21 @@
             },
             "statusCode": 200,
             "description": "The created commercial invoice"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Commercial Invoices_create_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "The created commercial invoice"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -26478,6 +26628,21 @@
             "statusCode": 200,
             "description": "The updated commercial invoice"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Commercial Invoices_update_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "The updated commercial invoice"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -26751,6 +26916,21 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Commercial Invoices_show_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -27061,6 +27241,21 @@
             "statusCode": 200,
             "description": "collection of customs entries"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Customs Entries_customs_entry_index_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "collection of customs entries"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -27201,6 +27396,21 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Customs Entries_show_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -27445,6 +27655,21 @@
             "statusCode": 200,
             "description": "collection of documents"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Document_documents_index_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "collection of documents"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -27595,6 +27820,21 @@
             },
             "statusCode": 200,
             "description": "Created"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Document_documents_create_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Created"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -27768,6 +28008,21 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Document_documents_show_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -27906,6 +28161,17 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "fileDownload"
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -28051,6 +28317,21 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Event_events_index_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -29761,6 +30042,21 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Event_events_show_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -31655,6 +31951,21 @@
             "statusCode": 200,
             "description": "collection of invoices"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Invoices_invoice_index_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "collection of invoices"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -32227,6 +32538,21 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Invoices_show_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -32838,6 +33164,21 @@
             "statusCode": 200,
             "description": "collection of companies"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Company_network_company_index_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "collection of companies"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -33040,6 +33381,21 @@
             "statusCode": 200,
             "description": "The created company"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Company_network_company_create_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "The created company"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -33227,6 +33583,21 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Company_network_company_show_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -33421,6 +33792,21 @@
             "statusCode": 200,
             "description": "The updated company"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Company_network_company_update_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "The updated company"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -33587,6 +33973,21 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Company_network_company_me_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -33829,6 +34230,21 @@
             "statusCode": 200,
             "description": "collection of company entities"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "CompanyEntity_company_entity_index_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "collection of company entities"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -33990,6 +34406,21 @@
             },
             "statusCode": 200,
             "description": "The created company entity"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "CompanyEntity_network_company_entity_create_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "The created company entity"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -34154,6 +34585,21 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "CompanyEntity_network_company_entity_show_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -34321,6 +34767,21 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "CompanyEntity_network_company_entity_update_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -34544,6 +35005,21 @@
             "statusCode": 200,
             "description": "collection of contacts"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Contact_network_contact_index_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "collection of contacts"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -34689,6 +35165,21 @@
             },
             "statusCode": 200,
             "description": "The created contact"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Contact_network_contact_create_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "The created contact"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -34840,6 +35331,21 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Contact_network_contact_show_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -34990,6 +35496,21 @@
             },
             "statusCode": 200,
             "description": "The updated contact"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Contact_network_contact_update_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "The updated contact"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -35223,6 +35744,21 @@
             "statusCode": 200,
             "description": "collection of locations"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Location_index_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "collection of locations"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -35394,6 +35930,21 @@
             },
             "statusCode": 200,
             "description": "The created location"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Location_network_location_create_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "The created location"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -35571,6 +36122,21 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Location_network_location_show_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -35747,6 +36313,21 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Location_update_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -35979,6 +36560,21 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContainerLeg_ocean_container_legs_index_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -36132,6 +36728,21 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContainerLeg_ocean_container_legs_show_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -36337,6 +36948,21 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Container_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -36568,6 +37194,21 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Container_show_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -36833,6 +37474,21 @@
             },
             "statusCode": 200,
             "description": "collection of ports"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Ports_index_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "collection of ports"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -37104,6 +37760,21 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Product_index_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -37280,6 +37951,21 @@
             },
             "statusCode": 200,
             "description": "Created"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Product_create_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Created"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -37465,6 +38151,21 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Product_show_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -37648,6 +38349,21 @@
             },
             "statusCode": 200,
             "description": "Updated"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Product_update_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Updated"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -37910,6 +38626,21 @@
             },
             "statusCode": 200,
             "description": "collection of purchase order line items"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PurchaseOrderLineItem_purchase_order_line_item_index_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "collection of purchase order line items"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -38271,6 +39002,21 @@
             },
             "statusCode": 200,
             "description": "collection of purchase order line items"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PurchaseOrderLineItem_purchase_order_line_item_show_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "collection of purchase order line items"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -38809,6 +39555,21 @@
             },
             "statusCode": 200,
             "description": "collection of purchase orders"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PurchaseOrder_purchase_order_index_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "collection of purchase orders"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -39353,6 +40114,21 @@
             },
             "statusCode": 200,
             "description": "The created purchase order"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PurchaseOrder"
+                  }
+                },
+                "statusCode": 200,
+                "description": "The created purchase order"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -40161,6 +40937,21 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PurchaseOrder_purchase_order_show_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -40697,6 +41488,21 @@
             },
             "statusCode": 200,
             "description": "The update purchase order"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PurchaseOrder"
+                  }
+                },
+                "statusCode": 200,
+                "description": "The update purchase order"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -41558,6 +42364,21 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ShipmentLeg_shipment_leg_index_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -41948,6 +42769,21 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ShipmentLeg_shipment_leg_show_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -42700,6 +43536,21 @@
             "statusCode": 200,
             "description": "collection of shipments"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Shipment_index_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "collection of shipments"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -43333,6 +44184,21 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Shipment_show_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -43957,6 +44823,21 @@
             },
             "statusCode": 200,
             "description": "The updated shipment"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Shipment_update_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "The updated shipment"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -44586,6 +45467,21 @@
             },
             "statusCode": 200,
             "description": "collection of shipments shareable status url"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Shipment_shipments_shareable_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "collection of shipments shareable status url"
+              }
+            ]
           },
           "errorsV2": [
             {

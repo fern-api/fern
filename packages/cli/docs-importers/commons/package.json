@@ -30,7 +30,7 @@
     "@fern-api/configuration": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-fern/fdr-cjs-sdk": "0.138.7-64da60a6a",
+    "@fern-fern/fdr-cjs-sdk": "0.138.11-2322dc4c6",
     "js-yaml": "^4.1.0"
   },
   "devDependencies": {

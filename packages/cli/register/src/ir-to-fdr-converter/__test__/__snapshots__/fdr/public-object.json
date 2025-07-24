@@ -31,6 +31,7 @@
               "type": "fileDownload"
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {

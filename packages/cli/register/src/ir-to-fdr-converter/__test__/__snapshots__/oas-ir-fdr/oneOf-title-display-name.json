@@ -146,6 +146,20 @@
           },
           "statusCode": 200
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "postTestOneOfDisplayName_Response_200"
+                }
+              },
+              "statusCode": 200
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {

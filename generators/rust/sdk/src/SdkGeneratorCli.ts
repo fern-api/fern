@@ -1,13 +1,12 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractRustGeneratorCli, RustFile } from "@fern-api/rust-base";
-
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { ErrorGenerator } from "./error/ErrorGenerator";
+import { generateModels } from "@fern-api/rust-model";
 
 export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -76,13 +75,27 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
         // Generate types if they exist
         if (Object.keys(context.ir.types).length > 0) {
-            const typesContent = this.generateTypesRs(context);
-            const typesFile = new RustFile({
-                filename: "types.rs",
-                directory: RelativeFilePath.of("src"),
-                fileContents: typesContent
+            const modelFiles = generateModels({ context: context.toModelGeneratorContext() });
+            // Place type files in types/ directory
+            const typeFiles = modelFiles.map(
+                (file) =>
+                    new RustFile({
+                        filename: file.filename,
+                        directory: RelativeFilePath.of("src/types"),
+                        fileContents:
+                            typeof file.fileContents === "string" ? file.fileContents : file.fileContents.toString()
+                    })
+            );
+            files.push(...typeFiles);
+
+            // Create a types module file that exports all generated types
+            const typesModContent = this.generateTypesModRs(context);
+            const typesModFile = new RustFile({
+                filename: "mod.rs",
+                directory: RelativeFilePath.of("src/types"),
+                fileContents: typesModContent
             });
-            files.push(typesFile);
+            files.push(typesModFile);
         }
 
         // Generate services
@@ -128,7 +141,7 @@ ${modules}
 
 pub use client::${context.getClientName()};
 pub use error::ApiError;
-${hasTypes ? "\npub use types::*;" : ""}
+${hasTypes ? "pub use types::*;" : ""}
 `;
     }
 
@@ -172,36 +185,14 @@ impl ${clientName} {
         await context.generatorAgent.pushToGitHub({ context });
     }
 
-    private generateTypesRs(context: SdkGeneratorContext): string {
-        let content = `use serde::{Deserialize, Serialize};
+    private generateTypesModRs(context: SdkGeneratorContext): string {
+        let content = "// Generated types module\n\n";
 
-`;
-
-        // Generate type aliases
-        for (const [typeId, type] of Object.entries(context.ir.types)) {
-            const typeName = type.name.name.pascalCase.safeName;
-
-            if (type.shape.type === "alias") {
-                // For now, just create a simple type alias
-                content += `pub type ${typeName} = String; // TODO: Implement proper type\n\n`;
-            } else if (type.shape.type === "enum") {
-                content += `#[derive(Debug, Clone, Serialize, Deserialize)]
-pub enum ${typeName} {
-`;
-                for (const value of type.shape.values) {
-                    content += `    ${value.name.name.pascalCase.safeName},\n`;
-                }
-                content += "}\n\n";
-            } else if (type.shape.type === "object") {
-                content += `#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct ${typeName} {
-`;
-                for (const property of type.shape.properties) {
-                    const fieldName = property.name.name.snakeCase.safeName;
-                    content += `    pub ${fieldName}: String, // TODO: Implement proper type\n`;
-                }
-                content += "}\n\n";
-            }
+        // Export all generated type files
+        for (const [_typeId, typeDeclaration] of Object.entries(context.ir.types)) {
+            const moduleName = typeDeclaration.name.name.snakeCase.unsafeName;
+            content += `pub mod ${moduleName};\n`;
+            content += `pub use ${moduleName}::*;\n`;
         }
 
         return content;
@@ -222,7 +213,7 @@ pub struct ${typeName} {
                 .join(" ");
 
         return `use crate::client::${clientName};
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl ${clientName} {
     // ${serviceName} methods

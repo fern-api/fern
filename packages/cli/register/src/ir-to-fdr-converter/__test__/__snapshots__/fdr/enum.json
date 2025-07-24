@@ -107,7 +107,7 @@
             "value": "Hello\\vWorld"
           },
           {
-            "value": "Hello\\0World"
+            "value": "Hello\\x00World"
           },
           {
             "value": "Hello\\u0007World"
@@ -131,7 +131,7 @@
             "value": "Line 1\\n\"Quote\"\\tTab\\\\Backslash\\r\\nLine 2\\0Null"
           },
           {
-            "value": "\\n\\r\\t\\0\\u0008\\f\\v\\u0007"
+            "value": "\\n\\r\\t\\x00\\u0008\\f\\v\\u0007"
           },
           {
             "value": "Hello 世界"
@@ -251,6 +251,7 @@
               }
             }
           ],
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -343,6 +344,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -427,6 +429,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -507,6 +510,7 @@
             }
           ],
           "headers": [],
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -577,6 +581,7 @@
             }
           ],
           "headers": [],
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {

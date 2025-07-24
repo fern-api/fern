@@ -1,5 +1,5 @@
 use crate::client::PathParametersClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl PathParametersClient {
     // User methods

@@ -9,5 +9,4 @@ pub mod payment;
 
 pub use client::IdempotencyHeadersClient;
 pub use error::ApiError;
-
 pub use types::*;

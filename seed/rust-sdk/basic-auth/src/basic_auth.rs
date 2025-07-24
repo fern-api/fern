@@ -1,5 +1,5 @@
 use crate::client::BasicAuthClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl BasicAuthClient {
     // BasicAuth methods

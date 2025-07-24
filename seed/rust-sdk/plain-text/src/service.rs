@@ -1,5 +1,5 @@
 use crate::client::PlainTextClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl PlainTextClient {
     // Service methods

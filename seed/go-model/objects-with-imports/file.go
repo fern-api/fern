@@ -3,73 +3,16 @@
 package objectswithimports
 
 import (
-	json "encoding/json"
 	fmt "fmt"
-	internal "github.com/objects-with-imports/fern/internal"
 )
-
-type File struct {
-	Name     string   `json:"name" url:"name"`
-	Contents string   `json:"contents" url:"contents"`
-	Info     FileInfo `json:"info" url:"info"`
-
-	extraProperties map[string]interface{}
-}
-
-func (f *File) GetName() string {
-	if f == nil {
-		return ""
-	}
-	return f.Name
-}
-
-func (f *File) GetContents() string {
-	if f == nil {
-		return ""
-	}
-	return f.Contents
-}
-
-func (f *File) GetInfo() FileInfo {
-	if f == nil {
-		return ""
-	}
-	return f.Info
-}
-
-func (f *File) GetExtraProperties() map[string]interface{} {
-	return f.extraProperties
-}
-
-func (f *File) UnmarshalJSON(data []byte) error {
-	type unmarshaler File
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*f = File(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *f)
-	if err != nil {
-		return err
-	}
-	f.extraProperties = extraProperties
-	return nil
-}
-
-func (f *File) String() string {
-	if value, err := internal.StringifyJSON(f); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", f)
-}
 
 type FileInfo string
 
 const (
 	// A regular file (e.g. foo.txt).
-	FileInfoRegular FileInfo = "REGULAR"
+	FileInfoRegular = "REGULAR"
 	// A directory (e.g. foo/).
-	FileInfoDirectory FileInfo = "DIRECTORY"
+	FileInfoDirectory = "DIRECTORY"
 )
 
 func NewFileInfoFromString(s string) (FileInfo, error) {

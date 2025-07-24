@@ -3,23 +3,15 @@
 package validation
 
 import (
-	json "encoding/json"
 	fmt "fmt"
-	internal "github.com/validation/fern/internal"
 )
-
-type Double = float64
-
-type LargeInteger = int
-
-type Sentence = string
 
 type Shape string
 
 const (
-	ShapeSquare   Shape = "SQUARE"
-	ShapeCircle   Shape = "CIRCLE"
-	ShapeTriangle Shape = "TRIANGLE"
+	ShapeSquare   = "SQUARE"
+	ShapeCircle   = "CIRCLE"
+	ShapeTriangle = "TRIANGLE"
 )
 
 func NewShapeFromString(s string) (Shape, error) {
@@ -38,71 +30,3 @@ func NewShapeFromString(s string) (Shape, error) {
 func (s Shape) Ptr() *Shape {
 	return &s
 }
-
-type SmallInteger = int
-
-// Defines properties with default values and validation rules.
-type Type struct {
-	Decimal float64 `json:"decimal" url:"decimal"`
-	Even    int     `json:"even" url:"even"`
-	Name    string  `json:"name" url:"name"`
-	Shape   Shape   `json:"shape" url:"shape"`
-
-	extraProperties map[string]interface{}
-}
-
-func (t *Type) GetDecimal() float64 {
-	if t == nil {
-		return 0
-	}
-	return t.Decimal
-}
-
-func (t *Type) GetEven() int {
-	if t == nil {
-		return 0
-	}
-	return t.Even
-}
-
-func (t *Type) GetName() string {
-	if t == nil {
-		return ""
-	}
-	return t.Name
-}
-
-func (t *Type) GetShape() Shape {
-	if t == nil {
-		return ""
-	}
-	return t.Shape
-}
-
-func (t *Type) GetExtraProperties() map[string]interface{} {
-	return t.extraProperties
-}
-
-func (t *Type) UnmarshalJSON(data []byte) error {
-	type unmarshaler Type
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*t = Type(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *t)
-	if err != nil {
-		return err
-	}
-	t.extraProperties = extraProperties
-	return nil
-}
-
-func (t *Type) String() string {
-	if value, err := internal.StringifyJSON(t); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", t)
-}
-
-type Word = string

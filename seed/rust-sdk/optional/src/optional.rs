@@ -1,5 +1,5 @@
 use crate::client::ObjectsWithImportsClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl ObjectsWithImportsClient {
     // Optional methods

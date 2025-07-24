@@ -4307,6 +4307,21 @@
             "statusCode": 200,
             "description": "File uploaded successfully"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "UploadedFile"
+                  }
+                },
+                "statusCode": 200,
+                "description": "File uploaded successfully"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -4539,6 +4554,21 @@
             "statusCode": 200,
             "description": "A list of transcripts filtered by `limit` and `status`"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TranscriptList"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A list of transcripts filtered by `limit` and `status`"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -4739,6 +4769,21 @@
             },
             "statusCode": 201,
             "description": "Transcript created and queued for processing."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Transcript"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Transcript created and queued for processing."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -5262,6 +5307,21 @@
             "statusCode": 200,
             "description": "The transcript resource"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Transcript"
+                  }
+                },
+                "statusCode": 200,
+                "description": "The transcript resource"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -5776,6 +5836,21 @@
             },
             "statusCode": 200,
             "description": "The deleted transcript response."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Transcript"
+                  }
+                },
+                "statusCode": 200,
+                "description": "The deleted transcript response."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -6319,6 +6394,18 @@
               "properties": []
             }
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "statusCode": 200,
+                "type": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": []
+                }
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -6490,6 +6577,21 @@
             },
             "statusCode": 200,
             "description": "Exported sentences"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SentencesResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Exported sentences"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -6703,6 +6805,21 @@
             },
             "statusCode": 200,
             "description": "Exported paragraphs"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ParagraphsResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Exported paragraphs"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -6931,6 +7048,21 @@
             "statusCode": 200,
             "description": "Word search response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "WordSearchResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Word search response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -7140,6 +7272,21 @@
             "statusCode": 200,
             "description": "The redacted audio object containing the status and URL to the redacted audio."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RedactedAudioResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "The redacted audio object containing the status and URL to the redacted audio."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -7323,6 +7470,21 @@
             },
             "statusCode": 200,
             "description": "Temporary authentication token generated."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RealtimeTemporaryTokenResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Temporary authentication token generated."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -7513,6 +7675,21 @@
             "statusCode": 200,
             "description": "LeMUR summary response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "LemurSummaryResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "LeMUR summary response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -7696,6 +7873,21 @@
             },
             "statusCode": 200,
             "description": "LeMUR question & answer response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "LemurQuestionAnswerResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "LeMUR question & answer response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -7901,6 +8093,21 @@
             "statusCode": 200,
             "description": "LeMUR action items response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "LemurActionItemsResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "LeMUR action items response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -8084,6 +8291,21 @@
             },
             "statusCode": 200,
             "description": "LeMUR task response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "LemurTaskResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "LeMUR task response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -8274,6 +8496,21 @@
             },
             "statusCode": 200,
             "description": "LeMUR request data deleted."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PurgeLemurRequestDataResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "LeMUR request data deleted."
+              }
+            ]
           },
           "errorsV2": [
             {

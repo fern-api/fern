@@ -18056,6 +18056,21 @@
             "statusCode": 200,
             "description": "Successful response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "admin_with_app"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful response"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -18229,6 +18244,21 @@
             },
             "statusCode": 200,
             "description": "Successful response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "admin"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -18470,6 +18500,21 @@
             "statusCode": 200,
             "description": "Successful response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "activity_log_list"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -18677,6 +18722,21 @@
             "statusCode": 200,
             "description": "Successful response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "admin_list"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -18833,6 +18893,21 @@
             },
             "statusCode": 200,
             "description": "Admin found"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "admin"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Admin found"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -19003,6 +19078,21 @@
             },
             "statusCode": 200,
             "description": "successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "article_list"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -19180,6 +19270,21 @@
             },
             "statusCode": 200,
             "description": "article created"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "article"
+                  }
+                },
+                "statusCode": 200,
+                "description": "article created"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -19454,6 +19559,21 @@
             "statusCode": 200,
             "description": "Article found"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "article"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Article found"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -19675,6 +19795,21 @@
             },
             "statusCode": 200,
             "description": "successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "article"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -19919,6 +20054,21 @@
             "statusCode": 200,
             "description": "successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "deleted_article_object"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -20122,6 +20272,21 @@
             "statusCode": 200,
             "description": "Search successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "article_search_response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Search successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -20306,6 +20471,21 @@
             },
             "statusCode": 200,
             "description": "Successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "collection_list"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -20503,6 +20683,21 @@
             },
             "statusCode": 200,
             "description": "collection created"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "collection"
+                  }
+                },
+                "statusCode": 200,
+                "description": "collection created"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -20717,6 +20912,21 @@
             "statusCode": 200,
             "description": "Collection found"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "collection"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Collection found"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -20914,6 +21124,21 @@
             },
             "statusCode": 200,
             "description": "successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "collection"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -21130,6 +21355,21 @@
             "statusCode": 200,
             "description": "successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "deleted_collection_object"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -21299,6 +21539,21 @@
             "statusCode": 200,
             "description": "Collection found"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "help_center"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Collection found"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -21456,6 +21711,21 @@
             },
             "statusCode": 200,
             "description": "Help Centers found"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "help_center_list"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Help Centers found"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -21661,6 +21931,21 @@
             },
             "statusCode": 200,
             "description": "Successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "company_list"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -21891,6 +22176,21 @@
             },
             "statusCode": 200,
             "description": "Successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "company"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -22131,6 +22431,21 @@
             "statusCode": 200,
             "description": "Successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "company"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -22335,6 +22650,21 @@
             },
             "statusCode": 200,
             "description": "Successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "company"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -22541,6 +22871,21 @@
             "statusCode": 200,
             "description": "Successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "deleted_company_object"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -22709,6 +23054,21 @@
             },
             "statusCode": 200,
             "description": "Successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "company_attached_contacts"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -22890,6 +23250,21 @@
             },
             "statusCode": 200,
             "description": "Successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "company_attached_segments"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -23078,6 +23453,21 @@
             },
             "statusCode": 200,
             "description": "Successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "company_list"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -23276,6 +23666,21 @@
             },
             "statusCode": 200,
             "description": "Successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "company_scroll"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -23487,6 +23892,21 @@
             },
             "statusCode": 200,
             "description": "Successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "company"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -23771,6 +24191,21 @@
             "statusCode": 200,
             "description": "Successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "company"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -24002,6 +24437,21 @@
             },
             "statusCode": 200,
             "description": "successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "contact_attached_companies"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -24236,6 +24686,21 @@
             "statusCode": 200,
             "description": "successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "contact_segments"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -24420,6 +24885,21 @@
             },
             "statusCode": 200,
             "description": "Successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "subscription_type_list"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -24674,6 +25154,21 @@
             "statusCode": 200,
             "description": "successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "tag_list"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -24852,6 +25347,21 @@
             },
             "statusCode": 200,
             "description": "successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "contact"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -25183,6 +25693,21 @@
             "statusCode": 200,
             "description": "successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "contact"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -25511,6 +26036,21 @@
             "statusCode": 200,
             "description": "successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "contact_deleted"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -25645,6 +26185,21 @@
             },
             "statusCode": 200,
             "description": "successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "contact"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -25966,6 +26521,21 @@
             "statusCode": 200,
             "description": "successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "contact_list"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -26129,6 +26699,21 @@
             "statusCode": 200,
             "description": "successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "contact_list"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -26271,6 +26856,21 @@
             },
             "statusCode": 200,
             "description": "successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "contact"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -26592,6 +27192,21 @@
             "statusCode": 200,
             "description": "successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "contact_archived"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -26701,6 +27316,21 @@
             },
             "statusCode": 200,
             "description": "successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "contact_unarchived"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -26821,6 +27451,21 @@
             },
             "statusCode": 200,
             "description": "Successful response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "note_list"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -27133,6 +27778,21 @@
             "statusCode": 200,
             "description": "Successful response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "note"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -27376,6 +28036,21 @@
             "statusCode": 200,
             "description": "Note found"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "note"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Note found"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -27612,6 +28287,21 @@
             },
             "statusCode": 200,
             "description": "Successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "subscription_type"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -27904,6 +28594,21 @@
             "statusCode": 200,
             "description": "Successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "subscription_type"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -28102,6 +28807,21 @@
             },
             "statusCode": 200,
             "description": "Successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "subscription_type_list"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -28313,6 +29033,21 @@
             },
             "statusCode": 200,
             "description": "successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "tag"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -28567,6 +29302,21 @@
             "statusCode": 200,
             "description": "successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "tag"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -28784,6 +29534,21 @@
             },
             "statusCode": 200,
             "description": "successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "tag"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -29028,6 +29793,21 @@
             "statusCode": 200,
             "description": "successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "tag"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -29247,6 +30027,21 @@
             "statusCode": 200,
             "description": "successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "tag_list"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -29387,6 +30182,21 @@
             },
             "statusCode": 200,
             "description": "Action successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "tag"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Action successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -29687,6 +30497,21 @@
             "statusCode": 200,
             "description": "Tag found"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "tag"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Tag found"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -29855,6 +30680,21 @@
             },
             "statusCode": 200,
             "description": "Successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Tags_deleteTag_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -30078,6 +30918,21 @@
             },
             "statusCode": 200,
             "description": "successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "tag"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -30321,6 +31176,21 @@
             },
             "statusCode": 200,
             "description": "successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "tag"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -30579,6 +31449,21 @@
             },
             "statusCode": 200,
             "description": "successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "paginated_response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -30877,6 +31762,21 @@
             "statusCode": 200,
             "description": "conversation created"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "message"
+                  }
+                },
+                "statusCode": 200,
+                "description": "conversation created"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -31137,6 +32037,21 @@
             },
             "statusCode": 200,
             "description": "conversation found"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "conversation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "conversation found"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -31487,6 +32402,21 @@
             },
             "statusCode": 200,
             "description": "conversation found"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "conversation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "conversation found"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -31937,6 +32867,21 @@
             "statusCode": 200,
             "description": "successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "conversation_list"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -32224,6 +33169,21 @@
             },
             "statusCode": 200,
             "description": "User last conversation reply"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "conversation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "User last conversation reply"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -33058,6 +34018,21 @@
             },
             "statusCode": 200,
             "description": "Assign a conversation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "conversation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Assign a conversation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -34065,6 +35040,21 @@
             "statusCode": 200,
             "description": "Assign a conversation using assignment rules"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "conversation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Assign a conversation using assignment rules"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -34445,6 +35435,21 @@
             "statusCode": 200,
             "description": "Attach a contact to a conversation"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "conversation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Attach a contact to a conversation"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -34722,6 +35727,21 @@
             },
             "statusCode": 200,
             "description": "Detach a contact from a group conversation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "conversation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Detach a contact from a group conversation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -35065,6 +36085,21 @@
             },
             "statusCode": 200,
             "description": "Redact a conversation part"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "conversation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Redact a conversation part"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -35452,6 +36487,21 @@
             "statusCode": 200,
             "description": "successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ticket"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -35802,6 +36852,21 @@
             },
             "statusCode": 200,
             "description": "Successful response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "data_attribute_list"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -36421,6 +37486,21 @@
             "statusCode": 200,
             "description": "Successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "data_attribute"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -36823,6 +37903,21 @@
             "statusCode": 200,
             "description": "Successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "data_attribute"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -37208,6 +38303,21 @@
             "statusCode": 200,
             "description": "Successful response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "data_event_summary"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -37354,6 +38464,21 @@
             "statusCode": 202,
             "description": "successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Data Events_createDataEvent_Response_202"
+                  }
+                },
+                "statusCode": 202,
+                "description": "successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -37481,6 +38606,21 @@
             },
             "statusCode": 200,
             "description": "successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Data Events_dataEventSummaries_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -37620,6 +38760,21 @@
             "statusCode": 200,
             "description": "successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "data_export"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -37739,6 +38894,21 @@
             "statusCode": 200,
             "description": "successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "data_export"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -37848,6 +39018,21 @@
             },
             "statusCode": 200,
             "description": "successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "data_export"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -37959,6 +39144,21 @@
             "statusCode": 200,
             "description": "successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Data Export_downloadDataExport_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -38062,6 +39262,21 @@
             },
             "statusCode": 200,
             "description": "admin message created"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "message"
+                  }
+                },
+                "statusCode": 200,
+                "description": "admin message created"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -38433,6 +39648,21 @@
             "statusCode": 200,
             "description": "successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "paginated_response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -38661,6 +39891,21 @@
             },
             "statusCode": 200,
             "description": "successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "news_item"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -38892,6 +40137,21 @@
             "statusCode": 200,
             "description": "successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "news_item"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -39114,6 +40374,21 @@
             },
             "statusCode": 200,
             "description": "successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "news_item"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -39366,6 +40641,21 @@
             "statusCode": 200,
             "description": "successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "deleted_object"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -39535,6 +40825,21 @@
             "statusCode": 200,
             "description": "successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "paginated_response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -39666,6 +40971,21 @@
             },
             "statusCode": 200,
             "description": "successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "paginated_response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -39846,6 +41166,21 @@
             "statusCode": 200,
             "description": "successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "newsfeed"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -39993,6 +41328,21 @@
             },
             "statusCode": 200,
             "description": "Successful response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "segment_list"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -40164,6 +41514,21 @@
             },
             "statusCode": 200,
             "description": "Successful response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "segment"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -40343,6 +41708,21 @@
             },
             "statusCode": 200,
             "description": "successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "phone_switch"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -40566,6 +41946,21 @@
             "statusCode": 200,
             "description": "successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "team_list"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -40700,6 +42095,21 @@
             },
             "statusCode": 200,
             "description": "successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "team"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -40894,6 +42304,21 @@
             },
             "statusCode": 200,
             "description": "Ticket Type Attribute created"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ticket_type_attribute"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ticket Type Attribute created"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -41112,6 +42537,21 @@
             "statusCode": 200,
             "description": "Ticket Type Attribute updated"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ticket_type_attribute"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ticket Type Attribute updated"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -41277,6 +42717,21 @@
             },
             "statusCode": 200,
             "description": "successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ticket_type_list"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -41567,6 +43022,21 @@
             "statusCode": 200,
             "description": "Ticket type created"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ticket_type"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ticket type created"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -41828,6 +43298,21 @@
             },
             "statusCode": 200,
             "description": "Ticket type found"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ticket_type"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ticket type found"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -42128,6 +43613,21 @@
             },
             "statusCode": 200,
             "description": "Ticket type updated"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ticket_type"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ticket type updated"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -42446,6 +43946,21 @@
             },
             "statusCode": 200,
             "description": "Admin quick_reply reply"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ticket_reply"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Admin quick_reply reply"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -42806,6 +44321,21 @@
             },
             "statusCode": 200,
             "description": "Successful response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ticket"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -43189,6 +44719,21 @@
             "statusCode": 200,
             "description": "Ticket found"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ticket"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ticket found"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -43558,6 +45103,21 @@
             },
             "statusCode": 200,
             "description": "Successful response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ticket"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -44176,6 +45736,21 @@
             "statusCode": 200,
             "description": "successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ticket_list"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -44559,6 +46134,21 @@
             "statusCode": 200,
             "description": "successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "visitor"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -44811,6 +46401,21 @@
             },
             "statusCode": 200,
             "description": "successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "visitor"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -45082,6 +46687,21 @@
             },
             "statusCode": 200,
             "description": "successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "contact"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful"
+              }
+            ]
           },
           "errorsV2": [
             {

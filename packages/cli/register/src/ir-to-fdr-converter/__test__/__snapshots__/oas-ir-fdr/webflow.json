@@ -48349,6 +48349,21 @@
             "statusCode": 200,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "forms_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -48662,6 +48677,21 @@
             "statusCode": 200,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "forms_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -48907,6 +48937,21 @@
             "statusCode": 200,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "forms_list-submissions_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -49130,6 +49175,21 @@
             "statusCode": 200,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "forms_get-submission_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -49330,6 +49390,21 @@
             },
             "statusCode": 200,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "forms_update-submission_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -49585,6 +49660,21 @@
             },
             "statusCode": 200,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "sites_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -49962,6 +50052,21 @@
             "statusCode": 200,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "sites_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -50216,6 +50321,21 @@
             "statusCode": 200,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "sites_get-custom-domain_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -50423,6 +50543,21 @@
             },
             "statusCode": 202,
             "description": "Request accepted"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "sites_publish_Response_202"
+                  }
+                },
+                "statusCode": 202,
+                "description": "Request accepted"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -50699,6 +50834,21 @@
             },
             "statusCode": 200,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "orders_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -51668,6 +51818,21 @@
             "statusCode": 200,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "orders_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -52355,6 +52520,21 @@
             "statusCode": 200,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "orders_update_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -53009,6 +53189,21 @@
             "statusCode": 200,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "orders_update-fulfill_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -53635,6 +53830,21 @@
             },
             "statusCode": 200,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "orders_update-unfulfill_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -54281,6 +54491,21 @@
             },
             "statusCode": 200,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "orders_refund_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -56269,6 +56494,21 @@
             "statusCode": 200,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "inventory_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -56513,6 +56753,21 @@
             },
             "statusCode": 200,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "inventory_update_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -56809,6 +57064,21 @@
             },
             "statusCode": 200,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "users_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -57194,6 +57464,21 @@
             "statusCode": 200,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "users_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -57415,6 +57700,21 @@
             "statusCode": 204,
             "description": "Request was successful. No Content is returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "users_delete_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Request was successful. No Content is returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -57629,6 +57929,21 @@
             },
             "statusCode": 200,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "users_update_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -57897,6 +58212,21 @@
             },
             "statusCode": 200,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "users_invite_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -58702,6 +59032,21 @@
             "statusCode": 200,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "pages_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -58979,6 +59324,21 @@
             },
             "statusCode": 200,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "pages_get-metadata_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -59415,6 +59775,21 @@
             "statusCode": 200,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Pages_update-page-settings_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -59702,6 +60077,21 @@
             "statusCode": 200,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "pages_get-content_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -59966,6 +60356,21 @@
             },
             "statusCode": 200,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Pages_update-static-content_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -60316,6 +60721,21 @@
             "statusCode": 200,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "token_authorized-by_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -60411,6 +60831,21 @@
             },
             "statusCode": 200,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "token_introspect_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -60583,6 +61018,21 @@
             },
             "statusCode": 200,
             "description": "A list of site activity logs"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "sites_activity-logs_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A list of site activity logs"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -60778,6 +61228,21 @@
             },
             "statusCode": 200,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "collections_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -61023,6 +61488,21 @@
             "statusCode": 200,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "collections_create_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -61216,6 +61696,21 @@
             "statusCode": 200,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "collections_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -61396,6 +61891,21 @@
             "statusCode": 204,
             "description": "Request was successful. No Content is returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Collections_delete-collection_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Request was successful. No Content is returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -61558,6 +62068,21 @@
             },
             "statusCode": 204,
             "description": "Request was successful. No Content is returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "collections_delete_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Request was successful. No Content is returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -61773,6 +62298,21 @@
             },
             "statusCode": 200,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "collections_fields_create_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -62019,6 +62559,21 @@
             },
             "statusCode": 200,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "collections_fields_update_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -62303,6 +62858,21 @@
             },
             "statusCode": 200,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "collections_items_list-items_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -62643,6 +63213,21 @@
             "statusCode": 202,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "collections_items_create-item_Response_202"
+                  }
+                },
+                "statusCode": 202,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -62950,6 +63535,21 @@
             },
             "statusCode": 200,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "collections_items_list-items-live_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -63290,6 +63890,21 @@
             "statusCode": 202,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "collections_items_create-item-live_Response_202"
+                  }
+                },
+                "statusCode": 202,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -63620,6 +64235,21 @@
             },
             "statusCode": 202,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "collections_items_create-item-for-multiple-locales_Response_202"
+                  }
+                },
+                "statusCode": 202,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -63973,6 +64603,21 @@
             "statusCode": 200,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "collections_items_get-item_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -64180,6 +64825,21 @@
             },
             "statusCode": 204,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "collections_items_delete-item_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -64461,6 +65121,21 @@
             "statusCode": 200,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "collections_items_update-item_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -64704,6 +65379,21 @@
             "statusCode": 200,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "collections_items_get-item-live_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -64911,6 +65601,21 @@
             },
             "statusCode": 204,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "collections_items_delete-item-live_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -65192,6 +65897,21 @@
             "statusCode": 200,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "collections_items_update-item-live_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -65428,6 +66148,21 @@
             "statusCode": 202,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "collections_items_publish-item_Response_202"
+                  }
+                },
+                "statusCode": 202,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -65610,6 +66345,21 @@
             },
             "statusCode": 200,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "pages_scripts_get-custom-code_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -65847,6 +66597,21 @@
             "statusCode": 200,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "pages_scripts_upsert-custom-code_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -66066,6 +66831,21 @@
             "statusCode": 204,
             "description": "Request was successful. No Content is returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "pages_scripts_delete-custom-code_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Request was successful. No Content is returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -66219,6 +66999,21 @@
             },
             "statusCode": 200,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "sites_scripts_get-custom-code_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -66456,6 +67251,21 @@
             "statusCode": 200,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "sites_scripts_upsert-custom-code_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -66669,6 +67479,21 @@
             "statusCode": 204,
             "description": "Request was successful. No Content is returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "sites_scripts_delete-custom-code_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Request was successful. No Content is returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -66839,6 +67664,21 @@
             },
             "statusCode": 200,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "sites_scripts_list-custom-code-blocks_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -67090,6 +67930,21 @@
             },
             "statusCode": 200,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "scripts_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -67362,6 +68217,21 @@
             "statusCode": 201,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "scripts_register-hosted_Response_201"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -67609,6 +68479,21 @@
             "statusCode": 201,
             "description": "Created"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "scripts_register-inline_Response_201"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -67794,6 +68679,21 @@
             },
             "statusCode": 200,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "assets_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -68037,6 +68937,21 @@
             "statusCode": 200,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "assets_create_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -68238,6 +69153,21 @@
             "statusCode": 200,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "assets_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -68428,6 +69358,21 @@
             "statusCode": 204,
             "description": "Request was successful. No Content is returned."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "assets_delete_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Request was successful. No Content is returned."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -68594,6 +69539,21 @@
             },
             "statusCode": 200,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "assets_update_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -68793,6 +69753,21 @@
             },
             "statusCode": 200,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "assets_list-folders_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -69013,6 +69988,21 @@
             "statusCode": 200,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "assets_create-folder_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -69187,6 +70177,21 @@
             },
             "statusCode": 200,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "assets_get-folder_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -69364,6 +70369,21 @@
             },
             "statusCode": 200,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "webhooks_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -69705,6 +70725,21 @@
             "statusCode": 201,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "webhooks_create_Response_201"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -69890,6 +70925,21 @@
             "statusCode": 200,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "webhooks_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -70051,6 +71101,21 @@
             },
             "statusCode": 204,
             "description": "Request was successful. No Content is returned."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "webhooks_delete_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Request was successful. No Content is returned."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -70243,6 +71308,21 @@
             },
             "statusCode": 200,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "access-groups_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -70483,6 +71563,21 @@
             },
             "statusCode": 200,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "products_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -70871,6 +71966,21 @@
             },
             "statusCode": 200,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "products_create_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -71340,6 +72450,21 @@
             "statusCode": 200,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "products_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -71727,6 +72852,21 @@
             },
             "statusCode": 200,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "products_update_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -72202,6 +73342,21 @@
             "statusCode": 200,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "products_create-sku_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -72532,6 +73687,21 @@
             "statusCode": 200,
             "description": "Request was successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "products_update-sku_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -72790,6 +73960,21 @@
             },
             "statusCode": 200,
             "description": "Request was successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ecommerce_get-settings_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was successful"
+              }
+            ]
           },
           "errorsV2": [
             {

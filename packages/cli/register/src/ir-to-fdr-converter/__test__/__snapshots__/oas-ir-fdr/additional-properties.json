@@ -129,6 +129,23 @@
           "statusCode": 200,
           "description": "Successful search response"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 200,
+              "description": "Successful search response"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
@@ -212,6 +229,23 @@
           },
           "statusCode": 200,
           "description": "Successful search response"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 200,
+              "description": "Successful search response"
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [

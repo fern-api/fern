@@ -1,5 +1,5 @@
 use crate::client::StreamingClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl StreamingClient {
     // Dummy methods

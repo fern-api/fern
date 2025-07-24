@@ -16440,6 +16440,21 @@
             "statusCode": 201,
             "description": "Hris direct employee object that was created or edited"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "HrisDirectEmployeeContainer"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Hris direct employee object that was created or edited"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -16742,6 +16757,21 @@
             "statusCode": 200,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EorCountryValidationsContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -17028,6 +17058,21 @@
             "statusCode": 200,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EorContractCreatedContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -17279,6 +17324,21 @@
             },
             "statusCode": 201,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContractContainer_pay_as_you_go_time_based"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -17707,6 +17767,21 @@
             "statusCode": 201,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContractContainer_payg_tasks"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -18130,6 +18205,21 @@
             "statusCode": 201,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContractContainer_payg_milestones"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -18552,6 +18642,21 @@
             },
             "statusCode": 201,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContractContainer_ongoing_time_based"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -18980,6 +19085,21 @@
             },
             "statusCode": 201,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContractContainer"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -19424,6 +19544,18 @@
               "properties": []
             }
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "statusCode": 200,
+                "type": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": []
+                }
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -19615,6 +19747,21 @@
             },
             "statusCode": 201,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultCreated"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -19824,6 +19971,21 @@
             },
             "statusCode": 201,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContractTerminationResultContainer"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -20036,6 +20198,21 @@
             "statusCode": 201,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PremiumResultAddedContainer"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -20236,6 +20413,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultDeleted"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -20547,6 +20739,21 @@
             "statusCode": 200,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContractListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -20815,6 +21022,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContractContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -21206,6 +21428,21 @@
             "statusCode": 200,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultCreated"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -21427,6 +21664,21 @@
             "statusCode": 200,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContractDocumentContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -21647,6 +21899,21 @@
             "statusCode": 200,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContractDocumentContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -21844,6 +22111,21 @@
             "statusCode": 200,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AlternateEmailList"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -22019,6 +22301,21 @@
             },
             "statusCode": 201,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultCreated"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -22218,6 +22515,21 @@
             "statusCode": 204,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultUpdated"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -22391,6 +22703,21 @@
             },
             "statusCode": 201,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultCreated"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -22591,6 +22918,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultDeleted"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -22826,6 +23168,21 @@
             "statusCode": 200,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "FinalPaymentCalculatedContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -22987,6 +23344,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ResponseEstimateFirstPaymentContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -23161,6 +23533,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContractTemplateListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -23347,6 +23734,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TaskListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -23568,6 +23970,21 @@
             "statusCode": 201,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultCreated"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -23784,6 +24201,21 @@
             },
             "statusCode": 201,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TaskListContainer"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -24044,6 +24476,21 @@
             "statusCode": 201,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TaskListContainer"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -24294,6 +24741,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultDeleted"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -24576,6 +25038,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TimesheetListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -24941,6 +25418,21 @@
             "statusCode": 200,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TimesheetListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -25219,6 +25711,21 @@
             "statusCode": 201,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "InvoiceAdjustmentCreatedContainer"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -25434,6 +25941,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TimesheetContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -25734,6 +26256,21 @@
             "statusCode": 200,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultDeleted"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -25933,6 +26470,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultUpdated"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -26149,6 +26701,21 @@
             "statusCode": 201,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultCreated"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -26342,6 +26909,21 @@
             },
             "statusCode": 201,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultCreated"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -26554,6 +27136,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "MilestoneListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -26787,6 +27384,21 @@
             "statusCode": 200,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultCreated"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -27006,6 +27618,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "MilestoneContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -27239,6 +27866,21 @@
             "statusCode": 200,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultDeleted"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -27458,6 +28100,21 @@
             "statusCode": 201,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultCreated"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -27672,6 +28329,21 @@
             "statusCode": 201,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultCreated"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -27885,6 +28557,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "OffCyclePaymentListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -28130,6 +28817,21 @@
             "statusCode": 200,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultCreated"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -28347,6 +29049,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "OffCyclePaymentContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -28583,6 +29300,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EorTimeoffsContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -28990,6 +29722,21 @@
             },
             "statusCode": 201,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EorTimeoffsItemContainer"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -29427,6 +30174,21 @@
             "statusCode": 201,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EorTimeoffsItemContainer"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -29849,6 +30611,21 @@
             "statusCode": 200,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultDeleted"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -29995,6 +30772,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EorEntitlementsContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -30162,6 +30954,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EorClientTimeoffsContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -31156,6 +31963,21 @@
             "statusCode": 200,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultUpdated"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -31475,6 +32297,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "InvoiceAdjustmentListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -31867,6 +32704,21 @@
             "statusCode": 200,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "InvoiceAdjustmentListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -32146,6 +32998,21 @@
             "statusCode": 201,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "InvoiceAdjustmentCreatedContainer"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -32376,6 +33243,21 @@
             "statusCode": 200,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultDeleted"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -32575,6 +33457,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultUpdated"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -32789,6 +33686,21 @@
             "statusCode": 201,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultCreated"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -32983,6 +33895,21 @@
             "statusCode": 201,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultCreated"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -33176,6 +34103,21 @@
             "statusCode": 200,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "LegalEntityListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -33350,6 +34292,21 @@
             "statusCode": 200,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "OrganizationListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -33519,6 +34476,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TeamListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -33726,6 +34698,21 @@
             "statusCode": 200,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AgreementListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -33927,6 +34914,21 @@
             "statusCode": 200,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "CountryListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -34114,6 +35116,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "CurrencyListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -34313,6 +35330,21 @@
             "statusCode": 200,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "JobTitleListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -34504,6 +35536,21 @@
             "statusCode": 200,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SeniorityListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -34675,6 +35722,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TimeoffTypeListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -34868,6 +35930,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "OutputToCreateFileRefContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -35094,6 +36171,21 @@
             "statusCode": 200,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "InvoiceListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -35307,6 +36399,21 @@
             "statusCode": 200,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "InvoiceDownloadContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -35495,6 +36602,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "InvoiceDownloadContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -35722,6 +36844,21 @@
             "statusCode": 200,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PaymentListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -35922,6 +37059,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PaymentBreakDownContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -36185,6 +37337,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PeopleContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -36541,6 +37708,21 @@
             "statusCode": 200,
             "description": "Successful operation."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PeopleMeContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -36740,6 +37922,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "WebhookListResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -36945,6 +38142,21 @@
             },
             "statusCode": 201,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "WebhookItemResponse"
+                  }
+                },
+                "statusCode": 201,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -37177,6 +38389,21 @@
             "statusCode": 200,
             "description": "successful operation"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "WebhookItemResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -37385,6 +38612,21 @@
             "statusCode": 200,
             "description": "successful operation"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Webhooks_WebhookController_deleteById_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -37573,6 +38815,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "WebhookItemResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {

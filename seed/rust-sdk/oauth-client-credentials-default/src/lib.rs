@@ -9,5 +9,4 @@ pub mod auth;
 
 pub use client::OauthClientCredentialsDefaultClient;
 pub use error::ApiError;
-
 pub use types::*;

@@ -1,5 +1,5 @@
 use crate::client::VariablesClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl VariablesClient {
     // Service methods

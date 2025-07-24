@@ -1,5 +1,5 @@
 use crate::client::VersionClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl VersionClient {
     // User methods

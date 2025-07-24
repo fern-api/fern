@@ -6,12 +6,14 @@ import {
     Func,
     FuncInvocation,
     GoTypeReference,
+    Identifier,
     Method,
     MethodInvocation,
     Parameter,
     Pointer,
     Selector,
-    Struct
+    Struct,
+    Switch
 } from "./ast";
 
 export function codeblock(arg: CodeBlock.Arg): CodeBlock {
@@ -32,6 +34,10 @@ export function file(args: File.Args = {}): File {
 
 export function func(args: Func.Args): Func {
     return new Func(args);
+}
+
+export function identifier(args: Identifier.Args): Identifier {
+    return new Identifier(args);
 }
 
 export function invokeFunc(args: FuncInvocation.Args): FuncInvocation {
@@ -62,6 +68,10 @@ export function struct(args: Struct.Args): Struct {
     return new Struct(args);
 }
 
+export function switch_(args: Switch.Args): Switch {
+    return new Switch(args);
+}
+
 export function typeReference(args: GoTypeReference.Args): GoTypeReference {
     return new GoTypeReference(args);
 }
@@ -77,6 +87,7 @@ export {
     GoTypeReference as TypeReference,
     Method,
     MethodInvocation,
+    MultiNode,
     Parameter,
     Pointer,
     Selector,
