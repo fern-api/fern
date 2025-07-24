@@ -2,6 +2,46 @@
 
 package unions
 
+import (
+	time "time"
+)
+
+type BigUnion struct {
+	Type               string
+	Id                 string
+	CreatedAt          time.Time
+	ArchivedAt         *time.Time
+	NormalSweet        NormalSweet
+	ThankfulFactor     ThankfulFactor
+	JumboEnd           JumboEnd
+	HastyPain          HastyPain
+	MistySnow          MistySnow
+	DistinctFailure    DistinctFailure
+	PracticalPrinciple PracticalPrinciple
+	LimpingStep        LimpingStep
+	VibrantExcitement  VibrantExcitement
+	ActiveDiamond      ActiveDiamond
+	PopularLimit       PopularLimit
+	FalseMirror        FalseMirror
+	PrimaryBlock       PrimaryBlock
+	RotatingRatio      RotatingRatio
+	ColorfulCover      ColorfulCover
+	DisloyalValue      DisloyalValue
+	GruesomeCoach      GruesomeCoach
+	TotalWork          TotalWork
+	HarmoniousPlay     HarmoniousPlay
+	UniqueStress       UniqueStress
+	UnwillingSmoke     UnwillingSmoke
+	FrozenSleep        FrozenSleep
+	DiligentDeal       DiligentDeal
+	AttractiveScript   AttractiveScript
+	HoarseMouse        HoarseMouse
+	CircularCard       CircularCard
+	PotableBad         PotableBad
+	TriangularRepair   TriangularRepair
+	GaseousRoad        GaseousRoad
+}
+
 type NormalSweet struct {
 	Value string `json:"value" url:"value"`
 }

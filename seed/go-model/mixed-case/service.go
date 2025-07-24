@@ -42,3 +42,10 @@ func NewResourceStatusFromString(s string) (ResourceStatus, error) {
 func (r ResourceStatus) Ptr() *ResourceStatus {
 	return &r
 }
+
+type Resource struct {
+	ResourceType string
+	Status       *ResourceStatus
+	User         User
+	Organization Organization
+}

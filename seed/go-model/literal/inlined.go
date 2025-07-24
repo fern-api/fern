@@ -2,12 +2,34 @@
 
 package literal
 
+
 type SomeAliasedLiteral = string
 
 type ATopLevelLiteral struct {
-	NestedLiteral *ANestedLiteral `json:"nestedLiteral" url:"nestedLiteral"`
+    NestedLiteral *ANestedLiteral `json:"nestedLiteral" url:"nestedLiteral"`
 }
 
+
 type ANestedLiteral struct {
-	myLiteral string
+    myLiteral string
 }
+
+
+type DiscriminatedLiteral struct {
+    Type string
+    CustomName string
+    DefaultName string
+    George bool
+    LiteralGeorge bool
+}
+
+
+type UndiscriminatedLiteral struct {
+    String string
+    $endingStringLiteral string
+    10 non-alphanumeric string literals you're going to love & why (number 8 will surprise you)StringLiteral string
+    TrueLiteral bool
+    FalseLiteral bool
+    Boolean bool
+}
+

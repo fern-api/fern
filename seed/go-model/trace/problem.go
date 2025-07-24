@@ -22,6 +22,14 @@ type ProblemDescription struct {
 }
 
 
+type ProblemDescriptionBoard struct {
+    Type string
+    Html string
+    Variable *VariableValue
+    TestCaseId string
+}
+
+
 type ProblemFiles struct {
     SolutionFile *FileInfo `json:"solutionFile" url:"solutionFile"`
     ReadOnlyFiles []*FileInfo `json:"readOnlyFiles" url:"readOnlyFiles"`
@@ -45,8 +53,21 @@ type CreateProblemRequest struct {
 }
 
 
+type CreateProblemResponse struct {
+    Type string
+    Success ProblemId
+    Error *CreateProblemError
+}
+
+
 type UpdateProblemResponse struct {
     ProblemVersion int `json:"problemVersion" url:"problemVersion"`
+}
+
+
+type CreateProblemError struct {
+    ErrorType string
+    Generic GenericCreateProblemError
 }
 
 

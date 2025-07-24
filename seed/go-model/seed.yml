@@ -51,12 +51,6 @@ scripts:
       - CGO_ENABLED=0 go test ./...
 
 allowedFailures:
-  - circular-references
-  - circular-references-advanced
-  - examples
-  - nullable
-  - pagination
+  - literal
   - reserved-keywords
-  - simple-fhir
   - trace
-  - undiscriminated-unions
