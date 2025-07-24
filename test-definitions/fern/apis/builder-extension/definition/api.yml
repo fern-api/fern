@@ -1,0 +1,7 @@
+name: builder-extension
+auth: bearer
+environments:
+  Production: https://api.example.com
+  Development: https://api.${DEV_NAMESPACE}.example.com
+  Staging: https://api.${STAGE_ENV}.example.com
+default-environment: Production

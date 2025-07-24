@@ -1,0 +1,3 @@
+rootProject.name = 'builder-extension'
+
+include 'sample-app'
