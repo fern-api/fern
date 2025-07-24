@@ -8,7 +8,7 @@ import {
     HttpResponse,
     HttpResponseBody,
     JsonResponse,
-    ProtobufMethodType,
+    ProtobufMethodType
 } from "@fern-api/ir-sdk";
 import { AbstractConverter } from "@fern-api/v2-importer-commons";
 
