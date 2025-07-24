@@ -1,3 +1,28 @@
+## 0.18.0-rc0
+**`(fix):`** Remove extraneous `next` in the generated service.
+
+
+## 0.17.7
+**`(internal):`** Upgrade to IRv55.
+
+## 0.17.6
+**`(feat):`** Re-release the `0.17.5` version.
+
+## 0.17.5
+**`(feat):`** Introduces a configuration `noOptionalProperties` which forces consumers to explicitly pass 
+in `undefined` instead of excluding the key. To turn this setting on, do the following: 
+
+```yml generators.yml
+groups: 
+  server: 
+    generators: 
+      - name: fernapi/fern-typescript-express
+        version: 0.17.5
+        config: 
+          noOptionalProperties: true
+```
+
+
 ## 0.17.4
 **`(fix):`** Update inlined request objects to respect `noSerdeLayer`
 
@@ -126,6 +151,11 @@ The root cause is because a breaking change was released in v4 of the mime libra
 This is now fixed because the generator resolves to v3 of the library as
 specified in this GitHub [issue](https://github.com/firebase/firebase-admin-node/issues/2512).
 
+
+## 0.9.8
+**`(feat):`** Enhance serde performance by reducing reliance on async behavior and lazy async dynamic imports
+
+**`(internal):`** Shared generator notification and config parsing logic.
 
 ## 0.9.7
 **`(internal):`** Release 0.9.7

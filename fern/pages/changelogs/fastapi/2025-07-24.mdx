@@ -1,0 +1,101 @@
+## 1.6.4
+**`(fix):`** Fix an issue with the type hint generated for nullable query parameter lists (introduced in 1.6.3).
+
+
+## 1.6.3
+**`(internal):`** Update the IR to v57.
+
+
+## 1.6.2
+**`(fix):`** Support Pydantic v1_on_v2 for all variants of use_pydantic_field_aliases.
+
+
+## 1.6.1
+**`(fix):`** Create a new release to incorporate pydantic v1 on v2.
+
+
+## 1.6.0
+**`(fix):`** The FastAPI generator now supports a new mode for pydantic model generation,
+to use pydantic v1 on v2 versions. 
+
+```yml generators.yml
+generators: 
+  server: 
+    - name: fernapi/fern-fastapi-server
+      version: 1.6.0
+      config: 
+        pydantic: 
+          version: "v1_on_v2"
+````
+
+
+## 1.5.0
+**`(fix):`** The snippet writer now correctly handles base64 strings.
+
+
+## 1.5.0-rc6
+**`(fix):`** A missing configuration now respects the pydantic version configuration, as such, the base model for discriminated unions generated with utilities
+now respects which version of Pydantic you are generating for.
+
+
+## 1.5.0-rc5
+**`(fix):`** Pydantic utilities now correctly handles cases where you have a Pydantic model, with a list of pydantic models as a field, where those models have literals.
+Effectively, `deep_union_pydantic_objects` now handles lists of objects and merges them appropriately.
+
+
+## 1.5.0-rc4
+**`(fix):`** Use of `IS_PYDANTIC_V2` flag is now only used within universal base models (`pydantic_utilities.py`) and if pydantic version compatibility is not specified
+or set to `Both`. Concretely, this means that if your configuration specifies a version for Pydantic, then your generated code will respect that version, and
+generate the code for that specific version of Pydantic, as opposed to always generating code compatible with both versions of Pydantic.
+
+
+### What's been fixed
+- `exclude_unset` is now respected when passed in as an option to a model's `.dict` call.
+
+
+## 1.5.0-rc3
+**`(fix):`** Dependencies are sorted within the generated code to ensure that even without running isort the imports are deterministically sorted.
+
+## 1.5.0-rc2
+**`(fix):`** The FastAPI server generation now adds model configuration back onto the union utils root model a change that was made when Pydantic V2 support was rolled out, believing
+it was not allowed in Pydantic V2.
+
+
+## 1.5.0-rc1
+**`(fix):`** When leveraging the `include_union_utils` configuration flag, the Pydantic models will no longer include transitive dependencies within
+`update_forward_ref` calls, since these should not be necessary. This effectively scopes back the changes introduced in 1.5.0-rc0, which included
+changes to improve circular reference handling in Pydantic models.
+
+
+## 1.5.0-rc0
+**`(feat):`** The FastAPI server generation now supports endpoints with file upload as well as endpoints with file download.
+
+## 1.4.9
+**`(fix):`** Default on `pydantic aliases`
+
+### What's been fixed
+- The previous version of the FastAPI generator defaulted on a setting which removed pydantic aliases. Because FastAPI calls into the pydantic serializers itself, the generated models must have aliases.
+
+## 1.4.8
+**`(chore):`** Remove Pydantic field aliases and leverage an internal representation
+
+### What's been fixed
+- Pydantic field aliases are removed and replaced with an internal representation. This allows for more robust handling of field aliases and prevents issues with Pydantic V2 and mypy.
+Previously, you'd have for V1 and V2 compatibility in Pydantic, you'd want to conditionally apply the config class within the base model, however this would lead to mypy errors when filling out a model with it's field alias. To solve this, We used the deprecated `class Config`, regardless of the Pydantic version to satisfy mypy, which lead to warnings in the console.
+Now, we've removed the field aliases and replaced them with an internal representation, which allows us to avoid pydantic config altogether.
+If you'd like to disable this feature, you can set `use_pydantic_field_aliases` to `true` in your configuration, which will preserve the existing behavior.
+To maintain parity with pre-3.11.0 behavior, update the flag to `true`:
+
+  ```yaml
+  - name: fernapi/fern-fastapi-server
+    version: 1.4.8
+    config:
+      pydantic_config:
+        use_pydantic_field_aliases: true
+  ```
+- Pydantic V2 `.dict` calls are updated to be back to pre-3.10.4 logic. This is fix a regression where nested literals were being omitted due to the Pydantic V2 serializers not respecting the recursive .dict logic, as Pydantic V2 shells out `model_dump` calls to Rust library and serializers, as opposed to recursively calling `model_dump`.
+It is expected that performance will not be degraded given the Rust-based serializers have optimized performance, compared to the Pydantic V1 .dict approach.
+
+## 1.4.7
+**`(chore):`** Release 1.4.7
+
