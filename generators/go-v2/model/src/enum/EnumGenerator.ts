@@ -1,12 +1,9 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
-import { FileGenerator, GoFile } from "@fern-api/go-base";
+import { GoFile } from "@fern-api/go-base";
 import { go } from "@fern-api/go-ast";
 
 import { EnumTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
-import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { join } from "path";
 import { AbstractModelGenerator } from "../AbstractModelGenerator";
 
 const STRING_VALUE_PARAM_NAME = "s";
