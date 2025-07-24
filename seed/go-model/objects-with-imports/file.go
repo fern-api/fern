@@ -6,6 +6,12 @@ import (
 	fmt "fmt"
 )
 
+type File struct {
+	Name     string    `json:"name" url:"name"`
+	Contents string    `json:"contents" url:"contents"`
+	Info     *FileInfo `json:"info" url:"info"`
+}
+
 type FileInfo string
 
 const (

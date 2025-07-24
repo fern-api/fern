@@ -6,6 +6,14 @@ import (
 	fmt "fmt"
 )
 
+type T struct {
+	Child *TorU `json:"child" url:"child"`
+}
+
+type U struct {
+	Child *T `json:"child" url:"child"`
+}
+
 type PrimitiveValue string
 
 const (
@@ -27,3 +35,5 @@ func NewPrimitiveValueFromString(s string) (PrimitiveValue, error) {
 func (p PrimitiveValue) Ptr() *PrimitiveValue {
 	return &p
 }
+
+type ObjectValue struct{}

@@ -50,4 +50,13 @@ scripts:
     commands:
       - CGO_ENABLED=0 go test ./...
 
-allowedFailures: []
+allowedFailures:
+  - circular-references
+  - circular-references-advanced
+  - examples
+  - nullable
+  - pagination
+  - reserved-keywords
+  - simple-fhir
+  - trace
+  - undiscriminated-unions

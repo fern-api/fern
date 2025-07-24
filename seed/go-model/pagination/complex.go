@@ -6,6 +6,11 @@ import (
 	fmt "fmt"
 )
 
+type MultipleFilterSearchRequest struct {
+	Operator *MultipleFilterSearchRequestOperator `json:"operator,undefined" url:"operator,undefined"`
+	Value    *MultipleFilterSearchRequestValue    `json:"value,undefined" url:"value,undefined"`
+}
+
 type MultipleFilterSearchRequestOperator string
 
 const (
@@ -26,6 +31,12 @@ func NewMultipleFilterSearchRequestOperatorFromString(s string) (MultipleFilterS
 
 func (m MultipleFilterSearchRequestOperator) Ptr() *MultipleFilterSearchRequestOperator {
 	return &m
+}
+
+type SingleFilterSearchRequest struct {
+	Field    *string                            `json:"field,undefined" url:"field,undefined"`
+	Operator *SingleFilterSearchRequestOperator `json:"operator,undefined" url:"operator,undefined"`
+	Value    *string                            `json:"value,undefined" url:"value,undefined"`
 }
 
 type SingleFilterSearchRequestOperator string
@@ -72,4 +83,35 @@ func NewSingleFilterSearchRequestOperatorFromString(s string) (SingleFilterSearc
 
 func (s SingleFilterSearchRequestOperator) Ptr() *SingleFilterSearchRequestOperator {
 	return &s
+}
+
+type SearchRequest struct {
+	Pagination *StartingAfterPaging `json:"pagination,undefined" url:"pagination,undefined"`
+	Query      *SearchRequestQuery  `json:"query" url:"query"`
+}
+
+type PaginatedConversationResponse struct {
+	Conversations []*Conversation `json:"conversations" url:"conversations"`
+	Pages         *CursorPages    `json:"pages,undefined" url:"pages,undefined"`
+	TotalCount    int             `json:"total_count" url:"total_count"`
+
+	type_ string
+}
+
+type CursorPages struct {
+	Next       *StartingAfterPaging `json:"next,undefined" url:"next,undefined"`
+	Page       *int                 `json:"page,undefined" url:"page,undefined"`
+	PerPage    *int                 `json:"per_page,undefined" url:"per_page,undefined"`
+	TotalPages *int                 `json:"total_pages,undefined" url:"total_pages,undefined"`
+
+	type_ string
+}
+
+type StartingAfterPaging struct {
+	PerPage       int     `json:"per_page" url:"per_page"`
+	StartingAfter *string `json:"starting_after,undefined" url:"starting_after,undefined"`
+}
+
+type Conversation struct {
+	Foo string `json:"foo" url:"foo"`
 }

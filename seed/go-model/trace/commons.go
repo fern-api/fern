@@ -3,30 +3,155 @@
 package trace
 
 import (
-	fmt "fmt"
+    fmt "fmt"
 )
+
+
+type UserId = string
+
+type ProblemId = string
+
+type NodeId = string
+
+type ListType struct {
+    ValueType *VariableType `json:"valueType" url:"valueType"`
+    // Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.
+    IsFixedLength *bool `json:"isFixedLength,undefined" url:"isFixedLength,undefined"`
+}
+
+
+type MapType struct {
+    KeyType *VariableType `json:"keyType" url:"keyType"`
+    ValueType *VariableType `json:"valueType" url:"valueType"`
+}
+
+
+type GenericValue struct {
+    StringifiedType *string `json:"stringifiedType,undefined" url:"stringifiedType,undefined"`
+    StringifiedValue string `json:"stringifiedValue" url:"stringifiedValue"`
+}
+
+
+type MapValue struct {
+    KeyValuePairs []*KeyValuePair `json:"keyValuePairs" url:"keyValuePairs"`
+}
+
+
+type KeyValuePair struct {
+    Key *VariableValue `json:"key" url:"key"`
+    Value *VariableValue `json:"value" url:"value"`
+}
+
+
+type BinaryTreeValue struct {
+    Root *NodeId `json:"root,undefined" url:"root,undefined"`
+    Nodes map[NodeId]*BinaryTreeNodeValue `json:"nodes" url:"nodes"`
+}
+
+
+type BinaryTreeNodeValue struct {
+    NodeId NodeId `json:"nodeId" url:"nodeId"`
+    Val float64 `json:"val" url:"val"`
+    Right *NodeId `json:"right,undefined" url:"right,undefined"`
+    Left *NodeId `json:"left,undefined" url:"left,undefined"`
+}
+
+
+type BinaryTreeNodeAndTreeValue struct {
+    NodeId NodeId `json:"nodeId" url:"nodeId"`
+    FullTree *BinaryTreeValue `json:"fullTree" url:"fullTree"`
+}
+
+
+type SinglyLinkedListValue struct {
+    Head *NodeId `json:"head,undefined" url:"head,undefined"`
+    Nodes map[NodeId]*SinglyLinkedListNodeValue `json:"nodes" url:"nodes"`
+}
+
+
+type SinglyLinkedListNodeValue struct {
+    NodeId NodeId `json:"nodeId" url:"nodeId"`
+    Val float64 `json:"val" url:"val"`
+    Next *NodeId `json:"next,undefined" url:"next,undefined"`
+}
+
+
+type SinglyLinkedListNodeAndListValue struct {
+    NodeId NodeId `json:"nodeId" url:"nodeId"`
+    FullList *SinglyLinkedListValue `json:"fullList" url:"fullList"`
+}
+
+
+type DoublyLinkedListValue struct {
+    Head *NodeId `json:"head,undefined" url:"head,undefined"`
+    Nodes map[NodeId]*DoublyLinkedListNodeValue `json:"nodes" url:"nodes"`
+}
+
+
+type DoublyLinkedListNodeValue struct {
+    NodeId NodeId `json:"nodeId" url:"nodeId"`
+    Val float64 `json:"val" url:"val"`
+    Next *NodeId `json:"next,undefined" url:"next,undefined"`
+    Prev *NodeId `json:"prev,undefined" url:"prev,undefined"`
+}
+
+
+type DoublyLinkedListNodeAndListValue struct {
+    NodeId NodeId `json:"nodeId" url:"nodeId"`
+    FullList *DoublyLinkedListValue `json:"fullList" url:"fullList"`
+}
+
+
+type DebugMapValue struct {
+    KeyValuePairs []*DebugKeyValuePairs `json:"keyValuePairs" url:"keyValuePairs"`
+}
+
+
+type DebugKeyValuePairs struct {
+    Key *DebugVariableValue `json:"key" url:"key"`
+    Value *DebugVariableValue `json:"value" url:"value"`
+}
+
+
+type TestCase struct {
+    Id string `json:"id" url:"id"`
+    Params []*VariableValue `json:"params" url:"params"`
+}
+
+
+type TestCaseWithExpectedResult struct {
+    TestCase *TestCase `json:"testCase" url:"testCase"`
+    ExpectedResult *VariableValue `json:"expectedResult" url:"expectedResult"`
+}
+
+
+type FileInfo struct {
+    Filename string `json:"filename" url:"filename"`
+    Contents string `json:"contents" url:"contents"`
+}
+
 
 type Language string
 
 const (
-	LanguageJava       = "JAVA"
-	LanguageJavascript = "JAVASCRIPT"
-	LanguagePython     = "PYTHON"
+    LanguageJava = "JAVA"
+    LanguageJavascript = "JAVASCRIPT"
+    LanguagePython = "PYTHON"
 )
-
-func NewLanguageFromString(s string) (Language, error) {
-	switch s {
-	case "JAVA":
-		return LanguageJava, nil
-	case "JAVASCRIPT":
-		return LanguageJavascript, nil
-	case "PYTHON":
-		return LanguagePython, nil
-	}
-	var t Language
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
+func NewLanguageFromString(s string) (Language, error){
+    switch s{
+        case "JAVA":
+            return LanguageJava, nil
+        case "JAVASCRIPT":
+            return LanguageJavascript, nil
+        case "PYTHON":
+            return LanguagePython, nil
+    }
+    var t Language
+    return "", fmt.Errorf("%s is not a valid %T", s, t)
 }
 
-func (l Language) Ptr() *Language {
-	return &l
+func (l Language) Ptr() *Language{
+    return &l
 }
+

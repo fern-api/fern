@@ -6,6 +6,13 @@ import (
 	fmt "fmt"
 )
 
+type Error struct {
+	Category *ErrorCategory `json:"category" url:"category"`
+	Code     *ErrorCode     `json:"code" url:"code"`
+	Detail   *string        `json:"detail,undefined" url:"detail,undefined"`
+	Field    *string        `json:"field,undefined" url:"field,undefined"`
+}
+
 type ErrorCategory string
 
 const (
@@ -78,4 +85,8 @@ func NewErrorCodeFromString(s string) (ErrorCode, error) {
 
 func (e ErrorCode) Ptr() *ErrorCode {
 	return &e
+}
+
+type PutResponse struct {
+	Errors []*Error `json:"errors,undefined" url:"errors,undefined"`
 }
