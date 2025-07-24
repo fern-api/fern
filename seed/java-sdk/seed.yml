@@ -154,6 +154,10 @@ fixtures:
         enable-forward-compatible-enums: true
       outputFolder: forward-compatible-enums
     - outputFolder: no-custom-config
+  builder-extension:
+    - customConfig:
+        client-class-name: BaseClient
+      outputFolder: base-client
 scripts:
   - docker: fernapi/java-seed
     commands:

@@ -7,7 +7,7 @@ import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class AsyncBestBuilder {
+public class AsyncBestBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private String token = null;
@@ -51,9 +51,13 @@ public final class AsyncBestBuilder {
         return this;
     }
 
+    protected ClientOptions buildClientOptions() {
+        clientOptionsBuilder.environment(this.environment);
+        return clientOptionsBuilder.build();
+    }
+
     public AsyncBest build() {
         this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + this.token);
-        clientOptionsBuilder.environment(this.environment);
-        return new AsyncBest(clientOptionsBuilder.build());
+        return new AsyncBest(buildClientOptions());
     }
 }

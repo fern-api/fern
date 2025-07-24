@@ -9,7 +9,7 @@ import com.fern.sdk.core.Environment;
 import java.lang.String;
 import okhttp3.OkHttpClient;
 
-public final class SeedExhaustiveClientBuilder {
+public class SeedExhaustiveClientBuilder {
   private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
   private String token = null;
@@ -53,9 +53,13 @@ public final class SeedExhaustiveClientBuilder {
     return this;
   }
 
+  protected ClientOptions buildClientOptions() {
+    clientOptionsBuilder.environment(this.environment);
+    return clientOptionsBuilder.build();
+  }
+
   public SeedExhaustiveClient build() {
     this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + this.token);
-    clientOptionsBuilder.environment(this.environment);
-    return new SeedExhaustiveClient(clientOptionsBuilder.build());
+    return new SeedExhaustiveClient(buildClientOptions());
   }
 }
