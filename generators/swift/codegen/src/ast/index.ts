@@ -8,6 +8,7 @@ export { Expression } from "./Expression";
 export { FunctionArgument } from "./FunctionArgument";
 export { FunctionParameter } from "./FunctionParameter";
 export { Initializer } from "./Initializer";
+export { LineBreak } from "./LineBreak";
 export { Method } from "./Method";
 export { Property } from "./Property";
 export { Protocol } from "./Protocol";
