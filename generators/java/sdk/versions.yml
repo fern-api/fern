@@ -1,3 +1,14 @@
+- version: 2.39.0
+  changelogEntry:
+    - summary: |
+        Enable builder extensibility for generated SDK clients. Builders are no longer marked as final, allowing users to extend them 
+        and customize client behavior. Added protected buildClientOptions() method for customization hooks and static from() method 
+        to ClientOptions.Builder for copying existing configurations. This enables use cases like environment variable expansion 
+        in URLs and custom authentication methods.
+      type: feat
+  createdAt: '2025-07-24'
+  irVersion: 58
+
 - version: 2.38.8
   changelogEntry:
     - summary: |

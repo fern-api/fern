@@ -253,7 +253,6 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 })
                 .forEach(clientBuilder::addMethod);
 
-        // Add protected buildClientOptions method
         MethodSpec buildClientOptionsMethod = MethodSpec.methodBuilder("buildClientOptions")
                 .addModifiers(Modifier.PROTECTED)
                 .returns(generatedClientOptions.getClassName())
@@ -266,7 +265,6 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .build();
         clientBuilder.addMethod(buildClientOptionsMethod);
 
-        // Modify build method to use buildClientOptions
         clientBuilder.addMethod(buildMethod
                 .addStatement("return new $T(buildClientOptions())", className())
                 .build());
