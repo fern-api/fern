@@ -40,7 +40,7 @@ export class ModelGeneratorCLI extends AbstractGoGeneratorCli<ModelCustomConfigS
     }
 
     protected async generate(context: ModelGeneratorContext): Promise<void> {
-        this.generateDocs(context)
+        this.generateDocs(context);
         generateModels(context);
         await context.project.persist({ tidy: true });
     }
@@ -50,11 +50,7 @@ export class ModelGeneratorCLI extends AbstractGoGeneratorCli<ModelCustomConfigS
         // Once all of the model generator is built out, this can safely be removed. This has no impact
         // on any user-facing functionality.
         context.project.addRawFiles(
-            new File(
-                "doc.go",
-                RelativeFilePath.of("."),
-                `package ${context.getRootPackageName()}`
-            )
+            new File("doc.go", RelativeFilePath.of("."), `package ${context.getRootPackageName()}`)
         );
     }
 }
