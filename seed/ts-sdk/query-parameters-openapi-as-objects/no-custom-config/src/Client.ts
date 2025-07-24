@@ -56,50 +56,142 @@ export class SeedApiClient {
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.search()
+     *     await client.search({
+     *         limit: 1,
+     *         id: "id",
+     *         date: "date",
+     *         deadline: "2024-01-15T09:30:00Z",
+     *         bytes: "bytes",
+     *         user: {
+     *             name: "name",
+     *             tags: ["tags", "tags"]
+     *         },
+     *         userList: {
+     *             name: "name",
+     *             tags: ["tags", "tags"]
+     *         },
+     *         optionalDeadline: "2024-01-15T09:30:00Z",
+     *         keyValue: {
+     *             "keyValue": "keyValue"
+     *         },
+     *         optionalString: "optionalString",
+     *         nestedUser: {
+     *             name: "name",
+     *             user: {
+     *                 name: "name",
+     *                 tags: ["tags", "tags"]
+     *             }
+     *         },
+     *         optionalUser: {
+     *             name: "name",
+     *             tags: ["tags", "tags"]
+     *         },
+     *         excludeUser: {
+     *             name: "name",
+     *             tags: ["tags", "tags"]
+     *         },
+     *         filter: "filter",
+     *         neighbor: {
+     *             name: "name",
+     *             tags: ["tags", "tags"]
+     *         },
+     *         neighborRequired: {
+     *             name: "name",
+     *             tags: ["tags", "tags"]
+     *         }
+     *     })
      */
     public search(
-        request: SeedApi.SearchRequest = {},
+        request: SeedApi.SearchRequest,
         requestOptions?: SeedApiClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.SearchResponse> {
         return core.HttpResponsePromise.fromPromise(this.__search(request, requestOptions));
     }
 
     private async __search(
-        request: SeedApi.SearchRequest = {},
+        request: SeedApi.SearchRequest,
         requestOptions?: SeedApiClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedApi.SearchResponse>> {
-        const { filter, sort, limit, after, tags } = request;
+        const {
+            limit,
+            id,
+            date,
+            deadline,
+            bytes,
+            user,
+            userList,
+            optionalDeadline,
+            keyValue,
+            optionalString,
+            nestedUser,
+            optionalUser,
+            excludeUser,
+            filter,
+            neighbor,
+            neighborRequired,
+        } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (filter != null) {
-            _queryParams["filter"] = filter;
-        }
-
-        if (sort != null) {
-            _queryParams["sort"] = sort;
-        }
-
-        if (limit != null) {
-            _queryParams["limit"] = limit.toString();
-        }
-
-        if (after != null) {
-            _queryParams["after"] = typeof after === "string" ? after : toJson(after);
-        }
-
-        if (tags != null) {
-            if (Array.isArray(tags)) {
-                _queryParams["tags"] = tags.map((item) => item);
+        _queryParams["limit"] = limit.toString();
+        _queryParams["id"] = id;
+        _queryParams["date"] = date;
+        _queryParams["deadline"] = deadline;
+        _queryParams["bytes"] = bytes;
+        _queryParams["user"] = user;
+        if (userList != null) {
+            if (Array.isArray(userList)) {
+                _queryParams["userList"] = userList.map((item) => item);
             } else {
-                _queryParams["tags"] = tags;
+                _queryParams["userList"] = userList;
             }
         }
 
+        if (optionalDeadline != null) {
+            _queryParams["optionalDeadline"] = optionalDeadline;
+        }
+
+        if (keyValue != null) {
+            _queryParams["keyValue"] = toJson(keyValue);
+        }
+
+        if (optionalString != null) {
+            _queryParams["optionalString"] = optionalString;
+        }
+
+        if (nestedUser != null) {
+            _queryParams["nestedUser"] = nestedUser;
+        }
+
+        if (optionalUser != null) {
+            _queryParams["optionalUser"] = optionalUser;
+        }
+
+        if (excludeUser != null) {
+            if (Array.isArray(excludeUser)) {
+                _queryParams["excludeUser"] = excludeUser.map((item) => item);
+            } else {
+                _queryParams["excludeUser"] = excludeUser;
+            }
+        }
+
+        if (filter != null) {
+            if (Array.isArray(filter)) {
+                _queryParams["filter"] = filter.map((item) => item);
+            } else {
+                _queryParams["filter"] = filter;
+            }
+        }
+
+        if (neighbor != null) {
+            _queryParams["neighbor"] = typeof neighbor === "string" ? neighbor : toJson(neighbor);
+        }
+
+        _queryParams["neighborRequired"] =
+            typeof neighborRequired === "string" ? neighborRequired : toJson(neighborRequired);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "search",
+                "user/getUsername",
             ),
             method: "GET",
             headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
@@ -128,7 +220,7 @@ export class SeedApiClient {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedApiTimeoutError("Timeout exceeded when calling GET /search.");
+                throw new errors.SeedApiTimeoutError("Timeout exceeded when calling GET /user/getUsername.");
             case "unknown":
                 throw new errors.SeedApiError({
                     message: _response.error.errorMessage,

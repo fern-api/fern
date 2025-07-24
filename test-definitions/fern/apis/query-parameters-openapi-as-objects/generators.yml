@@ -1,5 +1,5 @@
 api:
   specs:
-    - openapi: ./openapi.yml
+    - openapi: ../query-parameters-openapi/openapi.yml
       settings: 
         object-query-parameters: true

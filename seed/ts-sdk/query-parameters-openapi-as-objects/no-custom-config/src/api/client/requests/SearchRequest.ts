@@ -6,12 +6,66 @@ import * as SeedApi from "../../index.js";
 
 /**
  * @example
- *     {}
+ *     {
+ *         limit: 1,
+ *         id: "id",
+ *         date: "date",
+ *         deadline: "2024-01-15T09:30:00Z",
+ *         bytes: "bytes",
+ *         user: {
+ *             name: "name",
+ *             tags: ["tags", "tags"]
+ *         },
+ *         userList: {
+ *             name: "name",
+ *             tags: ["tags", "tags"]
+ *         },
+ *         optionalDeadline: "2024-01-15T09:30:00Z",
+ *         keyValue: {
+ *             "keyValue": "keyValue"
+ *         },
+ *         optionalString: "optionalString",
+ *         nestedUser: {
+ *             name: "name",
+ *             user: {
+ *                 name: "name",
+ *                 tags: ["tags", "tags"]
+ *             }
+ *         },
+ *         optionalUser: {
+ *             name: "name",
+ *             tags: ["tags", "tags"]
+ *         },
+ *         excludeUser: {
+ *             name: "name",
+ *             tags: ["tags", "tags"]
+ *         },
+ *         filter: "filter",
+ *         neighbor: {
+ *             name: "name",
+ *             tags: ["tags", "tags"]
+ *         },
+ *         neighborRequired: {
+ *             name: "name",
+ *             tags: ["tags", "tags"]
+ *         }
+ *     }
  */
 export interface SearchRequest {
-    filter?: SeedApi.SearchRequestFilter;
-    sort?: SeedApi.SearchRequestSort;
-    limit?: number;
-    after?: SeedApi.SearchRequestAfter;
-    tags?: string | string[];
+    limit: number;
+    id: string;
+    date: string;
+    deadline: string;
+    bytes: string;
+    user: SeedApi.User;
+    userList?: SeedApi.User | SeedApi.User[];
+    optionalDeadline?: string;
+    keyValue?: Record<string, string | undefined>;
+    optionalString?: string;
+    nestedUser?: SeedApi.NestedUser;
+    optionalUser?: SeedApi.User;
+    excludeUser?: SeedApi.User | SeedApi.User[];
+    filter?: string | string[];
+    neighbor?: SeedApi.SearchRequestNeighbor;
+    neighborRequired: SeedApi.SearchRequestNeighborRequired;
 }

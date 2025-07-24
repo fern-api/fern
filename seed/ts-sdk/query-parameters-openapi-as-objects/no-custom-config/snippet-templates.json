@@ -6,7 +6,7 @@
             "type": "typescript"
         },
         "endpointId": {
-            "path": "/search",
+            "path": "/user/getUsername",
             "method": "GET",
             "identifierOverride": "endpoint_.search"
         },
@@ -59,156 +59,6 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "filter: {\n\t\t\t$FERN_INPUT\n\t\t}",
-                                        "isOptional": true,
-                                        "inputDelimiter": ",\n\t\t\t",
-                                        "templateInputs": [
-                                            {
-                                                "value": {
-                                                    "imports": [],
-                                                    "templateString": "name: $FERN_INPUT",
-                                                    "isOptional": true,
-                                                    "templateInputs": [
-                                                        {
-                                                            "location": "QUERY",
-                                                            "path": "filter.name",
-                                                            "type": "payload"
-                                                        }
-                                                    ],
-                                                    "type": "generic"
-                                                },
-                                                "type": "template"
-                                            },
-                                            {
-                                                "value": {
-                                                    "imports": [],
-                                                    "templateString": "age: $FERN_INPUT",
-                                                    "isOptional": true,
-                                                    "templateInputs": [
-                                                        {
-                                                            "location": "QUERY",
-                                                            "path": "filter.age",
-                                                            "type": "payload"
-                                                        }
-                                                    ],
-                                                    "type": "generic"
-                                                },
-                                                "type": "template"
-                                            },
-                                            {
-                                                "value": {
-                                                    "imports": [],
-                                                    "templateString": "location: {\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
-                                                    "isOptional": true,
-                                                    "inputDelimiter": ",\n\t\t\t\t",
-                                                    "templateInputs": [
-                                                        {
-                                                            "value": {
-                                                                "imports": [],
-                                                                "templateString": "city: $FERN_INPUT",
-                                                                "isOptional": true,
-                                                                "templateInputs": [
-                                                                    {
-                                                                        "location": "QUERY",
-                                                                        "path": "filter.location.city",
-                                                                        "type": "payload"
-                                                                    }
-                                                                ],
-                                                                "type": "generic"
-                                                            },
-                                                            "type": "template"
-                                                        },
-                                                        {
-                                                            "value": {
-                                                                "imports": [],
-                                                                "templateString": "country: $FERN_INPUT",
-                                                                "isOptional": true,
-                                                                "templateInputs": [
-                                                                    {
-                                                                        "location": "QUERY",
-                                                                        "path": "filter.location.country",
-                                                                        "type": "payload"
-                                                                    }
-                                                                ],
-                                                                "type": "generic"
-                                                            },
-                                                            "type": "template"
-                                                        },
-                                                        {
-                                                            "value": {
-                                                                "imports": [],
-                                                                "templateString": "coordinates: {\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t}",
-                                                                "isOptional": true,
-                                                                "inputDelimiter": ",\n\t\t\t\t\t",
-                                                                "templateInputs": [
-                                                                    {
-                                                                        "value": {
-                                                                            "imports": [],
-                                                                            "templateString": "latitude: $FERN_INPUT",
-                                                                            "isOptional": true,
-                                                                            "templateInputs": [
-                                                                                {
-                                                                                    "location": "QUERY",
-                                                                                    "path": "filter.location.coordinates.latitude",
-                                                                                    "type": "payload"
-                                                                                }
-                                                                            ],
-                                                                            "type": "generic"
-                                                                        },
-                                                                        "type": "template"
-                                                                    },
-                                                                    {
-                                                                        "value": {
-                                                                            "imports": [],
-                                                                            "templateString": "longitude: $FERN_INPUT",
-                                                                            "isOptional": true,
-                                                                            "templateInputs": [
-                                                                                {
-                                                                                    "location": "QUERY",
-                                                                                    "path": "filter.location.coordinates.longitude",
-                                                                                    "type": "payload"
-                                                                                }
-                                                                            ],
-                                                                            "type": "generic"
-                                                                        },
-                                                                        "type": "template"
-                                                                    }
-                                                                ],
-                                                                "type": "generic"
-                                                            },
-                                                            "type": "template"
-                                                        }
-                                                    ],
-                                                    "type": "generic"
-                                                },
-                                                "type": "template"
-                                            }
-                                        ],
-                                        "type": "generic"
-                                    },
-                                    "type": "template"
-                                },
-                                {
-                                    "value": {
-                                        "imports": [],
-                                        "isOptional": true,
-                                        "values": {
-                                            "asc": "\"asc\"",
-                                            "desc": "\"desc\""
-                                        },
-                                        "templateString": "sort: $FERN_INPUT",
-                                        "templateInput": {
-                                            "location": "QUERY",
-                                            "path": "sort",
-                                            "type": "payload"
-                                        },
-                                        "type": "enum"
-                                    },
-                                    "type": "template"
-                                },
-                                {
-                                    "value": {
-                                        "imports": [],
                                         "templateString": "limit: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
@@ -225,27 +75,606 @@
                                 {
                                     "value": {
                                         "imports": [],
+                                        "templateString": "id: $FERN_INPUT",
                                         "isOptional": true,
-                                        "templateString": "after: $FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "QUERY",
+                                                "path": "id",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "date: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "QUERY",
+                                                "path": "date",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "deadline: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "QUERY",
+                                                "path": "deadline",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "bytes: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "QUERY",
+                                                "path": "bytes",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "user: {\n\t\t\t$FERN_INPUT\n\t\t}",
+                                        "isOptional": true,
+                                        "inputDelimiter": ",\n\t\t\t",
+                                        "templateInputs": [
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "name: $FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "QUERY",
+                                                            "path": "user.name",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            },
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "containerTemplateString": "tags: [\n\t\t\t\t$FERN_INPUT\n\t\t\t]",
+                                                    "delimiter": ",\n\t\t\t\t",
+                                                    "innerTemplate": {
+                                                        "imports": [],
+                                                        "templateString": "$FERN_INPUT",
+                                                        "isOptional": true,
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "RELATIVE",
+                                                                "type": "payload"
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    },
+                                                    "templateInput": {
+                                                        "location": "QUERY",
+                                                        "path": "user.tags",
+                                                        "type": "payload"
+                                                    },
+                                                    "type": "iterable"
+                                                },
+                                                "type": "template"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "userList: {\n\t\t\t$FERN_INPUT\n\t\t}",
+                                        "isOptional": true,
+                                        "inputDelimiter": ",\n\t\t\t",
+                                        "templateInputs": [
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "name: $FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "QUERY",
+                                                            "path": "userList.name",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            },
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "containerTemplateString": "tags: [\n\t\t\t\t$FERN_INPUT\n\t\t\t]",
+                                                    "delimiter": ",\n\t\t\t\t",
+                                                    "innerTemplate": {
+                                                        "imports": [],
+                                                        "templateString": "$FERN_INPUT",
+                                                        "isOptional": true,
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "RELATIVE",
+                                                                "type": "payload"
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    },
+                                                    "templateInput": {
+                                                        "location": "QUERY",
+                                                        "path": "userList.tags",
+                                                        "type": "payload"
+                                                    },
+                                                    "type": "iterable"
+                                                },
+                                                "type": "template"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "optionalDeadline: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "QUERY",
+                                                "path": "optionalDeadline",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "containerTemplateString": "keyValue: {\n\t\t\t$FERN_INPUT\n\t\t}",
+                                        "delimiter": ",\n\t\t\t",
+                                        "keyValueSeparator": ": ",
+                                        "keyTemplate": {
+                                            "imports": [],
+                                            "templateString": "$FERN_INPUT",
+                                            "isOptional": true,
+                                            "templateInputs": [
+                                                {
+                                                    "location": "RELATIVE",
+                                                    "type": "payload"
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        },
+                                        "valueTemplate": {
+                                            "imports": [],
+                                            "templateString": "$FERN_INPUT",
+                                            "isOptional": true,
+                                            "templateInputs": [
+                                                {
+                                                    "location": "RELATIVE",
+                                                    "type": "payload"
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        },
+                                        "templateInput": {
+                                            "location": "QUERY",
+                                            "path": "keyValue",
+                                            "type": "payload"
+                                        },
+                                        "type": "dict"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "optionalString: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "QUERY",
+                                                "path": "optionalString",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "nestedUser: {\n\t\t\t$FERN_INPUT\n\t\t}",
+                                        "isOptional": true,
+                                        "inputDelimiter": ",\n\t\t\t",
+                                        "templateInputs": [
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "name: $FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "QUERY",
+                                                            "path": "nestedUser.name",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            },
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "user: {\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
+                                                    "isOptional": true,
+                                                    "inputDelimiter": ",\n\t\t\t\t",
+                                                    "templateInputs": [
+                                                        {
+                                                            "value": {
+                                                                "imports": [],
+                                                                "templateString": "name: $FERN_INPUT",
+                                                                "isOptional": true,
+                                                                "templateInputs": [
+                                                                    {
+                                                                        "location": "QUERY",
+                                                                        "path": "nestedUser.user.name",
+                                                                        "type": "payload"
+                                                                    }
+                                                                ],
+                                                                "type": "generic"
+                                                            },
+                                                            "type": "template"
+                                                        },
+                                                        {
+                                                            "value": {
+                                                                "imports": [],
+                                                                "isOptional": true,
+                                                                "containerTemplateString": "tags: [\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t]",
+                                                                "delimiter": ",\n\t\t\t\t\t",
+                                                                "innerTemplate": {
+                                                                    "imports": [],
+                                                                    "templateString": "$FERN_INPUT",
+                                                                    "isOptional": true,
+                                                                    "templateInputs": [
+                                                                        {
+                                                                            "location": "RELATIVE",
+                                                                            "type": "payload"
+                                                                        }
+                                                                    ],
+                                                                    "type": "generic"
+                                                                },
+                                                                "templateInput": {
+                                                                    "location": "QUERY",
+                                                                    "path": "nestedUser.user.tags",
+                                                                    "type": "payload"
+                                                                },
+                                                                "type": "iterable"
+                                                            },
+                                                            "type": "template"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "optionalUser: {\n\t\t\t$FERN_INPUT\n\t\t}",
+                                        "isOptional": true,
+                                        "inputDelimiter": ",\n\t\t\t",
+                                        "templateInputs": [
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "name: $FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "QUERY",
+                                                            "path": "optionalUser.name",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            },
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "containerTemplateString": "tags: [\n\t\t\t\t$FERN_INPUT\n\t\t\t]",
+                                                    "delimiter": ",\n\t\t\t\t",
+                                                    "innerTemplate": {
+                                                        "imports": [],
+                                                        "templateString": "$FERN_INPUT",
+                                                        "isOptional": true,
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "RELATIVE",
+                                                                "type": "payload"
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    },
+                                                    "templateInput": {
+                                                        "location": "QUERY",
+                                                        "path": "optionalUser.tags",
+                                                        "type": "payload"
+                                                    },
+                                                    "type": "iterable"
+                                                },
+                                                "type": "template"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "excludeUser: {\n\t\t\t$FERN_INPUT\n\t\t}",
+                                        "isOptional": true,
+                                        "inputDelimiter": ",\n\t\t\t",
+                                        "templateInputs": [
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "name: $FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "QUERY",
+                                                            "path": "excludeUser.name",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            },
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "containerTemplateString": "tags: [\n\t\t\t\t$FERN_INPUT\n\t\t\t]",
+                                                    "delimiter": ",\n\t\t\t\t",
+                                                    "innerTemplate": {
+                                                        "imports": [],
+                                                        "templateString": "$FERN_INPUT",
+                                                        "isOptional": true,
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "RELATIVE",
+                                                                "type": "payload"
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    },
+                                                    "templateInput": {
+                                                        "location": "QUERY",
+                                                        "path": "excludeUser.tags",
+                                                        "type": "payload"
+                                                    },
+                                                    "type": "iterable"
+                                                },
+                                                "type": "template"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "filter: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "QUERY",
+                                                "path": "filter",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "neighbor: $FERN_INPUT",
                                         "members": [
                                             {
                                                 "template": {
                                                     "imports": [],
                                                     "templateString": "$FERN_INPUT",
                                                     "isOptional": true,
+                                                    "inputDelimiter": ",\n\t\t\t",
                                                     "templateInputs": [
                                                         {
-                                                            "location": "RELATIVE",
-                                                            "type": "payload"
+                                                            "value": {
+                                                                "imports": [],
+                                                                "templateString": "name: $FERN_INPUT",
+                                                                "isOptional": true,
+                                                                "templateInputs": [
+                                                                    {
+                                                                        "location": "RELATIVE",
+                                                                        "path": "name",
+                                                                        "type": "payload"
+                                                                    }
+                                                                ],
+                                                                "type": "generic"
+                                                            },
+                                                            "type": "template"
+                                                        },
+                                                        {
+                                                            "value": {
+                                                                "imports": [],
+                                                                "isOptional": true,
+                                                                "containerTemplateString": "tags: [\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t]",
+                                                                "delimiter": ",\n\t\t\t\t\t",
+                                                                "innerTemplate": {
+                                                                    "imports": [],
+                                                                    "templateString": "$FERN_INPUT",
+                                                                    "isOptional": true,
+                                                                    "templateInputs": [
+                                                                        {
+                                                                            "location": "RELATIVE",
+                                                                            "type": "payload"
+                                                                        }
+                                                                    ],
+                                                                    "type": "generic"
+                                                                },
+                                                                "templateInput": {
+                                                                    "location": "RELATIVE",
+                                                                    "path": "tags",
+                                                                    "type": "payload"
+                                                                },
+                                                                "type": "iterable"
+                                                            },
+                                                            "type": "template"
                                                         }
                                                     ],
                                                     "type": "generic"
                                                 },
                                                 "type": {
-                                                    "value": {
-                                                        "type": "integer"
-                                                    },
-                                                    "type": "primitive"
+                                                    "value": "type_:User",
+                                                    "type": "id"
+                                                }
+                                            },
+                                            {
+                                                "template": {
+                                                    "imports": [],
+                                                    "templateString": "$FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "inputDelimiter": ",\n\t\t\t",
+                                                    "templateInputs": [
+                                                        {
+                                                            "value": {
+                                                                "imports": [],
+                                                                "templateString": "name: $FERN_INPUT",
+                                                                "isOptional": true,
+                                                                "templateInputs": [
+                                                                    {
+                                                                        "location": "RELATIVE",
+                                                                        "path": "name",
+                                                                        "type": "payload"
+                                                                    }
+                                                                ],
+                                                                "type": "generic"
+                                                            },
+                                                            "type": "template"
+                                                        },
+                                                        {
+                                                            "value": {
+                                                                "imports": [],
+                                                                "templateString": "user: {\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t}",
+                                                                "isOptional": true,
+                                                                "inputDelimiter": ",\n\t\t\t\t\t",
+                                                                "templateInputs": [
+                                                                    {
+                                                                        "value": {
+                                                                            "imports": [],
+                                                                            "templateString": "name: $FERN_INPUT",
+                                                                            "isOptional": true,
+                                                                            "templateInputs": [
+                                                                                {
+                                                                                    "location": "RELATIVE",
+                                                                                    "path": "user.name",
+                                                                                    "type": "payload"
+                                                                                }
+                                                                            ],
+                                                                            "type": "generic"
+                                                                        },
+                                                                        "type": "template"
+                                                                    },
+                                                                    {
+                                                                        "value": {
+                                                                            "imports": [],
+                                                                            "isOptional": true,
+                                                                            "containerTemplateString": "tags: [\n\t\t\t\t\t\t$FERN_INPUT\n\t\t\t\t\t]",
+                                                                            "delimiter": ",\n\t\t\t\t\t\t",
+                                                                            "innerTemplate": {
+                                                                                "imports": [],
+                                                                                "templateString": "$FERN_INPUT",
+                                                                                "isOptional": true,
+                                                                                "templateInputs": [
+                                                                                    {
+                                                                                        "location": "RELATIVE",
+                                                                                        "type": "payload"
+                                                                                    }
+                                                                                ],
+                                                                                "type": "generic"
+                                                                            },
+                                                                            "templateInput": {
+                                                                                "location": "RELATIVE",
+                                                                                "path": "user.tags",
+                                                                                "type": "payload"
+                                                                            },
+                                                                            "type": "iterable"
+                                                                        },
+                                                                        "type": "template"
+                                                                    }
+                                                                ],
+                                                                "type": "generic"
+                                                            },
+                                                            "type": "template"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": {
+                                                    "value": "type_:NestedUser",
+                                                    "type": "id"
                                                 }
                                             },
                                             {
@@ -267,11 +696,31 @@
                                                     },
                                                     "type": "primitive"
                                                 }
+                                            },
+                                            {
+                                                "template": {
+                                                    "imports": [],
+                                                    "templateString": "$FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "RELATIVE",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": {
+                                                    "value": {
+                                                        "type": "integer"
+                                                    },
+                                                    "type": "primitive"
+                                                }
                                             }
                                         ],
                                         "templateInput": {
                                             "location": "QUERY",
-                                            "path": "after",
+                                            "path": "neighbor",
                                             "type": "payload"
                                         },
                                         "type": "union_v2"
@@ -281,16 +730,200 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "tags: $FERN_INPUT",
                                         "isOptional": true,
-                                        "templateInputs": [
+                                        "templateString": "neighborRequired: $FERN_INPUT",
+                                        "members": [
                                             {
-                                                "location": "QUERY",
-                                                "path": "tags",
-                                                "type": "payload"
+                                                "template": {
+                                                    "imports": [],
+                                                    "templateString": "$FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "inputDelimiter": ",\n\t\t\t",
+                                                    "templateInputs": [
+                                                        {
+                                                            "value": {
+                                                                "imports": [],
+                                                                "templateString": "name: $FERN_INPUT",
+                                                                "isOptional": true,
+                                                                "templateInputs": [
+                                                                    {
+                                                                        "location": "RELATIVE",
+                                                                        "path": "name",
+                                                                        "type": "payload"
+                                                                    }
+                                                                ],
+                                                                "type": "generic"
+                                                            },
+                                                            "type": "template"
+                                                        },
+                                                        {
+                                                            "value": {
+                                                                "imports": [],
+                                                                "isOptional": true,
+                                                                "containerTemplateString": "tags: [\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t]",
+                                                                "delimiter": ",\n\t\t\t\t\t",
+                                                                "innerTemplate": {
+                                                                    "imports": [],
+                                                                    "templateString": "$FERN_INPUT",
+                                                                    "isOptional": true,
+                                                                    "templateInputs": [
+                                                                        {
+                                                                            "location": "RELATIVE",
+                                                                            "type": "payload"
+                                                                        }
+                                                                    ],
+                                                                    "type": "generic"
+                                                                },
+                                                                "templateInput": {
+                                                                    "location": "RELATIVE",
+                                                                    "path": "tags",
+                                                                    "type": "payload"
+                                                                },
+                                                                "type": "iterable"
+                                                            },
+                                                            "type": "template"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": {
+                                                    "value": "type_:User",
+                                                    "type": "id"
+                                                }
+                                            },
+                                            {
+                                                "template": {
+                                                    "imports": [],
+                                                    "templateString": "$FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "inputDelimiter": ",\n\t\t\t",
+                                                    "templateInputs": [
+                                                        {
+                                                            "value": {
+                                                                "imports": [],
+                                                                "templateString": "name: $FERN_INPUT",
+                                                                "isOptional": true,
+                                                                "templateInputs": [
+                                                                    {
+                                                                        "location": "RELATIVE",
+                                                                        "path": "name",
+                                                                        "type": "payload"
+                                                                    }
+                                                                ],
+                                                                "type": "generic"
+                                                            },
+                                                            "type": "template"
+                                                        },
+                                                        {
+                                                            "value": {
+                                                                "imports": [],
+                                                                "templateString": "user: {\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t}",
+                                                                "isOptional": true,
+                                                                "inputDelimiter": ",\n\t\t\t\t\t",
+                                                                "templateInputs": [
+                                                                    {
+                                                                        "value": {
+                                                                            "imports": [],
+                                                                            "templateString": "name: $FERN_INPUT",
+                                                                            "isOptional": true,
+                                                                            "templateInputs": [
+                                                                                {
+                                                                                    "location": "RELATIVE",
+                                                                                    "path": "user.name",
+                                                                                    "type": "payload"
+                                                                                }
+                                                                            ],
+                                                                            "type": "generic"
+                                                                        },
+                                                                        "type": "template"
+                                                                    },
+                                                                    {
+                                                                        "value": {
+                                                                            "imports": [],
+                                                                            "isOptional": true,
+                                                                            "containerTemplateString": "tags: [\n\t\t\t\t\t\t$FERN_INPUT\n\t\t\t\t\t]",
+                                                                            "delimiter": ",\n\t\t\t\t\t\t",
+                                                                            "innerTemplate": {
+                                                                                "imports": [],
+                                                                                "templateString": "$FERN_INPUT",
+                                                                                "isOptional": true,
+                                                                                "templateInputs": [
+                                                                                    {
+                                                                                        "location": "RELATIVE",
+                                                                                        "type": "payload"
+                                                                                    }
+                                                                                ],
+                                                                                "type": "generic"
+                                                                            },
+                                                                            "templateInput": {
+                                                                                "location": "RELATIVE",
+                                                                                "path": "user.tags",
+                                                                                "type": "payload"
+                                                                            },
+                                                                            "type": "iterable"
+                                                                        },
+                                                                        "type": "template"
+                                                                    }
+                                                                ],
+                                                                "type": "generic"
+                                                            },
+                                                            "type": "template"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": {
+                                                    "value": "type_:NestedUser",
+                                                    "type": "id"
+                                                }
+                                            },
+                                            {
+                                                "template": {
+                                                    "imports": [],
+                                                    "templateString": "$FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "RELATIVE",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": {
+                                                    "value": {
+                                                        "type": "string"
+                                                    },
+                                                    "type": "primitive"
+                                                }
+                                            },
+                                            {
+                                                "template": {
+                                                    "imports": [],
+                                                    "templateString": "$FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "RELATIVE",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": {
+                                                    "value": {
+                                                        "type": "integer"
+                                                    },
+                                                    "type": "primitive"
+                                                }
                                             }
                                         ],
-                                        "type": "generic"
+                                        "templateInput": {
+                                            "location": "QUERY",
+                                            "path": "neighborRequired",
+                                            "type": "payload"
+                                        },
+                                        "type": "union_v2"
                                     },
                                     "type": "template"
                                 }
