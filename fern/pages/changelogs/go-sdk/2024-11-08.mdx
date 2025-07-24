@@ -1,0 +1,10 @@
+## 0.30.0
+**`(feat):`** Add support for nil-safe getter methods. Callers can more easily access nested properties by chaining together getter method calls instead of a long series of `!= nil` checks.
+
+## 0.29.0
+**`(feat):`** All SDKs now include an exported `FileParam` type that can be used to configure the `Content-Type` of file upload properties.
+
+**`(fix):`** Resolves an issue where multipart/form-data lists were incorrectly serialized as JSON. They are now added as individual parts.
+
+**`(internal):`** Refactor file upload endpoint generation with the new `core.MultipartWriter`. This significantly improves the aesthetics of the generated code.
+

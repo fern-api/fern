@@ -1,0 +1,4 @@
+## 0.14.2
+**`(fix):`** This updates the PHP generator to better support undiscriminated unions that define one or more `optional` types.
+With this, the generator unwraps each of the optional types, and includes a `|null` variant (e.g. `array<string, mixed>|Metadata|null`).
+

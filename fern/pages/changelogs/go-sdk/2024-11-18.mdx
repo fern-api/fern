@@ -1,0 +1,16 @@
+## 0.32.0
+**`(feat):`** Add support for the `inlineFileProperties` configuration option, which generates file properties in the generated request type instead of as separate positional parameters.
+```yaml # generators.yml
+- name: fern-api/fern-go-sdk
+  version: 0.32.0
+  config:
+    inlineFileProperties: true
+```
+
+**`(fix):`** Fixes an issue where the new `core.MultipartWriter` was generated for SDKs that didn't define any file upload endpoints.
+
+**`(internal):`** Simplify the generated code from the new `core.MultipartWriter` introduced in 0.29.0 by refactoring `internal.WithMultipartContentType` as `internal.WithDefaultContentType`.
+
+## 0.31.3
+**`(fix):`** Updates the retrier to stop retrying on `409 Conflict` HTTP status codes by default.
+

@@ -1,0 +1,53 @@
+## 0.10.0
+**`(feat):`** You can now modify the generated `composer.json` file by adding a `composerJson` property to your generator configuration.
+Here's an example of the `generators.yml` file with the `composerJson` property:
+```yaml generators.yml ... groups:
+  php-sdk:
+    generators:
+      - name: fernapi/fern-php-sdk
+        ...
+        config:
+          composerJson:
+            description: This is my PHP library
+            keywords:
+            - myCustomTag
+            license:
+            - "LGPL-2.1-only"
+            - "GPL-3.0-or-later"
+            scripts:
+              hello: echo hello
+```
+Which will result in the following composer.json file:
+```jsonc composer.json {
+  // ...,
+  "description": "This is my PHP library",
+  "keywords": [
+    "myCustomTag",
+    // ...,
+  ],
+  "license": [
+    "LGPL-2.1-only",
+    "GPL-3.0-or-later"
+  ],
+  // ...,
+  "scripts": {
+    // ...,
+    "hello": "echo hello"
+  }
+} ```
+
+## 0.9.0
+**`(feat):`** Add the ability to access alpha or undocumented response properties from every class. Users can access the additional properties like so:
+```php $response = $client->users->get(...); $additionalProperties = $response->getAdditionalProperties(); ```
+
+## 0.8.0
+**`(feat):`** Add automatic pagination support for endpoints that return a paginated response.
+Here's an example of how users can use paginated endpoints:
+```php $items = $client->list($request); foreach($items as $item){
+    echo $item;
+} $pages = $items->getPages(); foreach($pages as $page){
+    foreach($page as $item){
+        echo $item;
+    }
+} ```
+
