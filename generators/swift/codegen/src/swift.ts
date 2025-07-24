@@ -6,6 +6,7 @@ import {
     FunctionArgument,
     FunctionParameter,
     Initializer,
+    LineBreak,
     Method,
     Property,
     Struct
@@ -37,6 +38,9 @@ export function functionParameter(args: FunctionParameter.Args): FunctionParamet
 
 export function initializer(args: Initializer.Args): Initializer {
     return new Initializer(args);
+}
+export function lineBreak(): LineBreak {
+    return LineBreak.single();
 }
 
 export function method(args: Method.Args): Method {
