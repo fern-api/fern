@@ -7,7 +7,7 @@ import com.seed.serverSentEvents.core.ClientOptions;
 import com.seed.serverSentEvents.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class SeedServerSentEventsClientBuilder {
+public class SeedServerSentEventsClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private Environment environment;
@@ -41,8 +41,12 @@ public final class SeedServerSentEventsClientBuilder {
         return this;
     }
 
-    public SeedServerSentEventsClient build() {
+    protected ClientOptions buildClientOptions() {
         clientOptionsBuilder.environment(this.environment);
-        return new SeedServerSentEventsClient(clientOptionsBuilder.build());
+        return clientOptionsBuilder.build();
+    }
+
+    public SeedServerSentEventsClient build() {
+        return new SeedServerSentEventsClient(buildClientOptions());
     }
 }

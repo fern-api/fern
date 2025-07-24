@@ -7,7 +7,7 @@ import com.seed.license.core.ClientOptions;
 import com.seed.license.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class AsyncSeedLicenseClientBuilder {
+public class AsyncSeedLicenseClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private Environment environment;
@@ -41,8 +41,12 @@ public final class AsyncSeedLicenseClientBuilder {
         return this;
     }
 
-    public AsyncSeedLicenseClient build() {
+    protected ClientOptions buildClientOptions() {
         clientOptionsBuilder.environment(this.environment);
-        return new AsyncSeedLicenseClient(clientOptionsBuilder.build());
+        return clientOptionsBuilder.build();
+    }
+
+    public AsyncSeedLicenseClient build() {
+        return new AsyncSeedLicenseClient(buildClientOptions());
     }
 }

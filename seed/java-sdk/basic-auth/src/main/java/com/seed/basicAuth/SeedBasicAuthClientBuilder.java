@@ -8,7 +8,7 @@ import com.seed.basicAuth.core.Environment;
 import java.util.Base64;
 import okhttp3.OkHttpClient;
 
-public final class SeedBasicAuthClientBuilder {
+public class SeedBasicAuthClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private String username = null;
@@ -52,6 +52,11 @@ public final class SeedBasicAuthClientBuilder {
         return this;
     }
 
+    protected ClientOptions buildClientOptions() {
+        clientOptionsBuilder.environment(this.environment);
+        return clientOptionsBuilder.build();
+    }
+
     public SeedBasicAuthClient build() {
         if (this.username == null) {
             throw new RuntimeException("Please provide username");
@@ -62,7 +67,6 @@ public final class SeedBasicAuthClientBuilder {
         String unencodedToken = username + ":" + password;
         String encodedToken = Base64.getEncoder().encodeToString(unencodedToken.getBytes());
         this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + encodedToken);
-        clientOptionsBuilder.environment(this.environment);
-        return new SeedBasicAuthClient(clientOptionsBuilder.build());
+        return new SeedBasicAuthClient(buildClientOptions());
     }
 }

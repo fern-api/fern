@@ -7,7 +7,7 @@ import com.seed.deepCursorPath.core.ClientOptions;
 import com.seed.deepCursorPath.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class SeedDeepCursorPathClientBuilder {
+public class SeedDeepCursorPathClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private Environment environment;
@@ -41,8 +41,12 @@ public final class SeedDeepCursorPathClientBuilder {
         return this;
     }
 
-    public SeedDeepCursorPathClient build() {
+    protected ClientOptions buildClientOptions() {
         clientOptionsBuilder.environment(this.environment);
-        return new SeedDeepCursorPathClient(clientOptionsBuilder.build());
+        return clientOptionsBuilder.build();
+    }
+
+    public SeedDeepCursorPathClient build() {
+        return new SeedDeepCursorPathClient(buildClientOptions());
     }
 }

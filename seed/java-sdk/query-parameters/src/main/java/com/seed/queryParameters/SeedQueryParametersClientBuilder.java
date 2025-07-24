@@ -7,7 +7,7 @@ import com.seed.queryParameters.core.ClientOptions;
 import com.seed.queryParameters.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class SeedQueryParametersClientBuilder {
+public class SeedQueryParametersClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private Environment environment;
@@ -41,8 +41,12 @@ public final class SeedQueryParametersClientBuilder {
         return this;
     }
 
-    public SeedQueryParametersClient build() {
+    protected ClientOptions buildClientOptions() {
         clientOptionsBuilder.environment(this.environment);
-        return new SeedQueryParametersClient(clientOptionsBuilder.build());
+        return clientOptionsBuilder.build();
+    }
+
+    public SeedQueryParametersClient build() {
+        return new SeedQueryParametersClient(buildClientOptions());
     }
 }

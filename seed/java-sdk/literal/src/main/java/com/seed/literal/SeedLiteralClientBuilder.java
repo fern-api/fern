@@ -7,7 +7,7 @@ import com.seed.literal.core.ClientOptions;
 import com.seed.literal.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class SeedLiteralClientBuilder {
+public class SeedLiteralClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private String version = "02-02-2024";
@@ -61,10 +61,14 @@ public final class SeedLiteralClientBuilder {
         return this;
     }
 
+    protected ClientOptions buildClientOptions() {
+        clientOptionsBuilder.environment(this.environment);
+        return clientOptionsBuilder.build();
+    }
+
     public SeedLiteralClient build() {
         this.clientOptionsBuilder.addHeader("X-API-Version", this.version);
         this.clientOptionsBuilder.addHeader("X-API-Enable-Audit-Logging", this.auditLogging);
-        clientOptionsBuilder.environment(this.environment);
-        return new SeedLiteralClient(clientOptionsBuilder.build());
+        return new SeedLiteralClient(buildClientOptions());
     }
 }

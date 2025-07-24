@@ -7,7 +7,7 @@ import com.customprefix.core.ClientOptions;
 import com.customprefix.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class AsyncSeedApiClientBuilder {
+public class AsyncSeedApiClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private String token = null;
@@ -51,9 +51,13 @@ public final class AsyncSeedApiClientBuilder {
         return this;
     }
 
+    protected ClientOptions buildClientOptions() {
+        clientOptionsBuilder.environment(this.environment);
+        return clientOptionsBuilder.build();
+    }
+
     public AsyncSeedApiClient build() {
         this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + this.token);
-        clientOptionsBuilder.environment(this.environment);
-        return new AsyncSeedApiClient(clientOptionsBuilder.build());
+        return new AsyncSeedApiClient(buildClientOptions());
     }
 }

@@ -7,7 +7,7 @@ import com.seed.validation.core.ClientOptions;
 import com.seed.validation.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class AsyncSeedValidationClientBuilder {
+public class AsyncSeedValidationClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private Environment environment;
@@ -41,8 +41,12 @@ public final class AsyncSeedValidationClientBuilder {
         return this;
     }
 
-    public AsyncSeedValidationClient build() {
+    protected ClientOptions buildClientOptions() {
         clientOptionsBuilder.environment(this.environment);
-        return new AsyncSeedValidationClient(clientOptionsBuilder.build());
+        return clientOptionsBuilder.build();
+    }
+
+    public AsyncSeedValidationClient build() {
+        return new AsyncSeedValidationClient(buildClientOptions());
     }
 }

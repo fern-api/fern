@@ -7,7 +7,7 @@ import com.seed.idempotencyHeaders.core.ClientOptions;
 import com.seed.idempotencyHeaders.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class SeedIdempotencyHeadersClientBuilder {
+public class SeedIdempotencyHeadersClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private String token = null;
@@ -51,12 +51,16 @@ public final class SeedIdempotencyHeadersClientBuilder {
         return this;
     }
 
+    protected ClientOptions buildClientOptions() {
+        clientOptionsBuilder.environment(this.environment);
+        return clientOptionsBuilder.build();
+    }
+
     public SeedIdempotencyHeadersClient build() {
         if (token == null) {
             throw new RuntimeException("Please provide token");
         }
         this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + this.token);
-        clientOptionsBuilder.environment(this.environment);
-        return new SeedIdempotencyHeadersClient(clientOptionsBuilder.build());
+        return new SeedIdempotencyHeadersClient(buildClientOptions());
     }
 }

@@ -9,7 +9,7 @@ import com.seed.anyAuth.core.OAuthTokenSupplier;
 import com.seed.anyAuth.resources.auth.AuthClient;
 import okhttp3.OkHttpClient;
 
-public final class SeedAnyAuthClientBuilder {
+public class SeedAnyAuthClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private String token = System.getenv("MY_TOKEN");
@@ -87,6 +87,11 @@ public final class SeedAnyAuthClientBuilder {
         return this;
     }
 
+    protected ClientOptions buildClientOptions() {
+        clientOptionsBuilder.environment(this.environment);
+        return clientOptionsBuilder.build();
+    }
+
     public SeedAnyAuthClient build() {
         this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + this.token);
         if (apiKey == null) {
@@ -97,7 +102,6 @@ public final class SeedAnyAuthClientBuilder {
                 ClientOptions.builder().environment(this.environment).build());
         OAuthTokenSupplier oAuthTokenSupplier = new OAuthTokenSupplier(clientId, clientSecret, authClient);
         this.clientOptionsBuilder.addHeader("Authorization", oAuthTokenSupplier);
-        clientOptionsBuilder.environment(this.environment);
-        return new SeedAnyAuthClient(clientOptionsBuilder.build());
+        return new SeedAnyAuthClient(buildClientOptions());
     }
 }

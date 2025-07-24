@@ -7,7 +7,7 @@ import com.seed.streaming.core.ClientOptions;
 import com.seed.streaming.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class SeedStreamingClientBuilder {
+public class SeedStreamingClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private Environment environment;
@@ -41,8 +41,12 @@ public final class SeedStreamingClientBuilder {
         return this;
     }
 
-    public SeedStreamingClient build() {
+    protected ClientOptions buildClientOptions() {
         clientOptionsBuilder.environment(this.environment);
-        return new SeedStreamingClient(clientOptionsBuilder.build());
+        return clientOptionsBuilder.build();
+    }
+
+    public SeedStreamingClient build() {
+        return new SeedStreamingClient(buildClientOptions());
     }
 }

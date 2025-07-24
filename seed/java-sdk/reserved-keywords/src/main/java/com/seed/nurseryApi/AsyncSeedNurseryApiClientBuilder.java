@@ -7,7 +7,7 @@ import com.seed.nurseryApi.core.ClientOptions;
 import com.seed.nurseryApi.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class AsyncSeedNurseryApiClientBuilder {
+public class AsyncSeedNurseryApiClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private Environment environment;
@@ -41,8 +41,12 @@ public final class AsyncSeedNurseryApiClientBuilder {
         return this;
     }
 
-    public AsyncSeedNurseryApiClient build() {
+    protected ClientOptions buildClientOptions() {
         clientOptionsBuilder.environment(this.environment);
-        return new AsyncSeedNurseryApiClient(clientOptionsBuilder.build());
+        return clientOptionsBuilder.build();
+    }
+
+    public AsyncSeedNurseryApiClient build() {
+        return new AsyncSeedNurseryApiClient(buildClientOptions());
     }
 }
