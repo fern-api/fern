@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.6.2
+  changelogEntry:
+    - summary: |
+        Update form-data version to 4.0.4 to avoid vulnerability.
+      type: chore
+  createdAt: "2025-07-24"
+  irVersion: 58
+
 - version: 2.6.1
   changelogEntry:
     - summary: |
