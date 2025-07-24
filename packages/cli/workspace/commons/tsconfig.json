@@ -1,7 +1,6 @@
 {
   "extends": "@fern-api/configs/tsconfig/main.json",
   "compilerOptions": {
-    "sourceMap": true,
     "composite": true,
     "outDir": "lib",
     "rootDir": "src"
