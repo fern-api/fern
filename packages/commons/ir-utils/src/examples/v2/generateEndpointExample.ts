@@ -54,6 +54,43 @@ const addExampleToStore = ({
     return false;
 };
 
+function maybeCreateAndStoreExample({
+    key,
+    displayName,
+    request,
+    response,
+    exampleStore,
+    userOrAutoStore
+}: {
+    key: string;
+    displayName: string;
+    request: V2HttpEndpointRequest;
+    response: V2HttpEndpointResponse;
+    exampleStore: Map<string, V2HttpEndpointExample>;
+    userOrAutoStore: Record<string, V2HttpEndpointExample>;
+}): boolean {
+    if (!exampleStore.has(key)) {
+        const example: V2HttpEndpointExample = {
+            displayName,
+            request,
+            response,
+            codeSamples: undefined
+        };
+
+        userOrAutoStore[key] = example;
+
+        addExampleToStore({
+            exampleStore,
+            key,
+            example
+        });
+
+        return true;
+    }
+
+    return false;
+}
+
 export function generateEndpointExample({
     endpoint,
     ir,
@@ -125,43 +162,6 @@ export function generateEndpointExample({
     };
 }
 
-function maybeCreateAndStoreExample({
-    key,
-    displayName,
-    request,
-    response,
-    exampleStore,
-    userOrAutoStore
-}: {
-    key: string;
-    displayName: string;
-    request: V2HttpEndpointRequest;
-    response: V2HttpEndpointResponse;
-    exampleStore: Map<string, V2HttpEndpointExample>;
-    userOrAutoStore: Record<string, V2HttpEndpointExample>;
-}): boolean {
-    if (!exampleStore.has(key)) {
-        const example: V2HttpEndpointExample = {
-            displayName,
-            request,
-            response,
-            codeSamples: undefined
-        };
-
-        userOrAutoStore[key] = example;
-
-        addExampleToStore({
-            exampleStore,
-            key,
-            example
-        });
-
-        return true;
-    }
-
-    return false;
-}
-
 function createExamplesForResponseStatusCodes({
     endpoint,
     userRequestExamples,
@@ -174,7 +174,7 @@ function createExamplesForResponseStatusCodes({
     autoResults,
     exampleStore
 }: {
-    endpoint: any;
+    endpoint: HttpEndpoint;
     userRequestExamples: Record<string, V2HttpEndpointRequest>;
     baseRequestExample: V2HttpEndpointRequest;
     firstUserRequestName: string | undefined;
@@ -203,6 +203,7 @@ function createExamplesForResponseStatusCodes({
         const firstAutoResponseName = Object.keys(autoResponseExamples)[0];
         const firstAutoResponseExample = Object.values(autoResponseExamples)[0];
 
+        // Create response example from user-specified example
         for (const [name, responseExample] of Object.entries(userResponseExamples)) {
             let key: string;
             let requestExampleToUse: V2HttpEndpointRequest;
@@ -232,6 +233,7 @@ function createExamplesForResponseStatusCodes({
             }
         }
 
+        // Create response example from auto-generated example if no user-specified examples were created
         if (!examplesCreatedForResponse) {
             const fallbackExampleDisplayName = camelCase(`${endpoint.name.originalName}_example`);
             if (firstUserRequestName && firstUserRequestExample) {
@@ -267,7 +269,7 @@ function createExamplesForRemainingUserRequests({
     userResults,
     exampleStore
 }: {
-    endpoint: any;
+    endpoint: HttpEndpoint;
     userRequestExamples: Record<string, V2HttpEndpointRequest>;
     requestExamplesUsed: Set<string>;
     userResults: Record<string, V2HttpEndpointExample>;
