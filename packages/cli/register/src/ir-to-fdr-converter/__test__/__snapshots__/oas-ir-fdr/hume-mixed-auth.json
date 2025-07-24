@@ -3135,6 +3135,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "deleteToolVersionExample",
               "description": "",
               "path": "/v0/evi/tools/id",
               "pathParameters": {
@@ -3143,6 +3144,22 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "name": "deleteToolVersionExample",
+              "description": "",
+              "path": "/v0/evi/tools/id",
+              "pathParameters": {
+                "id": "id"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 204,
               "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
@@ -3479,6 +3496,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "deleteToolVersion1Example",
               "description": "",
               "path": "/v0/evi/tools/id/version/1",
               "pathParameters": {
@@ -3488,6 +3506,23 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "name": "deleteToolVersion1Example",
+              "description": "",
+              "path": "/v0/evi/tools/id/version/1",
+              "pathParameters": {
+                "id": "id",
+                "version": 1
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 204,
               "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
@@ -4167,6 +4202,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "deletePromptVersionExample",
               "description": "",
               "path": "/v0/evi/prompts/id",
               "pathParameters": {
@@ -4175,6 +4211,22 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "name": "deletePromptVersionExample",
+              "description": "",
+              "path": "/v0/evi/prompts/id",
+              "pathParameters": {
+                "id": "id"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 204,
               "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
@@ -4511,6 +4563,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "deletePromptVersion1Example",
               "description": "",
               "path": "/v0/evi/prompts/id/version/1",
               "pathParameters": {
@@ -4520,6 +4573,23 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "name": "deletePromptVersion1Example",
+              "description": "",
+              "path": "/v0/evi/prompts/id/version/1",
+              "pathParameters": {
+                "id": "id",
+                "version": 1
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 204,
               "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
@@ -5147,6 +5217,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "deleteCustomVoiceExample",
               "description": "",
               "path": "/v0/evi/custom_voices/id",
               "pathParameters": {
@@ -5155,6 +5226,22 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "name": "deleteCustomVoiceExample",
+              "description": "",
+              "path": "/v0/evi/custom_voices/id",
+              "pathParameters": {
+                "id": "id"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 204,
               "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
@@ -5823,6 +5910,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "deleteConfigExample",
               "description": "",
               "path": "/v0/evi/configs/id",
               "pathParameters": {
@@ -5831,6 +5919,22 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "name": "deleteConfigExample",
+              "description": "",
+              "path": "/v0/evi/configs/id",
+              "pathParameters": {
+                "id": "id"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 204,
               "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
@@ -6167,6 +6271,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "deleteConfigVersionExample",
               "description": "",
               "path": "/v0/evi/configs/id/version/1",
               "pathParameters": {
@@ -6176,6 +6281,23 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "name": "deleteConfigVersionExample",
+              "description": "",
+              "path": "/v0/evi/configs/id/version/1",
+              "pathParameters": {
+                "id": "id",
+                "version": 1
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 204,
               "responseBody": {},
               "responseBodyV3": {
                 "type": "json",

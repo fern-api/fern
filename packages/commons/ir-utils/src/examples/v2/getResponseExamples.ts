@@ -1,21 +1,36 @@
 import { assertNever } from "@fern-api/core-utils";
-import { HttpEndpoint, V2HttpEndpointResponse, V2HttpEndpointResponseBody, V2SchemaExample } from "@fern-api/ir-sdk";
+import {
+    HttpEndpoint,
+    HttpResponse,
+    V2HttpEndpointResponse,
+    V2HttpEndpointResponseBody,
+    V2SchemaExample
+} from "@fern-api/ir-sdk";
 
 import { getV2Examples } from "./getV2Examples";
 
-export function getResponseExamples({ endpoint }: { endpoint: HttpEndpoint }): {
+export function getResponseExamples({
+    endpoint,
+    responseObject
+}: {
+    endpoint: HttpEndpoint;
+    responseObject?: HttpResponse;
+}): {
     userResponseExamples: Record<string, V2HttpEndpointResponse>;
     autoResponseExamples: Record<string, V2HttpEndpointResponse>;
     baseExample: V2HttpEndpointResponse;
 } {
+    const endpointResponse = responseObject !== undefined ? responseObject : endpoint.response;
+
     const userResponseExamples: Record<string, V2HttpEndpointResponse> = {};
     const autoResponseExamples: Record<string, V2HttpEndpointResponse> = {};
     const baseResponseExample: V2HttpEndpointResponse = {
-        statusCode: endpoint.response?.statusCode,
+        statusCode: endpointResponse?.statusCode,
         body: undefined,
         docs: undefined
     };
-    if (endpoint.response == null) {
+
+    if (endpointResponse == null) {
         return {
             userResponseExamples: {},
             autoResponseExamples: {},
@@ -23,7 +38,7 @@ export function getResponseExamples({ endpoint }: { endpoint: HttpEndpoint }): {
         };
     }
 
-    if (endpoint.response.body == null) {
+    if (endpointResponse.body == null) {
         // For OpenRPC endpoints with no body, still return a JSON-RPC response format
         if (endpoint.source?.type === "openrpc") {
             return {
@@ -41,13 +56,13 @@ export function getResponseExamples({ endpoint }: { endpoint: HttpEndpoint }): {
             baseExample: baseResponseExample
         };
     }
-    switch (endpoint.response.body.type) {
+    switch (endpointResponse.body.type) {
         case "bytes":
             break;
         case "fileDownload":
             break;
         case "text": {
-            const textBody = endpoint.response.body;
+            const textBody = endpointResponse.body;
             const { userExamples, autoExamples } = getV2Examples(textBody.v2Examples);
             for (const [name, example] of Object.entries(userExamples)) {
                 const wrappedExample = endpoint.source?.type === "openrpc" ? wrapAsJsonRpcResponse(example) : example;
@@ -66,7 +81,7 @@ export function getResponseExamples({ endpoint }: { endpoint: HttpEndpoint }): {
             break;
         }
         case "json": {
-            const jsonBody = endpoint.response.body.value;
+            const jsonBody = endpointResponse.body.value;
             if (jsonBody.type === "response") {
                 const { userExamples, autoExamples } = getV2Examples(jsonBody.v2Examples);
                 for (const [name, example] of Object.entries(userExamples)) {
@@ -89,7 +104,7 @@ export function getResponseExamples({ endpoint }: { endpoint: HttpEndpoint }): {
             break;
         }
         case "streaming": {
-            const jsonBody = endpoint.response.body.value;
+            const jsonBody = endpointResponse.body.value;
             if (jsonBody.type === "json") {
                 const { userExamples, autoExamples } = getV2Examples(jsonBody.v2Examples);
                 for (const [name, example] of Object.entries(userExamples)) {
@@ -110,7 +125,7 @@ export function getResponseExamples({ endpoint }: { endpoint: HttpEndpoint }): {
         case "streamParameter":
             break;
         default: {
-            assertNever(endpoint.response.body);
+            assertNever(endpointResponse.body);
         }
     }
     return {
