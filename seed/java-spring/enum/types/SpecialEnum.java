@@ -28,7 +28,7 @@ public enum SpecialEnum {
 
   K("Hello\\vWorld"),
 
-  L("Hello\\0World"),
+  L("Hello\\x00World"),
 
   M("Hello\\u0007World"),
 
@@ -44,7 +44,7 @@ public enum SpecialEnum {
 
   S("Line 1\\n\"Quote\"\\tTab\\\\Backslash\\r\\nLine 2\\0Null"),
 
-  T("\\n\\r\\t\\0\\u0008\\f\\v\\u0007"),
+  T("\\n\\r\\t\\x00\\u0008\\f\\v\\u0007"),
 
   U("Hello 世界"),
 
