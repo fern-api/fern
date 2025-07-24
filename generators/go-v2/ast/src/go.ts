@@ -1,4 +1,5 @@
 import {
+    Alias,
     CodeBlock,
     Enum,
     Field,
@@ -15,6 +16,10 @@ import {
     Struct,
     Switch
 } from "./ast";
+
+export function alias(args: Alias.Args): Alias {
+    return new Alias(args);
+}
 
 export function codeblock(arg: CodeBlock.Arg): CodeBlock {
     return new CodeBlock(arg);
@@ -78,6 +83,7 @@ export function typeReference(args: GoTypeReference.Args): GoTypeReference {
 
 export { AstNode } from "./ast/core/AstNode";
 export {
+    Alias,
     CodeBlock,
     Enum,
     Field,

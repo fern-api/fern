@@ -1,3 +1,4 @@
+export { Alias } from "./Alias";
 export { CodeBlock } from "./CodeBlock";
 export { Writer } from "./core/Writer";
 export { Enum } from "./Enum";

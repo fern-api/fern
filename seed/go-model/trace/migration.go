@@ -3,32 +3,39 @@
 package trace
 
 import (
-	fmt "fmt"
+    fmt "fmt"
 )
+
 
 type MigrationStatus string
 
 const (
-	// The migration is running
-	MigrationStatusRunning = "RUNNING"
-	// The migration is failed
-	MigrationStatusFailed   = "FAILED"
-	MigrationStatusFinished = "FINISHED"
+    // The migration is running
+    MigrationStatusRunning = "RUNNING"
+    // The migration is failed
+    MigrationStatusFailed = "FAILED"
+    MigrationStatusFinished = "FINISHED"
 )
-
-func NewMigrationStatusFromString(s string) (MigrationStatus, error) {
-	switch s {
-	case "RUNNING":
-		return MigrationStatusRunning, nil
-	case "FAILED":
-		return MigrationStatusFailed, nil
-	case "FINISHED":
-		return MigrationStatusFinished, nil
-	}
-	var t MigrationStatus
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
+func NewMigrationStatusFromString(s string) (MigrationStatus, error){
+    switch s{
+        case "RUNNING":
+            return MigrationStatusRunning, nil
+        case "FAILED":
+            return MigrationStatusFailed, nil
+        case "FINISHED":
+            return MigrationStatusFinished, nil
+    }
+    var t MigrationStatus
+    return "", fmt.Errorf("%s is not a valid %T", s, t)
 }
 
-func (m MigrationStatus) Ptr() *MigrationStatus {
-	return &m
+func (m MigrationStatus) Ptr() *MigrationStatus{
+    return &m
 }
+
+
+type Migration struct {
+    Name string `json:"name" url:"name"`
+    Status *MigrationStatus `json:"status" url:"status"`
+}
+

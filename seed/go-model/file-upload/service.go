@@ -6,6 +6,21 @@ import (
 	fmt "fmt"
 )
 
+type Id = string
+
+type MyObjectWithOptional struct {
+	Prop         string  `json:"prop" url:"prop"`
+	OptionalProp *string `json:"optionalProp,omitempty" url:"optionalProp,omitempty"`
+}
+
+type MyAliasObject = *MyObject
+
+type MyCollectionAliasObject = []*MyObject
+
+type MyObject struct {
+	Foo string `json:"foo" url:"foo"`
+}
+
 type ObjectType string
 
 const (

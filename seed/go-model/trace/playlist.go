@@ -3,27 +3,51 @@
 package trace
 
 import (
-	fmt "fmt"
+    fmt "fmt"
 )
+
+
+type PlaylistId = string
+
+type Playlist struct {
+    Name string `json:"name" url:"name"`
+    Problems []ProblemId `json:"problems" url:"problems"`
+    PlaylistId PlaylistId `json:"playlist_id" url:"playlist_id"`
+    OwnerId UserId `json:"owner-id" url:"owner-id"`
+}
+
+
+type PlaylistCreateRequest struct {
+    Name string `json:"name" url:"name"`
+    Problems []ProblemId `json:"problems" url:"problems"`
+}
+
+
+type UpdatePlaylistRequest struct {
+    Name string `json:"name" url:"name"`
+    // The problems that make up the playlist.
+    Problems []ProblemId `json:"problems" url:"problems"`
+}
+
 
 type ReservedKeywordEnum string
 
 const (
-	ReservedKeywordEnumIs = "is"
-	ReservedKeywordEnumAs = "as"
+    ReservedKeywordEnumIs = "is"
+    ReservedKeywordEnumAs = "as"
 )
-
-func NewReservedKeywordEnumFromString(s string) (ReservedKeywordEnum, error) {
-	switch s {
-	case "is":
-		return ReservedKeywordEnumIs, nil
-	case "as":
-		return ReservedKeywordEnumAs, nil
-	}
-	var t ReservedKeywordEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
+func NewReservedKeywordEnumFromString(s string) (ReservedKeywordEnum, error){
+    switch s{
+        case "is":
+            return ReservedKeywordEnumIs, nil
+        case "as":
+            return ReservedKeywordEnumAs, nil
+    }
+    var t ReservedKeywordEnum
+    return "", fmt.Errorf("%s is not a valid %T", s, t)
 }
 
-func (r ReservedKeywordEnum) Ptr() *ReservedKeywordEnum {
-	return &r
+func (r ReservedKeywordEnum) Ptr() *ReservedKeywordEnum{
+    return &r
 }
+

@@ -6,6 +6,36 @@ import (
 	fmt "fmt"
 )
 
+type Cat struct {
+	Fruit *Fruit `json:"fruit" url:"fruit"`
+}
+
+type Dog struct {
+	Fruit *Fruit `json:"fruit" url:"fruit"`
+}
+
+type Acai struct {
+	Animal *Animal `json:"animal" url:"animal"`
+}
+
+type Fig struct {
+	Animal *Animal `json:"animal" url:"animal"`
+}
+
+type Berry struct {
+	Animal *Animal `json:"animal" url:"animal"`
+}
+
+type BranchNode struct {
+	Children []*Node `json:"children" url:"children"`
+}
+
+type LeafNode struct{}
+
+type NodesWrapper struct {
+	Nodes [][]*Node `json:"nodes" url:"nodes"`
+}
+
 type PrimitiveValue string
 
 const (
@@ -26,4 +56,14 @@ func NewPrimitiveValueFromString(s string) (PrimitiveValue, error) {
 
 func (p PrimitiveValue) Ptr() *PrimitiveValue {
 	return &p
+}
+
+type ObjectValue struct{}
+
+type FieldName = string
+
+// This type allows us to test a circular reference with a union type (see FieldValue).
+type ObjectFieldValue struct {
+	Name  FieldName   `json:"name" url:"name"`
+	Value *FieldValue `json:"value" url:"value"`
 }

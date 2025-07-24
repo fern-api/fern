@@ -4,6 +4,7 @@ package pagination
 
 import (
 	fmt "fmt"
+	uuid "github.com/google/uuid"
 )
 
 type Order string
@@ -26,4 +27,79 @@ func NewOrderFromString(s string) (Order, error) {
 
 func (o Order) Ptr() *Order {
 	return &o
+}
+
+type WithPage struct {
+	Page *int `json:"page,omitempty" url:"page,omitempty"`
+}
+
+type WithCursor struct {
+	Cursor *string `json:"cursor,omitempty" url:"cursor,omitempty"`
+}
+
+type UserListContainer struct {
+	Users []*User `json:"users" url:"users"`
+}
+
+type UserPage struct {
+	Data *UserListContainer `json:"data" url:"data"`
+	Next *uuid.UUID         `json:"next,omitempty" url:"next,omitempty"`
+}
+
+type UserOptionalListContainer struct {
+	Users []*User `json:"users,omitempty" url:"users,omitempty"`
+}
+
+type UserOptionalListPage struct {
+	Data *UserOptionalListContainer `json:"data" url:"data"`
+	Next *uuid.UUID                 `json:"next,omitempty" url:"next,omitempty"`
+}
+
+type UsernameContainer struct {
+	Results []string `json:"results" url:"results"`
+}
+
+type ListUsersExtendedResponse struct {
+	Data *UserListContainer `json:"data" url:"data"`
+	Next *uuid.UUID         `json:"next,omitempty" url:"next,omitempty"`
+	// The totall number of /users
+	TotalCount int `json:"total_count" url:"total_count"`
+}
+
+type ListUsersExtendedOptionalListResponse struct {
+	Data *UserOptionalListContainer `json:"data" url:"data"`
+	Next *uuid.UUID                 `json:"next,omitempty" url:"next,omitempty"`
+	// The totall number of /users
+	TotalCount int `json:"total_count" url:"total_count"`
+}
+
+type ListUsersPaginationResponse struct {
+	HasNextPage *bool `json:"hasNextPage,omitempty" url:"hasNextPage,omitempty"`
+	Page        *Page `json:"page,omitempty" url:"page,omitempty"`
+	// The totall number of /users
+	TotalCount int     `json:"total_count" url:"total_count"`
+	Data       []*User `json:"data" url:"data"`
+}
+
+type ListUsersMixedTypePaginationResponse struct {
+	Next string  `json:"next" url:"next"`
+	Data []*User `json:"data" url:"data"`
+}
+
+type Page struct {
+	// The current page
+	Page      int       `json:"page" url:"page"`
+	Next      *NextPage `json:"next,omitempty" url:"next,omitempty"`
+	PerPage   int       `json:"per_page" url:"per_page"`
+	TotalPage int       `json:"total_page" url:"total_page"`
+}
+
+type NextPage struct {
+	Page          int    `json:"page" url:"page"`
+	StartingAfter string `json:"starting_after" url:"starting_after"`
+}
+
+type User struct {
+	Name string `json:"name" url:"name"`
+	Id   int    `json:"id" url:"id"`
 }
