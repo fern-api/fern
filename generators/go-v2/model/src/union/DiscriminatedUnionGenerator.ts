@@ -80,8 +80,8 @@ export class DiscriminatedUnionGenerator extends AbstractModelGenerator {
 
     private getAllObjectProperties(): ObjectProperty[] {
         const extendedProperties: ObjectProperty[] = [];
-        for (const extenedType of this.unionDeclaration.extends) {
-            const extendedTypeDeclaration = this.context.getTypeDeclarationOrThrow(extenedType.typeId);
+        for (const extendedType of this.unionDeclaration.extends) {
+            const extendedTypeDeclaration = this.context.getTypeDeclarationOrThrow(extendedType.typeId);
             if (extendedTypeDeclaration.shape.type === "object") {
                 extendedProperties.push(...extendedTypeDeclaration.shape.properties);
             }
