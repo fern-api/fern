@@ -29,6 +29,7 @@ import { GoProject } from "../project/GoProject";
 import { GoTypeMapper } from "./GoTypeMapper";
 import { GoValueFormatter } from "./GoValueFormatter";
 import { GoZeroValueMapper } from "./GoZeroValueMapper";
+import { GoFieldMapper } from "./GoFieldMapper";
 
 export interface FileLocation {
     importPath: string;
@@ -40,6 +41,7 @@ export abstract class AbstractGoGeneratorContext<
 > extends AbstractGeneratorContext {
     private rootImportPath: string;
     public readonly project: GoProject;
+    public readonly goFieldMapper: GoFieldMapper;
     public readonly goTypeMapper: GoTypeMapper;
     public readonly goValueFormatter: GoValueFormatter;
     public readonly goZeroValueMapper: GoZeroValueMapper;
@@ -52,6 +54,7 @@ export abstract class AbstractGoGeneratorContext<
     ) {
         super(config, generatorNotificationService);
         this.project = new GoProject({ context: this });
+        this.goFieldMapper = new GoFieldMapper(this);
         this.goTypeMapper = new GoTypeMapper(this);
         this.goValueFormatter = new GoValueFormatter(this);
         this.goZeroValueMapper = new GoZeroValueMapper(this);
@@ -126,6 +129,10 @@ export abstract class AbstractGoGeneratorContext<
 
     public getFieldName(name: Name): string {
         return name.pascalCase.unsafeName;
+    }
+
+    public getLiteralFieldName(name: Name): string {
+        return name.camelCase.safeName;
     }
 
     public getParameterName(name: Name): string {

@@ -7,20 +7,18 @@ import { EnumTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import { join } from "path";
+import { AbstractModelGenerator } from "../AbstractModelGenerator";
 
 const STRING_VALUE_PARAM_NAME = "s";
 const TYPE_PARAMETER_NAME = "t";
 
-export class EnumGenerator extends FileGenerator<GoFile, ModelCustomConfigSchema, ModelGeneratorContext> {
-    private readonly typeReference: go.TypeReference;
-
+export class EnumGenerator extends AbstractModelGenerator {
     constructor(
         context: ModelGeneratorContext,
-        private readonly typeDeclaration: TypeDeclaration,
+        typeDeclaration: TypeDeclaration,
         private readonly enumDeclaration: EnumTypeDeclaration
     ) {
-        super(context);
-        this.typeReference = this.context.goTypeMapper.convertToTypeReference(this.typeDeclaration.name);
+        super(context, typeDeclaration);
     }
 
     protected doGenerate(): GoFile {
@@ -34,20 +32,7 @@ export class EnumGenerator extends FileGenerator<GoFile, ModelCustomConfigSchema
         }
         enum_.addConstructor(this.getConstructor({ typeReference: this.typeReference, members }));
         enum_.addMethod(this.getPtrMethod());
-        return new GoFile({
-            node: enum_,
-            importPath: this.getImportPath(),
-            packageName: this.context.getTypePackageName({ fernFilepath: this.typeDeclaration.name.fernFilepath }),
-            rootImportPath: this.context.getRootImportPath(),
-            customConfig: this.context.customConfig,
-            includeGeneratedCodeHeader: true,
-            ...this.getFileInfo()
-        });
-    }
-
-    protected getFilepath(): RelativeFilePath {
-        const { directory, filename } = this.getFileInfo();
-        return RelativeFilePath.of(join(directory, filename));
+        return this.toFile(enum_);
     }
 
     private getMembers(): go.Enum.Member[] {
@@ -113,18 +98,5 @@ export class EnumGenerator extends FileGenerator<GoFile, ModelCustomConfigSchema
             }),
             receiver
         });
-    }
-
-    private getImportPath(): string {
-        const location = this.context.getLocationForTypeId(this.typeDeclaration.name.typeId);
-        return location.importPath;
-    }
-
-    private getFileInfo(): { directory: RelativeFilePath; filename: string } {
-        const location = this.context.getLocationForTypeId(this.typeDeclaration.name.typeId);
-        return {
-            directory: location.directory,
-            filename: this.context.getTypeFilename({ fernFilepath: this.typeDeclaration.name.fernFilepath })
-        };
     }
 }

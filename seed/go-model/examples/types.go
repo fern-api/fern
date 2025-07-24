@@ -4,7 +4,16 @@ package examples
 
 import (
 	fmt "fmt"
+	commons "github.com/examples/fern/commons"
+	uuid "github.com/google/uuid"
+	time "time"
 )
+
+type Identifier struct {
+	Type  *Type  `json:"type" url:"type"`
+	Value string `json:"value" url:"value"`
+	Label string `json:"label" url:"label"`
+}
 
 type BasicType string
 
@@ -53,6 +62,87 @@ func (c ComplexType) Ptr() *ComplexType {
 	return &c
 }
 
+type MovieId = string
+
+type Movie struct {
+	Id      MovieId  `json:"id" url:"id"`
+	Prequel *MovieId `json:"prequel,omitempty" url:"prequel,omitempty"`
+	Title   string   `json:"title" url:"title"`
+	From    string   `json:"from" url:"from"`
+	// The rating scale is one to five stars
+	Rating   float64        `json:"rating" url:"rating"`
+	Tag      commons.Tag    `json:"tag" url:"tag"`
+	Book     *string        `json:"book,omitempty" url:"book,omitempty"`
+	Metadata map[string]any `json:"metadata" url:"metadata"`
+	Revenue  int64          `json:"revenue" url:"revenue"`
+
+	type_ string
+}
+
+type Actor struct {
+	Name string `json:"name" url:"name"`
+	Id   string `json:"id" url:"id"`
+}
+
+type Actress struct {
+	Name string `json:"name" url:"name"`
+	Id   string `json:"id" url:"id"`
+}
+
+type StuntDouble struct {
+	Name             string `json:"name" url:"name"`
+	ActorOrActressId string `json:"actorOrActressId" url:"actorOrActressId"`
+}
+
+type ExtendedMovie struct {
+	Id      MovieId  `json:"id" url:"id"`
+	Prequel *MovieId `json:"prequel,omitempty" url:"prequel,omitempty"`
+	Title   string   `json:"title" url:"title"`
+	From    string   `json:"from" url:"from"`
+	// The rating scale is one to five stars
+	Rating   float64        `json:"rating" url:"rating"`
+	Tag      commons.Tag    `json:"tag" url:"tag"`
+	Book     *string        `json:"book,omitempty" url:"book,omitempty"`
+	Metadata map[string]any `json:"metadata" url:"metadata"`
+	Revenue  int64          `json:"revenue" url:"revenue"`
+	Cast     []string       `json:"cast" url:"cast"`
+
+	type_ string
+}
+
+type Moment struct {
+	Id       uuid.UUID `json:"id" url:"id"`
+	Date     time.Time `json:"date" url:"date"`
+	Datetime time.Time `json:"datetime" url:"datetime"`
+}
+
+type File struct {
+	Name     string `json:"name" url:"name"`
+	Contents string `json:"contents" url:"contents"`
+}
+
+type Directory struct {
+	Name        string       `json:"name" url:"name"`
+	Files       []*File      `json:"files,omitempty" url:"files,omitempty"`
+	Directories []*Directory `json:"directories,omitempty" url:"directories,omitempty"`
+}
+
+type Node struct {
+	Name  string  `json:"name" url:"name"`
+	Nodes []*Node `json:"nodes,omitempty" url:"nodes,omitempty"`
+	Trees []*Tree `json:"trees,omitempty" url:"trees,omitempty"`
+}
+
+type Tree struct {
+	Nodes []*Node `json:"nodes,omitempty" url:"nodes,omitempty"`
+}
+
+type ExceptionInfo struct {
+	ExceptionType       string `json:"exceptionType" url:"exceptionType"`
+	ExceptionMessage    string `json:"exceptionMessage" url:"exceptionMessage"`
+	ExceptionStacktrace string `json:"exceptionStacktrace" url:"exceptionStacktrace"`
+}
+
 type MigrationStatus string
 
 const (
@@ -78,4 +168,47 @@ func NewMigrationStatusFromString(s string) (MigrationStatus, error) {
 
 func (m MigrationStatus) Ptr() *MigrationStatus {
 	return &m
+}
+
+type Migration struct {
+	Name   string           `json:"name" url:"name"`
+	Status *MigrationStatus `json:"status" url:"status"`
+}
+
+type Request struct {
+	Request any `json:"request" url:"request"`
+}
+
+type Response struct {
+	Response    any           `json:"response" url:"response"`
+	Identifiers []*Identifier `json:"identifiers" url:"identifiers"`
+}
+
+type ResponseType struct {
+	Type *Type `json:"type" url:"type"`
+}
+
+type Entity struct {
+	Type *Type  `json:"type" url:"type"`
+	Name string `json:"name" url:"name"`
+}
+
+type BigEntity struct {
+	CastMember     *CastMember        `json:"castMember,omitempty" url:"castMember,omitempty"`
+	ExtendedMovie  *ExtendedMovie     `json:"extendedMovie,omitempty" url:"extendedMovie,omitempty"`
+	Entity         *Entity            `json:"entity,omitempty" url:"entity,omitempty"`
+	Metadata       *Metadata          `json:"metadata,omitempty" url:"metadata,omitempty"`
+	CommonMetadata *commons.Metadata  `json:"commonMetadata,omitempty" url:"commonMetadata,omitempty"`
+	EventInfo      *commons.EventInfo `json:"eventInfo,omitempty" url:"eventInfo,omitempty"`
+	Data           *commons.Data      `json:"data,omitempty" url:"data,omitempty"`
+	Migration      *Migration         `json:"migration,omitempty" url:"migration,omitempty"`
+	Exception      *Exception         `json:"exception,omitempty" url:"exception,omitempty"`
+	Test           *Test              `json:"test,omitempty" url:"test,omitempty"`
+	Node           *Node              `json:"node,omitempty" url:"node,omitempty"`
+	Directory      *Directory         `json:"directory,omitempty" url:"directory,omitempty"`
+	Moment         *Moment            `json:"moment,omitempty" url:"moment,omitempty"`
+}
+
+type CronJob struct {
+	Expression string `json:"expression" url:"expression"`
 }
