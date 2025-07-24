@@ -89,7 +89,7 @@ function convertService(
             for (const [exampleName, example] of Object.entries(userSpecifiedExamples)) {
                 endpointExample = convertV2HttpEndpointExample({
                     shouldUseExampleName: shouldUseUserSpecifiedExampleName,
-                    exampleName,
+                    exampleName: example.displayName ?? exampleName,
                     example,
                     irEndpoint
                 });

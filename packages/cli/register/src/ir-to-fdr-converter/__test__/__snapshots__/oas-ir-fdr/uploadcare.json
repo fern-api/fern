@@ -3517,7 +3517,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "base_type-token_200",
+              "name": "type-token",
               "description": "",
               "path": "/from_url/",
               "pathParameters": {},
@@ -3541,7 +3541,7 @@
               }
             },
             {
-              "name": "base_type-file-info_200",
+              "name": "type-file-info",
               "description": "",
               "path": "/from_url/",
               "pathParameters": {},
@@ -3673,7 +3673,7 @@
               }
             },
             {
-              "name": "Upload_fromURLUpload_example_type-token_200",
+              "name": "Upload_fromURLUpload_example",
               "description": "",
               "path": "/from_url/",
               "pathParameters": {},
@@ -3807,7 +3807,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "base_status-waiting_200",
+              "name": "status-waiting",
               "description": "",
               "path": "/from_url/status/",
               "pathParameters": {},
@@ -3827,7 +3827,7 @@
               }
             },
             {
-              "name": "base_status-progress_200",
+              "name": "status-progress",
               "description": "",
               "path": "/from_url/status/",
               "pathParameters": {},
@@ -3851,7 +3851,7 @@
               }
             },
             {
-              "name": "base_status-success_200",
+              "name": "status-success",
               "description": "",
               "path": "/from_url/status/",
               "pathParameters": {},
@@ -3981,7 +3981,7 @@
               }
             },
             {
-              "name": "base_status-error_200",
+              "name": "status-error",
               "description": "",
               "path": "/from_url/status/",
               "pathParameters": {},
@@ -4005,7 +4005,7 @@
               }
             },
             {
-              "name": "base_status-unknown_200",
+              "name": "status-unknown",
               "description": "",
               "path": "/from_url/status/",
               "pathParameters": {},

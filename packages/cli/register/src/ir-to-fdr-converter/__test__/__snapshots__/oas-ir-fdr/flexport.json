@@ -22622,7 +22622,7 @@
           ],
           "examples": [
             {
-              "name": "base_Success_200",
+              "name": "Success",
               "description": "",
               "path": "/booking_amendments",
               "pathParameters": {},
@@ -22865,7 +22865,7 @@
               }
             },
             {
-              "name": "BookingAmendment_booking_amendment_create_example_Success_200",
+              "name": "BookingAmendment_booking_amendment_create_example",
               "description": "",
               "path": "/booking_amendments",
               "pathParameters": {},
@@ -23576,7 +23576,7 @@
           ],
           "examples": [
             {
-              "name": "base_Success_200",
+              "name": "Success",
               "description": "",
               "path": "/booking_line_items",
               "pathParameters": {},
@@ -23635,7 +23635,7 @@
               }
             },
             {
-              "name": "BookingLineItem_booking_line_item_create_example_Success_200",
+              "name": "BookingLineItem_booking_line_item_create_example",
               "description": "",
               "path": "/booking_line_items",
               "pathParameters": {},
@@ -24736,7 +24736,7 @@
           ],
           "examples": [
             {
-              "name": "base_Success_200",
+              "name": "Success",
               "description": "",
               "path": "/bookings",
               "pathParameters": {},
@@ -25237,7 +25237,7 @@
               }
             },
             {
-              "name": "Booking_create_example_Success_200",
+              "name": "Booking_create_example",
               "description": "",
               "path": "/bookings",
               "pathParameters": {},
@@ -26587,7 +26587,7 @@
           ],
           "examples": [
             {
-              "name": "base_response_200",
+              "name": "response",
               "description": "",
               "path": "/carbon_calculation",
               "pathParameters": {},
@@ -26628,7 +26628,7 @@
               }
             },
             {
-              "name": "Carbon Calculation_create_example_response_200",
+              "name": "Carbon Calculation_create_example",
               "description": "",
               "path": "/carbon_calculation",
               "pathParameters": {},
@@ -40943,7 +40943,7 @@
           ],
           "examples": [
             {
-              "name": "base_Success_200",
+              "name": "Success",
               "description": "",
               "path": "/purchase_orders",
               "pathParameters": {},
@@ -41402,7 +41402,7 @@
               }
             },
             {
-              "name": "PurchaseOrder_purchase_order_create_example_Success_200",
+              "name": "PurchaseOrder_purchase_order_create_example",
               "description": "",
               "path": "/purchase_orders",
               "pathParameters": {},
@@ -42764,7 +42764,7 @@
           ],
           "examples": [
             {
-              "name": "base_Success_200",
+              "name": "Success",
               "description": "",
               "path": "/purchase_orders/1",
               "pathParameters": {
@@ -43225,7 +43225,7 @@
               }
             },
             {
-              "name": "PurchaseOrder_purchase_order_update_example_Success_200",
+              "name": "PurchaseOrder_purchase_order_update_example",
               "description": "",
               "path": "/purchase_orders/1",
               "pathParameters": {
@@ -47190,7 +47190,7 @@
           ],
           "examples": [
             {
-              "name": "base_Success_200",
+              "name": "Success",
               "description": "",
               "path": "/shipments_shareable",
               "pathParameters": {},
@@ -47245,7 +47245,7 @@
               }
             },
             {
-              "name": "Shipment_shipments_shareable_example_Success_200",
+              "name": "Shipment_shipments_shareable_example",
               "description": "",
               "path": "/shipments_shareable",
               "pathParameters": {},

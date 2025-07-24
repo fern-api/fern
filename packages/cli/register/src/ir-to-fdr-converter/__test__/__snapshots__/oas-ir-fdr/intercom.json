@@ -18324,7 +18324,7 @@
           ],
           "examples": [
             {
-              "name": "Successful response_200",
+              "name": "Successful response",
               "description": "",
               "path": "/admins/1/away",
               "pathParameters": {
@@ -18369,7 +18369,7 @@
               }
             },
             {
-              "name": "Admin not found_Successful response_200",
+              "name": "Admin not found",
               "description": "",
               "path": "/admins/1/away",
               "pathParameters": {
@@ -18414,7 +18414,7 @@
               }
             },
             {
-              "name": "Unauthorized_Successful response_200",
+              "name": "Unauthorized",
               "description": "",
               "path": "/admins/1/away",
               "pathParameters": {
@@ -19396,7 +19396,7 @@
           ],
           "examples": [
             {
-              "name": "article created_200",
+              "name": "article created",
               "description": "",
               "path": "/articles",
               "pathParameters": {},
@@ -19497,7 +19497,7 @@
               }
             },
             {
-              "name": "Bad Request_article created_200",
+              "name": "Bad Request",
               "description": "",
               "path": "/articles",
               "pathParameters": {},
@@ -19974,7 +19974,7 @@
           ],
           "examples": [
             {
-              "name": "successful_200",
+              "name": "successful",
               "description": "",
               "path": "/articles/123",
               "pathParameters": {
@@ -20049,7 +20049,7 @@
               }
             },
             {
-              "name": "Article Not Found_successful_200",
+              "name": "Article Not Found",
               "description": "",
               "path": "/articles/123",
               "pathParameters": {
@@ -20915,7 +20915,7 @@
           ],
           "examples": [
             {
-              "name": "collection created_200",
+              "name": "collection created",
               "description": "",
               "path": "/help_center/collections",
               "pathParameters": {},
@@ -20962,7 +20962,7 @@
               }
             },
             {
-              "name": "Bad Request_collection created_200",
+              "name": "Bad Request",
               "description": "",
               "path": "/help_center/collections",
               "pathParameters": {},
@@ -21385,7 +21385,7 @@
           ],
           "examples": [
             {
-              "name": "successful_200",
+              "name": "successful",
               "description": "",
               "path": "/help_center/collections/123",
               "pathParameters": {
@@ -21434,7 +21434,7 @@
               }
             },
             {
-              "name": "Collection Not Found_successful_200",
+              "name": "Collection Not Found",
               "description": "",
               "path": "/help_center/collections/123",
               "pathParameters": {
@@ -22466,7 +22466,7 @@
           ],
           "examples": [
             {
-              "name": "Successful_200",
+              "name": "Successful",
               "description": "",
               "path": "/companies",
               "pathParameters": {},
@@ -22541,7 +22541,7 @@
               }
             },
             {
-              "name": "Bad Request_Successful_200",
+              "name": "Bad Request",
               "description": "",
               "path": "/companies",
               "pathParameters": {},
@@ -24265,7 +24265,7 @@
           ],
           "examples": [
             {
-              "name": "Successful_200",
+              "name": "Successful",
               "description": "",
               "path": "/contacts/id/companies",
               "pathParameters": {
@@ -24334,7 +24334,7 @@
               }
             },
             {
-              "name": "Company Not Found_Successful_200",
+              "name": "Company Not Found",
               "description": "",
               "path": "/contacts/id/companies",
               "pathParameters": {
@@ -28155,7 +28155,7 @@
           ],
           "examples": [
             {
-              "name": "Successful response_200",
+              "name": "Successful response",
               "description": "",
               "path": "/contacts/123/notes",
               "pathParameters": {
@@ -28218,7 +28218,7 @@
               }
             },
             {
-              "name": "Admin not found_Successful response_200",
+              "name": "Admin not found",
               "description": "",
               "path": "/contacts/123/notes",
               "pathParameters": {
@@ -28281,7 +28281,7 @@
               }
             },
             {
-              "name": "Contact not found_Successful response_200",
+              "name": "Contact not found",
               "description": "",
               "path": "/contacts/123/notes",
               "pathParameters": {
@@ -28773,7 +28773,7 @@
           ],
           "examples": [
             {
-              "name": "Successful_200",
+              "name": "Successful",
               "description": "",
               "path": "/contacts/63a07ddf05a32042dffac965/subscriptions",
               "pathParameters": {
@@ -28840,7 +28840,7 @@
               }
             },
             {
-              "name": "Contact not found_Successful_200",
+              "name": "Contact not found",
               "description": "",
               "path": "/contacts/63a07ddf05a32042dffac965/subscriptions",
               "pathParameters": {
@@ -28907,7 +28907,7 @@
               }
             },
             {
-              "name": "Resource not found_Successful_200",
+              "name": "Resource not found",
               "description": "",
               "path": "/contacts/63a07ddf05a32042dffac965/subscriptions",
               "pathParameters": {
@@ -29609,7 +29609,7 @@
           ],
           "examples": [
             {
-              "name": "successful_200",
+              "name": "successful",
               "description": "",
               "path": "/contacts/63a07ddf05a32042dffac965/tags",
               "pathParameters": {
@@ -29642,7 +29642,7 @@
               }
             },
             {
-              "name": "Contact not found_successful_200",
+              "name": "Contact not found",
               "description": "",
               "path": "/contacts/63a07ddf05a32042dffac965/tags",
               "pathParameters": {
@@ -29675,7 +29675,7 @@
               }
             },
             {
-              "name": "Tag not found_successful_200",
+              "name": "Tag not found",
               "description": "",
               "path": "/contacts/63a07ddf05a32042dffac965/tags",
               "pathParameters": {
@@ -30120,7 +30120,7 @@
           ],
           "examples": [
             {
-              "name": "successful_200",
+              "name": "successful",
               "description": "",
               "path": "/conversations/64619700005694/tags",
               "pathParameters": {
@@ -30155,7 +30155,7 @@
               }
             },
             {
-              "name": "Conversation not found_successful_200",
+              "name": "Conversation not found",
               "description": "",
               "path": "/conversations/64619700005694/tags",
               "pathParameters": {
@@ -30407,7 +30407,7 @@
           ],
           "examples": [
             {
-              "name": "successful_200",
+              "name": "successful",
               "description": "",
               "path": "/conversations/64619700005694/tags/7522907",
               "pathParameters": {
@@ -30441,7 +30441,7 @@
               }
             },
             {
-              "name": "Conversation not found_successful_200",
+              "name": "Conversation not found",
               "description": "",
               "path": "/conversations/64619700005694/tags/7522907",
               "pathParameters": {
@@ -30475,7 +30475,7 @@
               }
             },
             {
-              "name": "Tag not found_successful_200",
+              "name": "Tag not found",
               "description": "",
               "path": "/conversations/64619700005694/tags/7522907",
               "pathParameters": {
@@ -30853,7 +30853,7 @@
           ],
           "examples": [
             {
-              "name": "Action successful_200",
+              "name": "Action successful",
               "description": "",
               "path": "/tags",
               "pathParameters": {},
@@ -30884,7 +30884,7 @@
               }
             },
             {
-              "name": "Invalid parameters_Action successful_200",
+              "name": "Invalid parameters",
               "description": "",
               "path": "/tags",
               "pathParameters": {},
@@ -30917,7 +30917,7 @@
               }
             },
             {
-              "name": "Company not found_Action successful_200",
+              "name": "Company not found",
               "description": "",
               "path": "/tags",
               "pathParameters": {},
@@ -30958,7 +30958,7 @@
               }
             },
             {
-              "name": "User  not found_Action successful_200",
+              "name": "User  not found",
               "description": "",
               "path": "/tags",
               "pathParameters": {},
@@ -31582,7 +31582,7 @@
           ],
           "examples": [
             {
-              "name": "successful_200",
+              "name": "successful",
               "description": "",
               "path": "/tickets/64619700005694/tags",
               "pathParameters": {
@@ -31617,7 +31617,7 @@
               }
             },
             {
-              "name": "Ticket not found_successful_200",
+              "name": "Ticket not found",
               "description": "",
               "path": "/tickets/64619700005694/tags",
               "pathParameters": {
@@ -31869,7 +31869,7 @@
           ],
           "examples": [
             {
-              "name": "successful_200",
+              "name": "successful",
               "description": "",
               "path": "/tickets/64619700005694/tags/7522907",
               "pathParameters": {
@@ -31903,7 +31903,7 @@
               }
             },
             {
-              "name": "Ticket not found_successful_200",
+              "name": "Ticket not found",
               "description": "",
               "path": "/tickets/64619700005694/tags/7522907",
               "pathParameters": {
@@ -31937,7 +31937,7 @@
               }
             },
             {
-              "name": "Tag not found_successful_200",
+              "name": "Tag not found",
               "description": "",
               "path": "/tickets/64619700005694/tags/7522907",
               "pathParameters": {
@@ -32494,7 +32494,7 @@
           ],
           "examples": [
             {
-              "name": "conversation created_200",
+              "name": "conversation created",
               "description": "",
               "path": "/conversations",
               "pathParameters": {},
@@ -32539,7 +32539,7 @@
               }
             },
             {
-              "name": "Contact Not Found_conversation created_200",
+              "name": "Contact Not Found",
               "description": "",
               "path": "/conversations",
               "pathParameters": {},
@@ -33154,7 +33154,7 @@
           ],
           "examples": [
             {
-              "name": "conversation found_200",
+              "name": "conversation found",
               "description": "",
               "path": "/conversations/123",
               "pathParameters": {
@@ -33403,7 +33403,7 @@
               }
             },
             {
-              "name": "Not found_conversation found_200",
+              "name": "Not found",
               "description": "",
               "path": "/conversations/123",
               "pathParameters": {
@@ -34140,7 +34140,7 @@
           ],
           "examples": [
             {
-              "name": "User reply_200",
+              "name": "User reply",
               "description": "",
               "path": "/conversations/123%20or%20%22last%22/reply",
               "pathParameters": {
@@ -34349,7 +34349,7 @@
               }
             },
             {
-              "name": "Admin note reply_200",
+              "name": "Admin note reply",
               "description": "",
               "path": "/conversations/123%20or%20%22last%22/reply",
               "pathParameters": {
@@ -34550,7 +34550,7 @@
               }
             },
             {
-              "name": "User last conversation reply_200",
+              "name": "User last conversation reply",
               "description": "",
               "path": "/conversations/123%20or%20%22last%22/reply",
               "pathParameters": {
@@ -34759,7 +34759,7 @@
               }
             },
             {
-              "name": "Not found_User reply_200",
+              "name": "Not found",
               "description": "",
               "path": "/conversations/123%20or%20%22last%22/reply",
               "pathParameters": {
@@ -35172,7 +35172,7 @@
           ],
           "examples": [
             {
-              "name": "Close a conversation_200",
+              "name": "Close a conversation",
               "description": "",
               "path": "/conversations/123/parts",
               "pathParameters": {
@@ -35373,7 +35373,7 @@
               }
             },
             {
-              "name": "Snooze a conversation_200",
+              "name": "Snooze a conversation",
               "description": "",
               "path": "/conversations/123/parts",
               "pathParameters": {
@@ -35572,7 +35572,7 @@
               }
             },
             {
-              "name": "Open a conversation_200",
+              "name": "Open a conversation",
               "description": "",
               "path": "/conversations/123/parts",
               "pathParameters": {
@@ -35769,7 +35769,7 @@
               }
             },
             {
-              "name": "Assign a conversation_200",
+              "name": "Assign a conversation",
               "description": "",
               "path": "/conversations/123/parts",
               "pathParameters": {
@@ -35976,7 +35976,7 @@
               }
             },
             {
-              "name": "Not found_Close a conversation_200",
+              "name": "Not found",
               "description": "",
               "path": "/conversations/123/parts",
               "pathParameters": {
@@ -36763,7 +36763,7 @@
           ],
           "examples": [
             {
-              "name": "Attach a contact to a conversation_200",
+              "name": "Attach a contact to a conversation",
               "description": "",
               "path": "/conversations/123/customers",
               "pathParameters": {
@@ -36808,7 +36808,7 @@
               }
             },
             {
-              "name": "Not found_Attach a contact to a conversation_200",
+              "name": "Not found",
               "description": "",
               "path": "/conversations/123/customers",
               "pathParameters": {
@@ -37121,7 +37121,7 @@
           ],
           "examples": [
             {
-              "name": "Detach a contact from a group conversation_200",
+              "name": "Detach a contact from a group conversation",
               "description": "",
               "path": "/conversations/123/customers/123",
               "pathParameters": {
@@ -37167,7 +37167,7 @@
               }
             },
             {
-              "name": "Conversation not found_Detach a contact from a group conversation_200",
+              "name": "Conversation not found",
               "description": "",
               "path": "/conversations/123/customers/123",
               "pathParameters": {
@@ -37213,7 +37213,7 @@
               }
             },
             {
-              "name": "Contact not found_Detach a contact from a group conversation_200",
+              "name": "Contact not found",
               "description": "",
               "path": "/conversations/123/customers/123",
               "pathParameters": {
@@ -37259,7 +37259,7 @@
               }
             },
             {
-              "name": "Last customer_Detach a contact from a group conversation_200",
+              "name": "Last customer",
               "description": "",
               "path": "/conversations/123/customers/123",
               "pathParameters": {
@@ -37460,7 +37460,7 @@
           ],
           "examples": [
             {
-              "name": "Redact a conversation part_200",
+              "name": "Redact a conversation part",
               "description": "",
               "path": "/conversations/redact",
               "pathParameters": {},
@@ -37665,7 +37665,7 @@
               }
             },
             {
-              "name": "Not found_Redact a conversation part_200",
+              "name": "Not found",
               "description": "",
               "path": "/conversations/redact",
               "pathParameters": {},
@@ -38014,7 +38014,7 @@
           ],
           "examples": [
             {
-              "name": "successful_200",
+              "name": "successful",
               "description": "",
               "path": "/conversations/123/convert",
               "pathParameters": {
@@ -38213,7 +38213,7 @@
               }
             },
             {
-              "name": "Bad request_successful_200",
+              "name": "Bad request",
               "description": "",
               "path": "/conversations/123/convert",
               "pathParameters": {
@@ -39286,7 +39286,7 @@
           ],
           "examples": [
             {
-              "name": "Successful_200",
+              "name": "Successful",
               "description": "",
               "path": "/data_attributes",
               "pathParameters": {},
@@ -39345,7 +39345,7 @@
               }
             },
             {
-              "name": "Same name already exists_Successful_200",
+              "name": "Same name already exists",
               "description": "",
               "path": "/data_attributes",
               "pathParameters": {},
@@ -39404,7 +39404,7 @@
               }
             },
             {
-              "name": "Invalid name_Successful_200",
+              "name": "Invalid name",
               "description": "",
               "path": "/data_attributes",
               "pathParameters": {},
@@ -39463,7 +39463,7 @@
               }
             },
             {
-              "name": "Attribute already exists_Successful_200",
+              "name": "Attribute already exists",
               "description": "",
               "path": "/data_attributes",
               "pathParameters": {},
@@ -39522,7 +39522,7 @@
               }
             },
             {
-              "name": "Invalid Data Type_Successful_200",
+              "name": "Invalid Data Type",
               "description": "",
               "path": "/data_attributes",
               "pathParameters": {},
@@ -39581,7 +39581,7 @@
               }
             },
             {
-              "name": "Too few options for list_Successful_200",
+              "name": "Too few options for list",
               "description": "",
               "path": "/data_attributes",
               "pathParameters": {},
@@ -39884,7 +39884,7 @@
           ],
           "examples": [
             {
-              "name": "Successful_200",
+              "name": "Successful",
               "description": "",
               "path": "/data_attributes/1",
               "pathParameters": {
@@ -39961,7 +39961,7 @@
               }
             },
             {
-              "name": "Too few options in list_Successful_200",
+              "name": "Too few options in list",
               "description": "",
               "path": "/data_attributes/1",
               "pathParameters": {
@@ -40036,7 +40036,7 @@
               }
             },
             {
-              "name": "Attribute Not Found_Successful_200",
+              "name": "Attribute Not Found",
               "description": "",
               "path": "/data_attributes/1",
               "pathParameters": {
@@ -40113,7 +40113,7 @@
               }
             },
             {
-              "name": "Has Dependant Object_Successful_200",
+              "name": "Has Dependant Object",
               "description": "",
               "path": "/data_attributes/1",
               "pathParameters": {
@@ -41401,7 +41401,7 @@
           ],
           "examples": [
             {
-              "name": "user message created_200",
+              "name": "user message created",
               "description": "",
               "path": "/messages",
               "pathParameters": {},
@@ -41434,7 +41434,7 @@
               }
             },
             {
-              "name": "lead message created_200",
+              "name": "lead message created",
               "description": "",
               "path": "/messages",
               "pathParameters": {},
@@ -41467,7 +41467,7 @@
               }
             },
             {
-              "name": "admin message created_200",
+              "name": "admin message created",
               "description": "",
               "path": "/messages",
               "pathParameters": {},
@@ -41516,7 +41516,7 @@
               }
             },
             {
-              "name": "No body supplied for message_user message created_200",
+              "name": "No body supplied for message",
               "description": "",
               "path": "/messages",
               "pathParameters": {},
@@ -41549,7 +41549,7 @@
               }
             },
             {
-              "name": "No subject supplied for email message_user message created_200",
+              "name": "No subject supplied for email message",
               "description": "",
               "path": "/messages",
               "pathParameters": {},
@@ -41582,7 +41582,7 @@
               }
             },
             {
-              "name": "No body supplied for email message_user message created_200",
+              "name": "No body supplied for email message",
               "description": "",
               "path": "/messages",
               "pathParameters": {},
@@ -42494,7 +42494,7 @@
           ],
           "examples": [
             {
-              "name": "successful_200",
+              "name": "successful",
               "description": "",
               "path": "/news/news_items/123",
               "pathParameters": {
@@ -42567,7 +42567,7 @@
               }
             },
             {
-              "name": "News Item Not Found_successful_200",
+              "name": "News Item Not Found",
               "description": "",
               "path": "/news/news_items/123",
               "pathParameters": {
@@ -43839,7 +43839,7 @@
           ],
           "examples": [
             {
-              "name": "successful_200",
+              "name": "successful",
               "description": "",
               "path": "/phone_call_redirects",
               "pathParameters": {},
@@ -43876,7 +43876,7 @@
               }
             },
             {
-              "name": "bad request - exception sending sms_successful_200",
+              "name": "bad request - exception sending sms",
               "description": "",
               "path": "/phone_call_redirects",
               "pathParameters": {},
@@ -43913,7 +43913,7 @@
               }
             },
             {
-              "name": "bad request - invalid number_successful_200",
+              "name": "bad request - invalid number",
               "description": "",
               "path": "/phone_call_redirects",
               "pathParameters": {},
@@ -43950,7 +43950,7 @@
               }
             },
             {
-              "name": "unprocessable entity_successful_200",
+              "name": "unprocessable entity",
               "description": "",
               "path": "/phone_call_redirects",
               "pathParameters": {},
@@ -46170,7 +46170,7 @@
           ],
           "examples": [
             {
-              "name": "Admin note reply_200",
+              "name": "Admin note reply",
               "description": "",
               "path": "/tickets/123/reply",
               "pathParameters": {
@@ -46231,7 +46231,7 @@
               }
             },
             {
-              "name": "Admin quick_reply reply_200",
+              "name": "Admin quick_reply reply",
               "description": "",
               "path": "/tickets/123/reply",
               "pathParameters": {
@@ -46308,7 +46308,7 @@
               }
             },
             {
-              "name": "User reply_Admin note reply_200",
+              "name": "User reply",
               "description": "",
               "path": "/tickets/123/reply",
               "pathParameters": {
@@ -46369,7 +46369,7 @@
               }
             },
             {
-              "name": "Not found_Admin note reply_200",
+              "name": "Not found",
               "description": "",
               "path": "/tickets/123/reply",
               "pathParameters": {
@@ -47337,7 +47337,7 @@
           ],
           "examples": [
             {
-              "name": "Successful response_200",
+              "name": "Successful response",
               "description": "",
               "path": "/tickets/id",
               "pathParameters": {
@@ -47772,7 +47772,7 @@
               }
             },
             {
-              "name": "Admin not found_Successful response_200",
+              "name": "Admin not found",
               "description": "",
               "path": "/tickets/id",
               "pathParameters": {
@@ -48203,7 +48203,7 @@
               }
             },
             {
-              "name": "Assignee not found_Successful response_200",
+              "name": "Assignee not found",
               "description": "",
               "path": "/tickets/id",
               "pathParameters": {
@@ -49455,7 +49455,7 @@
           ],
           "examples": [
             {
-              "name": "successful_200",
+              "name": "successful",
               "description": "",
               "path": "/visitors",
               "pathParameters": {},
@@ -49572,7 +49572,7 @@
               }
             },
             {
-              "name": "visitor Not Found_successful_200",
+              "name": "visitor Not Found",
               "description": "",
               "path": "/visitors",
               "pathParameters": {},

@@ -7955,7 +7955,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "base_example-1_201",
+            "name": "example-1",
             "description": "",
             "path": "/events/transaction",
             "pathParameters": {},
@@ -8116,7 +8116,7 @@
             }
           },
           {
-            "name": "example-2_example-1_201",
+            "name": "example-2",
             "description": "",
             "path": "/events/transaction",
             "pathParameters": {},

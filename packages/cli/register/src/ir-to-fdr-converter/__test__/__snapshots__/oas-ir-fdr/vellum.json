@@ -6536,7 +6536,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "Index Using a Sentence Transformers Model_documentIndexesCreateExample_201",
+              "name": "Index Using a Sentence Transformers Model",
               "description": "",
               "path": "/v1/document-indexes",
               "pathParameters": {},
@@ -6605,7 +6605,7 @@
               }
             },
             {
-              "name": "Index Using OpenAI Model_documentIndexesCreateExample_201",
+              "name": "Index Using OpenAI Model",
               "description": "",
               "path": "/v1/document-indexes",
               "pathParameters": {},

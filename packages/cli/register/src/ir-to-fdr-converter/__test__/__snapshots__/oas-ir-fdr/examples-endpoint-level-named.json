@@ -397,7 +397,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "oak_201",
+            "name": "oak",
             "description": "",
             "path": "/trees",
             "pathParameters": {},
@@ -452,7 +452,7 @@
             }
           },
           {
-            "name": "maple_201",
+            "name": "maple",
             "description": "",
             "path": "/trees",
             "pathParameters": {},
@@ -705,7 +705,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "base_fernResponseExample2_201",
+            "name": "fernResponseExample2",
             "description": "",
             "path": "/ferns",
             "pathParameters": {},
@@ -728,7 +728,7 @@
             }
           },
           {
-            "name": "base_fernResponseExample_201",
+            "name": "fernResponseExample",
             "description": "",
             "path": "/ferns",
             "pathParameters": {},
@@ -751,7 +751,7 @@
             }
           },
           {
-            "name": "fernRequestExample_fernResponseExample2_201",
+            "name": "fernRequestExample",
             "description": "",
             "path": "/ferns",
             "pathParameters": {},
@@ -782,7 +782,7 @@
             }
           },
           {
-            "name": "fernRequestExample2_fernResponseExample2_201",
+            "name": "fernRequestExample2",
             "description": "",
             "path": "/ferns",
             "pathParameters": {},

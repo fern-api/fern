@@ -17639,7 +17639,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "base_Response (By Default)_200",
+              "name": "Response (By Default)",
               "description": "",
               "path": "/v3/docs-demo/getNFTsForOwner",
               "pathParameters": {
@@ -18129,7 +18129,7 @@
               }
             },
             {
-              "name": "base_Response (withMetadata = false)_200",
+              "name": "Response (withMetadata = false)",
               "description": "",
               "path": "/v3/docs-demo/getNFTsForOwner",
               "pathParameters": {
@@ -18187,7 +18187,7 @@
               }
             },
             {
-              "name": "base_Response (with contract filtering)_200",
+              "name": "Response (with contract filtering)",
               "description": "",
               "path": "/v3/docs-demo/getNFTsForOwner",
               "pathParameters": {
@@ -18245,7 +18245,7 @@
               }
             },
             {
-              "name": "base_Response (with pagination)_200",
+              "name": "Response (with pagination)",
               "description": "",
               "path": "/v3/docs-demo/getNFTsForOwner",
               "pathParameters": {
@@ -19434,7 +19434,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "base_Response (withMetadata = false)_200",
+              "name": "Response (withMetadata = false)",
               "description": "",
               "path": "/v3/docs-demo/getContractsForOwner",
               "pathParameters": {
@@ -19504,7 +19504,7 @@
               }
             },
             {
-              "name": "base_Response (withMetadata = true)_200",
+              "name": "Response (withMetadata = true)",
               "description": "",
               "path": "/v3/docs-demo/getContractsForOwner",
               "pathParameters": {
@@ -19896,7 +19896,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "base_Response (withMetadata = false)_200",
+              "name": "Response (withMetadata = false)",
               "description": "",
               "path": "/v3/docs-demo/getCollectionsForOwner",
               "pathParameters": {
@@ -19940,7 +19940,7 @@
               }
             },
             {
-              "name": "base_Response (withMetadata = true)_200",
+              "name": "Response (withMetadata = true)",
               "description": "",
               "path": "/v3/docs-demo/getCollectionsForOwner",
               "pathParameters": {
@@ -26504,7 +26504,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "base_Response (By Default)_200",
+              "name": "Response (By Default)",
               "description": "",
               "path": "/v2/docs-demo/getNFTs",
               "pathParameters": {
@@ -26730,7 +26730,7 @@
               }
             },
             {
-              "name": "base_Response (withMetadata = false)_200",
+              "name": "Response (withMetadata = false)",
               "description": "",
               "path": "/v2/docs-demo/getNFTs",
               "pathParameters": {
@@ -26810,7 +26810,7 @@
               }
             },
             {
-              "name": "base_Response (with contract filtering)_200",
+              "name": "Response (with contract filtering)",
               "description": "",
               "path": "/v2/docs-demo/getNFTs",
               "pathParameters": {
@@ -26854,7 +26854,7 @@
               }
             },
             {
-              "name": "base_Response (with pagination)_200",
+              "name": "Response (with pagination)",
               "description": "",
               "path": "/v2/docs-demo/getNFTs",
               "pathParameters": {
@@ -32697,7 +32697,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "base_Response (withMetadata = false)_200",
+              "name": "Response (withMetadata = false)",
               "description": "",
               "path": "/v2/docs-demo/getContractsForOwner",
               "pathParameters": {
@@ -32767,7 +32767,7 @@
               }
             },
             {
-              "name": "base_Response (withMetadata = true)_200",
+              "name": "Response (withMetadata = true)",
               "description": "",
               "path": "/v2/docs-demo/getContractsForOwner",
               "pathParameters": {

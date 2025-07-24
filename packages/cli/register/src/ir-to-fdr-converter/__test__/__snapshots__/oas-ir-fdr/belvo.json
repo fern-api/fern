@@ -32693,7 +32693,7 @@
           ],
           "examples": [
             {
-              "name": "accountsRetrieveAccountsExample_AccountsBankingChecking_200",
+              "name": "AccountsBankingChecking",
               "description": "",
               "path": "/api/accounts/",
               "pathParameters": {},
@@ -32774,7 +32774,7 @@
               }
             },
             {
-              "name": "accountsRetrieveAccountsExample_AccountsBankingCreditCard_200",
+              "name": "AccountsBankingCreditCard",
               "description": "",
               "path": "/api/accounts/",
               "pathParameters": {},
@@ -32875,7 +32875,7 @@
               }
             },
             {
-              "name": "accountsRetrieveAccountsExample_AcccountsBankingLoan_200",
+              "name": "AcccountsBankingLoan",
               "description": "",
               "path": "/api/accounts/",
               "pathParameters": {},
@@ -33010,7 +33010,7 @@
               }
             },
             {
-              "name": "accountsRetrieveAccountsExample_AccountsBankingPension_200",
+              "name": "AccountsBankingPension",
               "description": "",
               "path": "/api/accounts/",
               "pathParameters": {},
@@ -33161,7 +33161,7 @@
               }
             },
             {
-              "name": "accountsRetrieveAccountsExample_AccountsBankingSavings_200",
+              "name": "AccountsBankingSavings",
               "description": "",
               "path": "/api/accounts/",
               "pathParameters": {},
@@ -33242,7 +33242,7 @@
               }
             },
             {
-              "name": "accountsRetrieveAccountsExample_AccountsBankingChecking_201",
+              "name": "AccountsBankingChecking",
               "description": "",
               "path": "/api/accounts/",
               "pathParameters": {},
@@ -33323,7 +33323,7 @@
               }
             },
             {
-              "name": "accountsRetrieveAccountsExample_AccountsBankingCreditCard_201",
+              "name": "AccountsBankingCreditCard",
               "description": "",
               "path": "/api/accounts/",
               "pathParameters": {},
@@ -33424,7 +33424,7 @@
               }
             },
             {
-              "name": "accountsRetrieveAccountsExample_AcccountsBankingLoan_201",
+              "name": "AcccountsBankingLoan",
               "description": "",
               "path": "/api/accounts/",
               "pathParameters": {},
@@ -33559,7 +33559,7 @@
               }
             },
             {
-              "name": "accountsRetrieveAccountsExample_AccountsBankingPension_201",
+              "name": "AccountsBankingPension",
               "description": "",
               "path": "/api/accounts/",
               "pathParameters": {},
@@ -33710,7 +33710,7 @@
               }
             },
             {
-              "name": "accountsRetrieveAccountsExample_AccountsBankingSavings_201",
+              "name": "AccountsBankingSavings",
               "description": "",
               "path": "/api/accounts/",
               "pathParameters": {},
@@ -34002,7 +34002,7 @@
           ],
           "examples": [
             {
-              "name": "accountsPatchAccountsExample_AccountsBankingChecking_200",
+              "name": "AccountsBankingChecking",
               "description": "",
               "path": "/api/accounts/",
               "pathParameters": {},
@@ -34085,7 +34085,7 @@
               }
             },
             {
-              "name": "accountsPatchAccountsExample_AccountsBankingCreditCard_200",
+              "name": "AccountsBankingCreditCard",
               "description": "",
               "path": "/api/accounts/",
               "pathParameters": {},
@@ -34188,7 +34188,7 @@
               }
             },
             {
-              "name": "accountsPatchAccountsExample_AcccountsBankingLoan_200",
+              "name": "AcccountsBankingLoan",
               "description": "",
               "path": "/api/accounts/",
               "pathParameters": {},
@@ -34325,7 +34325,7 @@
               }
             },
             {
-              "name": "accountsPatchAccountsExample_AccountsBankingPension_200",
+              "name": "AccountsBankingPension",
               "description": "",
               "path": "/api/accounts/",
               "pathParameters": {},
@@ -34478,7 +34478,7 @@
               }
             },
             {
-              "name": "accountsPatchAccountsExample_AccountsBankingSavings_200",
+              "name": "AccountsBankingSavings",
               "description": "",
               "path": "/api/accounts/",
               "pathParameters": {},
@@ -34561,7 +34561,7 @@
               }
             },
             {
-              "name": "accountsPatchAccountsExample_AccountsBankingChecking_201",
+              "name": "AccountsBankingChecking",
               "description": "",
               "path": "/api/accounts/",
               "pathParameters": {},
@@ -34644,7 +34644,7 @@
               }
             },
             {
-              "name": "accountsPatchAccountsExample_AccountsBankingCreditCard_201",
+              "name": "AccountsBankingCreditCard",
               "description": "",
               "path": "/api/accounts/",
               "pathParameters": {},
@@ -34747,7 +34747,7 @@
               }
             },
             {
-              "name": "accountsPatchAccountsExample_AcccountsBankingLoan_201",
+              "name": "AcccountsBankingLoan",
               "description": "",
               "path": "/api/accounts/",
               "pathParameters": {},
@@ -34884,7 +34884,7 @@
               }
             },
             {
-              "name": "accountsPatchAccountsExample_AccountsBankingPension_201",
+              "name": "AccountsBankingPension",
               "description": "",
               "path": "/api/accounts/",
               "pathParameters": {},
@@ -35037,7 +35037,7 @@
               }
             },
             {
-              "name": "accountsPatchAccountsExample_AccountsBankingSavings_201",
+              "name": "AccountsBankingSavings",
               "description": "",
               "path": "/api/accounts/",
               "pathParameters": {},
@@ -35270,7 +35270,7 @@
           ],
           "examples": [
             {
-              "name": "base_AccountsBankingChecking_200",
+              "name": "AccountsBankingChecking",
               "description": "",
               "path": "/api/accounts/id/",
               "pathParameters": {
@@ -35340,7 +35340,7 @@
               }
             },
             {
-              "name": "base_AccountsBankingCreditCard_200",
+              "name": "AccountsBankingCreditCard",
               "description": "",
               "path": "/api/accounts/id/",
               "pathParameters": {
@@ -35430,7 +35430,7 @@
               }
             },
             {
-              "name": "base_AcccountsBankingLoan_200",
+              "name": "AcccountsBankingLoan",
               "description": "",
               "path": "/api/accounts/id/",
               "pathParameters": {
@@ -35554,7 +35554,7 @@
               }
             },
             {
-              "name": "base_AccountsBankingPension_200",
+              "name": "AccountsBankingPension",
               "description": "",
               "path": "/api/accounts/id/",
               "pathParameters": {
@@ -35694,7 +35694,7 @@
               }
             },
             {
-              "name": "base_AccountsBankingSavings_200",
+              "name": "AccountsBankingSavings",
               "description": "",
               "path": "/api/accounts/id/",
               "pathParameters": {
@@ -36756,7 +36756,7 @@
           ],
           "examples": [
             {
-              "name": "base_TransactionsCheckingPaginated_200",
+              "name": "TransactionsCheckingPaginated",
               "description": "",
               "path": "/api/transactions/",
               "pathParameters": {},
@@ -36884,7 +36884,7 @@
               }
             },
             {
-              "name": "base_TransactionsSavingsPaginated_200",
+              "name": "TransactionsSavingsPaginated",
               "description": "",
               "path": "/api/transactions/",
               "pathParameters": {},
@@ -37012,7 +37012,7 @@
               }
             },
             {
-              "name": "base_TransactionsCreditCardPaginated_200",
+              "name": "TransactionsCreditCardPaginated",
               "description": "",
               "path": "/api/transactions/",
               "pathParameters": {},
@@ -37401,7 +37401,7 @@
           ],
           "examples": [
             {
-              "name": "transactionsRetrieveTransactionsExample_TransactionsChecking_200",
+              "name": "TransactionsChecking",
               "description": "",
               "path": "/api/transactions/",
               "pathParameters": {},
@@ -37530,7 +37530,7 @@
               }
             },
             {
-              "name": "transactionsRetrieveTransactionsExample_TransactionsSavings_200",
+              "name": "TransactionsSavings",
               "description": "",
               "path": "/api/transactions/",
               "pathParameters": {},
@@ -37659,7 +37659,7 @@
               }
             },
             {
-              "name": "transactionsRetrieveTransactionsExample_TransactionsCreditCard_200",
+              "name": "TransactionsCreditCard",
               "description": "",
               "path": "/api/transactions/",
               "pathParameters": {},
@@ -37818,7 +37818,7 @@
               }
             },
             {
-              "name": "transactionsRetrieveTransactionsExample_TransactionsChecking_201",
+              "name": "TransactionsChecking",
               "description": "",
               "path": "/api/transactions/",
               "pathParameters": {},
@@ -37947,7 +37947,7 @@
               }
             },
             {
-              "name": "transactionsRetrieveTransactionsExample_TransactionsSavings_201",
+              "name": "TransactionsSavings",
               "description": "",
               "path": "/api/transactions/",
               "pathParameters": {},
@@ -38076,7 +38076,7 @@
               }
             },
             {
-              "name": "transactionsRetrieveTransactionsExample_TransactionsCreditCard_201",
+              "name": "TransactionsCreditCard",
               "description": "",
               "path": "/api/transactions/",
               "pathParameters": {},
@@ -38476,7 +38476,7 @@
           ],
           "examples": [
             {
-              "name": "transactionsPatchTransactionsExample_TransactionsChecking_200",
+              "name": "TransactionsChecking",
               "description": "",
               "path": "/api/transactions/",
               "pathParameters": {},
@@ -38603,7 +38603,7 @@
               }
             },
             {
-              "name": "transactionsPatchTransactionsExample_TransactionsSavings_200",
+              "name": "TransactionsSavings",
               "description": "",
               "path": "/api/transactions/",
               "pathParameters": {},
@@ -38730,7 +38730,7 @@
               }
             },
             {
-              "name": "transactionsPatchTransactionsExample_TransactionsCreditCard_200",
+              "name": "TransactionsCreditCard",
               "description": "",
               "path": "/api/transactions/",
               "pathParameters": {},
@@ -38887,7 +38887,7 @@
               }
             },
             {
-              "name": "transactionsPatchTransactionsExample_TransactionsChecking_201",
+              "name": "TransactionsChecking",
               "description": "",
               "path": "/api/transactions/",
               "pathParameters": {},
@@ -39014,7 +39014,7 @@
               }
             },
             {
-              "name": "transactionsPatchTransactionsExample_TransactionsSavings_201",
+              "name": "TransactionsSavings",
               "description": "",
               "path": "/api/transactions/",
               "pathParameters": {},
@@ -39141,7 +39141,7 @@
               }
             },
             {
-              "name": "transactionsPatchTransactionsExample_TransactionsCreditCard_201",
+              "name": "TransactionsCreditCard",
               "description": "",
               "path": "/api/transactions/",
               "pathParameters": {},
@@ -39448,7 +39448,7 @@
           ],
           "examples": [
             {
-              "name": "base_TransactionsChecking_200",
+              "name": "TransactionsChecking",
               "description": "",
               "path": "/api/transactions/id/",
               "pathParameters": {
@@ -39562,7 +39562,7 @@
               }
             },
             {
-              "name": "base_TransactionsSavings_200",
+              "name": "TransactionsSavings",
               "description": "",
               "path": "/api/transactions/id/",
               "pathParameters": {
@@ -39676,7 +39676,7 @@
               }
             },
             {
-              "name": "base_TransactionsCreditCard_200",
+              "name": "TransactionsCreditCard",
               "description": "",
               "path": "/api/transactions/id/",
               "pathParameters": {
@@ -40731,7 +40731,7 @@
           ],
           "examples": [
             {
-              "name": "balancesRetrieveBalancesExample_BalancesExamplePaginated_200",
+              "name": "BalancesExamplePaginated",
               "description": "",
               "path": "/api/balances/",
               "pathParameters": {},
@@ -40830,7 +40830,7 @@
               }
             },
             {
-              "name": "balancesRetrieveBalancesExample_BalancesExamplePaginated_201",
+              "name": "BalancesExamplePaginated",
               "description": "",
               "path": "/api/balances/",
               "pathParameters": {},
@@ -41140,7 +41140,7 @@
           ],
           "examples": [
             {
-              "name": "balancesPatchBalancesExample_BalancesExamplePaginated_200",
+              "name": "BalancesExamplePaginated",
               "description": "",
               "path": "/api/balances/",
               "pathParameters": {},
@@ -41237,7 +41237,7 @@
               }
             },
             {
-              "name": "balancesPatchBalancesExample_BalancesExamplePaginated_201",
+              "name": "BalancesExamplePaginated",
               "description": "",
               "path": "/api/balances/",
               "pathParameters": {},
@@ -42954,7 +42954,7 @@
           ],
           "examples": [
             {
-              "name": "ownersRetrieveOwnersExample_OwnerBankingAccount_200",
+              "name": "OwnerBankingAccount",
               "description": "",
               "path": "/api/owners/",
               "pathParameters": {},
@@ -43015,7 +43015,7 @@
               }
             },
             {
-              "name": "ownersRetrieveOwnersExample_OwnerBankingAccount_201",
+              "name": "OwnerBankingAccount",
               "description": "",
               "path": "/api/owners/",
               "pathParameters": {},
@@ -43287,7 +43287,7 @@
           ],
           "examples": [
             {
-              "name": "ownersPatchOwnersExample_OwnerBankingAccount_200",
+              "name": "OwnerBankingAccount",
               "description": "",
               "path": "/api/owners/",
               "pathParameters": {},
@@ -43350,7 +43350,7 @@
               }
             },
             {
-              "name": "ownersPatchOwnersExample_OwnerBankingAccount_201",
+              "name": "OwnerBankingAccount",
               "description": "",
               "path": "/api/owners/",
               "pathParameters": {},
@@ -44255,7 +44255,7 @@
           ],
           "examples": [
             {
-              "name": "base_InvoiceIngresso_200",
+              "name": "InvoiceIngresso",
               "description": "",
               "path": "/api/invoices/",
               "pathParameters": {},
@@ -44395,7 +44395,7 @@
               }
             },
             {
-              "name": "base_InvoicePago_200",
+              "name": "InvoicePago",
               "description": "",
               "path": "/api/invoices/",
               "pathParameters": {},
@@ -44583,7 +44583,7 @@
               }
             },
             {
-              "name": "base_InvoiceNomina_200",
+              "name": "InvoiceNomina",
               "description": "",
               "path": "/api/invoices/",
               "pathParameters": {},
@@ -44741,7 +44741,7 @@
               }
             },
             {
-              "name": "base_InvoiceEgreso_200",
+              "name": "InvoiceEgreso",
               "description": "",
               "path": "/api/invoices/",
               "pathParameters": {},
@@ -44881,7 +44881,7 @@
               }
             },
             {
-              "name": "base_InvoiceTraslado_200",
+              "name": "InvoiceTraslado",
               "description": "",
               "path": "/api/invoices/",
               "pathParameters": {},
@@ -45216,7 +45216,7 @@
           ],
           "examples": [
             {
-              "name": "invoicesRetrieveInvoicesExample_InvoiceIngresso_200",
+              "name": "InvoiceIngresso",
               "description": "",
               "path": "/api/invoices/",
               "pathParameters": {},
@@ -45361,7 +45361,7 @@
               }
             },
             {
-              "name": "invoicesRetrieveInvoicesExample_InvoicePago_200",
+              "name": "InvoicePago",
               "description": "",
               "path": "/api/invoices/",
               "pathParameters": {},
@@ -45554,7 +45554,7 @@
               }
             },
             {
-              "name": "invoicesRetrieveInvoicesExample_InvoiceNomina_200",
+              "name": "InvoiceNomina",
               "description": "",
               "path": "/api/invoices/",
               "pathParameters": {},
@@ -45717,7 +45717,7 @@
               }
             },
             {
-              "name": "invoicesRetrieveInvoicesExample_InvoiceEgreso_200",
+              "name": "InvoiceEgreso",
               "description": "",
               "path": "/api/invoices/",
               "pathParameters": {},
@@ -45862,7 +45862,7 @@
               }
             },
             {
-              "name": "invoicesRetrieveInvoicesExample_InvoiceTraslado_200",
+              "name": "InvoiceTraslado",
               "description": "",
               "path": "/api/invoices/",
               "pathParameters": {},
@@ -46007,7 +46007,7 @@
               }
             },
             {
-              "name": "invoicesRetrieveInvoicesExample_InvoiceIngresso_201",
+              "name": "InvoiceIngresso",
               "description": "",
               "path": "/api/invoices/",
               "pathParameters": {},
@@ -46152,7 +46152,7 @@
               }
             },
             {
-              "name": "invoicesRetrieveInvoicesExample_InvoicePago_201",
+              "name": "InvoicePago",
               "description": "",
               "path": "/api/invoices/",
               "pathParameters": {},
@@ -46345,7 +46345,7 @@
               }
             },
             {
-              "name": "invoicesRetrieveInvoicesExample_InvoiceNomina_201",
+              "name": "InvoiceNomina",
               "description": "",
               "path": "/api/invoices/",
               "pathParameters": {},
@@ -46508,7 +46508,7 @@
               }
             },
             {
-              "name": "invoicesRetrieveInvoicesExample_InvoiceEgreso_201",
+              "name": "InvoiceEgreso",
               "description": "",
               "path": "/api/invoices/",
               "pathParameters": {},
@@ -46653,7 +46653,7 @@
               }
             },
             {
-              "name": "invoicesRetrieveInvoicesExample_InvoiceTraslado_201",
+              "name": "InvoiceTraslado",
               "description": "",
               "path": "/api/invoices/",
               "pathParameters": {},
@@ -47625,7 +47625,7 @@
           ],
           "examples": [
             {
-              "name": "base_InvoiceIngresso_200",
+              "name": "InvoiceIngresso",
               "description": "",
               "path": "/api/invoices/id/",
               "pathParameters": {
@@ -47753,7 +47753,7 @@
               }
             },
             {
-              "name": "base_InvoicePago_200",
+              "name": "InvoicePago",
               "description": "",
               "path": "/api/invoices/id/",
               "pathParameters": {
@@ -47929,7 +47929,7 @@
               }
             },
             {
-              "name": "base_InvoiceNomina_200",
+              "name": "InvoiceNomina",
               "description": "",
               "path": "/api/invoices/id/",
               "pathParameters": {
@@ -48075,7 +48075,7 @@
               }
             },
             {
-              "name": "base_InvoiceEgreso_200",
+              "name": "InvoiceEgreso",
               "description": "",
               "path": "/api/invoices/id/",
               "pathParameters": {
@@ -48203,7 +48203,7 @@
               }
             },
             {
-              "name": "base_InvoiceTraslado_200",
+              "name": "InvoiceTraslado",
               "description": "",
               "path": "/api/invoices/id/",
               "pathParameters": {
@@ -48844,7 +48844,7 @@
           ],
           "examples": [
             {
-              "name": "base_TaxReturnPersonal_200",
+              "name": "TaxReturnPersonal",
               "description": "",
               "path": "/api/tax-returns/",
               "pathParameters": {},
@@ -49280,7 +49280,7 @@
               }
             },
             {
-              "name": "base_TaxReturnPersonalMonthlyPFAE_200",
+              "name": "TaxReturnPersonalMonthlyPFAE",
               "description": "",
               "path": "/api/tax-returns/",
               "pathParameters": {},
@@ -49440,7 +49440,7 @@
               }
             },
             {
-              "name": "base_TaxReturnPersonalMonthlyPFAI_200",
+              "name": "TaxReturnPersonalMonthlyPFAI",
               "description": "",
               "path": "/api/tax-returns/",
               "pathParameters": {},
@@ -49616,7 +49616,7 @@
               }
             },
             {
-              "name": "base_TaxReturnBusiness_200",
+              "name": "TaxReturnBusiness",
               "description": "",
               "path": "/api/tax-returns/",
               "pathParameters": {},
@@ -50472,7 +50472,7 @@
               }
             },
             {
-              "name": "base_TaxReturnBusinessMonthly_200",
+              "name": "TaxReturnBusinessMonthly",
               "description": "",
               "path": "/api/tax-returns/",
               "pathParameters": {},
@@ -51247,7 +51247,7 @@
           ],
           "examples": [
             {
-              "name": "taxReturnsRetrieveTaxReturnsExample_TaxReturnPersonal_200",
+              "name": "TaxReturnPersonal",
               "description": "",
               "path": "/api/tax-returns/",
               "pathParameters": {},
@@ -51686,7 +51686,7 @@
               }
             },
             {
-              "name": "taxReturnsRetrieveTaxReturnsExample_TaxReturnPersonalMonthlyPFAE_200",
+              "name": "TaxReturnPersonalMonthlyPFAE",
               "description": "",
               "path": "/api/tax-returns/",
               "pathParameters": {},
@@ -51851,7 +51851,7 @@
               }
             },
             {
-              "name": "taxReturnsRetrieveTaxReturnsExample_TaxReturnPersonalMonthlyPFAI_200",
+              "name": "TaxReturnPersonalMonthlyPFAI",
               "description": "",
               "path": "/api/tax-returns/",
               "pathParameters": {},
@@ -52032,7 +52032,7 @@
               }
             },
             {
-              "name": "taxReturnsRetrieveTaxReturnsExample_TaxReturnBusiness_200",
+              "name": "TaxReturnBusiness",
               "description": "",
               "path": "/api/tax-returns/",
               "pathParameters": {},
@@ -52891,7 +52891,7 @@
               }
             },
             {
-              "name": "taxReturnsRetrieveTaxReturnsExample_TaxReturnBusinessMonthly_200",
+              "name": "TaxReturnBusinessMonthly",
               "description": "",
               "path": "/api/tax-returns/",
               "pathParameters": {},
@@ -53476,7 +53476,7 @@
               }
             },
             {
-              "name": "taxReturnsRetrieveTaxReturnsExample_TaxReturnPersonal_201",
+              "name": "TaxReturnPersonal",
               "description": "",
               "path": "/api/tax-returns/",
               "pathParameters": {},
@@ -53915,7 +53915,7 @@
               }
             },
             {
-              "name": "taxReturnsRetrieveTaxReturnsExample_TaxReturnPersonalMonthlyPFAE_201",
+              "name": "TaxReturnPersonalMonthlyPFAE",
               "description": "",
               "path": "/api/tax-returns/",
               "pathParameters": {},
@@ -54080,7 +54080,7 @@
               }
             },
             {
-              "name": "taxReturnsRetrieveTaxReturnsExample_TaxReturnPersonalMonthlyPFAI_201",
+              "name": "TaxReturnPersonalMonthlyPFAI",
               "description": "",
               "path": "/api/tax-returns/",
               "pathParameters": {},
@@ -54261,7 +54261,7 @@
               }
             },
             {
-              "name": "taxReturnsRetrieveTaxReturnsExample_TaxReturnBusiness_201",
+              "name": "TaxReturnBusiness",
               "description": "",
               "path": "/api/tax-returns/",
               "pathParameters": {},
@@ -55120,7 +55120,7 @@
               }
             },
             {
-              "name": "taxReturnsRetrieveTaxReturnsExample_TaxReturnBusinessMonthly_201",
+              "name": "TaxReturnBusinessMonthly",
               "description": "",
               "path": "/api/tax-returns/",
               "pathParameters": {},
@@ -55855,7 +55855,7 @@
           ],
           "examples": [
             {
-              "name": "base_TaxReturnPersonal_200",
+              "name": "TaxReturnPersonal",
               "description": "",
               "path": "/api/tax-returns/id/",
               "pathParameters": {
@@ -56277,7 +56277,7 @@
               }
             },
             {
-              "name": "base_TaxReturnPersonalMonthlyPFAE_200",
+              "name": "TaxReturnPersonalMonthlyPFAE",
               "description": "",
               "path": "/api/tax-returns/id/",
               "pathParameters": {
@@ -56425,7 +56425,7 @@
               }
             },
             {
-              "name": "base_TaxReturnPersonalMonthlyPFAI_200",
+              "name": "TaxReturnPersonalMonthlyPFAI",
               "description": "",
               "path": "/api/tax-returns/id/",
               "pathParameters": {
@@ -56589,7 +56589,7 @@
               }
             },
             {
-              "name": "base_TaxReturnBusiness_200",
+              "name": "TaxReturnBusiness",
               "description": "",
               "path": "/api/tax-returns/id/",
               "pathParameters": {
@@ -57431,7 +57431,7 @@
               }
             },
             {
-              "name": "base_TaxReturnBusinessMonthly_200",
+              "name": "TaxReturnBusinessMonthly",
               "description": "",
               "path": "/api/tax-returns/id/",
               "pathParameters": {
@@ -58408,7 +58408,7 @@
           ],
           "examples": [
             {
-              "name": "base_TaxStatusPersonalListPaginated_200",
+              "name": "TaxStatusPersonalListPaginated",
               "description": "",
               "path": "/api/tax-status/",
               "pathParameters": {},
@@ -58580,7 +58580,7 @@
               }
             },
             {
-              "name": "base_TaxStatusBusinessListPaginated_200",
+              "name": "TaxStatusBusinessListPaginated",
               "description": "",
               "path": "/api/tax-status/",
               "pathParameters": {},
@@ -58938,7 +58938,7 @@
           ],
           "examples": [
             {
-              "name": "taxStatusRetrieveTaxStatusExample_TaxStatusPersonal_200",
+              "name": "TaxStatusPersonal",
               "description": "",
               "path": "/api/tax-status/",
               "pathParameters": {},
@@ -59105,7 +59105,7 @@
               }
             },
             {
-              "name": "taxStatusRetrieveTaxStatusExample_TaxStatusBusiness_200",
+              "name": "TaxStatusBusiness",
               "description": "",
               "path": "/api/tax-status/",
               "pathParameters": {},
@@ -59272,7 +59272,7 @@
               }
             },
             {
-              "name": "taxStatusRetrieveTaxStatusExample_TaxStatusPersonal_201",
+              "name": "TaxStatusPersonal",
               "description": "",
               "path": "/api/tax-status/",
               "pathParameters": {},
@@ -59439,7 +59439,7 @@
               }
             },
             {
-              "name": "taxStatusRetrieveTaxStatusExample_TaxStatusBusiness_201",
+              "name": "TaxStatusBusiness",
               "description": "",
               "path": "/api/tax-status/",
               "pathParameters": {},
@@ -59756,7 +59756,7 @@
           ],
           "examples": [
             {
-              "name": "base_TaxStatusPersonal_200",
+              "name": "TaxStatusPersonal",
               "description": "",
               "path": "/api/tax-status/id/",
               "pathParameters": {
@@ -59916,7 +59916,7 @@
               }
             },
             {
-              "name": "base_TaxStatusBusiness_200",
+              "name": "TaxStatusBusiness",
               "description": "",
               "path": "/api/tax-status/id/",
               "pathParameters": {
@@ -75912,7 +75912,7 @@
           ],
           "examples": [
             {
-              "name": "base_OfpiPixIndividual_200",
+              "name": "OfpiPixIndividual",
               "description": "",
               "path": "/payments/customers/",
               "pathParameters": {},
@@ -75990,7 +75990,7 @@
               }
             },
             {
-              "name": "base_OfpiPixBusiness_200",
+              "name": "OfpiPixBusiness",
               "description": "",
               "path": "/payments/customers/",
               "pathParameters": {},
@@ -76068,7 +76068,7 @@
               }
             },
             {
-              "name": "base_PseIndividual_200",
+              "name": "PseIndividual",
               "description": "",
               "path": "/payments/customers/",
               "pathParameters": {},
@@ -76278,7 +76278,7 @@
           ],
           "examples": [
             {
-              "name": "OfpiPixIndividual_201",
+              "name": "OfpiPixIndividual",
               "description": "",
               "path": "/payments/customers/",
               "pathParameters": {},
@@ -76335,7 +76335,7 @@
               }
             },
             {
-              "name": "OfpiPixBusiness_201",
+              "name": "OfpiPixBusiness",
               "description": "",
               "path": "/payments/customers/",
               "pathParameters": {},
@@ -76392,7 +76392,7 @@
               }
             },
             {
-              "name": "PseIndividual_201",
+              "name": "PseIndividual",
               "description": "",
               "path": "/payments/customers/",
               "pathParameters": {},
@@ -76576,7 +76576,7 @@
           ],
           "examples": [
             {
-              "name": "base_OfpiPixIndividual_200",
+              "name": "OfpiPixIndividual",
               "description": "",
               "path": "/payments/customers/a3b92311-1888-449f-acaa-49ae28d68fcd/",
               "pathParameters": {
@@ -76616,7 +76616,7 @@
               }
             },
             {
-              "name": "base_OfpiPixBusiness_200",
+              "name": "OfpiPixBusiness",
               "description": "",
               "path": "/payments/customers/a3b92311-1888-449f-acaa-49ae28d68fcd/",
               "pathParameters": {
@@ -76656,7 +76656,7 @@
               }
             },
             {
-              "name": "base_PseIndividual_200",
+              "name": "PseIndividual",
               "description": "",
               "path": "/payments/customers/a3b92311-1888-449f-acaa-49ae28d68fcd/",
               "pathParameters": {
@@ -76989,7 +76989,7 @@
           ],
           "examples": [
             {
-              "name": "base_OfpiPixInfo_200",
+              "name": "OfpiPixInfo",
               "description": "",
               "path": "/payments/bank-accounts/",
               "pathParameters": {},
@@ -77057,7 +77057,7 @@
               }
             },
             {
-              "name": "base_OfpiPixKey_200",
+              "name": "OfpiPixKey",
               "description": "",
               "path": "/payments/bank-accounts/",
               "pathParameters": {},
@@ -77121,7 +77121,7 @@
               }
             },
             {
-              "name": "base_PseInfo_200",
+              "name": "PseInfo",
               "description": "",
               "path": "/payments/bank-accounts/",
               "pathParameters": {},
@@ -77343,7 +77343,7 @@
           ],
           "examples": [
             {
-              "name": "OfpiPixInfo_201",
+              "name": "OfpiPixInfo",
               "description": "",
               "path": "/payments/bank-accounts/",
               "pathParameters": {},
@@ -77434,7 +77434,7 @@
               }
             },
             {
-              "name": "OfpiPixKey_201",
+              "name": "OfpiPixKey",
               "description": "",
               "path": "/payments/bank-accounts/",
               "pathParameters": {},
@@ -77517,7 +77517,7 @@
               }
             },
             {
-              "name": "PseInfo_201",
+              "name": "PseInfo",
               "description": "",
               "path": "/payments/bank-accounts/",
               "pathParameters": {},
@@ -77739,7 +77739,7 @@
           ],
           "examples": [
             {
-              "name": "base_OfpiPixInfo_200",
+              "name": "OfpiPixInfo",
               "description": "",
               "path": "/payments/bank-accounts/a3b92311-1888-449f-acaa-49ae28d68fcd/",
               "pathParameters": {
@@ -77795,7 +77795,7 @@
               }
             },
             {
-              "name": "base_OfpiPixKey_200",
+              "name": "OfpiPixKey",
               "description": "",
               "path": "/payments/bank-accounts/a3b92311-1888-449f-acaa-49ae28d68fcd/",
               "pathParameters": {
@@ -77847,7 +77847,7 @@
               }
             },
             {
-              "name": "base_PseInfo_200",
+              "name": "PseInfo",
               "description": "",
               "path": "/payments/bank-accounts/a3b92311-1888-449f-acaa-49ae28d68fcd/",
               "pathParameters": {

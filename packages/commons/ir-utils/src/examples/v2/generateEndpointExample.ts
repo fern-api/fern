@@ -140,7 +140,7 @@ export function generateEndpointExample({
     });
 
     // This means there were no user-specified requests, and there are no non-null responses
-    if (Object.keys(userResults).length === 0 && Object.keys(autoResults).length > 0) {
+    if (Object.keys(userResults).length === 0 && Object.keys(autoResults).length === 0) {
         const { baseExample: baseResponseExample } = getResponseExamples({
             endpoint
         });
