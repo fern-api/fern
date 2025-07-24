@@ -7,7 +7,7 @@ import com.seed.pagination.core.ClientOptions;
 import com.seed.pagination.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class AsyncSeedPaginationClientBuilder {
+public class AsyncSeedPaginationClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private String token = null;
@@ -51,9 +51,13 @@ public final class AsyncSeedPaginationClientBuilder {
         return this;
     }
 
+    protected ClientOptions buildClientOptions() {
+        clientOptionsBuilder.environment(this.environment);
+        return clientOptionsBuilder.build();
+    }
+
     public AsyncSeedPaginationClient build() {
         this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + this.token);
-        clientOptionsBuilder.environment(this.environment);
-        return new AsyncSeedPaginationClient(clientOptionsBuilder.build());
+        return new AsyncSeedPaginationClient(buildClientOptions());
     }
 }

@@ -7,7 +7,7 @@ import com.seed._enum.core.ClientOptions;
 import com.seed._enum.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class SeedEnumClientBuilder {
+public class SeedEnumClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private Environment environment;
@@ -41,8 +41,12 @@ public final class SeedEnumClientBuilder {
         return this;
     }
 
-    public SeedEnumClient build() {
+    protected ClientOptions buildClientOptions() {
         clientOptionsBuilder.environment(this.environment);
-        return new SeedEnumClient(clientOptionsBuilder.build());
+        return clientOptionsBuilder.build();
+    }
+
+    public SeedEnumClient build() {
+        return new SeedEnumClient(buildClientOptions());
     }
 }

@@ -8,7 +8,7 @@ import com.seed.basicAuthEnvironmentVariables.core.Environment;
 import java.util.Base64;
 import okhttp3.OkHttpClient;
 
-public final class SeedBasicAuthEnvironmentVariablesClientBuilder {
+public class SeedBasicAuthEnvironmentVariablesClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private String username = System.getenv("USERNAME");
@@ -52,6 +52,11 @@ public final class SeedBasicAuthEnvironmentVariablesClientBuilder {
         return this;
     }
 
+    protected ClientOptions buildClientOptions() {
+        clientOptionsBuilder.environment(this.environment);
+        return clientOptionsBuilder.build();
+    }
+
     public SeedBasicAuthEnvironmentVariablesClient build() {
         if (this.username == null) {
             throw new RuntimeException("Please provide username or set the USERNAME environment variable.");
@@ -62,7 +67,6 @@ public final class SeedBasicAuthEnvironmentVariablesClientBuilder {
         String unencodedToken = username + ":" + accessToken;
         String encodedToken = Base64.getEncoder().encodeToString(unencodedToken.getBytes());
         this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + encodedToken);
-        clientOptionsBuilder.environment(this.environment);
-        return new SeedBasicAuthEnvironmentVariablesClient(clientOptionsBuilder.build());
+        return new SeedBasicAuthEnvironmentVariablesClient(buildClientOptions());
     }
 }

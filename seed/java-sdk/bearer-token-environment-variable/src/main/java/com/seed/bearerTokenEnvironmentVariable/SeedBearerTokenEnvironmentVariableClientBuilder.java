@@ -7,7 +7,7 @@ import com.seed.bearerTokenEnvironmentVariable.core.ClientOptions;
 import com.seed.bearerTokenEnvironmentVariable.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class SeedBearerTokenEnvironmentVariableClientBuilder {
+public class SeedBearerTokenEnvironmentVariableClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private String apiKey = System.getenv("COURIER_API_KEY");
@@ -62,13 +62,17 @@ public final class SeedBearerTokenEnvironmentVariableClientBuilder {
         return this;
     }
 
+    protected ClientOptions buildClientOptions() {
+        clientOptionsBuilder.environment(this.environment);
+        return clientOptionsBuilder.build();
+    }
+
     public SeedBearerTokenEnvironmentVariableClient build() {
         if (apiKey == null) {
             throw new RuntimeException("Please provide apiKey or set the COURIER_API_KEY environment variable.");
         }
         this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + this.apiKey);
         this.clientOptionsBuilder.addHeader("X-API-Version", this.version);
-        clientOptionsBuilder.environment(this.environment);
-        return new SeedBearerTokenEnvironmentVariableClient(clientOptionsBuilder.build());
+        return new SeedBearerTokenEnvironmentVariableClient(buildClientOptions());
     }
 }

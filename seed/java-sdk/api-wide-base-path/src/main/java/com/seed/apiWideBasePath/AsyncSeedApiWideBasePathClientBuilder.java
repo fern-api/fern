@@ -7,7 +7,7 @@ import com.seed.apiWideBasePath.core.ClientOptions;
 import com.seed.apiWideBasePath.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class AsyncSeedApiWideBasePathClientBuilder {
+public class AsyncSeedApiWideBasePathClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private Environment environment;
@@ -41,8 +41,12 @@ public final class AsyncSeedApiWideBasePathClientBuilder {
         return this;
     }
 
-    public AsyncSeedApiWideBasePathClient build() {
+    protected ClientOptions buildClientOptions() {
         clientOptionsBuilder.environment(this.environment);
-        return new AsyncSeedApiWideBasePathClient(clientOptionsBuilder.build());
+        return clientOptionsBuilder.build();
+    }
+
+    public AsyncSeedApiWideBasePathClient build() {
+        return new AsyncSeedApiWideBasePathClient(buildClientOptions());
     }
 }

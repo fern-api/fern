@@ -7,7 +7,7 @@ import com.seed.crossPackageTypeNames.core.ClientOptions;
 import com.seed.crossPackageTypeNames.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class SeedCrossPackageTypeNamesClientBuilder {
+public class SeedCrossPackageTypeNamesClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private Environment environment;
@@ -41,8 +41,12 @@ public final class SeedCrossPackageTypeNamesClientBuilder {
         return this;
     }
 
-    public SeedCrossPackageTypeNamesClient build() {
+    protected ClientOptions buildClientOptions() {
         clientOptionsBuilder.environment(this.environment);
-        return new SeedCrossPackageTypeNamesClient(clientOptionsBuilder.build());
+        return clientOptionsBuilder.build();
+    }
+
+    public SeedCrossPackageTypeNamesClient build() {
+        return new SeedCrossPackageTypeNamesClient(buildClientOptions());
     }
 }

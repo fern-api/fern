@@ -7,7 +7,7 @@ import com.seed.responseProperty.core.ClientOptions;
 import com.seed.responseProperty.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class SeedResponsePropertyClientBuilder {
+public class SeedResponsePropertyClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private Environment environment;
@@ -41,8 +41,12 @@ public final class SeedResponsePropertyClientBuilder {
         return this;
     }
 
-    public SeedResponsePropertyClient build() {
+    protected ClientOptions buildClientOptions() {
         clientOptionsBuilder.environment(this.environment);
-        return new SeedResponsePropertyClient(clientOptionsBuilder.build());
+        return clientOptionsBuilder.build();
+    }
+
+    public SeedResponsePropertyClient build() {
+        return new SeedResponsePropertyClient(buildClientOptions());
     }
 }

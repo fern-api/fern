@@ -7,7 +7,7 @@ import com.seed.undiscriminatedUnions.core.ClientOptions;
 import com.seed.undiscriminatedUnions.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class SeedUndiscriminatedUnionsClientBuilder {
+public class SeedUndiscriminatedUnionsClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private Environment environment;
@@ -41,8 +41,12 @@ public final class SeedUndiscriminatedUnionsClientBuilder {
         return this;
     }
 
-    public SeedUndiscriminatedUnionsClient build() {
+    protected ClientOptions buildClientOptions() {
         clientOptionsBuilder.environment(this.environment);
-        return new SeedUndiscriminatedUnionsClient(clientOptionsBuilder.build());
+        return clientOptionsBuilder.build();
+    }
+
+    public SeedUndiscriminatedUnionsClient build() {
+        return new SeedUndiscriminatedUnionsClient(buildClientOptions());
     }
 }

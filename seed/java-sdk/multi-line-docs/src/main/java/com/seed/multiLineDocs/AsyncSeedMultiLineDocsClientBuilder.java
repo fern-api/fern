@@ -7,7 +7,7 @@ import com.seed.multiLineDocs.core.ClientOptions;
 import com.seed.multiLineDocs.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class AsyncSeedMultiLineDocsClientBuilder {
+public class AsyncSeedMultiLineDocsClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private Environment environment;
@@ -41,8 +41,12 @@ public final class AsyncSeedMultiLineDocsClientBuilder {
         return this;
     }
 
-    public AsyncSeedMultiLineDocsClient build() {
+    protected ClientOptions buildClientOptions() {
         clientOptionsBuilder.environment(this.environment);
-        return new AsyncSeedMultiLineDocsClient(clientOptionsBuilder.build());
+        return clientOptionsBuilder.build();
+    }
+
+    public AsyncSeedMultiLineDocsClient build() {
+        return new AsyncSeedMultiLineDocsClient(buildClientOptions());
     }
 }

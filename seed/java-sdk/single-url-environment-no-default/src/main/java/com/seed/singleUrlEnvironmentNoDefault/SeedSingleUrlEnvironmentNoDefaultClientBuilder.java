@@ -7,7 +7,7 @@ import com.seed.singleUrlEnvironmentNoDefault.core.ClientOptions;
 import com.seed.singleUrlEnvironmentNoDefault.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class SeedSingleUrlEnvironmentNoDefaultClientBuilder {
+public class SeedSingleUrlEnvironmentNoDefaultClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private String token = null;
@@ -56,12 +56,16 @@ public final class SeedSingleUrlEnvironmentNoDefaultClientBuilder {
         return this;
     }
 
+    protected ClientOptions buildClientOptions() {
+        clientOptionsBuilder.environment(this.environment);
+        return clientOptionsBuilder.build();
+    }
+
     public SeedSingleUrlEnvironmentNoDefaultClient build() {
         if (token == null) {
             throw new RuntimeException("Please provide token");
         }
         this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + this.token);
-        clientOptionsBuilder.environment(this.environment);
-        return new SeedSingleUrlEnvironmentNoDefaultClient(clientOptionsBuilder.build());
+        return new SeedSingleUrlEnvironmentNoDefaultClient(buildClientOptions());
     }
 }

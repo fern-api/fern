@@ -7,7 +7,7 @@ import com.seed._extends.core.ClientOptions;
 import com.seed._extends.core.Environment;
 import okhttp3.OkHttpClient;
 
-public final class AsyncSeedExtendsClientBuilder {
+public class AsyncSeedExtendsClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private Environment environment;
@@ -41,8 +41,12 @@ public final class AsyncSeedExtendsClientBuilder {
         return this;
     }
 
-    public AsyncSeedExtendsClient build() {
+    protected ClientOptions buildClientOptions() {
         clientOptionsBuilder.environment(this.environment);
-        return new AsyncSeedExtendsClient(clientOptionsBuilder.build());
+        return clientOptionsBuilder.build();
+    }
+
+    public AsyncSeedExtendsClient build() {
+        return new AsyncSeedExtendsClient(buildClientOptions());
     }
 }
