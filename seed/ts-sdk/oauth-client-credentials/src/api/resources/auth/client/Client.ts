@@ -4,7 +4,7 @@
 
 import * as core from "../../../../core/index.js";
 import * as SeedOauthClientCredentials from "../../../index.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
 
 export declare namespace Auth {
@@ -12,9 +12,9 @@ export declare namespace Auth {
         environment: core.Supplier<string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
-        token?: core.Supplier<core.BearerToken | undefined>;
         /** Additional headers to include in requests. */
         headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        authProvider: core.AuthProvider; // TODO: remove inside auth endpoint
     }
 
     export interface RequestOptions {
@@ -67,7 +67,7 @@ export class Auth {
             method: "POST",
             headers: mergeHeaders(
                 this._options?.headers,
-                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                this._options.authProvider.getHeaders(), // TODO: remove inside auth endpoint
                 requestOptions?.headers,
             ),
             contentType: "application/json",
@@ -141,7 +141,7 @@ export class Auth {
             method: "POST",
             headers: mergeHeaders(
                 this._options?.headers,
-                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                this._options.authProvider.getHeaders(), // TODO: remove inside auth endpoint
                 requestOptions?.headers,
             ),
             contentType: "application/json",
@@ -181,14 +181,5 @@ export class Auth {
                     rawResponse: _response.rawResponse,
                 });
         }
-    }
-
-    protected async _getAuthorizationHeader(): Promise<string | undefined> {
-        const bearer = await core.Supplier.get(this._options.token);
-        if (bearer != null) {
-            return `Bearer ${bearer}`;
-        }
-
-        return undefined;
     }
 }

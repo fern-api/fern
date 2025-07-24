@@ -3,19 +3,18 @@
  */
 
 import * as core from "./core/index.js";
-import { Auth } from "./api/resources/auth/client/Client.js";
+import * as SeedOauthClientCredentials from "./api/index.js";
 import { mergeHeaders } from "./core/headers.js";
+import { Auth } from "./api/resources/auth/client/Client.js";
 
 export declare namespace SeedOauthClientCredentialsClient {
-    export interface Options {
+    export type Options = core.PropertiesSupplier<SeedOauthClientCredentials.GetTokenRequest> & {
         environment: core.Supplier<string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
-        clientId: core.Supplier<string>;
-        clientSecret: core.Supplier<string>;
         /** Additional headers to include in requests. */
         headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
-    }
+    };
 
     export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
@@ -31,7 +30,7 @@ export declare namespace SeedOauthClientCredentialsClient {
 
 export class SeedOauthClientCredentialsClient {
     protected readonly _options: SeedOauthClientCredentialsClient.Options;
-    private readonly _oauthTokenProvider: core.OAuthTokenProvider;
+    protected readonly _authProvider: core.AuthProvider;
     protected _auth: Auth | undefined;
 
     constructor(_options: SeedOauthClientCredentialsClient.Options) {
@@ -49,21 +48,13 @@ export class SeedOauthClientCredentialsClient {
                 _options?.headers,
             ),
         };
-
-        this._oauthTokenProvider = new core.OAuthTokenProvider({
-            clientId: this._options.clientId,
-            clientSecret: this._options.clientSecret,
-            authClient: new Auth({
-                ...this._options,
-                environment: this._options.environment,
-            }),
-        });
+        this._authProvider = new core.AuthProvider(this, { ...this._options });
     }
 
     public get auth(): Auth {
         return (this._auth ??= new Auth({
             ...this._options,
-            token: async () => await this._oauthTokenProvider.getToken(),
+            authProvider: this._authProvider,
         }));
     }
 }
