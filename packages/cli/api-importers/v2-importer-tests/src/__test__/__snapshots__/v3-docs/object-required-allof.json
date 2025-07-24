@@ -659,25 +659,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "createTreeExample_base": {
-                "displayName": "createTreeExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/trees"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "age": "string",
-                    "location": {}
-                  }
-                },
-                "response": {
-                  "statusCode": 201
-                }
               }
             },
             "userSpecifiedExamples": {}

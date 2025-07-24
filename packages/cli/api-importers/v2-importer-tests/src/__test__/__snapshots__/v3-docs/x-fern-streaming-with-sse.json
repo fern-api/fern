@@ -505,24 +505,6 @@
                 "response": {
                   "statusCode": 200
                 }
-              },
-              "chatCompletionsCreateExample_base": {
-                "displayName": "chatCompletionsCreateExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/completions/chat"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "prompt": "string"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}

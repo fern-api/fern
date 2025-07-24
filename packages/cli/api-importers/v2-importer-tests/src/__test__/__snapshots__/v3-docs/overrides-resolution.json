@@ -1588,22 +1588,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "createAUserExample_base": {
-                "displayName": "createAUserExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/users"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -1848,22 +1832,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "updateAUserExample_base": {
-                "displayName": "updateAUserExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PUT",
-                    "path": "/users"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },

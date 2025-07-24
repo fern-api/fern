@@ -29680,22 +29680,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v2/upload"
-                  },
-                  "environment": "AssemblyAI API",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -30555,22 +30539,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/transcript"
-                  },
-                  "environment": "AssemblyAI API",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -31344,25 +31312,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "transcriptCreateExample_base": {
-                "displayName": "transcriptCreateExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v2/transcript"
-                  },
-                  "environment": "AssemblyAI API",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "audio_url": "string"
-                  }
-                },
-                "response": {
-                  "statusCode": 201
                 }
               }
             },
@@ -32340,24 +32289,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/transcript/transcript_id"
-                  },
-                  "environment": "AssemblyAI API",
-                  "pathParameters": {
-                    "transcript_id": "transcript_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -33334,24 +33265,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v2/transcript/transcript_id"
-                  },
-                  "environment": "AssemblyAI API",
-                  "pathParameters": {
-                    "transcript_id": "transcript_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -34125,25 +34038,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/transcript/transcript_id/srt"
-                  },
-                  "environment": "AssemblyAI API",
-                  "pathParameters": {
-                    "transcript_id": "transcript_id",
-                    "subtitle_format": "srt"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -34614,24 +34508,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/transcript/transcript_id/sentences"
-                  },
-                  "environment": "AssemblyAI API",
-                  "pathParameters": {
-                    "transcript_id": "transcript_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -35155,24 +35031,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/transcript/transcript_id/paragraphs"
-                  },
-                  "environment": "AssemblyAI API",
-                  "pathParameters": {
-                    "transcript_id": "transcript_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -35744,28 +35602,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/transcript/transcript_id/word-search"
-                  },
-                  "environment": "AssemblyAI API",
-                  "pathParameters": {
-                    "transcript_id": "transcript_id"
-                  },
-                  "queryParameters": {
-                    "words": [
-                      "string"
-                    ]
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -36249,24 +36085,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/transcript/transcript_id/redacted-audio"
-                  },
-                  "environment": "AssemblyAI API",
-                  "pathParameters": {
-                    "transcript_id": "transcript_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -36741,25 +36559,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "realtimeCreateTemporaryTokenExample_base": {
-                "displayName": "realtimeCreateTemporaryTokenExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v2/realtime/token"
-                  },
-                  "environment": "AssemblyAI API",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "expires_in": 1
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -37241,27 +37040,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "lemurSummaryExample_base": {
-                "displayName": "lemurSummaryExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/lemur/v3/generate/summary"
-                  },
-                  "environment": "AssemblyAI API",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "transcript_ids": [
-                      "string"
-                    ]
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -37707,32 +37485,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "lemurQuestionAnswerExample_base": {
-                "displayName": "lemurQuestionAnswerExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/lemur/v3/generate/question-answer"
-                  },
-                  "environment": "AssemblyAI API",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "transcript_ids": [
-                      "string"
-                    ],
-                    "questions": [
-                      {
-                        "question": "string"
-                      }
-                    ]
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -38163,27 +37915,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "lemurActionItemsExample_base": {
-                "displayName": "lemurActionItemsExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/lemur/v3/generate/action-items"
-                  },
-                  "environment": "AssemblyAI API",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "transcript_ids": [
-                      "string"
-                    ]
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -38610,28 +38341,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "lemurTaskExample_base": {
-                "displayName": "lemurTaskExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/lemur/v3/generate/task"
-                  },
-                  "environment": "AssemblyAI API",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "transcript_ids": [
-                      "string"
-                    ],
-                    "prompt": "string"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -39103,24 +38812,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/lemur/v3/request_id"
-                  },
-                  "environment": "AssemblyAI API",
-                  "pathParameters": {
-                    "request_id": "request_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },

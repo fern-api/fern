@@ -321,22 +321,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "getSearchExample_base": {
-                "displayName": "getSearchExample",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/search"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": "string"
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -580,22 +564,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "getSearchWithUnionExample_base": {
-                "displayName": "getSearchWithUnionExample",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/search-with-union"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": "string"
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -832,22 +800,6 @@
                     "value": "string",
                     "type": "json"
                   }
-                }
-              },
-              "getSearchWithUnionAndNullExample_base": {
-                "displayName": "getSearchWithUnionAndNullExample",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/search-with-union-and-null"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": "string"
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },

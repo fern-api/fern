@@ -6181,44 +6181,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "petUpdateAnExistingPetExample_base": {
-                "displayName": "petUpdateAnExistingPetExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PUT",
-                    "path": "/pet"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "id": 0,
-                    "category": {
-                      "id": 6,
-                      "name": "name"
-                    },
-                    "name": "doggie",
-                    "photoUrls": [
-                      "photoUrls",
-                      "photoUrls"
-                    ],
-                    "tags": [
-                      {
-                        "id": 1,
-                        "name": "name"
-                      },
-                      {
-                        "id": 1,
-                        "name": "name"
-                      }
-                    ],
-                    "status": "available"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -6471,21 +6433,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/order"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },

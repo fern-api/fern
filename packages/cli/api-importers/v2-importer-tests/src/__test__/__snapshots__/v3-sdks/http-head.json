@@ -1114,21 +1114,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/users"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -1351,21 +1336,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "HEAD",
-                    "path": "/users"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },

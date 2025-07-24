@@ -729,22 +729,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "postExample_base": {
-                "displayName": "postExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/post"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}

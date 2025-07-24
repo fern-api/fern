@@ -705,21 +705,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/list"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -1012,21 +997,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/list-with-step"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },

@@ -802,26 +802,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/organizations/organization_id/users/user_id"
-                  },
-                  "pathParameters": {
-                    "organization_id": "organization_id",
-                    "user_id": "user_id"
-                  },
-                  "queryParameters": {
-                    "limit": 1
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -1315,25 +1295,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "organizationsSearchExample_base": {
-                "displayName": "organizationsSearchExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/organizations/organization_id/search"
-                  },
-                  "pathParameters": {
-                    "id": "id",
-                    "organization_id": "organization_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },

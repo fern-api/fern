@@ -189,22 +189,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "sendExample_base": {
-                "displayName": "sendExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/send"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}

@@ -11171,22 +11171,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v0/evi/language_models"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -11468,22 +11452,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "ttsV0EviTtsPostExample_base": {
-                "displayName": "ttsV0EviTtsPostExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v0/evi/tts"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -11810,24 +11778,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "twilioWebhookV0EviTwilioPostExample_base": {
-                "displayName": "twilioWebhookV0EviTwilioPostExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v0/evi/twilio"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "config_id": "config_id"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -12069,22 +12019,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "voiceV0EviVoicePostExample_base": {
-                "displayName": "voiceV0EviVoicePostExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v0/evi/voice"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -12253,22 +12187,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v0/evi/voice-names"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -12702,22 +12620,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v0/evi/tools"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -12878,22 +12780,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "toolsCreateNewToolExample_base": {
-                "displayName": "toolsCreateNewToolExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v0/evi/tools"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 201
                 }
               }
             },
@@ -13305,24 +13191,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v0/evi/tools/id"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -13613,24 +13481,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "toolsAddNewToolVersionExample_base": {
-                "displayName": "toolsAddNewToolVersionExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v0/evi/tools/id"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 201
                 }
               }
             },
@@ -13974,24 +13824,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v0/evi/tools/id"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -14408,24 +14240,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "toolsUpdateToolNameExample_base": {
-                "displayName": "toolsUpdateToolNameExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PATCH",
-                    "path": "/v0/evi/tools/id"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -14838,25 +14652,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v0/evi/tools/id/version/1"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {
-                    "id": "id",
-                    "version": 1
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -15319,25 +15114,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v0/evi/tools/id/version/1"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {
-                    "id": "id",
-                    "version": 1
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -15819,25 +15595,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "toolsUpdateToolVersionDescriptionExample_base": {
-                "displayName": "toolsUpdateToolVersionDescriptionExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PATCH",
-                    "path": "/v0/evi/tools/id/version/1"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {
-                    "id": "id",
-                    "version": 1
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -16270,22 +16027,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v0/evi/prompts"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -16446,22 +16187,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "promptsCreateNewPromptExample_base": {
-                "displayName": "promptsCreateNewPromptExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v0/evi/prompts"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 201
                 }
               }
             },
@@ -16873,24 +16598,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v0/evi/prompts/id"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -17181,24 +16888,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "promptsAddNewPromptVersionExample_base": {
-                "displayName": "promptsAddNewPromptVersionExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v0/evi/prompts/id"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 201
                 }
               }
             },
@@ -17542,24 +17231,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v0/evi/prompts/id"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -17976,24 +17647,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "promptsUpdatePromptNameExample_base": {
-                "displayName": "promptsUpdatePromptNameExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PATCH",
-                    "path": "/v0/evi/prompts/id"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -18406,25 +18059,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v0/evi/prompts/id/version/1"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {
-                    "id": "id",
-                    "version": 1
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -18887,25 +18521,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v0/evi/prompts/id/version/1"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {
-                    "id": "id",
-                    "version": 1
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -19387,25 +19002,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "promptsUpdatePromptVersionDescriptionExample_base": {
-                "displayName": "promptsUpdatePromptVersionDescriptionExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PATCH",
-                    "path": "/v0/evi/prompts/id/version/1"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {
-                    "id": "id",
-                    "version": 1
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -19791,22 +19387,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v0/evi/custom_voices"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -19967,22 +19547,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "customVoicesCreateNewCustomVoiceExample_base": {
-                "displayName": "customVoicesCreateNewCustomVoiceExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v0/evi/custom_voices"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 201
                 }
               }
             },
@@ -20251,24 +19815,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v0/evi/custom_voices/id"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -20560,24 +20106,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "customVoicesAddNewCustomVoiceVersionExample_base": {
-                "displayName": "customVoicesAddNewCustomVoiceVersionExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v0/evi/custom_voices/id"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 201
                 }
               }
             },
@@ -20921,24 +20449,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v0/evi/custom_voices/id"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -21354,24 +20864,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "customVoicesUpdateCustomVoiceNameExample_base": {
-                "displayName": "customVoicesUpdateCustomVoiceNameExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PATCH",
-                    "path": "/v0/evi/custom_voices/id"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -21832,22 +21324,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v0/evi/configs"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -22008,22 +21484,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "configsCreateNewConfigExample_base": {
-                "displayName": "configsCreateNewConfigExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v0/evi/configs"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 201
                 }
               }
             },
@@ -22437,24 +21897,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v0/evi/configs/id"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -22745,24 +22187,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "configsAddNewConfigVersionExample_base": {
-                "displayName": "configsAddNewConfigVersionExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v0/evi/configs/id"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 201
                 }
               }
             },
@@ -23106,24 +22530,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v0/evi/configs/id"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -23540,24 +22946,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "configsUpdateConfigNameExample_base": {
-                "displayName": "configsUpdateConfigNameExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PATCH",
-                    "path": "/v0/evi/configs/id"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -23970,25 +23358,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v0/evi/configs/id/version/1"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {
-                    "id": "id",
-                    "version": 1
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -24451,25 +23820,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v0/evi/configs/id/version/1"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {
-                    "id": "id",
-                    "version": 1
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -24951,25 +24301,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "configsUpdateConfigVersionDescriptionExample_base": {
-                "displayName": "configsUpdateConfigVersionDescriptionExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PATCH",
-                    "path": "/v0/evi/configs/id/version/1"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {
-                    "id": "id",
-                    "version": 1
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -25356,22 +24687,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v0/evi/chats"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -25785,24 +25100,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v0/evi/chats/id"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -26070,24 +25367,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v0/evi/chats/id/audio"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -26475,22 +25754,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v0/evi/chat_groups"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -26904,24 +26167,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v0/evi/chat_groups/id"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -27334,24 +26579,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v0/evi/chat_groups/id/events"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -27763,24 +26990,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v0/evi/chat_groups/id/audio"
-                  },
-                  "environment": "https://api.hume.ai/v0/evi",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },

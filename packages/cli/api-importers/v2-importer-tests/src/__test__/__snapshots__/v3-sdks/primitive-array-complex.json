@@ -341,24 +341,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "getSearchWithArrayUnionExample_base": {
-                "displayName": "getSearchWithArrayUnionExample",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/search-with-array-union"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": [
-                    "string"
-                  ]
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -595,22 +577,6 @@
                     "value": "string",
                     "type": "json"
                   }
-                }
-              },
-              "getSearchWithObjectUnionExample_base": {
-                "displayName": "getSearchWithObjectUnionExample",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/search-with-object-union"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },

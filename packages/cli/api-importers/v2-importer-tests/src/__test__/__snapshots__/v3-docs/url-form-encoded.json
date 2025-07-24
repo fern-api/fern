@@ -398,25 +398,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "submitFormDataExample_base": {
-                "displayName": "submitFormDataExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/submit"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "username": "johndoe",
-                    "email": "john@example.com"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}

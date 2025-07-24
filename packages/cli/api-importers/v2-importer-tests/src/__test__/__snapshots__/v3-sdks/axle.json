@@ -8216,28 +8216,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "tokensExchangeTokenExample_base": {
-                "displayName": "tokensExchangeTokenExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/token/exchange"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {
-                    "x-client-id": "x-client-id",
-                    "x-client-secret": "x-client-secret"
-                  },
-                  "requestBody": {
-                    "authCode": "string"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -9877,27 +9855,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/accounts/id"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {
-                    "x-client-id": "x-client-id",
-                    "x-client-secret": "x-client-secret"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -18679,27 +18636,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/policies/id"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {
-                    "x-client-id": "x-client-id",
-                    "x-client-secret": "x-client-secret"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -20640,27 +20576,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/carriers/id"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {
-                    "x-client-id": "x-client-id",
-                    "x-client-secret": "x-client-secret"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -23510,25 +23425,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/carriers"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {
-                    "x-client-id": "x-client-id",
-                    "x-client-secret": "x-client-secret"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },

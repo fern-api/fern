@@ -10013,22 +10013,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/auth"
-                  },
-                  "environment": "https://api.airtop.ai/v1",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -13289,24 +13273,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/extensions"
-                  },
-                  "environment": "https://api.airtop.ai/v1",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "name": "Widget"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -16200,25 +16166,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "extensionsPostExample_base": {
-                "displayName": "extensionsPostExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/extensions"
-                  },
-                  "environment": "https://api.airtop.ai/v1",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "name": "Special Widget"
-                  }
-                },
-                "response": {
-                  "statusCode": 201
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -16514,24 +16461,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/extensions"
-                  },
-                  "environment": "https://api.airtop.ai/v1",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "name": "Widget"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
                 }
               }
             },
@@ -19473,24 +19402,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/extensions/4a61a55c-391b-4f73-957e-ffbd29ac7cba"
-                  },
-                  "environment": "https://api.airtop.ai/v1",
-                  "pathParameters": {
-                    "id": "4a61a55c-391b-4f73-957e-ffbd29ac7cba"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -23033,28 +22944,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/profiles"
-                  },
-                  "environment": "https://api.airtop.ai/v1",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "name": "^Acme.*",
-                    "tags": [
-                      "blue",
-                      "red"
-                    ]
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -26126,25 +26015,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "profilesPostExample_base": {
-                "displayName": "profilesPostExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/profiles"
-                  },
-                  "environment": "https://api.airtop.ai/v1",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "name": "Acme corp login"
-                  }
-                },
-                "response": {
-                  "statusCode": 201
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -26504,28 +26374,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/profiles"
-                  },
-                  "environment": "https://api.airtop.ai/v1",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "name": "^Acme.*",
-                    "tags": [
-                      "blue",
-                      "red"
-                    ]
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
                 }
               }
             },
@@ -29558,24 +29406,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/profiles/4a61a55c-391b-4f73-957e-ffbd29ac7cba"
-                  },
-                  "environment": "https://api.airtop.ai/v1",
-                  "pathParameters": {
-                    "id": "4a61a55c-391b-4f73-957e-ffbd29ac7cba"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -36629,30 +36459,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/sessions"
-                  },
-                  "environment": "https://api.airtop.ai/v1",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "sessionIds": [
-                      "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-                      "e39522ce-44f0-456f-9efd-07b3d4fdd9f2"
-                    ],
-                    "status": "running",
-                    "offset": 1,
-                    "limit": 10
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -40942,23 +40748,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "sessionsPostExample_base": {
-                "displayName": "sessionsPostExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/sessions"
-                  },
-                  "environment": "https://api.airtop.ai/v1",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 201
                 }
               }
             },
@@ -45292,24 +45081,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b"
-                  },
-                  "environment": "https://api.airtop.ai/v1",
-                  "pathParameters": {
-                    "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -45698,24 +45469,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b"
-                  },
-                  "environment": "https://api.airtop.ai/v1",
-                  "pathParameters": {
-                    "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
                 }
               }
             },
@@ -46816,24 +46569,6 @@
             "autogeneratedExamples": {
               "base_200": {
                 "displayName": "eventsExample",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/events"
-                  },
-                  "environment": "https://api.airtop.ai/v1",
-                  "pathParameters": {
-                    "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
-              },
-              "base": {
-                "displayName": "base",
                 "request": {
                   "endpoint": {
                     "method": "GET",
@@ -49943,27 +49678,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/windows/7334da2a-91b0-42c5-6156-76a5eba87430/get-window-info"
-                  },
-                  "environment": "https://api.airtop.ai/v1",
-                  "pathParameters": {
-                    "sessionId": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-                    "windowId": "7334da2a-91b0-42c5-6156-76a5eba87430"
-                  },
-                  "queryParameters": {
-                    "Screen resolution": "1920x1080"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 201
                 }
               }
             },
@@ -53804,28 +53518,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "windowsPromptContentExample_base": {
-                "displayName": "windowsPromptContentExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/windows/0334da2a-91b0-42c5-6156-76a5eba87430/prompt-content"
-                  },
-                  "environment": "https://api.airtop.ai/v1",
-                  "pathParameters": {
-                    "sessionId": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-                    "windowId": "0334da2a-91b0-42c5-6156-76a5eba87430"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "prompt": "What is the main idea of this page?"
-                  }
-                },
-                "response": {
-                  "statusCode": 201
                 }
               }
             },
@@ -57675,25 +57367,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/windows/0334da2a-91b0-42c5-6156-76a5eba87430/scrape-content"
-                  },
-                  "environment": "https://api.airtop.ai/v1",
-                  "pathParameters": {
-                    "sessionId": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-                    "windowId": "0334da2a-91b0-42c5-6156-76a5eba87430"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 201
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -61479,26 +61152,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "windowsSummarizeContentExample_base": {
-                "displayName": "windowsSummarizeContentExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/windows/0334da2a-91b0-42c5-6156-76a5eba87430/summarize-content"
-                  },
-                  "environment": "https://api.airtop.ai/v1",
-                  "pathParameters": {
-                    "sessionId": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-                    "windowId": "0334da2a-91b0-42c5-6156-76a5eba87430"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 201
                 }
               }
             },

@@ -33554,22 +33554,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/orgs"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -33844,26 +33828,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "organizationsCreateOrganizationExample_base": {
-                "displayName": "organizationsCreateOrganizationExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v2/orgs"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "key": "string",
-                    "name": "string"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -34177,24 +34141,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/orgs/org_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "org_id": "org_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -34488,24 +34434,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v2/orgs/org_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "org_id": "org_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
                 }
               }
             },
@@ -34848,25 +34776,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "organizationsUpdateOrganizationExample_base": {
-                "displayName": "organizationsUpdateOrganizationExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PATCH",
-                    "path": "/v2/orgs/org_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "org_id": "org_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -35084,22 +34993,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/orgs/active/org"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -35494,22 +35387,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/projects"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -35789,26 +35666,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "projectsCreateProjectExample_base": {
-                "displayName": "projectsCreateProjectExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v2/projects"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "key": "string",
-                    "name": "string"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -36129,24 +35986,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/projects/proj_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -36443,24 +36282,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v2/projects/proj_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
                 }
               }
             },
@@ -36808,25 +36629,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "projectsUpdateProjectExample_base": {
-                "displayName": "projectsUpdateProjectExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PATCH",
-                    "path": "/v2/projects/proj_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -37444,25 +37246,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/projects/proj_id/envs/env_id/stats"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -37984,24 +37767,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/projects/proj_id/envs"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -38388,28 +38153,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "environmentsCreateEnvironmentExample_base": {
-                "displayName": "environmentsCreateEnvironmentExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v2/projects/proj_id/envs"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "key": "string",
-                    "name": "string"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -38832,25 +38575,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/projects/proj_id/envs/env_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -39239,25 +38963,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v2/projects/proj_id/envs/env_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
                 }
               }
             },
@@ -39702,26 +39407,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "environmentsUpdateEnvironmentExample_base": {
-                "displayName": "environmentsUpdateEnvironmentExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PATCH",
-                    "path": "/v2/projects/proj_id/envs/env_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -40186,28 +39871,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "environmentsCopyEnvironmentExample_base": {
-                "displayName": "environmentsCopyEnvironmentExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v2/projects/proj_id/envs/env_id/copy"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "target_env": {}
-                  }
-                },
-                "response": {
-                  "statusCode": 201
                 }
               }
             },
@@ -40941,25 +40604,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/schema/proj_id/env_id/resources"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -41495,44 +41139,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "resourcesCreateResourceExample_base": {
-                "displayName": "resourcesCreateResourceExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v2/schema/proj_id/env_id/resources"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "key": "repository",
-                    "name": "Repository",
-                    "actions": {
-                      "clone": {},
-                      "read": {},
-                      "push": {}
-                    },
-                    "attributes": {
-                      "created": {
-                        "type": "time",
-                        "description": "the time (timestamp) the repository was created"
-                      },
-                      "private": {
-                        "type": "bool",
-                        "description": "whether the repo is private (if false, the repo is public)"
-                      }
-                    }
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -42095,26 +41701,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/schema/proj_id/env_id/resources/resource_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "resource_id": "resource_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -42723,30 +42309,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "resourcesReplaceResourceExample_base": {
-                "displayName": "resourcesReplaceResourceExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PUT",
-                    "path": "/v2/schema/proj_id/env_id/resources/resource_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "resource_id": "resource_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "name": "string",
-                    "actions": {}
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -43240,26 +42802,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v2/schema/proj_id/env_id/resources/resource_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "resource_id": "resource_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
                 }
               }
             },
@@ -43827,27 +43369,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "resourcesUpdateResourceExample_base": {
-                "displayName": "resourcesUpdateResourceExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PATCH",
-                    "path": "/v2/schema/proj_id/env_id/resources/resource_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "resource_id": "resource_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -44538,26 +44059,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/schema/proj_id/env_id/resources/resource_id/actions"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "resource_id": "resource_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -45109,31 +44610,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "resourceActionsCreateResourceActionExample_base": {
-                "displayName": "resourceActionsCreateResourceActionExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v2/schema/proj_id/env_id/resources/resource_id/actions"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "resource_id": "resource_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "key": "read",
-                    "name": "read",
-                    "description": "read a document"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -45718,27 +45194,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/schema/proj_id/env_id/resources/resource_id/actions/action_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "resource_id": "resource_id",
-                    "action_id": "action_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -46297,27 +45752,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v2/schema/proj_id/env_id/resources/resource_id/actions/action_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "resource_id": "resource_id",
-                    "action_id": "action_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
                 }
               }
             },
@@ -46932,30 +46366,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "resourceActionsUpdateResourceActionExample_base": {
-                "displayName": "resourceActionsUpdateResourceActionExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PATCH",
-                    "path": "/v2/schema/proj_id/env_id/resources/resource_id/actions/action_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "resource_id": "resource_id",
-                    "action_id": "action_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "description": "read a document"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -47628,26 +47038,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/schema/proj_id/env_id/resources/resource_id/action_groups"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "resource_id": "resource_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -48215,35 +47605,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "resourceActionGroupsCreateResourceActionGroupExample_base": {
-                "displayName": "resourceActionGroupsCreateResourceActionGroupExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v2/schema/proj_id/env_id/resources/resource_id/action_groups"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "resource_id": "resource_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "key": "writer",
-                    "name": "Writer",
-                    "description": "Writer Action Group",
-                    "actions": [
-                      "read",
-                      "update"
-                    ]
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -48837,27 +48198,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/schema/proj_id/env_id/resources/resource_id/action_groups/action_group_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "resource_id": "resource_id",
-                    "action_group_id": "action_group_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -49419,27 +48759,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v2/schema/proj_id/env_id/resources/resource_id/action_groups/action_group_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "resource_id": "resource_id",
-                    "action_group_id": "action_group_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
                 }
               }
             },
@@ -50056,28 +49375,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "resourceActionGroupsUpdateResourceActionGroupExample_base": {
-                "displayName": "resourceActionGroupsUpdateResourceActionGroupExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PATCH",
-                    "path": "/v2/schema/proj_id/env_id/resources/resource_id/action_groups/action_group_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "resource_id": "resource_id",
-                    "action_group_id": "action_group_id",
-                    "proj_id": "proj_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -50759,26 +50056,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/schema/proj_id/env_id/resources/resource_id/roles"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "resource_id": "resource_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -51357,37 +50634,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "resourceRolesCreateResourceRoleExample_base": {
-                "displayName": "resourceRolesCreateResourceRoleExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v2/schema/proj_id/env_id/resources/resource_id/roles"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "resource_id": "resource_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "key": "maintainer",
-                    "name": "Maintainer",
-                    "description": "the maintainer role can read from the repo and push changes",
-                    "permissions": [
-                      "push"
-                    ],
-                    "extends": [
-                      "contributor"
-                    ]
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -51987,27 +51233,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/schema/proj_id/env_id/resources/resource_id/roles/role_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "resource_id": "resource_id",
-                    "role_id": "role_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -52571,27 +51796,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v2/schema/proj_id/env_id/resources/resource_id/roles/role_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "resource_id": "resource_id",
-                    "role_id": "role_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
                 }
               }
             },
@@ -53222,33 +52426,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "resourceRolesUpdateResourceRoleExample_base": {
-                "displayName": "resourceRolesUpdateResourceRoleExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PATCH",
-                    "path": "/v2/schema/proj_id/env_id/resources/resource_id/roles/role_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "resource_id": "resource_id",
-                    "role_id": "role_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "description": "the maintainer role can read from the repo and push changes",
-                    "permissions": [
-                      "push"
-                    ]
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -53895,32 +53072,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "resourceRolesAssignPermissionsToResourceRoleExample_base": {
-                "displayName": "resourceRolesAssignPermissionsToResourceRoleExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v2/schema/proj_id/env_id/resources/resource_id/roles/role_id/permissions"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "resource_id": "resource_id",
-                    "role_id": "role_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "permissions": [
-                      "document:write"
-                    ]
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -54566,32 +53717,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "resourceRolesRemovePermissionsFromResourceRoleExample_base": {
-                "displayName": "resourceRolesRemovePermissionsFromResourceRoleExample",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v2/schema/proj_id/env_id/resources/resource_id/roles/role_id/permissions"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "resource_id": "resource_id",
-                    "role_id": "role_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "permissions": [
-                      "document:share"
-                    ]
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -55198,27 +54323,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/schema/proj_id/env_id/resources/resource_id/roles/role_id/ancestors"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "resource_id": "resource_id",
-                    "role_id": "role_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -55831,27 +54935,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/schema/proj_id/env_id/resources/resource_id/roles/role_id/descendants"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "resource_id": "resource_id",
-                    "role_id": "role_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -56530,26 +55613,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/schema/proj_id/env_id/resources/resource_id/attributes"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "resource_id": "resource_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -57103,31 +56166,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "resourceAttributesCreateResourceAttributeExample_base": {
-                "displayName": "resourceAttributesCreateResourceAttributeExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v2/schema/proj_id/env_id/resources/resource_id/attributes"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "resource_id": "resource_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "key": "private",
-                    "type": "bool",
-                    "description": "whether or not the github repository is private"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -57714,27 +56752,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/schema/proj_id/env_id/resources/resource_id/attributes/attribute_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "resource_id": "resource_id",
-                    "attribute_id": "attribute_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -58400,27 +57417,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v2/schema/proj_id/env_id/resources/resource_id/attributes/attribute_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "resource_id": "resource_id",
-                    "attribute_id": "attribute_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -59036,30 +58032,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "resourceAttributesUpdateResourceAttributeExample_base": {
-                "displayName": "resourceAttributesUpdateResourceAttributeExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PATCH",
-                    "path": "/v2/schema/proj_id/env_id/resources/resource_id/attributes/attribute_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "resource_id": "resource_id",
-                    "attribute_id": "attribute_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "description": "whether or not the github repository is private"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -59690,25 +58662,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/schema/proj_id/env_id/users/attributes"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -60224,30 +59177,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "userAttributesCreateUserAttributeExample_base": {
-                "displayName": "userAttributesCreateUserAttributeExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v2/schema/proj_id/env_id/users/attributes"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "key": "private",
-                    "type": "bool",
-                    "description": "whether or not the github repository is private"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -60796,26 +59725,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/schema/proj_id/env_id/users/attributes/attribute_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "attribute_id": "attribute_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -61442,26 +60351,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v2/schema/proj_id/env_id/users/attributes/attribute_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "attribute_id": "attribute_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -62039,29 +60928,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "userAttributesUpdateUserAttributeExample_base": {
-                "displayName": "userAttributesUpdateUserAttributeExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PATCH",
-                    "path": "/v2/schema/proj_id/env_id/users/attributes/attribute_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "attribute_id": "attribute_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "description": "whether or not the github repository is private"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -62750,25 +61616,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/schema/proj_id/env_id/roles"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -63255,36 +62102,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "rolesCreateRoleExample_base": {
-                "displayName": "rolesCreateRoleExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v2/schema/proj_id/env_id/roles"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "key": "editor",
-                    "name": "Editor",
-                    "description": "the editor role can read and write to documents",
-                    "permissions": [
-                      "document:write"
-                    ],
-                    "extends": [
-                      "viewer"
-                    ]
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -63794,26 +62611,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/schema/proj_id/env_id/roles/role_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "role_id": "role_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -64289,26 +63086,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v2/schema/proj_id/env_id/roles/role_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "role_id": "role_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
                 }
               }
             },
@@ -64850,32 +63627,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "rolesUpdateRoleExample_base": {
-                "displayName": "rolesUpdateRoleExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PATCH",
-                    "path": "/v2/schema/proj_id/env_id/roles/role_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "role_id": "role_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "description": "the editor role can read and write to documents",
-                    "permissions": [
-                      "document:write"
-                    ]
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -65432,31 +64183,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "rolesAssignPermissionsToRoleExample_base": {
-                "displayName": "rolesAssignPermissionsToRoleExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v2/schema/proj_id/env_id/roles/role_id/permissions"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "role_id": "role_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "permissions": [
-                      "document:write"
-                    ]
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -66012,31 +64738,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "rolesRemovePermissionsFromRoleExample_base": {
-                "displayName": "rolesRemovePermissionsFromRoleExample",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v2/schema/proj_id/env_id/roles/role_id/permissions"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "role_id": "role_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "permissions": [
-                      "document:share"
-                    ]
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -66553,26 +65254,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/schema/proj_id/env_id/roles/role_id/ancestors"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "role_id": "role_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -67095,26 +65776,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/schema/proj_id/env_id/roles/role_id/descendants"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "role_id": "role_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -67903,25 +66564,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/schema/proj_id/env_id/condition_sets"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -68471,47 +67113,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "conditionSetsCreateConditionSetExample_base": {
-                "displayName": "conditionSetsCreateConditionSetExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v2/schema/proj_id/env_id/condition_sets"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "key": "na_based_employees",
-                    "type": "userset",
-                    "name": "US or Canada based employees",
-                    "conditions": {
-                      "allOf": [
-                        {
-                          "user.role": {
-                            "equals": "employee"
-                          }
-                        },
-                        {
-                          "user.location": {
-                            "in": [
-                              "US",
-                              "Canada"
-                            ]
-                          }
-                        }
-                      ]
-                    }
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -69063,26 +67664,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/schema/proj_id/env_id/condition_sets/condition_set_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "condition_set_id": "condition_set_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -69572,26 +68153,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v2/schema/proj_id/env_id/condition_sets/condition_set_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "condition_set_id": "condition_set_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
                 }
               }
             },
@@ -70187,45 +68748,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "conditionSetsUpdateConditionSetExample_base": {
-                "displayName": "conditionSetsUpdateConditionSetExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PATCH",
-                    "path": "/v2/schema/proj_id/env_id/condition_sets/condition_set_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "condition_set_id": "condition_set_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "name": "US based managers",
-                    "conditions": {
-                      "allOf": [
-                        {
-                          "user.role": {
-                            "equals": "manager"
-                          }
-                        },
-                        {
-                          "user.location": {
-                            "in": [
-                              "US"
-                            ]
-                          }
-                        }
-                      ]
-                    }
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -70890,26 +69412,6 @@
                     ],
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/schema/proj_id/env_id/condition_sets/condition_set_id/ancestors"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "condition_set_id": "condition_set_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -71582,26 +70084,6 @@
                     ],
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/schema/proj_id/env_id/condition_sets/condition_set_id/descendants"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "condition_set_id": "condition_set_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -72331,25 +70813,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/facts/proj_id/env_id/users"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -72904,39 +71367,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "usersCreateUserExample_base": {
-                "displayName": "usersCreateUserExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v2/facts/proj_id/env_id/users"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "key": "user|892179821739812389327",
-                    "email": "jane@coolcompany.com",
-                    "first_name": "Jane",
-                    "last_name": "Doe",
-                    "attributes": {
-                      "department": "marketing",
-                      "age": 30,
-                      "subscription": {
-                        "tier": "pro",
-                        "expired": false
-                      }
-                    }
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -73526,26 +71956,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/facts/proj_id/env_id/users/user_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "user_id": "user_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -74281,40 +72691,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "usersReplaceUserExample_base": {
-                "displayName": "usersReplaceUserExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PUT",
-                    "path": "/v2/facts/proj_id/env_id/users/user_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "user_id": "user_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "key": "user|892179821739812389327",
-                    "email": "jane@coolcompany.com",
-                    "first_name": "Jane",
-                    "last_name": "Doe",
-                    "attributes": {
-                      "department": "marketing",
-                      "age": 30,
-                      "subscription": {
-                        "tier": "pro",
-                        "expired": false
-                      }
-                    }
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -74905,26 +73281,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v2/facts/proj_id/env_id/users/user_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "user_id": "user_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -75510,27 +73866,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "usersUpdateUserExample_base": {
-                "displayName": "usersUpdateUserExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PATCH",
-                    "path": "/v2/facts/proj_id/env_id/users/user_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "user_id": "user_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -76103,30 +74438,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "usersAssignRoleToUserExample_base": {
-                "displayName": "usersAssignRoleToUserExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v2/facts/proj_id/env_id/users/user_id/roles"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "user_id": "user_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "role": "admin",
-                    "tenant": "stripe-inc"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -76643,30 +74954,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "usersUnassignRoleFromUserExample_base": {
-                "displayName": "usersUnassignRoleFromUserExample",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v2/facts/proj_id/env_id/users/user_id/roles"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "user_id": "user_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "role": "editor",
-                    "tenant": "google-inc"
-                  }
-                },
-                "response": {
-                  "statusCode": 204
                 }
               }
             },
@@ -77444,26 +75731,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/facts/proj_id/env_id/tenants/tenant_id/users"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "tenant_id": "tenant_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -78104,25 +76371,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/facts/proj_id/env_id/tenants"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -78602,35 +76850,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "tenantsCreateTenantExample_base": {
-                "displayName": "tenantsCreateTenantExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v2/facts/proj_id/env_id/tenants"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "key": "stripeinc",
-                    "name": "Stripe Inc",
-                    "attributes": {
-                      "allowed_locations": [
-                        "US",
-                        "CA"
-                      ]
-                    }
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -79140,26 +77359,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/facts/proj_id/env_id/tenants/tenant_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "tenant_id": "tenant_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -79635,26 +77834,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v2/facts/proj_id/env_id/tenants/tenant_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "tenant_id": "tenant_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
                 }
               }
             },
@@ -80186,27 +78365,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "tenantsUpdateTenantExample_base": {
-                "displayName": "tenantsUpdateTenantExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PATCH",
-                    "path": "/v2/facts/proj_id/env_id/tenants/tenant_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "tenant_id": "tenant_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -80770,27 +78928,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v2/facts/proj_id/env_id/tenants/tenant_id/users/user_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "tenant_id": "tenant_id",
-                    "user_id": "user_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
                 }
               }
             },
@@ -81502,25 +79639,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/facts/proj_id/env_id/role_assignments"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -81985,30 +80103,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "roleAssignmentsAssignRoleExample_base": {
-                "displayName": "roleAssignmentsAssignRoleExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v2/facts/proj_id/env_id/role_assignments"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "role": "admin",
-                    "tenant": "stripe-inc",
-                    "user": "jane@coolcompany.com"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -82440,30 +80534,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "roleAssignmentsUnassignRoleExample_base": {
-                "displayName": "roleAssignmentsUnassignRoleExample",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v2/facts/proj_id/env_id/role_assignments"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "role": "editor",
-                    "tenant": "google-inc",
-                    "user": "jane@coolcompany.com"
-                  }
-                },
-                "response": {
-                  "statusCode": 204
                 }
               }
             },
@@ -82897,32 +80967,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "roleAssignmentsBulkAssignRoleExample_base": {
-                "displayName": "roleAssignmentsBulkAssignRoleExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v2/facts/proj_id/env_id/role_assignments/bulk"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": [
-                    {
-                      "role": "string",
-                      "tenant": "string",
-                      "user": "string"
-                    }
-                  ]
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -83358,32 +81402,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "roleAssignmentsBulkUnassignRoleExample_base": {
-                "displayName": "roleAssignmentsBulkUnassignRoleExample",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v2/facts/proj_id/env_id/role_assignments/bulk"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": [
-                    {
-                      "role": "string",
-                      "tenant": "string",
-                      "user": "string"
-                    }
-                  ]
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -84095,25 +82113,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/facts/proj_id/env_id/set_rules"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -84585,30 +82584,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "conditionSetRulesAssignSetPermissionsExample_base": {
-                "displayName": "conditionSetRulesAssignSetPermissionsExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v2/facts/proj_id/env_id/set_rules"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "user_set": "us_based_employees",
-                    "permission": "repository:clone",
-                    "resource_set": "private_repos"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -85047,30 +83022,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "conditionSetRulesUnassignSetPermissionsExample_base": {
-                "displayName": "conditionSetRulesUnassignSetPermissionsExample",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v2/facts/proj_id/env_id/set_rules"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "user_set": "us_based_employees",
-                    "permission": "repository:clone",
-                    "resource_set": "private_repos"
-                  }
-                },
-                "response": {
-                  "statusCode": 204
                 }
               }
             },
@@ -85640,25 +83591,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/facts/proj_id/env_id/resource_instances"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -86139,34 +84071,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "resourceInstancesCreateResourceInstanceExample_base": {
-                "displayName": "resourceInstancesCreateResourceInstanceExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v2/facts/proj_id/env_id/resource_instances"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "key": "react",
-                    "tenant": "default",
-                    "resource": "repository",
-                    "attributes": {
-                      "private": "false",
-                      "owner": "facebook"
-                    }
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -86676,26 +84580,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/facts/proj_id/env_id/resource_instances/instance_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "instance_id": "instance_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -87171,26 +85055,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v2/facts/proj_id/env_id/resource_instances/instance_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "instance_id": "instance_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
                 }
               }
             },
@@ -87733,32 +85597,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "resourceInstancesUpdateResourceInstanceExample_base": {
-                "displayName": "resourceInstancesUpdateResourceInstanceExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PATCH",
-                    "path": "/v2/facts/proj_id/env_id/resource_instances/instance_id"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id",
-                    "instance_id": "instance_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "attributes": {
-                      "private": "false",
-                      "owner": "facebook"
-                    }
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -88253,32 +86091,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "bulkOperationsBulkCreateUsersExample_base": {
-                "displayName": "bulkOperationsBulkCreateUsersExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v2/facts/proj_id/env_id/bulk/users"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "operations": [
-                      {
-                        "key": "string"
-                      }
-                    ]
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -88702,32 +86514,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "bulkOperationsBulkReplaceUsersExample_base": {
-                "displayName": "bulkOperationsBulkReplaceUsersExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PUT",
-                    "path": "/v2/facts/proj_id/env_id/bulk/users"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "operations": [
-                      {
-                        "key": "string"
-                      }
-                    ]
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -89146,30 +86932,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "bulkOperationsBulkDeleteUsersExample_base": {
-                "displayName": "bulkOperationsBulkDeleteUsersExample",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v2/facts/proj_id/env_id/bulk/users"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "idents": [
-                      "string"
-                    ]
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -89596,33 +87358,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "bulkOperationsBulkCreateTenantsExample_base": {
-                "displayName": "bulkOperationsBulkCreateTenantsExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v2/facts/proj_id/env_id/bulk/tenants"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "operations": [
-                      {
-                        "key": "string",
-                        "name": "string"
-                      }
-                    ]
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -90041,30 +87776,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "bulkOperationsBulkDeleteTenantsExample_base": {
-                "displayName": "bulkOperationsBulkDeleteTenantsExample",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v2/facts/proj_id/env_id/bulk/tenants"
-                  },
-                  "environment": "https://api.permit.io",
-                  "pathParameters": {
-                    "proj_id": "proj_id",
-                    "env_id": "env_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "idents": [
-                      "string"
-                    ]
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },

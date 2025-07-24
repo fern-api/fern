@@ -2634,21 +2634,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/api/v1/agents"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -3384,25 +3369,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "agentCreateAgentApiV1AgentsPostExample_base": {
-                "displayName": "agentCreateAgentApiV1AgentsPostExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/api/v1/agents"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "name": "string",
-                    "type": "string"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -3694,23 +3660,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/api/v1/agents/agentId"
-                  },
-                  "pathParameters": {
-                    "agentId": "agentId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -4001,23 +3950,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/api/v1/agents/agentId"
-                  },
-                  "pathParameters": {
-                    "agentId": "agentId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -4348,24 +4280,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "agentPatchAgentApiV1AgentsAgentIdPatchExample_base": {
-                "displayName": "agentPatchAgentApiV1AgentsAgentIdPatchExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PATCH",
-                    "path": "/api/v1/agents/agentId"
-                  },
-                  "pathParameters": {
-                    "agentId": "agentId"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -4895,26 +4809,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "agentPromptAgentApiV1AgentsAgentIdPredictPostExample_base": {
-                "displayName": "agentPromptAgentApiV1AgentsAgentIdPredictPostExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/api/v1/agents/agentId/predict"
-                  },
-                  "pathParameters": {
-                    "agentId": "agentId"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "input": {}
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -5345,25 +5239,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "authSignInApiV1AuthSignInPostExample_base": {
-                "displayName": "authSignInApiV1AuthSignInPostExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/api/v1/auth/sign-in"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "email": "string",
-                    "password": "string"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -5895,25 +5770,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "authSignUpApiV1AuthSignUpPostExample_base": {
-                "displayName": "authSignUpApiV1AuthSignUpPostExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/api/v1/auth/sign-up"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "email": "string",
-                    "password": "string"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -6104,21 +5960,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/api/v1/users/me"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -6410,23 +6251,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/api/v1/users/userId"
-                  },
-                  "pathParameters": {
-                    "userId": "userId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -6618,21 +6442,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/api/v1/api-tokens"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -6946,24 +6755,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "apiTokenCreateApiTokenApiV1ApiTokensPostExample_base": {
-                "displayName": "apiTokenCreateApiTokenApiV1ApiTokensPostExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/api/v1/api-tokens"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "description": "string"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -7254,23 +7045,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/api/v1/api-tokens/tokenId"
-                  },
-                  "pathParameters": {
-                    "tokenId": "tokenId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -7563,23 +7337,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/api/v1/api-tokens/tokenId"
-                  },
-                  "pathParameters": {
-                    "tokenId": "tokenId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -7771,21 +7528,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/api/v1/documents"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -8537,26 +8279,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "documentsCreateDocumentApiV1DocumentsPostExample_base": {
-                "displayName": "documentsCreateDocumentApiV1DocumentsPostExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/api/v1/documents"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "type": "string",
-                    "url": "string",
-                    "name": "string"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -8847,23 +8569,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/api/v1/documents/documentId"
-                  },
-                  "pathParameters": {
-                    "documentId": "documentId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -9156,23 +8861,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/api/v1/documents/documentId"
-                  },
-                  "pathParameters": {
-                    "documentId": "documentId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -9364,21 +9052,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/api/v1/prompts"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -9864,28 +9537,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "promptsCreateAPromptApiV1PromptsPostExample_base": {
-                "displayName": "promptsCreateAPromptApiV1PromptsPostExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/api/v1/prompts"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "name": "string",
-                    "input_variables": [
-                      null
-                    ],
-                    "template": "string"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -10177,23 +9828,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/api/v1/prompts/promptId"
-                  },
-                  "pathParameters": {
-                    "promptId": "promptId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -10484,23 +10118,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/api/v1/prompts/promptId"
-                  },
-                  "pathParameters": {
-                    "promptId": "promptId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -10832,24 +10449,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "promptsPatchPromptApiV1PromptsPromptIdPatchExample_base": {
-                "displayName": "promptsPatchPromptApiV1PromptsPromptIdPatchExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PATCH",
-                    "path": "/api/v1/prompts/promptId"
-                  },
-                  "pathParameters": {
-                    "promptId": "promptId"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -11041,21 +10640,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/api/v1/tools"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -11520,25 +11104,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "toolsCreateAToolApiV1ToolsPostExample_base": {
-                "displayName": "toolsCreateAToolApiV1ToolsPostExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/api/v1/tools"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "name": "string",
-                    "type": "string"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -11829,23 +11394,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/api/v1/tools/toolId"
-                  },
-                  "pathParameters": {
-                    "toolId": "toolId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -12138,23 +11686,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/api/v1/tools/toolId"
-                  },
-                  "pathParameters": {
-                    "toolId": "toolId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -12346,21 +11877,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/api/v1/traces"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },

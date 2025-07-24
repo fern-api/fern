@@ -30465,24 +30465,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v3/transactions/id"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -30847,24 +30829,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v3/transactions/id"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
                 }
               }
             },
@@ -31423,22 +31387,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v3/transactions"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -31862,35 +31810,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "transactionsPostTransactionsV3TransactionsPostExample_base": {
-                "displayName": "transactionsPostTransactionsV3TransactionsPostExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v3/transactions"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "transactions": [
-                      {
-                        "id": "string",
-                        "description": "string",
-                        "date": "2023-01-15",
-                        "amount": 1.1,
-                        "entry_type": "incoming",
-                        "currency": "EUR",
-                        "account_holder_id": "string"
-                      }
-                    ]
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -32406,27 +32325,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "transactionsSetTransactionAhV3TransactionsIdAssignPostExample_base": {
-                "displayName": "transactionsSetTransactionAhV3TransactionsIdAssignPostExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v3/transactions/id/assign"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "account_holder_id": "string"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -33020,22 +32918,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v3/batches"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -33318,35 +33200,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "batchesPostBatchV3BatchesPostExample_base": {
-                "displayName": "batchesPostBatchV3BatchesPostExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v3/batches"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "transactions": [
-                      {
-                        "id": "string",
-                        "description": "string",
-                        "date": "2023-01-15",
-                        "amount": 1.1,
-                        "entry_type": "incoming",
-                        "currency": "EUR",
-                        "account_holder_id": "string"
-                      }
-                    ]
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -33680,24 +33533,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v3/batches/id"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -34138,24 +33973,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v3/batches/id/results"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -34761,22 +34578,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v3/bank_statements"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -35068,25 +34869,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "bankStatementsPostBankStatementV3BankStatementsPostExample_base": {
-                "displayName": "bankStatementsPostBankStatementV3BankStatementsPostExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v3/bank_statements"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "file": "string"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -35427,24 +35209,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v3/bank_statements/id"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -35765,24 +35529,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v3/bank_statements/id"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
                 }
               }
             },
@@ -36144,24 +35890,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v3/bank_statements/id/overview"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -36547,24 +36275,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v3/bank_statements/id/results"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -36967,24 +36677,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v3/account_holders/id"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -37302,24 +36994,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v3/account_holders/id"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
                 }
               }
             },
@@ -37735,22 +37409,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v3/account_holders"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -38037,26 +37695,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "accountHoldersCreateAccountHolderV3AccountHoldersPostExample_base": {
-                "displayName": "accountHoldersCreateAccountHolderV3AccountHoldersPostExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v3/account_holders"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "id": "string",
-                    "type": "consumer"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -38491,24 +38129,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v3/account_holders/id/recurring_groups"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -38821,22 +38441,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v3/webhooks"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -39114,28 +38718,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "webhooksPostWebhookV3WebhooksPostExample_base": {
-                "displayName": "webhooksPostWebhookV3WebhooksPostExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v3/webhooks"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "url": "string",
-                    "events": [
-                      "reports.resolved"
-                    ]
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -39450,24 +39032,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v3/webhooks/id"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -39791,24 +39355,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v3/webhooks/id"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
                 }
               }
             },
@@ -40153,25 +39699,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "webhooksPatchWebhookV3WebhooksIdPatchExample_base": {
-                "displayName": "webhooksPatchWebhookV3WebhooksIdPatchExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PATCH",
-                    "path": "/v3/webhooks/id"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -40460,22 +39987,6 @@
                     ],
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v3/rules"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -40785,38 +40296,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "personalizationFilterPostV3RulesPostExample_base": {
-                "displayName": "personalizationFilterPostV3RulesPostExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v3/rules"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": [
-                    {
-                      "if": {},
-                      "then": [
-                        {
-                          "set": "logo",
-                          "to": "http://example.com/favicon.ico"
-                        }
-                      ],
-                      "else": [
-                        {
-                          "remove_label": "example label"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -41056,25 +40535,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "personalizationFilterAppendV3RulesAppendPostExample_base": {
-                "displayName": "personalizationFilterAppendV3RulesAppendPostExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v3/rules/append"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "if": {}
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -41333,24 +40793,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v3/rules/1"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {
-                    "index": 1
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -41652,27 +41094,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "personalizationFilterPatchV3RulesIndexPatchExample_base": {
-                "displayName": "personalizationFilterPatchV3RulesIndexPatchExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PATCH",
-                    "path": "/v3/rules/1"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {
-                    "index": 1
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "if": {}
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -42193,22 +41614,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v3/reports"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -42486,29 +41891,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "reportsPostReportV3ReportsPostExample_base": {
-                "displayName": "reportsPostReportV3ReportsPostExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v3/reports"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "transaction_id": "xbx8YP14g565Xk",
-                    "description": "lorem ipsum",
-                    "fields": [
-                      ".entities.counterparty"
-                    ]
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -42850,24 +42232,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v3/reports/id"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -43189,24 +42553,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v3/reports/id"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
                 }
               }
             },
@@ -43638,24 +42984,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v3/categories/consumer"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {
-                    "account_holder_type": "consumer"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -44092,37 +43420,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "categoriesCustomCategoriesPostV3CategoriesAccountHolderTypePostExample_base": {
-                "displayName": "categoriesCustomCategoriesPostV3CategoriesAccountHolderTypePostExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v3/categories/consumer"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {
-                    "account_holder_type": "consumer"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "incoming": [
-                      "salary",
-                      "investment income",
-                      "other income"
-                    ],
-                    "outgoing": [
-                      "rent",
-                      "utilities",
-                      "groceries",
-                      "entertainment"
-                    ]
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -44510,24 +43807,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v3/categories/consumer/reset"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {
-                    "account_holder_type": "consumer"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -45025,22 +44304,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v3/entities/lookup"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -45408,24 +44671,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v3/entities/id"
-                  },
-                  "environment": "Production server (uses live data).",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },

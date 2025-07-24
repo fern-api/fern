@@ -504,28 +504,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/simple"
-                  },
-                  "pathParameters": {
-                    "some-path-param": "def"
-                  },
-                  "queryParameters": {
-                    "some-query-param": "test-some-query-param",
-                    "some-query-param-ref-examples": "washington"
-                  },
-                  "headers": {
-                    "some-header": "foo"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}

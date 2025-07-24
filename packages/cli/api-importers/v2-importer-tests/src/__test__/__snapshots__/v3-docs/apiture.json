@@ -19491,22 +19491,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/accounts"
-                  },
-                  "environment": "https://api.apiture.com/banking",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -19944,24 +19928,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/accounts/accountId"
-                  },
-                  "environment": "https://api.apiture.com/banking",
-                  "pathParameters": {
-                    "accountId": "accountId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -20511,22 +20477,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/accountBalances"
-                  },
-                  "environment": "https://api.apiture.com/banking",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -21312,27 +21262,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/achEligibleAccounts"
-                  },
-                  "environment": "https://api.apiture.com/banking",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "allows": [
-                      "billPay"
-                    ],
-                    "secCode": "arc"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -21828,24 +21757,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/accounts/accountId/jointOwners"
-                  },
-                  "environment": "https://api.apiture.com/banking",
-                  "pathParameters": {
-                    "accountId": "accountId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -22425,24 +22336,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/accounts/accountId/eligibleOverdraftAccounts"
-                  },
-                  "environment": "https://api.apiture.com/banking",
-                  "pathParameters": {
-                    "accountId": "accountId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -22815,24 +22708,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/accounts/accountId/overdraftProtection"
-                  },
-                  "environment": "https://api.apiture.com/banking",
-                  "pathParameters": {
-                    "accountId": "accountId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -23339,38 +23214,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "overdraftProtectionPatchOverdraftAccountsExample_base": {
-                "displayName": "overdraftProtectionPatchOverdraftAccountsExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PATCH",
-                    "path": "/accounts/accountId/overdraftProtection"
-                  },
-                  "environment": "https://api.apiture.com/banking",
-                  "pathParameters": {
-                    "accountId": "accountId"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "items": [
-                      {
-                        "id": "da1331a9e9168ea91346",
-                        "label": "Checking *3456",
-                        "maskedNumber": "*3456"
-                      },
-                      {
-                        "id": "5c9b4e50a0401ef4eb2e",
-                        "label": "Premiere Savings *1234",
-                        "maskedNumber": "*1234"
-                      }
-                    ]
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -23908,32 +23751,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "jointOwnersCreateJointOwnerInvitationExample_base": {
-                "displayName": "jointOwnersCreateJointOwnerInvitationExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/accounts/accountId/jointOwnerInvitations"
-                  },
-                  "environment": "https://api.apiture.com/banking",
-                  "pathParameters": {
-                    "accountId": "accountId"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "firstName": "Mary",
-                    "lastName": "Jones",
-                    "identification": "3333",
-                    "sharedSecret": "obsolete obese octopus",
-                    "emailAddress": "Mary.Jones@example.com",
-                    "disallowDebitCardAccess": false
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -24508,26 +24325,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/institutionByLocator"
-                  },
-                  "environment": "https://api.apiture.com/banking",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "locator": "locator",
-                    "locatorType": "abaRoutingNumber",
-                    "countryCode": "countryCode"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -25306,28 +25103,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/institutions/TIBURON/transferSchedule"
-                  },
-                  "environment": "https://api.apiture.com/banking",
-                  "pathParameters": {
-                    "institutionId": "TIBURON"
-                  },
-                  "queryParameters": {
-                    "startsOn": "2022-07-04",
-                    "direction": "debit",
-                    "frequency": "once"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -25978,24 +25753,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/institutions/TIBURON/cutoffTimes"
-                  },
-                  "environment": "https://api.apiture.com/banking",
-                  "pathParameters": {
-                    "institutionId": "TIBURON"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -26823,24 +26580,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/institutions/TIBURON/transferDateRestrictions"
-                  },
-                  "environment": "https://api.apiture.com/banking",
-                  "pathParameters": {
-                    "institutionId": "TIBURON"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -28271,24 +28010,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/accounts/accountId/transactions"
-                  },
-                  "environment": "https://api.apiture.com/banking",
-                  "pathParameters": {
-                    "accountId": "accountId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -28796,22 +28517,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/transactionCategories"
-                  },
-                  "environment": "https://api.apiture.com/banking",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -29631,22 +29336,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/transfers"
-                  },
-                  "environment": "https://api.apiture.com/banking",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -30167,38 +29856,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "transfersCreateTransferExample_base": {
-                "displayName": "transfersCreateTransferExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/transfers"
-                  },
-                  "environment": "https://api.apiture.com/banking",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "amount": "275.00",
-                    "memo": "Cover check for car repair",
-                    "sourceAccount": {
-                      "id": "bd9b7af2-6f9b",
-                      "location": "internal"
-                    },
-                    "targetAccount": {
-                      "id": "88b1ca3e-d0f3",
-                      "location": "internal"
-                    },
-                    "schedule": {
-                      "scheduledOn": "2022-06-28",
-                      "frequency": "once"
-                    }
-                  }
-                },
-                "response": {
-                  "statusCode": 201
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -30608,24 +30265,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/transfers/transferId"
-                  },
-                  "environment": "https://api.apiture.com/banking",
-                  "pathParameters": {
-                    "transferId": "transferId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -31017,24 +30656,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/transfers/transferId"
-                  },
-                  "environment": "https://api.apiture.com/banking",
-                  "pathParameters": {
-                    "transferId": "transferId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
                 }
               }
             },
@@ -31603,34 +31224,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "transfersPatchTransferExample_base": {
-                "displayName": "transfersPatchTransferExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PATCH",
-                    "path": "/transfers/transferId"
-                  },
-                  "environment": "https://api.apiture.com/banking",
-                  "pathParameters": {
-                    "transferId": "transferId"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "amount": "275.00",
-                    "targetAccount": {
-                      "id": "88b1ca3e-d0f3"
-                    },
-                    "schedule": {
-                      "scheduledOn": "2022-06-28",
-                      "frequency": "once"
-                    }
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },

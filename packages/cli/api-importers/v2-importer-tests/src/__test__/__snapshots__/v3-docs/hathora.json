@@ -9838,22 +9838,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/apps/v1/list"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -10194,26 +10178,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "appV1CreateAppExample_base": {
-                "displayName": "appV1CreateAppExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/apps/v1/create"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "authConfiguration": {},
-                    "appName": "string"
-                  }
-                },
-                "response": {
-                  "statusCode": 201
                 }
               }
             },
@@ -10655,28 +10619,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "appV1UpdateAppExample_base": {
-                "displayName": "appV1UpdateAppExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/apps/v1/update/appId"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "authConfiguration": {},
-                    "appName": "string"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -11043,24 +10985,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/apps/v1/info/appId"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -11423,24 +11347,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/apps/v1/delete/appId"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
                 }
               }
             },
@@ -11818,24 +11724,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/auth/v1/appId/login/anonymous"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -12239,27 +12127,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "authV1LoginNicknameExample_base": {
-                "displayName": "authV1LoginNicknameExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/auth/v1/appId/login/nickname"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "nickname": "string"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -12693,27 +12560,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "authV1LoginGoogleExample_base": {
-                "displayName": "authV1LoginGoogleExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/auth/v1/appId/login/google"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "idToken": "string"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -13130,24 +12976,6 @@
                     ],
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/builds/v1/appId/list"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -13644,25 +13472,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/builds/v1/appId/info/1.1"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId",
-                    "buildId": 1.1
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -14086,24 +13895,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/builds/v1/appId/create"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 201
                 }
               }
             },
@@ -14624,28 +14415,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "buildV1RunBuildExample_base": {
-                "displayName": "buildV1RunBuildExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/builds/v1/appId/run/1.1"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId",
-                    "buildId": 1.1
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "file": "string"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -15112,25 +14881,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/builds/v1/appId/delete/1.1"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId",
-                    "buildId": 1.1
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -15549,24 +15299,6 @@
                     ],
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/deployments/v1/appId/list"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -16068,25 +15800,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/deployments/v1/appId/info/1.1"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId",
-                    "deploymentId": 1.1
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -16700,37 +16413,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "deploymentV1CreateDeploymentExample_base": {
-                "displayName": "deploymentV1CreateDeploymentExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/deployments/v1/appId/create/1.1"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId",
-                    "buildId": 1.1
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "env": [
-                      {
-                        "value": "string",
-                        "name": "string"
-                      }
-                    ],
-                    "roomsPerProcess": 1,
-                    "planName": "tiny",
-                    "transportType": "tcp",
-                    "containerPort": 1
-                  }
-                },
-                "response": {
-                  "statusCode": 201
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -16977,22 +16659,6 @@
                     ],
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/discovery/v1/ping"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -17648,26 +17314,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/lobby/v1/appId/create/private"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId"
-                  },
-                  "queryParameters": {},
-                  "headers": {
-                    "Authorization": "Authorization"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -18261,26 +17907,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/lobby/v1/appId/create/public"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId"
-                  },
-                  "queryParameters": {},
-                  "headers": {
-                    "Authorization": "Authorization"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -18816,26 +18442,6 @@
                     ],
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/lobby/v1/appId/list"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId"
-                  },
-                  "queryParameters": {},
-                  "headers": {
-                    "Authorization": "Authorization"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -19631,30 +19237,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "lobbyV2CreatePrivateLobbyExample_base": {
-                "displayName": "lobbyV2CreatePrivateLobbyExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/lobby/v2/appId/create/private"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId"
-                  },
-                  "queryParameters": {},
-                  "headers": {
-                    "Authorization": "Authorization"
-                  },
-                  "requestBody": {
-                    "initialConfig": {},
-                    "region": "Seattle"
-                  }
-                },
-                "response": {
-                  "statusCode": 201
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -20386,30 +19968,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "lobbyV2CreatePublicLobbyExample_base": {
-                "displayName": "lobbyV2CreatePublicLobbyExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/lobby/v2/appId/create/public"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId"
-                  },
-                  "queryParameters": {},
-                  "headers": {
-                    "Authorization": "Authorization"
-                  },
-                  "requestBody": {
-                    "initialConfig": {},
-                    "region": "Seattle"
-                  }
-                },
-                "response": {
-                  "statusCode": 201
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -21140,30 +20698,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "lobbyV2CreateLocalLobbyExample_base": {
-                "displayName": "lobbyV2CreateLocalLobbyExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/lobby/v2/appId/create/local"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId"
-                  },
-                  "queryParameters": {},
-                  "headers": {
-                    "Authorization": "Authorization"
-                  },
-                  "requestBody": {
-                    "initialConfig": {},
-                    "region": "Seattle"
-                  }
-                },
-                "response": {
-                  "statusCode": 201
                 }
               }
             },
@@ -21953,31 +21487,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "lobbyV2CreateLobbyExample_base": {
-                "displayName": "lobbyV2CreateLobbyExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/lobby/v2/appId/create"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId"
-                  },
-                  "queryParameters": {},
-                  "headers": {
-                    "Authorization": "Authorization"
-                  },
-                  "requestBody": {
-                    "visibility": "public",
-                    "initialConfig": {},
-                    "region": "Seattle"
-                  }
-                },
-                "response": {
-                  "statusCode": 201
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -22371,24 +21880,6 @@
                     ],
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/lobby/v2/appId/list/public"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -22866,25 +22357,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/lobby/v2/appId/info/roomId"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId",
-                    "roomId": "roomId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -23481,28 +22953,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "lobbyV2SetLobbyStateExample_base": {
-                "displayName": "lobbyV2SetLobbyStateExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/lobby/v2/appId/setState/roomId"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId",
-                    "roomId": "roomId"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "state": {}
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -24033,24 +23483,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/logs/v1/appId/all"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -24541,25 +23973,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/logs/v1/appId/process/processId"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId",
-                    "processId": "processId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -25046,25 +24459,6 @@
                   "body": {
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/logs/v1/appId/deployment/1.1"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId",
-                    "deploymentId": 1.1
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -25822,25 +25216,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/metrics/v1/appId/process/processId"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId",
-                    "processId": "processId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -26357,24 +25732,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/processes/v1/appId/list/running"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -26831,24 +26188,6 @@
                     ],
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/processes/v1/appId/list/stopped"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -27347,25 +26686,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/processes/v1/appId/info/processId"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId",
-                    "processId": "processId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -27881,27 +27201,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "roomV1CreateRoomExample_base": {
-                "displayName": "roomV1CreateRoomExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/rooms/v1/appId/create"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "region": "Seattle"
-                  }
-                },
-                "response": {
-                  "statusCode": 201
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -28377,25 +27676,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/rooms/v1/appId/info/roomId"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId",
-                    "roomId": "roomId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -28863,25 +28143,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/rooms/v1/appId/list/processId/active"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId",
-                    "processId": "processId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -29338,25 +28599,6 @@
                     ],
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/rooms/v1/appId/list/processId/inactive"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId",
-                    "processId": "processId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -29834,25 +29076,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/rooms/v1/appId/destroy/roomId"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId",
-                    "roomId": "roomId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -30320,25 +29543,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/rooms/v1/appId/suspend/roomId"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId",
-                    "roomId": "roomId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
                 }
               }
             },
@@ -30842,25 +30046,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/rooms/v1/appId/connectioninfo/roomId"
-                  },
-                  "environment": "https://api.hathora.dev",
-                  "pathParameters": {
-                    "appId": "appId",
-                    "roomId": "roomId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },

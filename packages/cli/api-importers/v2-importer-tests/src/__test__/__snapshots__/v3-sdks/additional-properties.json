@@ -939,22 +939,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "getObjectWithArrayOfObjectsExample_base": {
-                "displayName": "getObjectWithArrayOfObjectsExample",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/object-with-array-of-objects"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -1631,22 +1615,6 @@
                     "value": "string",
                     "type": "json"
                   }
-                }
-              },
-              "getImplicitObjectWithArrayOfObjectsExample_base": {
-                "displayName": "getImplicitObjectWithArrayOfObjectsExample",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/implicit-object-with-array-of-objects"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": null
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },

@@ -19378,26 +19378,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/search/vals"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "offset": 0,
-                    "limit": 20,
-                    "query": "query"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -20373,24 +20353,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/alias/username"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "username": "username"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -22345,25 +22307,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/alias/username/val_name"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "username": "username",
-                    "val_name": "val_name"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -26912,25 +26855,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/me/likes"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "offset": 0,
-                    "limit": 20
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -30408,26 +30332,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/me/comments"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "offset": 0,
-                    "limit": 20,
-                    "relationship": "any"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -33213,25 +33117,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/me/references"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "offset": 0,
-                    "limit": 20
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -34378,24 +34263,6 @@
                 "response": {
                   "statusCode": 200
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/blob/key"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "key": "key"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -34752,25 +34619,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "blobsStoreExample_base": {
-                "displayName": "blobsStoreExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v1/blob/key"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "key": "key"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": "string"
-                },
-                "response": {
-                  "statusCode": 201
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -35120,24 +34968,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v1/blob/key"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "key": "key"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
                 }
               }
             },
@@ -36086,24 +35916,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/users/user_id"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "user_id": "user_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -39719,27 +39531,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/users/user_id/vals"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "user_id": "user_id"
-                  },
-                  "queryParameters": {
-                    "offset": 0,
-                    "limit": 20
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -44142,24 +43933,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/eval/code"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "code": "code"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -44565,24 +44338,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/run/valname"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "valname": "valname"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -45072,24 +44827,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v1/run/valname"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "valname": "valname"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -47364,22 +47101,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v1/vals"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -47830,22 +47551,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "PUT",
-                    "path": "/v1/vals"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -49676,24 +49381,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/vals/val_id"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "val_id": "val_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -50956,24 +50643,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v1/vals/val_id"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "val_id": "val_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
                 }
               }
             },
@@ -52406,27 +52075,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/vals/val_id/versions"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "val_id": "val_id"
-                  },
-                  "queryParameters": {
-                    "offset": 0,
-                    "limit": 20
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -54844,24 +54492,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v1/vals/val_id/versions"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "val_id": "val_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 201
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -57005,28 +56635,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/vals/val_id/versions/1"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "val_id": "val_id",
-                    "version": 1
-                  },
-                  "queryParameters": {
-                    "offset": 0,
-                    "limit": 20
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -57548,25 +57156,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v1/vals/val_id/versions/1"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "val_id": "val_id",
-                    "version": 1
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
                 }
               }
             },
@@ -58136,25 +57725,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v1/vals/val_id/evaluations/evaluation_id/cancel"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "val_id": "val_id",
-                    "evaluation_id": "evaluation_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -59615,22 +59185,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v1/email"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },

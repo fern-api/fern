@@ -533,22 +533,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "getExample_base": {
-                "displayName": "getExample",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/test"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -712,22 +696,6 @@
                     "value": "string",
                     "type": "json"
                   }
-                }
-              },
-              "postExample_base": {
-                "displayName": "postExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/test"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },

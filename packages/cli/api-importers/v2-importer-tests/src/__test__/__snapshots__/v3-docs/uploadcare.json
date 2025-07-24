@@ -13555,22 +13555,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/multipart/start/"
-                  },
-                  "environment": "Production server",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -14078,22 +14062,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/multipart/complete/"
-                  },
-                  "environment": "Production server",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -16027,25 +15995,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/info/"
-                  },
-                  "environment": "Production server",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "pub_key": "YOUR_PUBLIC_KEY",
-                    "file_id": "67947755-1584-4e3f-902b-d4e2bf76a841"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -16624,22 +16573,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/group/"
-                  },
-                  "environment": "Production server",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -16938,25 +16871,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/group/info/"
-                  },
-                  "environment": "Production server",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "pub_key": "YOUR_PUBLIC_KEY",
-                    "group_id": "d52d7136-a2e5-4338-9f45-affbf83b857d~2"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },

@@ -47727,26 +47727,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "postUserEventExample_base": {
-                "displayName": "postUserEventExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/events/consumer/user"
-                  },
-                  "environment": "https://sandbox.api.flagright.com",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "timestamp": 1.1,
-                    "userId": "string"
-                  }
-                },
-                "response": {
-                  "statusCode": 201
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -50135,26 +50115,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "postBusinessUserEventExample_base": {
-                "displayName": "postBusinessUserEventExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/events/business/user"
-                  },
-                  "environment": "https://sandbox.api.flagright.com",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "timestamp": 1.1,
-                    "userId": "string"
-                  }
-                },
-                "response": {
-                  "statusCode": 201
                 }
               }
             },

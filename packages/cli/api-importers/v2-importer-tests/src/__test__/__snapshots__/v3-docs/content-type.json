@@ -408,26 +408,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "testUploadExample_base": {
-                "displayName": "testUploadExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/test"
-                  },
-                  "pathParameters": {
-                    "corpus_key": "corpus_key"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "file": "string"
-                  }
-                },
-                "response": {
-                  "statusCode": 201
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -726,24 +706,6 @@
                     "value": "string",
                     "type": "json"
                   }
-                }
-              },
-              "testWithDualContentTypeRequestTypesExample_base": {
-                "displayName": "testWithDualContentTypeRequestTypesExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/example"
-                  },
-                  "pathParameters": {
-                    "corpus_key": "corpus_key"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 201
                 }
               }
             },

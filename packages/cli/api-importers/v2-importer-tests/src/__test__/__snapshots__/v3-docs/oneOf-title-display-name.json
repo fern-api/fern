@@ -617,22 +617,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "postTestOneOfDisplayNameExample_base": {
-                "displayName": "postTestOneOfDisplayNameExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/test-one-of-display-name"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}

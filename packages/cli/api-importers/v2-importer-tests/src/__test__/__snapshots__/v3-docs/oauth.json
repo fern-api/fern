@@ -935,27 +935,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "authGetTokenExample_base": {
-                "displayName": "authGetTokenExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/oauth/token"
-                  },
-                  "environment": "https://api.example.com/v1",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "grant_type": "password",
-                    "client_id": "string",
-                    "client_secret": "string"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}

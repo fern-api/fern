@@ -74448,79 +74448,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "speechToTextListenExample_base": {
-                "displayName": "speechToTextListenExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v1/listen"
-                  },
-                  "environment": "Deepgram Production API",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "callback": "https://example.com",
-                    "callback_method": "PUT",
-                    "custom_topic": [
-                      "unsubscribe",
-                      "account%20deletion"
-                    ],
-                    "custom_topic_mode": "strict",
-                    "custom_intent_mode": "strict",
-                    "detect_entities": true,
-                    "diarize_version": "v2",
-                    "diarize": true,
-                    "encoding": "linear16",
-                    "extra": [
-                      "key:value",
-                      "user:1234567890"
-                    ],
-                    "filler_words": true,
-                    "intents": true,
-                    "keyterm": [
-                      "Snuffleupagus",
-                      "Sesame Street"
-                    ],
-                    "keywords": [
-                      "Twilio:2",
-                      "Algolia"
-                    ],
-                    "measurements": true,
-                    "multichannel": true,
-                    "numerals": true,
-                    "paragraphs": true,
-                    "profanity_filter": true,
-                    "punctuate": true,
-                    "redact": [
-                      "pii",
-                      "pci"
-                    ],
-                    "replace": [
-                      "monika:Monica",
-                      "jon:John"
-                    ],
-                    "search": [
-                      "Deepgram",
-                      "Text to Speech"
-                    ],
-                    "sentiment": true,
-                    "smart_format": true,
-                    "summarize": "v2",
-                    "tag": [
-                      "test"
-                    ],
-                    "topics": true,
-                    "utterances": true,
-                    "utt_split": 1.2
-                  },
-                  "headers": {},
-                  "requestBody": {
-                    "url": "https://dpgr.am/spacewalk.wav"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -75699,38 +75626,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "textIntelligenceTextReadExample_base": {
-                "displayName": "textIntelligenceTextReadExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v1/read"
-                  },
-                  "environment": "Deepgram Production API",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "callback": "https://example.com",
-                    "callback_method": "PUT",
-                    "custom_topic": [
-                      "unsubscribe",
-                      "account%20deletion"
-                    ],
-                    "custom_topic_mode": "strict",
-                    "intents": true,
-                    "read_language": "en",
-                    "sentiment": true,
-                    "read_summarize": true,
-                    "topics": true
-                  },
-                  "headers": {},
-                  "requestBody": {
-                    "url": "string"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -76550,30 +76445,6 @@
                 "response": {
                   "statusCode": 200
                 }
-              },
-              "textToSpeechSpeakExample_base": {
-                "displayName": "textToSpeechSpeakExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v1/speak"
-                  },
-                  "environment": "Deepgram Production API",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "callback": "https://example.com",
-                    "speak_encoding": "linear16",
-                    "speak_model": "aura-asteria-en",
-                    "speak_sample_rate": 24000
-                  },
-                  "headers": {},
-                  "requestBody": {
-                    "text": "Hello, welcome to Deepgram!"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -76805,22 +76676,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/projects"
-                  },
-                  "environment": "Deepgram Production API",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -77381,29 +77236,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/projects/project_id"
-                  },
-                  "environment": "Deepgram Production API",
-                  "pathParameters": {
-                    "project_id": "project_id"
-                  },
-                  "queryParameters": {
-                    "limit": 10,
-                    "start": "2024-07-01T00:00:00",
-                    "end": "2024-07-31T00:00:00",
-                    "page": 10
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -77754,24 +77586,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v1/projects/123456-7890-1234-5678-901234"
-                  },
-                  "environment": "Deepgram Production API",
-                  "pathParameters": {
-                    "project_id": "123456-7890-1234-5678-901234"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -78166,27 +77980,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "managementApiUpdateProjectExample_base": {
-                "displayName": "managementApiUpdateProjectExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PATCH",
-                    "path": "/v1/projects/123456-7890-1234-5678-901234"
-                  },
-                  "environment": "Deepgram Production API",
-                  "pathParameters": {
-                    "project_id": "123456-7890-1234-5678-901234"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "name": "My Project"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -79423,26 +79216,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/projects/123456-7890-1234-5678-901234/models"
-                  },
-                  "environment": "Deepgram Production API",
-                  "pathParameters": {
-                    "project_id": "123456-7890-1234-5678-901234"
-                  },
-                  "queryParameters": {
-                    "include_outdated": true
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -79881,25 +79654,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/projects/project_id/models/model_id"
-                  },
-                  "environment": "Deepgram Production API",
-                  "pathParameters": {
-                    "project_id": "project_id",
-                    "model_id": "model_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -80267,24 +80021,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/projects/123456-7890-1234-5678-901234/keys"
-                  },
-                  "environment": "Deepgram Production API",
-                  "pathParameters": {
-                    "project_id": "123456-7890-1234-5678-901234"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -80685,27 +80421,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "managementApiCreateProjectKeyExample_base": {
-                "displayName": "managementApiCreateProjectKeyExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v1/projects/123456-7890-1234-5678-901234/keys"
-                  },
-                  "environment": "Deepgram Production API",
-                  "pathParameters": {
-                    "project_id": "123456-7890-1234-5678-901234"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": [
-                    {}
-                  ]
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -81153,25 +80868,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/projects/123456-7890-1234-5678-901234/keys/123456789012345678901234"
-                  },
-                  "environment": "Deepgram Production API",
-                  "pathParameters": {
-                    "project_id": "123456-7890-1234-5678-901234",
-                    "key_id": "123456789012345678901234"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -81925,24 +81621,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/projects/123456-7890-1234-5678-901234/members"
-                  },
-                  "environment": "Deepgram Production API",
-                  "pathParameters": {
-                    "project_id": "123456-7890-1234-5678-901234"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -82355,25 +82033,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v1/projects/123456-7890-1234-5678-901234/members/123456789012345678901234"
-                  },
-                  "environment": "Deepgram Production API",
-                  "pathParameters": {
-                    "project_id": "123456-7890-1234-5678-901234",
-                    "member_id": "123456789012345678901234"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -82785,25 +82444,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/projects/123456-7890-1234-5678-901234/members/123456789012345678901234/scopes"
-                  },
-                  "environment": "Deepgram Production API",
-                  "pathParameters": {
-                    "project_id": "123456-7890-1234-5678-901234",
-                    "member_id": "123456789012345678901234"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -83259,28 +82899,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "managementApiUpdateProjectMemberScopesExample_base": {
-                "displayName": "managementApiUpdateProjectMemberScopesExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PUT",
-                    "path": "/v1/projects/123456-7890-1234-5678-901234/members/123456789012345678901234/scopes"
-                  },
-                  "environment": "Deepgram Production API",
-                  "pathParameters": {
-                    "project_id": "123456-7890-1234-5678-901234",
-                    "member_id": "123456789012345678901234"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "scope": "admin"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -83552,24 +83170,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/projects/123456-7890-1234-5678-901234/invites"
-                  },
-                  "environment": "Deepgram Production API",
-                  "pathParameters": {
-                    "project_id": "123456-7890-1234-5678-901234"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -83942,28 +83542,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "managementApiCreateProjectInviteExample_base": {
-                "displayName": "managementApiCreateProjectInviteExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v1/projects/123456-7890-1234-5678-901234/invites"
-                  },
-                  "environment": "Deepgram Production API",
-                  "pathParameters": {
-                    "project_id": "123456-7890-1234-5678-901234"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "email": "string",
-                    "scope": "string"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -84373,25 +83951,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v1/projects/123456-7890-1234-5678-901234/invites/john.doe%40example.com"
-                  },
-                  "environment": "Deepgram Production API",
-                  "pathParameters": {
-                    "project_id": "123456-7890-1234-5678-901234",
-                    "email": "john.doe@example.com"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -84712,24 +84271,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v1/projects/123456-7890-1234-5678-901234/leave"
-                  },
-                  "environment": "Deepgram Production API",
-                  "pathParameters": {
-                    "project_id": "123456-7890-1234-5678-901234"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -85315,29 +84856,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/projects/123456-7890-1234-5678-901234/requests"
-                  },
-                  "environment": "Deepgram Production API",
-                  "pathParameters": {
-                    "project_id": "123456-7890-1234-5678-901234"
-                  },
-                  "queryParameters": {
-                    "start": "2024-07-01T00:00:00",
-                    "end": "2024-07-31T00:00:00",
-                    "limit": 10,
-                    "page": 10
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -85720,25 +85238,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/projects/123456-7890-1234-5678-901234/requests/123456-7890-1234-5678-901234"
-                  },
-                  "environment": "Deepgram Production API",
-                  "pathParameters": {
-                    "project_id": "123456-7890-1234-5678-901234",
-                    "request_id": "123456-7890-1234-5678-901234"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -86251,27 +85750,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/projects/123456-7890-1234-5678-901234/usage"
-                  },
-                  "environment": "Deepgram Production API",
-                  "pathParameters": {
-                    "project_id": "123456-7890-1234-5678-901234"
-                  },
-                  "queryParameters": {
-                    "start": "2024-07-01T00:00:00",
-                    "end": "2024-07-31T00:00:00"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -86741,27 +86219,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/projects/123456-7890-1234-5678-901234/usage/fields"
-                  },
-                  "environment": "Deepgram Production API",
-                  "pathParameters": {
-                    "project_id": "123456-7890-1234-5678-901234"
-                  },
-                  "queryParameters": {
-                    "start": "2024-07-01T00:00:00",
-                    "end": "2024-07-31T00:00:00"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -87394,27 +86851,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/projects/123456-7890-1234-5678-901234/usage/breakdown"
-                  },
-                  "environment": "Deepgram Production API",
-                  "pathParameters": {
-                    "project_id": "123456-7890-1234-5678-901234"
-                  },
-                  "queryParameters": {
-                    "start": "2024-07-01T00:00:00",
-                    "end": "2024-07-31T00:00:00"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -87858,27 +87294,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/projects/123456-7890-1234-5678-901234/purchases"
-                  },
-                  "environment": "Deepgram Production API",
-                  "pathParameters": {
-                    "project_id": "123456-7890-1234-5678-901234"
-                  },
-                  "queryParameters": {
-                    "start": "2024-07-01T00:00:00",
-                    "limit": 10
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -88205,24 +87620,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/models"
-                  },
-                  "environment": "Deepgram Production API",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "include_outdated": true
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -88574,24 +87971,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/models/af6e9977-99f6-4d8f-b6f5-dfdf6fb6e291"
-                  },
-                  "environment": "Deepgram Production API",
-                  "pathParameters": {
-                    "model_id": "af6e9977-99f6-4d8f-b6f5-dfdf6fb6e291"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -88958,24 +88337,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/projects/123456-7890-1234-5678-901234/self-hosted/distribution/credentials"
-                  },
-                  "environment": "Deepgram Production API",
-                  "pathParameters": {
-                    "project_id": "123456-7890-1234-5678-901234"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -89810,25 +89171,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/projects/123456-7890-1234-5678-901234/self-hosted/distribution/credentials/8b36cfd0-472f-4a21-833f-2d6343c3a2f3"
-                  },
-                  "environment": "Deepgram Production API",
-                  "pathParameters": {
-                    "project_id": "123456-7890-1234-5678-901234",
-                    "distribution_credentials_id": "8b36cfd0-472f-4a21-833f-2d6343c3a2f3"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -90275,25 +89617,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v1/projects/123456-7890-1234-5678-901234/self-hosted/distribution/credentials/8b36cfd0-472f-4a21-833f-2d6343c3a2f3"
-                  },
-                  "environment": "Deepgram Production API",
-                  "pathParameters": {
-                    "project_id": "123456-7890-1234-5678-901234",
-                    "distribution_credentials_id": "8b36cfd0-472f-4a21-833f-2d6343c3a2f3"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },

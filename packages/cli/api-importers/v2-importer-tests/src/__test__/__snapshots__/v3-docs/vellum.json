@@ -30623,24 +30623,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/deployments/id"
-                  },
-                  "environment": "Default",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -31024,27 +31006,6 @@
                     "type": "stream"
                   }
                 }
-              },
-              "executePromptStreamExample_base": {
-                "displayName": "executePromptStreamExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v1/execute-prompt-stream"
-                  },
-                  "environment": "Predict",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "inputs": [
-                      "string"
-                    ]
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -31316,30 +31277,6 @@
                     ],
                     "type": "stream"
                   }
-                }
-              },
-              "executeWorkflowStreamExample_base": {
-                "displayName": "executeWorkflowStreamExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v1/execute-workflow-stream"
-                  },
-                  "environment": "Predict",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "inputs": [
-                      {
-                        "name": "string",
-                        "value": "string"
-                      }
-                    ]
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -31757,29 +31694,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "generateExample_base": {
-                "displayName": "generateExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v1/generate"
-                  },
-                  "environment": "Predict",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "requests": [
-                      {
-                        "input_values": {}
-                      }
-                    ]
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -32206,29 +32120,6 @@
                     "type": "stream"
                   }
                 }
-              },
-              "generateStreamExample_base": {
-                "displayName": "generateStreamExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v1/generate-stream"
-                  },
-                  "environment": "Predict",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "requests": [
-                      {
-                        "input_values": {}
-                      }
-                    ]
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -32585,25 +32476,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "searchExample_base": {
-                "displayName": "searchExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v1/search"
-                  },
-                  "environment": "Predict",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "query": "string"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -32919,27 +32791,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "submitCompletionActualsExample_base": {
-                "displayName": "submitCompletionActualsExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v1/submit-completion-actuals"
-                  },
-                  "environment": "Predict",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "actuals": [
-                      {}
-                    ]
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -33862,22 +33713,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/documents"
-                  },
-                  "environment": "Default",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -34205,26 +34040,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "documentsUploadExample_base": {
-                "displayName": "documentsUploadExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v1/upload-document"
-                  },
-                  "environment": "Documents",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "label": "string",
-                    "contents": "string"
-                  }
-                },
-                "response": {
-                  "statusCode": 201
                 }
               }
             },
@@ -34661,24 +34476,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v1/model-versions/id"
-                  },
-                  "environment": "Default",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -35049,27 +34846,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "modelVersionsModelVersionCompilePromptExample_base": {
-                "displayName": "modelVersionsModelVersionCompilePromptExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v1/model-versions/id/compile-prompt"
-                  },
-                  "environment": "Default",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "input_values": {}
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -35469,55 +35245,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "registeredPromptsRegisterPromptExample_base": {
-                "displayName": "registeredPromptsRegisterPromptExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v1/registered-prompts/register"
-                  },
-                  "environment": "Default",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "label": "string",
-                    "name": "string",
-                    "prompt": {
-                      "prompt_block_data": {
-                        "version": 1,
-                        "blocks": [
-                          {
-                            "id": "string",
-                            "block_type": "CHAT_MESSAGE",
-                            "properties": {}
-                          }
-                        ]
-                      },
-                      "input_variables": [
-                        {
-                          "key": "string"
-                        }
-                      ]
-                    },
-                    "provider": "ANTHROPIC",
-                    "model": "string",
-                    "parameters": {
-                      "temperature": 1.1,
-                      "max_tokens": 1,
-                      "stop": [
-                        "string"
-                      ],
-                      "top_p": 1.1,
-                      "frequency_penalty": 1.1,
-                      "presence_penalty": 1.1
-                    }
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -36429,25 +36156,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v1/sandboxes/id/scenarios/scenario_id"
-                  },
-                  "environment": "Default",
-                  "pathParameters": {
-                    "id": "id",
-                    "scenario_id": "scenario_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -36822,28 +36530,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "testSuitesUpsertTestSuiteTestCaseExample_base": {
-                "displayName": "testSuitesUpsertTestSuiteTestCaseExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v1/test-suites/id/test-cases"
-                  },
-                  "environment": "Default",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "input_values": {},
-                    "evaluation_params": {}
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -37196,25 +36882,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "DELETE",
-                    "path": "/v1/test-suites/id/test-cases/test_case_id"
-                  },
-                  "environment": "Default",
-                  "pathParameters": {
-                    "id": "id",
-                    "test_case_id": "test_case_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 204
                 }
               }
             },

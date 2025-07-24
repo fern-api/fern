@@ -1264,22 +1264,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "createAUserExample_base": {
-                "displayName": "createAUserExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/users"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}

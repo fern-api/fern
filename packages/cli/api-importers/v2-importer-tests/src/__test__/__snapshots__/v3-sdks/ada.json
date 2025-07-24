@@ -6212,24 +6212,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/end-users/v1/end_user_id"
-                  },
-                  "environment": "The subdomain of the client",
-                  "pathParameters": {
-                    "end_user_id": "end_user_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -9824,37 +9806,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "endUsersUpdateEndUserByIdExample_base": {
-                "displayName": "endUsersUpdateEndUserByIdExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PATCH",
-                    "path": "/end-users/v1/end_user_id"
-                  },
-                  "environment": "The subdomain of the client",
-                  "pathParameters": {
-                    "end_user_id": "end_user_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "profile": {
-                      "first_name": "Ada",
-                      "last_name": "Lovelace",
-                      "email": "ada.lovelace@ada.cx",
-                      "language": "en-US",
-                      "metadata": {
-                        "example_key1": "example_string_value",
-                        "example_key2": true,
-                        "example_key3": 123
-                      }
-                    }
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -15828,22 +15779,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/end-users/v1"
-                  },
-                  "environment": "The subdomain of the client",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },

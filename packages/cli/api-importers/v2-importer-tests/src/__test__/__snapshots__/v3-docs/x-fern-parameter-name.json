@@ -286,27 +286,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/user/userId"
-                  },
-                  "pathParameters": {
-                    "userId": "userId"
-                  },
-                  "queryParameters": {
-                    "foo": "foo"
-                  },
-                  "headers": {
-                    "X-API-Version": "X-API-Version"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}

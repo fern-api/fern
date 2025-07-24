@@ -26141,22 +26141,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v0/batch/jobs"
-                  },
-                  "environment": "https://api.hume.ai",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -26425,23 +26409,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "startJobExample_base": {
-                "displayName": "startJobExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v0/batch/jobs"
-                  },
-                  "environment": "https://api.hume.ai",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -27141,24 +27108,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v0/batch/jobs/id/predictions"
-                  },
-                  "environment": "https://api.hume.ai",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -27659,24 +27608,6 @@
                 "response": {
                   "statusCode": 200
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v0/batch/jobs/id/artifacts"
-                  },
-                  "environment": "https://api.hume.ai",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -28011,24 +27942,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v0/batch/jobs/id"
-                  },
-                  "environment": "https://api.hume.ai",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },

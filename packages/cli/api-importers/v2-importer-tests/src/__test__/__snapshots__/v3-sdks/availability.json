@@ -1639,26 +1639,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/collection/id/active_id/deprecated_ref_id/x-fern-availability_path_param"
-                  },
-                  "pathParameters": {
-                    "id": "id",
-                    "active_id": "active_id",
-                    "deprecated_ref_id": "deprecated_ref_id",
-                    "x-fern-availability_path_param": "x-fern-availability_path_param"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -2171,22 +2151,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "postSuccessRefExample_base": {
-                "displayName": "postSuccessRefExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/success-ref"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -2706,22 +2670,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "postSuccessInlinePropertyDeprecationExample_base": {
-                "displayName": "postSuccessInlinePropertyDeprecationExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/success-inline-property-deprecation"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -3154,22 +3102,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "postSuccessInlineObjectDeprecationExample_base": {
-                "displayName": "postSuccessInlineObjectDeprecationExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/success-inline-object-deprecation"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -3601,22 +3533,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "postSuccessInlineBetaBodyExample_base": {
-                "displayName": "postSuccessInlineBetaBodyExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/success-inline-beta-body"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },

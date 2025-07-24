@@ -76495,26 +76495,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v3/docs-demo/getOwnersForContract"
-                  },
-                  "environment": "eth-mainnet",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {
-                    "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -76876,27 +76856,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v3/docs-demo/isHolderOfContract"
-                  },
-                  "environment": "eth-mainnet",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {
-                    "wallet": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
-                    "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -79321,26 +79280,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v3/docs-demo/getNFTsForContract"
-                  },
-                  "environment": "eth-mainnet",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {
-                    "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -80073,24 +80012,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v3/docs-demo/getNFTsForCollection"
-                  },
-                  "environment": "eth-mainnet",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -80767,27 +80688,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v3/docs-demo/getNFTMetadata"
-                  },
-                  "environment": "eth-mainnet",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {
-                    "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330",
-                    "tokenId": "44"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -81446,25 +81346,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "nftMetadataEndpointsGetNftMetadataBatchV3Example_base": {
-                "displayName": "nftMetadataEndpointsGetNftMetadataBatchV3Example",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v3/docs-demo/getNFTMetadataBatch"
-                  },
-                  "environment": "eth-mainnet",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -81877,26 +81758,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v3/docs-demo/getContractMetadata"
-                  },
-                  "environment": "eth-mainnet",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {
-                    "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -82242,26 +82103,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v3/docs-demo/getCollectionMetadata"
-                  },
-                  "environment": "eth-mainnet",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {
-                    "collectionSlug": "boredapeyachtclub"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -82581,26 +82422,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v3/docs-demo/invalidateContract"
-                  },
-                  "environment": "eth-mainnet",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {
-                    "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -82999,25 +82820,6 @@
                     ],
                     "type": "json"
                   }
-                }
-              },
-              "nftMetadataEndpointsGetContractMetadataBatchV3Example_base": {
-                "displayName": "nftMetadataEndpointsGetContractMetadataBatchV3Example",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v3/docs-demo/getContractMetadataBatch"
-                  },
-                  "environment": "eth-mainnet",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -84349,26 +84151,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v3/docs-demo/searchContractMetadata"
-                  },
-                  "environment": "eth-mainnet",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {
-                    "query": "bored"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -84760,27 +84542,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v3/docs-demo/computeRarity"
-                  },
-                  "environment": "https://{network}.g.alchemy.com/nft",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {
-                    "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330",
-                    "tokenId": "44"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -85508,24 +85269,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v3/docs-demo/getSpamContracts"
-                  },
-                  "environment": "https://{network}.g.alchemy.com/nft",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -85838,26 +85581,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v3/docs-demo/isSpamContract"
-                  },
-                  "environment": "https://{network}.g.alchemy.com/nft",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {
-                    "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -86211,27 +85934,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v3/docs-demo/isAirdropNFT"
-                  },
-                  "environment": "eth-mainnet",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {
-                    "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330",
-                    "tokenId": "44"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -86517,26 +86219,6 @@
                     "value": "string",
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v3/docs-demo/reportSpam"
-                  },
-                  "environment": "eth-mainnet",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {
-                    "address": "0xe785E82358879F061BC3dcAC6f0444462D4b5330"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -86948,24 +86630,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v3/docs-demo/getFloorPrice"
-                  },
-                  "environment": "https://{network}.g.alchemy.com/nft",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -90326,27 +89990,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/docs-demo/getNFTMetadata"
-                  },
-                  "environment": "eth-mainnet",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {
-                    "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330",
-                    "tokenId": "44"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -91044,25 +90687,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "nftApiV2MethodsOlderVersionGetNftMetadataBatchExample_base": {
-                "displayName": "nftApiV2MethodsOlderVersionGetNftMetadataBatchExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v2/docs-demo/getNFTMetadataBatch"
-                  },
-                  "environment": "eth-mainnet",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -91491,26 +91115,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/docs-demo/getContractMetadata"
-                  },
-                  "environment": "eth-mainnet",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {
-                    "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -91959,25 +91563,6 @@
                     ],
                     "type": "json"
                   }
-                }
-              },
-              "nftApiV2MethodsOlderVersionGetContractMetadataBatchExample_base": {
-                "displayName": "nftApiV2MethodsOlderVersionGetContractMetadataBatchExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/v2/docs-demo/getContractMetadataBatch"
-                  },
-                  "environment": "eth-mainnet",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -92685,24 +92270,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/docs-demo/getNFTsForCollection"
-                  },
-                  "environment": "eth-mainnet",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -93211,27 +92778,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/docs-demo/getOwnersForToken"
-                  },
-                  "environment": "eth-mainnet",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {
-                    "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330",
-                    "tokenId": "44"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -93626,26 +93172,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/docs-demo/getOwnersForCollection"
-                  },
-                  "environment": "eth-mainnet",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {
-                    "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -93902,24 +93428,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/docs-demo/getSpamContracts"
-                  },
-                  "environment": "https://{network}.g.alchemy.com/nft",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -94210,26 +93718,6 @@
                     "value": true,
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/docs-demo/isSpamContract"
-                  },
-                  "environment": "https://{network}.g.alchemy.com/nft",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {
-                    "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -94539,27 +94027,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/docs-demo/isAirdrop"
-                  },
-                  "environment": "eth-mainnet",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {
-                    "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330",
-                    "tokenId": "44"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -94848,26 +94315,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/docs-demo/invalidateContract"
-                  },
-                  "environment": "eth-mainnet",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {
-                    "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -95192,26 +94639,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/docs-demo/getFloorPrice"
-                  },
-                  "environment": "https://{network}.g.alchemy.com/nft",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {
-                    "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -95586,27 +95013,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/docs-demo/computeRarity"
-                  },
-                  "environment": "https://{network}.g.alchemy.com/nft",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {
-                    "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330",
-                    "tokenId": "44"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -95972,26 +95378,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/docs-demo/searchContractMetadata"
-                  },
-                  "environment": "https://{network}.g.alchemy.com/nft",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {
-                    "query": "bored"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -96333,26 +95719,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/docs-demo/summarizeNFTAttributes"
-                  },
-                  "environment": "https://{network}.g.alchemy.com/nft",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {
-                    "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -96707,27 +96073,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/docs-demo/isHolderOfCollection"
-                  },
-                  "environment": "eth-mainnet",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {
-                    "owner": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
-                    "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -99006,26 +98351,6 @@
                     "value": "string",
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/v2/docs-demo/reportSpam"
-                  },
-                  "environment": "eth-mainnet",
-                  "pathParameters": {
-                    "apiKey": "docs-demo"
-                  },
-                  "queryParameters": {
-                    "address": "0xe785E82358879F061BC3dcAC6f0444462D4b5330"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },

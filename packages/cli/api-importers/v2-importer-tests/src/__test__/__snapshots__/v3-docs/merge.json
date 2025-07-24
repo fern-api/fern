@@ -68083,24 +68083,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/account-details"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -68449,24 +68431,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/account-token/public_token"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "public_token": "public_token"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -68807,24 +68771,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/available-actions"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -70044,30 +69990,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/bank-info"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                    "employee_id": "employee_id",
-                    "expand": "employee",
-                    "remote_fields": "account_type",
-                    "show_enum_origins": "account_type"
-                  },
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -70684,30 +70606,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/bank-info/id"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {
-                    "expand": "employee",
-                    "remote_fields": "account_type",
-                    "show_enum_origins": "account_type"
-                  },
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -71603,28 +71501,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/benefits"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                    "employee_id": "employee_id",
-                    "expand": "employee"
-                  },
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -72110,28 +71986,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/benefits/id"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {
-                    "expand": "employee"
-                  },
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -72912,26 +72766,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/companies"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw"
-                  },
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -73350,26 +73184,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/companies/id"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -73653,24 +73467,6 @@
                     "value": {},
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/delete-account"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -74851,29 +74647,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/employee-payroll-runs"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                    "employee_id": "employee_id",
-                    "expand": "employee,payroll_run",
-                    "payroll_run_id": "payroll_run_id"
-                  },
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -75443,28 +75216,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/employee-payroll-runs/id"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {
-                    "expand": "employee,payroll_run"
-                  },
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -77374,34 +77125,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/employees"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "company_id": "company_id",
-                    "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                    "expand": "employments,groups,home_location,work_location,manager,team,company,pay_group",
-                    "manager_id": "manager_id",
-                    "pay_group_id": "pay_group_id",
-                    "remote_fields": "employment_status,ethnicity,gender,marital_status",
-                    "show_enum_origins": "employment_status,ethnicity,gender,marital_status",
-                    "team_id": "team_id",
-                    "work_location_id": "work_location_id"
-                  },
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -77956,27 +77679,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "employeesCreateExample_base": {
-                "displayName": "employeesCreateExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/employees"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  },
-                  "requestBody": {
-                    "model": {}
-                  }
-                },
-                "response": {
-                  "statusCode": 201
                 }
               }
             },
@@ -78747,30 +78449,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/employees/id"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {
-                    "expand": "employments,groups,home_location,work_location,manager,team,company,pay_group",
-                    "remote_fields": "employment_status,ethnicity,gender,marital_status",
-                    "show_enum_origins": "employment_status,ethnicity,gender,marital_status"
-                  },
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -79161,29 +78839,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "employeesIgnoreCreateExample_base": {
-                "displayName": "employeesIgnoreCreateExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/employees/ignore/model_id"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "model_id": "model_id"
-                  },
-                  "queryParameters": {},
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  },
-                  "requestBody": {
-                    "reason": "GENERAL_CUSTOMER_REQUEST"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -79408,24 +79063,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/employees/meta/post"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -80516,30 +80153,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/employments"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                    "employee_id": "employee_id",
-                    "expand": "employee,pay_group",
-                    "remote_fields": "employment_type,flsa_status,pay_frequency,pay_period",
-                    "show_enum_origins": "employment_type,flsa_status,pay_frequency,pay_period"
-                  },
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -81169,30 +80782,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/employments/id"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {
-                    "expand": "employee,pay_group",
-                    "remote_fields": "employment_type,flsa_status,pay_frequency,pay_period",
-                    "show_enum_origins": "employment_type,flsa_status,pay_frequency,pay_period"
-                  },
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -81484,25 +81073,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "generateKeyCreateExample_base": {
-                "displayName": "generateKeyCreateExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/generate-key"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "name": "Remote Deployment Key 1"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -82439,28 +82009,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/groups"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                    "remote_fields": "type",
-                    "show_enum_origins": "type"
-                  },
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -83001,29 +82549,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/groups/id"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {
-                    "remote_fields": "type",
-                    "show_enum_origins": "type"
-                  },
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -83947,24 +83472,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/issues"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -84264,24 +83771,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/issues/id"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -84573,30 +84062,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "linkTokenCreateExample_base": {
-                "displayName": "linkTokenCreateExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/link-token"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "end_user_email_address": "string",
-                    "end_user_organization_name": "string",
-                    "end_user_origin_id": "string",
-                    "categories": [
-                      "hris"
-                    ]
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -85556,24 +85021,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/linked-accounts"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw"
-                  },
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -86515,28 +85962,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/locations"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                    "remote_fields": "location_type",
-                    "show_enum_origins": "location_type"
-                  },
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -87096,29 +86521,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/locations/id"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {
-                    "remote_fields": "location_type",
-                    "show_enum_origins": "location_type"
-                  },
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -87465,28 +86867,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "passthroughCreateExample_base": {
-                "displayName": "passthroughCreateExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/passthrough"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  },
-                  "requestBody": {
-                    "method": "GET",
-                    "path": "/scooters"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -88242,26 +87622,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/pay-groups"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw"
-                  },
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -88661,26 +88021,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/pay-groups/id"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {},
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -89851,28 +89191,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/payroll-runs"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                    "remote_fields": "run_state,run_type",
-                    "show_enum_origins": "run_state,run_type"
-                  },
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -90420,29 +89738,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/payroll-runs/id"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {
-                    "remote_fields": "run_state,run_type",
-                    "show_enum_origins": "run_state,run_type"
-                  },
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -90729,25 +90024,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "regenerateKeyCreateExample_base": {
-                "displayName": "regenerateKeyCreateExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/regenerate-key"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "name": "Remote Deployment Key 1"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -92213,26 +91489,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/sync-status"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw"
-                  },
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -92535,24 +91791,6 @@
                     ],
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/sync-status/resync"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -93434,28 +92672,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/teams"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                    "expand": "parent_team",
-                    "parent_team_id": "parent_team_id"
-                  },
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -93926,28 +93142,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/teams/id"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {
-                    "expand": "parent_team"
-                  },
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -95158,31 +94352,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/time-off"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "approver_id": "approver_id",
-                    "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                    "employee_id": "employee_id",
-                    "expand": "employee,approver",
-                    "remote_fields": "request_type,status,units",
-                    "show_enum_origins": "request_type,status,units"
-                  },
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -95668,27 +94837,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "timeOffCreateExample_base": {
-                "displayName": "timeOffCreateExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/time-off"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  },
-                  "requestBody": {
-                    "model": {}
-                  }
-                },
-                "response": {
-                  "statusCode": 201
                 }
               }
             },
@@ -96343,30 +95491,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/time-off/id"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {
-                    "expand": "employee,approver",
-                    "remote_fields": "request_type,status,units",
-                    "show_enum_origins": "request_type,status,units"
-                  },
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -96614,24 +95738,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/time-off/meta/post"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -97710,30 +96816,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/time-off-balances"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {
-                    "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                    "employee_id": "employee_id",
-                    "expand": "employee",
-                    "remote_fields": "policy_type",
-                    "show_enum_origins": "policy_type"
-                  },
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -98345,30 +97427,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/time-off-balances/id"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {
-                    "id": "id"
-                  },
-                  "queryParameters": {
-                    "expand": "employee",
-                    "remote_fields": "policy_type",
-                    "show_enum_origins": "policy_type"
-                  },
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -98668,24 +97726,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/webhook-receivers"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  }
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -98957,28 +97997,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "webhookReceiversCreateExample_base": {
-                "displayName": "webhookReceiversCreateExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/webhook-receivers"
-                  },
-                  "environment": "Production",
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {
-                    "X-Account-Token": "X-Account-Token"
-                  },
-                  "requestBody": {
-                    "event": "string",
-                    "is_active": true
-                  }
-                },
-                "response": {
-                  "statusCode": 201
                 }
               }
             },

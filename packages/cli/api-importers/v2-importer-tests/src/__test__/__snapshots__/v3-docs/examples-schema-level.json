@@ -792,21 +792,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/trees"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
@@ -1050,30 +1035,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "createTreeExample_base": {
-                "displayName": "createTreeExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/trees"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "species": "foo",
-                    "height": 123.4,
-                    "age": 50,
-                    "location": {
-                      "latitude": 40.7128,
-                      "longitude": -74.006
-                    }
-                  }
-                },
-                "response": {
-                  "statusCode": 201
                 }
               }
             },
@@ -1344,23 +1305,6 @@
                     },
                     "type": "json"
                   }
-                }
-              },
-              "base": {
-                "displayName": "base",
-                "request": {
-                  "endpoint": {
-                    "method": "GET",
-                    "path": "/trees/treeId"
-                  },
-                  "pathParameters": {
-                    "treeId": "treeId"
-                  },
-                  "queryParameters": {},
-                  "headers": {}
-                },
-                "response": {
-                  "statusCode": 200
                 }
               }
             },
@@ -1642,25 +1586,6 @@
                     "value": "string",
                     "type": "json"
                   }
-                }
-              },
-              "createFernExample_base": {
-                "displayName": "createFernExample",
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/ferns"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "color": "red",
-                    "name": "RedFern"
-                  }
-                },
-                "response": {
-                  "statusCode": 201
                 }
               }
             },

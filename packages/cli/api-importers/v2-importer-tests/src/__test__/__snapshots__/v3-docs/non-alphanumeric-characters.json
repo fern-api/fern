@@ -442,22 +442,6 @@
                     "type": "json"
                   }
                 }
-              },
-              "patchSettingsExample_base": {
-                "displayName": "patchSettingsExample",
-                "request": {
-                  "endpoint": {
-                    "method": "PATCH",
-                    "path": "/settings"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 200
-                }
               }
             },
             "userSpecifiedExamples": {}
