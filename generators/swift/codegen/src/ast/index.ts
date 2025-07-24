@@ -1,10 +1,12 @@
 export { AccessLevel } from "./AccessLevel";
 export { Class } from "./Class";
 export { CodeBlock } from "./CodeBlock";
+export { Comment } from "./Comment";
 export { DeclarationType } from "./DeclarationType";
 export { EnumWithAssociatedValues } from "./EnumWithAssociatedValues";
 export { EnumWithRawValues } from "./EnumWithRawValues";
 export { Expression } from "./Expression";
+export type { FileComponent } from "./FileComponent";
 export { FunctionArgument } from "./FunctionArgument";
 export { FunctionParameter } from "./FunctionParameter";
 export { Initializer } from "./Initializer";
