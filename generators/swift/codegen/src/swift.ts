@@ -1,6 +1,7 @@
 import {
     Class,
     CodeBlock,
+    Comment,
     EnumWithAssociatedValues,
     EnumWithRawValues,
     FunctionArgument,
@@ -18,6 +19,10 @@ export function class_(args: Class.Args): Class {
 
 export function codeBlock(args: CodeBlock.Args): CodeBlock {
     return new CodeBlock(args);
+}
+
+export function comment(args: Comment.Args): Comment {
+    return new Comment(args);
 }
 
 export function enumWithAssociatedValues(args: EnumWithAssociatedValues.Args): EnumWithAssociatedValues {
@@ -38,9 +43,6 @@ export function functionParameter(args: FunctionParameter.Args): FunctionParamet
 
 export function initializer(args: Initializer.Args): Initializer {
     return new Initializer(args);
-}
-export function lineBreak(): LineBreak {
-    return LineBreak.single();
 }
 
 export function method(args: Method.Args): Method {
