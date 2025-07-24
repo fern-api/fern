@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
@@ -81,21 +82,25 @@ export class RootClientGenerator {
     private generateInitializer(): swift.Initializer {
         let defaultBaseUrlValue: swift.Expression | undefined;
 
-        if (this.context.ir.environments && this.context.ir.environments.environments.type === "singleBaseUrl") {
-            const defaultEnvId = this.context.ir.environments.defaultEnvironment;
+        if (this.context.ir.environments) {
+            if (this.context.ir.environments.environments.type === "singleBaseUrl") {
+                const defaultEnvId = this.context.ir.environments.defaultEnvironment;
 
-            // If no default environment is specified, use the first environment
-            const defaultEnvironment = this.context.ir.environments.environments.environments.find((e, idx) =>
-                defaultEnvId == null ? idx === 0 : e.id === defaultEnvId
-            );
-            if (defaultEnvironment != null) {
-                defaultBaseUrlValue = swift.Expression.memberAccess({
-                    target: swift.Expression.reference(`${this.projectNamePascalCase}Environment`),
-                    memberName: `${defaultEnvironment.name.camelCase.unsafeName}.rawValue`
-                });
+                // If no default environment is specified, use the first environment
+                const defaultEnvironment = this.context.ir.environments.environments.environments.find((e, idx) =>
+                    defaultEnvId == null ? idx === 0 : e.id === defaultEnvId
+                );
+                if (defaultEnvironment != null) {
+                    defaultBaseUrlValue = swift.Expression.memberAccess({
+                        target: swift.Expression.reference(`${this.projectNamePascalCase}Environment`),
+                        memberName: `${defaultEnvironment.name.camelCase.unsafeName}.rawValue`
+                    });
+                }
+            } else if (this.context.ir.environments.environments.type === "multipleBaseUrls") {
+                // TODO(kafkas): Handle multiple environments
+            } else {
+                assertNever(this.context.ir.environments.environments);
             }
-        } else {
-            // TODO(kafkas): Handle multiple environments
         }
 
         return swift.initializer({
