@@ -300,6 +300,21 @@
           "statusCode": 200,
           "description": "OK"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "WholeDeprecatedSettings"
+                }
+              },
+              "statusCode": 200,
+              "description": "OK"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
@@ -373,6 +388,21 @@
           },
           "statusCode": 200,
           "description": "OK"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "NotDeprecatedSettings"
+                }
+              },
+              "statusCode": 200,
+              "description": "OK"
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [
@@ -472,6 +502,21 @@
           "statusCode": 200,
           "description": "OK"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "NotDeprecatedSettings"
+                }
+              },
+              "statusCode": 200,
+              "description": "OK"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
@@ -558,6 +603,21 @@
           "statusCode": 200,
           "description": "OK"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "NotDeprecatedSettings"
+                }
+              },
+              "statusCode": 200,
+              "description": "OK"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
@@ -643,6 +703,21 @@
           },
           "statusCode": 200,
           "description": "OK"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "NotDeprecatedSettings"
+                }
+              },
+              "statusCode": 200,
+              "description": "OK"
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [

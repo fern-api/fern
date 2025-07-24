@@ -152,6 +152,21 @@
             "statusCode": 200,
             "description": "Successful response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Organizations_Search_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful response"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -237,6 +252,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -331,6 +347,21 @@
           },
           "statusCode": 200,
           "description": "Successful response"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "GetOrganizationUser_Response_200"
+                }
+              },
+              "statusCode": 200,
+              "description": "Successful response"
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [

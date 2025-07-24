@@ -299,6 +299,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": []
         },
@@ -341,6 +342,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": []
         },
@@ -438,6 +440,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": []
         },
@@ -515,6 +518,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": []
         },
@@ -578,6 +582,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": []
         },
@@ -789,6 +794,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": []
         },
@@ -857,6 +863,7 @@
             },
             "statusCode": 200
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": []
         },
@@ -881,6 +888,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {

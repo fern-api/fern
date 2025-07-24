@@ -2631,6 +2631,21 @@
             "statusCode": 200,
             "description": "The file was uploaded successfully."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Upload_baseUpload_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "The file was uploaded successfully."
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -2921,6 +2936,21 @@
             "statusCode": 200,
             "description": "Multipart upload started successfully."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Upload_multipartFileUploadStart_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Multipart upload started successfully."
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -3041,6 +3071,7 @@
               "contentType": "application/octet-stream"
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -3130,6 +3161,21 @@
             },
             "statusCode": 200,
             "description": "The file was uploaded successfully."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "fileUploadInfo"
+                  }
+                },
+                "statusCode": 200,
+                "description": "The file was uploaded successfully."
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -3455,6 +3501,21 @@
             "statusCode": 200,
             "description": "Status Token or File Info of an already downloaded file."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Upload_fromURLUpload_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Status Token or File Info of an already downloaded file."
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -3718,6 +3779,21 @@
             },
             "statusCode": 200,
             "description": "Request was processed successfully.\n"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Upload_fromURLUploadStatus_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was processed successfully.\n"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -4003,6 +4079,21 @@
             "statusCode": 200,
             "description": "File information was retrieved successfully."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "fileUploadInfo"
+                  }
+                },
+                "statusCode": 200,
+                "description": "File information was retrieved successfully."
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -4255,6 +4346,21 @@
             "statusCode": 200,
             "description": "The group was created successfully."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "groupInfo"
+                  }
+                },
+                "statusCode": 200,
+                "description": "The group was created successfully."
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -4381,6 +4487,21 @@
             },
             "statusCode": 200,
             "description": "File group information was retrieved successfully."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "groupInfo"
+                  }
+                },
+                "statusCode": 200,
+                "description": "File group information was retrieved successfully."
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [

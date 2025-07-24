@@ -25577,6 +25577,21 @@
             "statusCode": 200,
             "description": "List of issue triggers"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "IssueTriggerPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of issue triggers"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -25803,6 +25818,21 @@
             "statusCode": 200,
             "description": "A single issue trigger"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "IssueTrigger"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single issue trigger"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -26013,6 +26043,21 @@
             "statusCode": 200,
             "description": "A single issue trigger"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "IssueTrigger"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single issue trigger"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -26194,6 +26239,21 @@
             },
             "statusCode": 200,
             "description": "A single issue trigger"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "IssueTrigger"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single issue trigger"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -26417,6 +26477,21 @@
             "statusCode": 200,
             "description": "A single issue trigger"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "IssueTrigger"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single issue trigger"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -26593,6 +26668,21 @@
             "statusCode": 200,
             "description": "An object with deleted issue trigger's id"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "DeletedIssueTriggerResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "An object with deleted issue trigger's id"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -26714,6 +26804,21 @@
             },
             "statusCode": 200,
             "description": "A single issue trigger"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "IssueTrigger"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single issue trigger"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -26872,6 +26977,21 @@
             },
             "statusCode": 200,
             "description": "A single issue trigger"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "IssueTrigger"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single issue trigger"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -27094,6 +27214,21 @@
             "statusCode": 200,
             "description": "List of attempts"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EventAttemptPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of attempts"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -27290,6 +27425,21 @@
             },
             "statusCode": 200,
             "description": "A single attempt"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EventAttempt"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single attempt"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -27566,6 +27716,21 @@
             "statusCode": 200,
             "description": "List of bookmarks"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BookmarkPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of bookmarks"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -27797,6 +27962,21 @@
             "statusCode": 200,
             "description": "A single bookmark"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Bookmark"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single bookmark"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -27974,6 +28154,21 @@
             },
             "statusCode": 200,
             "description": "A single bookmark"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Bookmark"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single bookmark"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -28198,6 +28393,21 @@
             "statusCode": 200,
             "description": "A single bookmark"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Bookmark"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single bookmark"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -28383,6 +28593,21 @@
             "statusCode": 200,
             "description": "An object with deleted bookmark's id"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "DeletedBookmarkResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "An object with deleted bookmark's id"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -28527,6 +28752,21 @@
             },
             "statusCode": 200,
             "description": "Array of created events"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EventArray"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Array of created events"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -28850,6 +29090,21 @@
             "statusCode": 200,
             "description": "List of destinations"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "DestinationPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of destinations"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -29105,6 +29360,21 @@
             "statusCode": 200,
             "description": "A single destination"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Destination"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single destination"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -29345,6 +29615,21 @@
             "statusCode": 200,
             "description": "A single destination"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Destination"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single destination"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -29506,6 +29791,21 @@
             },
             "statusCode": 200,
             "description": "A single destination"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Destination"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single destination"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -29762,6 +30062,21 @@
             "statusCode": 200,
             "description": "A single destination"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Destination"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single destination"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -29939,6 +30254,21 @@
             "statusCode": 200,
             "description": "A single destination"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Destination"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single destination"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -30080,6 +30410,21 @@
             },
             "statusCode": 200,
             "description": "A single destination"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Destination"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single destination"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -30488,6 +30833,21 @@
             "statusCode": 200,
             "description": "List of events"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EventPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of events"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -30695,6 +31055,21 @@
             "statusCode": 200,
             "description": "A single event"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Event"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single event"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -30867,6 +31242,21 @@
             "statusCode": 200,
             "description": "A request raw body data"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RawBody"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A request raw body data"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -30988,6 +31378,21 @@
             },
             "statusCode": 200,
             "description": "Retried event with event attempt"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RetriedEvent"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Retried event with event attempt"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -31210,6 +31615,21 @@
             },
             "statusCode": 200,
             "description": "A single event"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Event"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single event"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -31510,6 +31930,21 @@
             "statusCode": 200,
             "description": "List of events bulk retries"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BatchOperationPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of events bulk retries"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -31700,6 +32135,21 @@
             "statusCode": 200,
             "description": "A single events bulk retry"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BatchOperation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single events bulk retry"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -31859,6 +32309,21 @@
             "statusCode": 200,
             "description": "Events bulk retry plan"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BatchOperationPlan"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Events bulk retry plan"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -31995,6 +32460,21 @@
             },
             "statusCode": 200,
             "description": "A single events bulk retry"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BatchOperation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single events bulk retry"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -32145,6 +32625,21 @@
             },
             "statusCode": 200,
             "description": "A single events bulk retry"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BatchOperation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single events bulk retry"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -32423,6 +32918,21 @@
             "statusCode": 200,
             "description": "List of ignored events bulk retries"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BatchOperationPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of ignored events bulk retries"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -32613,6 +33123,21 @@
             "statusCode": 200,
             "description": "A single ignored events bulk retry"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BatchOperation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single ignored events bulk retry"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -32772,6 +33297,21 @@
             "statusCode": 200,
             "description": "Ignored events bulk retry plan"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BatchOperationPlan"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ignored events bulk retry plan"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -32908,6 +33448,21 @@
             },
             "statusCode": 200,
             "description": "A single ignored events bulk retry"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BatchOperation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single ignored events bulk retry"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -33058,6 +33613,21 @@
             },
             "statusCode": 200,
             "description": "A single ignored events bulk retry"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BatchOperation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single ignored events bulk retry"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -33223,6 +33793,21 @@
             },
             "statusCode": 200,
             "description": "List of integrations"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "IntegrationPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of integrations"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -33445,6 +34030,21 @@
             "statusCode": 200,
             "description": "A single integration"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Integration"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single integration"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -33640,6 +34240,21 @@
             },
             "statusCode": 200,
             "description": "A single integration"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Integration"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single integration"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -33857,6 +34472,21 @@
             "statusCode": 200,
             "description": "A single integration"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Integration"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single integration"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -34044,6 +34674,21 @@
             "statusCode": 200,
             "description": "An object with deleted integration id"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "DeletedIntegration"
+                  }
+                },
+                "statusCode": 200,
+                "description": "An object with deleted integration id"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -34182,6 +34827,21 @@
             },
             "statusCode": 200,
             "description": "Attach operation success status"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AttachedIntegrationToSource"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Attach operation success status"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -34335,6 +34995,21 @@
             },
             "statusCode": 200,
             "description": "Detach operation success status"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "DetachedIntegrationFromSource"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Detach operation success status"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -34620,6 +35295,21 @@
             },
             "statusCode": 200,
             "description": "List of issues"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "IssueWithDataPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of issues"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -35081,6 +35771,21 @@
             "statusCode": 200,
             "description": "Issue count"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "IssueCount"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Issue count"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -35200,6 +35905,21 @@
             },
             "statusCode": 200,
             "description": "A single issue"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "IssueWithData"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single issue"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -35503,6 +36223,21 @@
             "statusCode": 200,
             "description": "Updated issue"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Issue"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Updated issue"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -35700,6 +36435,21 @@
             },
             "statusCode": 200,
             "description": "Dismissed issue"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Issue"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Dismissed issue"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -36084,6 +36834,21 @@
             "statusCode": 200,
             "description": "List of requests"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RequestPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of requests"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -36287,6 +37052,21 @@
             "statusCode": 200,
             "description": "A single request"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Request"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single request"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -36455,6 +37235,21 @@
             "statusCode": 200,
             "description": "A request raw body data"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RawBody"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A request raw body data"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -36602,6 +37397,21 @@
             },
             "statusCode": 200,
             "description": "Retry request operation result"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RetryRequest"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Retry request operation result"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -37147,6 +37957,21 @@
             "statusCode": 200,
             "description": "List of events"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EventPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of events"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -37439,6 +38264,21 @@
             },
             "statusCode": 200,
             "description": "List of ignored events"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "IgnoredEventPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of ignored events"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -37753,6 +38593,21 @@
             "statusCode": 200,
             "description": "List of request bulk retries"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BatchOperationPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of request bulk retries"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -37943,6 +38798,21 @@
             "statusCode": 200,
             "description": "A single requests bulk retry"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BatchOperation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single requests bulk retry"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -38102,6 +38972,21 @@
             "statusCode": 200,
             "description": "Requests bulk retry plan"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BatchOperationPlan"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Requests bulk retry plan"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -38238,6 +39123,21 @@
             },
             "statusCode": 200,
             "description": "A single requests bulk retry"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BatchOperation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single requests bulk retry"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -38388,6 +39288,21 @@
             },
             "statusCode": 200,
             "description": "A single requests bulk retry"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BatchOperation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single requests bulk retry"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -38634,6 +39549,21 @@
             "statusCode": 200,
             "description": "List of rulesets"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RulesetPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of rulesets"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -38851,6 +39781,21 @@
             "statusCode": 200,
             "description": "A single ruleset"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Ruleset"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single ruleset"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -39053,6 +39998,21 @@
             "statusCode": 200,
             "description": "A single ruleset"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Ruleset"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single ruleset"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -39222,6 +40182,21 @@
             },
             "statusCode": 200,
             "description": "A single ruleset"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Ruleset"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single ruleset"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -39443,6 +40418,21 @@
             "statusCode": 200,
             "description": "A single ruleset"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Ruleset"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single ruleset"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -39624,6 +40614,21 @@
             "statusCode": 200,
             "description": "A single ruleset"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Ruleset"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single ruleset"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -39773,6 +40778,21 @@
             },
             "statusCode": 200,
             "description": "A single ruleset"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Ruleset"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single ruleset"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -40029,6 +41049,21 @@
             "statusCode": 200,
             "description": "List of sources"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SourcePaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of sources"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -40222,6 +41257,21 @@
             "statusCode": 200,
             "description": "A single source"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Source"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single source"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -40400,6 +41450,21 @@
             "statusCode": 200,
             "description": "A single source"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Source"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single source"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -40571,6 +41636,21 @@
             },
             "statusCode": 200,
             "description": "A single source"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Source"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single source"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -40768,6 +41848,21 @@
             "statusCode": 200,
             "description": "A single source"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Source"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single source"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -40951,6 +42046,21 @@
             "statusCode": 200,
             "description": "A single source"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Source"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single source"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -41102,6 +42212,21 @@
             },
             "statusCode": 200,
             "description": "A single source"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Source"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single source"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -41299,6 +42424,21 @@
             "statusCode": 200,
             "description": "Toggle operation status response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ToggleWebhookNotifications"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Toggle operation status response"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -41490,6 +42630,21 @@
             },
             "statusCode": 200,
             "description": "List of transformations"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TransformationPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of transformations"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -41691,6 +42846,21 @@
             "statusCode": 200,
             "description": "A single transformation"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Transformation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single transformation"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -41878,6 +43048,21 @@
             "statusCode": 200,
             "description": "A single transformation"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Transformation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single transformation"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -42037,6 +43222,21 @@
             },
             "statusCode": 200,
             "description": "A single transformation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Transformation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single transformation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -42226,6 +43426,21 @@
             },
             "statusCode": 200,
             "description": "A single transformation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Transformation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single transformation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -42462,6 +43677,21 @@
             },
             "statusCode": 200,
             "description": "Transformation run output"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TransformationExecutorOutput"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Transformation run output"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -42734,6 +43964,21 @@
             "statusCode": 200,
             "description": "List of transformation executions"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TransformationExecutionPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of transformation executions"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -42971,6 +44216,21 @@
             },
             "statusCode": 200,
             "description": "A single transformation execution"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TransformationExecution"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single transformation execution"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -43295,6 +44555,21 @@
             },
             "statusCode": 200,
             "description": "List of connections"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ConnectionPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of connections"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -43697,6 +44972,21 @@
             "statusCode": 200,
             "description": "A single connection"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Connection"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single connection"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -44083,6 +45373,21 @@
             "statusCode": 200,
             "description": "A single connection"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Connection"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single connection"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -44364,6 +45669,21 @@
             },
             "statusCode": 200,
             "description": "A single connection"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Connection"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single connection"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -44696,6 +46016,21 @@
             "statusCode": 200,
             "description": "A single connection"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Connection"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single connection"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -44989,6 +46324,21 @@
             "statusCode": 200,
             "description": "A single connection"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Connection"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single connection"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -45250,6 +46600,21 @@
             },
             "statusCode": 200,
             "description": "A single connection"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Connection"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single connection"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -45513,6 +46878,21 @@
             "statusCode": 200,
             "description": "A single connection"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Connection"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single connection"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -45774,6 +47154,21 @@
             },
             "statusCode": 200,
             "description": "A single connection"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Connection"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single connection"
+              }
+            ]
           },
           "errorsV2": [
             {

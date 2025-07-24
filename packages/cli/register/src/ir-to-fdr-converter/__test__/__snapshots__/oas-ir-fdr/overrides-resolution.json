@@ -365,6 +365,21 @@
           "statusCode": 200,
           "description": "User created successfully"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "User"
+                }
+              },
+              "statusCode": 200,
+              "description": "User created successfully"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
@@ -464,6 +479,21 @@
           },
           "statusCode": 200,
           "description": "User updated successfully"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "User"
+                }
+              },
+              "statusCode": 200,
+              "description": "User updated successfully"
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [

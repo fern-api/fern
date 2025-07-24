@@ -5214,6 +5214,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Transaction"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -5424,6 +5439,21 @@
             "statusCode": 204,
             "description": "Deletion successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Transactions_delete_transaction_v3_transactions__id__delete_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Deletion successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -5582,6 +5612,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PagedResponse_Transaction"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -5783,6 +5828,21 @@
             },
             "statusCode": 200,
             "description": "Enriched transactions."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SyncEnrichmentOutput"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Enriched transactions."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -6027,6 +6087,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Transaction"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -6308,6 +6383,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PagedResponse_Batch"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -6418,6 +6508,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Batch"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -6553,6 +6658,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Batch"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -6672,6 +6792,21 @@
             },
             "statusCode": 200,
             "description": "Returned batch of transaction enrichment results."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BatchResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Returned batch of transaction enrichment results."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -6960,6 +7095,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PagedResponse_BankStatement"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -7082,6 +7232,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BankStatement"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -7202,6 +7367,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BankStatement"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -7326,6 +7506,21 @@
             "statusCode": 204,
             "description": "Deletion successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Bank statements_delete_bank_statement_v3_bank_statements__id__delete_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Deletion successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -7431,6 +7626,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "StatementInfo"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -7585,6 +7795,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BankStatementResults"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -7749,6 +7974,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AccountHolderExternal"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -7864,6 +8104,21 @@
             },
             "statusCode": 204,
             "description": "Deletion successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Account Holders_delete_account_holder_v3_account_holders__id__delete_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Deletion successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -8010,6 +8265,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PagedResponse_AccountHolderExternal"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -8115,6 +8385,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AccountHolderExternal"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -8253,6 +8538,24 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "RecurrenceGroup"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -8406,6 +8709,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PagedResponse_Webhook"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -8522,6 +8840,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Webhook"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -8650,6 +8983,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Webhook"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -8763,6 +9111,21 @@
             },
             "statusCode": 204,
             "description": "Deletion successful"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Webhooks_delete_webhook_v3_webhooks__id__delete_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Deletion successful"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -8883,6 +9246,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Webhook"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -8993,6 +9371,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "personalization"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -9109,6 +9502,20 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -9250,6 +9657,20 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -9369,6 +9790,20 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -9481,6 +9916,20 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -9653,6 +10102,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PagedResponse_Report_"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -9769,6 +10233,21 @@
             },
             "statusCode": 200,
             "description": "The newly created report"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Report"
+                  }
+                },
+                "statusCode": 200,
+                "description": "The newly created report"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -9897,6 +10376,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Report"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -10021,6 +10515,21 @@
             "statusCode": 204,
             "description": "Deletion successful"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Reports_delete_report_v3_reports__id__delete_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Deletion successful"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -10134,6 +10643,21 @@
             },
             "statusCode": 200,
             "description": "Category set for the selected type of account holder"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "CategorySet"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Category set for the selected type of account holder"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -10296,6 +10820,21 @@
             "statusCode": 200,
             "description": "Custom categories successfully set."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "CustomCategorySet"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Custom categories successfully set."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -10440,6 +10979,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "CategorySet"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -10623,6 +11177,21 @@
             "statusCode": 200,
             "description": "Entity"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Entity"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Entity"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -10755,6 +11324,21 @@
             },
             "statusCode": 200,
             "description": "Entity"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Entity"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Entity"
+              }
+            ]
           },
           "errorsV2": [
             {

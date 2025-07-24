@@ -1706,6 +1706,24 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "ApplicationWithDeployment"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -1855,6 +1873,21 @@
             },
             "statusCode": 201,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Application"
+                  }
+                },
+                "statusCode": 201,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -2022,6 +2055,21 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Application"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -2177,6 +2225,21 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Application"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -2306,6 +2369,21 @@
             "statusCode": 204,
             "description": "No content"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AppV1_DeleteApp_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No content"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -2428,6 +2506,21 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AuthV1_LoginAnonymous_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -2549,6 +2642,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AuthV1_LoginNickname_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -2680,6 +2788,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AuthV1_LoginGoogle_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -2818,6 +2941,24 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Build"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -2967,6 +3108,21 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Build"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -3096,6 +3252,21 @@
             },
             "statusCode": 201,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Build"
+                  }
+                },
+                "statusCode": 201,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -3288,6 +3459,18 @@
               "properties": []
             }
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "statusCode": 200,
+                "type": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": []
+                }
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -3427,6 +3610,21 @@
             },
             "statusCode": 204,
             "description": "No content"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BuildV1_DeleteBuild_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No content"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -3568,6 +3766,24 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Deployment"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -3720,6 +3936,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Deployment"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -3882,6 +4113,21 @@
             },
             "statusCode": 201,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Deployment"
+                  }
+                },
+                "statusCode": 201,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -4068,6 +4314,21 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "DiscoveryResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -4203,6 +4464,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RoomId"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -4397,6 +4673,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RoomId"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -4595,6 +4886,24 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Lobby"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -4790,6 +5099,21 @@
             },
             "statusCode": 201,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Lobby"
+                  }
+                },
+                "statusCode": 201,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -5029,6 +5353,21 @@
             "statusCode": 201,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Lobby"
+                  }
+                },
+                "statusCode": 201,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -5266,6 +5605,21 @@
             },
             "statusCode": 201,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Lobby"
+                  }
+                },
+                "statusCode": 201,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -5511,6 +5865,21 @@
             "statusCode": 201,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Lobby"
+                  }
+                },
+                "statusCode": 201,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -5717,6 +6086,24 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Lobby"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -5836,6 +6223,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Lobby"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -5988,6 +6390,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Lobby"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -6172,6 +6589,18 @@
               "properties": []
             }
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "statusCode": 200,
+                "type": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": []
+                }
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -6304,6 +6733,18 @@
               "extends": [],
               "properties": []
             }
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "statusCode": 200,
+                "type": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": []
+                }
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -6438,6 +6879,18 @@
               "extends": [],
               "properties": []
             }
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "statusCode": 200,
+                "type": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": []
+                }
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -6607,6 +7060,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "MetricsResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -6795,6 +7263,24 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "ProcessWithRooms"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -6952,6 +7438,24 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Process"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -7101,6 +7605,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Process"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -7263,6 +7782,21 @@
             "statusCode": 201,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RoomId"
+                  }
+                },
+                "statusCode": 201,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -7398,6 +7932,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Room"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -7551,6 +8100,24 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "RoomWithoutAllocations"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -7671,6 +8238,24 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "RoomWithoutAllocations"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -7787,6 +8372,21 @@
             },
             "statusCode": 204,
             "description": "No content"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RoomV1_DestroyRoom_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No content"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -7916,6 +8516,21 @@
             "statusCode": 204,
             "description": "No content"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RoomV1_SuspendRoom_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No content"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -8043,6 +8658,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ConnectionInfo"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {

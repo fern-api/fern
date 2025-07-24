@@ -2386,6 +2386,7 @@
           },
           "description": "client version"
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -2473,6 +2474,7 @@
           },
           "description": "Keccak-256 hash of the given data"
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -2546,6 +2548,7 @@
           },
           "description": "`true` if listening is active or `false` if listening is not active"
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -2611,6 +2614,7 @@
           },
           "description": "number of connected peers."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -2675,6 +2679,7 @@
           },
           "description": "Network ID associated with the current network"
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -2734,6 +2739,7 @@
             }
           }
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -2820,6 +2826,7 @@
           },
           "description": "The return value of the executed contract"
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -2874,6 +2881,7 @@
           },
           "description": "hex format integer of the current chain id. Defaults are ETC=61, ETH=1, Morden=62."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -2934,6 +2942,7 @@
           },
           "description": "The address owned by the client that is used as default for things like the mining reward"
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -3000,6 +3009,7 @@
           },
           "description": "The amount of gas used"
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -3049,6 +3059,7 @@
             }
           }
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -3126,6 +3137,7 @@
             }
           }
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -3204,6 +3216,7 @@
             }
           }
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -3282,6 +3295,7 @@
             }
           }
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -3351,6 +3365,7 @@
           },
           "description": "The Number of total transactions in the given block"
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -3420,6 +3435,7 @@
           },
           "description": "The Number of total transactions in the given block"
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -3500,6 +3516,7 @@
             }
           }
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -3571,6 +3588,7 @@
             }
           }
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -3660,6 +3678,7 @@
           },
           "description": "An array of all logs matching filter with given id."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -3746,6 +3765,7 @@
           },
           "description": "The raw transaction data"
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -3823,6 +3843,7 @@
           },
           "description": "The raw transaction data"
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -3900,6 +3921,7 @@
           },
           "description": "The raw transaction data"
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -3972,6 +3994,7 @@
           },
           "description": "An array of all logs matching filter with given id."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -4071,6 +4094,7 @@
             }
           }
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -4148,6 +4172,7 @@
           },
           "description": "Returns a transaction or null"
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -4234,6 +4259,7 @@
           },
           "description": "Returns a transaction or null"
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -4324,6 +4350,7 @@
           },
           "description": "Returns a transaction or null"
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -4420,6 +4447,7 @@
             }
           }
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -4502,6 +4530,7 @@
           },
           "description": "returns either a receipt or null"
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -4619,6 +4648,7 @@
             }
           }
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -4697,6 +4727,7 @@
           },
           "description": "returns an uncle block or null"
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -4775,6 +4806,7 @@
           },
           "description": "The Number of total uncles in the given block"
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -4844,6 +4876,7 @@
           },
           "description": "The Number of total uncles in the given block"
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -4920,6 +4953,7 @@
             }
           }
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -4985,6 +5019,7 @@
             }
           }
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -5049,6 +5084,7 @@
           },
           "description": "Integer of the number of hashes per second"
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -5098,6 +5134,7 @@
           },
           "description": "Whether or not the client is mining"
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -5157,6 +5194,7 @@
             }
           }
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -5223,6 +5261,7 @@
           },
           "description": "The filter ID for use in `eth_getFilterChanges`"
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -5272,6 +5311,7 @@
             }
           }
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -5318,6 +5358,7 @@
             }
           }
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -5365,6 +5406,7 @@
           },
           "description": "The current ethereum protocol version"
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -5432,6 +5474,7 @@
           },
           "description": "The transaction hash, or the zero hash if the transaction is not yet available."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -5511,6 +5554,7 @@
           },
           "description": "whether of not submitting went through successfully"
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -5609,6 +5653,7 @@
           },
           "description": "returns true if the provided solution is valid, otherwise false."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -5669,6 +5714,7 @@
             }
           }
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -5750,6 +5796,7 @@
           },
           "description": "returns true if the filter was successfully uninstalled, false otherwise."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {

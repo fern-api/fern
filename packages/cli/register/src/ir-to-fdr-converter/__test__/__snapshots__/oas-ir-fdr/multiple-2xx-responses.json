@@ -78,6 +78,32 @@
           "statusCode": 200,
           "description": "OK response"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "getStatus_Response_200"
+                }
+              },
+              "statusCode": 200,
+              "description": "OK response"
+            },
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "getStatus_Response_201"
+                }
+              },
+              "statusCode": 201,
+              "description": "Created response"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
