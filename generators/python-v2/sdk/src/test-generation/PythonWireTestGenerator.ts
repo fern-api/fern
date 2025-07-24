@@ -143,7 +143,7 @@ export class PythonWireTestGenerator {
         testMethod.addStatement(python.codeBlock(snippetContent));
 
         // add assertions
-        const responseAssertions = this.generateResponseAssertionsFromExample(example);
+        const responseAssertions = this.generateResponseAssertions(endpoint, example);
         if (responseAssertions.trim()) {
             testMethod.addStatement(python.codeBlock(responseAssertions));
         }
@@ -167,8 +167,8 @@ export class PythonWireTestGenerator {
             })
         );
 
-        // Add mock response setup using proper AST construction
-        const mockResponse = this.extractResponseFromExample(example);
+        // Add mock response setup
+        const mockResponse = this.constructResponse(endpoint, example);
         const statusCode = this.getResponseStatusCode(example, endpoint);
 
         const httpxResponseCall = python.instantiateClass({
@@ -428,7 +428,13 @@ export class PythonWireTestGenerator {
         return urlJoin(PythonWireTestGenerator.DEFAULT_BASE_URL, path);
     }
 
-    private extractResponseFromExample(example: ExampleEndpointCall): unknown {
+    private constructResponse(endpoint: HttpEndpoint, example: ExampleEndpointCall): unknown {
+        // return None/null for endpoints with no response body
+        if (endpoint.response === undefined || endpoint.response.body === undefined) {
+            return undefined;
+        }
+
+        // try to extract from example
         if (example.response && example.response.type === "ok") {
             // For success responses, extract the jsonExample directly from the response body
             if (example.response.value && example.response.value.type === "body") {
@@ -449,9 +455,15 @@ export class PythonWireTestGenerator {
         return python.TypeInstantiation.unknown(value).toString();
     }
 
-    private generateResponseAssertionsFromExample(example: ExampleEndpointCall): string {
+    private generateResponseAssertions(endpoint: HttpEndpoint, example: ExampleEndpointCall): string {
         const responseVar = PythonWireTestGenerator.DEFAULT_RESPONSE_VARIABLE_NAME;
-        const responseData = this.extractResponseFromExample(example);
+
+        // assert None for endpoints without response body
+        if (endpoint.response === undefined || endpoint.response.body === undefined) {
+            return `assert ${responseVar} is None`;
+        }
+
+        const responseData = this.constructResponse(endpoint, example);
 
         if (!responseData || responseData === null) {
             return `assert ${responseVar} is not None`;
