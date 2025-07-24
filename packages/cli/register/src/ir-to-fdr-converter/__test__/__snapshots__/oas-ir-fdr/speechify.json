@@ -1484,6 +1484,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "audio_ExperimentalStreamCreate_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -1616,6 +1631,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "audio_GetSpeech_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -1757,6 +1787,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "audio_GetStream_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -1904,6 +1949,21 @@
             "statusCode": 200,
             "description": "Contains the details of the token which can be used by the user to access the API"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "auth_CreateAccessToken_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Contains the details of the token which can be used by the user to access the API"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -1984,6 +2044,21 @@
             "statusCode": 200,
             "description": "An array of all API keys for the user for the given request"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "apikey_ListAPIKeys_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "An array of all API keys for the user for the given request"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -2043,6 +2118,21 @@
             },
             "statusCode": 200,
             "description": "APIKeyResponseWrapper contains the details of the API key which can be used by the user to access the API"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "apikey_CreateAPIKey_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "APIKeyResponseWrapper contains the details of the API key which can be used by the user to access the API"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -2122,6 +2212,21 @@
             },
             "statusCode": 200,
             "description": "API key deleted successfully"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "apikey_DeleteAPIKey_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "API key deleted successfully"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -2219,6 +2324,21 @@
             "statusCode": 200,
             "description": "APIKeyResponseWrapper contains the details of the API key which can be used by the user to access the API"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "apikey_UpdateApiKey_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "APIKeyResponseWrapper contains the details of the API key which can be used by the user to access the API"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -2296,6 +2416,21 @@
             },
             "statusCode": 200,
             "description": "A list of voices"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "voices_GetVoices_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A list of voices"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -2428,6 +2563,21 @@
             },
             "statusCode": 200,
             "description": "A created voice"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "voices_CreateVoice_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A created voice"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -2566,6 +2716,21 @@
             },
             "statusCode": 204,
             "description": "Voice deleted successfully"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "voices_DeleteVoice_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Voice deleted successfully"
+              }
+            ]
           },
           "errorsV2": [
             {

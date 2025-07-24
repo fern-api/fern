@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Support multiple 2XX responses on http endpoints part 2.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-23"
+  version: 0.65.29
+        
+- changelogEntry:
+    - summary: |
         endpoint example creation ignores global auth headers 
       type: feat
   irVersion: 58

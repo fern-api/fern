@@ -251,6 +251,7 @@
               }
             }
           ],
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -343,6 +344,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -427,6 +429,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -507,6 +510,7 @@
             }
           ],
           "headers": [],
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -577,6 +581,7 @@
             }
           ],
           "headers": [],
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {

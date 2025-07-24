@@ -1304,6 +1304,21 @@
             "statusCode": 200,
             "description": "A list of pets"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Pet"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A list of pets"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -1470,6 +1485,21 @@
             },
             "statusCode": 200,
             "description": "An order object"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Order"
+                  }
+                },
+                "statusCode": 200,
+                "description": "An order object"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [

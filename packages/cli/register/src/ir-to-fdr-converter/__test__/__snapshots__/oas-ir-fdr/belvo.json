@@ -30308,6 +30308,21 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PaginatedResponseLink"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -30468,6 +30483,21 @@
             },
             "statusCode": 201,
             "description": "Created"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Link"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -30674,6 +30704,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Link"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -30888,6 +30933,21 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Link"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -31072,6 +31132,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Link"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -31275,6 +31350,21 @@
             "statusCode": 204,
             "description": "No content"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Links_DestroyLink_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No content"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -31437,6 +31527,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Link"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -32129,6 +32234,21 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AccountsPaginatedResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -32456,6 +32576,38 @@
             },
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Account"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok (when `save_data=false`)"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Account"
+                    }
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created (when `save_data=true`)"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -33184,6 +33336,38 @@
             },
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Account"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok (when `save_data=false`)"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Account"
+                    }
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created (when `save_data=true`)"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -33927,6 +34111,21 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Account"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -34528,6 +34727,21 @@
             },
             "statusCode": 204,
             "description": "No content"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Accounts_DestroyAccount_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No content"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -35399,6 +35613,21 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TransactionsPaginatedResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -35936,6 +36165,49 @@
             },
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Transaction"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok (when `save_data=false`)"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Transaction"
+                    }
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created (when `save_data=true`)"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AsynchronousAccepted202"
+                  }
+                },
+                "statusCode": 202,
+                "description": "Accepted (when `X-Belvo-Request-Mode` is `async`)"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -36533,6 +36805,38 @@
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Transaction"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok (when `save_data=false`)"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Transaction"
+                    }
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created (when `save_data=true`)"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -37127,6 +37431,21 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Transaction"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -37606,6 +37925,21 @@
             },
             "statusCode": 204,
             "description": "No content"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Transactions_DestroyTransaction_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No content"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -38090,6 +38424,21 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BalancesPaginatedResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -38299,6 +38648,38 @@
             },
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Balance"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok (when `save_data=false`)"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Balance"
+                    }
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created (when `save_data=true`)"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -38576,6 +38957,38 @@
             },
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Balance"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok (when `save_data=false`)"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Balance"
+                    }
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created (when `save_data=true`)"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -38856,6 +39269,21 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Balance"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -39046,6 +39474,21 @@
             },
             "statusCode": 204,
             "description": "No content"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Balances_DestroyBalance_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No content"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -39358,6 +39801,21 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "InstitutionsPaginatedResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -39601,6 +40059,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Institution"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -40012,6 +40485,21 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "OwnersPaginatedResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -40185,6 +40673,38 @@
             },
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Owner"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok (when `save_data=false`)"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Owner"
+                    }
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created (when `save_data=true`)"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -40424,6 +40944,38 @@
             },
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Owner"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok (when `save_data=false`)"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Owner"
+                    }
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created (when `save_data=true`)"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -40670,6 +41222,21 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Owner"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -40826,6 +41393,21 @@
             },
             "statusCode": 204,
             "description": "No content"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Owners_DestroyOwner_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No content"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -41347,6 +41929,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "InvoicesResponsePaginatedResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -42228,6 +42825,38 @@
             },
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "ApiInvoicesPostResponsesContentApplicationJsonSchemaItems"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok (when `save_data=false`)"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "ApiInvoicesPostResponsesContentApplicationJsonSchemaItems"
+                    }
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created (when `save_data=true`)"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -43183,6 +43812,38 @@
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "ApiInvoicesPatchResponsesContentApplicationJsonSchemaItems"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok (when `save_data=false`)"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "ApiInvoicesPatchResponsesContentApplicationJsonSchemaItems"
+                    }
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created (when `save_data=true`)"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -43597,6 +44258,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Invoices_DetailInvoice_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -44412,6 +45088,21 @@
             "statusCode": 204,
             "description": "No content"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Invoices_DestroyInvoice_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No content"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -44802,6 +45493,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Tax returns_ListTaxReturns_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -47125,6 +47831,38 @@
             },
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "ApiTaxReturnsPostResponsesContentApplicationJsonSchemaItems"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok (when `save_data=false`)"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "ApiTaxReturnsPostResponsesContentApplicationJsonSchemaItems"
+                    }
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created (when `save_data=true`)"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -49522,6 +50260,21 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Tax returns_DetailTaxReturn_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -51774,6 +52527,21 @@
             "statusCode": 204,
             "description": "No content"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Tax returns_DestroyTaxReturn_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No content"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -52060,6 +52828,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TaxStatusPaginatedResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -52516,6 +53299,32 @@
             },
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Tax status_RetrieveTaxStatus_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok (when `save_data=false`)"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Tax status_RetrieveTaxStatus_Response_201"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created (when `save_data=true`)"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -53018,6 +53827,21 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Tax status_DetailTaxStatus_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -53446,6 +54270,21 @@
             "statusCode": 204,
             "description": "No content"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Tax status_DestroyTaxStatus_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No content"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -53733,6 +54572,21 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TaxComplianceStatusPaginatedResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -53887,6 +54741,32 @@
             },
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TaxComplianceStatus"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok (when `save_data=false`)"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TaxComplianceStatus"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created (when `save_data=true`)"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -54093,6 +54973,21 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TaxComplianceStatus"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -54231,6 +55126,21 @@
             },
             "statusCode": 204,
             "description": "No content"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Tax compliance status_DestroyTaxComplianceStatus_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No content"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -54454,6 +55364,21 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "IncomesPaginatedResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -54674,6 +55599,32 @@
             },
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Income"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok (when `save_data=false`)"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Income"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created (when `save_data=true`)"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -54957,6 +55908,38 @@
             },
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Income"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok (when `save_data=false`)"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Income"
+                    }
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created (when `save_data=true`)"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -55254,6 +56237,24 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Income"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -55462,6 +56463,21 @@
             },
             "statusCode": 204,
             "description": "No content"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Incomes_DestroyIncomes_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No content"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -55711,6 +56727,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RecurringExpensesPaginatedResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -56073,6 +57104,38 @@
             },
             "statusCode": 200,
             "description": "Ok (when save_data=false)"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "RecurringExpenses"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok (when save_data=false)"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "RecurringExpenses"
+                    }
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created (when save_data=true)"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -56498,6 +57561,38 @@
             },
             "statusCode": 200,
             "description": "Ok (when save_data=false)"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "RecurringExpenses"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok (when save_data=false)"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "RecurringExpenses"
+                    }
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created (when save_data=true)"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -56932,6 +58027,24 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "RecurringExpenses"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -57278,6 +58391,21 @@
             "statusCode": 204,
             "description": "No content"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Recurring Expenses_DestroyRecurringExpense_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No content"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -57533,6 +58661,21 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "InvestmentsPortfoliosPaginatedResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -57769,6 +58912,32 @@
             },
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "InvestmentsPortfolio"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok (when `save_data=false`)"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "InvestmentsPortfolio"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created (when `save_data=true`)"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -58049,6 +59218,32 @@
             },
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "InvestmentsPortfolio"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok (when `save_data=false`)"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "InvestmentsPortfolio"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created (when `save_data=true`)"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -58339,6 +59534,21 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "InvestmentsPortfolio"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -58559,6 +59769,21 @@
             },
             "statusCode": 204,
             "description": "No content"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Investment Portfolios_DestroyPortfolio_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No content"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -58926,6 +60151,21 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ReceivablesTransactionsPaginatedResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -59122,6 +60362,32 @@
             },
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ReceivablesTransaction"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok (when `save_data=false`)"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ReceivablesTransaction"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created (when `save_data=true`)"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -59374,6 +60640,21 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ReceivablesTransaction"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -59554,6 +60835,21 @@
             },
             "statusCode": 204,
             "description": "No content"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Receivable Transactions_DestroyReceivableTransaction_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No content"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -59776,6 +61072,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RiskInsightsPaginatedResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -60070,6 +61381,38 @@
             },
             "statusCode": 200,
             "description": "Ok (when save_data=false)"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "RiskInsights"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok (when save_data=false)"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "RiskInsights"
+                    }
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created (when save_data=true)"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -60427,6 +61770,38 @@
             },
             "statusCode": 200,
             "description": "Ok (when save_data=false)"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "RiskInsights"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok (when save_data=false)"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "RiskInsights"
+                    }
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created (when save_data=true)"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -60794,6 +62169,24 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "RiskInsights"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -61073,6 +62466,21 @@
             "statusCode": 204,
             "description": "No content"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Risk Insights_DestroyRiskInsights_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No content"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -61334,6 +62742,21 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TaxRetentionsPaginatedResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -61533,6 +62956,38 @@
             },
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "TaxRetentions"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok (when `save_data=false`)"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "TaxRetentions"
+                    }
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created (when `save_data=true`)"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -61791,6 +63246,21 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TaxRetentions"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -61971,6 +63441,21 @@
             },
             "statusCode": 204,
             "description": "No content"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Tax retentions_DestroyTaxRetention_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No content"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -62337,6 +63822,21 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Tax declarations_ListTaxDeclarations_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -62626,6 +64126,38 @@
             },
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "ApiTaxDeclarationsPostResponsesContentApplicationJsonSchemaItems"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok (when `save_data=false`)"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "ApiTaxDeclarationsPostResponsesContentApplicationJsonSchemaItems"
+                    }
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created (when `save_data=true`)"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -62954,6 +64486,21 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Tax declarations_DetailTaxDeclaration_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -63225,6 +64772,21 @@
             "statusCode": 204,
             "description": "No content"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Tax declarations_DestroyTaxDeclaration_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No content"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -63393,6 +64955,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EmploymentRecordsPaginatedResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -63651,6 +65228,38 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "EmploymentRecord"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "EmploymentRecord"
+                    }
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created (when `save_data=true`)"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -63977,6 +65586,21 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EmploymentRecord"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -64216,6 +65840,21 @@
             "statusCode": 204,
             "description": "No content"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Employment Records_DestroyEmploymentRecord_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No content"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -64344,6 +65983,24 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Income"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -64664,6 +66321,21 @@
             "statusCode": 200,
             "description": "Ok"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Categorization"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -64936,6 +66608,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SecretKeysPaginatedResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -65047,6 +66734,24 @@
             },
             "statusCode": 201,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "SecretKeys"
+                    }
+                  }
+                },
+                "statusCode": 201,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -65172,6 +66877,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PaymentsWebhooksPaginatedResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -65303,6 +67023,24 @@
             },
             "statusCode": 201,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "paymentWebhook"
+                    }
+                  }
+                },
+                "statusCode": 201,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -65488,6 +67226,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "paymentWebhook"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -65626,6 +67379,21 @@
             },
             "statusCode": 204,
             "description": "No content"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Payment Webhooks_DeletePaymentWebhooks_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No content"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -65858,6 +67626,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PaymentsInstitutionsPaginatedResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -66042,6 +67825,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "paymentInstitution"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -66352,6 +68150,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "CustomerPaginatedResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -66672,6 +68485,21 @@
             "statusCode": 201,
             "description": "OK (Created)"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Customers_CreateCustomer_Response_201"
+                  }
+                },
+                "statusCode": 201,
+                "description": "OK (Created)"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -66970,6 +68798,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Customers_DetailCustomer_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -67385,6 +69228,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BankAccountPaginatedResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -67675,6 +69533,21 @@
             },
             "statusCode": 201,
             "description": "OK (Created)"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Bank Accounts_CreateBankAccount_Response_201"
+                  }
+                },
+                "statusCode": 201,
+                "description": "OK (Created)"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -68089,6 +69962,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Bank Accounts_DetailBankAccount_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -68500,6 +70388,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PaymentLinkPaginatedResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -68641,6 +70544,21 @@
             },
             "statusCode": 201,
             "description": "OK (Created)"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Payment Links_CreatePaymentlink_Response_201"
+                  }
+                },
+                "statusCode": 201,
+                "description": "OK (Created)"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -69110,6 +71028,21 @@
             },
             "statusCode": 200,
             "description": "OK (Created)"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Payment Links_DetailCreatePaymentlink_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK (Created)"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -69758,6 +71691,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PaymentIntentPaginatedResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -70237,6 +72185,21 @@
             },
             "statusCode": 201,
             "description": "OK (Created)"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Payment Intents_CreatePaymentIntent_Response_201"
+                  }
+                },
+                "statusCode": 201,
+                "description": "OK (Created)"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -70792,6 +72755,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Payment Intents_DetailPaymentIntent_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -71295,6 +73273,21 @@
             },
             "statusCode": 200,
             "description": "OK (Created)"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Payment Intents_PatchPaymentIntent_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK (Created)"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -72086,6 +74079,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PaymentsTransactionsPaginatedResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -72228,6 +74236,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "paymentTransaction"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {

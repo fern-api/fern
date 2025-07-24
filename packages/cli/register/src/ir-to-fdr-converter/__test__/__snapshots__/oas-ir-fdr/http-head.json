@@ -113,6 +113,21 @@
           "statusCode": 200,
           "description": "User retrieved successfully"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "listUsers_Response_200"
+                }
+              },
+              "statusCode": 200,
+              "description": "User retrieved successfully"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
@@ -178,6 +193,21 @@
           },
           "statusCode": 200,
           "description": "User retrieved successfully"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "headMethodsShouldNotDefineAResponseBody_Response_200"
+                }
+              },
+              "statusCode": 200,
+              "description": "User retrieved successfully"
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [

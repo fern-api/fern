@@ -7470,6 +7470,21 @@
           "statusCode": 201,
           "description": "Created"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "post-consumer-transaction_Response_201"
+                }
+              },
+              "statusCode": 201,
+              "description": "Created"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
@@ -7692,6 +7707,21 @@
           "statusCode": 200,
           "description": "OK"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "TransactionWithRulesResult"
+                }
+              },
+              "statusCode": 200,
+              "description": "OK"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
@@ -7906,6 +7936,21 @@
           },
           "statusCode": 201,
           "description": "Created"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "TransactionEventMonitoringResult"
+                }
+              },
+              "statusCode": 201,
+              "description": "Created"
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [
@@ -8170,6 +8215,21 @@
           "statusCode": 201,
           "description": "Created"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "post-consumer-user_Response_201"
+                }
+              },
+              "statusCode": 201,
+              "description": "Created"
+            }
+          ]
+        },
         "errorsV2": [
           {
             "type": {
@@ -8433,6 +8493,21 @@
           "statusCode": 200,
           "description": "OK"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "User"
+                }
+              },
+              "statusCode": 200,
+              "description": "OK"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
@@ -8634,6 +8709,21 @@
           "statusCode": 201,
           "description": "Created"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "post-business-user_Response_201"
+                }
+              },
+              "statusCode": 201,
+              "description": "Created"
+            }
+          ]
+        },
         "errorsV2": [
           {
             "type": {
@@ -8778,6 +8868,21 @@
           },
           "statusCode": 200,
           "description": "OK"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "Business"
+                }
+              },
+              "statusCode": 200,
+              "description": "OK"
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [
@@ -9219,6 +9324,21 @@
           },
           "statusCode": 201,
           "description": "Created"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "UserWithRulesResult"
+                }
+              },
+              "statusCode": 201,
+              "description": "Created"
+            }
+          ]
         },
         "errorsV2": [
           {
@@ -10468,6 +10588,21 @@
           },
           "statusCode": 201,
           "description": "Created"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "BusinessWithRulesResult"
+                }
+              },
+              "statusCode": 201,
+              "description": "Created"
+            }
+          ]
         },
         "errorsV2": [
           {

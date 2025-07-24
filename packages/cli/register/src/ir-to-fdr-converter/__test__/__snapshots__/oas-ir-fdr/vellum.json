@@ -6393,6 +6393,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "DeploymentRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -6502,6 +6517,21 @@
             },
             "statusCode": 201,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "DocumentIndexRead"
+                  }
+                },
+                "statusCode": 201,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -6834,6 +6864,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PaginatedSlimDocumentList"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -6956,6 +7001,21 @@
             },
             "statusCode": 201,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "UploadDocumentResponse"
+                  }
+                },
+                "statusCode": 201,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -7102,6 +7162,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ModelVersionRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -7316,6 +7391,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ModelVersionCompilePromptResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -7420,6 +7510,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RegisterPromptResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -7649,6 +7754,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SandboxScenario"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -7941,6 +8061,21 @@
             "statusCode": 204,
             "description": "No response body"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "sandboxes_delete_sandbox_scenario_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No response body"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -8047,6 +8182,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TestSuiteTestCase"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -8173,6 +8323,21 @@
             "statusCode": 204,
             "description": "No response body"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "test-suites_delete_test_suite_test_case_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No response body"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -8261,6 +8426,24 @@
           },
           "statusCode": 200,
           "description": ""
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "stream",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ExecutePromptEvent"
+                  }
+                }
+              },
+              "statusCode": 200,
+              "description": ""
+            }
+          ]
         },
         "errorsV2": [
           {
@@ -8429,6 +8612,24 @@
           "statusCode": 200,
           "description": ""
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "stream",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "WorkflowStreamEvent"
+                  }
+                }
+              },
+              "statusCode": 200,
+              "description": ""
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
@@ -8569,6 +8770,21 @@
           },
           "statusCode": 200,
           "description": ""
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "GenerateResponse"
+                }
+              },
+              "statusCode": 200,
+              "description": ""
+            }
+          ]
         },
         "errorsV2": [
           {
@@ -8778,6 +8994,24 @@
           "statusCode": 200,
           "description": ""
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "stream",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenerateStreamResponse"
+                  }
+                }
+              },
+              "statusCode": 200,
+              "description": ""
+            }
+          ]
+        },
         "errorsV2": [
           {
             "type": {
@@ -8986,6 +9220,21 @@
           "statusCode": 200,
           "description": ""
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "SearchResponse"
+                }
+              },
+              "statusCode": 200,
+              "description": ""
+            }
+          ]
+        },
         "errorsV2": [
           {
             "type": {
@@ -9137,6 +9386,21 @@
           },
           "statusCode": 200,
           "description": "No response body"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "submit-completion-actuals_Response_200"
+                }
+              },
+              "statusCode": 200,
+              "description": "No response body"
+            }
+          ]
         },
         "errorsV2": [
           {

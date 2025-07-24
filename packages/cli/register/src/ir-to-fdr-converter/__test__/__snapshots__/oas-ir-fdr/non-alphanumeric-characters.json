@@ -91,6 +91,21 @@
           "statusCode": 200,
           "description": "OK"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "Settings"
+                }
+              },
+              "statusCode": 200,
+              "description": "OK"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
