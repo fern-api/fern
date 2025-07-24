@@ -5,6 +5,7 @@
 import * as FernIr from "../../../index";
 
 export interface V2HttpEndpointExample {
+    displayName: string | undefined;
     request: FernIr.V2HttpEndpointRequest | undefined;
     response: FernIr.V2HttpEndpointResponse | undefined;
     codeSamples: FernIr.V2HttpEndpointCodeSample[] | undefined;
