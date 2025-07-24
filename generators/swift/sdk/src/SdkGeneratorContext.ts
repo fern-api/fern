@@ -1,6 +1,6 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { AbstractSwiftGeneratorContext } from "@fern-api/swift-base";
+import { AbstractSwiftGeneratorContext, AsIsFileDefinition, AsIsFiles } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -27,6 +27,10 @@ export class SdkGeneratorContext extends AbstractSwiftGeneratorContext<SdkCustom
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(ir, config, customConfig, generatorNotificationService);
+    }
+
+    public getCoreAsIsFiles(): AsIsFileDefinition[] {
+        return Object.values(AsIsFiles);
     }
 
     public getAdditionalQueryParametersType(): swift.Type {
