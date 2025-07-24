@@ -54,6 +54,12 @@ type DictionaryLiteral = {
     multiline?: true;
 };
 
+type ArrayLiteral = {
+    type: "array-literal";
+    elements?: Expression[];
+    multiline?: true;
+};
+
 type MethodCall = {
     type: "method-call";
     target: Expression;
@@ -99,6 +105,7 @@ type InternalExpression =
     | StructInitialization
     | ClassInitialization
     | DictionaryLiteral
+    | ArrayLiteral
     | MethodCall
     | MethodCallWithTrailingClosure
     | ContextualMethodCall
@@ -161,6 +168,9 @@ export class Expression extends AstNode {
                 break;
             case "dictionary-literal":
                 this.writeDictionaryLiteral(writer, this.internalExpression);
+                break;
+            case "array-literal":
+                this.writeArrayLiteral(writer, this.internalExpression);
                 break;
             case "method-call":
                 this.internalExpression.target.write(writer);
@@ -259,6 +269,33 @@ export class Expression extends AstNode {
         writer.write("]");
     }
 
+    private writeArrayLiteral(writer: Writer, arrayLiteral: ArrayLiteral): void {
+        if (!arrayLiteral.elements || arrayLiteral.elements.length === 0) {
+            writer.write("[]");
+            return;
+        }
+        writer.write("[");
+        const multiline = !!arrayLiteral.multiline;
+        if (multiline) {
+            writer.newLine();
+            writer.indent();
+        }
+        arrayLiteral.elements?.forEach((element, elementIdx) => {
+            if (elementIdx > 0) {
+                writer.write(", ");
+                if (multiline) {
+                    writer.newLine();
+                }
+            }
+            element.write(writer);
+        });
+        if (multiline) {
+            writer.newLine();
+            writer.dedent();
+        }
+        writer.write("]");
+    }
+
     public static reference(unsafeName: string): Expression {
         return new this({ type: "reference", unsafeName });
     }
@@ -285,6 +322,10 @@ export class Expression extends AstNode {
 
     public static dictionaryLiteral(params: Omit<DictionaryLiteral, "type">): Expression {
         return new this({ type: "dictionary-literal", ...params });
+    }
+
+    public static arrayLiteral(params: Omit<ArrayLiteral, "type">): Expression {
+        return new this({ type: "array-literal", ...params });
     }
 
     public static methodCall(params: Omit<MethodCall, "type">): Expression {
