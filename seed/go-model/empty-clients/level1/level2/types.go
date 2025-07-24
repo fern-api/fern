@@ -9,7 +9,7 @@ type Person struct {
 
 type Address struct {
 	Line1 string  `json:"line1" url:"line1"`
-	Line2 *string `json:"line2,undefined" url:"line2,undefined"`
+	Line2 *string `json:"line2,omitempty" url:"line2,omitempty"`
 	City  string  `json:"city" url:"city"`
 	State string  `json:"state" url:"state"`
 	Zip   string  `json:"zip" url:"zip"`

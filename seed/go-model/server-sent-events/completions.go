@@ -4,5 +4,5 @@ package serversentevents
 
 type StreamedCompletion struct {
 	Delta  string `json:"delta" url:"delta"`
-	Tokens *int   `json:"tokens,undefined" url:"tokens,undefined"`
+	Tokens *int   `json:"tokens,omitempty" url:"tokens,omitempty"`
 }

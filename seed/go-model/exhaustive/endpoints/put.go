@@ -9,8 +9,8 @@ import (
 type Error struct {
 	Category *ErrorCategory `json:"category" url:"category"`
 	Code     *ErrorCode     `json:"code" url:"code"`
-	Detail   *string        `json:"detail,undefined" url:"detail,undefined"`
-	Field    *string        `json:"field,undefined" url:"field,undefined"`
+	Detail   *string        `json:"detail,omitempty" url:"detail,omitempty"`
+	Field    *string        `json:"field,omitempty" url:"field,omitempty"`
 }
 
 type ErrorCategory string
@@ -88,5 +88,5 @@ func (e ErrorCode) Ptr() *ErrorCode {
 }
 
 type PutResponse struct {
-	Errors []*Error `json:"errors,undefined" url:"errors,undefined"`
+	Errors []*Error `json:"errors,omitempty" url:"errors,omitempty"`
 }

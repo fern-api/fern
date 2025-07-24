@@ -7,5 +7,5 @@ import (
 )
 
 type Response struct {
-	Foo *folderb.Foo `json:"foo,undefined" url:"foo,undefined"`
+	Foo *folderb.Foo `json:"foo,omitempty" url:"foo,omitempty"`
 }

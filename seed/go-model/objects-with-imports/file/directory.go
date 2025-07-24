@@ -8,6 +8,6 @@ import (
 
 type Directory struct {
 	Name        string       `json:"name" url:"name"`
-	Files       []*fern.File `json:"files,undefined" url:"files,undefined"`
-	Directories []*Directory `json:"directories,undefined" url:"directories,undefined"`
+	Files       []*fern.File `json:"files,omitempty" url:"files,omitempty"`
+	Directories []*Directory `json:"directories,omitempty" url:"directories,omitempty"`
 }

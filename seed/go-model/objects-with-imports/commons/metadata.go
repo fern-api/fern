@@ -4,5 +4,5 @@ package commons
 
 type Metadata struct {
 	Id   string            `json:"id" url:"id"`
-	Data map[string]string `json:"data,undefined" url:"data,undefined"`
+	Data map[string]string `json:"data,omitempty" url:"data,omitempty"`
 }

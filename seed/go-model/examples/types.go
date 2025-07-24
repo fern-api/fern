@@ -66,13 +66,13 @@ type MovieId = string
 
 type Movie struct {
 	Id      MovieId  `json:"id" url:"id"`
-	Prequel *MovieId `json:"prequel,undefined" url:"prequel,undefined"`
+	Prequel *MovieId `json:"prequel,omitempty" url:"prequel,omitempty"`
 	Title   string   `json:"title" url:"title"`
 	From    string   `json:"from" url:"from"`
 	// The rating scale is one to five stars
 	Rating   float64        `json:"rating" url:"rating"`
 	Tag      commons.Tag    `json:"tag" url:"tag"`
-	Book     *string        `json:"book,undefined" url:"book,undefined"`
+	Book     *string        `json:"book,omitempty" url:"book,omitempty"`
 	Metadata map[string]any `json:"metadata" url:"metadata"`
 	Revenue  int64          `json:"revenue" url:"revenue"`
 
@@ -96,13 +96,13 @@ type StuntDouble struct {
 
 type ExtendedMovie struct {
 	Id      MovieId  `json:"id" url:"id"`
-	Prequel *MovieId `json:"prequel,undefined" url:"prequel,undefined"`
+	Prequel *MovieId `json:"prequel,omitempty" url:"prequel,omitempty"`
 	Title   string   `json:"title" url:"title"`
 	From    string   `json:"from" url:"from"`
 	// The rating scale is one to five stars
 	Rating   float64        `json:"rating" url:"rating"`
 	Tag      commons.Tag    `json:"tag" url:"tag"`
-	Book     *string        `json:"book,undefined" url:"book,undefined"`
+	Book     *string        `json:"book,omitempty" url:"book,omitempty"`
 	Metadata map[string]any `json:"metadata" url:"metadata"`
 	Revenue  int64          `json:"revenue" url:"revenue"`
 	Cast     []string       `json:"cast" url:"cast"`
@@ -123,18 +123,18 @@ type File struct {
 
 type Directory struct {
 	Name        string       `json:"name" url:"name"`
-	Files       []*File      `json:"files,undefined" url:"files,undefined"`
-	Directories []*Directory `json:"directories,undefined" url:"directories,undefined"`
+	Files       []*File      `json:"files,omitempty" url:"files,omitempty"`
+	Directories []*Directory `json:"directories,omitempty" url:"directories,omitempty"`
 }
 
 type Node struct {
 	Name  string  `json:"name" url:"name"`
-	Nodes []*Node `json:"nodes,undefined" url:"nodes,undefined"`
-	Trees []*Tree `json:"trees,undefined" url:"trees,undefined"`
+	Nodes []*Node `json:"nodes,omitempty" url:"nodes,omitempty"`
+	Trees []*Tree `json:"trees,omitempty" url:"trees,omitempty"`
 }
 
 type Tree struct {
-	Nodes []*Node `json:"nodes,undefined" url:"nodes,undefined"`
+	Nodes []*Node `json:"nodes,omitempty" url:"nodes,omitempty"`
 }
 
 type ExceptionInfo struct {
@@ -194,19 +194,19 @@ type Entity struct {
 }
 
 type BigEntity struct {
-	CastMember     *CastMember        `json:"castMember,undefined" url:"castMember,undefined"`
-	ExtendedMovie  *ExtendedMovie     `json:"extendedMovie,undefined" url:"extendedMovie,undefined"`
-	Entity         *Entity            `json:"entity,undefined" url:"entity,undefined"`
-	Metadata       *Metadata          `json:"metadata,undefined" url:"metadata,undefined"`
-	CommonMetadata *commons.Metadata  `json:"commonMetadata,undefined" url:"commonMetadata,undefined"`
-	EventInfo      *commons.EventInfo `json:"eventInfo,undefined" url:"eventInfo,undefined"`
-	Data           *commons.Data      `json:"data,undefined" url:"data,undefined"`
-	Migration      *Migration         `json:"migration,undefined" url:"migration,undefined"`
-	Exception      *Exception         `json:"exception,undefined" url:"exception,undefined"`
-	Test           *Test              `json:"test,undefined" url:"test,undefined"`
-	Node           *Node              `json:"node,undefined" url:"node,undefined"`
-	Directory      *Directory         `json:"directory,undefined" url:"directory,undefined"`
-	Moment         *Moment            `json:"moment,undefined" url:"moment,undefined"`
+	CastMember     *CastMember        `json:"castMember,omitempty" url:"castMember,omitempty"`
+	ExtendedMovie  *ExtendedMovie     `json:"extendedMovie,omitempty" url:"extendedMovie,omitempty"`
+	Entity         *Entity            `json:"entity,omitempty" url:"entity,omitempty"`
+	Metadata       *Metadata          `json:"metadata,omitempty" url:"metadata,omitempty"`
+	CommonMetadata *commons.Metadata  `json:"commonMetadata,omitempty" url:"commonMetadata,omitempty"`
+	EventInfo      *commons.EventInfo `json:"eventInfo,omitempty" url:"eventInfo,omitempty"`
+	Data           *commons.Data      `json:"data,omitempty" url:"data,omitempty"`
+	Migration      *Migration         `json:"migration,omitempty" url:"migration,omitempty"`
+	Exception      *Exception         `json:"exception,omitempty" url:"exception,omitempty"`
+	Test           *Test              `json:"test,omitempty" url:"test,omitempty"`
+	Node           *Node              `json:"node,omitempty" url:"node,omitempty"`
+	Directory      *Directory         `json:"directory,omitempty" url:"directory,omitempty"`
+	Moment         *Moment            `json:"moment,omitempty" url:"moment,omitempty"`
 }
 
 type CronJob struct {

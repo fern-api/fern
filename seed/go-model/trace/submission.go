@@ -16,7 +16,7 @@ type ShareId = string
 
 type InitializeProblemRequest struct {
     ProblemId ProblemId `json:"problemId" url:"problemId"`
-    ProblemVersion *int `json:"problemVersion,undefined" url:"problemVersion,undefined"`
+    ProblemVersion *int `json:"problemVersion,omitempty" url:"problemVersion,omitempty"`
 }
 
 
@@ -25,8 +25,8 @@ type SubmitRequestV2 struct {
     Language *Language `json:"language" url:"language"`
     SubmissionFiles []*SubmissionFileInfo `json:"submissionFiles" url:"submissionFiles"`
     ProblemId ProblemId `json:"problemId" url:"problemId"`
-    ProblemVersion *int `json:"problemVersion,undefined" url:"problemVersion,undefined"`
-    UserId *string `json:"userId,undefined" url:"userId,undefined"`
+    ProblemVersion *int `json:"problemVersion,omitempty" url:"problemVersion,omitempty"`
+    UserId *string `json:"userId,omitempty" url:"userId,omitempty"`
 }
 
 
@@ -34,7 +34,7 @@ type WorkspaceSubmitRequest struct {
     SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
     Language *Language `json:"language" url:"language"`
     SubmissionFiles []*SubmissionFileInfo `json:"submissionFiles" url:"submissionFiles"`
-    UserId *string `json:"userId,undefined" url:"userId,undefined"`
+    UserId *string `json:"userId,omitempty" url:"userId,omitempty"`
 }
 
 
@@ -146,8 +146,8 @@ type WorkspaceRanResponse struct {
 
 
 type WorkspaceRunDetails struct {
-    ExceptionV2 *ExceptionV2 `json:"exceptionV2,undefined" url:"exceptionV2,undefined"`
-    Exception *ExceptionInfo `json:"exception,undefined" url:"exception,undefined"`
+    ExceptionV2 *ExceptionV2 `json:"exceptionV2,omitempty" url:"exceptionV2,omitempty"`
+    Exception *ExceptionInfo `json:"exception,omitempty" url:"exception,omitempty"`
     Stdout string `json:"stdout" url:"stdout"`
 }
 
@@ -171,8 +171,8 @@ type TestCaseHiddenGrade struct {
 
 type TestCaseNonHiddenGrade struct {
     Passed bool `json:"passed" url:"passed"`
-    ActualResult *VariableValue `json:"actualResult,undefined" url:"actualResult,undefined"`
-    Exception *ExceptionV2 `json:"exception,undefined" url:"exception,undefined"`
+    ActualResult *VariableValue `json:"actualResult,omitempty" url:"actualResult,omitempty"`
+    Exception *ExceptionV2 `json:"exception,omitempty" url:"exception,omitempty"`
     Stdout string `json:"stdout" url:"stdout"`
 }
 
@@ -180,16 +180,16 @@ type TestCaseNonHiddenGrade struct {
 type RecordedResponseNotification struct {
     SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
     TraceResponsesSize int `json:"traceResponsesSize" url:"traceResponsesSize"`
-    TestCaseId *string `json:"testCaseId,undefined" url:"testCaseId,undefined"`
+    TestCaseId *string `json:"testCaseId,omitempty" url:"testCaseId,omitempty"`
 }
 
 
 type RecordingResponseNotification struct {
     SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
-    TestCaseId *string `json:"testCaseId,undefined" url:"testCaseId,undefined"`
+    TestCaseId *string `json:"testCaseId,omitempty" url:"testCaseId,omitempty"`
     LineNumber int `json:"lineNumber" url:"lineNumber"`
     LightweightStackInfo *LightweightStackframeInformation `json:"lightweightStackInfo" url:"lightweightStackInfo"`
-    TracedFile *TracedFile `json:"tracedFile,undefined" url:"tracedFile,undefined"`
+    TracedFile *TracedFile `json:"tracedFile,omitempty" url:"tracedFile,omitempty"`
 }
 
 
@@ -270,10 +270,10 @@ type StderrResponse struct {
 type TraceResponse struct {
     SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
     LineNumber int `json:"lineNumber" url:"lineNumber"`
-    ReturnValue *DebugVariableValue `json:"returnValue,undefined" url:"returnValue,undefined"`
-    ExpressionLocation *ExpressionLocation `json:"expressionLocation,undefined" url:"expressionLocation,undefined"`
+    ReturnValue *DebugVariableValue `json:"returnValue,omitempty" url:"returnValue,omitempty"`
+    ExpressionLocation *ExpressionLocation `json:"expressionLocation,omitempty" url:"expressionLocation,omitempty"`
     Stack *StackInformation `json:"stack" url:"stack"`
-    Stdout *string `json:"stdout,undefined" url:"stdout,undefined"`
+    Stdout *string `json:"stdout,omitempty" url:"stdout,omitempty"`
 }
 
 
@@ -281,10 +281,10 @@ type TraceResponseV2 struct {
     SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
     LineNumber int `json:"lineNumber" url:"lineNumber"`
     File *TracedFile `json:"file" url:"file"`
-    ReturnValue *DebugVariableValue `json:"returnValue,undefined" url:"returnValue,undefined"`
-    ExpressionLocation *ExpressionLocation `json:"expressionLocation,undefined" url:"expressionLocation,undefined"`
+    ReturnValue *DebugVariableValue `json:"returnValue,omitempty" url:"returnValue,omitempty"`
+    ExpressionLocation *ExpressionLocation `json:"expressionLocation,omitempty" url:"expressionLocation,omitempty"`
     Stack *StackInformation `json:"stack" url:"stack"`
-    Stdout *string `json:"stdout,undefined" url:"stdout,undefined"`
+    Stdout *string `json:"stdout,omitempty" url:"stdout,omitempty"`
 }
 
 
@@ -302,7 +302,7 @@ type ExpressionLocation struct {
 
 type StackInformation struct {
     NumStackFrames int `json:"numStackFrames" url:"numStackFrames"`
-    TopStackFrame *StackFrame `json:"topStackFrame,undefined" url:"topStackFrame,undefined"`
+    TopStackFrame *StackFrame `json:"topStackFrame,omitempty" url:"topStackFrame,omitempty"`
 }
 
 
@@ -320,7 +320,7 @@ type Scope struct {
 
 type ExecutionSessionResponse struct {
     SessionId string `json:"sessionId" url:"sessionId"`
-    ExecutionSessionUrl *string `json:"executionSessionUrl,undefined" url:"executionSessionUrl,undefined"`
+    ExecutionSessionUrl *string `json:"executionSessionUrl,omitempty" url:"executionSessionUrl,omitempty"`
     Language *Language `json:"language" url:"language"`
     Status *ExecutionSessionStatus `json:"status" url:"status"`
 }
@@ -424,7 +424,7 @@ type TracedTestCase struct {
 type TraceResponsesPage struct {
     // If present, use this to load subsequent pages.
     // The offset is the id of the next trace response to load.
-    Offset *int `json:"offset,undefined" url:"offset,undefined"`
+    Offset *int `json:"offset,omitempty" url:"offset,omitempty"`
     TraceResponses []*TraceResponse `json:"traceResponses" url:"traceResponses"`
 }
 
@@ -432,13 +432,13 @@ type TraceResponsesPage struct {
 type TraceResponsesPageV2 struct {
     // If present, use this to load subsequent pages.
     // The offset is the id of the next trace response to load.
-    Offset *int `json:"offset,undefined" url:"offset,undefined"`
+    Offset *int `json:"offset,omitempty" url:"offset,omitempty"`
     TraceResponses []*TraceResponseV2 `json:"traceResponses" url:"traceResponses"`
 }
 
 
 type GetTraceResponsesPageRequest struct {
-    Offset *int `json:"offset,undefined" url:"offset,undefined"`
+    Offset *int `json:"offset,omitempty" url:"offset,omitempty"`
 }
 
 
@@ -459,11 +459,11 @@ type WorkspaceFiles struct {
 
 
 type ExecutionSessionState struct {
-    LastTimeContacted *string `json:"lastTimeContacted,undefined" url:"lastTimeContacted,undefined"`
+    LastTimeContacted *string `json:"lastTimeContacted,omitempty" url:"lastTimeContacted,omitempty"`
     // The auto-generated session id. Formatted as a uuid.
     SessionId string `json:"sessionId" url:"sessionId"`
     IsWarmInstance bool `json:"isWarmInstance" url:"isWarmInstance"`
-    AwsTaskId *string `json:"awsTaskId,undefined" url:"awsTaskId,undefined"`
+    AwsTaskId *string `json:"awsTaskId,omitempty" url:"awsTaskId,omitempty"`
     Language *Language `json:"language" url:"language"`
     Status *ExecutionSessionStatus `json:"status" url:"status"`
 }
@@ -471,13 +471,13 @@ type ExecutionSessionState struct {
 
 type GetExecutionSessionStateResponse struct {
     States map[string]*ExecutionSessionState `json:"states" url:"states"`
-    NumWarmingInstances *int `json:"numWarmingInstances,undefined" url:"numWarmingInstances,undefined"`
+    NumWarmingInstances *int `json:"numWarmingInstances,omitempty" url:"numWarmingInstances,omitempty"`
     WarmingSessionIds []string `json:"warmingSessionIds" url:"warmingSessionIds"`
 }
 
 
 type GetSubmissionStateResponse struct {
-    TimeSubmitted *time.Time `json:"timeSubmitted,undefined" url:"timeSubmitted,undefined"`
+    TimeSubmitted *time.Time `json:"timeSubmitted,omitempty" url:"timeSubmitted,omitempty"`
     Submission string `json:"submission" url:"submission"`
     Language *Language `json:"language" url:"language"`
     SubmissionTypeState *SubmissionTypeState `json:"submissionTypeState" url:"submissionTypeState"`

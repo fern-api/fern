@@ -6,6 +6,6 @@ type Tag = string
 
 type Metadata struct {
 	Id         string            `json:"id" url:"id"`
-	Data       map[string]string `json:"data,undefined" url:"data,undefined"`
-	JsonString *string           `json:"jsonString,undefined" url:"jsonString,undefined"`
+	Data       map[string]string `json:"data,omitempty" url:"data,omitempty"`
+	JsonString *string           `json:"jsonString,omitempty" url:"jsonString,omitempty"`
 }

@@ -7,6 +7,6 @@ type UsernameCursor struct {
 }
 
 type UsernamePage struct {
-	After *string  `json:"after,undefined" url:"after,undefined"`
+	After *string  `json:"after,omitempty" url:"after,omitempty"`
 	Data  []string `json:"data" url:"data"`
 }

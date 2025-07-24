@@ -13,5 +13,5 @@ type User struct {
 	//  - Charlie
 	Name string `json:"name" url:"name"`
 	// The user's age.
-	Age *int `json:"age,undefined" url:"age,undefined"`
+	Age *int `json:"age,omitempty" url:"age,omitempty"`
 }

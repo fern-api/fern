@@ -10,7 +10,7 @@ type Id = string
 
 type MyObjectWithOptional struct {
 	Prop         string  `json:"prop" url:"prop"`
-	OptionalProp *string `json:"optionalProp,undefined" url:"optionalProp,undefined"`
+	OptionalProp *string `json:"optionalProp,omitempty" url:"optionalProp,omitempty"`
 }
 
 type MyAliasObject = *MyObject

@@ -7,8 +7,8 @@ import (
 )
 
 type MultipleFilterSearchRequest struct {
-	Operator *MultipleFilterSearchRequestOperator `json:"operator,undefined" url:"operator,undefined"`
-	Value    *MultipleFilterSearchRequestValue    `json:"value,undefined" url:"value,undefined"`
+	Operator *MultipleFilterSearchRequestOperator `json:"operator,omitempty" url:"operator,omitempty"`
+	Value    *MultipleFilterSearchRequestValue    `json:"value,omitempty" url:"value,omitempty"`
 }
 
 type MultipleFilterSearchRequestOperator string
@@ -34,9 +34,9 @@ func (m MultipleFilterSearchRequestOperator) Ptr() *MultipleFilterSearchRequestO
 }
 
 type SingleFilterSearchRequest struct {
-	Field    *string                            `json:"field,undefined" url:"field,undefined"`
-	Operator *SingleFilterSearchRequestOperator `json:"operator,undefined" url:"operator,undefined"`
-	Value    *string                            `json:"value,undefined" url:"value,undefined"`
+	Field    *string                            `json:"field,omitempty" url:"field,omitempty"`
+	Operator *SingleFilterSearchRequestOperator `json:"operator,omitempty" url:"operator,omitempty"`
+	Value    *string                            `json:"value,omitempty" url:"value,omitempty"`
 }
 
 type SingleFilterSearchRequestOperator string
@@ -86,30 +86,30 @@ func (s SingleFilterSearchRequestOperator) Ptr() *SingleFilterSearchRequestOpera
 }
 
 type SearchRequest struct {
-	Pagination *StartingAfterPaging `json:"pagination,undefined" url:"pagination,undefined"`
+	Pagination *StartingAfterPaging `json:"pagination,omitempty" url:"pagination,omitempty"`
 	Query      *SearchRequestQuery  `json:"query" url:"query"`
 }
 
 type PaginatedConversationResponse struct {
 	Conversations []*Conversation `json:"conversations" url:"conversations"`
-	Pages         *CursorPages    `json:"pages,undefined" url:"pages,undefined"`
+	Pages         *CursorPages    `json:"pages,omitempty" url:"pages,omitempty"`
 	TotalCount    int             `json:"total_count" url:"total_count"`
 
 	type_ string
 }
 
 type CursorPages struct {
-	Next       *StartingAfterPaging `json:"next,undefined" url:"next,undefined"`
-	Page       *int                 `json:"page,undefined" url:"page,undefined"`
-	PerPage    *int                 `json:"per_page,undefined" url:"per_page,undefined"`
-	TotalPages *int                 `json:"total_pages,undefined" url:"total_pages,undefined"`
+	Next       *StartingAfterPaging `json:"next,omitempty" url:"next,omitempty"`
+	Page       *int                 `json:"page,omitempty" url:"page,omitempty"`
+	PerPage    *int                 `json:"per_page,omitempty" url:"per_page,omitempty"`
+	TotalPages *int                 `json:"total_pages,omitempty" url:"total_pages,omitempty"`
 
 	type_ string
 }
 
 type StartingAfterPaging struct {
 	PerPage       int     `json:"per_page" url:"per_page"`
-	StartingAfter *string `json:"starting_after,undefined" url:"starting_after,undefined"`
+	StartingAfter *string `json:"starting_after,omitempty" url:"starting_after,omitempty"`
 }
 
 type Conversation struct {

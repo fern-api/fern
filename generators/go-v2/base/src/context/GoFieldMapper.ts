@@ -5,10 +5,10 @@ import { ContainerType, Literal, NameAndWireValue, TypeReference } from "@fern-f
 import { BaseGoCustomConfigSchema, go } from "@fern-api/go-ast";
 import { AbstractGoGeneratorContext } from "./AbstractGoGeneratorContext";
 
-export declare namespace GoFieldMapper {
-    const IGNORE_TAG = "-";
-    const OMIT_EMPTY_TAG = "omitempty";
+const IGNORE_TAG = "-";
+const OMIT_EMPTY_TAG = "omitempty";
 
+export declare namespace GoFieldMapper {
     /* The default set of tags included in every exported struct field. */
     type Tag = "json" | "url";
 
@@ -134,14 +134,14 @@ export class GoFieldMapper {
         if (!includedTags.has(tag)) {
             return {
                 name: tag,
-                value: GoFieldMapper.IGNORE_TAG
+                value: IGNORE_TAG
             };
         }
         const isOptional = this.context.isOptional(reference);
         if (isOptional) {
             return {
                 name: tag,
-                value: `${name.wireValue},${GoFieldMapper.OMIT_EMPTY_TAG}`
+                value: `${name.wireValue},${OMIT_EMPTY_TAG}`
             };
         }
         return {

@@ -5,7 +5,7 @@ package literal
 type SendRequest struct {
 	Query           string           `json:"query" url:"query"`
 	Context         SomeLiteral      `json:"context" url:"context"`
-	MaybeContext    *SomeLiteral     `json:"maybeContext,undefined" url:"maybeContext,undefined"`
+	MaybeContext    *SomeLiteral     `json:"maybeContext,omitempty" url:"maybeContext,omitempty"`
 	ContainerObject *ContainerObject `json:"containerObject" url:"containerObject"`
 
 	prompt string

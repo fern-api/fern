@@ -4,10 +4,10 @@ package streaming
 
 type RegularResponse struct {
 	Id   string  `json:"id" url:"id"`
-	Name *string `json:"name,undefined" url:"name,undefined"`
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
 }
 
 type StreamResponse struct {
 	Id   string  `json:"id" url:"id"`
-	Name *string `json:"name,undefined" url:"name,undefined"`
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
 }

@@ -7,11 +7,11 @@ import (
 )
 
 type Request struct {
-	Union *MetadataUnion `json:"union,undefined" url:"union,undefined"`
+	Union *MetadataUnion `json:"union,omitempty" url:"union,omitempty"`
 }
 
 type TypeWithOptionalUnion struct {
-	MyUnion *MyUnion `json:"myUnion,undefined" url:"myUnion,undefined"`
+	MyUnion *MyUnion `json:"myUnion,omitempty" url:"myUnion,omitempty"`
 }
 
 type NamedMetadata struct {

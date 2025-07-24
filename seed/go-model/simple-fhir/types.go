@@ -4,7 +4,7 @@ package api
 
 type Memo struct {
 	Description string   `json:"description" url:"description"`
-	Account     *Account `json:"account,undefined" url:"account,undefined"`
+	Account     *Account `json:"account,omitempty" url:"account,omitempty"`
 }
 
 type BaseResource struct {
@@ -18,8 +18,8 @@ type Account struct {
 	RelatedResources []*ResourceList `json:"related_resources" url:"related_resources"`
 	Memo             *Memo           `json:"memo" url:"memo"`
 	Name             string          `json:"name" url:"name"`
-	Patient          *Patient        `json:"patient,undefined" url:"patient,undefined"`
-	Practitioner     *Practitioner   `json:"practitioner,undefined" url:"practitioner,undefined"`
+	Patient          *Patient        `json:"patient,omitempty" url:"patient,omitempty"`
+	Practitioner     *Practitioner   `json:"practitioner,omitempty" url:"practitioner,omitempty"`
 
 	resourceType string
 }

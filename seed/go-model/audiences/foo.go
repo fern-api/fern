@@ -9,6 +9,6 @@ type ImportingType struct {
 type OptionalString = *string
 
 type FilteredType struct {
-	PublicProperty  *string `json:"public_property,undefined" url:"public_property,undefined"`
+	PublicProperty  *string `json:"public_property,omitempty" url:"public_property,omitempty"`
 	PrivateProperty int     `json:"private_property" url:"private_property"`
 }

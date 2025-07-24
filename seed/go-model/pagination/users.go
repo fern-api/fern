@@ -30,11 +30,11 @@ func (o Order) Ptr() *Order {
 }
 
 type WithPage struct {
-	Page *int `json:"page,undefined" url:"page,undefined"`
+	Page *int `json:"page,omitempty" url:"page,omitempty"`
 }
 
 type WithCursor struct {
-	Cursor *string `json:"cursor,undefined" url:"cursor,undefined"`
+	Cursor *string `json:"cursor,omitempty" url:"cursor,omitempty"`
 }
 
 type UserListContainer struct {
@@ -43,16 +43,16 @@ type UserListContainer struct {
 
 type UserPage struct {
 	Data *UserListContainer `json:"data" url:"data"`
-	Next *uuid.UUID         `json:"next,undefined" url:"next,undefined"`
+	Next *uuid.UUID         `json:"next,omitempty" url:"next,omitempty"`
 }
 
 type UserOptionalListContainer struct {
-	Users []*User `json:"users,undefined" url:"users,undefined"`
+	Users []*User `json:"users,omitempty" url:"users,omitempty"`
 }
 
 type UserOptionalListPage struct {
 	Data *UserOptionalListContainer `json:"data" url:"data"`
-	Next *uuid.UUID                 `json:"next,undefined" url:"next,undefined"`
+	Next *uuid.UUID                 `json:"next,omitempty" url:"next,omitempty"`
 }
 
 type UsernameContainer struct {
@@ -61,21 +61,21 @@ type UsernameContainer struct {
 
 type ListUsersExtendedResponse struct {
 	Data *UserListContainer `json:"data" url:"data"`
-	Next *uuid.UUID         `json:"next,undefined" url:"next,undefined"`
+	Next *uuid.UUID         `json:"next,omitempty" url:"next,omitempty"`
 	// The totall number of /users
 	TotalCount int `json:"total_count" url:"total_count"`
 }
 
 type ListUsersExtendedOptionalListResponse struct {
 	Data *UserOptionalListContainer `json:"data" url:"data"`
-	Next *uuid.UUID                 `json:"next,undefined" url:"next,undefined"`
+	Next *uuid.UUID                 `json:"next,omitempty" url:"next,omitempty"`
 	// The totall number of /users
 	TotalCount int `json:"total_count" url:"total_count"`
 }
 
 type ListUsersPaginationResponse struct {
-	HasNextPage *bool `json:"hasNextPage,undefined" url:"hasNextPage,undefined"`
-	Page        *Page `json:"page,undefined" url:"page,undefined"`
+	HasNextPage *bool `json:"hasNextPage,omitempty" url:"hasNextPage,omitempty"`
+	Page        *Page `json:"page,omitempty" url:"page,omitempty"`
 	// The totall number of /users
 	TotalCount int     `json:"total_count" url:"total_count"`
 	Data       []*User `json:"data" url:"data"`
@@ -89,7 +89,7 @@ type ListUsersMixedTypePaginationResponse struct {
 type Page struct {
 	// The current page
 	Page      int       `json:"page" url:"page"`
-	Next      *NextPage `json:"next,undefined" url:"next,undefined"`
+	Next      *NextPage `json:"next,omitempty" url:"next,omitempty"`
 	PerPage   int       `json:"per_page" url:"per_page"`
 	TotalPage int       `json:"total_page" url:"total_page"`
 }

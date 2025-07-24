@@ -16,7 +16,7 @@ type NodeId = string
 type ListType struct {
     ValueType *VariableType `json:"valueType" url:"valueType"`
     // Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.
-    IsFixedLength *bool `json:"isFixedLength,undefined" url:"isFixedLength,undefined"`
+    IsFixedLength *bool `json:"isFixedLength,omitempty" url:"isFixedLength,omitempty"`
 }
 
 
@@ -27,7 +27,7 @@ type MapType struct {
 
 
 type GenericValue struct {
-    StringifiedType *string `json:"stringifiedType,undefined" url:"stringifiedType,undefined"`
+    StringifiedType *string `json:"stringifiedType,omitempty" url:"stringifiedType,omitempty"`
     StringifiedValue string `json:"stringifiedValue" url:"stringifiedValue"`
 }
 
@@ -44,7 +44,7 @@ type KeyValuePair struct {
 
 
 type BinaryTreeValue struct {
-    Root *NodeId `json:"root,undefined" url:"root,undefined"`
+    Root *NodeId `json:"root,omitempty" url:"root,omitempty"`
     Nodes map[NodeId]*BinaryTreeNodeValue `json:"nodes" url:"nodes"`
 }
 
@@ -52,8 +52,8 @@ type BinaryTreeValue struct {
 type BinaryTreeNodeValue struct {
     NodeId NodeId `json:"nodeId" url:"nodeId"`
     Val float64 `json:"val" url:"val"`
-    Right *NodeId `json:"right,undefined" url:"right,undefined"`
-    Left *NodeId `json:"left,undefined" url:"left,undefined"`
+    Right *NodeId `json:"right,omitempty" url:"right,omitempty"`
+    Left *NodeId `json:"left,omitempty" url:"left,omitempty"`
 }
 
 
@@ -64,7 +64,7 @@ type BinaryTreeNodeAndTreeValue struct {
 
 
 type SinglyLinkedListValue struct {
-    Head *NodeId `json:"head,undefined" url:"head,undefined"`
+    Head *NodeId `json:"head,omitempty" url:"head,omitempty"`
     Nodes map[NodeId]*SinglyLinkedListNodeValue `json:"nodes" url:"nodes"`
 }
 
@@ -72,7 +72,7 @@ type SinglyLinkedListValue struct {
 type SinglyLinkedListNodeValue struct {
     NodeId NodeId `json:"nodeId" url:"nodeId"`
     Val float64 `json:"val" url:"val"`
-    Next *NodeId `json:"next,undefined" url:"next,undefined"`
+    Next *NodeId `json:"next,omitempty" url:"next,omitempty"`
 }
 
 
@@ -83,7 +83,7 @@ type SinglyLinkedListNodeAndListValue struct {
 
 
 type DoublyLinkedListValue struct {
-    Head *NodeId `json:"head,undefined" url:"head,undefined"`
+    Head *NodeId `json:"head,omitempty" url:"head,omitempty"`
     Nodes map[NodeId]*DoublyLinkedListNodeValue `json:"nodes" url:"nodes"`
 }
 
@@ -91,8 +91,8 @@ type DoublyLinkedListValue struct {
 type DoublyLinkedListNodeValue struct {
     NodeId NodeId `json:"nodeId" url:"nodeId"`
     Val float64 `json:"val" url:"val"`
-    Next *NodeId `json:"next,undefined" url:"next,undefined"`
-    Prev *NodeId `json:"prev,undefined" url:"prev,undefined"`
+    Next *NodeId `json:"next,omitempty" url:"next,omitempty"`
+    Prev *NodeId `json:"prev,omitempty" url:"prev,omitempty"`
 }
 
 

@@ -46,11 +46,11 @@ type TestCaseV2 struct {
 	Metadata       *TestCaseMetadata                   `json:"metadata" url:"metadata"`
 	Implementation *TestCaseImplementationReference    `json:"implementation" url:"implementation"`
 	Arguments      map[ParameterId]*fern.VariableValue `json:"arguments" url:"arguments"`
-	Expects        *TestCaseExpects                    `json:"expects,undefined" url:"expects,undefined"`
+	Expects        *TestCaseExpects                    `json:"expects,omitempty" url:"expects,omitempty"`
 }
 
 type TestCaseExpects struct {
-	ExpectedStdout *string `json:"expectedStdout,undefined" url:"expectedStdout,undefined"`
+	ExpectedStdout *string `json:"expectedStdout,omitempty" url:"expectedStdout,omitempty"`
 }
 
 type BasicTestCaseTemplate struct {
@@ -132,7 +132,7 @@ type FunctionImplementationForMultipleLanguages struct {
 
 type FunctionImplementation struct {
 	Impl    string  `json:"impl" url:"impl"`
-	Imports *string `json:"imports,undefined" url:"imports,undefined"`
+	Imports *string `json:"imports,omitempty" url:"imports,omitempty"`
 }
 
 type GeneratedFiles struct {
@@ -182,7 +182,7 @@ type GetBasicSolutionFileResponse struct {
 }
 
 type GetGeneratedTestCaseFileRequest struct {
-	Template *TestCaseTemplate `json:"template,undefined" url:"template,undefined"`
+	Template *TestCaseTemplate `json:"template,omitempty" url:"template,omitempty"`
 	TestCase *TestCaseV2       `json:"testCase" url:"testCase"`
 }
 

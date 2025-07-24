@@ -6,5 +6,5 @@ package oauthclientcredentialsenvironmentvariables
 type TokenResponse struct {
 	AccessToken  string  `json:"access_token" url:"access_token"`
 	ExpiresIn    int     `json:"expires_in" url:"expires_in"`
-	RefreshToken *string `json:"refresh_token,undefined" url:"refresh_token,undefined"`
+	RefreshToken *string `json:"refresh_token,omitempty" url:"refresh_token,omitempty"`
 }

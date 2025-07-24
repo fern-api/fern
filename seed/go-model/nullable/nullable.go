@@ -14,18 +14,18 @@ type User struct {
 	Name           string         `json:"name" url:"name"`
 	Id             UserId         `json:"id" url:"id"`
 	Tags           []string       `json:"tags" url:"tags"`
-	Metadata       *Metadata      `json:"metadata,undefined" url:"metadata,undefined"`
+	Metadata       *Metadata      `json:"metadata,omitempty" url:"metadata,omitempty"`
 	Email          Email          `json:"email" url:"email"`
 	FavoriteNumber *WeirdNumber   `json:"favorite-number" url:"favorite-number"`
-	Numbers        []int          `json:"numbers,undefined" url:"numbers,undefined"`
-	Strings        map[string]any `json:"strings,undefined" url:"strings,undefined"`
+	Numbers        []int          `json:"numbers,omitempty" url:"numbers,omitempty"`
+	Strings        map[string]any `json:"strings,omitempty" url:"strings,omitempty"`
 }
 
 type Metadata struct {
 	CreatedAt time.Time          `json:"createdAt" url:"createdAt"`
 	UpdatedAt time.Time          `json:"updatedAt" url:"updatedAt"`
 	Avatar    *string            `json:"avatar" url:"avatar"`
-	Activated *bool              `json:"activated,undefined" url:"activated,undefined"`
+	Activated *bool              `json:"activated,omitempty" url:"activated,omitempty"`
 	Status    *Status            `json:"status" url:"status"`
-	Values    map[string]*string `json:"values,undefined" url:"values,undefined"`
+	Values    map[string]*string `json:"values,omitempty" url:"values,omitempty"`
 }

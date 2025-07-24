@@ -3,7 +3,7 @@
 package api
 
 type ImportingA struct {
-	A *A `json:"a,undefined" url:"a,undefined"`
+	A *A `json:"a,omitempty" url:"a,omitempty"`
 }
 
 type RootType struct {

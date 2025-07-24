@@ -8,10 +8,10 @@ import (
 
 type Node struct {
 	Id       string            `json:"id" url:"id"`
-	Label    *string           `json:"label,undefined" url:"label,undefined"`
-	Metadata *commons.Metadata `json:"metadata,undefined" url:"metadata,undefined"`
+	Label    *string           `json:"label,omitempty" url:"label,omitempty"`
+	Metadata *commons.Metadata `json:"metadata,omitempty" url:"metadata,omitempty"`
 }
 
 type Tree struct {
-	Nodes []*Node `json:"nodes,undefined" url:"nodes,undefined"`
+	Nodes []*Node `json:"nodes,omitempty" url:"nodes,omitempty"`
 }

@@ -21,7 +21,7 @@ type Type struct {
 	Ten         []int            `json:"ten" url:"ten"`
 	Eleven      []float64        `json:"eleven" url:"eleven"`
 	Twelve      map[string]bool  `json:"twelve" url:"twelve"`
-	Thirteen    *int64           `json:"thirteen,undefined" url:"thirteen,undefined"`
+	Thirteen    *int64           `json:"thirteen,omitempty" url:"thirteen,omitempty"`
 	Fourteen    any              `json:"fourteen" url:"fourteen"`
 	Fifteen     [][]int          `json:"fifteen" url:"fifteen"`
 	Sixteen     []map[string]int `json:"sixteen" url:"sixteen"`
@@ -31,8 +31,8 @@ type Type struct {
 	Twentyone   int64            `json:"twentyone" url:"twentyone"`
 	Twentytwo   float64          `json:"twentytwo" url:"twentytwo"`
 	Twentythree string           `json:"twentythree" url:"twentythree"`
-	Twentyfour  *time.Time       `json:"twentyfour,undefined" url:"twentyfour,undefined"`
-	Twentyfive  *time.Time       `json:"twentyfive,undefined" url:"twentyfive,undefined"`
+	Twentyfour  *time.Time       `json:"twentyfour,omitempty" url:"twentyfour,omitempty"`
+	Twentyfive  *time.Time       `json:"twentyfive,omitempty" url:"twentyfive,omitempty"`
 
 	eighteen string
 }

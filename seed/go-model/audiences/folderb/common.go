@@ -7,5 +7,5 @@ import (
 )
 
 type Foo struct {
-	Foo *folderc.FolderCFoo `json:"foo,undefined" url:"foo,undefined"`
+	Foo *folderc.FolderCFoo `json:"foo,omitempty" url:"foo,omitempty"`
 }
