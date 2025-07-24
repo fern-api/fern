@@ -17,6 +17,7 @@
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
+    "postcompile": "cp -r ./src/asIs ./lib/asIs",
     "test": "vitest --passWithNoTests --run",
     "test:update": "vitest --passWithNoTests --run -u",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",
@@ -41,6 +42,7 @@
     "depcheck": "^1.4.7",
     "esbuild": "^0.25.0",
     "eslint": "^8.56.0",
+    "lodash-es": "^4.17.21",
     "prettier": "^3.4.2",
     "tsup": "^8.0.2",
     "typescript": "5.7.2",

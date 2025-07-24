@@ -3,6 +3,9 @@ import urlJoin from "url-join";
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractRubyGeneratorCli } from "@fern-api/ruby-base";
 
+import { generateModels } from "@fern-api/ruby-model";
+import { ModelGeneratorContext } from "@fern-api/ruby-model";
+
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
@@ -45,6 +48,23 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
+        // Create a ModelGeneratorContext to generate models and as-is files
+        const modelContext = new ModelGeneratorContext(
+            context.ir,
+            context.config,
+            {
+                // Pass the client module name from SDK config to model config
+                clientModuleName: context.customConfig.clientModuleName,
+                typesModuleName: "Types"
+            },
+            context.generatorNotificationService
+        );
+
+        const models = generateModels({ context: modelContext });
+        for (const file of models) {
+            context.project.addRawFiles(file);
+        }
+
         await context.project.persist();
     }
 }
