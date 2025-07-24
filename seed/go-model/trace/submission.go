@@ -14,6 +14,16 @@ type SubmissionId = uuid.UUID
 
 type ShareId = string
 
+type SubmissionRequest struct {
+    Type string
+    InitializeProblemRequest InitializeProblemRequest
+    InitializeWorkspaceRequest any
+    SubmitV2 SubmitRequestV2
+    WorkspaceSubmit WorkspaceSubmitRequest
+    Stop StopRequest
+}
+
+
 type InitializeProblemRequest struct {
     ProblemId ProblemId `json:"problemId" url:"problemId"`
     ProblemVersion *int `json:"problemVersion,omitempty" url:"problemVersion,omitempty"`
@@ -70,6 +80,33 @@ type StopRequest struct {
 }
 
 
+type SubmissionResponse struct {
+    Type string
+    ServerInitialized any
+    ProblemInitialized ProblemId
+    WorkspaceInitialized any
+    ServerErrored ExceptionInfo
+    CodeExecutionUpdate *CodeExecutionUpdate
+    Terminated TerminatedResponse
+}
+
+
+type CodeExecutionUpdate struct {
+    Type string
+    BuildingExecutor BuildingExecutorResponse
+    Running RunningResponse
+    Errored ErroredResponse
+    Stopped StoppedResponse
+    Graded GradedResponse
+    GradedV2 GradedResponseV2
+    WorkspaceRan WorkspaceRanResponse
+    Recording RecordingResponseNotification
+    Recorded RecordedResponseNotification
+    InvalidRequest InvalidRequestResponse
+    Finished FinishedResponse
+}
+
+
 type BuildingExecutorResponse struct {
     SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
     Status *ExecutionSessionStatus `json:"status" url:"status"`
@@ -119,6 +156,14 @@ type ErroredResponse struct {
 }
 
 
+type ErrorInfo struct {
+    Type string
+    CompileError CompileError
+    RuntimeError RuntimeError
+    InternalError InternalError
+}
+
+
 type CompileError struct {
     Message string `json:"message" url:"message"`
 }
@@ -161,6 +206,13 @@ type GradedResponse struct {
 type GradedResponseV2 struct {
     SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
     TestCases map[v2.TestCaseId]*TestCaseGrade `json:"testCases" url:"testCases"`
+}
+
+
+type TestCaseGrade struct {
+    Type string
+    Hidden TestCaseHiddenGrade
+    NonHidden TestCaseNonHiddenGrade
 }
 
 
@@ -212,6 +264,21 @@ type TestCaseResult struct {
 }
 
 
+type ActualResult struct {
+    Type string
+    Value *VariableValue
+    Exception ExceptionInfo
+    ExceptionV2 *ExceptionV2
+}
+
+
+type ExceptionV2 struct {
+    Type string
+    Generic ExceptionInfo
+    Timeout any
+}
+
+
 type ExceptionInfo struct {
     ExceptionType string `json:"exceptionType" url:"exceptionType"`
     ExceptionMessage string `json:"exceptionMessage" url:"exceptionMessage"`
@@ -222,6 +289,14 @@ type ExceptionInfo struct {
 type InvalidRequestResponse struct {
     Request *SubmissionRequest `json:"request" url:"request"`
     Cause *InvalidRequestCause `json:"cause" url:"cause"`
+}
+
+
+type InvalidRequestCause struct {
+    Type string
+    SubmissionIdNotFound SubmissionIdNotFound
+    CustomTestCasesUnsupported CustomTestCasesUnsupported
+    UnexpectedLanguage UnexpectedLanguageError
 }
 
 
@@ -360,6 +435,13 @@ func (e ExecutionSessionStatus) Ptr() *ExecutionSessionStatus{
 }
 
 
+type SubmissionStatusV2 struct {
+    Type string
+    Test TestSubmissionStatusV2
+    Workspace WorkspaceSubmissionStatusV2
+}
+
+
 type TestSubmissionStatusV2 struct {
     Updates []*TestSubmissionUpdate `json:"updates" url:"updates"`
     ProblemId ProblemId `json:"problemId" url:"problemId"`
@@ -379,9 +461,32 @@ type TestSubmissionUpdate struct {
 }
 
 
+type TestSubmissionUpdateInfo struct {
+    Type string
+    Running *RunningSubmissionState
+    Stopped any
+    Errored *ErrorInfo
+    GradedTestCase GradedTestCaseUpdate
+    RecordedTestCase RecordedTestCaseUpdate
+    Finished any
+}
+
+
 type WorkspaceSubmissionUpdate struct {
     UpdateTime time.Time `json:"updateTime" url:"updateTime"`
     UpdateInfo *WorkspaceSubmissionUpdateInfo `json:"updateInfo" url:"updateInfo"`
+}
+
+
+type WorkspaceSubmissionUpdateInfo struct {
+    Type string
+    Running *RunningSubmissionState
+    Ran WorkspaceRunDetails
+    Stopped any
+    Traced any
+    TracedV2 WorkspaceTracedUpdate
+    Errored *ErrorInfo
+    Finished any
 }
 
 
@@ -402,8 +507,25 @@ type WorkspaceTracedUpdate struct {
 }
 
 
+type SubmissionTypeState struct {
+    Type string
+    Test TestSubmissionState
+    Workspace WorkspaceSubmissionState
+}
+
+
 type WorkspaceSubmissionState struct {
     Status *WorkspaceSubmissionStatus `json:"status" url:"status"`
+}
+
+
+type WorkspaceSubmissionStatus struct {
+    Type string
+    Stopped any
+    Errored *ErrorInfo
+    Running *RunningSubmissionState
+    Ran WorkspaceRunDetails
+    Traced WorkspaceRunDetails
 }
 
 
@@ -412,6 +534,23 @@ type TestSubmissionState struct {
     DefaultTestCases []*TestCase `json:"defaultTestCases" url:"defaultTestCases"`
     CustomTestCases []*TestCase `json:"customTestCases" url:"customTestCases"`
     Status *TestSubmissionStatus `json:"status" url:"status"`
+}
+
+
+type TestSubmissionStatus struct {
+    Type string
+    Stopped any
+    Errored *ErrorInfo
+    Running *RunningSubmissionState
+    TestCaseIdToState map[string]*SubmissionStatusForTestCase
+}
+
+
+type SubmissionStatusForTestCase struct {
+    Type string
+    Graded TestCaseResultWithStdout
+    GradedV2 *TestCaseGrade
+    Traced TracedTestCase
 }
 
 

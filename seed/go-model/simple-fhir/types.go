@@ -13,6 +13,13 @@ type BaseResource struct {
 	Memo             *Memo           `json:"memo" url:"memo"`
 }
 
+type ResourceList struct {
+	Account      *Account
+	Patient      *Patient
+	Practitioner *Practitioner
+	Script       *Script
+}
+
 type Account struct {
 	Id               string          `json:"id" url:"id"`
 	RelatedResources []*ResourceList `json:"related_resources" url:"related_resources"`

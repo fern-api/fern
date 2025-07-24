@@ -6,6 +6,11 @@ import (
 	fmt "fmt"
 )
 
+type SearchRequestQuery struct {
+	SingleFilterSearchRequest   *SingleFilterSearchRequest
+	MultipleFilterSearchRequest *MultipleFilterSearchRequest
+}
+
 type MultipleFilterSearchRequest struct {
 	Operator *MultipleFilterSearchRequestOperator `json:"operator,omitempty" url:"operator,omitempty"`
 	Value    *MultipleFilterSearchRequestValue    `json:"value,omitempty" url:"value,omitempty"`
@@ -31,6 +36,11 @@ func NewMultipleFilterSearchRequestOperatorFromString(s string) (MultipleFilterS
 
 func (m MultipleFilterSearchRequestOperator) Ptr() *MultipleFilterSearchRequestOperator {
 	return &m
+}
+
+type MultipleFilterSearchRequestValue struct {
+	MultipleFilterSearchRequestList []*MultipleFilterSearchRequest
+	SingleFilterSearchRequestList   []*SingleFilterSearchRequest
 }
 
 type SingleFilterSearchRequest struct {

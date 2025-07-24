@@ -13,6 +13,21 @@ type ProblemId = string
 
 type NodeId = string
 
+type VariableType struct {
+    Type string
+    IntegerType any
+    DoubleType any
+    BooleanType any
+    StringType any
+    CharType any
+    ListType ListType
+    MapType MapType
+    BinaryTreeType any
+    SinglyLinkedListType any
+    DoublyLinkedListType any
+}
+
+
 type ListType struct {
     ValueType *VariableType `json:"valueType" url:"valueType"`
     // Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.
@@ -23,6 +38,40 @@ type ListType struct {
 type MapType struct {
     KeyType *VariableType `json:"keyType" url:"keyType"`
     ValueType *VariableType `json:"valueType" url:"valueType"`
+}
+
+
+type VariableValue struct {
+    Type string
+    IntegerValue int
+    BooleanValue bool
+    DoubleValue float64
+    StringValue string
+    CharValue string
+    MapValue MapValue
+    ListValue []*VariableValue
+    BinaryTreeValue BinaryTreeValue
+    SinglyLinkedListValue SinglyLinkedListValue
+    DoublyLinkedListValue DoublyLinkedListValue
+    NullValue any
+}
+
+
+type DebugVariableValue struct {
+    Type string
+    IntegerValue int
+    BooleanValue bool
+    DoubleValue float64
+    StringValue string
+    CharValue string
+    MapValue DebugMapValue
+    ListValue []*DebugVariableValue
+    BinaryTreeNodeValue BinaryTreeNodeAndTreeValue
+    SinglyLinkedListNodeValue SinglyLinkedListNodeAndListValue
+    DoublyLinkedListNodeValue DoublyLinkedListNodeAndListValue
+    UndefinedValue any
+    NullValue any
+    GenericValue GenericValue
 }
 
 

@@ -53,6 +53,12 @@ type TestCaseExpects struct {
 	ExpectedStdout *string `json:"expectedStdout,omitempty" url:"expectedStdout,omitempty"`
 }
 
+type TestCaseImplementationReference struct {
+	Type           string
+	TemplateId     TestCaseTemplateId
+	Implementation TestCaseImplementation
+}
+
 type BasicTestCaseTemplate struct {
 	TemplateId               TestCaseTemplateId                 `json:"templateId" url:"templateId"`
 	Name                     string                             `json:"name" url:"name"`
@@ -69,6 +75,12 @@ type TestCaseTemplate struct {
 type TestCaseImplementation struct {
 	Description *TestCaseImplementationDescription `json:"description" url:"description"`
 	Function    *TestCaseFunction                  `json:"function" url:"function"`
+}
+
+type TestCaseFunction struct {
+	Type             string
+	WithActualResult TestCaseWithActualResultImplementation
+	Custom           VoidFunctionDefinition
 }
 
 type TestCaseWithActualResultImplementation struct {
@@ -106,6 +118,13 @@ type VoidFunctionSignatureThatTakesActualResult struct {
 	ActualResultType *fern.VariableType `json:"actualResultType" url:"actualResultType"`
 }
 
+type AssertCorrectnessCheck struct {
+	Type         string
+	DeepEquality DeepEqualityCorrectnessCheck
+	// The generated signature will include an additional param, actualResult
+	Custom VoidFunctionDefinitionThatTakesActualResult
+}
+
 type DeepEqualityCorrectnessCheck struct {
 	ExpectedValueParameterId ParameterId `json:"expectedValueParameterId" url:"expectedValueParameterId"`
 }
@@ -118,6 +137,12 @@ type VoidFunctionDefinitionThatTakesActualResult struct {
 
 type TestCaseImplementationDescription struct {
 	Boards []*TestCaseImplementationDescriptionBoard `json:"boards" url:"boards"`
+}
+
+type TestCaseImplementationDescriptionBoard struct {
+	Type    string
+	Html    string
+	ParamId ParameterId
 }
 
 type TestCaseMetadata struct {
@@ -141,6 +166,12 @@ type GeneratedFiles struct {
 	Other                  map[*fern.Language]*Files `json:"other" url:"other"`
 }
 
+type CustomFiles struct {
+	Type   string
+	Basic  BasicCustomFiles
+	Custom map[*fern.Language]*Files
+}
+
 type BasicCustomFiles struct {
 	MethodName            string                    `json:"methodName" url:"methodName"`
 	Signature             *NonVoidFunctionSignature `json:"signature" url:"signature"`
@@ -162,6 +193,13 @@ type FileInfoV2 struct {
 type DefaultProvidedFile struct {
 	File         *FileInfoV2          `json:"file" url:"file"`
 	RelatedTypes []*fern.VariableType `json:"relatedTypes" url:"relatedTypes"`
+}
+
+type FunctionSignature struct {
+	Type                      string
+	Void                      VoidFunctionSignature
+	NonVoid                   NonVoidFunctionSignature
+	VoidThatTakesActualResult VoidFunctionSignatureThatTakesActualResult
 }
 
 type GetFunctionSignatureRequest struct {

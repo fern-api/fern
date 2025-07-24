@@ -9,6 +9,11 @@ import (
 	time "time"
 )
 
+type Type struct {
+	BasicType   *BasicType
+	ComplexType *ComplexType
+}
+
 type Identifier struct {
 	Type  *Type  `json:"type" url:"type"`
 	Value string `json:"value" url:"value"`
@@ -79,6 +84,12 @@ type Movie struct {
 	type_ string
 }
 
+type CastMember struct {
+	Actor       *Actor
+	Actress     *Actress
+	StuntDouble *StuntDouble
+}
+
 type Actor struct {
 	Name string `json:"name" url:"name"`
 	Id   string `json:"id" url:"id"`
@@ -137,6 +148,20 @@ type Tree struct {
 	Nodes []*Node `json:"nodes,omitempty" url:"nodes,omitempty"`
 }
 
+type Metadata struct {
+	Type     string
+	Extra    map[string]string
+	Tags     []string
+	Html     string
+	Markdown string
+}
+
+type Exception struct {
+	Type    string
+	Generic ExceptionInfo
+	Timeout any
+}
+
 type ExceptionInfo struct {
 	ExceptionType       string `json:"exceptionType" url:"exceptionType"`
 	ExceptionMessage    string `json:"exceptionMessage" url:"exceptionMessage"`
@@ -186,6 +211,12 @@ type Response struct {
 
 type ResponseType struct {
 	Type *Type `json:"type" url:"type"`
+}
+
+type Test struct {
+	Type string
+	And  bool
+	Or   bool
 }
 
 type Entity struct {

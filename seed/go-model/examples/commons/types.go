@@ -9,3 +9,15 @@ type Metadata struct {
 	Data       map[string]string `json:"data,omitempty" url:"data,omitempty"`
 	JsonString *string           `json:"jsonString,omitempty" url:"jsonString,omitempty"`
 }
+
+type EventInfo struct {
+	Type     string
+	Metadata Metadata
+	Tag      Tag
+}
+
+type Data struct {
+	Type   string
+	String string
+	Base64 []byte
+}

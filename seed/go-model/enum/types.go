@@ -57,6 +57,11 @@ func (c Color) Ptr() *Color {
 	return &c
 }
 
+type ColorOrOperand struct {
+	Color   *Color
+	Operand *Operand
+}
+
 type EnumWithCustom string
 
 const (

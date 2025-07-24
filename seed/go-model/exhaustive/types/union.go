@@ -2,6 +2,12 @@
 
 package types
 
+type Animal struct {
+	Animal string
+	Dog    Dog
+	Cat    Cat
+}
+
 type Dog struct {
 	Name        string `json:"name" url:"name"`
 	LikesToWoof bool   `json:"likesToWoof" url:"likesToWoof"`
