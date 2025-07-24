@@ -114,7 +114,7 @@ export class RootClientGenerator {
                 }),
                 swift.functionParameter({
                     argumentLabel: "apiKey",
-                    unsafeName: "qpiKey",
+                    unsafeName: "apiKey",
                     type: swift.Type.string()
                 }),
                 swift.functionParameter({
