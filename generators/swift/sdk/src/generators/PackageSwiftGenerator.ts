@@ -21,20 +21,23 @@ export class PackageSwiftGenerator {
     }
 
     public generate(): SwiftFile {
-        const statement = swift.Statement.constantDeclaration(
-            "package",
-            swift.Expression.classInitialization({
-                unsafeName: "Package",
-                arguments_: [
-                    swift.functionArgument({
-                        label: "name",
-                        value: swift.Expression.rawStringValue(this.projectNamePascalCase)
-                    })
-                ],
-                multiline: true
-            })
-        );
-        const fileContents = statement.toString();
+        const statements: swift.Statement[] = [
+            swift.Statement.import("PackageDescription"),
+            swift.Statement.constantDeclaration(
+                "package",
+                swift.Expression.classInitialization({
+                    unsafeName: "Package",
+                    arguments_: [
+                        swift.functionArgument({
+                            label: "name",
+                            value: swift.Expression.rawStringValue(this.projectNamePascalCase)
+                        })
+                    ],
+                    multiline: true
+                })
+            )
+        ];
+        const fileContents = statements.map((statement) => statement.toString()).join("\n");
         return new SwiftFile({
             filename: `Package.swift`,
             directory: RelativeFilePath.of(""),
