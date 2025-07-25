@@ -70,6 +70,8 @@ jobs:
             csharp-model
             php-sdk
             php-model
+            rust-sdk
+            rust-model
           )
           for generator in "${generators[@]}"; do
             pnpm seed validate generator "$generator" --log-level debug
