@@ -5,14 +5,19 @@ package com.seed.exhaustive;
 
 import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.Environment;
+import java.util.Optional;
 import okhttp3.OkHttpClient;
 
 public class AsyncBestBuilder {
-    private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
+    private Optional<Integer> timeout = Optional.empty();
+
+    private Optional<Integer> maxRetries = Optional.empty();
 
     private String token = null;
 
     private Environment environment;
+
+    private OkHttpClient httpClient;
 
     /**
      * Sets token
@@ -31,7 +36,7 @@ public class AsyncBestBuilder {
      * Sets the timeout (in seconds) for the client. Defaults to 60 seconds.
      */
     public AsyncBestBuilder timeout(int timeout) {
-        this.clientOptionsBuilder.timeout(timeout);
+        this.timeout = Optional.of(timeout);
         return this;
     }
 
@@ -39,7 +44,7 @@ public class AsyncBestBuilder {
      * Sets the maximum number of retries for the client. Defaults to 2 retries.
      */
     public AsyncBestBuilder maxRetries(int maxRetries) {
-        this.clientOptionsBuilder.maxRetries(maxRetries);
+        this.maxRetries = Optional.of(maxRetries);
         return this;
     }
 
@@ -47,17 +52,69 @@ public class AsyncBestBuilder {
      * Sets the underlying OkHttp client
      */
     public AsyncBestBuilder httpClient(OkHttpClient httpClient) {
-        this.clientOptionsBuilder.httpClient(httpClient);
+        this.httpClient = httpClient;
         return this;
     }
 
     protected ClientOptions buildClientOptions() {
-        clientOptionsBuilder.environment(this.environment);
-        return clientOptionsBuilder.build();
+        ClientOptions.Builder builder = ClientOptions.builder();
+        ;
+        // Call configuration methods in order
+        configureEnvironment(builder);
+        configureAuthentication(builder);
+        configureHttpClient(builder);
+        configureTimeouts(builder);
+        configureRetries(builder);
+        ;
+        // Extension point for subclasses
+        configureAdditional(builder);
+        ;
+        return builder.build();
     }
 
+    protected void configureEnvironment(ClientOptions.Builder builder) {
+        builder.environment(this.environment);
+    }
+
+    /**
+     * Override this method to customize authentication
+     */
+    protected void configureAuthentication(ClientOptions.Builder builder) {
+        if (this.token != null) {
+            builder.addHeader("Authorization", "Bearer " + this.token);
+        }
+    }
+
+    protected void configureTimeouts(ClientOptions.Builder builder) {
+        if (this.timeout.isPresent()) {
+            builder.timeout(this.timeout.get());
+        }
+    }
+
+    protected void configureRetries(ClientOptions.Builder builder) {
+        if (this.maxRetries.isPresent()) {
+            builder.maxRetries(this.maxRetries.get());
+        }
+    }
+
+    protected void configureHttpClient(ClientOptions.Builder builder) {
+        if (this.httpClient != null) {
+            builder.httpClient(this.httpClient);
+        }
+    }
+
+    /**
+     * Extension point for subclasses to add additional configuration
+     */
+    protected void configureAdditional(ClientOptions.Builder builder) {}
+
+    /**
+     * Override this method to add custom validation logic
+     */
+    protected void validateConfiguration() {}
+
     public AsyncBest build() {
-        this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + this.token);
+        validateConfiguration();
         return new AsyncBest(buildClientOptions());
     }
 }
