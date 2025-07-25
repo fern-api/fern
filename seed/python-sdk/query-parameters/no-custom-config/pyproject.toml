@@ -1,8 +1,8 @@
 [project]
-name = "fern_extends"
+name = "fern_query-parameters"
 
 [tool.poetry]
-name = "fern_extends"
+name = "fern_query-parameters"
 version = "0.0.1"
 description = ""
 readme = "README.md"
@@ -31,7 +31,7 @@ packages = [
 ]
 
 [project.urls]
-Repository = 'https://github.com/extends/fern'
+Repository = 'https://github.com/query-parameters/fern'
 
 [tool.poetry.dependencies]
 python = "^3.8"
