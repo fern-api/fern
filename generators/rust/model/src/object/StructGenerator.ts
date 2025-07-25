@@ -2,7 +2,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { rust, Attribute, PUBLIC } from "@fern-api/rust-codegen";
 
-import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference";
 import {
@@ -84,6 +84,12 @@ export class StructGenerator {
                 writer.writeLine(`use crate::types::${parentType.name.snakeCase.unsafeName}::${parentTypeName};`);
             });
         }
+
+        // Add imports for custom named types referenced in fields
+        const customTypes = this.getCustomTypesUsedInFields();
+        customTypes.forEach((typeName) => {
+            writer.writeLine(`use super::${typeName.snakeCase.unsafeName}::${typeName.pascalCase.unsafeName};`);
+        });
     }
 
     private generateStructForTypeDeclaration(): rust.Struct {
@@ -212,5 +218,35 @@ export class StructGenerator {
 
             return isUnknownType(typeRef);
         });
+    }
+
+    private getCustomTypesUsedInFields(): { snakeCase: { unsafeName: string }; pascalCase: { unsafeName: string } }[] {
+        const customTypeNames: { snakeCase: { unsafeName: string }; pascalCase: { unsafeName: string } }[] = [];
+        const visited = new Set<string>();
+
+        const addTypeIfNamed = (typeRef: TypeReference) => {
+            if (typeRef.type === "named") {
+                const typeName = typeRef.name.originalName;
+                if (!visited.has(typeName)) {
+                    visited.add(typeName);
+                    customTypeNames.push({
+                        snakeCase: { unsafeName: typeRef.name.snakeCase.unsafeName },
+                        pascalCase: { unsafeName: typeRef.name.pascalCase.unsafeName }
+                    });
+                }
+            }
+        };
+
+        this.objectTypeDeclaration.properties.forEach((property) => {
+            const fieldType = property.valueType;
+            if (isOptionalType(fieldType)) {
+                const innerType = getInnerTypeFromOptional(fieldType);
+                addTypeIfNamed(innerType);
+            } else {
+                addTypeIfNamed(fieldType);
+            }
+        });
+
+        return customTypeNames;
     }
 }
