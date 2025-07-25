@@ -55,7 +55,21 @@ export class StructGenerator {
     }
 
     private writeUseStatements(writer: rust.Writer): void {
-        writer.writeLine("use serde::{Deserialize, Serialize};");
+        // Add imports for custom named types referenced in fields FIRST
+        const customTypes = this.getCustomTypesUsedInFields();
+        customTypes.forEach((typeName) => {
+            const moduleNameEscaped = this.escapeRustKeyword(typeName.snakeCase.unsafeName);
+            writer.writeLine(`use crate::${moduleNameEscaped}::${typeName.pascalCase.unsafeName};`);
+        });
+
+        // Add imports for parent types
+        if (this.objectTypeDeclaration.extends.length > 0) {
+            this.objectTypeDeclaration.extends.forEach((parentType) => {
+                const parentTypeName = parentType.name.pascalCase.unsafeName;
+                const moduleNameEscaped = this.escapeRustKeyword(parentType.name.snakeCase.unsafeName);
+                writer.writeLine(`use crate::${moduleNameEscaped}::${parentTypeName};`);
+            });
+        }
 
         // Add chrono if we have datetime fields
         if (this.hasDateTimeFields()) {
@@ -77,19 +91,8 @@ export class StructGenerator {
             writer.writeLine("use serde_json::Value;");
         }
 
-        // Add imports for parent types
-        if (this.objectTypeDeclaration.extends.length > 0) {
-            this.objectTypeDeclaration.extends.forEach((parentType) => {
-                const parentTypeName = parentType.name.pascalCase.unsafeName;
-                writer.writeLine(`use crate::types::${parentType.name.snakeCase.unsafeName}::${parentTypeName};`);
-            });
-        }
-
-        // Add imports for custom named types referenced in fields
-        const customTypes = this.getCustomTypesUsedInFields();
-        customTypes.forEach((typeName) => {
-            writer.writeLine(`use super::${typeName.snakeCase.unsafeName}::${typeName.pascalCase.unsafeName};`);
-        });
+        // Add serde imports LAST
+        writer.writeLine("use serde::{Deserialize, Serialize};");
     }
 
     private generateStructForTypeDeclaration(): rust.Struct {
@@ -124,9 +127,10 @@ export class StructGenerator {
     private generateRustFieldForProperty(property: ObjectProperty): rust.Field {
         const fieldType = this.getFieldType(property);
         const fieldAttributes = this.generateFieldAttributes(property);
+        const fieldName = this.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
 
         return rust.field({
-            name: property.name.name.snakeCase.unsafeName,
+            name: fieldName,
             type: fieldType,
             visibility: PUBLIC,
             attributes: fieldAttributes
@@ -224,7 +228,7 @@ export class StructGenerator {
         const customTypeNames: { snakeCase: { unsafeName: string }; pascalCase: { unsafeName: string } }[] = [];
         const visited = new Set<string>();
 
-        const addTypeIfNamed = (typeRef: TypeReference) => {
+        const extractNamedTypesRecursively = (typeRef: TypeReference) => {
             if (typeRef.type === "named") {
                 const typeName = typeRef.name.originalName;
                 if (!visited.has(typeName)) {
@@ -234,19 +238,41 @@ export class StructGenerator {
                         pascalCase: { unsafeName: typeRef.name.pascalCase.unsafeName }
                     });
                 }
+            } else if (typeRef.type === "container") {
+                typeRef.container._visit({
+                    list: (listType) => extractNamedTypesRecursively(listType),
+                    set: (setType) => extractNamedTypesRecursively(setType),
+                    optional: (optionalType) => extractNamedTypesRecursively(optionalType),
+                    nullable: (nullableType) => extractNamedTypesRecursively(nullableType),
+                    map: (mapType) => {
+                        extractNamedTypesRecursively(mapType.keyType);
+                        extractNamedTypesRecursively(mapType.valueType);
+                    },
+                    literal: () => {
+                        // No named types in literals
+                    },
+                    _other: () => {
+                        // Unknown container type
+                    }
+                });
             }
         };
 
         this.objectTypeDeclaration.properties.forEach((property) => {
-            const fieldType = property.valueType;
-            if (isOptionalType(fieldType)) {
-                const innerType = getInnerTypeFromOptional(fieldType);
-                addTypeIfNamed(innerType);
-            } else {
-                addTypeIfNamed(fieldType);
-            }
+            extractNamedTypesRecursively(property.valueType);
         });
 
         return customTypeNames;
+    }
+
+    private escapeRustKeyword(name: string): string {
+        const rustKeywords = new Set([
+            "as", "break", "const", "continue", "crate", "else", "enum", "extern",
+            "false", "fn", "for", "if", "impl", "in", "let", "loop", "match",
+            "mod", "move", "mut", "pub", "ref", "return", "self", "Self", "static",
+            "struct", "super", "trait", "true", "type", "unsafe", "use", "where", "while"
+        ]);
+
+        return rustKeywords.has(name) ? `r#${name}` : name;
     }
 }

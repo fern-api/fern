@@ -44,7 +44,12 @@ export class UndiscriminatedUnionGenerator {
     }
 
     private writeUseStatements(writer: rust.Writer): void {
-        writer.writeLine("use serde::{Deserialize, Serialize};");
+        // Add imports for variant types FIRST
+        const variantTypes = this.getVariantTypesUsedInUnion();
+        variantTypes.forEach((typeName) => {
+            const moduleNameEscaped = this.escapeRustKeyword(typeName.snakeCase.unsafeName);
+            writer.writeLine(`use crate::${moduleNameEscaped}::${typeName.pascalCase.unsafeName};`);
+        });
 
         // Add chrono if we have datetime fields
         if (this.hasDateTimeFields()) {
@@ -65,6 +70,9 @@ export class UndiscriminatedUnionGenerator {
         if (this.hasJsonValueFields()) {
             writer.writeLine("use serde_json::Value;");
         }
+
+        // Add serde imports LAST
+        writer.writeLine("use serde::{Deserialize, Serialize};");
     }
 
     private generateUndiscriminatedUnionEnum(writer: rust.Writer): void {
@@ -242,5 +250,36 @@ export class UndiscriminatedUnionGenerator {
 
     private hasFieldsOfType(predicate: (typeRef: TypeReference) => boolean): boolean {
         return this.undiscriminatedUnionTypeDeclaration.members.some((member) => predicate(member.type));
+    }
+
+    private getVariantTypesUsedInUnion(): { snakeCase: { unsafeName: string }; pascalCase: { unsafeName: string } }[] {
+        const variantTypeNames: { snakeCase: { unsafeName: string }; pascalCase: { unsafeName: string } }[] = [];
+        const visited = new Set<string>();
+
+        this.undiscriminatedUnionTypeDeclaration.members.forEach((member) => {
+            if (member.type.type === "named") {
+                const typeName = member.type.name.originalName;
+                if (!visited.has(typeName)) {
+                    visited.add(typeName);
+                    variantTypeNames.push({
+                        snakeCase: { unsafeName: member.type.name.snakeCase.unsafeName },
+                        pascalCase: { unsafeName: member.type.name.pascalCase.unsafeName }
+                    });
+                }
+            }
+        });
+
+        return variantTypeNames;
+    }
+
+    private escapeRustKeyword(name: string): string {
+        const rustKeywords = new Set([
+            "as", "break", "const", "continue", "crate", "else", "enum", "extern",
+            "false", "fn", "for", "if", "impl", "in", "let", "loop", "match",
+            "mod", "move", "mut", "pub", "ref", "return", "self", "Self", "static",
+            "struct", "super", "trait", "true", "type", "unsafe", "use", "where", "while"
+        ]);
+
+        return rustKeywords.has(name) ? `r#${name}` : name;
     }
 }

@@ -1,7 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { rust, Attribute, PUBLIC } from "@fern-api/rust-codegen";
-import { AliasTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { AliasTypeDeclaration, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 import { generateRustTypeForTypeReference } from "../converters";
 import { isChronoType, isUuidType, isCollectionType, isUnknownType, isDateTimeType } from "../utils/primitiveTypeUtils";
 
@@ -55,6 +55,13 @@ export class AliasGenerator {
     private writeAdditionalUseStatements(writer: rust.Writer): void {
         const innerType = this.aliasTypeDeclaration.aliasOf;
 
+        // Add imports for custom named types FIRST
+        const customTypes = this.getCustomTypesUsedInAlias();
+        customTypes.forEach((typeName) => {
+            const moduleNameEscaped = this.escapeRustKeyword(typeName.snakeCase.unsafeName);
+            writer.writeLine(`use crate::${moduleNameEscaped}::${typeName.pascalCase.unsafeName};`);
+        });
+
         // Add chrono if aliasing a datetime
         if (isChronoType(innerType)) {
             writer.writeLine("use chrono::{DateTime, Utc};");
@@ -101,5 +108,56 @@ export class AliasGenerator {
         }
 
         return attributes;
+    }
+
+    private getCustomTypesUsedInAlias(): { snakeCase: { unsafeName: string }; pascalCase: { unsafeName: string } }[] {
+        const customTypeNames: { snakeCase: { unsafeName: string }; pascalCase: { unsafeName: string } }[] = [];
+        const visited = new Set<string>();
+
+        const extractNamedTypesRecursively = (typeRef: TypeReference) => {
+            if (typeRef.type === "named") {
+                const typeName = typeRef.name.originalName;
+                if (!visited.has(typeName)) {
+                    visited.add(typeName);
+                    customTypeNames.push({
+                        snakeCase: { unsafeName: typeRef.name.snakeCase.unsafeName },
+                        pascalCase: { unsafeName: typeRef.name.pascalCase.unsafeName }
+                    });
+                }
+            } else if (typeRef.type === "container") {
+                typeRef.container._visit({
+                    list: (listType: TypeReference) => extractNamedTypesRecursively(listType),
+                    set: (setType: TypeReference) => extractNamedTypesRecursively(setType),
+                    optional: (optionalType: TypeReference) => extractNamedTypesRecursively(optionalType),
+                    nullable: (nullableType: TypeReference) => extractNamedTypesRecursively(nullableType),
+                    map: (mapType) => {
+                        extractNamedTypesRecursively(mapType.keyType);
+                        extractNamedTypesRecursively(mapType.valueType);
+                    },
+                    literal: () => {
+                        // No named types in literals
+                    },
+                    _other: () => {
+                        // Unknown container type
+                    }
+                });
+            }
+        };
+
+        // Analyze the aliased type
+        extractNamedTypesRecursively(this.aliasTypeDeclaration.aliasOf);
+
+        return customTypeNames;
+    }
+
+    private escapeRustKeyword(name: string): string {
+        const rustKeywords = new Set([
+            "as", "break", "const", "continue", "crate", "else", "enum", "extern",
+            "false", "fn", "for", "if", "impl", "in", "let", "loop", "match",
+            "mod", "move", "mut", "pub", "ref", "return", "self", "Self", "static",
+            "struct", "super", "trait", "true", "type", "unsafe", "use", "where", "while"
+        ]);
+
+        return rustKeywords.has(name) ? `r#${name}` : name;
     }
 }
