@@ -2,7 +2,10 @@ public struct CompileError: Codable, Hashable {
     public let message: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(message: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        message: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.message = message
         self.additionalProperties = additionalProperties
     }

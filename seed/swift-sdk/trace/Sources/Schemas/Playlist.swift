@@ -3,7 +3,11 @@ public struct Playlist: Codable, Hashable {
     public let ownerId: UserId
     public let additionalProperties: [String: JSONValue]
 
-    public init(playlistId: PlaylistId, ownerId: UserId, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        playlistId: PlaylistId,
+        ownerId: UserId,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.playlistId = playlistId
         self.ownerId = ownerId
         self.additionalProperties = additionalProperties

@@ -3,7 +3,11 @@ public struct CreatePaymentRequest: Codable, Hashable {
     public let currency: Currency
     public let additionalProperties: [String: JSONValue]
 
-    public init(amount: Int, currency: Currency, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        amount: Int,
+        currency: Currency,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.amount = amount
         self.currency = currency
         self.additionalProperties = additionalProperties

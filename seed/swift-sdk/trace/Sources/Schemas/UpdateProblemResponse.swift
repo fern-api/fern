@@ -2,7 +2,10 @@ public struct UpdateProblemResponse: Codable, Hashable {
     public let problemVersion: Int
     public let additionalProperties: [String: JSONValue]
 
-    public init(problemVersion: Int, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        problemVersion: Int,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.problemVersion = problemVersion
         self.additionalProperties = additionalProperties
     }

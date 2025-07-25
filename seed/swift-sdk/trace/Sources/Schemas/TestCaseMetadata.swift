@@ -4,7 +4,12 @@ public struct TestCaseMetadata: Codable, Hashable {
     public let hidden: Bool
     public let additionalProperties: [String: JSONValue]
 
-    public init(id: TestCaseId, name: String, hidden: Bool, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        id: TestCaseId,
+        name: String,
+        hidden: Bool,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.id = id
         self.name = name
         self.hidden = hidden

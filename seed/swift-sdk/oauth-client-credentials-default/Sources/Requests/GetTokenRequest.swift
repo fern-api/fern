@@ -4,7 +4,12 @@ public struct GetTokenRequest: Codable, Hashable {
     public let grantType: Any
     public let additionalProperties: [String: JSONValue]
 
-    public init(clientId: String, clientSecret: String, grantType: Any, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        clientId: String,
+        clientSecret: String,
+        grantType: Any,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.clientId = clientId
         self.clientSecret = clientSecret
         self.grantType = grantType

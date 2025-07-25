@@ -3,7 +3,11 @@ public struct RunningResponse: Codable, Hashable {
     public let state: RunningSubmissionState
     public let additionalProperties: [String: JSONValue]
 
-    public init(submissionId: SubmissionId, state: RunningSubmissionState, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        submissionId: SubmissionId,
+        state: RunningSubmissionState,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.submissionId = submissionId
         self.state = state
         self.additionalProperties = additionalProperties

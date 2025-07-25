@@ -2,7 +2,10 @@ public struct ExtendedMovie: Codable, Hashable {
     public let cast: [String]
     public let additionalProperties: [String: JSONValue]
 
-    public init(cast: [String], additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        cast: [String],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.cast = cast
         self.additionalProperties = additionalProperties
     }

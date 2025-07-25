@@ -5,7 +5,13 @@ public struct TestSubmissionStatusV2: Codable, Hashable {
     public let problemInfo: ProblemInfoV2
     public let additionalProperties: [String: JSONValue]
 
-    public init(updates: [TestSubmissionUpdate], problemId: ProblemId, problemVersion: Int, problemInfo: ProblemInfoV2, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        updates: [TestSubmissionUpdate],
+        problemId: ProblemId,
+        problemVersion: Int,
+        problemInfo: ProblemInfoV2,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.updates = updates
         self.problemId = problemId
         self.problemVersion = problemVersion

@@ -9,7 +9,17 @@ public struct User: Codable, Hashable {
     public let strings: Any?
     public let additionalProperties: [String: JSONValue]
 
-    public init(name: String, id: UserId, tags: Any, metadata: Any? = nil, email: Email, favoriteNumber: WeirdNumber, numbers: Any? = nil, strings: Any? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        name: String,
+        id: UserId,
+        tags: Any,
+        metadata: Any? = nil,
+        email: Email,
+        favoriteNumber: WeirdNumber,
+        numbers: Any? = nil,
+        strings: Any? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.name = name
         self.id = id
         self.tags = tags

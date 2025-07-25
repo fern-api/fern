@@ -2,7 +2,10 @@ public struct RootType: Codable, Hashable {
     public let s: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(s: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        s: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.s = s
         self.additionalProperties = additionalProperties
     }

@@ -5,7 +5,13 @@ public struct SendEnumInlinedRequest: Codable, Hashable {
     public let maybeOperandOrColor: ColorOrOperand?
     public let additionalProperties: [String: JSONValue]
 
-    public init(operand: Operand, maybeOperand: Operand? = nil, operandOrColor: ColorOrOperand, maybeOperandOrColor: ColorOrOperand? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        operand: Operand,
+        maybeOperand: Operand? = nil,
+        operandOrColor: ColorOrOperand,
+        maybeOperandOrColor: ColorOrOperand? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.operand = operand
         self.maybeOperand = maybeOperand
         self.operandOrColor = operandOrColor

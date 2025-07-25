@@ -2,7 +2,10 @@ public struct UsernameContainer: Codable, Hashable {
     public let results: [String]
     public let additionalProperties: [String: JSONValue]
 
-    public init(results: [String], additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        results: [String],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.results = results
         self.additionalProperties = additionalProperties
     }

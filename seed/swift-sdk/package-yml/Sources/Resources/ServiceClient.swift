@@ -5,12 +5,11 @@ public final class ServiceClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func nop(id: String, nestedId: String, requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func nop(id: String, nestedId: String, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .get,
             path: "/\(id)//\(nestedId)",
-            requestOptions: requestOptions,
-            responseType: Any.self
+            requestOptions: requestOptions
         )
     }
 }

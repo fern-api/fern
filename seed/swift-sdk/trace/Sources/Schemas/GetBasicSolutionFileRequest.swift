@@ -3,7 +3,11 @@ public struct GetBasicSolutionFileRequest: Codable, Hashable {
     public let signature: NonVoidFunctionSignature
     public let additionalProperties: [String: JSONValue]
 
-    public init(methodName: String, signature: NonVoidFunctionSignature, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        methodName: String,
+        signature: NonVoidFunctionSignature,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.methodName = methodName
         self.signature = signature
         self.additionalProperties = additionalProperties

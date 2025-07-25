@@ -7,7 +7,15 @@ public struct Address: Codable, Hashable {
     public let country: Any
     public let additionalProperties: [String: JSONValue]
 
-    public init(line1: String, line2: String? = nil, city: String, state: String, zip: String, country: Any, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        line1: String,
+        line2: String? = nil,
+        city: String,
+        state: String,
+        zip: String,
+        country: Any,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.line1 = line1
         self.line2 = line2
         self.city = city

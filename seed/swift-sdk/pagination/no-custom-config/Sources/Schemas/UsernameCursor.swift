@@ -2,7 +2,10 @@ public struct UsernameCursor: Codable, Hashable {
     public let cursor: UsernamePage
     public let additionalProperties: [String: JSONValue]
 
-    public init(cursor: UsernamePage, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        cursor: UsernamePage,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.cursor = cursor
         self.additionalProperties = additionalProperties
     }

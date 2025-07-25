@@ -3,7 +3,11 @@ public struct ListUsersMixedTypePaginationResponse: Codable, Hashable {
     public let data: [User]
     public let additionalProperties: [String: JSONValue]
 
-    public init(next: String, data: [User], additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        next: String,
+        data: [User],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.next = next
         self.data = data
         self.additionalProperties = additionalProperties

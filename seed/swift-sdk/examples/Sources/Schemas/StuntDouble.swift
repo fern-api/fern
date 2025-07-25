@@ -3,7 +3,11 @@ public struct StuntDouble: Codable, Hashable {
     public let actorOrActressId: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(name: String, actorOrActressId: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        name: String,
+        actorOrActressId: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.name = name
         self.actorOrActressId = actorOrActressId
         self.additionalProperties = additionalProperties

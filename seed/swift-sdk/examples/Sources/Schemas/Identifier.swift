@@ -4,7 +4,12 @@ public struct Identifier: Codable, Hashable {
     public let label: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(type: Type, value: String, label: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        type: Type,
+        value: String,
+        label: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.type = type
         self.value = value
         self.label = label

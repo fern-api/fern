@@ -6,7 +6,14 @@ public struct RecordingResponseNotification: Codable, Hashable {
     public let tracedFile: TracedFile?
     public let additionalProperties: [String: JSONValue]
 
-    public init(submissionId: SubmissionId, testCaseId: String? = nil, lineNumber: Int, lightweightStackInfo: LightweightStackframeInformation, tracedFile: TracedFile? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        submissionId: SubmissionId,
+        testCaseId: String? = nil,
+        lineNumber: Int,
+        lightweightStackInfo: LightweightStackframeInformation,
+        tracedFile: TracedFile? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.submissionId = submissionId
         self.testCaseId = testCaseId
         self.lineNumber = lineNumber

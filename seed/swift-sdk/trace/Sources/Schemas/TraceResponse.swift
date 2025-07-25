@@ -7,7 +7,15 @@ public struct TraceResponse: Codable, Hashable {
     public let stdout: String?
     public let additionalProperties: [String: JSONValue]
 
-    public init(submissionId: SubmissionId, lineNumber: Int, returnValue: DebugVariableValue? = nil, expressionLocation: ExpressionLocation? = nil, stack: StackInformation, stdout: String? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        submissionId: SubmissionId,
+        lineNumber: Int,
+        returnValue: DebugVariableValue? = nil,
+        expressionLocation: ExpressionLocation? = nil,
+        stack: StackInformation,
+        stdout: String? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.submissionId = submissionId
         self.lineNumber = lineNumber
         self.returnValue = returnValue

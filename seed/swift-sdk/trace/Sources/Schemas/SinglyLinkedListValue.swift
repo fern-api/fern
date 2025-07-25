@@ -3,7 +3,11 @@ public struct SinglyLinkedListValue: Codable, Hashable {
     public let nodes: Any
     public let additionalProperties: [String: JSONValue]
 
-    public init(head: NodeId? = nil, nodes: Any, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        head: NodeId? = nil,
+        nodes: Any,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.head = head
         self.nodes = nodes
         self.additionalProperties = additionalProperties

@@ -5,7 +5,13 @@ public struct Error: Codable, Hashable {
     public let field: String?
     public let additionalProperties: [String: JSONValue]
 
-    public init(category: ErrorCategory, code: ErrorCode, detail: String? = nil, field: String? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        category: ErrorCategory,
+        code: ErrorCode,
+        detail: String? = nil,
+        field: String? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.category = category
         self.code = code
         self.detail = detail

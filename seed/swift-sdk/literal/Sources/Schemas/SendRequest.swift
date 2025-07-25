@@ -8,7 +8,16 @@ public struct SendRequest: Codable, Hashable {
     public let containerObject: ContainerObject
     public let additionalProperties: [String: JSONValue]
 
-    public init(prompt: Any, query: String, stream: Any, ending: Any, context: SomeLiteral, maybeContext: SomeLiteral? = nil, containerObject: ContainerObject, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        prompt: Any,
+        query: String,
+        stream: Any,
+        ending: Any,
+        context: SomeLiteral,
+        maybeContext: SomeLiteral? = nil,
+        containerObject: ContainerObject,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.prompt = prompt
         self.query = query
         self.stream = stream

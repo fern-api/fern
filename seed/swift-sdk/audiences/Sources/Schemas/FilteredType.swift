@@ -3,7 +3,11 @@ public struct FilteredType: Codable, Hashable {
     public let privateProperty: Int
     public let additionalProperties: [String: JSONValue]
 
-    public init(publicProperty: String? = nil, privateProperty: Int, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        publicProperty: String? = nil,
+        privateProperty: Int,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.publicProperty = publicProperty
         self.privateProperty = privateProperty
         self.additionalProperties = additionalProperties

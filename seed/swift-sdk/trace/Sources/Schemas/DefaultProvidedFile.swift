@@ -3,7 +3,11 @@ public struct DefaultProvidedFile: Codable, Hashable {
     public let relatedTypes: [VariableType]
     public let additionalProperties: [String: JSONValue]
 
-    public init(file: FileInfoV2, relatedTypes: [VariableType], additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        file: FileInfoV2,
+        relatedTypes: [VariableType],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.file = file
         self.relatedTypes = relatedTypes
         self.additionalProperties = additionalProperties

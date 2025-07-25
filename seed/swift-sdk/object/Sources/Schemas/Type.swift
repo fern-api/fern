@@ -26,7 +26,34 @@ public struct Type: Codable, Hashable {
     public let twentyfive: Date?
     public let additionalProperties: [String: JSONValue]
 
-    public init(one: Int, two: Double, three: String, four: Bool, five: Int64, six: Date, seven: Date, eight: UUID, nine: String, ten: [Int], eleven: Any, twelve: Any, thirteen: Int64? = nil, fourteen: Any, fifteen: [[Int]], sixteen: [Any], seventeen: [UUID?], eighteen: Any, nineteen: Name, twenty: UInt, twentyone: UInt64, twentytwo: Float, twentythree: String, twentyfour: Date? = nil, twentyfive: Date? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        one: Int,
+        two: Double,
+        three: String,
+        four: Bool,
+        five: Int64,
+        six: Date,
+        seven: Date,
+        eight: UUID,
+        nine: String,
+        ten: [Int],
+        eleven: Any,
+        twelve: Any,
+        thirteen: Int64? = nil,
+        fourteen: Any,
+        fifteen: [[Int]],
+        sixteen: [Any],
+        seventeen: [UUID?],
+        eighteen: Any,
+        nineteen: Name,
+        twenty: UInt,
+        twentyone: UInt64,
+        twentytwo: Float,
+        twentythree: String,
+        twentyfour: Date? = nil,
+        twentyfive: Date? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.one = one
         self.two = two
         self.three = three

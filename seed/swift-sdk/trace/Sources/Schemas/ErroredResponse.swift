@@ -3,7 +3,11 @@ public struct ErroredResponse: Codable, Hashable {
     public let errorInfo: ErrorInfo
     public let additionalProperties: [String: JSONValue]
 
-    public init(submissionId: SubmissionId, errorInfo: ErrorInfo, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        submissionId: SubmissionId,
+        errorInfo: ErrorInfo,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.submissionId = submissionId
         self.errorInfo = errorInfo
         self.additionalProperties = additionalProperties

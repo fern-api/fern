@@ -6,7 +6,14 @@ public struct GetTokenRequest: Codable, Hashable {
     public let scope: String?
     public let additionalProperties: [String: JSONValue]
 
-    public init(clientId: String, clientSecret: String, audience: Any, grantType: Any, scope: String? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        clientId: String,
+        clientSecret: String,
+        audience: Any,
+        grantType: Any,
+        scope: String? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.clientId = clientId
         self.clientSecret = clientSecret
         self.audience = audience

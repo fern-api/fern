@@ -5,15 +5,14 @@ public final class PackageClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func test(for: String, requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func test(for: String, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/",
             queryParams: [
                 "for": .string(`for`)
             ],
-            requestOptions: requestOptions,
-            responseType: Any.self
+            requestOptions: requestOptions
         )
     }
 }

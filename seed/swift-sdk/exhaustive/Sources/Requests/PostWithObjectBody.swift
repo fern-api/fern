@@ -4,7 +4,12 @@ public struct PostWithObjectBody: Codable, Hashable {
     public let nestedObject: ObjectWithOptionalField
     public let additionalProperties: [String: JSONValue]
 
-    public init(string: String, integer: Int, nestedObject: ObjectWithOptionalField, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        string: String,
+        integer: Int,
+        nestedObject: ObjectWithOptionalField,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.string = string
         self.integer = integer
         self.nestedObject = nestedObject

@@ -4,7 +4,12 @@ public struct File: Codable, Hashable {
     public let info: FileInfo
     public let additionalProperties: [String: JSONValue]
 
-    public init(name: String, contents: String, info: FileInfo, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        name: String,
+        contents: String,
+        info: FileInfo,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.name = name
         self.contents = contents
         self.info = info

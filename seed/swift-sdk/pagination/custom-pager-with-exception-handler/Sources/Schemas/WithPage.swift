@@ -2,7 +2,10 @@ public struct WithPage: Codable, Hashable {
     public let page: Int?
     public let additionalProperties: [String: JSONValue]
 
-    public init(page: Int? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        page: Int? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.page = page
         self.additionalProperties = additionalProperties
     }

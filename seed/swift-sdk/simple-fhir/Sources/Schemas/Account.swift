@@ -5,7 +5,13 @@ public struct Account: Codable, Hashable {
     public let practitioner: Practitioner?
     public let additionalProperties: [String: JSONValue]
 
-    public init(resourceType: Any, name: String, patient: Patient? = nil, practitioner: Practitioner? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        resourceType: Any,
+        name: String,
+        patient: Patient? = nil,
+        practitioner: Practitioner? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.resourceType = resourceType
         self.name = name
         self.patient = patient

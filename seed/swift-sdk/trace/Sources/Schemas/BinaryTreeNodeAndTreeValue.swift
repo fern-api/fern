@@ -3,7 +3,11 @@ public struct BinaryTreeNodeAndTreeValue: Codable, Hashable {
     public let fullTree: BinaryTreeValue
     public let additionalProperties: [String: JSONValue]
 
-    public init(nodeId: NodeId, fullTree: BinaryTreeValue, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        nodeId: NodeId,
+        fullTree: BinaryTreeValue,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.nodeId = nodeId
         self.fullTree = fullTree
         self.additionalProperties = additionalProperties

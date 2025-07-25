@@ -3,7 +3,11 @@ public struct RecordedTestCaseUpdate: Codable, Hashable {
     public let traceResponsesSize: Int
     public let additionalProperties: [String: JSONValue]
 
-    public init(testCaseId: TestCaseId, traceResponsesSize: Int, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        testCaseId: TestCaseId,
+        traceResponsesSize: Int,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.testCaseId = testCaseId
         self.traceResponsesSize = traceResponsesSize
         self.additionalProperties = additionalProperties

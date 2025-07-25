@@ -5,7 +5,13 @@ public struct Page: Codable, Hashable {
     public let totalPage: Int
     public let additionalProperties: [String: JSONValue]
 
-    public init(page: Int, next: NextPage? = nil, perPage: Int, totalPage: Int, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        page: Int,
+        next: NextPage? = nil,
+        perPage: Int,
+        totalPage: Int,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.page = page
         self.next = next
         self.perPage = perPage

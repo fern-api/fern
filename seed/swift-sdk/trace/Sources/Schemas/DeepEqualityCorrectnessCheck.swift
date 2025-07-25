@@ -2,7 +2,10 @@ public struct DeepEqualityCorrectnessCheck: Codable, Hashable {
     public let expectedValueParameterId: ParameterId
     public let additionalProperties: [String: JSONValue]
 
-    public init(expectedValueParameterId: ParameterId, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        expectedValueParameterId: ParameterId,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.expectedValueParameterId = expectedValueParameterId
         self.additionalProperties = additionalProperties
     }

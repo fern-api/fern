@@ -3,7 +3,11 @@ public struct NonVoidFunctionSignature: Codable, Hashable {
     public let returnType: VariableType
     public let additionalProperties: [String: JSONValue]
 
-    public init(parameters: [Parameter], returnType: VariableType, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        parameters: [Parameter],
+        returnType: VariableType,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.parameters = parameters
         self.returnType = returnType
         self.additionalProperties = additionalProperties

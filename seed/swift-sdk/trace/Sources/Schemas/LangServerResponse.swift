@@ -2,7 +2,10 @@ public struct LangServerResponse: Codable, Hashable {
     public let response: Any
     public let additionalProperties: [String: JSONValue]
 
-    public init(response: Any, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        response: Any,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.response = response
         self.additionalProperties = additionalProperties
     }

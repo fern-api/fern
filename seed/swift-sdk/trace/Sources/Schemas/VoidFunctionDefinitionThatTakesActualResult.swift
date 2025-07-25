@@ -3,7 +3,11 @@ public struct VoidFunctionDefinitionThatTakesActualResult: Codable, Hashable {
     public let code: FunctionImplementationForMultipleLanguages
     public let additionalProperties: [String: JSONValue]
 
-    public init(additionalParameters: [Parameter], code: FunctionImplementationForMultipleLanguages, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        additionalParameters: [Parameter],
+        code: FunctionImplementationForMultipleLanguages,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.additionalParameters = additionalParameters
         self.code = code
         self.additionalProperties = additionalProperties

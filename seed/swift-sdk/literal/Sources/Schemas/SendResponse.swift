@@ -4,7 +4,12 @@ public struct SendResponse: Codable, Hashable {
     public let success: Any
     public let additionalProperties: [String: JSONValue]
 
-    public init(message: String, status: Int, success: Any, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        message: String,
+        status: Int,
+        success: Any,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.message = message
         self.status = status
         self.success = success

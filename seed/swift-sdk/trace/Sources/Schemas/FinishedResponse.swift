@@ -2,7 +2,10 @@ public struct FinishedResponse: Codable, Hashable {
     public let submissionId: SubmissionId
     public let additionalProperties: [String: JSONValue]
 
-    public init(submissionId: SubmissionId, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        submissionId: SubmissionId,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.submissionId = submissionId
         self.additionalProperties = additionalProperties
     }

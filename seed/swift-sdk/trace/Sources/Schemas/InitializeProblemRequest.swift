@@ -3,7 +3,11 @@ public struct InitializeProblemRequest: Codable, Hashable {
     public let problemVersion: Int?
     public let additionalProperties: [String: JSONValue]
 
-    public init(problemId: ProblemId, problemVersion: Int? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        problemId: ProblemId,
+        problemVersion: Int? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.problemId = problemId
         self.problemVersion = problemVersion
         self.additionalProperties = additionalProperties

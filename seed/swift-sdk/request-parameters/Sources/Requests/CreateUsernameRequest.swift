@@ -4,7 +4,12 @@ public struct CreateUsernameRequest: Codable, Hashable {
     public let name: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(username: String, password: String, name: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        username: String,
+        password: String,
+        name: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.username = username
         self.password = password
         self.name = name

@@ -2,7 +2,10 @@ public struct BootInstanceRequest: Codable, Hashable {
     public let size: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(size: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        size: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.size = size
         self.additionalProperties = additionalProperties
     }

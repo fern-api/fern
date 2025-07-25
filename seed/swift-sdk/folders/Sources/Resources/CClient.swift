@@ -5,12 +5,11 @@ public final class CClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func foo(requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func foo(requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/",
-            requestOptions: requestOptions,
-            responseType: Any.self
+            requestOptions: requestOptions
         )
     }
 }

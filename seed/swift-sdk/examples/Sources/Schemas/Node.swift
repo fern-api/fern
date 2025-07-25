@@ -4,7 +4,12 @@ public struct Node: Codable, Hashable {
     public let trees: [Tree]?
     public let additionalProperties: [String: JSONValue]
 
-    public init(name: String, nodes: [Node]? = nil, trees: [Tree]? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        name: String,
+        nodes: [Node]? = nil,
+        trees: [Tree]? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.name = name
         self.nodes = nodes
         self.trees = trees

@@ -2,7 +2,10 @@ public struct VoidFunctionSignature: Codable, Hashable {
     public let parameters: [Parameter]
     public let additionalProperties: [String: JSONValue]
 
-    public init(parameters: [Parameter], additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        parameters: [Parameter],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.parameters = parameters
         self.additionalProperties = additionalProperties
     }

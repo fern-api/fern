@@ -3,7 +3,11 @@ public struct FunctionImplementation: Codable, Hashable {
     public let imports: String?
     public let additionalProperties: [String: JSONValue]
 
-    public init(impl: String, imports: String? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        impl: String,
+        imports: String? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.impl = impl
         self.imports = imports
         self.additionalProperties = additionalProperties

@@ -5,7 +5,13 @@ public struct BasicCustomFiles: Codable, Hashable {
     public let basicTestCaseTemplate: BasicTestCaseTemplate
     public let additionalProperties: [String: JSONValue]
 
-    public init(methodName: String, signature: NonVoidFunctionSignature, additionalFiles: Any, basicTestCaseTemplate: BasicTestCaseTemplate, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        methodName: String,
+        signature: NonVoidFunctionSignature,
+        additionalFiles: Any,
+        basicTestCaseTemplate: BasicTestCaseTemplate,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.methodName = methodName
         self.signature = signature
         self.additionalFiles = additionalFiles

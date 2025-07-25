@@ -3,7 +3,11 @@ public struct UserPage: Codable, Hashable {
     public let next: UUID?
     public let additionalProperties: [String: JSONValue]
 
-    public init(data: UserListContainer, next: UUID? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        data: UserListContainer,
+        next: UUID? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.data = data
         self.next = next
         self.additionalProperties = additionalProperties

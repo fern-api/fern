@@ -2,7 +2,10 @@ public struct WorkspaceTracedUpdate: Codable, Hashable {
     public let traceResponsesSize: Int
     public let additionalProperties: [String: JSONValue]
 
-    public init(traceResponsesSize: Int, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        traceResponsesSize: Int,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.traceResponsesSize = traceResponsesSize
         self.additionalProperties = additionalProperties
     }

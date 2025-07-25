@@ -3,7 +3,11 @@ public struct TracedFile: Codable, Hashable {
     public let directory: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(filename: String, directory: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        filename: String,
+        directory: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.filename = filename
         self.directory = directory
         self.additionalProperties = additionalProperties

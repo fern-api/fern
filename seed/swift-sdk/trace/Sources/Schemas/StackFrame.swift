@@ -4,7 +4,12 @@ public struct StackFrame: Codable, Hashable {
     public let scopes: [Scope]
     public let additionalProperties: [String: JSONValue]
 
-    public init(methodName: String, lineNumber: Int, scopes: [Scope], additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        methodName: String,
+        lineNumber: Int,
+        scopes: [Scope],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.methodName = methodName
         self.lineNumber = lineNumber
         self.scopes = scopes

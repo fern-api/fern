@@ -1,7 +1,9 @@
 public struct Acai: Codable, Hashable {
     public let additionalProperties: [String: JSONValue]
 
-    public init(additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.additionalProperties = additionalProperties
     }
 

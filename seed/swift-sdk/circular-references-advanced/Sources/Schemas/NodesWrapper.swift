@@ -2,7 +2,10 @@ public struct NodesWrapper: Codable, Hashable {
     public let nodes: [[Node]]
     public let additionalProperties: [String: JSONValue]
 
-    public init(nodes: [[Node]], additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        nodes: [[Node]],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.nodes = nodes
         self.additionalProperties = additionalProperties
     }

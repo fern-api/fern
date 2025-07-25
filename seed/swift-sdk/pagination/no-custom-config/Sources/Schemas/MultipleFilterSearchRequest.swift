@@ -3,7 +3,11 @@ public struct MultipleFilterSearchRequest: Codable, Hashable {
     public let value: MultipleFilterSearchRequestValue?
     public let additionalProperties: [String: JSONValue]
 
-    public init(operator: MultipleFilterSearchRequestOperator? = nil, value: MultipleFilterSearchRequestValue? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        operator: MultipleFilterSearchRequestOperator? = nil,
+        value: MultipleFilterSearchRequestValue? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.operator = `operator`
         self.value = value
         self.additionalProperties = additionalProperties

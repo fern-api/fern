@@ -2,7 +2,10 @@ public struct BranchNode: Codable, Hashable {
     public let children: [Node]
     public let additionalProperties: [String: JSONValue]
 
-    public init(children: [Node], additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        children: [Node],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.children = children
         self.additionalProperties = additionalProperties
     }

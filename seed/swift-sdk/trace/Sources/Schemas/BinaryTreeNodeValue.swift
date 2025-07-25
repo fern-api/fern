@@ -5,7 +5,13 @@ public struct BinaryTreeNodeValue: Codable, Hashable {
     public let left: NodeId?
     public let additionalProperties: [String: JSONValue]
 
-    public init(nodeId: NodeId, val: Double, right: NodeId? = nil, left: NodeId? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        nodeId: NodeId,
+        val: Double,
+        right: NodeId? = nil,
+        left: NodeId? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.nodeId = nodeId
         self.val = val
         self.right = right

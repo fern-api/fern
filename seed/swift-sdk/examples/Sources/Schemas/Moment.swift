@@ -4,7 +4,12 @@ public struct Moment: Codable, Hashable {
     public let datetime: Date
     public let additionalProperties: [String: JSONValue]
 
-    public init(id: UUID, date: Date, datetime: Date, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        id: UUID,
+        date: Date,
+        datetime: Date,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.id = id
         self.date = date
         self.datetime = datetime

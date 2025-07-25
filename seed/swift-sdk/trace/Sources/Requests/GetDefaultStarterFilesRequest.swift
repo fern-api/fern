@@ -4,7 +4,12 @@ public struct GetDefaultStarterFilesRequest: Codable, Hashable {
     public let methodName: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(inputParams: [VariableTypeAndName], outputType: VariableType, methodName: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        inputParams: [VariableTypeAndName],
+        outputType: VariableType,
+        methodName: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.inputParams = inputParams
         self.outputType = outputType
         self.methodName = methodName

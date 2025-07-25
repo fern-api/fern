@@ -5,7 +5,13 @@ public struct TestCaseNonHiddenGrade: Codable, Hashable {
     public let stdout: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(passed: Bool, actualResult: VariableValue? = nil, exception: ExceptionV2? = nil, stdout: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        passed: Bool,
+        actualResult: VariableValue? = nil,
+        exception: ExceptionV2? = nil,
+        stdout: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.passed = passed
         self.actualResult = actualResult
         self.exception = exception

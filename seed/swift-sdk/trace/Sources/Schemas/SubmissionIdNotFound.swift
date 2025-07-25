@@ -2,7 +2,10 @@ public struct SubmissionIdNotFound: Codable, Hashable {
     public let missingSubmissionId: SubmissionId
     public let additionalProperties: [String: JSONValue]
 
-    public init(missingSubmissionId: SubmissionId, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        missingSubmissionId: SubmissionId,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.missingSubmissionId = missingSubmissionId
         self.additionalProperties = additionalProperties
     }

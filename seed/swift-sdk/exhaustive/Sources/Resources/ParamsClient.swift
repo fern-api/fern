@@ -23,7 +23,7 @@ public final class ParamsClient: Sendable {
         )
     }
 
-    public func getWithQuery(query: String, number: Int, requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func getWithQuery(query: String, number: Int, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .get,
             path: "/params",
@@ -31,12 +31,11 @@ public final class ParamsClient: Sendable {
                 "query": .string(query), 
                 "number": .int(number)
             ],
-            requestOptions: requestOptions,
-            responseType: Any.self
+            requestOptions: requestOptions
         )
     }
 
-    public func getWithAllowMultipleQuery(query: String, number: Int, requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func getWithAllowMultipleQuery(query: String, number: Int, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .get,
             path: "/params",
@@ -44,32 +43,29 @@ public final class ParamsClient: Sendable {
                 "query": .string(query), 
                 "number": .int(number)
             ],
-            requestOptions: requestOptions,
-            responseType: Any.self
+            requestOptions: requestOptions
         )
     }
 
-    public func getWithPathAndQuery(param: String, query: String, requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func getWithPathAndQuery(param: String, query: String, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .get,
             path: "/params/path-query/\(param)",
             queryParams: [
                 "query": .string(query)
             ],
-            requestOptions: requestOptions,
-            responseType: Any.self
+            requestOptions: requestOptions
         )
     }
 
-    public func getWithInlinePathAndQuery(param: String, query: String, requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func getWithInlinePathAndQuery(param: String, query: String, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .get,
             path: "/params/path-query/\(param)",
             queryParams: [
                 "query": .string(query)
             ],
-            requestOptions: requestOptions,
-            responseType: Any.self
+            requestOptions: requestOptions
         )
     }
 

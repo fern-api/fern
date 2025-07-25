@@ -2,7 +2,10 @@ public struct Square: Codable, Hashable {
     public let length: Double
     public let additionalProperties: [String: JSONValue]
 
-    public init(length: Double, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        length: Double,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.length = length
         self.additionalProperties = additionalProperties
     }

@@ -2,7 +2,10 @@ public struct ATopLevelLiteral: Codable, Hashable {
     public let nestedLiteral: ANestedLiteral
     public let additionalProperties: [String: JSONValue]
 
-    public init(nestedLiteral: ANestedLiteral, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        nestedLiteral: ANestedLiteral,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.nestedLiteral = nestedLiteral
         self.additionalProperties = additionalProperties
     }

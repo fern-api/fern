@@ -3,7 +3,11 @@ public struct GenericValue: Codable, Hashable {
     public let stringifiedValue: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(stringifiedType: String? = nil, stringifiedValue: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        stringifiedType: String? = nil,
+        stringifiedValue: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.stringifiedType = stringifiedType
         self.stringifiedValue = stringifiedValue
         self.additionalProperties = additionalProperties

@@ -3,7 +3,11 @@ public struct StackInformation: Codable, Hashable {
     public let topStackFrame: StackFrame?
     public let additionalProperties: [String: JSONValue]
 
-    public init(numStackFrames: Int, topStackFrame: StackFrame? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        numStackFrames: Int,
+        topStackFrame: StackFrame? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.numStackFrames = numStackFrames
         self.topStackFrame = topStackFrame
         self.additionalProperties = additionalProperties

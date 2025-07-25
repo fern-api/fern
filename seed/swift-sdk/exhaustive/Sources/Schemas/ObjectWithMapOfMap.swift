@@ -2,7 +2,10 @@ public struct ObjectWithMapOfMap: Codable, Hashable {
     public let map: Any
     public let additionalProperties: [String: JSONValue]
 
-    public init(map: Any, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        map: Any,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.map = map
         self.additionalProperties = additionalProperties
     }

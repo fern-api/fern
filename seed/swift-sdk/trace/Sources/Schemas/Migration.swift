@@ -3,7 +3,11 @@ public struct Migration: Codable, Hashable {
     public let status: MigrationStatus
     public let additionalProperties: [String: JSONValue]
 
-    public init(name: String, status: MigrationStatus, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        name: String,
+        status: MigrationStatus,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.name = name
         self.status = status
         self.additionalProperties = additionalProperties

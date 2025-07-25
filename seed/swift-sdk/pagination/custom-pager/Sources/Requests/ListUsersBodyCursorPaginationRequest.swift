@@ -2,7 +2,10 @@ public struct ListUsersBodyCursorPaginationRequest: Codable, Hashable {
     public let pagination: WithCursor?
     public let additionalProperties: [String: JSONValue]
 
-    public init(pagination: WithCursor? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        pagination: WithCursor? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.pagination = pagination
         self.additionalProperties = additionalProperties
     }

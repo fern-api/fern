@@ -3,7 +3,11 @@ public struct GenerateRequest: Codable, Hashable {
     public let numEvents: Int
     public let additionalProperties: [String: JSONValue]
 
-    public init(stream: Bool, numEvents: Int, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        stream: Bool,
+        numEvents: Int,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.stream = stream
         self.numEvents = numEvents
         self.additionalProperties = additionalProperties

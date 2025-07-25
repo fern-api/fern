@@ -3,7 +3,11 @@ public struct TestCaseWithActualResultImplementation: Codable, Hashable {
     public let assertCorrectnessCheck: AssertCorrectnessCheck
     public let additionalProperties: [String: JSONValue]
 
-    public init(getActualResult: NonVoidFunctionDefinition, assertCorrectnessCheck: AssertCorrectnessCheck, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        getActualResult: NonVoidFunctionDefinition,
+        assertCorrectnessCheck: AssertCorrectnessCheck,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.getActualResult = getActualResult
         self.assertCorrectnessCheck = assertCorrectnessCheck
         self.additionalProperties = additionalProperties

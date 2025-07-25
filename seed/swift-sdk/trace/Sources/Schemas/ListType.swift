@@ -3,7 +3,11 @@ public struct ListType: Codable, Hashable {
     public let isFixedLength: Bool?
     public let additionalProperties: [String: JSONValue]
 
-    public init(valueType: VariableType, isFixedLength: Bool? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        valueType: VariableType,
+        isFixedLength: Bool? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.valueType = valueType
         self.isFixedLength = isFixedLength
         self.additionalProperties = additionalProperties

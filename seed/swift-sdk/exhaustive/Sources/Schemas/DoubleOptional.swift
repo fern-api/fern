@@ -2,7 +2,10 @@ public struct DoubleOptional: Codable, Hashable {
     public let optionalAlias: OptionalAlias?
     public let additionalProperties: [String: JSONValue]
 
-    public init(optionalAlias: OptionalAlias? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        optionalAlias: OptionalAlias? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.optionalAlias = optionalAlias
         self.additionalProperties = additionalProperties
     }

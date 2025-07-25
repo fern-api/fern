@@ -5,7 +5,13 @@ public struct PaginatedConversationResponse: Codable, Hashable {
     public let type: Any
     public let additionalProperties: [String: JSONValue]
 
-    public init(conversations: [Conversation], pages: CursorPages? = nil, totalCount: Int, type: Any, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        conversations: [Conversation],
+        pages: CursorPages? = nil,
+        totalCount: Int,
+        type: Any,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.conversations = conversations
         self.pages = pages
         self.totalCount = totalCount

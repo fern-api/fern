@@ -4,7 +4,12 @@ public struct BaseResource: Codable, Hashable {
     public let memo: Memo
     public let additionalProperties: [String: JSONValue]
 
-    public init(id: String, relatedResources: [ResourceList], memo: Memo, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        id: String,
+        relatedResources: [ResourceList],
+        memo: Memo,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.id = id
         self.relatedResources = relatedResources
         self.memo = memo

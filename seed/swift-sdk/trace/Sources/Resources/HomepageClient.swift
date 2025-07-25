@@ -14,13 +14,12 @@ public final class HomepageClient: Sendable {
         )
     }
 
-    public func setHomepageProblems(request: [ProblemId], requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func setHomepageProblems(request: [ProblemId], requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/homepage-problems",
             body: request,
-            requestOptions: requestOptions,
-            responseType: Any.self
+            requestOptions: requestOptions
         )
     }
 }

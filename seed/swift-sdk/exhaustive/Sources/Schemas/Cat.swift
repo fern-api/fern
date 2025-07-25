@@ -3,7 +3,11 @@ public struct Cat: Codable, Hashable {
     public let likesToMeow: Bool
     public let additionalProperties: [String: JSONValue]
 
-    public init(name: String, likesToMeow: Bool, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        name: String,
+        likesToMeow: Bool,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.name = name
         self.likesToMeow = likesToMeow
         self.additionalProperties = additionalProperties

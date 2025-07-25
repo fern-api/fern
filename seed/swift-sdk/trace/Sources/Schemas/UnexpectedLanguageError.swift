@@ -3,7 +3,11 @@ public struct UnexpectedLanguageError: Codable, Hashable {
     public let actualLanguage: Language
     public let additionalProperties: [String: JSONValue]
 
-    public init(expectedLanguage: Language, actualLanguage: Language, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        expectedLanguage: Language,
+        actualLanguage: Language,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.expectedLanguage = expectedLanguage
         self.actualLanguage = actualLanguage
         self.additionalProperties = additionalProperties

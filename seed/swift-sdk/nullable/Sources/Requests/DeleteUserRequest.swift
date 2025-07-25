@@ -2,7 +2,10 @@ public struct DeleteUserRequest: Codable, Hashable {
     public let username: Any?
     public let additionalProperties: [String: JSONValue]
 
-    public init(username: Any? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        username: Any? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.username = username
         self.additionalProperties = additionalProperties
     }

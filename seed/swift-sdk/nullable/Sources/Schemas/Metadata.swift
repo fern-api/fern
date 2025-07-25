@@ -7,7 +7,15 @@ public struct Metadata: Codable, Hashable {
     public let values: Any?
     public let additionalProperties: [String: JSONValue]
 
-    public init(createdAt: Date, updatedAt: Date, avatar: Any, activated: Any? = nil, status: Status, values: Any? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        createdAt: Date,
+        updatedAt: Date,
+        avatar: Any,
+        activated: Any? = nil,
+        status: Status,
+        values: Any? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.createdAt = createdAt
         self.updatedAt = updatedAt
         self.avatar = avatar

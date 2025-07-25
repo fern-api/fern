@@ -2,7 +2,10 @@ public struct FooExtended: Codable, Hashable {
     public let age: Int
     public let additionalProperties: [String: JSONValue]
 
-    public init(age: Int, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        age: Int,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.age = age
         self.additionalProperties = additionalProperties
     }

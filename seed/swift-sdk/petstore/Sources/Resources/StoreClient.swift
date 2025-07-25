@@ -5,12 +5,11 @@ public final class StoreClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func deleteOrder(orderId: String, requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func deleteOrder(orderId: String, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .delete,
             path: "/store/order/\(orderId)",
-            requestOptions: requestOptions,
-            responseType: Any.self
+            requestOptions: requestOptions
         )
     }
 

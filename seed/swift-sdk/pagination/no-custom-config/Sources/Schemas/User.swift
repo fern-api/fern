@@ -3,7 +3,11 @@ public struct User: Codable, Hashable {
     public let id: Int
     public let additionalProperties: [String: JSONValue]
 
-    public init(name: String, id: Int, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        name: String,
+        id: Int,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.name = name
         self.id = id
         self.additionalProperties = additionalProperties

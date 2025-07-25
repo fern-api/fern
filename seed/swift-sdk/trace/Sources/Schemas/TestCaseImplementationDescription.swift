@@ -2,7 +2,10 @@ public struct TestCaseImplementationDescription: Codable, Hashable {
     public let boards: [TestCaseImplementationDescriptionBoard]
     public let additionalProperties: [String: JSONValue]
 
-    public init(boards: [TestCaseImplementationDescriptionBoard], additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        boards: [TestCaseImplementationDescriptionBoard],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.boards = boards
         self.additionalProperties = additionalProperties
     }

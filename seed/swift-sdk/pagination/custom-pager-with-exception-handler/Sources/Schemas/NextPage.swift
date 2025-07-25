@@ -3,7 +3,11 @@ public struct NextPage: Codable, Hashable {
     public let startingAfter: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(page: Int, startingAfter: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        page: Int,
+        startingAfter: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.page = page
         self.startingAfter = startingAfter
         self.additionalProperties = additionalProperties

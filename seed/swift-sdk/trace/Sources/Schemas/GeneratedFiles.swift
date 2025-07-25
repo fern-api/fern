@@ -4,7 +4,12 @@ public struct GeneratedFiles: Codable, Hashable {
     public let other: Any
     public let additionalProperties: [String: JSONValue]
 
-    public init(generatedTestCaseFiles: Any, generatedTemplateFiles: Any, other: Any, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        generatedTestCaseFiles: Any,
+        generatedTemplateFiles: Any,
+        other: Any,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.generatedTestCaseFiles = generatedTestCaseFiles
         self.generatedTemplateFiles = generatedTemplateFiles
         self.other = other

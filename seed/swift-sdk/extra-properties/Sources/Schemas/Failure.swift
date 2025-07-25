@@ -2,7 +2,10 @@ public struct Failure: Codable, Hashable {
     public let status: Any
     public let additionalProperties: [String: JSONValue]
 
-    public init(status: Any, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        status: Any,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.status = status
         self.additionalProperties = additionalProperties
     }

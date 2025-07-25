@@ -2,7 +2,10 @@ public struct MapValue: Codable, Hashable {
     public let keyValuePairs: [KeyValuePair]
     public let additionalProperties: [String: JSONValue]
 
-    public init(keyValuePairs: [KeyValuePair], additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        keyValuePairs: [KeyValuePair],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.keyValuePairs = keyValuePairs
         self.additionalProperties = additionalProperties
     }

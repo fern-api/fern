@@ -5,7 +5,13 @@ public struct Type: Codable, Hashable {
     public let shape: Shape
     public let additionalProperties: [String: JSONValue]
 
-    public init(decimal: Double, even: Int, name: String, shape: Shape, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        decimal: Double,
+        even: Int,
+        name: String,
+        shape: Shape,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.decimal = decimal
         self.even = even
         self.name = name

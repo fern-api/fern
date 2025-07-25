@@ -2,7 +2,10 @@ public struct CronJob: Codable, Hashable {
     public let expression: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(expression: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        expression: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.expression = expression
         self.additionalProperties = additionalProperties
     }

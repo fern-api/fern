@@ -3,7 +3,11 @@ public struct VoidFunctionSignatureThatTakesActualResult: Codable, Hashable {
     public let actualResultType: VariableType
     public let additionalProperties: [String: JSONValue]
 
-    public init(parameters: [Parameter], actualResultType: VariableType, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        parameters: [Parameter],
+        actualResultType: VariableType,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.parameters = parameters
         self.actualResultType = actualResultType
         self.additionalProperties = additionalProperties

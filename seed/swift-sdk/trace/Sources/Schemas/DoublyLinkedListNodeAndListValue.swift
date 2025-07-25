@@ -3,7 +3,11 @@ public struct DoublyLinkedListNodeAndListValue: Codable, Hashable {
     public let fullList: DoublyLinkedListValue
     public let additionalProperties: [String: JSONValue]
 
-    public init(nodeId: NodeId, fullList: DoublyLinkedListValue, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        nodeId: NodeId,
+        fullList: DoublyLinkedListValue,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.nodeId = nodeId
         self.fullList = fullList
         self.additionalProperties = additionalProperties

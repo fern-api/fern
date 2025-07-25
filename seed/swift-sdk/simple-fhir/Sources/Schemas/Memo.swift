@@ -3,7 +3,11 @@ public struct Memo: Codable, Hashable {
     public let account: Account?
     public let additionalProperties: [String: JSONValue]
 
-    public init(description: String, account: Account? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        description: String,
+        account: Account? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.description = description
         self.account = account
         self.additionalProperties = additionalProperties

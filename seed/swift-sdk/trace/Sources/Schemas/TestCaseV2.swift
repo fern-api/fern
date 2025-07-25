@@ -5,7 +5,13 @@ public struct TestCaseV2: Codable, Hashable {
     public let expects: TestCaseExpects?
     public let additionalProperties: [String: JSONValue]
 
-    public init(metadata: TestCaseMetadata, implementation: TestCaseImplementationReference, arguments: Any, expects: TestCaseExpects? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        metadata: TestCaseMetadata,
+        implementation: TestCaseImplementationReference,
+        arguments: Any,
+        expects: TestCaseExpects? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.metadata = metadata
         self.implementation = implementation
         self.arguments = arguments

@@ -5,12 +5,11 @@ public final class V2Client: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func test(requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func test(requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .get,
             path: "/",
-            requestOptions: requestOptions,
-            responseType: Any.self
+            requestOptions: requestOptions
         )
     }
 }

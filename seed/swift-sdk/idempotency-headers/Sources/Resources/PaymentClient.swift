@@ -15,12 +15,11 @@ public final class PaymentClient: Sendable {
         )
     }
 
-    public func delete(paymentId: String, requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func delete(paymentId: String, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .delete,
             path: "/payment/\(paymentId)",
-            requestOptions: requestOptions,
-            responseType: Any.self
+            requestOptions: requestOptions
         )
     }
 }

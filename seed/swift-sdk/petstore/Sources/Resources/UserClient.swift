@@ -25,12 +25,11 @@ public final class UserClient: Sendable {
         )
     }
 
-    public func deleteUser(username: String, requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func deleteUser(username: String, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .delete,
             path: "/user/\(username)",
-            requestOptions: requestOptions,
-            responseType: Any.self
+            requestOptions: requestOptions
         )
     }
 
@@ -56,22 +55,20 @@ public final class UserClient: Sendable {
         )
     }
 
-    public func logoutUser(requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func logoutUser(requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .get,
             path: "/user/logout",
-            requestOptions: requestOptions,
-            responseType: Any.self
+            requestOptions: requestOptions
         )
     }
 
-    public func updateUser(username: String, request: User, requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func updateUser(username: String, request: User, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .put,
             path: "/user/\(username)",
             body: request,
-            requestOptions: requestOptions,
-            responseType: Any.self
+            requestOptions: requestOptions
         )
     }
 }

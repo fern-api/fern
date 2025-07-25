@@ -5,7 +5,13 @@ public struct FileInfoV2: Codable, Hashable {
     public let editable: Bool
     public let additionalProperties: [String: JSONValue]
 
-    public init(filename: String, directory: String, contents: String, editable: Bool, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        filename: String,
+        directory: String,
+        contents: String,
+        editable: Bool,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.filename = filename
         self.directory = directory
         self.contents = contents

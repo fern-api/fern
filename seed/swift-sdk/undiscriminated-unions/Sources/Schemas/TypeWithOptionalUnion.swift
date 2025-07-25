@@ -2,7 +2,10 @@ public struct TypeWithOptionalUnion: Codable, Hashable {
     public let myUnion: MyUnion?
     public let additionalProperties: [String: JSONValue]
 
-    public init(myUnion: MyUnion? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        myUnion: MyUnion? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.myUnion = myUnion
         self.additionalProperties = additionalProperties
     }

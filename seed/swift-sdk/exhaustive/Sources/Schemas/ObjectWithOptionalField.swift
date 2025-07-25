@@ -14,7 +14,22 @@ public struct ObjectWithOptionalField: Codable, Hashable {
     public let bigint: String?
     public let additionalProperties: [String: JSONValue]
 
-    public init(string: String? = nil, integer: Int? = nil, long: Int64? = nil, double: Double? = nil, bool: Bool? = nil, datetime: Date? = nil, date: Date? = nil, uuid: UUID? = nil, base64: String? = nil, list: [String]? = nil, set: Any? = nil, map: Any? = nil, bigint: String? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        string: String? = nil,
+        integer: Int? = nil,
+        long: Int64? = nil,
+        double: Double? = nil,
+        bool: Bool? = nil,
+        datetime: Date? = nil,
+        date: Date? = nil,
+        uuid: UUID? = nil,
+        base64: String? = nil,
+        list: [String]? = nil,
+        set: Any? = nil,
+        map: Any? = nil,
+        bigint: String? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.string = string
         self.integer = integer
         self.long = long

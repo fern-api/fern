@@ -3,7 +3,11 @@ public struct StdoutResponse: Codable, Hashable {
     public let stdout: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(submissionId: SubmissionId, stdout: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        submissionId: SubmissionId,
+        stdout: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.submissionId = submissionId
         self.stdout = stdout
         self.additionalProperties = additionalProperties

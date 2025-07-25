@@ -3,7 +3,11 @@ public struct TraceResponsesPageV2: Codable, Hashable {
     public let traceResponses: [TraceResponseV2]
     public let additionalProperties: [String: JSONValue]
 
-    public init(offset: Int? = nil, traceResponses: [TraceResponseV2], additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        offset: Int? = nil,
+        traceResponses: [TraceResponseV2],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.offset = offset
         self.traceResponses = traceResponses
         self.additionalProperties = additionalProperties

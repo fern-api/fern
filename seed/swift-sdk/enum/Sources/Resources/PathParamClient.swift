@@ -5,12 +5,11 @@ public final class PathParamClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func send(operand: String, operandOrColor: String, requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func send(operand: String, operandOrColor: String, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/path/\(operand)/\(operandOrColor)",
-            requestOptions: requestOptions,
-            responseType: Any.self
+            requestOptions: requestOptions
         )
     }
 }

@@ -3,7 +3,11 @@ public struct WorkspaceRanResponse: Codable, Hashable {
     public let runDetails: WorkspaceRunDetails
     public let additionalProperties: [String: JSONValue]
 
-    public init(submissionId: SubmissionId, runDetails: WorkspaceRunDetails, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        submissionId: SubmissionId,
+        runDetails: WorkspaceRunDetails,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.submissionId = submissionId
         self.runDetails = runDetails
         self.additionalProperties = additionalProperties

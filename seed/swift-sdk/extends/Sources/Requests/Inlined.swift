@@ -2,7 +2,10 @@ public struct Inlined: Codable, Hashable {
     public let unique: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(unique: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        unique: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.unique = unique
         self.additionalProperties = additionalProperties
     }

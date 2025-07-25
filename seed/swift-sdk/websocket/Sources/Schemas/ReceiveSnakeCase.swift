@@ -3,7 +3,11 @@ public struct ReceiveSnakeCase: Codable, Hashable {
     public let receiveInt: Int
     public let additionalProperties: [String: JSONValue]
 
-    public init(receiveText: String, receiveInt: Int, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        receiveText: String,
+        receiveInt: Int,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.receiveText = receiveText
         self.receiveInt = receiveInt
         self.additionalProperties = additionalProperties

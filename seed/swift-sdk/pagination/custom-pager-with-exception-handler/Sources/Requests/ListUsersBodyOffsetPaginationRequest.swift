@@ -2,7 +2,10 @@ public struct ListUsersBodyOffsetPaginationRequest: Codable, Hashable {
     public let pagination: WithPage?
     public let additionalProperties: [String: JSONValue]
 
-    public init(pagination: WithPage? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        pagination: WithPage? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.pagination = pagination
         self.additionalProperties = additionalProperties
     }

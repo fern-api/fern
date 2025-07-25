@@ -2,7 +2,10 @@ public struct Request: Codable, Hashable {
     public let union: MetadataUnion?
     public let additionalProperties: [String: JSONValue]
 
-    public init(union: MetadataUnion? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        union: MetadataUnion? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.union = union
         self.additionalProperties = additionalProperties
     }

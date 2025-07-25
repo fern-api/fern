@@ -3,7 +3,11 @@ public struct TracedTestCase: Codable, Hashable {
     public let traceResponsesSize: Int
     public let additionalProperties: [String: JSONValue]
 
-    public init(result: TestCaseResultWithStdout, traceResponsesSize: Int, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        result: TestCaseResultWithStdout,
+        traceResponsesSize: Int,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.result = result
         self.traceResponsesSize = traceResponsesSize
         self.additionalProperties = additionalProperties

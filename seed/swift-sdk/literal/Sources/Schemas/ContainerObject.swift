@@ -2,7 +2,10 @@ public struct ContainerObject: Codable, Hashable {
     public let nestedObjects: [NestedObjectWithLiterals]
     public let additionalProperties: [String: JSONValue]
 
-    public init(nestedObjects: [NestedObjectWithLiterals], additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        nestedObjects: [NestedObjectWithLiterals],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.nestedObjects = nestedObjects
         self.additionalProperties = additionalProperties
     }

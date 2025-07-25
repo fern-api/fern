@@ -3,7 +3,11 @@ public struct DebugKeyValuePairs: Codable, Hashable {
     public let value: DebugVariableValue
     public let additionalProperties: [String: JSONValue]
 
-    public init(key: DebugVariableValue, value: DebugVariableValue, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        key: DebugVariableValue,
+        value: DebugVariableValue,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.key = key
         self.value = value
         self.additionalProperties = additionalProperties

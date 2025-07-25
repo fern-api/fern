@@ -5,7 +5,7 @@ public final class QueryParamClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func send(operand: Operand, maybeOperand: Operand? = nil, operandOrColor: ColorOrOperand, maybeOperandOrColor: ColorOrOperand? = nil, requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func send(operand: Operand, maybeOperand: Operand? = nil, operandOrColor: ColorOrOperand, maybeOperandOrColor: ColorOrOperand? = nil, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/query",
@@ -15,12 +15,11 @@ public final class QueryParamClient: Sendable {
                 "operandOrColor": .string(operandOrColor.rawValue), 
                 "maybeOperandOrColor": maybeOperandOrColor.map { .string($0) }
             ],
-            requestOptions: requestOptions,
-            responseType: Any.self
+            requestOptions: requestOptions
         )
     }
 
-    public func sendList(operand: Operand, maybeOperand: Operand? = nil, operandOrColor: ColorOrOperand, maybeOperandOrColor: ColorOrOperand? = nil, requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func sendList(operand: Operand, maybeOperand: Operand? = nil, operandOrColor: ColorOrOperand, maybeOperandOrColor: ColorOrOperand? = nil, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/query-list",
@@ -30,8 +29,7 @@ public final class QueryParamClient: Sendable {
                 "operandOrColor": .string(operandOrColor.rawValue), 
                 "maybeOperandOrColor": maybeOperandOrColor.map { .string($0) }
             ],
-            requestOptions: requestOptions,
-            responseType: Any.self
+            requestOptions: requestOptions
         )
     }
 }

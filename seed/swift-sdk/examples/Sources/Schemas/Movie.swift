@@ -11,7 +11,19 @@ public struct Movie: Codable, Hashable {
     public let revenue: Int64
     public let additionalProperties: [String: JSONValue]
 
-    public init(id: MovieId, prequel: MovieId? = nil, title: String, from: String, rating: Double, type: Any, tag: Tag, book: String? = nil, metadata: Any, revenue: Int64, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        id: MovieId,
+        prequel: MovieId? = nil,
+        title: String,
+        from: String,
+        rating: Double,
+        type: Any,
+        tag: Tag,
+        book: String? = nil,
+        metadata: Any,
+        revenue: Int64,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.id = id
         self.prequel = prequel
         self.title = title

@@ -54,12 +54,11 @@ public final class PlaylistClient: Sendable {
         )
     }
 
-    public func deletePlaylist(serviceParam: String, playlistId: String, requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func deletePlaylist(serviceParam: String, playlistId: String, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .delete,
             path: "/v2/playlist/\(serviceParam)/\(playlistId)",
-            requestOptions: requestOptions,
-            responseType: Any.self
+            requestOptions: requestOptions
         )
     }
 }

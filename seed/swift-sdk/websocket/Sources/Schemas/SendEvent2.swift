@@ -3,7 +3,11 @@ public struct SendEvent2: Codable, Hashable {
     public let sendParam2: Bool
     public let additionalProperties: [String: JSONValue]
 
-    public init(sendText2: String, sendParam2: Bool, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        sendText2: String,
+        sendParam2: Bool,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.sendText2 = sendText2
         self.sendParam2 = sendParam2
         self.additionalProperties = additionalProperties

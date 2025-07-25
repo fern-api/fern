@@ -3,7 +3,11 @@ public struct NonVoidFunctionDefinition: Codable, Hashable {
     public let code: FunctionImplementationForMultipleLanguages
     public let additionalProperties: [String: JSONValue]
 
-    public init(signature: NonVoidFunctionSignature, code: FunctionImplementationForMultipleLanguages, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        signature: NonVoidFunctionSignature,
+        code: FunctionImplementationForMultipleLanguages,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.signature = signature
         self.code = code
         self.additionalProperties = additionalProperties

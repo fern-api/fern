@@ -2,7 +2,10 @@ public struct ImportingA: Codable, Hashable {
     public let a: A?
     public let additionalProperties: [String: JSONValue]
 
-    public init(a: A? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        a: A? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.a = a
         self.additionalProperties = additionalProperties
     }

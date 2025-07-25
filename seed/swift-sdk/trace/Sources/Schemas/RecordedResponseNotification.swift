@@ -4,7 +4,12 @@ public struct RecordedResponseNotification: Codable, Hashable {
     public let testCaseId: String?
     public let additionalProperties: [String: JSONValue]
 
-    public init(submissionId: SubmissionId, traceResponsesSize: Int, testCaseId: String? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        submissionId: SubmissionId,
+        traceResponsesSize: Int,
+        testCaseId: String? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.submissionId = submissionId
         self.traceResponsesSize = traceResponsesSize
         self.testCaseId = testCaseId

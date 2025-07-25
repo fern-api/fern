@@ -2,7 +2,10 @@ public struct ObjectWithDocs: Codable, Hashable {
     public let string: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(string: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        string: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.string = string
         self.additionalProperties = additionalProperties
     }

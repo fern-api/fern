@@ -2,7 +2,10 @@ public struct TestCaseHiddenGrade: Codable, Hashable {
     public let passed: Bool
     public let additionalProperties: [String: JSONValue]
 
-    public init(passed: Bool, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        passed: Bool,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.passed = passed
         self.additionalProperties = additionalProperties
     }

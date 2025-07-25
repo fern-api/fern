@@ -2,7 +2,10 @@ public struct WorkspaceSubmissionStatusV2: Codable, Hashable {
     public let updates: [WorkspaceSubmissionUpdate]
     public let additionalProperties: [String: JSONValue]
 
-    public init(updates: [WorkspaceSubmissionUpdate], additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        updates: [WorkspaceSubmissionUpdate],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.updates = updates
         self.additionalProperties = additionalProperties
     }

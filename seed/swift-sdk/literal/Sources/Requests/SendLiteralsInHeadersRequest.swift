@@ -2,7 +2,10 @@ public struct SendLiteralsInHeadersRequest: Codable, Hashable {
     public let query: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(query: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        query: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.query = query
         self.additionalProperties = additionalProperties
     }

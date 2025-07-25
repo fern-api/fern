@@ -3,7 +3,11 @@ public struct StartingAfterPaging: Codable, Hashable {
     public let startingAfter: String?
     public let additionalProperties: [String: JSONValue]
 
-    public init(perPage: Int, startingAfter: String? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        perPage: Int,
+        startingAfter: String? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.perPage = perPage
         self.startingAfter = startingAfter
         self.additionalProperties = additionalProperties

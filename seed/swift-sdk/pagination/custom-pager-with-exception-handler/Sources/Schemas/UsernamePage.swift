@@ -3,7 +3,11 @@ public struct UsernamePage: Codable, Hashable {
     public let data: [String]
     public let additionalProperties: [String: JSONValue]
 
-    public init(after: String? = nil, data: [String], additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        after: String? = nil,
+        data: [String],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.after = after
         self.data = data
         self.additionalProperties = additionalProperties

@@ -4,7 +4,12 @@ public struct NestedObjectWithLiterals: Codable, Hashable {
     public let strProp: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(literal1: Any, literal2: Any, strProp: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        literal1: Any,
+        literal2: Any,
+        strProp: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.literal1 = literal1
         self.literal2 = literal2
         self.strProp = strProp

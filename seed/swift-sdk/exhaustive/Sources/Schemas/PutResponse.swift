@@ -2,7 +2,10 @@ public struct PutResponse: Codable, Hashable {
     public let errors: [Error]?
     public let additionalProperties: [String: JSONValue]
 
-    public init(errors: [Error]? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        errors: [Error]? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.errors = errors
         self.additionalProperties = additionalProperties
     }

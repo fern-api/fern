@@ -2,7 +2,10 @@ public struct ListUsersExtendedOptionalListResponse: Codable, Hashable {
     public let totalCount: Int
     public let additionalProperties: [String: JSONValue]
 
-    public init(totalCount: Int, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        totalCount: Int,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.totalCount = totalCount
         self.additionalProperties = additionalProperties
     }

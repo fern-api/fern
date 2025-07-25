@@ -5,7 +5,13 @@ public struct GetSubmissionStateResponse: Codable, Hashable {
     public let submissionTypeState: SubmissionTypeState
     public let additionalProperties: [String: JSONValue]
 
-    public init(timeSubmitted: Date? = nil, submission: String, language: Language, submissionTypeState: SubmissionTypeState, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        timeSubmitted: Date? = nil,
+        submission: String,
+        language: Language,
+        submissionTypeState: SubmissionTypeState,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.timeSubmitted = timeSubmitted
         self.submission = submission
         self.language = language

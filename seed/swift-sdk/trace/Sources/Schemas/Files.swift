@@ -2,7 +2,10 @@ public struct Files: Codable, Hashable {
     public let files: [FileInfoV2]
     public let additionalProperties: [String: JSONValue]
 
-    public init(files: [FileInfoV2], additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        files: [FileInfoV2],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.files = files
         self.additionalProperties = additionalProperties
     }

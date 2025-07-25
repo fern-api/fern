@@ -3,7 +3,11 @@ public struct ExpressionLocation: Codable, Hashable {
     public let offset: Int
     public let additionalProperties: [String: JSONValue]
 
-    public init(start: Int, offset: Int, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        start: Int,
+        offset: Int,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.start = start
         self.offset = offset
         self.additionalProperties = additionalProperties

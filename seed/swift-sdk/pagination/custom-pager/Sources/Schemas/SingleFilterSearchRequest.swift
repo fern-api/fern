@@ -4,7 +4,12 @@ public struct SingleFilterSearchRequest: Codable, Hashable {
     public let value: String?
     public let additionalProperties: [String: JSONValue]
 
-    public init(field: String? = nil, operator: SingleFilterSearchRequestOperator? = nil, value: String? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        field: String? = nil,
+        operator: SingleFilterSearchRequestOperator? = nil,
+        value: String? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.field = field
         self.operator = `operator`
         self.value = value

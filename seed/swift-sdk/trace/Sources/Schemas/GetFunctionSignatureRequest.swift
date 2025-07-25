@@ -2,7 +2,10 @@ public struct GetFunctionSignatureRequest: Codable, Hashable {
     public let functionSignature: FunctionSignature
     public let additionalProperties: [String: JSONValue]
 
-    public init(functionSignature: FunctionSignature, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        functionSignature: FunctionSignature,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.functionSignature = functionSignature
         self.additionalProperties = additionalProperties
     }

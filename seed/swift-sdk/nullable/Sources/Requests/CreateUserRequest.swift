@@ -5,7 +5,13 @@ public struct CreateUserRequest: Codable, Hashable {
     public let avatar: Any?
     public let additionalProperties: [String: JSONValue]
 
-    public init(username: String, tags: [String]? = nil, metadata: Metadata? = nil, avatar: Any? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        username: String,
+        tags: [String]? = nil,
+        metadata: Metadata? = nil,
+        avatar: Any? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.username = username
         self.tags = tags
         self.metadata = metadata

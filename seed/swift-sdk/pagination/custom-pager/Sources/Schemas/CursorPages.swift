@@ -6,7 +6,14 @@ public struct CursorPages: Codable, Hashable {
     public let type: Any
     public let additionalProperties: [String: JSONValue]
 
-    public init(next: StartingAfterPaging? = nil, page: Int? = nil, perPage: Int? = nil, totalPages: Int? = nil, type: Any, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        next: StartingAfterPaging? = nil,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        totalPages: Int? = nil,
+        type: Any,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.next = next
         self.page = page
         self.perPage = perPage

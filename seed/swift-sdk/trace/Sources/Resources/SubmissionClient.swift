@@ -23,12 +23,11 @@ public final class SubmissionClient: Sendable {
         )
     }
 
-    public func stopExecutionSession(sessionId: String, requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func stopExecutionSession(sessionId: String, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .delete,
             path: "/sessions/stop/\(sessionId)",
-            requestOptions: requestOptions,
-            responseType: Any.self
+            requestOptions: requestOptions
         )
     }
 

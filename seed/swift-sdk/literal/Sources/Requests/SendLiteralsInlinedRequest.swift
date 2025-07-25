@@ -9,7 +9,17 @@ public struct SendLiteralsInlinedRequest: Codable, Hashable {
     public let objectWithLiteral: ATopLevelLiteral
     public let additionalProperties: [String: JSONValue]
 
-    public init(prompt: Any, context: Any? = nil, query: String, temperature: Double? = nil, stream: Any, aliasedContext: SomeAliasedLiteral, maybeContext: SomeAliasedLiteral? = nil, objectWithLiteral: ATopLevelLiteral, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        prompt: Any,
+        context: Any? = nil,
+        query: String,
+        temperature: Double? = nil,
+        stream: Any,
+        aliasedContext: SomeAliasedLiteral,
+        maybeContext: SomeAliasedLiteral? = nil,
+        objectWithLiteral: ATopLevelLiteral,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.prompt = prompt
         self.context = context
         self.query = query

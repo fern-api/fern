@@ -5,7 +5,13 @@ public struct ListUsersPaginationResponse: Codable, Hashable {
     public let data: [User]
     public let additionalProperties: [String: JSONValue]
 
-    public init(hasNextPage: Bool? = nil, page: Page? = nil, totalCount: Int, data: [User], additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        hasNextPage: Bool? = nil,
+        page: Page? = nil,
+        totalCount: Int,
+        data: [User],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.hasNextPage = hasNextPage
         self.page = page
         self.totalCount = totalCount

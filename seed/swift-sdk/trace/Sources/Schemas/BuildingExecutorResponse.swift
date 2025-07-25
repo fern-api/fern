@@ -3,7 +3,11 @@ public struct BuildingExecutorResponse: Codable, Hashable {
     public let status: ExecutionSessionStatus
     public let additionalProperties: [String: JSONValue]
 
-    public init(submissionId: SubmissionId, status: ExecutionSessionStatus, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        submissionId: SubmissionId,
+        status: ExecutionSessionStatus,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.submissionId = submissionId
         self.status = status
         self.additionalProperties = additionalProperties

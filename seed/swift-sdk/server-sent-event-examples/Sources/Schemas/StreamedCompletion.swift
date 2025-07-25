@@ -3,7 +3,11 @@ public struct StreamedCompletion: Codable, Hashable {
     public let tokens: Int?
     public let additionalProperties: [String: JSONValue]
 
-    public init(delta: String, tokens: Int? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        delta: String,
+        tokens: Int? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.delta = delta
         self.tokens = tokens
         self.additionalProperties = additionalProperties

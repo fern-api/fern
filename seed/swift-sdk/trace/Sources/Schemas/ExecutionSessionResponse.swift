@@ -5,7 +5,13 @@ public struct ExecutionSessionResponse: Codable, Hashable {
     public let status: ExecutionSessionStatus
     public let additionalProperties: [String: JSONValue]
 
-    public init(sessionId: String, executionSessionUrl: String? = nil, language: Language, status: ExecutionSessionStatus, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        sessionId: String,
+        executionSessionUrl: String? = nil,
+        language: Language,
+        status: ExecutionSessionStatus,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.sessionId = sessionId
         self.executionSessionUrl = executionSessionUrl
         self.language = language

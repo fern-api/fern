@@ -3,7 +3,11 @@ public struct FileInfo: Codable, Hashable {
     public let contents: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(filename: String, contents: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        filename: String,
+        contents: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.filename = filename
         self.contents = contents
         self.additionalProperties = additionalProperties

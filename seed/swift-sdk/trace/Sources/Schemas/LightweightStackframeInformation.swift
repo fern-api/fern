@@ -3,7 +3,11 @@ public struct LightweightStackframeInformation: Codable, Hashable {
     public let topStackFrameMethodName: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(numStackFrames: Int, topStackFrameMethodName: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        numStackFrames: Int,
+        topStackFrameMethodName: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.numStackFrames = numStackFrames
         self.topStackFrameMethodName = topStackFrameMethodName
         self.additionalProperties = additionalProperties

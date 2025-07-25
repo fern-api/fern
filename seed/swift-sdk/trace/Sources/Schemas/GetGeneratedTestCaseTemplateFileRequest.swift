@@ -2,7 +2,10 @@ public struct GetGeneratedTestCaseTemplateFileRequest: Codable, Hashable {
     public let template: TestCaseTemplate
     public let additionalProperties: [String: JSONValue]
 
-    public init(template: TestCaseTemplate, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        template: TestCaseTemplate,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.template = template
         self.additionalProperties = additionalProperties
     }

@@ -4,7 +4,12 @@ public struct Parameter: Codable, Hashable {
     public let variableType: VariableType
     public let additionalProperties: [String: JSONValue]
 
-    public init(parameterId: ParameterId, name: String, variableType: VariableType, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        parameterId: ParameterId,
+        name: String,
+        variableType: VariableType,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.parameterId = parameterId
         self.name = name
         self.variableType = variableType

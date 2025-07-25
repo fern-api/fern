@@ -2,7 +2,10 @@ public struct TestCaseExpects: Codable, Hashable {
     public let expectedStdout: String?
     public let additionalProperties: [String: JSONValue]
 
-    public init(expectedStdout: String? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        expectedStdout: String? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.expectedStdout = expectedStdout
         self.additionalProperties = additionalProperties
     }

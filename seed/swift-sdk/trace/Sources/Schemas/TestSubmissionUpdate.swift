@@ -3,7 +3,11 @@ public struct TestSubmissionUpdate: Codable, Hashable {
     public let updateInfo: TestSubmissionUpdateInfo
     public let additionalProperties: [String: JSONValue]
 
-    public init(updateTime: Date, updateInfo: TestSubmissionUpdateInfo, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        updateTime: Date,
+        updateInfo: TestSubmissionUpdateInfo,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.updateTime = updateTime
         self.updateInfo = updateInfo
         self.additionalProperties = additionalProperties

@@ -4,7 +4,12 @@ public struct CreateUserRequest: Codable, Hashable {
     public let name: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(type: Any, version: Any, name: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        type: Any,
+        version: Any,
+        name: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.type = type
         self.version = version
         self.name = name

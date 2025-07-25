@@ -2,7 +2,10 @@ public struct GetShapeRequest: Codable, Hashable {
     public let id: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(id: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        id: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.id = id
         self.additionalProperties = additionalProperties
     }

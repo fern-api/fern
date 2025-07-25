@@ -2,7 +2,10 @@ public struct ANestedLiteral: Codable, Hashable {
     public let myLiteral: Any
     public let additionalProperties: [String: JSONValue]
 
-    public init(myLiteral: Any, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        myLiteral: Any,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.myLiteral = myLiteral
         self.additionalProperties = additionalProperties
     }

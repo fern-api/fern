@@ -11,7 +11,19 @@ public struct ProblemInfoV2: Codable, Hashable {
     public let isPublic: Bool
     public let additionalProperties: [String: JSONValue]
 
-    public init(problemId: ProblemId, problemDescription: ProblemDescription, problemName: String, problemVersion: Int, supportedLanguages: Any, customFiles: CustomFiles, generatedFiles: GeneratedFiles, customTestCaseTemplates: [TestCaseTemplate], testcases: [TestCaseV2], isPublic: Bool, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        problemId: ProblemId,
+        problemDescription: ProblemDescription,
+        problemName: String,
+        problemVersion: Int,
+        supportedLanguages: Any,
+        customFiles: CustomFiles,
+        generatedFiles: GeneratedFiles,
+        customTestCaseTemplates: [TestCaseTemplate],
+        testcases: [TestCaseV2],
+        isPublic: Bool,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.problemId = problemId
         self.problemDescription = problemDescription
         self.problemName = problemName

@@ -3,7 +3,11 @@ public struct TestCaseWithExpectedResult: Codable, Hashable {
     public let expectedResult: VariableValue
     public let additionalProperties: [String: JSONValue]
 
-    public init(testCase: TestCase, expectedResult: VariableValue, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        testCase: TestCase,
+        expectedResult: VariableValue,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.testCase = testCase
         self.expectedResult = expectedResult
         self.additionalProperties = additionalProperties

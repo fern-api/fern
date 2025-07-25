@@ -3,7 +3,11 @@ public struct SearchRequest: Codable, Hashable {
     public let query: SearchRequestQuery
     public let additionalProperties: [String: JSONValue]
 
-    public init(pagination: StartingAfterPaging? = nil, query: SearchRequestQuery, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        pagination: StartingAfterPaging? = nil,
+        query: SearchRequestQuery,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.pagination = pagination
         self.query = query
         self.additionalProperties = additionalProperties

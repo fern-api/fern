@@ -2,7 +2,10 @@ public struct LangServerRequest: Codable, Hashable {
     public let request: Any
     public let additionalProperties: [String: JSONValue]
 
-    public init(request: Any, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        request: Any,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.request = request
         self.additionalProperties = additionalProperties
     }

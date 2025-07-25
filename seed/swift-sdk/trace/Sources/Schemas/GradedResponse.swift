@@ -3,7 +3,11 @@ public struct GradedResponse: Codable, Hashable {
     public let testCases: Any
     public let additionalProperties: [String: JSONValue]
 
-    public init(submissionId: SubmissionId, testCases: Any, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        submissionId: SubmissionId,
+        testCases: Any,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.submissionId = submissionId
         self.testCases = testCases
         self.additionalProperties = additionalProperties

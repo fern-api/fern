@@ -3,7 +3,11 @@ public struct PatchProxyRequest: Codable, Hashable {
     public let requireAuth: Any
     public let additionalProperties: [String: JSONValue]
 
-    public init(application: Any, requireAuth: Any, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        application: Any,
+        requireAuth: Any,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.application = application
         self.requireAuth = requireAuth
         self.additionalProperties = additionalProperties

@@ -3,7 +3,11 @@ public struct InvalidRequestResponse: Codable, Hashable {
     public let cause: InvalidRequestCause
     public let additionalProperties: [String: JSONValue]
 
-    public init(request: SubmissionRequest, cause: InvalidRequestCause, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        request: SubmissionRequest,
+        cause: InvalidRequestCause,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.request = request
         self.cause = cause
         self.additionalProperties = additionalProperties

@@ -3,7 +3,11 @@ public struct NestedUser: Codable, Hashable {
     public let user: User
     public let additionalProperties: [String: JSONValue]
 
-    public init(name: String, user: User, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        name: String,
+        user: User,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.name = name
         self.user = user
         self.additionalProperties = additionalProperties

@@ -5,7 +5,13 @@ public struct DoublyLinkedListNodeValue: Codable, Hashable {
     public let prev: NodeId?
     public let additionalProperties: [String: JSONValue]
 
-    public init(nodeId: NodeId, val: Double, next: NodeId? = nil, prev: NodeId? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        nodeId: NodeId,
+        val: Double,
+        next: NodeId? = nil,
+        prev: NodeId? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.nodeId = nodeId
         self.val = val
         self.next = next

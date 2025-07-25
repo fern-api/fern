@@ -2,7 +2,10 @@ public struct GetPresignedUrlRequest: Codable, Hashable {
     public let s3Key: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(s3Key: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        s3Key: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.s3Key = s3Key
         self.additionalProperties = additionalProperties
     }

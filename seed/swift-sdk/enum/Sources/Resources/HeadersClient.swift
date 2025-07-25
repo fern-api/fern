@@ -5,7 +5,7 @@ public final class HeadersClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func send(operand: Operand, maybeOperand: Operand? = nil, operandOrColor: ColorOrOperand, maybeOperandOrColor: ColorOrOperand? = nil, requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func send(operand: Operand, maybeOperand: Operand? = nil, operandOrColor: ColorOrOperand, maybeOperandOrColor: ColorOrOperand? = nil, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/headers",
@@ -15,8 +15,7 @@ public final class HeadersClient: Sendable {
                 "operandOrColor": operandOrColor, 
                 "maybeOperandOrColor": maybeOperandOrColor
             ],
-            requestOptions: requestOptions,
-            responseType: Any.self
+            requestOptions: requestOptions
         )
     }
 }

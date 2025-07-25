@@ -2,7 +2,10 @@ public struct FunctionImplementationForMultipleLanguages: Codable, Hashable {
     public let codeByLanguage: Any
     public let additionalProperties: [String: JSONValue]
 
-    public init(codeByLanguage: Any, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        codeByLanguage: Any,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.codeByLanguage = codeByLanguage
         self.additionalProperties = additionalProperties
     }

@@ -3,7 +3,11 @@ public struct TestCase: Codable, Hashable {
     public let params: [VariableValue]
     public let additionalProperties: [String: JSONValue]
 
-    public init(id: String, params: [VariableValue], additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        id: String,
+        params: [VariableValue],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.id = id
         self.params = params
         self.additionalProperties = additionalProperties

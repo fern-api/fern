@@ -3,7 +3,11 @@ public struct NestedObjectWithRequiredField: Codable, Hashable {
     public let nestedObject: ObjectWithOptionalField
     public let additionalProperties: [String: JSONValue]
 
-    public init(string: String, nestedObject: ObjectWithOptionalField, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        string: String,
+        nestedObject: ObjectWithOptionalField,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.string = string
         self.nestedObject = nestedObject
         self.additionalProperties = additionalProperties

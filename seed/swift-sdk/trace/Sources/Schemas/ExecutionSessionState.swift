@@ -7,7 +7,15 @@ public struct ExecutionSessionState: Codable, Hashable {
     public let status: ExecutionSessionStatus
     public let additionalProperties: [String: JSONValue]
 
-    public init(lastTimeContacted: String? = nil, sessionId: String, isWarmInstance: Bool, awsTaskId: String? = nil, language: Language, status: ExecutionSessionStatus, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        lastTimeContacted: String? = nil,
+        sessionId: String,
+        isWarmInstance: Bool,
+        awsTaskId: String? = nil,
+        language: Language,
+        status: ExecutionSessionStatus,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.lastTimeContacted = lastTimeContacted
         self.sessionId = sessionId
         self.isWarmInstance = isWarmInstance

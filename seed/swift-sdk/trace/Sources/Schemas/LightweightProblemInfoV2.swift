@@ -5,7 +5,13 @@ public struct LightweightProblemInfoV2: Codable, Hashable {
     public let variableTypes: Any
     public let additionalProperties: [String: JSONValue]
 
-    public init(problemId: ProblemId, problemName: String, problemVersion: Int, variableTypes: Any, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        problemId: ProblemId,
+        problemName: String,
+        problemVersion: Int,
+        variableTypes: Any,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.problemId = problemId
         self.problemName = problemName
         self.problemVersion = problemVersion

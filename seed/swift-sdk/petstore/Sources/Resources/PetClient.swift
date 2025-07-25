@@ -15,12 +15,11 @@ public final class PetClient: Sendable {
         )
     }
 
-    public func deletePet(petId: String, requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func deletePet(petId: String, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .delete,
             path: "/pet/\(petId)",
-            requestOptions: requestOptions,
-            responseType: Any.self
+            requestOptions: requestOptions
         )
     }
 

@@ -3,7 +3,11 @@ public struct StoreTracedWorkspaceRequest: Codable, Hashable {
     public let traceResponses: [TraceResponse]
     public let additionalProperties: [String: JSONValue]
 
-    public init(workspaceRunDetails: WorkspaceRunDetails, traceResponses: [TraceResponse], additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        workspaceRunDetails: WorkspaceRunDetails,
+        traceResponses: [TraceResponse],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.workspaceRunDetails = workspaceRunDetails
         self.traceResponses = traceResponses
         self.additionalProperties = additionalProperties

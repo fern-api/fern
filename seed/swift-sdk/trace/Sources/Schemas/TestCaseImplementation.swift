@@ -3,7 +3,11 @@ public struct TestCaseImplementation: Codable, Hashable {
     public let function: TestCaseFunction
     public let additionalProperties: [String: JSONValue]
 
-    public init(description: TestCaseImplementationDescription, function: TestCaseFunction, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        description: TestCaseImplementationDescription,
+        function: TestCaseFunction,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.description = description
         self.function = function
         self.additionalProperties = additionalProperties

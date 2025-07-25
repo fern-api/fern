@@ -5,7 +5,13 @@ public struct WorkspaceSubmitRequest: Codable, Hashable {
     public let userId: String?
     public let additionalProperties: [String: JSONValue]
 
-    public init(submissionId: SubmissionId, language: Language, submissionFiles: [SubmissionFileInfo], userId: String? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        submissionId: SubmissionId,
+        language: Language,
+        submissionFiles: [SubmissionFileInfo],
+        userId: String? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.submissionId = submissionId
         self.language = language
         self.submissionFiles = submissionFiles

@@ -3,7 +3,11 @@ public struct WorkspaceFiles: Codable, Hashable {
     public let readOnlyFiles: [FileInfo]
     public let additionalProperties: [String: JSONValue]
 
-    public init(mainFile: FileInfo, readOnlyFiles: [FileInfo], additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        mainFile: FileInfo,
+        readOnlyFiles: [FileInfo],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.mainFile = mainFile
         self.readOnlyFiles = readOnlyFiles
         self.additionalProperties = additionalProperties

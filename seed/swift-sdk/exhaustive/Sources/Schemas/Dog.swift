@@ -3,7 +3,11 @@ public struct Dog: Codable, Hashable {
     public let likesToWoof: Bool
     public let additionalProperties: [String: JSONValue]
 
-    public init(name: String, likesToWoof: Bool, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        name: String,
+        likesToWoof: Bool,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.name = name
         self.likesToWoof = likesToWoof
         self.additionalProperties = additionalProperties

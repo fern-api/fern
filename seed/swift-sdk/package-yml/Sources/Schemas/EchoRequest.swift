@@ -3,7 +3,11 @@ public struct EchoRequest: Codable, Hashable {
     public let size: Int
     public let additionalProperties: [String: JSONValue]
 
-    public init(name: String, size: Int, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        name: String,
+        size: Int,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.name = name
         self.size = size
         self.additionalProperties = additionalProperties

@@ -4,7 +4,12 @@ public struct GetExecutionSessionStateResponse: Codable, Hashable {
     public let warmingSessionIds: [String]
     public let additionalProperties: [String: JSONValue]
 
-    public init(states: Any, numWarmingInstances: Int? = nil, warmingSessionIds: [String], additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        states: Any,
+        numWarmingInstances: Int? = nil,
+        warmingSessionIds: [String],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.states = states
         self.numWarmingInstances = numWarmingInstances
         self.warmingSessionIds = warmingSessionIds

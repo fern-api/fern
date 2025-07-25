@@ -2,7 +2,10 @@ public struct GetBasicSolutionFileResponse: Codable, Hashable {
     public let solutionFileByLanguage: Any
     public let additionalProperties: [String: JSONValue]
 
-    public init(solutionFileByLanguage: Any, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        solutionFileByLanguage: Any,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.solutionFileByLanguage = solutionFileByLanguage
         self.additionalProperties = additionalProperties
     }

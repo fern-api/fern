@@ -5,12 +5,11 @@ public final class ServiceClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func post(pathParam: String, serviceParam: String, endpointParam: String, resourceParam: String, requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func post(pathParam: String, serviceParam: String, endpointParam: String, resourceParam: String, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/test/\(pathParam)/\(serviceParam)/\(endpointParam)/\(resourceParam)",
-            requestOptions: requestOptions,
-            responseType: Any.self
+            requestOptions: requestOptions
         )
     }
 }

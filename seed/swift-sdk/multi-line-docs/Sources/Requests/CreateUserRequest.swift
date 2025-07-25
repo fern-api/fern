@@ -3,7 +3,11 @@ public struct CreateUserRequest: Codable, Hashable {
     public let age: Int?
     public let additionalProperties: [String: JSONValue]
 
-    public init(name: String, age: Int? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        name: String,
+        age: Int? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.name = name
         self.age = age
         self.additionalProperties = additionalProperties

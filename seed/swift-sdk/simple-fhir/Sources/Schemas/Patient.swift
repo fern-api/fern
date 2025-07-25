@@ -4,7 +4,12 @@ public struct Patient: Codable, Hashable {
     public let scripts: [Script]
     public let additionalProperties: [String: JSONValue]
 
-    public init(resourceType: Any, name: String, scripts: [Script], additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        resourceType: Any,
+        name: String,
+        scripts: [Script],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.resourceType = resourceType
         self.name = name
         self.scripts = scripts

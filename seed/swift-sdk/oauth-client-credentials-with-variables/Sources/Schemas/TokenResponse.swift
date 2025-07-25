@@ -4,7 +4,12 @@ public struct TokenResponse: Codable, Hashable {
     public let refreshToken: String?
     public let additionalProperties: [String: JSONValue]
 
-    public init(accessToken: String, expiresIn: Int, refreshToken: String? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        accessToken: String,
+        expiresIn: Int,
+        refreshToken: String? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.accessToken = accessToken
         self.expiresIn = expiresIn
         self.refreshToken = refreshToken

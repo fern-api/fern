@@ -8,7 +8,16 @@ public struct CreateProblemRequest: Codable, Hashable {
     public let methodName: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(problemName: String, problemDescription: ProblemDescription, files: Any, inputParams: [VariableTypeAndName], outputType: VariableType, testcases: [TestCaseWithExpectedResult], methodName: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        problemName: String,
+        problemDescription: ProblemDescription,
+        files: Any,
+        inputParams: [VariableTypeAndName],
+        outputType: VariableType,
+        testcases: [TestCaseWithExpectedResult],
+        methodName: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.problemName = problemName
         self.problemDescription = problemDescription
         self.files = files

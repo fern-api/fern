@@ -2,7 +2,10 @@ public struct Circle: Codable, Hashable {
     public let radius: Double
     public let additionalProperties: [String: JSONValue]
 
-    public init(radius: Double, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        radius: Double,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.radius = radius
         self.additionalProperties = additionalProperties
     }

@@ -4,7 +4,12 @@ public struct GenericCreateProblemError: Codable, Hashable {
     public let stacktrace: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(message: String, type: String, stacktrace: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        message: String,
+        type: String,
+        stacktrace: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.message = message
         self.type = type
         self.stacktrace = stacktrace

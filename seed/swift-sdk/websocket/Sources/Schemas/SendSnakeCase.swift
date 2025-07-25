@@ -3,7 +3,11 @@ public struct SendSnakeCase: Codable, Hashable {
     public let sendParam: Int
     public let additionalProperties: [String: JSONValue]
 
-    public init(sendText: String, sendParam: Int, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        sendText: String,
+        sendParam: Int,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.sendText = sendText
         self.sendParam = sendParam
         self.additionalProperties = additionalProperties

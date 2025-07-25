@@ -2,7 +2,10 @@ public struct ActiveDiamond: Codable, Hashable {
     public let value: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(value: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        value: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.value = value
         self.additionalProperties = additionalProperties
     }

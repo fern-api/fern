@@ -4,7 +4,12 @@ public struct ExceptionInfo: Codable, Hashable {
     public let exceptionStacktrace: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(exceptionType: String, exceptionMessage: String, exceptionStacktrace: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        exceptionType: String,
+        exceptionMessage: String,
+        exceptionStacktrace: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.exceptionType = exceptionType
         self.exceptionMessage = exceptionMessage
         self.exceptionStacktrace = exceptionStacktrace

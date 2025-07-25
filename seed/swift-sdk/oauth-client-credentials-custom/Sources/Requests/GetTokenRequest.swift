@@ -8,7 +8,16 @@ public struct GetTokenRequest: Codable, Hashable {
     public let scope: String?
     public let additionalProperties: [String: JSONValue]
 
-    public init(cid: String, csr: String, scp: String, entityId: String, audience: Any, grantType: Any, scope: String? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        cid: String,
+        csr: String,
+        scp: String,
+        entityId: String,
+        audience: Any,
+        grantType: Any,
+        scope: String? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.cid = cid
         self.csr = csr
         self.scp = scp

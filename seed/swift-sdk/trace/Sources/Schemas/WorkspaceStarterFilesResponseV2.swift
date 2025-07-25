@@ -2,7 +2,10 @@ public struct WorkspaceStarterFilesResponseV2: Codable, Hashable {
     public let filesByLanguage: Any
     public let additionalProperties: [String: JSONValue]
 
-    public init(filesByLanguage: Any, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        filesByLanguage: Any,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.filesByLanguage = filesByLanguage
         self.additionalProperties = additionalProperties
     }

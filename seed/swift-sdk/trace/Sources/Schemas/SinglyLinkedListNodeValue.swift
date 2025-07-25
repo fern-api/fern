@@ -4,7 +4,12 @@ public struct SinglyLinkedListNodeValue: Codable, Hashable {
     public let next: NodeId?
     public let additionalProperties: [String: JSONValue]
 
-    public init(nodeId: NodeId, val: Double, next: NodeId? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        nodeId: NodeId,
+        val: Double,
+        next: NodeId? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.nodeId = nodeId
         self.val = val
         self.next = next

@@ -4,7 +4,12 @@ public struct Directory: Codable, Hashable {
     public let directories: [Directory]?
     public let additionalProperties: [String: JSONValue]
 
-    public init(name: String, files: [File]? = nil, directories: [Directory]? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        name: String,
+        files: [File]? = nil,
+        directories: [Directory]? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.name = name
         self.files = files
         self.directories = directories

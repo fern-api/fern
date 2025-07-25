@@ -3,7 +3,11 @@ public struct RegularResponse: Codable, Hashable {
     public let name: String?
     public let additionalProperties: [String: JSONValue]
 
-    public init(id: String, name: String? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        id: String,
+        name: String? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.id = id
         self.name = name
         self.additionalProperties = additionalProperties

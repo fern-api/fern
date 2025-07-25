@@ -3,7 +3,11 @@ public struct VariableTypeAndName: Codable, Hashable {
     public let name: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(variableType: VariableType, name: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        variableType: VariableType,
+        name: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.variableType = variableType
         self.name = name
         self.additionalProperties = additionalProperties

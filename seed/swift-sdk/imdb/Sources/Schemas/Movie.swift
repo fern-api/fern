@@ -4,7 +4,12 @@ public struct Movie: Codable, Hashable {
     public let rating: Double
     public let additionalProperties: [String: JSONValue]
 
-    public init(id: MovieId, title: String, rating: Double, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        id: MovieId,
+        title: String,
+        rating: Double,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.id = id
         self.title = title
         self.rating = rating

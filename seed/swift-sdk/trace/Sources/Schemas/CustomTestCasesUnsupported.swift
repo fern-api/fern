@@ -3,7 +3,11 @@ public struct CustomTestCasesUnsupported: Codable, Hashable {
     public let submissionId: SubmissionId
     public let additionalProperties: [String: JSONValue]
 
-    public init(problemId: ProblemId, submissionId: SubmissionId, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        problemId: ProblemId,
+        submissionId: SubmissionId,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.problemId = problemId
         self.submissionId = submissionId
         self.additionalProperties = additionalProperties

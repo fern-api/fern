@@ -4,7 +4,12 @@ public struct TestCaseTemplate: Codable, Hashable {
     public let implementation: TestCaseImplementation
     public let additionalProperties: [String: JSONValue]
 
-    public init(templateId: TestCaseTemplateId, name: String, implementation: TestCaseImplementation, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        templateId: TestCaseTemplateId,
+        name: String,
+        implementation: TestCaseImplementation,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.templateId = templateId
         self.name = name
         self.implementation = implementation

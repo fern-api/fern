@@ -4,7 +4,12 @@ public struct ReceiveEvent2: Codable, Hashable {
     public let epsilon: Bool
     public let additionalProperties: [String: JSONValue]
 
-    public init(gamma: String, delta: Int, epsilon: Bool, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        gamma: String,
+        delta: Int,
+        epsilon: Bool,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.gamma = gamma
         self.delta = delta
         self.epsilon = epsilon

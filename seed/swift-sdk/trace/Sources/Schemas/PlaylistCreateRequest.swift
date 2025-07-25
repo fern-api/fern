@@ -3,7 +3,11 @@ public struct PlaylistCreateRequest: Codable, Hashable {
     public let problems: [ProblemId]
     public let additionalProperties: [String: JSONValue]
 
-    public init(name: String, problems: [ProblemId], additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        name: String,
+        problems: [ProblemId],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.name = name
         self.problems = problems
         self.additionalProperties = additionalProperties

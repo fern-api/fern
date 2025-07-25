@@ -3,7 +3,11 @@ public struct Response: Codable, Hashable {
     public let identifiers: [Identifier]
     public let additionalProperties: [String: JSONValue]
 
-    public init(response: Any, identifiers: [Identifier], additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        response: Any,
+        identifiers: [Identifier],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.response = response
         self.identifiers = identifiers
         self.additionalProperties = additionalProperties

@@ -3,7 +3,11 @@ public struct CreateMovieRequest: Codable, Hashable {
     public let rating: Double
     public let additionalProperties: [String: JSONValue]
 
-    public init(title: String, rating: Double, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        title: String,
+        rating: Double,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.title = title
         self.rating = rating
         self.additionalProperties = additionalProperties

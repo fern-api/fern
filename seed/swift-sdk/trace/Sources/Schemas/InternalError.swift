@@ -2,7 +2,10 @@ public struct InternalError: Codable, Hashable {
     public let exceptionInfo: ExceptionInfo
     public let additionalProperties: [String: JSONValue]
 
-    public init(exceptionInfo: ExceptionInfo, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        exceptionInfo: ExceptionInfo,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.exceptionInfo = exceptionInfo
         self.additionalProperties = additionalProperties
     }

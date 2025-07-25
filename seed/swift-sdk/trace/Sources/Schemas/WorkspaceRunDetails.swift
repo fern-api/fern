@@ -4,7 +4,12 @@ public struct WorkspaceRunDetails: Codable, Hashable {
     public let stdout: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(exceptionV2: ExceptionV2? = nil, exception: ExceptionInfo? = nil, stdout: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        exceptionV2: ExceptionV2? = nil,
+        exception: ExceptionInfo? = nil,
+        stdout: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.exceptionV2 = exceptionV2
         self.exception = exception
         self.stdout = stdout
