@@ -4,14 +4,10 @@ import typing
 
 import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .core.request_options import RequestOptions
-from .raw_client import AsyncRawSeedExtends, RawSeedExtends
-
-# this is used as the default value for optional parameters
-OMIT = typing.cast(typing.Any, ...)
+from .user.client import AsyncUserClient, UserClient
 
 
-class SeedExtends:
+class SeedQueryParameters:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -34,9 +30,9 @@ class SeedExtends:
 
     Examples
     --------
-    from seed import SeedExtends
+    from seed import SeedQueryParameters
 
-    client = SeedExtends(
+    client = SeedQueryParameters(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -63,58 +59,10 @@ class SeedExtends:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
-        self._raw_client = RawSeedExtends(client_wrapper=self._client_wrapper)
-
-    @property
-    def with_raw_response(self) -> RawSeedExtends:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        RawSeedExtends
-        """
-        return self._raw_client
-
-    def extended_inline_request_body(
-        self, *, unique: str, name: str, docs: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
-        """
-        Parameters
-        ----------
-        unique : str
-
-        name : str
-
-        docs : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from seed import SeedExtends
-
-        client = SeedExtends(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.extended_inline_request_body(
-            unique="unique",
-            name="name",
-            docs="docs",
-        )
-        """
-        _response = self._raw_client.extended_inline_request_body(
-            unique=unique, name=name, docs=docs, request_options=request_options
-        )
-        return _response.data
+        self.user = UserClient(client_wrapper=self._client_wrapper)
 
 
-class AsyncSeedExtends:
+class AsyncSeedQueryParameters:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -137,9 +85,9 @@ class AsyncSeedExtends:
 
     Examples
     --------
-    from seed import AsyncSeedExtends
+    from seed import AsyncSeedQueryParameters
 
-    client = AsyncSeedExtends(
+    client = AsyncSeedQueryParameters(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -166,60 +114,4 @@ class AsyncSeedExtends:
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
-        self._raw_client = AsyncRawSeedExtends(client_wrapper=self._client_wrapper)
-
-    @property
-    def with_raw_response(self) -> AsyncRawSeedExtends:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawSeedExtends
-        """
-        return self._raw_client
-
-    async def extended_inline_request_body(
-        self, *, unique: str, name: str, docs: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
-        """
-        Parameters
-        ----------
-        unique : str
-
-        name : str
-
-        docs : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedExtends
-
-        client = AsyncSeedExtends(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.extended_inline_request_body(
-                unique="unique",
-                name="name",
-                docs="docs",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.extended_inline_request_body(
-            unique=unique, name=name, docs=docs, request_options=request_options
-        )
-        return _response.data
+        self.user = AsyncUserClient(client_wrapper=self._client_wrapper)

@@ -2,5 +2,6 @@
 
 # isort: skip_file
 
-from .organization import Organization
-__all__ = ["Organization"]
+from .types import NestedUser, User
+
+__all__ = ["NestedUser", "User"]
