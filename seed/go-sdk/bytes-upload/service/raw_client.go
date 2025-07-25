@@ -7,7 +7,6 @@ import (
 	core "github.com/bytes-upload/fern/core"
 	internal "github.com/bytes-upload/fern/internal"
 	option "github.com/bytes-upload/fern/option"
-	io "io"
 	http "net/http"
 )
 
@@ -32,7 +31,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) Upload(
 	ctx context.Context,
-	request io.Reader,
+	request []byte,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
