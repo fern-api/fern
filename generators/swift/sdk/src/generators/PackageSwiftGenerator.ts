@@ -34,7 +34,7 @@ export class PackageSwiftGenerator {
 
     public generate(): SwiftFile {
         return new SwiftFile({
-            filename: `Package.swift`,
+            filename: "Package.swift",
             directory: RelativeFilePath.of(""),
             fileContents: [
                 swift.comment({ content: "swift-tools-version: 5.7" }),
