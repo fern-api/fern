@@ -6,4 +6,17 @@ from . import realtime
 from .client import AsyncSeedWebsocket, SeedWebsocket
 from .realtime import ReceiveEvent, ReceiveEvent2, ReceiveEvent3, ReceiveSnakeCase, SendEvent, SendEvent2, SendSnakeCase
 from .version import __version__
-__all__ = ["AsyncSeedWebsocket", "ReceiveEvent", "ReceiveEvent2", "ReceiveEvent3", "ReceiveSnakeCase", "SeedWebsocket", "SendEvent", "SendEvent2", "SendSnakeCase", "__version__", "realtime"]
+
+__all__ = [
+    "AsyncSeedWebsocket",
+    "ReceiveEvent",
+    "ReceiveEvent2",
+    "ReceiveEvent3",
+    "ReceiveSnakeCase",
+    "SeedWebsocket",
+    "SendEvent",
+    "SendEvent2",
+    "SendSnakeCase",
+    "__version__",
+    "realtime",
+]
