@@ -54,6 +54,23 @@
         "vitest.config.{js,mjs,mts,ts,cjs,cts}"
       ]
     },
+    "test:debug": {
+      "dependsOn": ["^compile:debug"],
+      "outputs": [],
+      "inputs": [
+        "$TURBO_ROOT$/shared/jest.config.shared.js",
+        "$TURBO_ROOT$/shared/vitest.config.ts",
+        "$TURBO_ROOT$/test-definitions-openapi/**",
+        "$TURBO_ROOT$/test-definitions/**",
+        "$TURBO_ROOT$/tsconfig.eslint.json",
+        "$TURBO_ROOT$/vitest.workspace.ts",
+        "jest.config.{js,mjs,mts,ts,cjs,cts}",
+        "src/**",
+        "tests/**",
+        "tsconfig.json",
+        "vitest.config.{js,mjs,mts,ts,cjs,cts}"
+      ]
+    },
     "test:update": {
       "dependsOn": ["^compile"],
       "outputs": [],
