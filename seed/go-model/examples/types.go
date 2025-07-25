@@ -3,8 +3,10 @@
 package examples
 
 import (
+	json "encoding/json"
 	fmt "fmt"
 	commons "github.com/examples/fern/commons"
+	internal "github.com/examples/fern/internal"
 	uuid "github.com/google/uuid"
 	time "time"
 )
@@ -18,6 +20,49 @@ type Identifier struct {
 	Type  *Type  `json:"type" url:"type"`
 	Value string `json:"value" url:"value"`
 	Label string `json:"label" url:"label"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (i *Identifier) GetType() *Type {
+	if i == nil {
+		return nil
+	}
+	return i.Type
+}
+
+func (i *Identifier) GetValue() string {
+	if i == nil {
+		return ""
+	}
+	return i.Value
+}
+
+func (i *Identifier) GetLabel() string {
+	if i == nil {
+		return ""
+	}
+	return i.Label
+}
+
+func (i *Identifier) GetExtraProperties() map[string]any {
+	if i == nil {
+		return nil
+	}
+	return i.extraProperties
+}
+
+func (i *Identifier) String() string {
+	if len(i.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(i.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(i); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", i)
 }
 
 type BasicType string
@@ -81,7 +126,98 @@ type Movie struct {
 	Metadata map[string]any `json:"metadata" url:"metadata"`
 	Revenue  int64          `json:"revenue" url:"revenue"`
 
-	type_ string
+	type_           string
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (m *Movie) GetId() MovieId {
+	if m == nil {
+		return ""
+	}
+	return m.Id
+}
+
+func (m *Movie) GetPrequel() *MovieId {
+	if m == nil {
+		return nil
+	}
+	return m.Prequel
+}
+
+func (m *Movie) GetTitle() string {
+	if m == nil {
+		return ""
+	}
+	return m.Title
+}
+
+func (m *Movie) GetFrom() string {
+	if m == nil {
+		return ""
+	}
+	return m.From
+}
+
+func (m *Movie) GetRating() float64 {
+	if m == nil {
+		return 0
+	}
+	return m.Rating
+}
+
+func (m *Movie) GetType_() string {
+	if m == nil {
+		return ""
+	}
+	return m.type_
+}
+
+func (m *Movie) GetTag() commons.Tag {
+	if m == nil {
+		return ""
+	}
+	return m.Tag
+}
+
+func (m *Movie) GetBook() *string {
+	if m == nil {
+		return nil
+	}
+	return m.Book
+}
+
+func (m *Movie) GetMetadata() map[string]any {
+	if m == nil {
+		return nil
+	}
+	return m.Metadata
+}
+
+func (m *Movie) GetRevenue() int64 {
+	if m == nil {
+		return 0
+	}
+	return m.Revenue
+}
+
+func (m *Movie) GetExtraProperties() map[string]any {
+	if m == nil {
+		return nil
+	}
+	return m.extraProperties
+}
+
+func (m *Movie) String() string {
+	if len(m.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(m); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", m)
 }
 
 type CastMember struct {
@@ -93,16 +229,124 @@ type CastMember struct {
 type Actor struct {
 	Name string `json:"name" url:"name"`
 	Id   string `json:"id" url:"id"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (a *Actor) GetName() string {
+	if a == nil {
+		return ""
+	}
+	return a.Name
+}
+
+func (a *Actor) GetId() string {
+	if a == nil {
+		return ""
+	}
+	return a.Id
+}
+
+func (a *Actor) GetExtraProperties() map[string]any {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *Actor) String() string {
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
 }
 
 type Actress struct {
 	Name string `json:"name" url:"name"`
 	Id   string `json:"id" url:"id"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (a *Actress) GetName() string {
+	if a == nil {
+		return ""
+	}
+	return a.Name
+}
+
+func (a *Actress) GetId() string {
+	if a == nil {
+		return ""
+	}
+	return a.Id
+}
+
+func (a *Actress) GetExtraProperties() map[string]any {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *Actress) String() string {
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
 }
 
 type StuntDouble struct {
 	Name             string `json:"name" url:"name"`
 	ActorOrActressId string `json:"actorOrActressId" url:"actorOrActressId"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (s *StuntDouble) GetName() string {
+	if s == nil {
+		return ""
+	}
+	return s.Name
+}
+
+func (s *StuntDouble) GetActorOrActressId() string {
+	if s == nil {
+		return ""
+	}
+	return s.ActorOrActressId
+}
+
+func (s *StuntDouble) GetExtraProperties() map[string]any {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *StuntDouble) String() string {
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
 }
 
 type ExtendedMovie struct {
@@ -118,34 +362,326 @@ type ExtendedMovie struct {
 	Revenue  int64          `json:"revenue" url:"revenue"`
 	Cast     []string       `json:"cast" url:"cast"`
 
-	type_ string
+	type_           string
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (e *ExtendedMovie) GetId() MovieId {
+	if e == nil {
+		return ""
+	}
+	return e.Id
+}
+
+func (e *ExtendedMovie) GetPrequel() *MovieId {
+	if e == nil {
+		return nil
+	}
+	return e.Prequel
+}
+
+func (e *ExtendedMovie) GetTitle() string {
+	if e == nil {
+		return ""
+	}
+	return e.Title
+}
+
+func (e *ExtendedMovie) GetFrom() string {
+	if e == nil {
+		return ""
+	}
+	return e.From
+}
+
+func (e *ExtendedMovie) GetRating() float64 {
+	if e == nil {
+		return 0
+	}
+	return e.Rating
+}
+
+func (e *ExtendedMovie) GetType_() string {
+	if e == nil {
+		return ""
+	}
+	return e.type_
+}
+
+func (e *ExtendedMovie) GetTag() commons.Tag {
+	if e == nil {
+		return ""
+	}
+	return e.Tag
+}
+
+func (e *ExtendedMovie) GetBook() *string {
+	if e == nil {
+		return nil
+	}
+	return e.Book
+}
+
+func (e *ExtendedMovie) GetMetadata() map[string]any {
+	if e == nil {
+		return nil
+	}
+	return e.Metadata
+}
+
+func (e *ExtendedMovie) GetRevenue() int64 {
+	if e == nil {
+		return 0
+	}
+	return e.Revenue
+}
+
+func (e *ExtendedMovie) GetCast() []string {
+	if e == nil {
+		return nil
+	}
+	return e.Cast
+}
+
+func (e *ExtendedMovie) GetExtraProperties() map[string]any {
+	if e == nil {
+		return nil
+	}
+	return e.extraProperties
+}
+
+func (e *ExtendedMovie) String() string {
+	if len(e.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
 }
 
 type Moment struct {
 	Id       uuid.UUID `json:"id" url:"id"`
 	Date     time.Time `json:"date" url:"date"`
 	Datetime time.Time `json:"datetime" url:"datetime"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (m *Moment) GetId() uuid.UUID {
+	if m == nil {
+		return uuid.UUID{}
+	}
+	return m.Id
+}
+
+func (m *Moment) GetDate() time.Time {
+	if m == nil {
+		return time.Time{}
+	}
+	return m.Date
+}
+
+func (m *Moment) GetDatetime() time.Time {
+	if m == nil {
+		return time.Time{}
+	}
+	return m.Datetime
+}
+
+func (m *Moment) GetExtraProperties() map[string]any {
+	if m == nil {
+		return nil
+	}
+	return m.extraProperties
+}
+
+func (m *Moment) String() string {
+	if len(m.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(m); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", m)
 }
 
 type File struct {
 	Name     string `json:"name" url:"name"`
 	Contents string `json:"contents" url:"contents"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (f *File) GetName() string {
+	if f == nil {
+		return ""
+	}
+	return f.Name
+}
+
+func (f *File) GetContents() string {
+	if f == nil {
+		return ""
+	}
+	return f.Contents
+}
+
+func (f *File) GetExtraProperties() map[string]any {
+	if f == nil {
+		return nil
+	}
+	return f.extraProperties
+}
+
+func (f *File) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
 }
 
 type Directory struct {
 	Name        string       `json:"name" url:"name"`
 	Files       []*File      `json:"files,omitempty" url:"files,omitempty"`
 	Directories []*Directory `json:"directories,omitempty" url:"directories,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (d *Directory) GetName() string {
+	if d == nil {
+		return ""
+	}
+	return d.Name
+}
+
+func (d *Directory) GetFiles() []*File {
+	if d == nil {
+		return nil
+	}
+	return d.Files
+}
+
+func (d *Directory) GetDirectories() []*Directory {
+	if d == nil {
+		return nil
+	}
+	return d.Directories
+}
+
+func (d *Directory) GetExtraProperties() map[string]any {
+	if d == nil {
+		return nil
+	}
+	return d.extraProperties
+}
+
+func (d *Directory) String() string {
+	if len(d.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(d); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", d)
 }
 
 type Node struct {
 	Name  string  `json:"name" url:"name"`
 	Nodes []*Node `json:"nodes,omitempty" url:"nodes,omitempty"`
 	Trees []*Tree `json:"trees,omitempty" url:"trees,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (n *Node) GetName() string {
+	if n == nil {
+		return ""
+	}
+	return n.Name
+}
+
+func (n *Node) GetNodes() []*Node {
+	if n == nil {
+		return nil
+	}
+	return n.Nodes
+}
+
+func (n *Node) GetTrees() []*Tree {
+	if n == nil {
+		return nil
+	}
+	return n.Trees
+}
+
+func (n *Node) GetExtraProperties() map[string]any {
+	if n == nil {
+		return nil
+	}
+	return n.extraProperties
+}
+
+func (n *Node) String() string {
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(n); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", n)
 }
 
 type Tree struct {
 	Nodes []*Node `json:"nodes,omitempty" url:"nodes,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (t *Tree) GetNodes() []*Node {
+	if t == nil {
+		return nil
+	}
+	return t.Nodes
+}
+
+func (t *Tree) GetExtraProperties() map[string]any {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *Tree) String() string {
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
 }
 
 type Metadata struct {
@@ -166,6 +702,49 @@ type ExceptionInfo struct {
 	ExceptionType       string `json:"exceptionType" url:"exceptionType"`
 	ExceptionMessage    string `json:"exceptionMessage" url:"exceptionMessage"`
 	ExceptionStacktrace string `json:"exceptionStacktrace" url:"exceptionStacktrace"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (e *ExceptionInfo) GetExceptionType() string {
+	if e == nil {
+		return ""
+	}
+	return e.ExceptionType
+}
+
+func (e *ExceptionInfo) GetExceptionMessage() string {
+	if e == nil {
+		return ""
+	}
+	return e.ExceptionMessage
+}
+
+func (e *ExceptionInfo) GetExceptionStacktrace() string {
+	if e == nil {
+		return ""
+	}
+	return e.ExceptionStacktrace
+}
+
+func (e *ExceptionInfo) GetExtraProperties() map[string]any {
+	if e == nil {
+		return nil
+	}
+	return e.extraProperties
+}
+
+func (e *ExceptionInfo) String() string {
+	if len(e.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
 }
 
 type MigrationStatus string
@@ -198,19 +777,149 @@ func (m MigrationStatus) Ptr() *MigrationStatus {
 type Migration struct {
 	Name   string           `json:"name" url:"name"`
 	Status *MigrationStatus `json:"status" url:"status"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (m *Migration) GetName() string {
+	if m == nil {
+		return ""
+	}
+	return m.Name
+}
+
+func (m *Migration) GetStatus() *MigrationStatus {
+	if m == nil {
+		return nil
+	}
+	return m.Status
+}
+
+func (m *Migration) GetExtraProperties() map[string]any {
+	if m == nil {
+		return nil
+	}
+	return m.extraProperties
+}
+
+func (m *Migration) String() string {
+	if len(m.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(m); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", m)
 }
 
 type Request struct {
 	Request any `json:"request" url:"request"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (r *Request) GetRequest() any {
+	if r == nil {
+		return nil
+	}
+	return r.Request
+}
+
+func (r *Request) GetExtraProperties() map[string]any {
+	if r == nil {
+		return nil
+	}
+	return r.extraProperties
+}
+
+func (r *Request) String() string {
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
 }
 
 type Response struct {
 	Response    any           `json:"response" url:"response"`
 	Identifiers []*Identifier `json:"identifiers" url:"identifiers"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (r *Response) GetResponse() any {
+	if r == nil {
+		return nil
+	}
+	return r.Response
+}
+
+func (r *Response) GetIdentifiers() []*Identifier {
+	if r == nil {
+		return nil
+	}
+	return r.Identifiers
+}
+
+func (r *Response) GetExtraProperties() map[string]any {
+	if r == nil {
+		return nil
+	}
+	return r.extraProperties
+}
+
+func (r *Response) String() string {
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
 }
 
 type ResponseType struct {
 	Type *Type `json:"type" url:"type"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (r *ResponseType) GetType() *Type {
+	if r == nil {
+		return nil
+	}
+	return r.Type
+}
+
+func (r *ResponseType) GetExtraProperties() map[string]any {
+	if r == nil {
+		return nil
+	}
+	return r.extraProperties
+}
+
+func (r *ResponseType) String() string {
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
 }
 
 type Test struct {
@@ -222,6 +931,42 @@ type Test struct {
 type Entity struct {
 	Type *Type  `json:"type" url:"type"`
 	Name string `json:"name" url:"name"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (e *Entity) GetType() *Type {
+	if e == nil {
+		return nil
+	}
+	return e.Type
+}
+
+func (e *Entity) GetName() string {
+	if e == nil {
+		return ""
+	}
+	return e.Name
+}
+
+func (e *Entity) GetExtraProperties() map[string]any {
+	if e == nil {
+		return nil
+	}
+	return e.extraProperties
+}
+
+func (e *Entity) String() string {
+	if len(e.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
 }
 
 type BigEntity struct {
@@ -238,8 +983,150 @@ type BigEntity struct {
 	Node           *Node              `json:"node,omitempty" url:"node,omitempty"`
 	Directory      *Directory         `json:"directory,omitempty" url:"directory,omitempty"`
 	Moment         *Moment            `json:"moment,omitempty" url:"moment,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (b *BigEntity) GetCastMember() *CastMember {
+	if b == nil {
+		return nil
+	}
+	return b.CastMember
+}
+
+func (b *BigEntity) GetExtendedMovie() *ExtendedMovie {
+	if b == nil {
+		return nil
+	}
+	return b.ExtendedMovie
+}
+
+func (b *BigEntity) GetEntity() *Entity {
+	if b == nil {
+		return nil
+	}
+	return b.Entity
+}
+
+func (b *BigEntity) GetMetadata() *Metadata {
+	if b == nil {
+		return nil
+	}
+	return b.Metadata
+}
+
+func (b *BigEntity) GetCommonMetadata() *commons.Metadata {
+	if b == nil {
+		return nil
+	}
+	return b.CommonMetadata
+}
+
+func (b *BigEntity) GetEventInfo() *commons.EventInfo {
+	if b == nil {
+		return nil
+	}
+	return b.EventInfo
+}
+
+func (b *BigEntity) GetData() *commons.Data {
+	if b == nil {
+		return nil
+	}
+	return b.Data
+}
+
+func (b *BigEntity) GetMigration() *Migration {
+	if b == nil {
+		return nil
+	}
+	return b.Migration
+}
+
+func (b *BigEntity) GetException() *Exception {
+	if b == nil {
+		return nil
+	}
+	return b.Exception
+}
+
+func (b *BigEntity) GetTest() *Test {
+	if b == nil {
+		return nil
+	}
+	return b.Test
+}
+
+func (b *BigEntity) GetNode() *Node {
+	if b == nil {
+		return nil
+	}
+	return b.Node
+}
+
+func (b *BigEntity) GetDirectory() *Directory {
+	if b == nil {
+		return nil
+	}
+	return b.Directory
+}
+
+func (b *BigEntity) GetMoment() *Moment {
+	if b == nil {
+		return nil
+	}
+	return b.Moment
+}
+
+func (b *BigEntity) GetExtraProperties() map[string]any {
+	if b == nil {
+		return nil
+	}
+	return b.extraProperties
+}
+
+func (b *BigEntity) String() string {
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
 }
 
 type CronJob struct {
 	Expression string `json:"expression" url:"expression"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (c *CronJob) GetExpression() string {
+	if c == nil {
+		return ""
+	}
+	return c.Expression
+}
+
+func (c *CronJob) GetExtraProperties() map[string]any {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CronJob) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
 }

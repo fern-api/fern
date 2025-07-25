@@ -2,9 +2,51 @@
 
 package version
 
+import (
+	json "encoding/json"
+	fmt "fmt"
+	internal "github.com/version-no-default/fern/internal"
+)
+
 type UserId = string
 
 type User struct {
 	Id   UserId `json:"id" url:"id"`
 	Name string `json:"name" url:"name"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (u *User) GetId() UserId {
+	if u == nil {
+		return ""
+	}
+	return u.Id
+}
+
+func (u *User) GetName() string {
+	if u == nil {
+		return ""
+	}
+	return u.Name
+}
+
+func (u *User) GetExtraProperties() map[string]any {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *User) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
 }

@@ -2,16 +2,79 @@
 
 package literal
 
+import (
+    json "encoding/json"
+    internal "github.com/literal/fern/internal"
+    fmt "fmt"
+)
+
 
 type SomeAliasedLiteral = string
 
 type ATopLevelLiteral struct {
     NestedLiteral *ANestedLiteral `json:"nestedLiteral" url:"nestedLiteral"`
+
+    extraProperties map[string]any
+    rawJSON json.RawMessage
+}
+
+func (a *ATopLevelLiteral) GetNestedLiteral() *ANestedLiteral{
+    if a == nil {
+        return nil
+    }
+    return a.NestedLiteral
+}
+
+func (a *ATopLevelLiteral) GetExtraProperties() map[string]any{
+    if a == nil {
+        return nil
+    }
+    return a.extraProperties
+}
+
+func (a *ATopLevelLiteral) String() string{
+    if len(a.rawJSON) > 0 {
+        if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+            return value
+        }
+    }
+    if value, err := internal.StringifyJSON(a); err == nil {
+        return value
+    }
+    return fmt.Sprintf("%#v", a)
 }
 
 
 type ANestedLiteral struct {
     myLiteral string
+    extraProperties map[string]any
+    rawJSON json.RawMessage
+}
+
+func (a *ANestedLiteral) GetMyLiteral() string{
+    if a == nil {
+        return ""
+    }
+    return a.myLiteral
+}
+
+func (a *ANestedLiteral) GetExtraProperties() map[string]any{
+    if a == nil {
+        return nil
+    }
+    return a.extraProperties
+}
+
+func (a *ANestedLiteral) String() string{
+    if len(a.rawJSON) > 0 {
+        if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+            return value
+        }
+    }
+    if value, err := internal.StringifyJSON(a); err == nil {
+        return value
+    }
+    return fmt.Sprintf("%#v", a)
 }
 
 

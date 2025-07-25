@@ -3,6 +3,8 @@
 package trace
 
 import (
+    json "encoding/json"
+    internal "github.com/trace/fern/internal"
     fmt "fmt"
 )
 
@@ -14,12 +16,98 @@ type Playlist struct {
     Problems []ProblemId `json:"problems" url:"problems"`
     PlaylistId PlaylistId `json:"playlist_id" url:"playlist_id"`
     OwnerId UserId `json:"owner-id" url:"owner-id"`
+
+    extraProperties map[string]any
+    rawJSON json.RawMessage
+}
+
+func (p *Playlist) GetName() string{
+    if p == nil {
+        return ""
+    }
+    return p.Name
+}
+
+func (p *Playlist) GetProblems() []ProblemId{
+    if p == nil {
+        return nil
+    }
+    return p.Problems
+}
+
+func (p *Playlist) GetPlaylistId() PlaylistId{
+    if p == nil {
+        return ""
+    }
+    return p.PlaylistId
+}
+
+func (p *Playlist) GetOwnerId() UserId{
+    if p == nil {
+        return ""
+    }
+    return p.OwnerId
+}
+
+func (p *Playlist) GetExtraProperties() map[string]any{
+    if p == nil {
+        return nil
+    }
+    return p.extraProperties
+}
+
+func (p *Playlist) String() string{
+    if len(p.rawJSON) > 0 {
+        if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+            return value
+        }
+    }
+    if value, err := internal.StringifyJSON(p); err == nil {
+        return value
+    }
+    return fmt.Sprintf("%#v", p)
 }
 
 
 type PlaylistCreateRequest struct {
     Name string `json:"name" url:"name"`
     Problems []ProblemId `json:"problems" url:"problems"`
+
+    extraProperties map[string]any
+    rawJSON json.RawMessage
+}
+
+func (p *PlaylistCreateRequest) GetName() string{
+    if p == nil {
+        return ""
+    }
+    return p.Name
+}
+
+func (p *PlaylistCreateRequest) GetProblems() []ProblemId{
+    if p == nil {
+        return nil
+    }
+    return p.Problems
+}
+
+func (p *PlaylistCreateRequest) GetExtraProperties() map[string]any{
+    if p == nil {
+        return nil
+    }
+    return p.extraProperties
+}
+
+func (p *PlaylistCreateRequest) String() string{
+    if len(p.rawJSON) > 0 {
+        if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+            return value
+        }
+    }
+    if value, err := internal.StringifyJSON(p); err == nil {
+        return value
+    }
+    return fmt.Sprintf("%#v", p)
 }
 
 
@@ -27,6 +115,42 @@ type UpdatePlaylistRequest struct {
     Name string `json:"name" url:"name"`
     // The problems that make up the playlist.
     Problems []ProblemId `json:"problems" url:"problems"`
+
+    extraProperties map[string]any
+    rawJSON json.RawMessage
+}
+
+func (u *UpdatePlaylistRequest) GetName() string{
+    if u == nil {
+        return ""
+    }
+    return u.Name
+}
+
+func (u *UpdatePlaylistRequest) GetProblems() []ProblemId{
+    if u == nil {
+        return nil
+    }
+    return u.Problems
+}
+
+func (u *UpdatePlaylistRequest) GetExtraProperties() map[string]any{
+    if u == nil {
+        return nil
+    }
+    return u.extraProperties
+}
+
+func (u *UpdatePlaylistRequest) String() string{
+    if len(u.rawJSON) > 0 {
+        if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+            return value
+        }
+    }
+    if value, err := internal.StringifyJSON(u); err == nil {
+        return value
+    }
+    return fmt.Sprintf("%#v", u)
 }
 
 

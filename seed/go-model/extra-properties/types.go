@@ -2,6 +2,41 @@
 
 package extraproperties
 
+import (
+	json "encoding/json"
+	fmt "fmt"
+	internal "github.com/extra-properties/fern/internal"
+)
+
 type Failure struct {
-	status string
+	ExtraProperties map[string]any `json:"-" url:"-"`
+
+	status  string
+	rawJSON json.RawMessage
+}
+
+func (f *Failure) GetStatus() string {
+	if f == nil {
+		return ""
+	}
+	return f.status
+}
+
+func (f *Failure) GetExtraProperties() map[string]any {
+	if f == nil {
+		return nil
+	}
+	return f.ExtraProperties
+}
+
+func (f *Failure) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
 }

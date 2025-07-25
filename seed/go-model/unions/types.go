@@ -3,6 +3,9 @@
 package unions
 
 import (
+	json "encoding/json"
+	fmt "fmt"
+	internal "github.com/unions/fern/internal"
 	time "time"
 )
 
@@ -99,13 +102,107 @@ type UnionWithSubTypes struct {
 
 type Foo struct {
 	Name string `json:"name" url:"name"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (f *Foo) GetName() string {
+	if f == nil {
+		return ""
+	}
+	return f.Name
+}
+
+func (f *Foo) GetExtraProperties() map[string]any {
+	if f == nil {
+		return nil
+	}
+	return f.extraProperties
+}
+
+func (f *Foo) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
 }
 
 type FooExtended struct {
 	Name string `json:"name" url:"name"`
 	Age  int    `json:"age" url:"age"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (f *FooExtended) GetName() string {
+	if f == nil {
+		return ""
+	}
+	return f.Name
+}
+
+func (f *FooExtended) GetAge() int {
+	if f == nil {
+		return 0
+	}
+	return f.Age
+}
+
+func (f *FooExtended) GetExtraProperties() map[string]any {
+	if f == nil {
+		return nil
+	}
+	return f.extraProperties
+}
+
+func (f *FooExtended) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
 }
 
 type Bar struct {
 	Name string `json:"name" url:"name"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (b *Bar) GetName() string {
+	if b == nil {
+		return ""
+	}
+	return b.Name
+}
+
+func (b *Bar) GetExtraProperties() map[string]any {
+	if b == nil {
+		return nil
+	}
+	return b.extraProperties
+}
+
+func (b *Bar) String() string {
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
 }

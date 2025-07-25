@@ -3,8 +3,10 @@
 package pagination
 
 import (
+	json "encoding/json"
 	fmt "fmt"
 	uuid "github.com/google/uuid"
+	internal "github.com/pagination/fern/internal"
 )
 
 type Order string
@@ -31,32 +33,249 @@ func (o Order) Ptr() *Order {
 
 type WithPage struct {
 	Page *int `json:"page,omitempty" url:"page,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (w *WithPage) GetPage() *int {
+	if w == nil {
+		return nil
+	}
+	return w.Page
+}
+
+func (w *WithPage) GetExtraProperties() map[string]any {
+	if w == nil {
+		return nil
+	}
+	return w.extraProperties
+}
+
+func (w *WithPage) String() string {
+	if len(w.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(w); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", w)
 }
 
 type WithCursor struct {
 	Cursor *string `json:"cursor,omitempty" url:"cursor,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (w *WithCursor) GetCursor() *string {
+	if w == nil {
+		return nil
+	}
+	return w.Cursor
+}
+
+func (w *WithCursor) GetExtraProperties() map[string]any {
+	if w == nil {
+		return nil
+	}
+	return w.extraProperties
+}
+
+func (w *WithCursor) String() string {
+	if len(w.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(w); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", w)
 }
 
 type UserListContainer struct {
 	Users []*User `json:"users" url:"users"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (u *UserListContainer) GetUsers() []*User {
+	if u == nil {
+		return nil
+	}
+	return u.Users
+}
+
+func (u *UserListContainer) GetExtraProperties() map[string]any {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UserListContainer) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
 }
 
 type UserPage struct {
 	Data *UserListContainer `json:"data" url:"data"`
 	Next *uuid.UUID         `json:"next,omitempty" url:"next,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (u *UserPage) GetData() *UserListContainer {
+	if u == nil {
+		return nil
+	}
+	return u.Data
+}
+
+func (u *UserPage) GetNext() *uuid.UUID {
+	if u == nil {
+		return nil
+	}
+	return u.Next
+}
+
+func (u *UserPage) GetExtraProperties() map[string]any {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UserPage) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
 }
 
 type UserOptionalListContainer struct {
 	Users []*User `json:"users,omitempty" url:"users,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (u *UserOptionalListContainer) GetUsers() []*User {
+	if u == nil {
+		return nil
+	}
+	return u.Users
+}
+
+func (u *UserOptionalListContainer) GetExtraProperties() map[string]any {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UserOptionalListContainer) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
 }
 
 type UserOptionalListPage struct {
 	Data *UserOptionalListContainer `json:"data" url:"data"`
 	Next *uuid.UUID                 `json:"next,omitempty" url:"next,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (u *UserOptionalListPage) GetData() *UserOptionalListContainer {
+	if u == nil {
+		return nil
+	}
+	return u.Data
+}
+
+func (u *UserOptionalListPage) GetNext() *uuid.UUID {
+	if u == nil {
+		return nil
+	}
+	return u.Next
+}
+
+func (u *UserOptionalListPage) GetExtraProperties() map[string]any {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UserOptionalListPage) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
 }
 
 type UsernameContainer struct {
 	Results []string `json:"results" url:"results"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (u *UsernameContainer) GetResults() []string {
+	if u == nil {
+		return nil
+	}
+	return u.Results
+}
+
+func (u *UsernameContainer) GetExtraProperties() map[string]any {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UsernameContainer) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
 }
 
 type ListUsersExtendedResponse struct {
@@ -64,6 +283,49 @@ type ListUsersExtendedResponse struct {
 	Next *uuid.UUID         `json:"next,omitempty" url:"next,omitempty"`
 	// The totall number of /users
 	TotalCount int `json:"total_count" url:"total_count"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (l *ListUsersExtendedResponse) GetData() *UserListContainer {
+	if l == nil {
+		return nil
+	}
+	return l.Data
+}
+
+func (l *ListUsersExtendedResponse) GetNext() *uuid.UUID {
+	if l == nil {
+		return nil
+	}
+	return l.Next
+}
+
+func (l *ListUsersExtendedResponse) GetTotalCount() int {
+	if l == nil {
+		return 0
+	}
+	return l.TotalCount
+}
+
+func (l *ListUsersExtendedResponse) GetExtraProperties() map[string]any {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListUsersExtendedResponse) String() string {
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
 }
 
 type ListUsersExtendedOptionalListResponse struct {
@@ -71,6 +333,49 @@ type ListUsersExtendedOptionalListResponse struct {
 	Next *uuid.UUID                 `json:"next,omitempty" url:"next,omitempty"`
 	// The totall number of /users
 	TotalCount int `json:"total_count" url:"total_count"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (l *ListUsersExtendedOptionalListResponse) GetData() *UserOptionalListContainer {
+	if l == nil {
+		return nil
+	}
+	return l.Data
+}
+
+func (l *ListUsersExtendedOptionalListResponse) GetNext() *uuid.UUID {
+	if l == nil {
+		return nil
+	}
+	return l.Next
+}
+
+func (l *ListUsersExtendedOptionalListResponse) GetTotalCount() int {
+	if l == nil {
+		return 0
+	}
+	return l.TotalCount
+}
+
+func (l *ListUsersExtendedOptionalListResponse) GetExtraProperties() map[string]any {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListUsersExtendedOptionalListResponse) String() string {
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
 }
 
 type ListUsersPaginationResponse struct {
@@ -79,11 +384,97 @@ type ListUsersPaginationResponse struct {
 	// The totall number of /users
 	TotalCount int     `json:"total_count" url:"total_count"`
 	Data       []*User `json:"data" url:"data"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (l *ListUsersPaginationResponse) GetHasNextPage() *bool {
+	if l == nil {
+		return nil
+	}
+	return l.HasNextPage
+}
+
+func (l *ListUsersPaginationResponse) GetPage() *Page {
+	if l == nil {
+		return nil
+	}
+	return l.Page
+}
+
+func (l *ListUsersPaginationResponse) GetTotalCount() int {
+	if l == nil {
+		return 0
+	}
+	return l.TotalCount
+}
+
+func (l *ListUsersPaginationResponse) GetData() []*User {
+	if l == nil {
+		return nil
+	}
+	return l.Data
+}
+
+func (l *ListUsersPaginationResponse) GetExtraProperties() map[string]any {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListUsersPaginationResponse) String() string {
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
 }
 
 type ListUsersMixedTypePaginationResponse struct {
 	Next string  `json:"next" url:"next"`
 	Data []*User `json:"data" url:"data"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (l *ListUsersMixedTypePaginationResponse) GetNext() string {
+	if l == nil {
+		return ""
+	}
+	return l.Next
+}
+
+func (l *ListUsersMixedTypePaginationResponse) GetData() []*User {
+	if l == nil {
+		return nil
+	}
+	return l.Data
+}
+
+func (l *ListUsersMixedTypePaginationResponse) GetExtraProperties() map[string]any {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListUsersMixedTypePaginationResponse) String() string {
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
 }
 
 type Page struct {
@@ -92,14 +483,136 @@ type Page struct {
 	Next      *NextPage `json:"next,omitempty" url:"next,omitempty"`
 	PerPage   int       `json:"per_page" url:"per_page"`
 	TotalPage int       `json:"total_page" url:"total_page"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (p *Page) GetPage() int {
+	if p == nil {
+		return 0
+	}
+	return p.Page
+}
+
+func (p *Page) GetNext() *NextPage {
+	if p == nil {
+		return nil
+	}
+	return p.Next
+}
+
+func (p *Page) GetPerPage() int {
+	if p == nil {
+		return 0
+	}
+	return p.PerPage
+}
+
+func (p *Page) GetTotalPage() int {
+	if p == nil {
+		return 0
+	}
+	return p.TotalPage
+}
+
+func (p *Page) GetExtraProperties() map[string]any {
+	if p == nil {
+		return nil
+	}
+	return p.extraProperties
+}
+
+func (p *Page) String() string {
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
 }
 
 type NextPage struct {
 	Page          int    `json:"page" url:"page"`
 	StartingAfter string `json:"starting_after" url:"starting_after"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (n *NextPage) GetPage() int {
+	if n == nil {
+		return 0
+	}
+	return n.Page
+}
+
+func (n *NextPage) GetStartingAfter() string {
+	if n == nil {
+		return ""
+	}
+	return n.StartingAfter
+}
+
+func (n *NextPage) GetExtraProperties() map[string]any {
+	if n == nil {
+		return nil
+	}
+	return n.extraProperties
+}
+
+func (n *NextPage) String() string {
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(n); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", n)
 }
 
 type User struct {
 	Name string `json:"name" url:"name"`
 	Id   int    `json:"id" url:"id"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (u *User) GetName() string {
+	if u == nil {
+		return ""
+	}
+	return u.Name
+}
+
+func (u *User) GetId() int {
+	if u == nil {
+		return 0
+	}
+	return u.Id
+}
+
+func (u *User) GetExtraProperties() map[string]any {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *User) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
 }

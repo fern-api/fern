@@ -2,7 +2,49 @@
 
 package pathparameters
 
+import (
+	json "encoding/json"
+	fmt "fmt"
+	internal "github.com/path-parameters/fern/internal"
+)
+
 type Organization struct {
 	Name string   `json:"name" url:"name"`
 	Tags []string `json:"tags" url:"tags"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (o *Organization) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *Organization) GetTags() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Tags
+}
+
+func (o *Organization) GetExtraProperties() map[string]any {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *Organization) String() string {
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
 }

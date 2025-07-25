@@ -3,7 +3,9 @@
 package endpoints
 
 import (
+	json "encoding/json"
 	fmt "fmt"
+	internal "github.com/exhaustive/fern/internal"
 )
 
 type Error struct {
@@ -11,6 +13,56 @@ type Error struct {
 	Code     *ErrorCode     `json:"code" url:"code"`
 	Detail   *string        `json:"detail,omitempty" url:"detail,omitempty"`
 	Field    *string        `json:"field,omitempty" url:"field,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (e *Error) GetCategory() *ErrorCategory {
+	if e == nil {
+		return nil
+	}
+	return e.Category
+}
+
+func (e *Error) GetCode() *ErrorCode {
+	if e == nil {
+		return nil
+	}
+	return e.Code
+}
+
+func (e *Error) GetDetail() *string {
+	if e == nil {
+		return nil
+	}
+	return e.Detail
+}
+
+func (e *Error) GetField() *string {
+	if e == nil {
+		return nil
+	}
+	return e.Field
+}
+
+func (e *Error) GetExtraProperties() map[string]any {
+	if e == nil {
+		return nil
+	}
+	return e.extraProperties
+}
+
+func (e *Error) String() string {
+	if len(e.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
 }
 
 type ErrorCategory string
@@ -89,4 +141,33 @@ func (e ErrorCode) Ptr() *ErrorCode {
 
 type PutResponse struct {
 	Errors []*Error `json:"errors,omitempty" url:"errors,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (p *PutResponse) GetErrors() []*Error {
+	if p == nil {
+		return nil
+	}
+	return p.Errors
+}
+
+func (p *PutResponse) GetExtraProperties() map[string]any {
+	if p == nil {
+		return nil
+	}
+	return p.extraProperties
+}
+
+func (p *PutResponse) String() string {
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
 }

@@ -3,7 +3,10 @@
 package v2
 
 import (
+	json "encoding/json"
+	fmt "fmt"
 	fern "github.com/trace/fern"
+	internal "github.com/trace/fern/internal"
 )
 
 type TestCaseTemplateId = string
@@ -23,6 +26,98 @@ type ProblemInfoV2 struct {
 	CustomTestCaseTemplates []*TestCaseTemplate      `json:"customTestCaseTemplates" url:"customTestCaseTemplates"`
 	Testcases               []*TestCaseV2            `json:"testcases" url:"testcases"`
 	IsPublic                bool                     `json:"isPublic" url:"isPublic"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (p *ProblemInfoV2) GetProblemId() fern.ProblemId {
+	if p == nil {
+		return ""
+	}
+	return p.ProblemId
+}
+
+func (p *ProblemInfoV2) GetProblemDescription() *fern.ProblemDescription {
+	if p == nil {
+		return nil
+	}
+	return p.ProblemDescription
+}
+
+func (p *ProblemInfoV2) GetProblemName() string {
+	if p == nil {
+		return ""
+	}
+	return p.ProblemName
+}
+
+func (p *ProblemInfoV2) GetProblemVersion() int {
+	if p == nil {
+		return 0
+	}
+	return p.ProblemVersion
+}
+
+func (p *ProblemInfoV2) GetSupportedLanguages() []*fern.Language {
+	if p == nil {
+		return nil
+	}
+	return p.SupportedLanguages
+}
+
+func (p *ProblemInfoV2) GetCustomFiles() *CustomFiles {
+	if p == nil {
+		return nil
+	}
+	return p.CustomFiles
+}
+
+func (p *ProblemInfoV2) GetGeneratedFiles() *GeneratedFiles {
+	if p == nil {
+		return nil
+	}
+	return p.GeneratedFiles
+}
+
+func (p *ProblemInfoV2) GetCustomTestCaseTemplates() []*TestCaseTemplate {
+	if p == nil {
+		return nil
+	}
+	return p.CustomTestCaseTemplates
+}
+
+func (p *ProblemInfoV2) GetTestcases() []*TestCaseV2 {
+	if p == nil {
+		return nil
+	}
+	return p.Testcases
+}
+
+func (p *ProblemInfoV2) GetIsPublic() bool {
+	if p == nil {
+		return false
+	}
+	return p.IsPublic
+}
+
+func (p *ProblemInfoV2) GetExtraProperties() map[string]any {
+	if p == nil {
+		return nil
+	}
+	return p.extraProperties
+}
+
+func (p *ProblemInfoV2) String() string {
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
 }
 
 type LightweightProblemInfoV2 struct {
@@ -30,6 +125,56 @@ type LightweightProblemInfoV2 struct {
 	ProblemName    string               `json:"problemName" url:"problemName"`
 	ProblemVersion int                  `json:"problemVersion" url:"problemVersion"`
 	VariableTypes  []*fern.VariableType `json:"variableTypes" url:"variableTypes"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (l *LightweightProblemInfoV2) GetProblemId() fern.ProblemId {
+	if l == nil {
+		return ""
+	}
+	return l.ProblemId
+}
+
+func (l *LightweightProblemInfoV2) GetProblemName() string {
+	if l == nil {
+		return ""
+	}
+	return l.ProblemName
+}
+
+func (l *LightweightProblemInfoV2) GetProblemVersion() int {
+	if l == nil {
+		return 0
+	}
+	return l.ProblemVersion
+}
+
+func (l *LightweightProblemInfoV2) GetVariableTypes() []*fern.VariableType {
+	if l == nil {
+		return nil
+	}
+	return l.VariableTypes
+}
+
+func (l *LightweightProblemInfoV2) GetExtraProperties() map[string]any {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *LightweightProblemInfoV2) String() string {
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
 }
 
 type CreateProblemRequestV2 struct {
@@ -40,6 +185,77 @@ type CreateProblemRequestV2 struct {
 	Testcases               []*TestCaseV2            `json:"testcases" url:"testcases"`
 	SupportedLanguages      []*fern.Language         `json:"supportedLanguages" url:"supportedLanguages"`
 	IsPublic                bool                     `json:"isPublic" url:"isPublic"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateProblemRequestV2) GetProblemName() string {
+	if c == nil {
+		return ""
+	}
+	return c.ProblemName
+}
+
+func (c *CreateProblemRequestV2) GetProblemDescription() *fern.ProblemDescription {
+	if c == nil {
+		return nil
+	}
+	return c.ProblemDescription
+}
+
+func (c *CreateProblemRequestV2) GetCustomFiles() *CustomFiles {
+	if c == nil {
+		return nil
+	}
+	return c.CustomFiles
+}
+
+func (c *CreateProblemRequestV2) GetCustomTestCaseTemplates() []*TestCaseTemplate {
+	if c == nil {
+		return nil
+	}
+	return c.CustomTestCaseTemplates
+}
+
+func (c *CreateProblemRequestV2) GetTestcases() []*TestCaseV2 {
+	if c == nil {
+		return nil
+	}
+	return c.Testcases
+}
+
+func (c *CreateProblemRequestV2) GetSupportedLanguages() []*fern.Language {
+	if c == nil {
+		return nil
+	}
+	return c.SupportedLanguages
+}
+
+func (c *CreateProblemRequestV2) GetIsPublic() bool {
+	if c == nil {
+		return false
+	}
+	return c.IsPublic
+}
+
+func (c *CreateProblemRequestV2) GetExtraProperties() map[string]any {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateProblemRequestV2) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
 }
 
 type TestCaseV2 struct {
@@ -47,10 +263,89 @@ type TestCaseV2 struct {
 	Implementation *TestCaseImplementationReference    `json:"implementation" url:"implementation"`
 	Arguments      map[ParameterId]*fern.VariableValue `json:"arguments" url:"arguments"`
 	Expects        *TestCaseExpects                    `json:"expects,omitempty" url:"expects,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (t *TestCaseV2) GetMetadata() *TestCaseMetadata {
+	if t == nil {
+		return nil
+	}
+	return t.Metadata
+}
+
+func (t *TestCaseV2) GetImplementation() *TestCaseImplementationReference {
+	if t == nil {
+		return nil
+	}
+	return t.Implementation
+}
+
+func (t *TestCaseV2) GetArguments() map[ParameterId]*fern.VariableValue {
+	if t == nil {
+		return nil
+	}
+	return t.Arguments
+}
+
+func (t *TestCaseV2) GetExpects() *TestCaseExpects {
+	if t == nil {
+		return nil
+	}
+	return t.Expects
+}
+
+func (t *TestCaseV2) GetExtraProperties() map[string]any {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *TestCaseV2) String() string {
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
 }
 
 type TestCaseExpects struct {
 	ExpectedStdout *string `json:"expectedStdout,omitempty" url:"expectedStdout,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (t *TestCaseExpects) GetExpectedStdout() *string {
+	if t == nil {
+		return nil
+	}
+	return t.ExpectedStdout
+}
+
+func (t *TestCaseExpects) GetExtraProperties() map[string]any {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *TestCaseExpects) String() string {
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
 }
 
 type TestCaseImplementationReference struct {
@@ -64,17 +359,146 @@ type BasicTestCaseTemplate struct {
 	Name                     string                             `json:"name" url:"name"`
 	Description              *TestCaseImplementationDescription `json:"description" url:"description"`
 	ExpectedValueParameterId ParameterId                        `json:"expectedValueParameterId" url:"expectedValueParameterId"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (b *BasicTestCaseTemplate) GetTemplateId() TestCaseTemplateId {
+	if b == nil {
+		return ""
+	}
+	return b.TemplateId
+}
+
+func (b *BasicTestCaseTemplate) GetName() string {
+	if b == nil {
+		return ""
+	}
+	return b.Name
+}
+
+func (b *BasicTestCaseTemplate) GetDescription() *TestCaseImplementationDescription {
+	if b == nil {
+		return nil
+	}
+	return b.Description
+}
+
+func (b *BasicTestCaseTemplate) GetExpectedValueParameterId() ParameterId {
+	if b == nil {
+		return ""
+	}
+	return b.ExpectedValueParameterId
+}
+
+func (b *BasicTestCaseTemplate) GetExtraProperties() map[string]any {
+	if b == nil {
+		return nil
+	}
+	return b.extraProperties
+}
+
+func (b *BasicTestCaseTemplate) String() string {
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
 }
 
 type TestCaseTemplate struct {
 	TemplateId     TestCaseTemplateId      `json:"templateId" url:"templateId"`
 	Name           string                  `json:"name" url:"name"`
 	Implementation *TestCaseImplementation `json:"implementation" url:"implementation"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (t *TestCaseTemplate) GetTemplateId() TestCaseTemplateId {
+	if t == nil {
+		return ""
+	}
+	return t.TemplateId
+}
+
+func (t *TestCaseTemplate) GetName() string {
+	if t == nil {
+		return ""
+	}
+	return t.Name
+}
+
+func (t *TestCaseTemplate) GetImplementation() *TestCaseImplementation {
+	if t == nil {
+		return nil
+	}
+	return t.Implementation
+}
+
+func (t *TestCaseTemplate) GetExtraProperties() map[string]any {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *TestCaseTemplate) String() string {
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
 }
 
 type TestCaseImplementation struct {
 	Description *TestCaseImplementationDescription `json:"description" url:"description"`
 	Function    *TestCaseFunction                  `json:"function" url:"function"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (t *TestCaseImplementation) GetDescription() *TestCaseImplementationDescription {
+	if t == nil {
+		return nil
+	}
+	return t.Description
+}
+
+func (t *TestCaseImplementation) GetFunction() *TestCaseFunction {
+	if t == nil {
+		return nil
+	}
+	return t.Function
+}
+
+func (t *TestCaseImplementation) GetExtraProperties() map[string]any {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *TestCaseImplementation) String() string {
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
 }
 
 type TestCaseFunction struct {
@@ -86,36 +510,288 @@ type TestCaseFunction struct {
 type TestCaseWithActualResultImplementation struct {
 	GetActualResult        *NonVoidFunctionDefinition `json:"getActualResult" url:"getActualResult"`
 	AssertCorrectnessCheck *AssertCorrectnessCheck    `json:"assertCorrectnessCheck" url:"assertCorrectnessCheck"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (t *TestCaseWithActualResultImplementation) GetGetActualResult() *NonVoidFunctionDefinition {
+	if t == nil {
+		return nil
+	}
+	return t.GetActualResult
+}
+
+func (t *TestCaseWithActualResultImplementation) GetAssertCorrectnessCheck() *AssertCorrectnessCheck {
+	if t == nil {
+		return nil
+	}
+	return t.AssertCorrectnessCheck
+}
+
+func (t *TestCaseWithActualResultImplementation) GetExtraProperties() map[string]any {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *TestCaseWithActualResultImplementation) String() string {
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
 }
 
 type VoidFunctionDefinition struct {
 	Parameters []*Parameter                                `json:"parameters" url:"parameters"`
 	Code       *FunctionImplementationForMultipleLanguages `json:"code" url:"code"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (v *VoidFunctionDefinition) GetParameters() []*Parameter {
+	if v == nil {
+		return nil
+	}
+	return v.Parameters
+}
+
+func (v *VoidFunctionDefinition) GetCode() *FunctionImplementationForMultipleLanguages {
+	if v == nil {
+		return nil
+	}
+	return v.Code
+}
+
+func (v *VoidFunctionDefinition) GetExtraProperties() map[string]any {
+	if v == nil {
+		return nil
+	}
+	return v.extraProperties
+}
+
+func (v *VoidFunctionDefinition) String() string {
+	if len(v.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(v.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(v); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", v)
 }
 
 type Parameter struct {
 	ParameterId  ParameterId        `json:"parameterId" url:"parameterId"`
 	Name         string             `json:"name" url:"name"`
 	VariableType *fern.VariableType `json:"variableType" url:"variableType"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (p *Parameter) GetParameterId() ParameterId {
+	if p == nil {
+		return ""
+	}
+	return p.ParameterId
+}
+
+func (p *Parameter) GetName() string {
+	if p == nil {
+		return ""
+	}
+	return p.Name
+}
+
+func (p *Parameter) GetVariableType() *fern.VariableType {
+	if p == nil {
+		return nil
+	}
+	return p.VariableType
+}
+
+func (p *Parameter) GetExtraProperties() map[string]any {
+	if p == nil {
+		return nil
+	}
+	return p.extraProperties
+}
+
+func (p *Parameter) String() string {
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
 }
 
 type NonVoidFunctionDefinition struct {
 	Signature *NonVoidFunctionSignature                   `json:"signature" url:"signature"`
 	Code      *FunctionImplementationForMultipleLanguages `json:"code" url:"code"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (n *NonVoidFunctionDefinition) GetSignature() *NonVoidFunctionSignature {
+	if n == nil {
+		return nil
+	}
+	return n.Signature
+}
+
+func (n *NonVoidFunctionDefinition) GetCode() *FunctionImplementationForMultipleLanguages {
+	if n == nil {
+		return nil
+	}
+	return n.Code
+}
+
+func (n *NonVoidFunctionDefinition) GetExtraProperties() map[string]any {
+	if n == nil {
+		return nil
+	}
+	return n.extraProperties
+}
+
+func (n *NonVoidFunctionDefinition) String() string {
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(n); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", n)
 }
 
 type VoidFunctionSignature struct {
 	Parameters []*Parameter `json:"parameters" url:"parameters"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (v *VoidFunctionSignature) GetParameters() []*Parameter {
+	if v == nil {
+		return nil
+	}
+	return v.Parameters
+}
+
+func (v *VoidFunctionSignature) GetExtraProperties() map[string]any {
+	if v == nil {
+		return nil
+	}
+	return v.extraProperties
+}
+
+func (v *VoidFunctionSignature) String() string {
+	if len(v.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(v.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(v); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", v)
 }
 
 type NonVoidFunctionSignature struct {
 	Parameters []*Parameter       `json:"parameters" url:"parameters"`
 	ReturnType *fern.VariableType `json:"returnType" url:"returnType"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (n *NonVoidFunctionSignature) GetParameters() []*Parameter {
+	if n == nil {
+		return nil
+	}
+	return n.Parameters
+}
+
+func (n *NonVoidFunctionSignature) GetReturnType() *fern.VariableType {
+	if n == nil {
+		return nil
+	}
+	return n.ReturnType
+}
+
+func (n *NonVoidFunctionSignature) GetExtraProperties() map[string]any {
+	if n == nil {
+		return nil
+	}
+	return n.extraProperties
+}
+
+func (n *NonVoidFunctionSignature) String() string {
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(n); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", n)
 }
 
 type VoidFunctionSignatureThatTakesActualResult struct {
 	Parameters       []*Parameter       `json:"parameters" url:"parameters"`
 	ActualResultType *fern.VariableType `json:"actualResultType" url:"actualResultType"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (v *VoidFunctionSignatureThatTakesActualResult) GetParameters() []*Parameter {
+	if v == nil {
+		return nil
+	}
+	return v.Parameters
+}
+
+func (v *VoidFunctionSignatureThatTakesActualResult) GetActualResultType() *fern.VariableType {
+	if v == nil {
+		return nil
+	}
+	return v.ActualResultType
+}
+
+func (v *VoidFunctionSignatureThatTakesActualResult) GetExtraProperties() map[string]any {
+	if v == nil {
+		return nil
+	}
+	return v.extraProperties
+}
+
+func (v *VoidFunctionSignatureThatTakesActualResult) String() string {
+	if len(v.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(v.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(v); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", v)
 }
 
 type AssertCorrectnessCheck struct {
@@ -127,16 +803,110 @@ type AssertCorrectnessCheck struct {
 
 type DeepEqualityCorrectnessCheck struct {
 	ExpectedValueParameterId ParameterId `json:"expectedValueParameterId" url:"expectedValueParameterId"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (d *DeepEqualityCorrectnessCheck) GetExpectedValueParameterId() ParameterId {
+	if d == nil {
+		return ""
+	}
+	return d.ExpectedValueParameterId
+}
+
+func (d *DeepEqualityCorrectnessCheck) GetExtraProperties() map[string]any {
+	if d == nil {
+		return nil
+	}
+	return d.extraProperties
+}
+
+func (d *DeepEqualityCorrectnessCheck) String() string {
+	if len(d.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(d); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", d)
 }
 
 // The generated signature will include an additional param, actualResult
 type VoidFunctionDefinitionThatTakesActualResult struct {
 	AdditionalParameters []*Parameter                                `json:"additionalParameters" url:"additionalParameters"`
 	Code                 *FunctionImplementationForMultipleLanguages `json:"code" url:"code"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (v *VoidFunctionDefinitionThatTakesActualResult) GetAdditionalParameters() []*Parameter {
+	if v == nil {
+		return nil
+	}
+	return v.AdditionalParameters
+}
+
+func (v *VoidFunctionDefinitionThatTakesActualResult) GetCode() *FunctionImplementationForMultipleLanguages {
+	if v == nil {
+		return nil
+	}
+	return v.Code
+}
+
+func (v *VoidFunctionDefinitionThatTakesActualResult) GetExtraProperties() map[string]any {
+	if v == nil {
+		return nil
+	}
+	return v.extraProperties
+}
+
+func (v *VoidFunctionDefinitionThatTakesActualResult) String() string {
+	if len(v.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(v.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(v); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", v)
 }
 
 type TestCaseImplementationDescription struct {
 	Boards []*TestCaseImplementationDescriptionBoard `json:"boards" url:"boards"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (t *TestCaseImplementationDescription) GetBoards() []*TestCaseImplementationDescriptionBoard {
+	if t == nil {
+		return nil
+	}
+	return t.Boards
+}
+
+func (t *TestCaseImplementationDescription) GetExtraProperties() map[string]any {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *TestCaseImplementationDescription) String() string {
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
 }
 
 type TestCaseImplementationDescriptionBoard struct {
@@ -149,21 +919,172 @@ type TestCaseMetadata struct {
 	Id     TestCaseId `json:"id" url:"id"`
 	Name   string     `json:"name" url:"name"`
 	Hidden bool       `json:"hidden" url:"hidden"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (t *TestCaseMetadata) GetId() TestCaseId {
+	if t == nil {
+		return ""
+	}
+	return t.Id
+}
+
+func (t *TestCaseMetadata) GetName() string {
+	if t == nil {
+		return ""
+	}
+	return t.Name
+}
+
+func (t *TestCaseMetadata) GetHidden() bool {
+	if t == nil {
+		return false
+	}
+	return t.Hidden
+}
+
+func (t *TestCaseMetadata) GetExtraProperties() map[string]any {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *TestCaseMetadata) String() string {
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
 }
 
 type FunctionImplementationForMultipleLanguages struct {
 	CodeByLanguage map[*fern.Language]*FunctionImplementation `json:"codeByLanguage" url:"codeByLanguage"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (f *FunctionImplementationForMultipleLanguages) GetCodeByLanguage() map[*fern.Language]*FunctionImplementation {
+	if f == nil {
+		return nil
+	}
+	return f.CodeByLanguage
+}
+
+func (f *FunctionImplementationForMultipleLanguages) GetExtraProperties() map[string]any {
+	if f == nil {
+		return nil
+	}
+	return f.extraProperties
+}
+
+func (f *FunctionImplementationForMultipleLanguages) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
 }
 
 type FunctionImplementation struct {
 	Impl    string  `json:"impl" url:"impl"`
 	Imports *string `json:"imports,omitempty" url:"imports,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (f *FunctionImplementation) GetImpl() string {
+	if f == nil {
+		return ""
+	}
+	return f.Impl
+}
+
+func (f *FunctionImplementation) GetImports() *string {
+	if f == nil {
+		return nil
+	}
+	return f.Imports
+}
+
+func (f *FunctionImplementation) GetExtraProperties() map[string]any {
+	if f == nil {
+		return nil
+	}
+	return f.extraProperties
+}
+
+func (f *FunctionImplementation) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
 }
 
 type GeneratedFiles struct {
 	GeneratedTestCaseFiles map[*fern.Language]*Files `json:"generatedTestCaseFiles" url:"generatedTestCaseFiles"`
 	GeneratedTemplateFiles map[*fern.Language]*Files `json:"generatedTemplateFiles" url:"generatedTemplateFiles"`
 	Other                  map[*fern.Language]*Files `json:"other" url:"other"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (g *GeneratedFiles) GetGeneratedTestCaseFiles() map[*fern.Language]*Files {
+	if g == nil {
+		return nil
+	}
+	return g.GeneratedTestCaseFiles
+}
+
+func (g *GeneratedFiles) GetGeneratedTemplateFiles() map[*fern.Language]*Files {
+	if g == nil {
+		return nil
+	}
+	return g.GeneratedTemplateFiles
+}
+
+func (g *GeneratedFiles) GetOther() map[*fern.Language]*Files {
+	if g == nil {
+		return nil
+	}
+	return g.Other
+}
+
+func (g *GeneratedFiles) GetExtraProperties() map[string]any {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GeneratedFiles) String() string {
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
 }
 
 type CustomFiles struct {
@@ -177,10 +1098,89 @@ type BasicCustomFiles struct {
 	Signature             *NonVoidFunctionSignature `json:"signature" url:"signature"`
 	AdditionalFiles       map[*fern.Language]*Files `json:"additionalFiles" url:"additionalFiles"`
 	BasicTestCaseTemplate *BasicTestCaseTemplate    `json:"basicTestCaseTemplate" url:"basicTestCaseTemplate"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (b *BasicCustomFiles) GetMethodName() string {
+	if b == nil {
+		return ""
+	}
+	return b.MethodName
+}
+
+func (b *BasicCustomFiles) GetSignature() *NonVoidFunctionSignature {
+	if b == nil {
+		return nil
+	}
+	return b.Signature
+}
+
+func (b *BasicCustomFiles) GetAdditionalFiles() map[*fern.Language]*Files {
+	if b == nil {
+		return nil
+	}
+	return b.AdditionalFiles
+}
+
+func (b *BasicCustomFiles) GetBasicTestCaseTemplate() *BasicTestCaseTemplate {
+	if b == nil {
+		return nil
+	}
+	return b.BasicTestCaseTemplate
+}
+
+func (b *BasicCustomFiles) GetExtraProperties() map[string]any {
+	if b == nil {
+		return nil
+	}
+	return b.extraProperties
+}
+
+func (b *BasicCustomFiles) String() string {
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
 }
 
 type Files struct {
 	Files []*FileInfoV2 `json:"files" url:"files"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (f *Files) GetFiles() []*FileInfoV2 {
+	if f == nil {
+		return nil
+	}
+	return f.Files
+}
+
+func (f *Files) GetExtraProperties() map[string]any {
+	if f == nil {
+		return nil
+	}
+	return f.extraProperties
+}
+
+func (f *Files) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
 }
 
 type FileInfoV2 struct {
@@ -188,11 +1188,97 @@ type FileInfoV2 struct {
 	Directory string `json:"directory" url:"directory"`
 	Contents  string `json:"contents" url:"contents"`
 	Editable  bool   `json:"editable" url:"editable"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (f *FileInfoV2) GetFilename() string {
+	if f == nil {
+		return ""
+	}
+	return f.Filename
+}
+
+func (f *FileInfoV2) GetDirectory() string {
+	if f == nil {
+		return ""
+	}
+	return f.Directory
+}
+
+func (f *FileInfoV2) GetContents() string {
+	if f == nil {
+		return ""
+	}
+	return f.Contents
+}
+
+func (f *FileInfoV2) GetEditable() bool {
+	if f == nil {
+		return false
+	}
+	return f.Editable
+}
+
+func (f *FileInfoV2) GetExtraProperties() map[string]any {
+	if f == nil {
+		return nil
+	}
+	return f.extraProperties
+}
+
+func (f *FileInfoV2) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
 }
 
 type DefaultProvidedFile struct {
 	File         *FileInfoV2          `json:"file" url:"file"`
 	RelatedTypes []*fern.VariableType `json:"relatedTypes" url:"relatedTypes"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (d *DefaultProvidedFile) GetFile() *FileInfoV2 {
+	if d == nil {
+		return nil
+	}
+	return d.File
+}
+
+func (d *DefaultProvidedFile) GetRelatedTypes() []*fern.VariableType {
+	if d == nil {
+		return nil
+	}
+	return d.RelatedTypes
+}
+
+func (d *DefaultProvidedFile) GetExtraProperties() map[string]any {
+	if d == nil {
+		return nil
+	}
+	return d.extraProperties
+}
+
+func (d *DefaultProvidedFile) String() string {
+	if len(d.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(d); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", d)
 }
 
 type FunctionSignature struct {
@@ -204,26 +1290,214 @@ type FunctionSignature struct {
 
 type GetFunctionSignatureRequest struct {
 	FunctionSignature *FunctionSignature `json:"functionSignature" url:"functionSignature"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (g *GetFunctionSignatureRequest) GetFunctionSignature() *FunctionSignature {
+	if g == nil {
+		return nil
+	}
+	return g.FunctionSignature
+}
+
+func (g *GetFunctionSignatureRequest) GetExtraProperties() map[string]any {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetFunctionSignatureRequest) String() string {
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
 }
 
 type GetFunctionSignatureResponse struct {
 	FunctionByLanguage map[*fern.Language]string `json:"functionByLanguage" url:"functionByLanguage"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (g *GetFunctionSignatureResponse) GetFunctionByLanguage() map[*fern.Language]string {
+	if g == nil {
+		return nil
+	}
+	return g.FunctionByLanguage
+}
+
+func (g *GetFunctionSignatureResponse) GetExtraProperties() map[string]any {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetFunctionSignatureResponse) String() string {
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
 }
 
 type GetBasicSolutionFileRequest struct {
 	MethodName string                    `json:"methodName" url:"methodName"`
 	Signature  *NonVoidFunctionSignature `json:"signature" url:"signature"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (g *GetBasicSolutionFileRequest) GetMethodName() string {
+	if g == nil {
+		return ""
+	}
+	return g.MethodName
+}
+
+func (g *GetBasicSolutionFileRequest) GetSignature() *NonVoidFunctionSignature {
+	if g == nil {
+		return nil
+	}
+	return g.Signature
+}
+
+func (g *GetBasicSolutionFileRequest) GetExtraProperties() map[string]any {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetBasicSolutionFileRequest) String() string {
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
 }
 
 type GetBasicSolutionFileResponse struct {
 	SolutionFileByLanguage map[*fern.Language]*FileInfoV2 `json:"solutionFileByLanguage" url:"solutionFileByLanguage"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (g *GetBasicSolutionFileResponse) GetSolutionFileByLanguage() map[*fern.Language]*FileInfoV2 {
+	if g == nil {
+		return nil
+	}
+	return g.SolutionFileByLanguage
+}
+
+func (g *GetBasicSolutionFileResponse) GetExtraProperties() map[string]any {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetBasicSolutionFileResponse) String() string {
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
 }
 
 type GetGeneratedTestCaseFileRequest struct {
 	Template *TestCaseTemplate `json:"template,omitempty" url:"template,omitempty"`
 	TestCase *TestCaseV2       `json:"testCase" url:"testCase"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (g *GetGeneratedTestCaseFileRequest) GetTemplate() *TestCaseTemplate {
+	if g == nil {
+		return nil
+	}
+	return g.Template
+}
+
+func (g *GetGeneratedTestCaseFileRequest) GetTestCase() *TestCaseV2 {
+	if g == nil {
+		return nil
+	}
+	return g.TestCase
+}
+
+func (g *GetGeneratedTestCaseFileRequest) GetExtraProperties() map[string]any {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetGeneratedTestCaseFileRequest) String() string {
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
 }
 
 type GetGeneratedTestCaseTemplateFileRequest struct {
 	Template *TestCaseTemplate `json:"template" url:"template"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (g *GetGeneratedTestCaseTemplateFileRequest) GetTemplate() *TestCaseTemplate {
+	if g == nil {
+		return nil
+	}
+	return g.Template
+}
+
+func (g *GetGeneratedTestCaseTemplateFileRequest) GetExtraProperties() map[string]any {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetGeneratedTestCaseTemplateFileRequest) String() string {
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
 }

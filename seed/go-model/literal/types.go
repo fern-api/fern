@@ -2,9 +2,57 @@
 
 package literal
 
+import (
+	json "encoding/json"
+	fmt "fmt"
+	internal "github.com/literal/fern/internal"
+)
+
 type SendResponse struct {
 	Message string `json:"message" url:"message"`
 	Status  int    `json:"status" url:"status"`
 
-	success bool
+	success         bool
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (s *SendResponse) GetMessage() string {
+	if s == nil {
+		return ""
+	}
+	return s.Message
+}
+
+func (s *SendResponse) GetStatus() int {
+	if s == nil {
+		return 0
+	}
+	return s.Status
+}
+
+func (s *SendResponse) GetSuccess() bool {
+	if s == nil {
+		return false
+	}
+	return s.success
+}
+
+func (s *SendResponse) GetExtraProperties() map[string]any {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SendResponse) String() string {
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
 }

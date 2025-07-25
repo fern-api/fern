@@ -2,6 +2,41 @@
 
 package api
 
+import (
+	json "encoding/json"
+	fmt "fmt"
+	internal "github.com/circular-references-advanced/fern/internal"
+)
+
 type A struct {
 	S string `json:"s" url:"s"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (a *A) GetS() string {
+	if a == nil {
+		return ""
+	}
+	return a.S
+}
+
+func (a *A) GetExtraProperties() map[string]any {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *A) String() string {
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
 }
