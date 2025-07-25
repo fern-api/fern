@@ -21,6 +21,7 @@ const SUCCESS_PAGE = `
       <div style="font-family: sans-serif; font-size: 20px; color: gray; margin-top: 15px;">
         Head back to your terminal to continue using Fern.
       </div>
+    </div>
   </body>
 
 </html>
