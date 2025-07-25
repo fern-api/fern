@@ -2,6 +2,101 @@
 
 package unions
 
+import (
+	time "time"
+)
+
+// This is a simple union.
+type Union struct {
+	// This is a simple union.
+	Type string
+	Foo  *Foo
+	Bar  *Bar
+}
+
+type UnionWithDiscriminant struct {
+	Type string
+	Foo  *Foo
+	Bar  *Bar
+}
+
+type UnionWithPrimitive struct {
+	Type    string
+	Integer int
+	String  string
+}
+
+type UnionWithDuplicatePrimitive struct {
+	Type     string
+	Integer1 int
+	Integer2 int
+	String1  string
+	String2  string
+}
+
+type UnionWithoutKey struct {
+	Type string
+	Foo  Foo
+	Bar  Bar
+}
+
+type UnionWithNoProperties struct {
+	Type  string
+	Foo   Foo
+	Empty any
+}
+
+type UnionWithMultipleNoProperties struct {
+	Type   string
+	Foo    Foo
+	Empty1 any
+	Empty2 any
+}
+
+type UnionWithLiteral struct {
+	Type string
+	Base string
+	Fern string
+}
+
+type UnionWithBaseProperties struct {
+	Type    string
+	Id      string
+	Integer int
+	String  string
+	Foo     Foo
+}
+
+type UnionWithTime struct {
+	Type     string
+	Value    int
+	Date     time.Time
+	Datetime time.Time
+}
+
+type UnionWithOptionalTime struct {
+	Type     string
+	Date     *time.Time
+	Datetime *time.Time
+}
+
+type UnionWithSingleElement struct {
+	Type string
+	Foo  Foo
+}
+
+type UnionWithDuplicateTypes struct {
+	Type string
+	Foo1 Foo
+	Foo2 Foo
+}
+
+type UnionWithSubTypes struct {
+	Type        string
+	Foo         Foo
+	FooExtended FooExtended
+}
+
 type Foo struct {
 	Name string `json:"name" url:"name"`
 }

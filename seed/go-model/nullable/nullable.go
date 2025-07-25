@@ -10,6 +10,13 @@ type Email = *string
 
 type UserId = string
 
+type WeirdNumber struct {
+	Integer                int
+	DoubleOptional         *float64
+	StringOptionalOptional *string
+	Double                 float64
+}
+
 type User struct {
 	Name           string         `json:"name" url:"name"`
 	Id             UserId         `json:"id" url:"id"`
@@ -19,6 +26,13 @@ type User struct {
 	FavoriteNumber *WeirdNumber   `json:"favorite-number" url:"favorite-number"`
 	Numbers        []int          `json:"numbers,omitempty" url:"numbers,omitempty"`
 	Strings        map[string]any `json:"strings,omitempty" url:"strings,omitempty"`
+}
+
+type Status struct {
+	Type        string
+	Active      any
+	Archived    *time.Time
+	SoftDeleted *time.Time
 }
 
 type Metadata struct {

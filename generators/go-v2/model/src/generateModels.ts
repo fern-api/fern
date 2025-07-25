@@ -5,13 +5,13 @@ import { ObjectGenerator } from "./object/ObjectGenerator";
 import { AliasGenerator } from "./alias/AliasGenerator";
 import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { AbstractModelGenerator } from "./AbstractModelGenerator";
+import { DiscriminatedUnionGenerator } from "./union/DiscriminatedUnionGenerator";
+import { UndiscriminatedUnionGenerator } from "./union/UndiscriminatedUnionGenerator";
 
 export function generateModels(context: ModelGeneratorContext): void {
     for (const typeDeclaration of Object.values(context.ir.types)) {
         const generator = buildModelGenerator({ context, typeDeclaration });
-        if (generator != null) {
-            context.project.addGoFiles(generator.generate());
-        }
+        context.project.addGoFiles(generator.generate());
     }
 }
 
@@ -21,7 +21,7 @@ function buildModelGenerator({
 }: {
     context: ModelGeneratorContext;
     typeDeclaration: TypeDeclaration;
-}): AbstractModelGenerator | undefined {
+}): AbstractModelGenerator {
     switch (typeDeclaration.shape.type) {
         case "alias":
             return new AliasGenerator(context, typeDeclaration, typeDeclaration.shape);
@@ -30,8 +30,9 @@ function buildModelGenerator({
         case "object":
             return new ObjectGenerator(context, typeDeclaration, typeDeclaration.shape);
         case "union":
+            return new DiscriminatedUnionGenerator(context, typeDeclaration, typeDeclaration.shape);
         case "undiscriminatedUnion":
-            return undefined;
+            return new UndiscriminatedUnionGenerator(context, typeDeclaration, typeDeclaration.shape);
         default:
             assertNever(typeDeclaration.shape);
     }

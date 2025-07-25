@@ -5182,19 +5182,28 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "example1",
               "description": "",
               "path": "/v1/sqlite/execute",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "statement": "SELECT 1;"
+                "statement": {
+                  "sql": "SELECT * FROM table WHERE column = ?;",
+                  "args": [
+                    1
+                  ]
+                }
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "statement": "SELECT 1;"
+                  "statement": {
+                    "sql": "SELECT * FROM table WHERE column = ?;",
+                    "args": [
+                      1
+                    ]
+                  }
                 }
               },
               "responseStatusCode": 200,
@@ -5233,29 +5242,18 @@
               }
             },
             {
-              "name": "example2",
               "description": "",
               "path": "/v1/sqlite/execute",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "statement": {
-                  "sql": "SELECT * FROM table WHERE column = ?;",
-                  "args": [
-                    1
-                  ]
-                }
+                "statement": "SELECT 1;"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "statement": {
-                    "sql": "SELECT * FROM table WHERE column = ?;",
-                    "args": [
-                      1
-                    ]
-                  }
+                  "statement": "SELECT 1;"
                 }
               },
               "responseStatusCode": 200,
@@ -5584,30 +5582,6 @@
           ],
           "examples": [
             {
-              "name": "example1",
-              "description": "",
-              "path": "/v1/eval",
-              "pathParameters": {},
-              "queryParameters": {},
-              "headers": {},
-              "requestBody": {
-                "code": "export default 1"
-              },
-              "requestBodyV3": {
-                "type": "json",
-                "value": {
-                  "code": "export default 1"
-                }
-              },
-              "responseStatusCode": 200,
-              "responseBody": {},
-              "responseBodyV3": {
-                "type": "json",
-                "value": {}
-              }
-            },
-            {
-              "name": "example2",
               "description": "",
               "path": "/v1/eval",
               "pathParameters": {},
@@ -5626,6 +5600,28 @@
                   "args": [
                     1
                   ]
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "description": "",
+              "path": "/v1/eval",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "code": "export default 1"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "code": "export default 1"
                 }
               },
               "responseStatusCode": 200,
@@ -6636,7 +6632,30 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "example1",
+              "description": "",
+              "path": "/v1/vals/val_id",
+              "pathParameters": {
+                "val_id": "val_id"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "type": "http"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "http"
+                }
+              },
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
               "description": "",
               "path": "/v1/vals/val_id",
               "pathParameters": {
@@ -6653,31 +6672,6 @@
                 "value": {
                   "name": "myVal",
                   "readme": "# Updated readme"
-                }
-              },
-              "responseStatusCode": 204,
-              "responseBody": {},
-              "responseBodyV3": {
-                "type": "json",
-                "value": {}
-              }
-            },
-            {
-              "name": "example2",
-              "description": "",
-              "path": "/v1/vals/val_id",
-              "pathParameters": {
-                "val_id": "val_id"
-              },
-              "queryParameters": {},
-              "headers": {},
-              "requestBody": {
-                "type": "http"
-              },
-              "requestBodyV3": {
-                "type": "json",
-                "value": {
-                  "type": "http"
                 }
               },
               "responseStatusCode": 204,

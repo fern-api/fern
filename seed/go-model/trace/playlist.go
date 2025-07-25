@@ -30,6 +30,12 @@ type UpdatePlaylistRequest struct {
 }
 
 
+type PlaylistIdNotFoundErrorBody struct {
+    Type string
+    PlaylistId PlaylistId
+}
+
+
 type ReservedKeywordEnum string
 
 const (

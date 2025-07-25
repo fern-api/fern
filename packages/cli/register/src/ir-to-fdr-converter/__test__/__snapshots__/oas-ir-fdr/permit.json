@@ -21597,6 +21597,7 @@
           ],
           "examples": [
             {
+              "name": "usersReplaceUserExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/users/user_id",
               "pathParameters": {
@@ -21638,6 +21639,141 @@
                 }
               },
               "responseStatusCode": 200,
+              "responseBody": {
+                "key": "user|892179821739812389327",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "associated_tenants": [
+                  {
+                    "tenant": "stripe-inc",
+                    "roles": [
+                      "admin"
+                    ],
+                    "status": "active"
+                  },
+                  {
+                    "tenant": "othercompany.com",
+                    "roles": [
+                      "viewer"
+                    ],
+                    "status": "pending"
+                  }
+                ],
+                "roles": [
+                  {
+                    "role": "admin",
+                    "tenant": "stripe-inc"
+                  },
+                  {
+                    "role": "viewer",
+                    "tenant": "othercompany.com"
+                  }
+                ],
+                "email": "jane@coolcompany.com",
+                "first_name": "Jane",
+                "last_name": "Doe",
+                "attributes": {
+                  "department": "marketing",
+                  "age": 30,
+                  "subscription": {
+                    "tier": "pro",
+                    "expired": false
+                  }
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "key": "user|892179821739812389327",
+                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                  "associated_tenants": [
+                    {
+                      "tenant": "stripe-inc",
+                      "roles": [
+                        "admin"
+                      ],
+                      "status": "active"
+                    },
+                    {
+                      "tenant": "othercompany.com",
+                      "roles": [
+                        "viewer"
+                      ],
+                      "status": "pending"
+                    }
+                  ],
+                  "roles": [
+                    {
+                      "role": "admin",
+                      "tenant": "stripe-inc"
+                    },
+                    {
+                      "role": "viewer",
+                      "tenant": "othercompany.com"
+                    }
+                  ],
+                  "email": "jane@coolcompany.com",
+                  "first_name": "Jane",
+                  "last_name": "Doe",
+                  "attributes": {
+                    "department": "marketing",
+                    "age": 30,
+                    "subscription": {
+                      "tier": "pro",
+                      "expired": false
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "usersReplaceUserExample",
+              "description": "",
+              "path": "/v2/facts/proj_id/env_id/users/user_id",
+              "pathParameters": {
+                "proj_id": "proj_id",
+                "env_id": "env_id",
+                "user_id": "user_id"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "key": "user|892179821739812389327",
+                "email": "jane@coolcompany.com",
+                "first_name": "Jane",
+                "last_name": "Doe",
+                "attributes": {
+                  "department": "marketing",
+                  "age": 30,
+                  "subscription": {
+                    "tier": "pro",
+                    "expired": false
+                  }
+                }
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "key": "user|892179821739812389327",
+                  "email": "jane@coolcompany.com",
+                  "first_name": "Jane",
+                  "last_name": "Doe",
+                  "attributes": {
+                    "department": "marketing",
+                    "age": 30,
+                    "subscription": {
+                      "tier": "pro",
+                      "expired": false
+                    }
+                  }
+                }
+              },
+              "responseStatusCode": 201,
               "responseBody": {
                 "key": "user|892179821739812389327",
                 "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",

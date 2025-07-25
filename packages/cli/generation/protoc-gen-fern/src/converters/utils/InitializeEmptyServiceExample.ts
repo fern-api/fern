@@ -2,6 +2,7 @@ import { FernIr, V2EndpointLocationHttpMethod, V2HttpEndpointExample } from "@fe
 
 export function initializeEmptyServiceExample(): V2HttpEndpointExample {
     return {
+        displayName: undefined,
         request: {
             endpoint: {
                 method: V2EndpointLocationHttpMethod.Post,
