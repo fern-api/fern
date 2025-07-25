@@ -212,6 +212,12 @@ fixtures:
     - customConfig:
         noSerdeLayer: false
       outputFolder: serde-layer-query
+  query-parameters-openapi:
+    - customConfig: null
+      outputFolder: no-custom-config
+  query-parameters-openapi-as-objects:
+    - customConfig: null
+      outputFolder: no-custom-config
   request-parameters:
     - customConfig: null
       outputFolder: no-custom-config
