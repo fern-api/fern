@@ -11,9 +11,9 @@ public final class QueryParamClient: Sendable {
             path: "/query",
             queryParams: [
                 "operand": .string(operand.rawValue), 
-                "maybeOperand": maybeOperand.map { .string($0) }, 
+                "maybeOperand": maybeOperand.map { .string($0.rawValue) }, 
                 "operandOrColor": .string(operandOrColor.rawValue), 
-                "maybeOperandOrColor": maybeOperandOrColor.map { .string($0) }
+                "maybeOperandOrColor": maybeOperandOrColor.map { .string($0.rawValue) }
             ],
             requestOptions: requestOptions
         )
@@ -25,9 +25,9 @@ public final class QueryParamClient: Sendable {
             path: "/query-list",
             queryParams: [
                 "operand": .string(operand.rawValue), 
-                "maybeOperand": maybeOperand.map { .string($0) }, 
+                "maybeOperand": maybeOperand.map { .string($0.rawValue) }, 
                 "operandOrColor": .string(operandOrColor.rawValue), 
-                "maybeOperandOrColor": maybeOperandOrColor.map { .string($0) }
+                "maybeOperandOrColor": maybeOperandOrColor.map { .string($0.rawValue) }
             ],
             requestOptions: requestOptions
         )

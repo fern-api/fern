@@ -30,7 +30,7 @@ public final class UserClient: Sendable {
                 "keyValue": .unknown(keyValue), 
                 "optionalString": optionalString.map { .string($0) }, 
                 "nestedUser": .string(nestedUser.rawValue), 
-                "optionalUser": optionalUser.map { .string($0) }, 
+                "optionalUser": optionalUser.map { .string($0.rawValue) }, 
                 "excludeUser": .string(excludeUser.rawValue), 
                 "filter": .string(filter), 
                 "longParam": .int64(longParam), 

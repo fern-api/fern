@@ -28,7 +28,7 @@ public final class PetClient: Sendable {
             method: .get,
             path: "/pet/findByStatus",
             queryParams: [
-                "status": status.map { .string($0) }
+                "status": status.map { .string($0.rawValue) }
             ],
             requestOptions: requestOptions,
             responseType: [Pet].self
