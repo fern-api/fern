@@ -7,7 +7,6 @@ import (
 	core "github.com/go-bytes-request/fern/core"
 	internal "github.com/go-bytes-request/fern/internal"
 	option "github.com/go-bytes-request/fern/option"
-	io "io"
 	http "net/http"
 )
 
@@ -36,7 +35,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 
 func (c *Client) Upload(
 	ctx context.Context,
-	request io.Reader,
+	request []byte,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Upload(
