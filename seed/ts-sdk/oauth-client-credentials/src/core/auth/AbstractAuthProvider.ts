@@ -1,5 +1,5 @@
-import * as core from "..";
+import { AuthRequest } from "./AuthRequest";
 
 export abstract class AbstractAuthProvider {
-    public abstract getHeaders(): Record<string, core.Supplier<string>>;
+    public abstract getAuthRequest(): Promise<AuthRequest>;
 }

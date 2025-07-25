@@ -2,6 +2,7 @@ import { SeedOauthClientCredentialsClient } from "Client";
 import * as core from "..";
 import { GetTokenRequest } from "api";
 import { AbstractAuthProvider } from "./AbstractAuthProvider";
+import { AuthRequest } from "./AuthRequest";
 
 export namespace AuthProvider {
     export interface Options {
@@ -15,7 +16,7 @@ export class AuthProvider extends AbstractAuthProvider {
     private readonly client: SeedOauthClientCredentialsClient;
     private readonly options: AuthProvider.Options;
 
-    private headersPromise: Promise<Record<string, string>> | undefined;
+    private authRequestPromise: Promise<AuthRequest> | undefined;
     private expiresAt: Date | undefined;
 
     constructor(client: SeedOauthClientCredentialsClient, options: AuthProvider.Options) {
@@ -24,42 +25,36 @@ export class AuthProvider extends AbstractAuthProvider {
         this.options = options;
     }
 
-    private getHeadersPromise(): Promise<Record<string, string>> {
+    private getCachedAuthRequest(): Promise<AuthRequest> {
         if (this.expiresAt && this.expiresAt <= new Date()) {
-            // If the token has expired, reset the headers promise
-            this.headersPromise = undefined;
+            // If the token has expired, reset the auth request promise
+            this.authRequestPromise = undefined;
         }
 
-        if (!this.headersPromise) {
-            this.headersPromise = this.getHeadersFromTokenEndpoint();
+        if (!this.authRequestPromise) {
+            this.authRequestPromise = this.getAuthRequestFromTokenEndpoint();
         }
 
-        return this.headersPromise;
+        return this.authRequestPromise;
     }
 
-    public getHeaders(): Record<string, core.Supplier<string>> {
-        const headers = this.getHeadersPromise();
-        return {
-            Authorization: () => headers.then((h) => h.Authorization),
-            "x-scope": "read-only",
-        };
+    public async getAuthRequest(): Promise<AuthRequest> {
+        const authRequest = await this.getCachedAuthRequest();
+        return authRequest;
     }
 
-    private async getHeadersFromTokenEndpoint(): Promise<{
-        Authorization: string;
-        // Add other headers from the response as needed
-        // 'X-Custom-Header': string;
-    }> {
-        const response = await this.client.auth.getTokenWithClientCredentials(await this.getRequestParameters());
+    private async getAuthRequestFromTokenEndpoint(): Promise<AuthRequest> {
+        const response = await this.client.auth.getTokenWithClientCredentials(await this.getTokenRequestParameters());
         this.expiresAt = new Date(Date.now() + response.expires_in * 1000);
         return {
-            Authorization: `Bearer ${response.access_token}`,
-            // Add other headers from the response as needed
-            // 'X-Custom-Header': response.custom_header,
+            headers: {
+                Authorization: `Bearer ${response.access_token}`,
+                // Add other headers from the response as needed
+            },
         };
     }
 
-    private async getRequestParameters(): Promise<GetTokenRequest> {
+    private async getTokenRequestParameters(): Promise<GetTokenRequest> {
         return {
             client_id: await core.Supplier.get(this.options.clientId),
             client_secret: await core.Supplier.get(this.options.clientSecret),

@@ -58,6 +58,7 @@ export class Auth {
         request: SeedOauthClientCredentials.GetTokenRequest,
         requestOptions?: Auth.RequestOptions,
     ): Promise<core.WithRawResponse<SeedOauthClientCredentials.TokenResponse>> {
+        const authRequest = await this._options.authProvider.getAuthRequest();
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -67,7 +68,7 @@ export class Auth {
             method: "POST",
             headers: mergeHeaders(
                 this._options?.headers,
-                this._options.authProvider.getHeaders(), // TODO: remove inside auth endpoint
+                authRequest.headers,
                 requestOptions?.headers,
             ),
             contentType: "application/json",
@@ -132,6 +133,7 @@ export class Auth {
         request: SeedOauthClientCredentials.RefreshTokenRequest,
         requestOptions?: Auth.RequestOptions,
     ): Promise<core.WithRawResponse<SeedOauthClientCredentials.TokenResponse>> {
+        const authRequest = await this._options.authProvider.getAuthRequest();
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -141,7 +143,7 @@ export class Auth {
             method: "POST",
             headers: mergeHeaders(
                 this._options?.headers,
-                this._options.authProvider.getHeaders(), // TODO: remove inside auth endpoint
+                authRequest.headers,
                 requestOptions?.headers,
             ),
             contentType: "application/json",
