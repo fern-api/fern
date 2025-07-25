@@ -49,7 +49,7 @@ export class OpenAPILoader {
                 } else if (isOpenAPIV2(openAPI)) {
                     // default to https to produce a valid URL
                     if (!openAPI.schemes || openAPI.schemes.length === 0) {
-                        openAPI.schemes = ["https"]
+                        openAPI.schemes = ["https"];
                     }
                     const convertedOpenAPI = await convertOpenAPIV2ToV3(openAPI);
                     documents.push({
