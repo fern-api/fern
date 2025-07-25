@@ -20,7 +20,7 @@ public struct GetExecutionSessionStateResponse: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.states, forKey: .states)
         try container.encodeIfPresent(self.numWarmingInstances, forKey: .numWarmingInstances)

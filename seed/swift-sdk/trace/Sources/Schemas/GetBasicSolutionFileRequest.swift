@@ -17,7 +17,7 @@ public struct GetBasicSolutionFileRequest: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.methodName, forKey: .methodName)
         try container.encode(self.signature, forKey: .signature)

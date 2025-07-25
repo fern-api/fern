@@ -20,7 +20,7 @@ public struct Patient: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.resourceType, forKey: .resourceType)
         try container.encode(self.name, forKey: .name)

@@ -17,7 +17,7 @@ public struct BinaryTreeValue: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encodeIfPresent(self.root, forKey: .root)
         try container.encode(self.nodes, forKey: .nodes)

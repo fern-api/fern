@@ -32,7 +32,7 @@ public struct GetTokenRequest: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.cid, forKey: .cid)
         try container.encode(self.csr, forKey: .csr)
