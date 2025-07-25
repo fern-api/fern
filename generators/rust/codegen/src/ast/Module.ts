@@ -3,10 +3,14 @@ import { Writer } from "./Writer";
 import { Struct } from "./Struct";
 import { ImplBlock } from "./ImplBlock";
 import { Enum } from "./Enum";
+import { UseStatement } from "./UseStatement";
+import { ModuleDeclaration } from "./ModuleDeclaration";
 
 export declare namespace Module {
     interface Args {
         imports?: string[];
+        useStatements?: UseStatement[];
+        moduleDeclarations?: ModuleDeclaration[];
         structs?: Struct[];
         implBlocks?: ImplBlock[];
         enums?: Enum[];
@@ -16,14 +20,18 @@ export declare namespace Module {
 
 export class Module extends AstNode {
     public readonly imports?: string[];
+    public readonly useStatements?: UseStatement[];
+    public readonly moduleDeclarations?: ModuleDeclaration[];
     public readonly structs?: Struct[];
     public readonly implBlocks?: ImplBlock[];
     public readonly enums?: Enum[];
     public readonly rawDeclarations?: string[];
 
-    public constructor({ imports, structs, implBlocks, enums, rawDeclarations }: Module.Args) {
+    public constructor({ imports, useStatements, moduleDeclarations, structs, implBlocks, enums, rawDeclarations }: Module.Args) {
         super();
         this.imports = imports;
+        this.useStatements = useStatements;
+        this.moduleDeclarations = moduleDeclarations;
         this.structs = structs;
         this.implBlocks = implBlocks;
         this.enums = enums;
@@ -31,10 +39,28 @@ export class Module extends AstNode {
     }
 
     public write(writer: Writer): void {
-        // Write imports
+        // Write imports (legacy string-based imports)
         if (this.imports && this.imports.length > 0) {
             this.imports.forEach((importStatement) => {
                 writer.write(importStatement);
+                writer.newLine();
+            });
+            writer.newLine();
+        }
+
+        // Write module declarations
+        if (this.moduleDeclarations && this.moduleDeclarations.length > 0) {
+            this.moduleDeclarations.forEach((moduleDecl) => {
+                moduleDecl.write(writer);
+                writer.newLine();
+            });
+            writer.newLine();
+        }
+
+        // Write use statements
+        if (this.useStatements && this.useStatements.length > 0) {
+            this.useStatements.forEach((useStmt) => {
+                useStmt.write(writer);
                 writer.newLine();
             });
             writer.newLine();

@@ -15,6 +15,8 @@ export { Method } from "./Method";
 export type { FunctionParameter } from "./Method";
 export { ImplBlock } from "./ImplBlock";
 export { Module } from "./Module";
+export { UseStatement } from "./UseStatement";
+export { ModuleDeclaration } from "./ModuleDeclaration";
 export { Client } from "./Client";
 export { Pattern } from "./Pattern";
 export { MatchArm } from "./MatchArm";

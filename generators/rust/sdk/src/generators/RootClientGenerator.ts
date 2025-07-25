@@ -1,8 +1,10 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { rust } from "@fern-api/rust-codegen";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+
 import { Package, Subpackage } from "@fern-fern/ir-sdk/api";
+
+import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 export class RootClientGenerator {
     private readonly context: SdkGeneratorContext;
@@ -23,7 +25,7 @@ export class RootClientGenerator {
         const rustRootClient = rust.client({
             name: clientName,
             isRoot: true,
-            subClients: subpackages.map(subpackage => this.getSubClientName(subpackage))
+            subClients: subpackages.map((subpackage) => this.getSubClientName(subpackage))
         });
 
         const fileContents = rustRootClient.toString();
@@ -34,21 +36,17 @@ export class RootClientGenerator {
         });
     }
 
-
-
-    private getSubpackages(): Subpackage[] {
-        return this.package.subpackages
-            .map(subpackageId => this.context.getSubpackageOrThrow(subpackageId))
-            .filter(subpackage => subpackage.service != null || subpackage.hasEndpointsInTree);
+    private getRootClientName(): string {
+        return this.context.getClientName();
     }
 
     private getSubClientName(subpackage: Subpackage): string {
         return `${subpackage.name.pascalCase.safeName}Client`;
     }
 
-
-
-    private getRootClientName(): string {
-        return this.context.getClientName();
+    private getSubpackages(): Subpackage[] {
+        return this.package.subpackages
+            .map((subpackageId) => this.context.getSubpackageOrThrow(subpackageId))
+            .filter((subpackage) => subpackage.service != null || subpackage.hasEndpointsInTree);
     }
-} 
+}

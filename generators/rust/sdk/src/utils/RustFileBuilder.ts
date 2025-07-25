@@ -44,20 +44,9 @@ export class RustFileBuilder {
         }
 
         // Add items
-        const itemStrings = this.items.map(item => item.toString());
+        const itemStrings = this.items.map((item) => item.toString());
         parts.push(...itemStrings);
 
         return parts.join("\n");
     }
-
-    // Convenience methods for common imports
-    public addStandardErrorImports(): this {
-        return this.addUse("thiserror", ["Error"])
-            .addUse("serde", ["Deserialize", "Serialize"]);
-    }
-
-    public addStandardClientImports(): this {
-        return this.addUse("reqwest")
-            .addUse("serde_json");
-    }
-} 
+}

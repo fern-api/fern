@@ -1,7 +1,9 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { rust } from "@fern-api/rust-codegen";
+
 import { HttpEndpoint, HttpService, Subpackage } from "@fern-fern/ir-sdk/api";
+
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 export class SubClientGenerator {
@@ -15,13 +17,17 @@ export class SubClientGenerator {
         this.service = subpackage.service ? this.context.getHttpServiceOrThrow(subpackage.service) : undefined;
     }
 
+    private get subClientName(): string {
+        return this.subpackage.name.pascalCase.safeName + "Client";
+    }
+
     public generate(): RustFile {
         const filename = `${this.subpackage.name.snakeCase.safeName}.rs`;
         const endpoints = this.service?.endpoints || [];
 
         // Simple client generation - no bloat!
         const rustClient = rust.client({
-            name: this.getClientName(),
+            name: this.subClientName,
             methods: this.convertEndpointsToSimpleMethods(endpoints)
         });
 
@@ -36,8 +42,9 @@ export class SubClientGenerator {
     private convertEndpointsToSimpleMethods(endpoints: HttpEndpoint[]): any[] {
         return endpoints.map((endpoint) => ({
             name: endpoint.name.snakeCase.safeName,
-            parameters: this.extractParametersFromEndpoint(endpoint).map(param => 
-                `${param.name}: ${param.isRef ? "&" : ""}${param.optional ? `Option<${param.type}>` : param.type}`
+            parameters: this.extractParametersFromEndpoint(endpoint).map(
+                (param) =>
+                    `${param.name}: ${param.isRef ? "&" : ""}${param.optional ? `Option<${param.type}>` : param.type}`
             ),
             returnType: "String"
         }));
@@ -71,9 +78,5 @@ export class SubClientGenerator {
         });
 
         return params;
-    }
-
-    private getClientName(): string {
-        return this.subpackage.name.pascalCase.safeName + "Client";
     }
 }
