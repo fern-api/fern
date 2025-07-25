@@ -11,7 +11,7 @@
       "runtimeExecutable": "yarn",
       "runtimeArgs": [
         "run",
-        "--inspect-brk",
+        "--inspect-brk --no-file-parallelism",
         "jest",
         "--runInBand",
         "--testPathPattern",

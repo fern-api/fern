@@ -29,7 +29,7 @@
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "publish:cli": "pnpm dist:cli && cd dist && yarn npm publish",
     "test": "vitest --passWithNoTests --run",
-    "test:debug": "pnpm test --inspect-brk",
+    "test:debug": "pnpm run test --inspect-brk --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {
