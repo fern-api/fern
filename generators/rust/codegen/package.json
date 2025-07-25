@@ -20,6 +20,7 @@
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
     "test": "vitest --passWithNoTests --run",
+    "test:debug": "pnpm test --inspect-brk",
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {

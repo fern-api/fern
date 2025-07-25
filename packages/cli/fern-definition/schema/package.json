@@ -20,6 +20,7 @@
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
     "test": "vitest --run",
+    "test:debug": "pnpm test --inspect-brk",
     "test:update": "vitest --run -u",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",

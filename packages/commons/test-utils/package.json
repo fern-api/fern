@@ -26,6 +26,7 @@
     "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "test": "vitest --run",
+    "test:debug": "pnpm test --inspect-brk",
     "test:update": "vitest --run -u"
   },
   "devDependencies": {
