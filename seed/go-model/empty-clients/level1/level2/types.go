@@ -2,9 +2,51 @@
 
 package level2
 
+import (
+	json "encoding/json"
+	fmt "fmt"
+	internal "github.com/empty-clients/fern/internal"
+)
+
 type Person struct {
 	Name    string   `json:"name" url:"name"`
 	Address *Address `json:"address" url:"address"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (p *Person) GetName() string {
+	if p == nil {
+		return ""
+	}
+	return p.Name
+}
+
+func (p *Person) GetAddress() *Address {
+	if p == nil {
+		return nil
+	}
+	return p.Address
+}
+
+func (p *Person) GetExtraProperties() map[string]any {
+	if p == nil {
+		return nil
+	}
+	return p.extraProperties
+}
+
+func (p *Person) String() string {
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
 }
 
 type Address struct {
@@ -14,5 +56,68 @@ type Address struct {
 	State string  `json:"state" url:"state"`
 	Zip   string  `json:"zip" url:"zip"`
 
-	country string
+	country         string
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (a *Address) GetLine1() string {
+	if a == nil {
+		return ""
+	}
+	return a.Line1
+}
+
+func (a *Address) GetLine2() *string {
+	if a == nil {
+		return nil
+	}
+	return a.Line2
+}
+
+func (a *Address) GetCity() string {
+	if a == nil {
+		return ""
+	}
+	return a.City
+}
+
+func (a *Address) GetState() string {
+	if a == nil {
+		return ""
+	}
+	return a.State
+}
+
+func (a *Address) GetZip() string {
+	if a == nil {
+		return ""
+	}
+	return a.Zip
+}
+
+func (a *Address) GetCountry() string {
+	if a == nil {
+		return ""
+	}
+	return a.country
+}
+
+func (a *Address) GetExtraProperties() map[string]any {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *Address) String() string {
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
 }

@@ -2,12 +2,90 @@
 
 package mixedfiledirectory
 
+import (
+	json "encoding/json"
+	fmt "fmt"
+	internal "github.com/mixed-file-directory/fern/internal"
+)
+
 type Organization struct {
 	Id    Id      `json:"id" url:"id"`
 	Name  string  `json:"name" url:"name"`
 	Users []*User `json:"users" url:"users"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (o *Organization) GetId() Id {
+	if o == nil {
+		return ""
+	}
+	return o.Id
+}
+
+func (o *Organization) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *Organization) GetUsers() []*User {
+	if o == nil {
+		return nil
+	}
+	return o.Users
+}
+
+func (o *Organization) GetExtraProperties() map[string]any {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *Organization) String() string {
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
 }
 
 type CreateOrganizationRequest struct {
 	Name string `json:"name" url:"name"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateOrganizationRequest) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateOrganizationRequest) GetExtraProperties() map[string]any {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateOrganizationRequest) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
 }

@@ -2,13 +2,84 @@
 
 package aliasextends
 
+import (
+	json "encoding/json"
+	fmt "fmt"
+	internal "github.com/alias-extends/fern/internal"
+)
+
 type AliasType = *Parent
 
 type Parent struct {
 	Parent string `json:"parent" url:"parent"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (p *Parent) GetParent() string {
+	if p == nil {
+		return ""
+	}
+	return p.Parent
+}
+
+func (p *Parent) GetExtraProperties() map[string]any {
+	if p == nil {
+		return nil
+	}
+	return p.extraProperties
+}
+
+func (p *Parent) String() string {
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
 }
 
 type Child struct {
 	Parent string `json:"parent" url:"parent"`
 	Child  string `json:"child" url:"child"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (c *Child) GetParent() string {
+	if c == nil {
+		return ""
+	}
+	return c.Parent
+}
+
+func (c *Child) GetChild() string {
+	if c == nil {
+		return ""
+	}
+	return c.Child
+}
+
+func (c *Child) GetExtraProperties() map[string]any {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *Child) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
 }

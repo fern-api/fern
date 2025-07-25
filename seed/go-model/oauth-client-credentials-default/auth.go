@@ -2,8 +2,50 @@
 
 package oauthclientcredentialsdefault
 
+import (
+	json "encoding/json"
+	fmt "fmt"
+	internal "github.com/oauth-client-credentials-default/fern/internal"
+)
+
 // An OAuth token response.
 type TokenResponse struct {
 	AccessToken string `json:"access_token" url:"access_token"`
 	ExpiresIn   int    `json:"expires_in" url:"expires_in"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (t *TokenResponse) GetAccessToken() string {
+	if t == nil {
+		return ""
+	}
+	return t.AccessToken
+}
+
+func (t *TokenResponse) GetExpiresIn() int {
+	if t == nil {
+		return 0
+	}
+	return t.ExpiresIn
+}
+
+func (t *TokenResponse) GetExtraProperties() map[string]any {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *TokenResponse) String() string {
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
 }

@@ -2,8 +2,57 @@
 
 package mixedfiledirectory
 
+import (
+	json "encoding/json"
+	fmt "fmt"
+	internal "github.com/mixed-file-directory/fern/internal"
+)
+
 type User struct {
 	Id   Id     `json:"id" url:"id"`
 	Name string `json:"name" url:"name"`
 	Age  int    `json:"age" url:"age"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (u *User) GetId() Id {
+	if u == nil {
+		return ""
+	}
+	return u.Id
+}
+
+func (u *User) GetName() string {
+	if u == nil {
+		return ""
+	}
+	return u.Name
+}
+
+func (u *User) GetAge() int {
+	if u == nil {
+		return 0
+	}
+	return u.Age
+}
+
+func (u *User) GetExtraProperties() map[string]any {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *User) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
 }

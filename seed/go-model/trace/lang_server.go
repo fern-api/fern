@@ -2,13 +2,77 @@
 
 package trace
 
+import (
+    json "encoding/json"
+    internal "github.com/trace/fern/internal"
+    fmt "fmt"
+)
+
 
 type LangServerRequest struct {
     Request any `json:"request" url:"request"`
+
+    extraProperties map[string]any
+    rawJSON json.RawMessage
+}
+
+func (l *LangServerRequest) GetRequest() any{
+    if l == nil {
+        return nil
+    }
+    return l.Request
+}
+
+func (l *LangServerRequest) GetExtraProperties() map[string]any{
+    if l == nil {
+        return nil
+    }
+    return l.extraProperties
+}
+
+func (l *LangServerRequest) String() string{
+    if len(l.rawJSON) > 0 {
+        if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+            return value
+        }
+    }
+    if value, err := internal.StringifyJSON(l); err == nil {
+        return value
+    }
+    return fmt.Sprintf("%#v", l)
 }
 
 
 type LangServerResponse struct {
     Response any `json:"response" url:"response"`
+
+    extraProperties map[string]any
+    rawJSON json.RawMessage
+}
+
+func (l *LangServerResponse) GetResponse() any{
+    if l == nil {
+        return nil
+    }
+    return l.Response
+}
+
+func (l *LangServerResponse) GetExtraProperties() map[string]any{
+    if l == nil {
+        return nil
+    }
+    return l.extraProperties
+}
+
+func (l *LangServerResponse) String() string{
+    if len(l.rawJSON) > 0 {
+        if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+            return value
+        }
+    }
+    if value, err := internal.StringifyJSON(l); err == nil {
+        return value
+    }
+    return fmt.Sprintf("%#v", l)
 }
 

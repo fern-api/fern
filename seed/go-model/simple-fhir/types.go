@@ -2,15 +2,100 @@
 
 package api
 
+import (
+	json "encoding/json"
+	fmt "fmt"
+	internal "github.com/simple-fhir/fern/internal"
+)
+
 type Memo struct {
 	Description string   `json:"description" url:"description"`
 	Account     *Account `json:"account,omitempty" url:"account,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (m *Memo) GetDescription() string {
+	if m == nil {
+		return ""
+	}
+	return m.Description
+}
+
+func (m *Memo) GetAccount() *Account {
+	if m == nil {
+		return nil
+	}
+	return m.Account
+}
+
+func (m *Memo) GetExtraProperties() map[string]any {
+	if m == nil {
+		return nil
+	}
+	return m.extraProperties
+}
+
+func (m *Memo) String() string {
+	if len(m.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(m); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", m)
 }
 
 type BaseResource struct {
 	Id               string          `json:"id" url:"id"`
 	RelatedResources []*ResourceList `json:"related_resources" url:"related_resources"`
 	Memo             *Memo           `json:"memo" url:"memo"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (b *BaseResource) GetId() string {
+	if b == nil {
+		return ""
+	}
+	return b.Id
+}
+
+func (b *BaseResource) GetRelatedResources() []*ResourceList {
+	if b == nil {
+		return nil
+	}
+	return b.RelatedResources
+}
+
+func (b *BaseResource) GetMemo() *Memo {
+	if b == nil {
+		return nil
+	}
+	return b.Memo
+}
+
+func (b *BaseResource) GetExtraProperties() map[string]any {
+	if b == nil {
+		return nil
+	}
+	return b.extraProperties
+}
+
+func (b *BaseResource) String() string {
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
 }
 
 type ResourceList struct {
@@ -28,7 +113,77 @@ type Account struct {
 	Patient          *Patient        `json:"patient,omitempty" url:"patient,omitempty"`
 	Practitioner     *Practitioner   `json:"practitioner,omitempty" url:"practitioner,omitempty"`
 
-	resourceType string
+	resourceType    string
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (a *Account) GetId() string {
+	if a == nil {
+		return ""
+	}
+	return a.Id
+}
+
+func (a *Account) GetRelatedResources() []*ResourceList {
+	if a == nil {
+		return nil
+	}
+	return a.RelatedResources
+}
+
+func (a *Account) GetMemo() *Memo {
+	if a == nil {
+		return nil
+	}
+	return a.Memo
+}
+
+func (a *Account) GetResourceType() string {
+	if a == nil {
+		return ""
+	}
+	return a.resourceType
+}
+
+func (a *Account) GetName() string {
+	if a == nil {
+		return ""
+	}
+	return a.Name
+}
+
+func (a *Account) GetPatient() *Patient {
+	if a == nil {
+		return nil
+	}
+	return a.Patient
+}
+
+func (a *Account) GetPractitioner() *Practitioner {
+	if a == nil {
+		return nil
+	}
+	return a.Practitioner
+}
+
+func (a *Account) GetExtraProperties() map[string]any {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *Account) String() string {
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
 }
 
 type Patient struct {
@@ -38,7 +193,70 @@ type Patient struct {
 	Name             string          `json:"name" url:"name"`
 	Scripts          []*Script       `json:"scripts" url:"scripts"`
 
-	resourceType string
+	resourceType    string
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (p *Patient) GetId() string {
+	if p == nil {
+		return ""
+	}
+	return p.Id
+}
+
+func (p *Patient) GetRelatedResources() []*ResourceList {
+	if p == nil {
+		return nil
+	}
+	return p.RelatedResources
+}
+
+func (p *Patient) GetMemo() *Memo {
+	if p == nil {
+		return nil
+	}
+	return p.Memo
+}
+
+func (p *Patient) GetResourceType() string {
+	if p == nil {
+		return ""
+	}
+	return p.resourceType
+}
+
+func (p *Patient) GetName() string {
+	if p == nil {
+		return ""
+	}
+	return p.Name
+}
+
+func (p *Patient) GetScripts() []*Script {
+	if p == nil {
+		return nil
+	}
+	return p.Scripts
+}
+
+func (p *Patient) GetExtraProperties() map[string]any {
+	if p == nil {
+		return nil
+	}
+	return p.extraProperties
+}
+
+func (p *Patient) String() string {
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
 }
 
 type Practitioner struct {
@@ -47,7 +265,63 @@ type Practitioner struct {
 	Memo             *Memo           `json:"memo" url:"memo"`
 	Name             string          `json:"name" url:"name"`
 
-	resourceType string
+	resourceType    string
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (p *Practitioner) GetId() string {
+	if p == nil {
+		return ""
+	}
+	return p.Id
+}
+
+func (p *Practitioner) GetRelatedResources() []*ResourceList {
+	if p == nil {
+		return nil
+	}
+	return p.RelatedResources
+}
+
+func (p *Practitioner) GetMemo() *Memo {
+	if p == nil {
+		return nil
+	}
+	return p.Memo
+}
+
+func (p *Practitioner) GetResourceType() string {
+	if p == nil {
+		return ""
+	}
+	return p.resourceType
+}
+
+func (p *Practitioner) GetName() string {
+	if p == nil {
+		return ""
+	}
+	return p.Name
+}
+
+func (p *Practitioner) GetExtraProperties() map[string]any {
+	if p == nil {
+		return nil
+	}
+	return p.extraProperties
+}
+
+func (p *Practitioner) String() string {
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
 }
 
 type Script struct {
@@ -56,5 +330,61 @@ type Script struct {
 	Memo             *Memo           `json:"memo" url:"memo"`
 	Name             string          `json:"name" url:"name"`
 
-	resourceType string
+	resourceType    string
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (s *Script) GetId() string {
+	if s == nil {
+		return ""
+	}
+	return s.Id
+}
+
+func (s *Script) GetRelatedResources() []*ResourceList {
+	if s == nil {
+		return nil
+	}
+	return s.RelatedResources
+}
+
+func (s *Script) GetMemo() *Memo {
+	if s == nil {
+		return nil
+	}
+	return s.Memo
+}
+
+func (s *Script) GetResourceType() string {
+	if s == nil {
+		return ""
+	}
+	return s.resourceType
+}
+
+func (s *Script) GetName() string {
+	if s == nil {
+		return ""
+	}
+	return s.Name
+}
+
+func (s *Script) GetExtraProperties() map[string]any {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *Script) String() string {
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
 }

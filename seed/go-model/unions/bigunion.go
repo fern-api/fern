@@ -3,6 +3,9 @@
 package unions
 
 import (
+	json "encoding/json"
+	fmt "fmt"
+	internal "github.com/unions/fern/internal"
 	time "time"
 )
 
@@ -44,116 +47,957 @@ type BigUnion struct {
 
 type NormalSweet struct {
 	Value string `json:"value" url:"value"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (n *NormalSweet) GetValue() string {
+	if n == nil {
+		return ""
+	}
+	return n.Value
+}
+
+func (n *NormalSweet) GetExtraProperties() map[string]any {
+	if n == nil {
+		return nil
+	}
+	return n.extraProperties
+}
+
+func (n *NormalSweet) String() string {
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(n); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", n)
 }
 
 type ThankfulFactor struct {
 	Value string `json:"value" url:"value"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (t *ThankfulFactor) GetValue() string {
+	if t == nil {
+		return ""
+	}
+	return t.Value
+}
+
+func (t *ThankfulFactor) GetExtraProperties() map[string]any {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *ThankfulFactor) String() string {
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
 }
 
 type JumboEnd struct {
 	Value string `json:"value" url:"value"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (j *JumboEnd) GetValue() string {
+	if j == nil {
+		return ""
+	}
+	return j.Value
+}
+
+func (j *JumboEnd) GetExtraProperties() map[string]any {
+	if j == nil {
+		return nil
+	}
+	return j.extraProperties
+}
+
+func (j *JumboEnd) String() string {
+	if len(j.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(j.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(j); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", j)
 }
 
 type HastyPain struct {
 	Value string `json:"value" url:"value"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (h *HastyPain) GetValue() string {
+	if h == nil {
+		return ""
+	}
+	return h.Value
+}
+
+func (h *HastyPain) GetExtraProperties() map[string]any {
+	if h == nil {
+		return nil
+	}
+	return h.extraProperties
+}
+
+func (h *HastyPain) String() string {
+	if len(h.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(h.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(h); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", h)
 }
 
 type MistySnow struct {
 	Value string `json:"value" url:"value"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (m *MistySnow) GetValue() string {
+	if m == nil {
+		return ""
+	}
+	return m.Value
+}
+
+func (m *MistySnow) GetExtraProperties() map[string]any {
+	if m == nil {
+		return nil
+	}
+	return m.extraProperties
+}
+
+func (m *MistySnow) String() string {
+	if len(m.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(m); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", m)
 }
 
 type DistinctFailure struct {
 	Value string `json:"value" url:"value"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (d *DistinctFailure) GetValue() string {
+	if d == nil {
+		return ""
+	}
+	return d.Value
+}
+
+func (d *DistinctFailure) GetExtraProperties() map[string]any {
+	if d == nil {
+		return nil
+	}
+	return d.extraProperties
+}
+
+func (d *DistinctFailure) String() string {
+	if len(d.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(d); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", d)
 }
 
 type PracticalPrinciple struct {
 	Value string `json:"value" url:"value"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (p *PracticalPrinciple) GetValue() string {
+	if p == nil {
+		return ""
+	}
+	return p.Value
+}
+
+func (p *PracticalPrinciple) GetExtraProperties() map[string]any {
+	if p == nil {
+		return nil
+	}
+	return p.extraProperties
+}
+
+func (p *PracticalPrinciple) String() string {
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
 }
 
 type LimpingStep struct {
 	Value string `json:"value" url:"value"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (l *LimpingStep) GetValue() string {
+	if l == nil {
+		return ""
+	}
+	return l.Value
+}
+
+func (l *LimpingStep) GetExtraProperties() map[string]any {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *LimpingStep) String() string {
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
 }
 
 type VibrantExcitement struct {
 	Value string `json:"value" url:"value"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (v *VibrantExcitement) GetValue() string {
+	if v == nil {
+		return ""
+	}
+	return v.Value
+}
+
+func (v *VibrantExcitement) GetExtraProperties() map[string]any {
+	if v == nil {
+		return nil
+	}
+	return v.extraProperties
+}
+
+func (v *VibrantExcitement) String() string {
+	if len(v.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(v.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(v); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", v)
 }
 
 type ActiveDiamond struct {
 	Value string `json:"value" url:"value"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (a *ActiveDiamond) GetValue() string {
+	if a == nil {
+		return ""
+	}
+	return a.Value
+}
+
+func (a *ActiveDiamond) GetExtraProperties() map[string]any {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *ActiveDiamond) String() string {
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
 }
 
 type PopularLimit struct {
 	Value string `json:"value" url:"value"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (p *PopularLimit) GetValue() string {
+	if p == nil {
+		return ""
+	}
+	return p.Value
+}
+
+func (p *PopularLimit) GetExtraProperties() map[string]any {
+	if p == nil {
+		return nil
+	}
+	return p.extraProperties
+}
+
+func (p *PopularLimit) String() string {
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
 }
 
 type FalseMirror struct {
 	Value string `json:"value" url:"value"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (f *FalseMirror) GetValue() string {
+	if f == nil {
+		return ""
+	}
+	return f.Value
+}
+
+func (f *FalseMirror) GetExtraProperties() map[string]any {
+	if f == nil {
+		return nil
+	}
+	return f.extraProperties
+}
+
+func (f *FalseMirror) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
 }
 
 type PrimaryBlock struct {
 	Value string `json:"value" url:"value"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (p *PrimaryBlock) GetValue() string {
+	if p == nil {
+		return ""
+	}
+	return p.Value
+}
+
+func (p *PrimaryBlock) GetExtraProperties() map[string]any {
+	if p == nil {
+		return nil
+	}
+	return p.extraProperties
+}
+
+func (p *PrimaryBlock) String() string {
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
 }
 
 type RotatingRatio struct {
 	Value string `json:"value" url:"value"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (r *RotatingRatio) GetValue() string {
+	if r == nil {
+		return ""
+	}
+	return r.Value
+}
+
+func (r *RotatingRatio) GetExtraProperties() map[string]any {
+	if r == nil {
+		return nil
+	}
+	return r.extraProperties
+}
+
+func (r *RotatingRatio) String() string {
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
 }
 
 type ColorfulCover struct {
 	Value string `json:"value" url:"value"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (c *ColorfulCover) GetValue() string {
+	if c == nil {
+		return ""
+	}
+	return c.Value
+}
+
+func (c *ColorfulCover) GetExtraProperties() map[string]any {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ColorfulCover) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
 }
 
 type DisloyalValue struct {
 	Value string `json:"value" url:"value"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (d *DisloyalValue) GetValue() string {
+	if d == nil {
+		return ""
+	}
+	return d.Value
+}
+
+func (d *DisloyalValue) GetExtraProperties() map[string]any {
+	if d == nil {
+		return nil
+	}
+	return d.extraProperties
+}
+
+func (d *DisloyalValue) String() string {
+	if len(d.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(d); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", d)
 }
 
 type GruesomeCoach struct {
 	Value string `json:"value" url:"value"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (g *GruesomeCoach) GetValue() string {
+	if g == nil {
+		return ""
+	}
+	return g.Value
+}
+
+func (g *GruesomeCoach) GetExtraProperties() map[string]any {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GruesomeCoach) String() string {
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
 }
 
 type TotalWork struct {
 	Value string `json:"value" url:"value"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (t *TotalWork) GetValue() string {
+	if t == nil {
+		return ""
+	}
+	return t.Value
+}
+
+func (t *TotalWork) GetExtraProperties() map[string]any {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *TotalWork) String() string {
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
 }
 
 type HarmoniousPlay struct {
 	Value string `json:"value" url:"value"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (h *HarmoniousPlay) GetValue() string {
+	if h == nil {
+		return ""
+	}
+	return h.Value
+}
+
+func (h *HarmoniousPlay) GetExtraProperties() map[string]any {
+	if h == nil {
+		return nil
+	}
+	return h.extraProperties
+}
+
+func (h *HarmoniousPlay) String() string {
+	if len(h.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(h.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(h); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", h)
 }
 
 type UniqueStress struct {
 	Value string `json:"value" url:"value"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (u *UniqueStress) GetValue() string {
+	if u == nil {
+		return ""
+	}
+	return u.Value
+}
+
+func (u *UniqueStress) GetExtraProperties() map[string]any {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UniqueStress) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
 }
 
 type UnwillingSmoke struct {
 	Value string `json:"value" url:"value"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (u *UnwillingSmoke) GetValue() string {
+	if u == nil {
+		return ""
+	}
+	return u.Value
+}
+
+func (u *UnwillingSmoke) GetExtraProperties() map[string]any {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UnwillingSmoke) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
 }
 
 type FrozenSleep struct {
 	Value string `json:"value" url:"value"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (f *FrozenSleep) GetValue() string {
+	if f == nil {
+		return ""
+	}
+	return f.Value
+}
+
+func (f *FrozenSleep) GetExtraProperties() map[string]any {
+	if f == nil {
+		return nil
+	}
+	return f.extraProperties
+}
+
+func (f *FrozenSleep) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
 }
 
 type DiligentDeal struct {
 	Value string `json:"value" url:"value"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (d *DiligentDeal) GetValue() string {
+	if d == nil {
+		return ""
+	}
+	return d.Value
+}
+
+func (d *DiligentDeal) GetExtraProperties() map[string]any {
+	if d == nil {
+		return nil
+	}
+	return d.extraProperties
+}
+
+func (d *DiligentDeal) String() string {
+	if len(d.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(d); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", d)
 }
 
 type AttractiveScript struct {
 	Value string `json:"value" url:"value"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (a *AttractiveScript) GetValue() string {
+	if a == nil {
+		return ""
+	}
+	return a.Value
+}
+
+func (a *AttractiveScript) GetExtraProperties() map[string]any {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *AttractiveScript) String() string {
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
 }
 
 type HoarseMouse struct {
 	Value string `json:"value" url:"value"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (h *HoarseMouse) GetValue() string {
+	if h == nil {
+		return ""
+	}
+	return h.Value
+}
+
+func (h *HoarseMouse) GetExtraProperties() map[string]any {
+	if h == nil {
+		return nil
+	}
+	return h.extraProperties
+}
+
+func (h *HoarseMouse) String() string {
+	if len(h.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(h.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(h); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", h)
 }
 
 type CircularCard struct {
 	Value string `json:"value" url:"value"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (c *CircularCard) GetValue() string {
+	if c == nil {
+		return ""
+	}
+	return c.Value
+}
+
+func (c *CircularCard) GetExtraProperties() map[string]any {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CircularCard) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
 }
 
 type PotableBad struct {
 	Value string `json:"value" url:"value"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (p *PotableBad) GetValue() string {
+	if p == nil {
+		return ""
+	}
+	return p.Value
+}
+
+func (p *PotableBad) GetExtraProperties() map[string]any {
+	if p == nil {
+		return nil
+	}
+	return p.extraProperties
+}
+
+func (p *PotableBad) String() string {
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
 }
 
 type TriangularRepair struct {
 	Value string `json:"value" url:"value"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (t *TriangularRepair) GetValue() string {
+	if t == nil {
+		return ""
+	}
+	return t.Value
+}
+
+func (t *TriangularRepair) GetExtraProperties() map[string]any {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *TriangularRepair) String() string {
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
 }
 
 type GaseousRoad struct {
 	Value string `json:"value" url:"value"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (g *GaseousRoad) GetValue() string {
+	if g == nil {
+		return ""
+	}
+	return g.Value
+}
+
+func (g *GaseousRoad) GetExtraProperties() map[string]any {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GaseousRoad) String() string {
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
 }

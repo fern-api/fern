@@ -2,10 +2,74 @@
 
 package api
 
+import (
+	json "encoding/json"
+	fmt "fmt"
+	internal "github.com/circular-references/fern/internal"
+)
+
 type ImportingA struct {
 	A *A `json:"a,omitempty" url:"a,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (i *ImportingA) GetA() *A {
+	if i == nil {
+		return nil
+	}
+	return i.A
+}
+
+func (i *ImportingA) GetExtraProperties() map[string]any {
+	if i == nil {
+		return nil
+	}
+	return i.extraProperties
+}
+
+func (i *ImportingA) String() string {
+	if len(i.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(i.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(i); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", i)
 }
 
 type RootType struct {
 	S string `json:"s" url:"s"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (r *RootType) GetS() string {
+	if r == nil {
+		return ""
+	}
+	return r.S
+}
+
+func (r *RootType) GetExtraProperties() map[string]any {
+	if r == nil {
+		return nil
+	}
+	return r.extraProperties
+}
+
+func (r *RootType) String() string {
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
 }

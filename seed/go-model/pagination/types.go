@@ -2,11 +2,82 @@
 
 package pagination
 
+import (
+	json "encoding/json"
+	fmt "fmt"
+	internal "github.com/pagination/fern/internal"
+)
+
 type UsernameCursor struct {
 	Cursor *UsernamePage `json:"cursor" url:"cursor"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (u *UsernameCursor) GetCursor() *UsernamePage {
+	if u == nil {
+		return nil
+	}
+	return u.Cursor
+}
+
+func (u *UsernameCursor) GetExtraProperties() map[string]any {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UsernameCursor) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
 }
 
 type UsernamePage struct {
 	After *string  `json:"after,omitempty" url:"after,omitempty"`
 	Data  []string `json:"data" url:"data"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (u *UsernamePage) GetAfter() *string {
+	if u == nil {
+		return nil
+	}
+	return u.After
+}
+
+func (u *UsernamePage) GetData() []string {
+	if u == nil {
+		return nil
+	}
+	return u.Data
+}
+
+func (u *UsernamePage) GetExtraProperties() map[string]any {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UsernamePage) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
 }

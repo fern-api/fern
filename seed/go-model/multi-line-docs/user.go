@@ -2,6 +2,12 @@
 
 package multilinedocs
 
+import (
+	json "encoding/json"
+	fmt "fmt"
+	internal "github.com/multi-line-docs/fern/internal"
+)
+
 // A user object. This type is used throughout the following APIs:
 //   - createUser
 //   - getUser
@@ -14,4 +20,47 @@ type User struct {
 	Name string `json:"name" url:"name"`
 	// The user's age.
 	Age *int `json:"age,omitempty" url:"age,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (u *User) GetId() string {
+	if u == nil {
+		return ""
+	}
+	return u.Id
+}
+
+func (u *User) GetName() string {
+	if u == nil {
+		return ""
+	}
+	return u.Name
+}
+
+func (u *User) GetAge() *int {
+	if u == nil {
+		return nil
+	}
+	return u.Age
+}
+
+func (u *User) GetExtraProperties() map[string]any {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *User) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
 }

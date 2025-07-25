@@ -3,9 +3,41 @@
 package folderb
 
 import (
+	json "encoding/json"
+	fmt "fmt"
 	folderc "github.com/audiences/fern/folderc"
+	internal "github.com/audiences/fern/internal"
 )
 
 type Foo struct {
 	Foo *folderc.FolderCFoo `json:"foo,omitempty" url:"foo,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (f *Foo) GetFoo() *folderc.FolderCFoo {
+	if f == nil {
+		return nil
+	}
+	return f.Foo
+}
+
+func (f *Foo) GetExtraProperties() map[string]any {
+	if f == nil {
+		return nil
+	}
+	return f.extraProperties
+}
+
+func (f *Foo) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
 }

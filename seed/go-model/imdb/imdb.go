@@ -2,6 +2,12 @@
 
 package api
 
+import (
+	json "encoding/json"
+	fmt "fmt"
+	internal "github.com/imdb/fern/internal"
+)
+
 type MovieId = string
 
 type Movie struct {
@@ -9,9 +15,88 @@ type Movie struct {
 	Title string  `json:"title" url:"title"`
 	// The rating scale is one to five stars
 	Rating float64 `json:"rating" url:"rating"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (m *Movie) GetId() MovieId {
+	if m == nil {
+		return ""
+	}
+	return m.Id
+}
+
+func (m *Movie) GetTitle() string {
+	if m == nil {
+		return ""
+	}
+	return m.Title
+}
+
+func (m *Movie) GetRating() float64 {
+	if m == nil {
+		return 0
+	}
+	return m.Rating
+}
+
+func (m *Movie) GetExtraProperties() map[string]any {
+	if m == nil {
+		return nil
+	}
+	return m.extraProperties
+}
+
+func (m *Movie) String() string {
+	if len(m.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(m); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", m)
 }
 
 type CreateMovieRequest struct {
 	Title  string  `json:"title" url:"title"`
 	Rating float64 `json:"rating" url:"rating"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateMovieRequest) GetTitle() string {
+	if c == nil {
+		return ""
+	}
+	return c.Title
+}
+
+func (c *CreateMovieRequest) GetRating() float64 {
+	if c == nil {
+		return 0
+	}
+	return c.Rating
+}
+
+func (c *CreateMovieRequest) GetExtraProperties() map[string]any {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateMovieRequest) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
 }

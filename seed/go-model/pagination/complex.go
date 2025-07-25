@@ -3,7 +3,9 @@
 package pagination
 
 import (
+	json "encoding/json"
 	fmt "fmt"
+	internal "github.com/pagination/fern/internal"
 )
 
 type SearchRequestQuery struct {
@@ -14,6 +16,42 @@ type SearchRequestQuery struct {
 type MultipleFilterSearchRequest struct {
 	Operator *MultipleFilterSearchRequestOperator `json:"operator,omitempty" url:"operator,omitempty"`
 	Value    *MultipleFilterSearchRequestValue    `json:"value,omitempty" url:"value,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (m *MultipleFilterSearchRequest) GetOperator() *MultipleFilterSearchRequestOperator {
+	if m == nil {
+		return nil
+	}
+	return m.Operator
+}
+
+func (m *MultipleFilterSearchRequest) GetValue() *MultipleFilterSearchRequestValue {
+	if m == nil {
+		return nil
+	}
+	return m.Value
+}
+
+func (m *MultipleFilterSearchRequest) GetExtraProperties() map[string]any {
+	if m == nil {
+		return nil
+	}
+	return m.extraProperties
+}
+
+func (m *MultipleFilterSearchRequest) String() string {
+	if len(m.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(m); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", m)
 }
 
 type MultipleFilterSearchRequestOperator string
@@ -47,6 +85,49 @@ type SingleFilterSearchRequest struct {
 	Field    *string                            `json:"field,omitempty" url:"field,omitempty"`
 	Operator *SingleFilterSearchRequestOperator `json:"operator,omitempty" url:"operator,omitempty"`
 	Value    *string                            `json:"value,omitempty" url:"value,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (s *SingleFilterSearchRequest) GetField() *string {
+	if s == nil {
+		return nil
+	}
+	return s.Field
+}
+
+func (s *SingleFilterSearchRequest) GetOperator() *SingleFilterSearchRequestOperator {
+	if s == nil {
+		return nil
+	}
+	return s.Operator
+}
+
+func (s *SingleFilterSearchRequest) GetValue() *string {
+	if s == nil {
+		return nil
+	}
+	return s.Value
+}
+
+func (s *SingleFilterSearchRequest) GetExtraProperties() map[string]any {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SingleFilterSearchRequest) String() string {
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
 }
 
 type SingleFilterSearchRequestOperator string
@@ -98,6 +179,42 @@ func (s SingleFilterSearchRequestOperator) Ptr() *SingleFilterSearchRequestOpera
 type SearchRequest struct {
 	Pagination *StartingAfterPaging `json:"pagination,omitempty" url:"pagination,omitempty"`
 	Query      *SearchRequestQuery  `json:"query" url:"query"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (s *SearchRequest) GetPagination() *StartingAfterPaging {
+	if s == nil {
+		return nil
+	}
+	return s.Pagination
+}
+
+func (s *SearchRequest) GetQuery() *SearchRequestQuery {
+	if s == nil {
+		return nil
+	}
+	return s.Query
+}
+
+func (s *SearchRequest) GetExtraProperties() map[string]any {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SearchRequest) String() string {
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
 }
 
 type PaginatedConversationResponse struct {
@@ -105,7 +222,56 @@ type PaginatedConversationResponse struct {
 	Pages         *CursorPages    `json:"pages,omitempty" url:"pages,omitempty"`
 	TotalCount    int             `json:"total_count" url:"total_count"`
 
-	type_ string
+	type_           string
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (p *PaginatedConversationResponse) GetConversations() []*Conversation {
+	if p == nil {
+		return nil
+	}
+	return p.Conversations
+}
+
+func (p *PaginatedConversationResponse) GetPages() *CursorPages {
+	if p == nil {
+		return nil
+	}
+	return p.Pages
+}
+
+func (p *PaginatedConversationResponse) GetTotalCount() int {
+	if p == nil {
+		return 0
+	}
+	return p.TotalCount
+}
+
+func (p *PaginatedConversationResponse) GetType_() string {
+	if p == nil {
+		return ""
+	}
+	return p.type_
+}
+
+func (p *PaginatedConversationResponse) GetExtraProperties() map[string]any {
+	if p == nil {
+		return nil
+	}
+	return p.extraProperties
+}
+
+func (p *PaginatedConversationResponse) String() string {
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
 }
 
 type CursorPages struct {
@@ -114,14 +280,135 @@ type CursorPages struct {
 	PerPage    *int                 `json:"per_page,omitempty" url:"per_page,omitempty"`
 	TotalPages *int                 `json:"total_pages,omitempty" url:"total_pages,omitempty"`
 
-	type_ string
+	type_           string
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (c *CursorPages) GetNext() *StartingAfterPaging {
+	if c == nil {
+		return nil
+	}
+	return c.Next
+}
+
+func (c *CursorPages) GetPage() *int {
+	if c == nil {
+		return nil
+	}
+	return c.Page
+}
+
+func (c *CursorPages) GetPerPage() *int {
+	if c == nil {
+		return nil
+	}
+	return c.PerPage
+}
+
+func (c *CursorPages) GetTotalPages() *int {
+	if c == nil {
+		return nil
+	}
+	return c.TotalPages
+}
+
+func (c *CursorPages) GetType_() string {
+	if c == nil {
+		return ""
+	}
+	return c.type_
+}
+
+func (c *CursorPages) GetExtraProperties() map[string]any {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CursorPages) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
 }
 
 type StartingAfterPaging struct {
 	PerPage       int     `json:"per_page" url:"per_page"`
 	StartingAfter *string `json:"starting_after,omitempty" url:"starting_after,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (s *StartingAfterPaging) GetPerPage() int {
+	if s == nil {
+		return 0
+	}
+	return s.PerPage
+}
+
+func (s *StartingAfterPaging) GetStartingAfter() *string {
+	if s == nil {
+		return nil
+	}
+	return s.StartingAfter
+}
+
+func (s *StartingAfterPaging) GetExtraProperties() map[string]any {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *StartingAfterPaging) String() string {
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
 }
 
 type Conversation struct {
 	Foo string `json:"foo" url:"foo"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (c *Conversation) GetFoo() string {
+	if c == nil {
+		return ""
+	}
+	return c.Foo
+}
+
+func (c *Conversation) GetExtraProperties() map[string]any {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *Conversation) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
 }

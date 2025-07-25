@@ -2,7 +2,49 @@
 
 package packageyml
 
+import (
+	json "encoding/json"
+	fmt "fmt"
+	internal "github.com/package-yml/fern/internal"
+)
+
 type EchoRequest struct {
 	Name string `json:"name" url:"name"`
 	Size int    `json:"size" url:"size"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (e *EchoRequest) GetName() string {
+	if e == nil {
+		return ""
+	}
+	return e.Name
+}
+
+func (e *EchoRequest) GetSize() int {
+	if e == nil {
+		return 0
+	}
+	return e.Size
+}
+
+func (e *EchoRequest) GetExtraProperties() map[string]any {
+	if e == nil {
+		return nil
+	}
+	return e.extraProperties
+}
+
+func (e *EchoRequest) String() string {
+	if len(e.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
 }

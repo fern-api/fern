@@ -2,6 +2,41 @@
 
 package extraproperties
 
+import (
+	json "encoding/json"
+	fmt "fmt"
+	internal "github.com/extra-properties/fern/internal"
+)
+
 type User struct {
-	Name string `json:"name" url:"name"`
+	Name            string         `json:"name" url:"name"`
+	ExtraProperties map[string]any `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (u *User) GetName() string {
+	if u == nil {
+		return ""
+	}
+	return u.Name
+}
+
+func (u *User) GetExtraProperties() map[string]any {
+	if u == nil {
+		return nil
+	}
+	return u.ExtraProperties
+}
+
+func (u *User) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
 }

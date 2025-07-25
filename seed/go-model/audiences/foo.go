@@ -2,8 +2,43 @@
 
 package audiences
 
+import (
+	json "encoding/json"
+	fmt "fmt"
+	internal "github.com/audiences/fern/internal"
+)
+
 type ImportingType struct {
 	Imported Imported `json:"imported" url:"imported"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (i *ImportingType) GetImported() Imported {
+	if i == nil {
+		return ""
+	}
+	return i.Imported
+}
+
+func (i *ImportingType) GetExtraProperties() map[string]any {
+	if i == nil {
+		return nil
+	}
+	return i.extraProperties
+}
+
+func (i *ImportingType) String() string {
+	if len(i.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(i.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(i); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", i)
 }
 
 type OptionalString = *string
@@ -11,4 +46,40 @@ type OptionalString = *string
 type FilteredType struct {
 	PublicProperty  *string `json:"public_property,omitempty" url:"public_property,omitempty"`
 	PrivateProperty int     `json:"private_property" url:"private_property"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (f *FilteredType) GetPublicProperty() *string {
+	if f == nil {
+		return nil
+	}
+	return f.PublicProperty
+}
+
+func (f *FilteredType) GetPrivateProperty() int {
+	if f == nil {
+		return 0
+	}
+	return f.PrivateProperty
+}
+
+func (f *FilteredType) GetExtraProperties() map[string]any {
+	if f == nil {
+		return nil
+	}
+	return f.extraProperties
+}
+
+func (f *FilteredType) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
 }

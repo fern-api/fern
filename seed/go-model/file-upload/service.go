@@ -3,7 +3,9 @@
 package fileupload
 
 import (
+	json "encoding/json"
 	fmt "fmt"
+	internal "github.com/file-upload/fern/internal"
 )
 
 type Id = string
@@ -11,6 +13,42 @@ type Id = string
 type MyObjectWithOptional struct {
 	Prop         string  `json:"prop" url:"prop"`
 	OptionalProp *string `json:"optionalProp,omitempty" url:"optionalProp,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (m *MyObjectWithOptional) GetProp() string {
+	if m == nil {
+		return ""
+	}
+	return m.Prop
+}
+
+func (m *MyObjectWithOptional) GetOptionalProp() *string {
+	if m == nil {
+		return nil
+	}
+	return m.OptionalProp
+}
+
+func (m *MyObjectWithOptional) GetExtraProperties() map[string]any {
+	if m == nil {
+		return nil
+	}
+	return m.extraProperties
+}
+
+func (m *MyObjectWithOptional) String() string {
+	if len(m.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(m); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", m)
 }
 
 type MyAliasObject = *MyObject
@@ -19,6 +57,35 @@ type MyCollectionAliasObject = []*MyObject
 
 type MyObject struct {
 	Foo string `json:"foo" url:"foo"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (m *MyObject) GetFoo() string {
+	if m == nil {
+		return ""
+	}
+	return m.Foo
+}
+
+func (m *MyObject) GetExtraProperties() map[string]any {
+	if m == nil {
+		return nil
+	}
+	return m.extraProperties
+}
+
+func (m *MyObject) String() string {
+	if len(m.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(m); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", m)
 }
 
 type ObjectType string

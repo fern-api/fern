@@ -2,12 +2,76 @@
 
 package responseproperty
 
+import (
+	json "encoding/json"
+	fmt "fmt"
+	internal "github.com/response-property/fern/internal"
+)
+
 type StringResponse struct {
 	Data string `json:"data" url:"data"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (s *StringResponse) GetData() string {
+	if s == nil {
+		return ""
+	}
+	return s.Data
+}
+
+func (s *StringResponse) GetExtraProperties() map[string]any {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *StringResponse) String() string {
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
 }
 
 type OptionalStringResponse = *StringResponse
 
 type WithMetadata struct {
 	Metadata map[string]string `json:"metadata" url:"metadata"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (w *WithMetadata) GetMetadata() map[string]string {
+	if w == nil {
+		return nil
+	}
+	return w.Metadata
+}
+
+func (w *WithMetadata) GetExtraProperties() map[string]any {
+	if w == nil {
+		return nil
+	}
+	return w.extraProperties
+}
+
+func (w *WithMetadata) String() string {
+	if len(w.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(w); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", w)
 }

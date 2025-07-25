@@ -147,6 +147,44 @@ export abstract class AbstractGoGeneratorContext<
         });
     }
 
+    public callFmtSprintf(format: string, args: go.AstNode[]): go.FuncInvocation {
+        return go.invokeFunc({
+            func: go.typeReference({ name: "Sprintf", importPath: "fmt" }),
+            arguments_: [go.TypeInstantiation.string(format), ...args],
+            multiline: false
+        });
+    }
+
+    public callInternalStringifyJSON(arg: go.TypeInstantiation): go.FuncInvocation {
+        return this.callInternalFunc({
+            name: "StringifyJSON",
+            arguments_: [arg],
+            multiline: false
+        });
+    }
+
+    public callInternalFunc({
+        name,
+        arguments_,
+        generics,
+        multiline = true
+    }: {
+        name: string;
+        arguments_: go.AstNode[];
+        generics?: go.Type[];
+        multiline?: boolean;
+    }): go.FuncInvocation {
+        return go.invokeFunc({
+            func: go.typeReference({
+                name,
+                importPath: this.getInternalImportPath(),
+                generics
+            }),
+            arguments_,
+            multiline
+        });
+    }
+
     public maybeUnwrapIterable(typeReference: TypeReference): TypeReference | undefined {
         switch (typeReference.type) {
             // biome-ignore lint/suspicious/noFallthroughSwitchClause: allow fall through
@@ -284,6 +322,13 @@ export abstract class AbstractGoGeneratorContext<
         return go.typeReference({
             name: "Context",
             importPath: "context"
+        });
+    }
+
+    public getJsonRawMessageTypeReference(): go.TypeReference {
+        return go.typeReference({
+            name: "RawMessage",
+            importPath: "encoding/json"
         });
     }
 
@@ -538,4 +583,6 @@ export abstract class AbstractGoGeneratorContext<
             directory: RelativeFilePath.of(parts.join("/"))
         };
     }
+
+    public abstract getInternalAsIsFiles(): string[];
 }
