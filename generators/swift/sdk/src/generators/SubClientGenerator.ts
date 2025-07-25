@@ -187,20 +187,18 @@ export class SubClientGenerator {
     }
 
     private getMethodReturnTypeForEndpoint(endpoint: HttpEndpoint): swift.Type {
-        if (!endpoint.response) {
+        if (!endpoint.response || !endpoint.response.body) {
             return swift.Type.void();
         }
-        return (
-            endpoint.response.body?._visit({
-                json: (resp) => getSwiftTypeForTypeReference(resp.responseBodyType),
-                fileDownload: () => swift.Type.any(),
-                text: () => swift.Type.any(),
-                bytes: () => swift.Type.any(),
-                streaming: () => swift.Type.any(),
-                streamParameter: () => swift.Type.any(),
-                _other: () => swift.Type.any()
-            }) ?? swift.Type.any()
-        );
+        return endpoint.response.body._visit({
+            json: (resp) => getSwiftTypeForTypeReference(resp.responseBodyType),
+            fileDownload: () => swift.Type.any(),
+            text: () => swift.Type.any(),
+            bytes: () => swift.Type.any(),
+            streaming: () => swift.Type.any(),
+            streamParameter: () => swift.Type.any(),
+            _other: () => swift.Type.any()
+        });
     }
 
     private getMethodBodyForEndpoint(endpoint: HttpEndpoint): swift.CodeBlock {
@@ -307,7 +305,9 @@ export class SubClientGenerator {
             })
         );
 
-        if (endpoint.response) {
+        const returnType = this.getMethodReturnTypeForEndpoint(endpoint);
+
+        if (returnType.type !== "void") {
             arguments_.push(
                 swift.functionArgument({
                     label: "responseType",
