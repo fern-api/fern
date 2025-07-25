@@ -1,4 +1,4 @@
-public struct DiligentDeal: Codable, Hashable {
+public struct DiligentDeal: Codable, Hashable, Sendable {
     public let value: String
     public let additionalProperties: [String: JSONValue]
 

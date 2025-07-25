@@ -1,4 +1,4 @@
-public struct SendRequest: Codable, Hashable {
+public struct SendRequest: Codable, Hashable, Sendable {
     public let prompt: Any
     public let query: String
     public let stream: Any

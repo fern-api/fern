@@ -1,4 +1,4 @@
-public struct GetDefaultStarterFilesRequest: Codable, Hashable {
+public struct GetDefaultStarterFilesRequest: Codable, Hashable, Sendable {
     public let inputParams: [VariableTypeAndName]
     public let outputType: VariableType
     public let methodName: String

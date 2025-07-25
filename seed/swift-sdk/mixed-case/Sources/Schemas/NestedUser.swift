@@ -1,4 +1,4 @@
-public struct NestedUser: Codable, Hashable {
+public struct NestedUser: Codable, Hashable, Sendable {
     public let name: String
     public let nestedUser: User
     public let additionalProperties: [String: JSONValue]

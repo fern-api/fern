@@ -1,4 +1,4 @@
-public struct Actor: Codable, Hashable {
+public struct Actor: Codable, Hashable, Sendable {
     public let name: String
     public let id: String
     public let additionalProperties: [String: JSONValue]

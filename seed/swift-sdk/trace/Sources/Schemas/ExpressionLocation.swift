@@ -1,4 +1,4 @@
-public struct ExpressionLocation: Codable, Hashable {
+public struct ExpressionLocation: Codable, Hashable, Sendable {
     public let start: Int
     public let offset: Int
     public let additionalProperties: [String: JSONValue]

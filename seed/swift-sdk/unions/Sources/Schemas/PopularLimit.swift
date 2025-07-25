@@ -1,4 +1,4 @@
-public struct PopularLimit: Codable, Hashable {
+public struct PopularLimit: Codable, Hashable, Sendable {
     public let value: String
     public let additionalProperties: [String: JSONValue]
 

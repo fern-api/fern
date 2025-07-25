@@ -1,4 +1,4 @@
-public struct User: Codable, Hashable {
+public struct User: Codable, Hashable, Sendable {
     public let userName: String
     public let metadataTags: [String]
     public let extraProperties: [String: String]

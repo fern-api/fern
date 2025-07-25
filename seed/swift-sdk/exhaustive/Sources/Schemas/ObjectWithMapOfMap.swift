@@ -1,4 +1,4 @@
-public struct ObjectWithMapOfMap: Codable, Hashable {
+public struct ObjectWithMapOfMap: Codable, Hashable, Sendable {
     public let map: [String: [String: String]]
     public let additionalProperties: [String: JSONValue]
 

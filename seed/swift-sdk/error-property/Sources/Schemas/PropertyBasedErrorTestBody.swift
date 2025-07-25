@@ -1,4 +1,4 @@
-public struct PropertyBasedErrorTestBody: Codable, Hashable {
+public struct PropertyBasedErrorTestBody: Codable, Hashable, Sendable {
     public let message: String
     public let additionalProperties: [String: JSONValue]
 

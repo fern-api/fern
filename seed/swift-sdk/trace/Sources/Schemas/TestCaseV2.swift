@@ -1,4 +1,4 @@
-public struct TestCaseV2: Codable, Hashable {
+public struct TestCaseV2: Codable, Hashable, Sendable {
     public let metadata: TestCaseMetadata
     public let implementation: TestCaseImplementationReference
     public let arguments: [ParameterId: VariableValue]

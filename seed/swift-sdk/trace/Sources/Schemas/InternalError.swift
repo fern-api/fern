@@ -1,4 +1,4 @@
-public struct InternalError: Codable, Hashable {
+public struct InternalError: Codable, Hashable, Sendable {
     public let exceptionInfo: ExceptionInfo
     public let additionalProperties: [String: JSONValue]
 

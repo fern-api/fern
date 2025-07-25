@@ -1,4 +1,4 @@
-public struct BinaryTreeValue: Codable, Hashable {
+public struct BinaryTreeValue: Codable, Hashable, Sendable {
     public let root: NodeId?
     public let nodes: [NodeId: BinaryTreeNodeValue]
     public let additionalProperties: [String: JSONValue]

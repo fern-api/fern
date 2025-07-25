@@ -1,4 +1,4 @@
-public struct GenericValue: Codable, Hashable {
+public struct GenericValue: Codable, Hashable, Sendable {
     public let stringifiedType: String?
     public let stringifiedValue: String
     public let additionalProperties: [String: JSONValue]

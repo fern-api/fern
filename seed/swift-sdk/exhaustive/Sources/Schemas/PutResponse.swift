@@ -1,4 +1,4 @@
-public struct PutResponse: Codable, Hashable {
+public struct PutResponse: Codable, Hashable, Sendable {
     public let errors: [Error]?
     public let additionalProperties: [String: JSONValue]
 

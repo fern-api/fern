@@ -1,4 +1,4 @@
-public struct UnexpectedLanguageError: Codable, Hashable {
+public struct UnexpectedLanguageError: Codable, Hashable, Sendable {
     public let expectedLanguage: Language
     public let actualLanguage: Language
     public let additionalProperties: [String: JSONValue]

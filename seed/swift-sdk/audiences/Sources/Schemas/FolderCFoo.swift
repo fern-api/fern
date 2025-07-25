@@ -1,4 +1,4 @@
-public struct FolderCFoo: Codable, Hashable {
+public struct FolderCFoo: Codable, Hashable, Sendable {
     public let barProperty: UUID
     public let additionalProperties: [String: JSONValue]
 

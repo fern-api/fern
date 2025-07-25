@@ -1,4 +1,4 @@
-public struct Inlined: Codable, Hashable {
+public struct Inlined: Codable, Hashable, Sendable {
     public let unique: String
     public let additionalProperties: [String: JSONValue]
 

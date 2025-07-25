@@ -1,4 +1,4 @@
-public struct BadObjectRequestInfo: Codable, Hashable {
+public struct BadObjectRequestInfo: Codable, Hashable, Sendable {
     public let message: String
     public let additionalProperties: [String: JSONValue]
 

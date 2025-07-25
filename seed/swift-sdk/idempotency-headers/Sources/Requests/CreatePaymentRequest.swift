@@ -1,4 +1,4 @@
-public struct CreatePaymentRequest: Codable, Hashable {
+public struct CreatePaymentRequest: Codable, Hashable, Sendable {
     public let amount: Int
     public let currency: Currency
     public let additionalProperties: [String: JSONValue]

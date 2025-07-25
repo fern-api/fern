@@ -1,4 +1,4 @@
-public struct UserPage: Codable, Hashable {
+public struct UserPage: Codable, Hashable, Sendable {
     public let data: UserListContainer
     public let next: UUID?
     public let additionalProperties: [String: JSONValue]

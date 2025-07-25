@@ -1,4 +1,4 @@
-public struct VibrantExcitement: Codable, Hashable {
+public struct VibrantExcitement: Codable, Hashable, Sendable {
     public let value: String
     public let additionalProperties: [String: JSONValue]
 

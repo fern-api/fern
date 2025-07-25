@@ -1,4 +1,4 @@
-public struct RotatingRatio: Codable, Hashable {
+public struct RotatingRatio: Codable, Hashable, Sendable {
     public let value: String
     public let additionalProperties: [String: JSONValue]
 

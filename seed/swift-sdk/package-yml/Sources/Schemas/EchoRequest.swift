@@ -1,4 +1,4 @@
-public struct EchoRequest: Codable, Hashable {
+public struct EchoRequest: Codable, Hashable, Sendable {
     public let name: String
     public let size: Int
     public let additionalProperties: [String: JSONValue]

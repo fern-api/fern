@@ -1,4 +1,4 @@
-public struct WorkspaceSubmissionState: Codable, Hashable {
+public struct WorkspaceSubmissionState: Codable, Hashable, Sendable {
     public let status: WorkspaceSubmissionStatus
     public let additionalProperties: [String: JSONValue]
 

@@ -1,4 +1,4 @@
-public struct ListUsersExtendedOptionalListResponse: Codable, Hashable {
+public struct ListUsersExtendedOptionalListResponse: Codable, Hashable, Sendable {
     public let totalCount: Int
     public let additionalProperties: [String: JSONValue]
 

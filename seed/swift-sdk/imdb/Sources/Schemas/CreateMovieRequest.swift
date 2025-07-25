@@ -1,4 +1,4 @@
-public struct CreateMovieRequest: Codable, Hashable {
+public struct CreateMovieRequest: Codable, Hashable, Sendable {
     public let title: String
     public let rating: Double
     public let additionalProperties: [String: JSONValue]

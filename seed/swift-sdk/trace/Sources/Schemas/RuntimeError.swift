@@ -1,4 +1,4 @@
-public struct RuntimeError: Codable, Hashable {
+public struct RuntimeError: Codable, Hashable, Sendable {
     public let message: String
     public let additionalProperties: [String: JSONValue]
 

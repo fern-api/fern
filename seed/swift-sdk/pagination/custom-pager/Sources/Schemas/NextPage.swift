@@ -1,4 +1,4 @@
-public struct NextPage: Codable, Hashable {
+public struct NextPage: Codable, Hashable, Sendable {
     public let page: Int
     public let startingAfter: String
     public let additionalProperties: [String: JSONValue]

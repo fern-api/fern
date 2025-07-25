@@ -1,4 +1,4 @@
-public struct StdoutResponse: Codable, Hashable {
+public struct StdoutResponse: Codable, Hashable, Sendable {
     public let submissionId: SubmissionId
     public let stdout: String
     public let additionalProperties: [String: JSONValue]

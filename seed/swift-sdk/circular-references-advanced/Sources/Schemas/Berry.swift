@@ -1,4 +1,4 @@
-public struct Berry: Codable, Hashable {
+public struct Berry: Codable, Hashable, Sendable {
     public let animal: Animal
     public let additionalProperties: [String: JSONValue]
 

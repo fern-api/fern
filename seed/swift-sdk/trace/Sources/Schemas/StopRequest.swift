@@ -1,4 +1,4 @@
-public struct StopRequest: Codable, Hashable {
+public struct StopRequest: Codable, Hashable, Sendable {
     public let submissionId: SubmissionId
     public let additionalProperties: [String: JSONValue]
 

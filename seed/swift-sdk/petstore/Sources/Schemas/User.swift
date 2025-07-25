@@ -1,4 +1,4 @@
-public struct User: Codable, Hashable {
+public struct User: Codable, Hashable, Sendable {
     public let email: String?
     public let firstName: String?
     public let id: Int64?

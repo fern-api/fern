@@ -1,4 +1,4 @@
-public struct CircularCard: Codable, Hashable {
+public struct CircularCard: Codable, Hashable, Sendable {
     public let value: String
     public let additionalProperties: [String: JSONValue]
 

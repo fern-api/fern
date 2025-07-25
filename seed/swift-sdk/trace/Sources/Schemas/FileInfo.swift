@@ -1,4 +1,4 @@
-public struct FileInfo: Codable, Hashable {
+public struct FileInfo: Codable, Hashable, Sendable {
     public let filename: String
     public let contents: String
     public let additionalProperties: [String: JSONValue]

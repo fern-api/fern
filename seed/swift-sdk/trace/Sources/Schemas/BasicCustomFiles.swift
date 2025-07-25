@@ -1,4 +1,4 @@
-public struct BasicCustomFiles: Codable, Hashable {
+public struct BasicCustomFiles: Codable, Hashable, Sendable {
     public let methodName: String
     public let signature: NonVoidFunctionSignature
     public let additionalFiles: [Language: Files]

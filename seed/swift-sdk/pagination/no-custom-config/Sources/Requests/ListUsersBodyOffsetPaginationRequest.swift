@@ -1,4 +1,4 @@
-public struct ListUsersBodyOffsetPaginationRequest: Codable, Hashable {
+public struct ListUsersBodyOffsetPaginationRequest: Codable, Hashable, Sendable {
     public let pagination: WithPage?
     public let additionalProperties: [String: JSONValue]
 

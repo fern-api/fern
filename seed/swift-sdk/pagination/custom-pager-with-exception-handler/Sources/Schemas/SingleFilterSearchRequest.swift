@@ -1,4 +1,4 @@
-public struct SingleFilterSearchRequest: Codable, Hashable {
+public struct SingleFilterSearchRequest: Codable, Hashable, Sendable {
     public let field: String?
     public let `operator`: SingleFilterSearchRequestOperator?
     public let value: String?

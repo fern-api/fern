@@ -1,4 +1,4 @@
-public struct ProblemDescription: Codable, Hashable {
+public struct ProblemDescription: Codable, Hashable, Sendable {
     public let boards: [ProblemDescriptionBoard]
     public let additionalProperties: [String: JSONValue]
 

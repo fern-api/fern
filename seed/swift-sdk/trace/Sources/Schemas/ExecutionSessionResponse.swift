@@ -1,4 +1,4 @@
-public struct ExecutionSessionResponse: Codable, Hashable {
+public struct ExecutionSessionResponse: Codable, Hashable, Sendable {
     public let sessionId: String
     public let executionSessionUrl: String?
     public let language: Language

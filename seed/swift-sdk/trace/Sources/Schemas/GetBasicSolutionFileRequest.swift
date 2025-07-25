@@ -1,4 +1,4 @@
-public struct GetBasicSolutionFileRequest: Codable, Hashable {
+public struct GetBasicSolutionFileRequest: Codable, Hashable, Sendable {
     public let methodName: String
     public let signature: NonVoidFunctionSignature
     public let additionalProperties: [String: JSONValue]

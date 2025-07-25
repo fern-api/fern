@@ -1,4 +1,4 @@
-public struct TokenResponse: Codable, Hashable {
+public struct TokenResponse: Codable, Hashable, Sendable {
     public let accessToken: String
     public let expiresIn: Int
     public let refreshToken: String?

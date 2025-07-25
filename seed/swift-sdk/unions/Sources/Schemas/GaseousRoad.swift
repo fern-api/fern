@@ -1,4 +1,4 @@
-public struct GaseousRoad: Codable, Hashable {
+public struct GaseousRoad: Codable, Hashable, Sendable {
     public let value: String
     public let additionalProperties: [String: JSONValue]
 

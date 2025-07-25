@@ -1,4 +1,4 @@
-public struct NonVoidFunctionDefinition: Codable, Hashable {
+public struct NonVoidFunctionDefinition: Codable, Hashable, Sendable {
     public let signature: NonVoidFunctionSignature
     public let code: FunctionImplementationForMultipleLanguages
     public let additionalProperties: [String: JSONValue]

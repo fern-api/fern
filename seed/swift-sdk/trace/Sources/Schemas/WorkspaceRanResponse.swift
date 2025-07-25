@@ -1,4 +1,4 @@
-public struct WorkspaceRanResponse: Codable, Hashable {
+public struct WorkspaceRanResponse: Codable, Hashable, Sendable {
     public let submissionId: SubmissionId
     public let runDetails: WorkspaceRunDetails
     public let additionalProperties: [String: JSONValue]

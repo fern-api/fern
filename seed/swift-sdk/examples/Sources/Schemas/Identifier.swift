@@ -1,4 +1,4 @@
-public struct Identifier: Codable, Hashable {
+public struct Identifier: Codable, Hashable, Sendable {
     public let type: Type
     public let value: String
     public let label: String

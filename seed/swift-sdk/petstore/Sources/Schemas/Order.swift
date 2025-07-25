@@ -1,4 +1,4 @@
-public struct Order: Codable, Hashable {
+public struct Order: Codable, Hashable, Sendable {
     public let complete: Bool?
     public let id: Int64?
     public let petId: Int64?

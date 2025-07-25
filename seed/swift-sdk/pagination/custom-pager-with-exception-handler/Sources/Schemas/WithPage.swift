@@ -1,4 +1,4 @@
-public struct WithPage: Codable, Hashable {
+public struct WithPage: Codable, Hashable, Sendable {
     public let page: Int?
     public let additionalProperties: [String: JSONValue]
 

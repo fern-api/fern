@@ -1,4 +1,4 @@
-public struct ImportingType: Codable, Hashable {
+public struct ImportingType: Codable, Hashable, Sendable {
     public let imported: Imported
     public let additionalProperties: [String: JSONValue]
 

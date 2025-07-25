@@ -1,4 +1,4 @@
-public struct TypeWithOptionalUnion: Codable, Hashable {
+public struct TypeWithOptionalUnion: Codable, Hashable, Sendable {
     public let myUnion: MyUnion?
     public let additionalProperties: [String: JSONValue]
 

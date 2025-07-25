@@ -1,4 +1,4 @@
-public struct TestSubmissionStatusV2: Codable, Hashable {
+public struct TestSubmissionStatusV2: Codable, Hashable, Sendable {
     public let updates: [TestSubmissionUpdate]
     public let problemId: ProblemId
     public let problemVersion: Int

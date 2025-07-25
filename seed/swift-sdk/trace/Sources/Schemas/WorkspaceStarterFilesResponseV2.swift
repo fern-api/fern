@@ -1,4 +1,4 @@
-public struct WorkspaceStarterFilesResponseV2: Codable, Hashable {
+public struct WorkspaceStarterFilesResponseV2: Codable, Hashable, Sendable {
     public let filesByLanguage: [Language: Files]
     public let additionalProperties: [String: JSONValue]
 

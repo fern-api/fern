@@ -1,4 +1,4 @@
-public struct TraceResponsesPage: Codable, Hashable {
+public struct TraceResponsesPage: Codable, Hashable, Sendable {
     public let offset: Int?
     public let traceResponses: [TraceResponse]
     public let additionalProperties: [String: JSONValue]

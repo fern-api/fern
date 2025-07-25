@@ -1,4 +1,4 @@
-public struct UnwillingSmoke: Codable, Hashable {
+public struct UnwillingSmoke: Codable, Hashable, Sendable {
     public let value: String
     public let additionalProperties: [String: JSONValue]
 

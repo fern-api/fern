@@ -1,4 +1,4 @@
-public struct Cat: Codable, Hashable {
+public struct Cat: Codable, Hashable, Sendable {
     public let name: String
     public let likesToMeow: Bool
     public let additionalProperties: [String: JSONValue]

@@ -1,4 +1,4 @@
-public struct TestCaseWithActualResultImplementation: Codable, Hashable {
+public struct TestCaseWithActualResultImplementation: Codable, Hashable, Sendable {
     public let getActualResult: NonVoidFunctionDefinition
     public let assertCorrectnessCheck: AssertCorrectnessCheck
     public let additionalProperties: [String: JSONValue]

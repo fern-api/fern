@@ -1,4 +1,4 @@
-public struct AttractiveScript: Codable, Hashable {
+public struct AttractiveScript: Codable, Hashable, Sendable {
     public let value: String
     public let additionalProperties: [String: JSONValue]
 

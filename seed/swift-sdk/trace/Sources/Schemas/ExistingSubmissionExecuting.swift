@@ -1,4 +1,4 @@
-public struct ExistingSubmissionExecuting: Codable, Hashable {
+public struct ExistingSubmissionExecuting: Codable, Hashable, Sendable {
     public let submissionId: SubmissionId
     public let additionalProperties: [String: JSONValue]
 

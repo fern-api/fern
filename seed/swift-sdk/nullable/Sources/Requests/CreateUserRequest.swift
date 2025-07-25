@@ -1,4 +1,4 @@
-public struct CreateUserRequest: Codable, Hashable {
+public struct CreateUserRequest: Codable, Hashable, Sendable {
     public let username: String
     public let tags: [String]?
     public let metadata: Metadata?

@@ -1,4 +1,4 @@
-public struct Node: Codable, Hashable {
+public struct Node: Codable, Hashable, Sendable {
     public let name: String
     public let nodes: [Node]?
     public let trees: [Tree]?

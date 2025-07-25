@@ -1,4 +1,4 @@
-public struct TestSubmissionState: Codable, Hashable {
+public struct TestSubmissionState: Codable, Hashable, Sendable {
     public let problemId: ProblemId
     public let defaultTestCases: [TestCase]
     public let customTestCases: [TestCase]

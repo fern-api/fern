@@ -1,4 +1,4 @@
-public struct Memo: Codable, Hashable {
+public struct Memo: Codable, Hashable, Sendable {
     public let description: String
     public let account: Account?
     public let additionalProperties: [String: JSONValue]

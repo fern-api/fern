@@ -1,4 +1,4 @@
-public struct WithCursor: Codable, Hashable {
+public struct WithCursor: Codable, Hashable, Sendable {
     public let cursor: String?
     public let additionalProperties: [String: JSONValue]
 

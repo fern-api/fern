@@ -1,4 +1,4 @@
-public struct Playlist: Codable, Hashable {
+public struct Playlist: Codable, Hashable, Sendable {
     public let playlistId: PlaylistId
     public let ownerId: UserId
     public let additionalProperties: [String: JSONValue]

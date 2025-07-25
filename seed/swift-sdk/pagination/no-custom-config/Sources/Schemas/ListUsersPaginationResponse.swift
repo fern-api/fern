@@ -1,4 +1,4 @@
-public struct ListUsersPaginationResponse: Codable, Hashable {
+public struct ListUsersPaginationResponse: Codable, Hashable, Sendable {
     public let hasNextPage: Bool?
     public let page: Page?
     public let totalCount: Int

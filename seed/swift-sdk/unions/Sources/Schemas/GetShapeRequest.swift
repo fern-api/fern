@@ -1,4 +1,4 @@
-public struct GetShapeRequest: Codable, Hashable {
+public struct GetShapeRequest: Codable, Hashable, Sendable {
     public let id: String
     public let additionalProperties: [String: JSONValue]
 

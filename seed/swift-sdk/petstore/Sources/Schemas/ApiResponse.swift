@@ -1,4 +1,4 @@
-public struct ApiResponse: Codable, Hashable {
+public struct ApiResponse: Codable, Hashable, Sendable {
     public let code: Int?
     public let message: String?
     public let type: String?

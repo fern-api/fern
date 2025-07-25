@@ -1,4 +1,4 @@
-public struct TestCaseResult: Codable, Hashable {
+public struct TestCaseResult: Codable, Hashable, Sendable {
     public let expectedResult: VariableValue
     public let actualResult: ActualResult
     public let passed: Bool

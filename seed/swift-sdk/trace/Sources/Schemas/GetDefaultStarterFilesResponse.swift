@@ -1,4 +1,4 @@
-public struct GetDefaultStarterFilesResponse: Codable, Hashable {
+public struct GetDefaultStarterFilesResponse: Codable, Hashable, Sendable {
     public let files: [Language: ProblemFiles]
     public let additionalProperties: [String: JSONValue]
 

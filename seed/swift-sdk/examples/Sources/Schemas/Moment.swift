@@ -1,4 +1,4 @@
-public struct Moment: Codable, Hashable {
+public struct Moment: Codable, Hashable, Sendable {
     public let id: UUID
     public let date: Date
     public let datetime: Date

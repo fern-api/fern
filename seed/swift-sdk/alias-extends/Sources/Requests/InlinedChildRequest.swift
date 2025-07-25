@@ -1,4 +1,4 @@
-public struct InlinedChildRequest: Codable, Hashable {
+public struct InlinedChildRequest: Codable, Hashable, Sendable {
     public let child: String
     public let additionalProperties: [String: JSONValue]
 

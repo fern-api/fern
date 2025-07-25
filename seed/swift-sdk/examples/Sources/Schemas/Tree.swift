@@ -1,4 +1,4 @@
-public struct Tree: Codable, Hashable {
+public struct Tree: Codable, Hashable, Sendable {
     public let nodes: [Node]?
     public let additionalProperties: [String: JSONValue]
 

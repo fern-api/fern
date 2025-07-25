@@ -1,4 +1,4 @@
-public struct PotableBad: Codable, Hashable {
+public struct PotableBad: Codable, Hashable, Sendable {
     public let value: String
     public let additionalProperties: [String: JSONValue]
 

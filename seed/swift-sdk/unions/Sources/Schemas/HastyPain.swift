@@ -1,4 +1,4 @@
-public struct HastyPain: Codable, Hashable {
+public struct HastyPain: Codable, Hashable, Sendable {
     public let value: String
     public let additionalProperties: [String: JSONValue]
 

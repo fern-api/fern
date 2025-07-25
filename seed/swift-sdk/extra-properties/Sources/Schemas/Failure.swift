@@ -1,4 +1,4 @@
-public struct Failure: Codable, Hashable {
+public struct Failure: Codable, Hashable, Sendable {
     public let status: Any
     public let additionalProperties: [String: JSONValue]
 

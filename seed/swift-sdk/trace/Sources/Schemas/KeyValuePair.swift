@@ -1,4 +1,4 @@
-public struct KeyValuePair: Codable, Hashable {
+public struct KeyValuePair: Codable, Hashable, Sendable {
     public let key: VariableValue
     public let value: VariableValue
     public let additionalProperties: [String: JSONValue]

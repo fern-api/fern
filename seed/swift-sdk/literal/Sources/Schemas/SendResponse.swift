@@ -1,4 +1,4 @@
-public struct SendResponse: Codable, Hashable {
+public struct SendResponse: Codable, Hashable, Sendable {
     public let message: String
     public let status: Int
     public let success: Any

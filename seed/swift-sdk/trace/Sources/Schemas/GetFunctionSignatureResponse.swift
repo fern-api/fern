@@ -1,4 +1,4 @@
-public struct GetFunctionSignatureResponse: Codable, Hashable {
+public struct GetFunctionSignatureResponse: Codable, Hashable, Sendable {
     public let functionByLanguage: [Language: String]
     public let additionalProperties: [String: JSONValue]
 

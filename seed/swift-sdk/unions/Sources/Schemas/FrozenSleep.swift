@@ -1,4 +1,4 @@
-public struct FrozenSleep: Codable, Hashable {
+public struct FrozenSleep: Codable, Hashable, Sendable {
     public let value: String
     public let additionalProperties: [String: JSONValue]
 

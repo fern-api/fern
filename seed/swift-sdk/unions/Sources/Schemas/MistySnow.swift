@@ -1,4 +1,4 @@
-public struct MistySnow: Codable, Hashable {
+public struct MistySnow: Codable, Hashable, Sendable {
     public let value: String
     public let additionalProperties: [String: JSONValue]
 

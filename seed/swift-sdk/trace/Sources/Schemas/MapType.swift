@@ -1,4 +1,4 @@
-public struct MapType: Codable, Hashable {
+public struct MapType: Codable, Hashable, Sendable {
     public let keyType: VariableType
     public let valueType: VariableType
     public let additionalProperties: [String: JSONValue]

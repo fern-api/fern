@@ -1,4 +1,4 @@
-public struct ListUsersBodyCursorPaginationRequest: Codable, Hashable {
+public struct ListUsersBodyCursorPaginationRequest: Codable, Hashable, Sendable {
     public let pagination: WithCursor?
     public let additionalProperties: [String: JSONValue]
 

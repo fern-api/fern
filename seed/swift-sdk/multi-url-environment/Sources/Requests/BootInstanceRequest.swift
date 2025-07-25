@@ -1,4 +1,4 @@
-public struct BootInstanceRequest: Codable, Hashable {
+public struct BootInstanceRequest: Codable, Hashable, Sendable {
     public let size: String
     public let additionalProperties: [String: JSONValue]
 

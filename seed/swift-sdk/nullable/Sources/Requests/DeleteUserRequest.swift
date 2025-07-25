@@ -1,4 +1,4 @@
-public struct DeleteUserRequest: Codable, Hashable {
+public struct DeleteUserRequest: Codable, Hashable, Sendable {
     public let username: Any?
     public let additionalProperties: [String: JSONValue]
 

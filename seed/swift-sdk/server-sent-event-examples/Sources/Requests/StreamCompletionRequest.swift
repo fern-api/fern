@@ -1,4 +1,4 @@
-public struct StreamCompletionRequest: Codable, Hashable {
+public struct StreamCompletionRequest: Codable, Hashable, Sendable {
     public let query: String
     public let additionalProperties: [String: JSONValue]
 

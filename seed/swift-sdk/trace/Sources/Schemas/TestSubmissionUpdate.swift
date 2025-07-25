@@ -1,4 +1,4 @@
-public struct TestSubmissionUpdate: Codable, Hashable {
+public struct TestSubmissionUpdate: Codable, Hashable, Sendable {
     public let updateTime: Date
     public let updateInfo: TestSubmissionUpdateInfo
     public let additionalProperties: [String: JSONValue]

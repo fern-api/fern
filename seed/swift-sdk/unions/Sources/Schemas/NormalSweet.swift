@@ -1,4 +1,4 @@
-public struct NormalSweet: Codable, Hashable {
+public struct NormalSweet: Codable, Hashable, Sendable {
     public let value: String
     public let additionalProperties: [String: JSONValue]
 

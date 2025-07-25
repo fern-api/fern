@@ -1,4 +1,4 @@
-public struct GruesomeCoach: Codable, Hashable {
+public struct GruesomeCoach: Codable, Hashable, Sendable {
     public let value: String
     public let additionalProperties: [String: JSONValue]
 

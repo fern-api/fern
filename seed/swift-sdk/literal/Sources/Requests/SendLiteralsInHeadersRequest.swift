@@ -1,4 +1,4 @@
-public struct SendLiteralsInHeadersRequest: Codable, Hashable {
+public struct SendLiteralsInHeadersRequest: Codable, Hashable, Sendable {
     public let query: String
     public let additionalProperties: [String: JSONValue]
 

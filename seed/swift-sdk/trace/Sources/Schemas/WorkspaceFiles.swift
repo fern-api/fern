@@ -1,4 +1,4 @@
-public struct WorkspaceFiles: Codable, Hashable {
+public struct WorkspaceFiles: Codable, Hashable, Sendable {
     public let mainFile: FileInfo
     public let readOnlyFiles: [FileInfo]
     public let additionalProperties: [String: JSONValue]

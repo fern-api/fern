@@ -1,4 +1,4 @@
-public struct StreamResponse: Codable, Hashable {
+public struct StreamResponse: Codable, Hashable, Sendable {
     public let id: String
     public let name: String?
     public let additionalProperties: [String: JSONValue]

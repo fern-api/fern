@@ -1,4 +1,4 @@
-public struct FilteredType: Codable, Hashable {
+public struct FilteredType: Codable, Hashable, Sendable {
     public let publicProperty: String?
     public let privateProperty: Int
     public let additionalProperties: [String: JSONValue]

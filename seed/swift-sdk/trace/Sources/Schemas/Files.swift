@@ -1,4 +1,4 @@
-public struct Files: Codable, Hashable {
+public struct Files: Codable, Hashable, Sendable {
     public let files: [FileInfoV2]
     public let additionalProperties: [String: JSONValue]
 

@@ -1,4 +1,4 @@
-public struct RecordedResponseNotification: Codable, Hashable {
+public struct RecordedResponseNotification: Codable, Hashable, Sendable {
     public let submissionId: SubmissionId
     public let traceResponsesSize: Int
     public let testCaseId: String?

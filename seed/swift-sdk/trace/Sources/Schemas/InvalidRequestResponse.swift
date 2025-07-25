@@ -1,4 +1,4 @@
-public struct InvalidRequestResponse: Codable, Hashable {
+public struct InvalidRequestResponse: Codable, Hashable, Sendable {
     public let request: SubmissionRequest
     public let cause: InvalidRequestCause
     public let additionalProperties: [String: JSONValue]

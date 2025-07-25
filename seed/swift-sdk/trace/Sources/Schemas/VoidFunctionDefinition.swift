@@ -1,4 +1,4 @@
-public struct VoidFunctionDefinition: Codable, Hashable {
+public struct VoidFunctionDefinition: Codable, Hashable, Sendable {
     public let parameters: [Parameter]
     public let code: FunctionImplementationForMultipleLanguages
     public let additionalProperties: [String: JSONValue]

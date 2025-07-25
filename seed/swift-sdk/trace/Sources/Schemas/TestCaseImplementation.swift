@@ -1,4 +1,4 @@
-public struct TestCaseImplementation: Codable, Hashable {
+public struct TestCaseImplementation: Codable, Hashable, Sendable {
     public let description: TestCaseImplementationDescription
     public let function: TestCaseFunction
     public let additionalProperties: [String: JSONValue]

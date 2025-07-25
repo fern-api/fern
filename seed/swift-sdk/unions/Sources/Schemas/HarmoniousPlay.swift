@@ -1,4 +1,4 @@
-public struct HarmoniousPlay: Codable, Hashable {
+public struct HarmoniousPlay: Codable, Hashable, Sendable {
     public let value: String
     public let additionalProperties: [String: JSONValue]
 

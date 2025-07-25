@@ -1,4 +1,4 @@
-public struct UsernameContainer: Codable, Hashable {
+public struct UsernameContainer: Codable, Hashable, Sendable {
     public let results: [String]
     public let additionalProperties: [String: JSONValue]
 

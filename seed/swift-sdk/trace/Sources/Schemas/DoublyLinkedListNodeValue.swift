@@ -1,4 +1,4 @@
-public struct DoublyLinkedListNodeValue: Codable, Hashable {
+public struct DoublyLinkedListNodeValue: Codable, Hashable, Sendable {
     public let nodeId: NodeId
     public let val: Double
     public let next: NodeId?

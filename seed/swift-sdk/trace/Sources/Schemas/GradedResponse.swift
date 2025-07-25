@@ -1,4 +1,4 @@
-public struct GradedResponse: Codable, Hashable {
+public struct GradedResponse: Codable, Hashable, Sendable {
     public let submissionId: SubmissionId
     public let testCases: [String: TestCaseResultWithStdout]
     public let additionalProperties: [String: JSONValue]

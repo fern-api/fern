@@ -1,4 +1,4 @@
-public struct ThankfulFactor: Codable, Hashable {
+public struct ThankfulFactor: Codable, Hashable, Sendable {
     public let value: String
     public let additionalProperties: [String: JSONValue]
 

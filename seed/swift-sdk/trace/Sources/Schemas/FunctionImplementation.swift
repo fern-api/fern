@@ -1,4 +1,4 @@
-public struct FunctionImplementation: Codable, Hashable {
+public struct FunctionImplementation: Codable, Hashable, Sendable {
     public let impl: String
     public let imports: String?
     public let additionalProperties: [String: JSONValue]

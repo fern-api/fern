@@ -1,4 +1,4 @@
-public struct DoubleOptional: Codable, Hashable {
+public struct DoubleOptional: Codable, Hashable, Sendable {
     public let optionalAlias: OptionalAlias?
     public let additionalProperties: [String: JSONValue]
 

@@ -1,4 +1,4 @@
-public struct NodesWrapper: Codable, Hashable {
+public struct NodesWrapper: Codable, Hashable, Sendable {
     public let nodes: [[Node]]
     public let additionalProperties: [String: JSONValue]
 

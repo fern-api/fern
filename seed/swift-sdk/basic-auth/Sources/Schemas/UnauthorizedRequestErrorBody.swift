@@ -1,4 +1,4 @@
-public struct UnauthorizedRequestErrorBody: Codable, Hashable {
+public struct UnauthorizedRequestErrorBody: Codable, Hashable, Sendable {
     public let message: String
     public let additionalProperties: [String: JSONValue]
 

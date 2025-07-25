@@ -1,4 +1,4 @@
-public enum Status: String, Codable, Hashable, Sendable, CaseIterable {
+public enum Status: String, Codable, Hashable, CaseIterable, Sendable {
     case known = "Known"
     case unknown = "Unknown"
 }

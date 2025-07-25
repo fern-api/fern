@@ -1,4 +1,4 @@
-public struct SendEvent: Codable, Hashable {
+public struct SendEvent: Codable, Hashable, Sendable {
     public let sendText: String
     public let sendParam: Int
     public let additionalProperties: [String: JSONValue]

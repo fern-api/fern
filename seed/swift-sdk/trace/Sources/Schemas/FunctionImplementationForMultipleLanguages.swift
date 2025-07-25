@@ -1,4 +1,4 @@
-public struct FunctionImplementationForMultipleLanguages: Codable, Hashable {
+public struct FunctionImplementationForMultipleLanguages: Codable, Hashable, Sendable {
     public let codeByLanguage: [Language: FunctionImplementation]
     public let additionalProperties: [String: JSONValue]
 

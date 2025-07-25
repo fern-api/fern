@@ -1,4 +1,4 @@
-public struct TestCase: Codable, Hashable {
+public struct TestCase: Codable, Hashable, Sendable {
     public let id: String
     public let params: [VariableValue]
     public let additionalProperties: [String: JSONValue]

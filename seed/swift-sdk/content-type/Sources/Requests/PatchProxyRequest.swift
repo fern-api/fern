@@ -1,4 +1,4 @@
-public struct PatchProxyRequest: Codable, Hashable {
+public struct PatchProxyRequest: Codable, Hashable, Sendable {
     public let application: Any
     public let requireAuth: Any
     public let additionalProperties: [String: JSONValue]

@@ -1,4 +1,4 @@
-public struct ListType: Codable, Hashable {
+public struct ListType: Codable, Hashable, Sendable {
     public let valueType: VariableType
     public let isFixedLength: Bool?
     public let additionalProperties: [String: JSONValue]

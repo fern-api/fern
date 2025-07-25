@@ -1,4 +1,4 @@
-public struct LightweightProblemInfoV2: Codable, Hashable {
+public struct LightweightProblemInfoV2: Codable, Hashable, Sendable {
     public let problemId: ProblemId
     public let problemName: String
     public let problemVersion: Int

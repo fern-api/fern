@@ -1,4 +1,4 @@
-public struct GetPresignedUrlRequest: Codable, Hashable {
+public struct GetPresignedUrlRequest: Codable, Hashable, Sendable {
     public let s3Key: String
     public let additionalProperties: [String: JSONValue]
 

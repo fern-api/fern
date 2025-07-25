@@ -1,4 +1,4 @@
-public struct LimpingStep: Codable, Hashable {
+public struct LimpingStep: Codable, Hashable, Sendable {
     public let value: String
     public let additionalProperties: [String: JSONValue]
 

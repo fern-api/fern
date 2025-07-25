@@ -1,4 +1,4 @@
-public struct GetFunctionSignatureRequest: Codable, Hashable {
+public struct GetFunctionSignatureRequest: Codable, Hashable, Sendable {
     public let functionSignature: FunctionSignature
     public let additionalProperties: [String: JSONValue]
 

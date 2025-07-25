@@ -1,4 +1,4 @@
-public struct Movie: Codable, Hashable {
+public struct Movie: Codable, Hashable, Sendable {
     public let id: MovieId
     public let title: String
     public let rating: Double

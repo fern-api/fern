@@ -1,4 +1,4 @@
-public struct Address: Codable, Hashable {
+public struct Address: Codable, Hashable, Sendable {
     public let line1: String
     public let line2: String?
     public let city: String

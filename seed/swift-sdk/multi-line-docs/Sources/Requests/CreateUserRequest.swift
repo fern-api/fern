@@ -1,4 +1,4 @@
-public struct CreateUserRequest: Codable, Hashable {
+public struct CreateUserRequest: Codable, Hashable, Sendable {
     public let name: String
     public let age: Int?
     public let additionalProperties: [String: JSONValue]

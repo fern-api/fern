@@ -1,4 +1,4 @@
-public struct ProblemInfo: Codable, Hashable {
+public struct ProblemInfo: Codable, Hashable, Sendable {
     public let problemId: ProblemId
     public let problemDescription: ProblemDescription
     public let problemName: String

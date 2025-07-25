@@ -1,4 +1,4 @@
-public struct Directory: Codable, Hashable {
+public struct Directory: Codable, Hashable, Sendable {
     public let name: String
     public let files: [File]?
     public let directories: [Directory]?

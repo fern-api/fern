@@ -1,4 +1,4 @@
-public struct Scope: Codable, Hashable {
+public struct Scope: Codable, Hashable, Sendable {
     public let variables: [String: DebugVariableValue]
     public let additionalProperties: [String: JSONValue]
 

@@ -1,4 +1,4 @@
-public struct ExceptionInfo: Codable, Hashable {
+public struct ExceptionInfo: Codable, Hashable, Sendable {
     public let exceptionType: String
     public let exceptionMessage: String
     public let exceptionStacktrace: String

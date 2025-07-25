@@ -1,4 +1,4 @@
-public struct TestCaseMetadata: Codable, Hashable {
+public struct TestCaseMetadata: Codable, Hashable, Sendable {
     public let id: TestCaseId
     public let name: String
     public let hidden: Bool

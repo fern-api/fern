@@ -1,4 +1,4 @@
-public struct T: Codable, Hashable {
+public struct T: Codable, Hashable, Sendable {
     public let child: TorU
     public let additionalProperties: [String: JSONValue]
 

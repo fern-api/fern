@@ -1,4 +1,4 @@
-public struct Script: Codable, Hashable {
+public struct Script: Codable, Hashable, Sendable {
     public let resourceType: Any
     public let name: String
     public let additionalProperties: [String: JSONValue]

@@ -1,4 +1,4 @@
-public struct Pet: Codable, Hashable {
+public struct Pet: Codable, Hashable, Sendable {
     public let category: Category?
     public let id: Int64?
     public let name: String

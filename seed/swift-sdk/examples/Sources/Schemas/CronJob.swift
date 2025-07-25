@@ -1,4 +1,4 @@
-public struct CronJob: Codable, Hashable {
+public struct CronJob: Codable, Hashable, Sendable {
     public let expression: String
     public let additionalProperties: [String: JSONValue]
 

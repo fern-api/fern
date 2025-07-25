@@ -1,4 +1,4 @@
-public struct UpdatePlaylistRequest: Codable, Hashable {
+public struct UpdatePlaylistRequest: Codable, Hashable, Sendable {
     public let name: String
     public let problems: [ProblemId]
     public let additionalProperties: [String: JSONValue]

@@ -1,4 +1,4 @@
-public struct PostWithObjectBody: Codable, Hashable {
+public struct PostWithObjectBody: Codable, Hashable, Sendable {
     public let string: String
     public let integer: Int
     public let nestedObject: ObjectWithOptionalField

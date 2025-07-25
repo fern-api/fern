@@ -1,4 +1,4 @@
-public struct GetGeneratedTestCaseFileRequest: Codable, Hashable {
+public struct GetGeneratedTestCaseFileRequest: Codable, Hashable, Sendable {
     public let template: TestCaseTemplate?
     public let testCase: TestCaseV2
     public let additionalProperties: [String: JSONValue]

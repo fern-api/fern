@@ -1,4 +1,4 @@
-public struct NestedObjectWithOptionalField: Codable, Hashable {
+public struct NestedObjectWithOptionalField: Codable, Hashable, Sendable {
     public let string: String?
     public let nestedObject: ObjectWithOptionalField?
     public let additionalProperties: [String: JSONValue]

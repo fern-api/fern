@@ -1,4 +1,4 @@
-public struct BasicTestCaseTemplate: Codable, Hashable {
+public struct BasicTestCaseTemplate: Codable, Hashable, Sendable {
     public let templateId: TestCaseTemplateId
     public let name: String
     public let description: TestCaseImplementationDescription

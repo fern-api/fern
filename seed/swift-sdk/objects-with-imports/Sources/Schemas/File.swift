@@ -1,4 +1,4 @@
-public struct File: Codable, Hashable {
+public struct File: Codable, Hashable, Sendable {
     public let name: String
     public let contents: String
     public let info: FileInfo

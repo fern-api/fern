@@ -1,4 +1,4 @@
-public struct Circle: Codable, Hashable {
+public struct Circle: Codable, Hashable, Sendable {
     public let radius: Double
     public let additionalProperties: [String: JSONValue]
 

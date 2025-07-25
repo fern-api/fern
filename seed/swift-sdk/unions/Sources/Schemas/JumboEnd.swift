@@ -1,4 +1,4 @@
-public struct JumboEnd: Codable, Hashable {
+public struct JumboEnd: Codable, Hashable, Sendable {
     public let value: String
     public let additionalProperties: [String: JSONValue]
 

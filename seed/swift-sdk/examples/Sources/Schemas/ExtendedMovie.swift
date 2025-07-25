@@ -1,4 +1,4 @@
-public struct ExtendedMovie: Codable, Hashable {
+public struct ExtendedMovie: Codable, Hashable, Sendable {
     public let cast: [String]
     public let additionalProperties: [String: JSONValue]
 

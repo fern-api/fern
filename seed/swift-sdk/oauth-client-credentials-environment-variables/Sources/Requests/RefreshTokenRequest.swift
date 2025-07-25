@@ -1,4 +1,4 @@
-public struct RefreshTokenRequest: Codable, Hashable {
+public struct RefreshTokenRequest: Codable, Hashable, Sendable {
     public let clientId: String
     public let clientSecret: String
     public let refreshToken: String

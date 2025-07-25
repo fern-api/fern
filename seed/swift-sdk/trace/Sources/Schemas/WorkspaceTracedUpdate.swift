@@ -1,4 +1,4 @@
-public struct WorkspaceTracedUpdate: Codable, Hashable {
+public struct WorkspaceTracedUpdate: Codable, Hashable, Sendable {
     public let traceResponsesSize: Int
     public let additionalProperties: [String: JSONValue]
 

@@ -1,4 +1,4 @@
-public struct LightweightStackframeInformation: Codable, Hashable {
+public struct LightweightStackframeInformation: Codable, Hashable, Sendable {
     public let numStackFrames: Int
     public let topStackFrameMethodName: String
     public let additionalProperties: [String: JSONValue]

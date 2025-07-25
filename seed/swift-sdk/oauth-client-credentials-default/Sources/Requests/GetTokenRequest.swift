@@ -1,4 +1,4 @@
-public struct GetTokenRequest: Codable, Hashable {
+public struct GetTokenRequest: Codable, Hashable, Sendable {
     public let clientId: String
     public let clientSecret: String
     public let grantType: Any

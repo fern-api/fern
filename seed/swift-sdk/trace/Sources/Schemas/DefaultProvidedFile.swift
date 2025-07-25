@@ -1,4 +1,4 @@
-public struct DefaultProvidedFile: Codable, Hashable {
+public struct DefaultProvidedFile: Codable, Hashable, Sendable {
     public let file: FileInfoV2
     public let relatedTypes: [VariableType]
     public let additionalProperties: [String: JSONValue]

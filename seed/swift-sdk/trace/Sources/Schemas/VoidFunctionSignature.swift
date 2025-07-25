@@ -1,4 +1,4 @@
-public struct VoidFunctionSignature: Codable, Hashable {
+public struct VoidFunctionSignature: Codable, Hashable, Sendable {
     public let parameters: [Parameter]
     public let additionalProperties: [String: JSONValue]
 

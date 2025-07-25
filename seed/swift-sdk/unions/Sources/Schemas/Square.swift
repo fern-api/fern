@@ -1,4 +1,4 @@
-public struct Square: Codable, Hashable {
+public struct Square: Codable, Hashable, Sendable {
     public let length: Double
     public let additionalProperties: [String: JSONValue]
 

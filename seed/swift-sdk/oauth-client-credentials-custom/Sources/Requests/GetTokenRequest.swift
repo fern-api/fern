@@ -1,4 +1,4 @@
-public struct GetTokenRequest: Codable, Hashable {
+public struct GetTokenRequest: Codable, Hashable, Sendable {
     public let cid: String
     public let csr: String
     public let scp: String

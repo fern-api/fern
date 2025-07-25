@@ -1,4 +1,4 @@
-public struct Conversation: Codable, Hashable {
+public struct Conversation: Codable, Hashable, Sendable {
     public let foo: String
     public let additionalProperties: [String: JSONValue]
 

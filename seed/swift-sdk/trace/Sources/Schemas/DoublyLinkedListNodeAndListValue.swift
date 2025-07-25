@@ -1,4 +1,4 @@
-public struct DoublyLinkedListNodeAndListValue: Codable, Hashable {
+public struct DoublyLinkedListNodeAndListValue: Codable, Hashable, Sendable {
     public let nodeId: NodeId
     public let fullList: DoublyLinkedListValue
     public let additionalProperties: [String: JSONValue]

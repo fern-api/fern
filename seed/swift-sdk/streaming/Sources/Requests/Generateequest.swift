@@ -1,4 +1,4 @@
-public struct Generateequest: Codable, Hashable {
+public struct Generateequest: Codable, Hashable, Sendable {
     public let stream: Any
     public let numEvents: Int
     public let additionalProperties: [String: JSONValue]

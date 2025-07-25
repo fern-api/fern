@@ -1,4 +1,4 @@
-public struct InitializeProblemRequest: Codable, Hashable {
+public struct InitializeProblemRequest: Codable, Hashable, Sendable {
     public let problemId: ProblemId
     public let problemVersion: Int?
     public let additionalProperties: [String: JSONValue]

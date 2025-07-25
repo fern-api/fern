@@ -1,4 +1,4 @@
-public struct MultipleFilterSearchRequest: Codable, Hashable {
+public struct MultipleFilterSearchRequest: Codable, Hashable, Sendable {
     public let `operator`: MultipleFilterSearchRequestOperator?
     public let value: MultipleFilterSearchRequestValue?
     public let additionalProperties: [String: JSONValue]

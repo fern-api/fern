@@ -1,4 +1,4 @@
-public struct Fig: Codable, Hashable {
+public struct Fig: Codable, Hashable, Sendable {
     public let animal: Animal
     public let additionalProperties: [String: JSONValue]
 

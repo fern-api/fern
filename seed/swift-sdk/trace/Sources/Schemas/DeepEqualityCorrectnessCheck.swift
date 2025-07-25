@@ -1,4 +1,4 @@
-public struct DeepEqualityCorrectnessCheck: Codable, Hashable {
+public struct DeepEqualityCorrectnessCheck: Codable, Hashable, Sendable {
     public let expectedValueParameterId: ParameterId
     public let additionalProperties: [String: JSONValue]
 

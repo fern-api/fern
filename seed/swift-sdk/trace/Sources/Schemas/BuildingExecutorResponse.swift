@@ -1,4 +1,4 @@
-public struct BuildingExecutorResponse: Codable, Hashable {
+public struct BuildingExecutorResponse: Codable, Hashable, Sendable {
     public let submissionId: SubmissionId
     public let status: ExecutionSessionStatus
     public let additionalProperties: [String: JSONValue]

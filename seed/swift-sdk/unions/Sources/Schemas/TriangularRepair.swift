@@ -1,4 +1,4 @@
-public struct TriangularRepair: Codable, Hashable {
+public struct TriangularRepair: Codable, Hashable, Sendable {
     public let value: String
     public let additionalProperties: [String: JSONValue]
 

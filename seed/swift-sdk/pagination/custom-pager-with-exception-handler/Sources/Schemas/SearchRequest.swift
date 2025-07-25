@@ -1,4 +1,4 @@
-public struct SearchRequest: Codable, Hashable {
+public struct SearchRequest: Codable, Hashable, Sendable {
     public let pagination: StartingAfterPaging?
     public let query: SearchRequestQuery
     public let additionalProperties: [String: JSONValue]

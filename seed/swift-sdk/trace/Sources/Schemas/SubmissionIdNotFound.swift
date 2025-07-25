@@ -1,4 +1,4 @@
-public struct SubmissionIdNotFound: Codable, Hashable {
+public struct SubmissionIdNotFound: Codable, Hashable, Sendable {
     public let missingSubmissionId: SubmissionId
     public let additionalProperties: [String: JSONValue]
 

@@ -1,4 +1,4 @@
-public struct FindRequest: Codable, Hashable {
+public struct FindRequest: Codable, Hashable, Sendable {
     public let publicProperty: String?
     public let privateProperty: Int?
     public let additionalProperties: [String: JSONValue]

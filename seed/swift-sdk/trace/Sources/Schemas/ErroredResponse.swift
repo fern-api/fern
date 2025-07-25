@@ -1,4 +1,4 @@
-public struct ErroredResponse: Codable, Hashable {
+public struct ErroredResponse: Codable, Hashable, Sendable {
     public let submissionId: SubmissionId
     public let errorInfo: ErrorInfo
     public let additionalProperties: [String: JSONValue]

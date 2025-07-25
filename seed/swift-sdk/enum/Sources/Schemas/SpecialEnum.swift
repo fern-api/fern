@@ -1,4 +1,4 @@
-public enum SpecialEnum: String, Codable, Hashable, Sendable, CaseIterable {
+public enum SpecialEnum: String, Codable, Hashable, CaseIterable, Sendable {
     case a = ""
     case b = "Hello \"World\""
     case c = "Hello 'World'"

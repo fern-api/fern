@@ -1,4 +1,4 @@
-public struct GeneratedFiles: Codable, Hashable {
+public struct GeneratedFiles: Codable, Hashable, Sendable {
     public let generatedTestCaseFiles: [Language: Files]
     public let generatedTemplateFiles: [Language: Files]
     public let other: [Language: Files]

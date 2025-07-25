@@ -1,4 +1,4 @@
-public enum OrderStatus: String, Codable, Hashable, Sendable, CaseIterable {
+public enum OrderStatus: String, Codable, Hashable, CaseIterable, Sendable {
     case placed
     case approved
     case delivered

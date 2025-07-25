@@ -1,4 +1,4 @@
-public struct FalseMirror: Codable, Hashable {
+public struct FalseMirror: Codable, Hashable, Sendable {
     public let value: String
     public let additionalProperties: [String: JSONValue]
 

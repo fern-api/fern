@@ -1,4 +1,4 @@
-public struct NamedMetadata: Codable, Hashable {
+public struct NamedMetadata: Codable, Hashable, Sendable {
     public let name: String
     public let value: [String: Any]
     public let additionalProperties: [String: JSONValue]

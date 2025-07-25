@@ -1,4 +1,4 @@
-public struct ObjectWithOptionalField: Codable, Hashable {
+public struct ObjectWithOptionalField: Codable, Hashable, Sendable {
     public let string: String?
     public let integer: Int?
     public let long: Int64?

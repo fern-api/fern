@@ -1,4 +1,4 @@
-public struct UpdateProblemResponse: Codable, Hashable {
+public struct UpdateProblemResponse: Codable, Hashable, Sendable {
     public let problemVersion: Int
     public let additionalProperties: [String: JSONValue]
 

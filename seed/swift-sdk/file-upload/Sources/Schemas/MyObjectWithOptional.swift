@@ -1,4 +1,4 @@
-public struct MyObjectWithOptional: Codable, Hashable {
+public struct MyObjectWithOptional: Codable, Hashable, Sendable {
     public let prop: String
     public let optionalProp: String?
     public let additionalProperties: [String: JSONValue]

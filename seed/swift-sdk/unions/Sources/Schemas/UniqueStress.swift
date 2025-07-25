@@ -1,4 +1,4 @@
-public struct UniqueStress: Codable, Hashable {
+public struct UniqueStress: Codable, Hashable, Sendable {
     public let value: String
     public let additionalProperties: [String: JSONValue]
 

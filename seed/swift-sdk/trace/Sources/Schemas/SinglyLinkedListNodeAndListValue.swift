@@ -1,4 +1,4 @@
-public struct SinglyLinkedListNodeAndListValue: Codable, Hashable {
+public struct SinglyLinkedListNodeAndListValue: Codable, Hashable, Sendable {
     public let nodeId: NodeId
     public let fullList: SinglyLinkedListValue
     public let additionalProperties: [String: JSONValue]

@@ -1,4 +1,4 @@
-public struct BranchNode: Codable, Hashable {
+public struct BranchNode: Codable, Hashable, Sendable {
     public let children: [Node]
     public let additionalProperties: [String: JSONValue]
 

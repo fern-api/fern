@@ -1,4 +1,4 @@
-public struct ReceiveEvent: Codable, Hashable {
+public struct ReceiveEvent: Codable, Hashable, Sendable {
     public let alpha: String
     public let beta: Int
     public let additionalProperties: [String: JSONValue]

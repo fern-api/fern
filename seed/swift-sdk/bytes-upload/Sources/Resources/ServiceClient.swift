@@ -5,11 +5,11 @@ public final class ServiceClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func upload(request: Any, requestOptions: RequestOptions? = nil) async throws -> Void {
-        return try await httpClient.performRequest(
+    public func upload(request: Data, requestOptions: RequestOptions? = nil) async throws -> Void {
+        return try await httpClient.performFileUpload(
             method: .post,
             path: "/upload-content",
-            body: request,
+            fileData: request,
             requestOptions: requestOptions
         )
     }

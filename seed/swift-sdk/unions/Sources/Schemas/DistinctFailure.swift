@@ -1,4 +1,4 @@
-public struct DistinctFailure: Codable, Hashable {
+public struct DistinctFailure: Codable, Hashable, Sendable {
     public let value: String
     public let additionalProperties: [String: JSONValue]
 

@@ -1,4 +1,4 @@
-public struct TestCaseHiddenGrade: Codable, Hashable {
+public struct TestCaseHiddenGrade: Codable, Hashable, Sendable {
     public let passed: Bool
     public let additionalProperties: [String: JSONValue]
 

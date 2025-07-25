@@ -1,4 +1,4 @@
-public struct CustomTestCasesUnsupported: Codable, Hashable {
+public struct CustomTestCasesUnsupported: Codable, Hashable, Sendable {
     public let problemId: ProblemId
     public let submissionId: SubmissionId
     public let additionalProperties: [String: JSONValue]

@@ -1,4 +1,4 @@
-public struct ContainerObject: Codable, Hashable {
+public struct ContainerObject: Codable, Hashable, Sendable {
     public let nestedObjects: [NestedObjectWithLiterals]
     public let additionalProperties: [String: JSONValue]
 

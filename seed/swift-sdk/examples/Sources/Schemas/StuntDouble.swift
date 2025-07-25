@@ -1,4 +1,4 @@
-public struct StuntDouble: Codable, Hashable {
+public struct StuntDouble: Codable, Hashable, Sendable {
     public let name: String
     public let actorOrActressId: String
     public let additionalProperties: [String: JSONValue]

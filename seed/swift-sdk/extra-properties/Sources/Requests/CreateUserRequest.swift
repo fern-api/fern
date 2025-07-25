@@ -1,4 +1,4 @@
-public struct CreateUserRequest: Codable, Hashable {
+public struct CreateUserRequest: Codable, Hashable, Sendable {
     public let type: Any
     public let version: Any
     public let name: String

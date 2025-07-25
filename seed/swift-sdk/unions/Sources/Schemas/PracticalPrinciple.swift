@@ -1,4 +1,4 @@
-public struct PracticalPrinciple: Codable, Hashable {
+public struct PracticalPrinciple: Codable, Hashable, Sendable {
     public let value: String
     public let additionalProperties: [String: JSONValue]
 

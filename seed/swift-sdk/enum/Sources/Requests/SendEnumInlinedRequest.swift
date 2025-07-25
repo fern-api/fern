@@ -1,4 +1,4 @@
-public struct SendEnumInlinedRequest: Codable, Hashable {
+public struct SendEnumInlinedRequest: Codable, Hashable, Sendable {
     public let operand: Operand
     public let maybeOperand: Operand?
     public let operandOrColor: ColorOrOperand

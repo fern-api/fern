@@ -1,4 +1,4 @@
-public struct SendSnakeCase: Codable, Hashable {
+public struct SendSnakeCase: Codable, Hashable, Sendable {
     public let sendText: String
     public let sendParam: Int
     public let additionalProperties: [String: JSONValue]

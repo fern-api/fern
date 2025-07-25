@@ -1,4 +1,4 @@
-public struct TracedTestCase: Codable, Hashable {
+public struct TracedTestCase: Codable, Hashable, Sendable {
     public let result: TestCaseResultWithStdout
     public let traceResponsesSize: Int
     public let additionalProperties: [String: JSONValue]

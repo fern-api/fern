@@ -79,11 +79,11 @@ public final class PetClient: Sendable {
         )
     }
 
-    public func uploadFile(petId: String, request: Any, requestOptions: RequestOptions? = nil) async throws -> ApiResponse {
-        return try await httpClient.performRequest(
+    public func uploadFile(petId: String, request: Data, requestOptions: RequestOptions? = nil) async throws -> ApiResponse {
+        return try await httpClient.performFileUpload(
             method: .post,
             path: "/pet/\(petId)/uploadImage",
-            body: request,
+            fileData: request,
             requestOptions: requestOptions,
             responseType: ApiResponse.self
         )

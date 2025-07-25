@@ -1,4 +1,4 @@
-public struct SendLiteralsInlinedRequest: Codable, Hashable {
+public struct SendLiteralsInlinedRequest: Codable, Hashable, Sendable {
     public let prompt: Any
     public let context: Any?
     public let query: String

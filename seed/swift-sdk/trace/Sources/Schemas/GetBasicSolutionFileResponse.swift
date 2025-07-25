@@ -1,4 +1,4 @@
-public struct GetBasicSolutionFileResponse: Codable, Hashable {
+public struct GetBasicSolutionFileResponse: Codable, Hashable, Sendable {
     public let solutionFileByLanguage: [Language: FileInfoV2]
     public let additionalProperties: [String: JSONValue]
 

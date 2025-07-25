@@ -1,4 +1,4 @@
-public struct HoarseMouse: Codable, Hashable {
+public struct HoarseMouse: Codable, Hashable, Sendable {
     public let value: String
     public let additionalProperties: [String: JSONValue]
 

@@ -1,4 +1,4 @@
-public struct ProblemFiles: Codable, Hashable {
+public struct ProblemFiles: Codable, Hashable, Sendable {
     public let solutionFile: FileInfo
     public let readOnlyFiles: [FileInfo]
     public let additionalProperties: [String: JSONValue]

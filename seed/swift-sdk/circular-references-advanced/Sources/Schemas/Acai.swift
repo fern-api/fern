@@ -1,4 +1,4 @@
-public struct Acai: Codable, Hashable {
+public struct Acai: Codable, Hashable, Sendable {
     public let additionalProperties: [String: JSONValue]
 
     public init(

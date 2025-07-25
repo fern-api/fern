@@ -1,4 +1,4 @@
-public struct Page: Codable, Hashable {
+public struct Page: Codable, Hashable, Sendable {
     public let page: Int
     public let next: NextPage?
     public let perPage: Int

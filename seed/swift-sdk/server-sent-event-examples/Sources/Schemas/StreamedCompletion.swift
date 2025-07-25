@@ -1,4 +1,4 @@
-public struct StreamedCompletion: Codable, Hashable {
+public struct StreamedCompletion: Codable, Hashable, Sendable {
     public let delta: String
     public let tokens: Int?
     public let additionalProperties: [String: JSONValue]

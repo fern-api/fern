@@ -1,4 +1,4 @@
-public struct ANestedLiteral: Codable, Hashable {
+public struct ANestedLiteral: Codable, Hashable, Sendable {
     public let myLiteral: Any
     public let additionalProperties: [String: JSONValue]
 

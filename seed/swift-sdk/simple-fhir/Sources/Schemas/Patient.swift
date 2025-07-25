@@ -1,4 +1,4 @@
-public struct Patient: Codable, Hashable {
+public struct Patient: Codable, Hashable, Sendable {
     public let resourceType: Any
     public let name: String
     public let scripts: [Script]

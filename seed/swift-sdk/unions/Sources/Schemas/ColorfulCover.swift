@@ -1,4 +1,4 @@
-public struct ColorfulCover: Codable, Hashable {
+public struct ColorfulCover: Codable, Hashable, Sendable {
     public let value: String
     public let additionalProperties: [String: JSONValue]
 

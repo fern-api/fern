@@ -1,4 +1,4 @@
-public struct PrimaryBlock: Codable, Hashable {
+public struct PrimaryBlock: Codable, Hashable, Sendable {
     public let value: String
     public let additionalProperties: [String: JSONValue]
 
