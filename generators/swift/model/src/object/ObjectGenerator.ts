@@ -219,18 +219,17 @@ export class ObjectGenerator {
                     ? [
                           swift.Statement.variableDeclaration(
                               "container",
-                              swift.Expression.try(
-                                  swift.Expression.methodCall({
-                                      target: swift.Expression.reference("encoder"),
-                                      methodName: "container",
-                                      arguments_: [
-                                          swift.functionArgument({
-                                              label: "keyedBy",
-                                              value: swift.Expression.rawValue("CodingKeys.self")
-                                          })
-                                      ]
-                                  })
-                              )
+
+                              swift.Expression.methodCall({
+                                  target: swift.Expression.reference("encoder"),
+                                  methodName: "container",
+                                  arguments_: [
+                                      swift.functionArgument({
+                                          label: "keyedBy",
+                                          value: swift.Expression.rawValue("CodingKeys.self")
+                                      })
+                                  ]
+                              })
                           )
                       ]
                     : []),
