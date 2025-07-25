@@ -4065,6 +4065,7 @@
           ],
           "examples": [
             {
+              "name": "listAccountBalancesExample",
               "description": "",
               "path": "/accountBalances",
               "pathParameters": {},
@@ -4112,6 +4113,94 @@
                       "incomplete": false
                     }
                   ]
+                }
+              }
+            },
+            {
+              "name": "listAccountBalancesExample",
+              "description": "",
+              "path": "/accountBalances",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 202,
+              "responseBody": {
+                "items": [
+                  {
+                    "id": "05d00d7d-d630",
+                    "available": "3208.20",
+                    "current": "3448.72",
+                    "updatedAt": "2022-05-02T06:51:19.375Z",
+                    "currentWithPending": "3448.72",
+                    "incomplete": false
+                  },
+                  {
+                    "id": "cb5d67ea-a5c3",
+                    "available": "1750.80",
+                    "current": "1956.19",
+                    "updatedAt": "2022-05-02T06:51:19.375Z",
+                    "currentWithPending": "1956.19",
+                    "incomplete": false
+                  },
+                  {
+                    "id": "b5a4f178-2baf",
+                    "incomplete": true
+                  },
+                  {
+                    "id": "959908db-fd40",
+                    "incomplete": true
+                  },
+                  {
+                    "id": "97e6166a-2a4c",
+                    "incomplete": true
+                  }
+                ],
+                "incompleteAccounts": [
+                  "b5a4f178-2baf",
+                  "959908db-fd40",
+                  "97e6166a-2a4c"
+                ],
+                "retryCount": 1
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "items": [
+                    {
+                      "id": "05d00d7d-d630",
+                      "available": "3208.20",
+                      "current": "3448.72",
+                      "updatedAt": "2022-05-02T06:51:19.375Z",
+                      "currentWithPending": "3448.72",
+                      "incomplete": false
+                    },
+                    {
+                      "id": "cb5d67ea-a5c3",
+                      "available": "1750.80",
+                      "current": "1956.19",
+                      "updatedAt": "2022-05-02T06:51:19.375Z",
+                      "currentWithPending": "1956.19",
+                      "incomplete": false
+                    },
+                    {
+                      "id": "b5a4f178-2baf",
+                      "incomplete": true
+                    },
+                    {
+                      "id": "959908db-fd40",
+                      "incomplete": true
+                    },
+                    {
+                      "id": "97e6166a-2a4c",
+                      "incomplete": true
+                    }
+                  ],
+                  "incompleteAccounts": [
+                    "b5a4f178-2baf",
+                    "959908db-fd40",
+                    "97e6166a-2a4c"
+                  ],
+                  "retryCount": 1
                 }
               }
             }
@@ -6858,6 +6947,7 @@
           ],
           "examples": [
             {
+              "name": "listTransactionsExample",
               "description": "",
               "path": "/accounts/accountId/transactions",
               "pathParameters": {
@@ -6949,6 +7039,26 @@
                       }
                     }
                   ]
+                }
+              }
+            },
+            {
+              "name": "listTransactionsExample",
+              "description": "",
+              "path": "/accounts/accountId/transactions",
+              "pathParameters": {
+                "accountId": "accountId"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 202,
+              "responseBody": {
+                "retryCount": 1
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "retryCount": 1
                 }
               }
             }

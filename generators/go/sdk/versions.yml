@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.5.3
+  changelogEntry:
+    - summary: |
+        Fix a regression where the `useReaderForBytesRequest` configuration option was not being respected after `1.5.0`.
+      type: fix
+  createdAt: '2025-07-25'
+  irVersion: 58
+
 - version: 1.5.2
   changelogEntry:
     - summary: |

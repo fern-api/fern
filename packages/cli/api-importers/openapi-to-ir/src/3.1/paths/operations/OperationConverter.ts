@@ -482,6 +482,7 @@ export class OperationConverter extends AbstractOperationConverter {
                 return [
                     this.getExampleName({ example, exampleIndex }),
                     {
+                        displayName: undefined,
                         request:
                             example.request != null
                                 ? {

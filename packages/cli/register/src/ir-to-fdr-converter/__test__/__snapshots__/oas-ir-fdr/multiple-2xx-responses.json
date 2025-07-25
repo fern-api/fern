@@ -107,6 +107,7 @@
         "errorsV2": [],
         "examples": [
           {
+            "name": "getStatusExample",
             "description": "",
             "path": "/status",
             "pathParameters": {},
@@ -120,6 +121,24 @@
               "type": "json",
               "value": {
                 "message": "All systems operational"
+              }
+            }
+          },
+          {
+            "name": "getStatusExample",
+            "description": "",
+            "path": "/status",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "responseStatusCode": 201,
+            "responseBody": {
+              "message": "New status created"
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "message": "New status created"
               }
             }
           }

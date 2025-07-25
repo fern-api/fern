@@ -1,0 +1,42 @@
+# Generators are registered within seed.yml, once their tests are passing
+name: Publish Rust Model Generator
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "generators/rust/model/versions.yml"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "The version of the generator to publish."
+        required: true
+        type: string
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo at current ref
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 2
+      - name: automated publish
+        if: ${{ github.event_name == 'push' }}
+        uses: ./.github/actions/publish-generator
+        with:
+          generator-name: "rust-model"
+          version-file: "generators/rust/model/versions.yml"
+          fern-token: ${{ secrets.FERN_TOKEN }}
+          docker-pwd: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+      - name: manual publish
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        uses: ./.github/actions/publish-generator
+        with:
+          generator-name: "rust-model"
+          version: ${{ inputs.version }}
+          manual-trigger: "true"
+          fern-token: ${{ secrets.FERN_TOKEN }}
+          docker-pwd: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}

@@ -311,6 +311,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
 
                 // Create the example with request and response
                 examples[exampleName] = {
+                    displayName: undefined,
                     request: {
                         docs: undefined,
                         endpoint: {

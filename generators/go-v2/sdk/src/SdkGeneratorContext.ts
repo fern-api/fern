@@ -5,7 +5,6 @@ import { go } from "@fern-api/go-ast";
 import { AbstractGoGeneratorContext, FileLocation, ModuleConfig } from "@fern-api/go-base";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { GithubOutputMode, OutputMode } from "@fern-fern/generator-exec-sdk/api";
 import {
     EnvironmentId,
     EnvironmentUrl,
