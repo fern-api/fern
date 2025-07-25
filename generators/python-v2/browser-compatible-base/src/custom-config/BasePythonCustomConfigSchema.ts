@@ -24,6 +24,7 @@ export const BasePythonCustomConfigSchema = z.object({
     pyproject_python_version: z.string().optional(),
     pyproject_toml: z.string().optional(),
     should_generate_websocket_clients: z.boolean().optional(),
+    should_generate_wire_tests: z.boolean().optional(),
     skip_formatting: z.boolean().optional(),
     timeout_in_seconds: z.union([z.literal("infinity"), z.number()]).optional(),
 

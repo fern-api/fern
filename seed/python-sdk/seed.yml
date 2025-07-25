@@ -40,6 +40,10 @@ test:
 language: python
 generatorType: SDK
 defaultOutputMode: github
+
+defaultCustomConfig:
+  should_generate_wire_tests: true
+
 customFixtureConfig:
   customConfig:
     use_typeddict_requests: true

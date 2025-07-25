@@ -27,7 +27,9 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
         if (parsed != null) {
             return parsed;
         }
-        return {};
+        return {
+            should_generate_wire_tests: false
+        };
     }
 
     protected publishPackage(context: SdkGeneratorContext): Promise<void> {
