@@ -118,7 +118,8 @@ export class ObjectGenerator {
                     this.additionalPropertiesInfo.propertyName,
                     swift.Expression.reference(this.additionalPropertiesInfo.propertyName)
                 )
-            ])
+            ]),
+            multiline: true
         });
     }
 
