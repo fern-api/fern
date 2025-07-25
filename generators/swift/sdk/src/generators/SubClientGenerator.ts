@@ -249,12 +249,13 @@ export class SubClientGenerator {
                                             methodName: getQueryParamCaseName(swiftType),
                                             arguments_: [
                                                 swift.functionArgument({
-                                                    value: swiftType.isCustom
-                                                        ? swift.Expression.memberAccess({
-                                                              target: swift.Expression.reference("$0"),
-                                                              memberName: "rawValue"
-                                                          })
-                                                        : swift.Expression.reference("$0")
+                                                    value:
+                                                        swiftType.unwrappedType === "custom"
+                                                            ? swift.Expression.memberAccess({
+                                                                  target: swift.Expression.reference("$0"),
+                                                                  memberName: "rawValue"
+                                                              })
+                                                            : swift.Expression.reference("$0")
                                                 })
                                             ]
                                         })
@@ -267,16 +268,17 @@ export class SubClientGenerator {
                                         methodName: getQueryParamCaseName(swiftType),
                                         arguments_: [
                                             swift.functionArgument({
-                                                value: swiftType.isCustom
-                                                    ? swift.Expression.memberAccess({
-                                                          target: swift.Expression.reference(
+                                                value:
+                                                    swiftType.unwrappedType === "custom"
+                                                        ? swift.Expression.memberAccess({
+                                                              target: swift.Expression.reference(
+                                                                  queryParam.name.name.camelCase.unsafeName
+                                                              ),
+                                                              memberName: "rawValue"
+                                                          })
+                                                        : swift.Expression.reference(
                                                               queryParam.name.name.camelCase.unsafeName
-                                                          ),
-                                                          memberName: "rawValue"
-                                                      })
-                                                    : swift.Expression.reference(
-                                                          queryParam.name.name.camelCase.unsafeName
-                                                      )
+                                                          )
                                             })
                                         ]
                                     })

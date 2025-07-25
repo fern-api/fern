@@ -111,12 +111,17 @@ export class Type extends AstNode {
         return this.internalType.type;
     }
 
-    public get isOptional(): boolean {
-        return this.internalType.type === "optional";
+    /**
+     * This is the type of the value, without any optional wrapping.
+     */
+    public get unwrappedType(): Exclude<InternalType["type"], "optional"> {
+        return this.internalType.type === "optional"
+            ? this.internalType.valueType.unwrappedType
+            : this.internalType.type;
     }
 
-    public get isCustom(): boolean {
-        return this.internalType.type === "custom";
+    public get isOptional(): boolean {
+        return this.internalType.type === "optional";
     }
 
     public write(writer: Writer): void {
@@ -250,7 +255,7 @@ export class Type extends AstNode {
     }
 
     public static required(valueType: Type): Type {
-        return valueType.internalType.type === "optional" ? valueType.internalType.valueType : valueType;
+        return valueType.internalType.type === "optional" ? Type.required(valueType.internalType.valueType) : valueType;
     }
 
     public static custom(name: string): Type {
