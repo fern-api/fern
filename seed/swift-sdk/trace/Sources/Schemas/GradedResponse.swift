@@ -1,11 +1,11 @@
 public struct GradedResponse: Codable, Hashable {
     public let submissionId: SubmissionId
-    public let testCases: Any
+    public let testCases: [String: TestCaseResultWithStdout]
     public let additionalProperties: [String: JSONValue]
 
     public init(
         submissionId: SubmissionId,
-        testCases: Any,
+        testCases: [String: TestCaseResultWithStdout],
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.submissionId = submissionId
@@ -16,7 +16,7 @@ public struct GradedResponse: Codable, Hashable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.submissionId = try container.decode(SubmissionId.self, forKey: .submissionId)
-        self.testCases = try container.decode(Any.self, forKey: .testCases)
+        self.testCases = try container.decode([String: TestCaseResultWithStdout].self, forKey: .testCases)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

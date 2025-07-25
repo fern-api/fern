@@ -1,13 +1,13 @@
 public struct User: Codable, Hashable {
     public let userName: String
     public let metadataTags: [String]
-    public let extraProperties: Any
+    public let extraProperties: [String: String]
     public let additionalProperties: [String: JSONValue]
 
     public init(
         userName: String,
         metadataTags: [String],
-        extraProperties: Any,
+        extraProperties: [String: String],
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.userName = userName
@@ -20,7 +20,7 @@ public struct User: Codable, Hashable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.userName = try container.decode(String.self, forKey: .userName)
         self.metadataTags = try container.decode([String].self, forKey: .metadataTags)
-        self.extraProperties = try container.decode(Any.self, forKey: .extraProperties)
+        self.extraProperties = try container.decode([String: String].self, forKey: .extraProperties)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

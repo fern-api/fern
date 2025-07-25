@@ -1,9 +1,9 @@
 public struct GetDefaultStarterFilesResponse: Codable, Hashable {
-    public let files: Any
+    public let files: [Language: ProblemFiles]
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        files: Any,
+        files: [Language: ProblemFiles],
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.files = files
@@ -12,7 +12,7 @@ public struct GetDefaultStarterFilesResponse: Codable, Hashable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.files = try container.decode(Any.self, forKey: .files)
+        self.files = try container.decode([Language: ProblemFiles].self, forKey: .files)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

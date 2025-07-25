@@ -1,11 +1,11 @@
 public struct SinglyLinkedListValue: Codable, Hashable {
     public let head: NodeId?
-    public let nodes: Any
+    public let nodes: [NodeId: SinglyLinkedListNodeValue]
     public let additionalProperties: [String: JSONValue]
 
     public init(
         head: NodeId? = nil,
-        nodes: Any,
+        nodes: [NodeId: SinglyLinkedListNodeValue],
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.head = head
@@ -16,7 +16,7 @@ public struct SinglyLinkedListValue: Codable, Hashable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.head = try container.decodeIfPresent(NodeId.self, forKey: .head)
-        self.nodes = try container.decode(Any.self, forKey: .nodes)
+        self.nodes = try container.decode([NodeId: SinglyLinkedListNodeValue].self, forKey: .nodes)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

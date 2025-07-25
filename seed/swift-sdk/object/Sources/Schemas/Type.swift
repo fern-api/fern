@@ -10,11 +10,11 @@ public struct Type: Codable, Hashable {
     public let nine: String
     public let ten: [Int]
     public let eleven: Any
-    public let twelve: Any
+    public let twelve: [String: Bool]
     public let thirteen: Int64?
     public let fourteen: Any
     public let fifteen: [[Int]]
-    public let sixteen: [Any]
+    public let sixteen: [[String: Int]]
     public let seventeen: [UUID?]
     public let eighteen: Any
     public let nineteen: Name
@@ -38,11 +38,11 @@ public struct Type: Codable, Hashable {
         nine: String,
         ten: [Int],
         eleven: Any,
-        twelve: Any,
+        twelve: [String: Bool],
         thirteen: Int64? = nil,
         fourteen: Any,
         fifteen: [[Int]],
-        sixteen: [Any],
+        sixteen: [[String: Int]],
         seventeen: [UUID?],
         eighteen: Any,
         nineteen: Name,
@@ -95,11 +95,11 @@ public struct Type: Codable, Hashable {
         self.nine = try container.decode(String.self, forKey: .nine)
         self.ten = try container.decode([Int].self, forKey: .ten)
         self.eleven = try container.decode(Any.self, forKey: .eleven)
-        self.twelve = try container.decode(Any.self, forKey: .twelve)
+        self.twelve = try container.decode([String: Bool].self, forKey: .twelve)
         self.thirteen = try container.decodeIfPresent(Int64.self, forKey: .thirteen)
         self.fourteen = try container.decode(Any.self, forKey: .fourteen)
         self.fifteen = try container.decode([[Int]].self, forKey: .fifteen)
-        self.sixteen = try container.decode([Any].self, forKey: .sixteen)
+        self.sixteen = try container.decode([[String: Int]].self, forKey: .sixteen)
         self.seventeen = try container.decode([UUID?].self, forKey: .seventeen)
         self.eighteen = try container.decode(Any.self, forKey: .eighteen)
         self.nineteen = try container.decode(Name.self, forKey: .nineteen)

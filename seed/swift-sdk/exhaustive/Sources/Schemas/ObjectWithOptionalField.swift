@@ -10,7 +10,7 @@ public struct ObjectWithOptionalField: Codable, Hashable {
     public let base64: String?
     public let list: [String]?
     public let set: Any?
-    public let map: Any?
+    public let map: [Int: String]?
     public let bigint: String?
     public let additionalProperties: [String: JSONValue]
 
@@ -26,7 +26,7 @@ public struct ObjectWithOptionalField: Codable, Hashable {
         base64: String? = nil,
         list: [String]? = nil,
         set: Any? = nil,
-        map: Any? = nil,
+        map: [Int: String]? = nil,
         bigint: String? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
@@ -59,7 +59,7 @@ public struct ObjectWithOptionalField: Codable, Hashable {
         self.base64 = try container.decodeIfPresent(String.self, forKey: .base64)
         self.list = try container.decodeIfPresent([String].self, forKey: .list)
         self.set = try container.decodeIfPresent(Any.self, forKey: .set)
-        self.map = try container.decodeIfPresent(Any.self, forKey: .map)
+        self.map = try container.decodeIfPresent([Int: String].self, forKey: .map)
         self.bigint = try container.decodeIfPresent(String.self, forKey: .bigint)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }

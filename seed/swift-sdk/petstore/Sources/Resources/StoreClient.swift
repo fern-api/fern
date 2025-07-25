@@ -13,12 +13,12 @@ public final class StoreClient: Sendable {
         )
     }
 
-    public func getInventory(requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func getInventory(requestOptions: RequestOptions? = nil) async throws -> [String: Int] {
         return try await httpClient.performRequest(
             method: .get,
             path: "/store/inventory",
             requestOptions: requestOptions,
-            responseType: Any.self
+            responseType: [String: Int].self
         )
     }
 

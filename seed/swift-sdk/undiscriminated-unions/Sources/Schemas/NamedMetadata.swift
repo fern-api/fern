@@ -1,11 +1,11 @@
 public struct NamedMetadata: Codable, Hashable {
     public let name: String
-    public let value: Any
+    public let value: [String: Any]
     public let additionalProperties: [String: JSONValue]
 
     public init(
         name: String,
-        value: Any,
+        value: [String: Any],
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.name = name
@@ -16,7 +16,7 @@ public struct NamedMetadata: Codable, Hashable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.name = try container.decode(String.self, forKey: .name)
-        self.value = try container.decode(Any.self, forKey: .value)
+        self.value = try container.decode([String: Any].self, forKey: .value)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

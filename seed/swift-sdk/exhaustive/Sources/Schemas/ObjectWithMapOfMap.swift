@@ -1,9 +1,9 @@
 public struct ObjectWithMapOfMap: Codable, Hashable {
-    public let map: Any
+    public let map: [String: [String: String]]
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        map: Any,
+        map: [String: [String: String]],
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.map = map
@@ -12,7 +12,7 @@ public struct ObjectWithMapOfMap: Codable, Hashable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.map = try container.decode(Any.self, forKey: .map)
+        self.map = try container.decode([String: [String: String]].self, forKey: .map)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

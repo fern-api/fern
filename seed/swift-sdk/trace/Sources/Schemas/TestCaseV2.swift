@@ -1,14 +1,14 @@
 public struct TestCaseV2: Codable, Hashable {
     public let metadata: TestCaseMetadata
     public let implementation: TestCaseImplementationReference
-    public let arguments: Any
+    public let arguments: [ParameterId: VariableValue]
     public let expects: TestCaseExpects?
     public let additionalProperties: [String: JSONValue]
 
     public init(
         metadata: TestCaseMetadata,
         implementation: TestCaseImplementationReference,
-        arguments: Any,
+        arguments: [ParameterId: VariableValue],
         expects: TestCaseExpects? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
@@ -23,7 +23,7 @@ public struct TestCaseV2: Codable, Hashable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.metadata = try container.decode(TestCaseMetadata.self, forKey: .metadata)
         self.implementation = try container.decode(TestCaseImplementationReference.self, forKey: .implementation)
-        self.arguments = try container.decode(Any.self, forKey: .arguments)
+        self.arguments = try container.decode([ParameterId: VariableValue].self, forKey: .arguments)
         self.expects = try container.decodeIfPresent(TestCaseExpects.self, forKey: .expects)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }

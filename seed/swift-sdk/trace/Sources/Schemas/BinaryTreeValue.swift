@@ -1,11 +1,11 @@
 public struct BinaryTreeValue: Codable, Hashable {
     public let root: NodeId?
-    public let nodes: Any
+    public let nodes: [NodeId: BinaryTreeNodeValue]
     public let additionalProperties: [String: JSONValue]
 
     public init(
         root: NodeId? = nil,
-        nodes: Any,
+        nodes: [NodeId: BinaryTreeNodeValue],
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.root = root
@@ -16,7 +16,7 @@ public struct BinaryTreeValue: Codable, Hashable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.root = try container.decodeIfPresent(NodeId.self, forKey: .root)
-        self.nodes = try container.decode(Any.self, forKey: .nodes)
+        self.nodes = try container.decode([NodeId: BinaryTreeNodeValue].self, forKey: .nodes)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

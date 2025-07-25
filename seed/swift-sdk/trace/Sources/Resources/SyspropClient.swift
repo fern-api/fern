@@ -13,12 +13,12 @@ public final class SyspropClient: Sendable {
         )
     }
 
-    public func getNumWarmInstances(requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func getNumWarmInstances(requestOptions: RequestOptions? = nil) async throws -> [Language: Int] {
         return try await httpClient.performRequest(
             method: .get,
             path: "/sysprop/num-warm-instances",
             requestOptions: requestOptions,
-            responseType: Any.self
+            responseType: [Language: Int].self
         )
     }
 }

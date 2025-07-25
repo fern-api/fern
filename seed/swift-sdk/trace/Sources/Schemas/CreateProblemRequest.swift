@@ -1,7 +1,7 @@
 public struct CreateProblemRequest: Codable, Hashable {
     public let problemName: String
     public let problemDescription: ProblemDescription
-    public let files: Any
+    public let files: [Language: ProblemFiles]
     public let inputParams: [VariableTypeAndName]
     public let outputType: VariableType
     public let testcases: [TestCaseWithExpectedResult]
@@ -11,7 +11,7 @@ public struct CreateProblemRequest: Codable, Hashable {
     public init(
         problemName: String,
         problemDescription: ProblemDescription,
-        files: Any,
+        files: [Language: ProblemFiles],
         inputParams: [VariableTypeAndName],
         outputType: VariableType,
         testcases: [TestCaseWithExpectedResult],
@@ -32,7 +32,7 @@ public struct CreateProblemRequest: Codable, Hashable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.problemName = try container.decode(String.self, forKey: .problemName)
         self.problemDescription = try container.decode(ProblemDescription.self, forKey: .problemDescription)
-        self.files = try container.decode(Any.self, forKey: .files)
+        self.files = try container.decode([Language: ProblemFiles].self, forKey: .files)
         self.inputParams = try container.decode([VariableTypeAndName].self, forKey: .inputParams)
         self.outputType = try container.decode(VariableType.self, forKey: .outputType)
         self.testcases = try container.decode([TestCaseWithExpectedResult].self, forKey: .testcases)

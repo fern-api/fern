@@ -45,23 +45,23 @@ public final class ContainerClient: Sendable {
         )
     }
 
-    public func getAndReturnMapPrimToPrim(request: Any, requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func getAndReturnMapPrimToPrim(request: [String: String], requestOptions: RequestOptions? = nil) async throws -> [String: String] {
         return try await httpClient.performRequest(
             method: .post,
             path: "/container/map-prim-to-prim",
             body: request,
             requestOptions: requestOptions,
-            responseType: Any.self
+            responseType: [String: String].self
         )
     }
 
-    public func getAndReturnMapOfPrimToObject(request: Any, requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func getAndReturnMapOfPrimToObject(request: [String: ObjectWithRequiredField], requestOptions: RequestOptions? = nil) async throws -> [String: ObjectWithRequiredField] {
         return try await httpClient.performRequest(
             method: .post,
             path: "/container/map-prim-to-object",
             body: request,
             requestOptions: requestOptions,
-            responseType: Any.self
+            responseType: [String: ObjectWithRequiredField].self
         )
     }
 

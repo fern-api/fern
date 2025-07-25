@@ -4,7 +4,7 @@ public struct Metadata: Codable, Hashable {
     public let avatar: Any
     public let activated: Any?
     public let status: Status
-    public let values: Any?
+    public let values: [String: Any?]?
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -13,7 +13,7 @@ public struct Metadata: Codable, Hashable {
         avatar: Any,
         activated: Any? = nil,
         status: Status,
-        values: Any? = nil,
+        values: [String: Any?]? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.createdAt = createdAt
@@ -32,7 +32,7 @@ public struct Metadata: Codable, Hashable {
         self.avatar = try container.decode(Any.self, forKey: .avatar)
         self.activated = try container.decodeIfPresent(Any.self, forKey: .activated)
         self.status = try container.decode(Status.self, forKey: .status)
-        self.values = try container.decodeIfPresent(Any.self, forKey: .values)
+        self.values = try container.decodeIfPresent([String: Any?].self, forKey: .values)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

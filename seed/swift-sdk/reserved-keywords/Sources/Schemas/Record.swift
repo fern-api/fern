@@ -1,10 +1,10 @@
 public struct Record: Codable, Hashable {
-    public let foo: Any
+    public let foo: [String: String]
     public let 3D: Int
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        foo: Any,
+        foo: [String: String],
         3D: Int,
         additionalProperties: [String: JSONValue] = .init()
     ) {
@@ -15,7 +15,7 @@ public struct Record: Codable, Hashable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.foo = try container.decode(Any.self, forKey: .foo)
+        self.foo = try container.decode([String: String].self, forKey: .foo)
         self.3D = try container.decode(Int.self, forKey: .3D)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }

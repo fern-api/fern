@@ -1,9 +1,9 @@
 public struct WorkspaceStarterFilesResponseV2: Codable, Hashable {
-    public let filesByLanguage: Any
+    public let filesByLanguage: [Language: Files]
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        filesByLanguage: Any,
+        filesByLanguage: [Language: Files],
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.filesByLanguage = filesByLanguage
@@ -12,7 +12,7 @@ public struct WorkspaceStarterFilesResponseV2: Codable, Hashable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.filesByLanguage = try container.decode(Any.self, forKey: .filesByLanguage)
+        self.filesByLanguage = try container.decode([Language: Files].self, forKey: .filesByLanguage)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

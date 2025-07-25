@@ -1,9 +1,9 @@
 public struct GetFunctionSignatureResponse: Codable, Hashable {
-    public let functionByLanguage: Any
+    public let functionByLanguage: [Language: String]
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        functionByLanguage: Any,
+        functionByLanguage: [Language: String],
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.functionByLanguage = functionByLanguage
@@ -12,7 +12,7 @@ public struct GetFunctionSignatureResponse: Codable, Hashable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.functionByLanguage = try container.decode(Any.self, forKey: .functionByLanguage)
+        self.functionByLanguage = try container.decode([Language: String].self, forKey: .functionByLanguage)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

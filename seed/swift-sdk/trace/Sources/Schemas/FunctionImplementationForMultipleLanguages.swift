@@ -1,9 +1,9 @@
 public struct FunctionImplementationForMultipleLanguages: Codable, Hashable {
-    public let codeByLanguage: Any
+    public let codeByLanguage: [Language: FunctionImplementation]
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        codeByLanguage: Any,
+        codeByLanguage: [Language: FunctionImplementation],
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.codeByLanguage = codeByLanguage
@@ -12,7 +12,7 @@ public struct FunctionImplementationForMultipleLanguages: Codable, Hashable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.codeByLanguage = try container.decode(Any.self, forKey: .codeByLanguage)
+        self.codeByLanguage = try container.decode([Language: FunctionImplementation].self, forKey: .codeByLanguage)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

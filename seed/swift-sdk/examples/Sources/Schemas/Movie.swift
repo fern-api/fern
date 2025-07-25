@@ -7,7 +7,7 @@ public struct Movie: Codable, Hashable {
     public let type: Any
     public let tag: Tag
     public let book: String?
-    public let metadata: Any
+    public let metadata: [String: Any]
     public let revenue: Int64
     public let additionalProperties: [String: JSONValue]
 
@@ -20,7 +20,7 @@ public struct Movie: Codable, Hashable {
         type: Any,
         tag: Tag,
         book: String? = nil,
-        metadata: Any,
+        metadata: [String: Any],
         revenue: Int64,
         additionalProperties: [String: JSONValue] = .init()
     ) {
@@ -47,7 +47,7 @@ public struct Movie: Codable, Hashable {
         self.type = try container.decode(Any.self, forKey: .type)
         self.tag = try container.decode(Tag.self, forKey: .tag)
         self.book = try container.decodeIfPresent(String.self, forKey: .book)
-        self.metadata = try container.decode(Any.self, forKey: .metadata)
+        self.metadata = try container.decode([String: Any].self, forKey: .metadata)
         self.revenue = try container.decode(Int64.self, forKey: .revenue)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
