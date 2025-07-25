@@ -10,6 +10,7 @@ export declare namespace Expression {
         | { type: "self" }
         | { type: "field-access"; target: Expression; field: string }
         | { type: "method-call"; target: Expression; method: string; args: Expression[]; isAsync?: boolean; multiline?: boolean }
+        | { type: "method-chain"; calls: MethodCall[] }
         | { type: "function-call"; function: string; args: Expression[]; multiline?: boolean }
         | { type: "await"; expression: Expression }
         | { type: "try"; expression: Expression }
@@ -18,9 +19,12 @@ export declare namespace Expression {
         | { type: "some"; value: Expression }
         | { type: "none" }
         | { type: "string-literal"; value: string }
+        | { type: "number-literal"; value: number }
+        | { type: "boolean-literal"; value: boolean }
         | { type: "format-string"; template: string; args: Expression[] }
         | { type: "vec-literal"; elements: Expression[] }
         | { type: "struct-literal"; name: string; fields: Array<{ name: string; value: Expression }> }
+        | { type: "struct-construction"; typeName: string; fields: FieldAssignment[] }
         | { type: "reference-of"; inner: Expression; mutable?: boolean }
         | { type: "dereference"; inner: Expression }
         | { type: "clone"; expression: Expression }
@@ -32,6 +36,17 @@ export declare namespace Expression {
         | { type: "macro-call"; name: string; args: Expression[] }
         | { type: "closure"; parameters: Array<{ name: string; type?: Type }>; body: Expression }
         | { type: "raw"; value: string };
+
+    interface MethodCall {
+        method: string;
+        args: Expression[];
+        isAsync?: boolean;
+    }
+
+    interface FieldAssignment {
+        name: string;
+        value: Expression;
+    }
 }
 
 export class Expression extends AstNode {
@@ -85,6 +100,24 @@ export class Expression extends AstNode {
                 if (methodArgs.isAsync) {
                     writer.write(".await");
                 }
+                break;
+            }
+
+            case "method-chain": {
+                const chainArgs = this.args as Extract<Expression.Args, { type: "method-chain" }>;
+                chainArgs.calls.forEach((call, index) => {
+                    if (index > 0) writer.write(".");
+                    writer.write(call.method);
+                    writer.write("(");
+                    call.args.forEach((arg, argIndex) => {
+                        if (argIndex > 0) writer.write(", ");
+                        arg.write(writer);
+                    });
+                    writer.write(")");
+                    if (call.isAsync) {
+                        writer.write(".await");
+                    }
+                });
                 break;
             }
             
@@ -151,6 +184,14 @@ export class Expression extends AstNode {
             case "string-literal":
                 writer.write(JSON.stringify(this.args.value));
                 break;
+
+            case "number-literal":
+                writer.write(this.args.value.toString());
+                break;
+
+            case "boolean-literal":
+                writer.write(this.args.value.toString());
+                break;
             
             case "format-string":
                 writer.write("format!(");
@@ -182,6 +223,28 @@ export class Expression extends AstNode {
                 });
                 writer.write(" }");
                 break;
+
+            case "struct-construction": {
+                const constructArgs = this.args as Extract<Expression.Args, { type: "struct-construction" }>;
+                writer.write(constructArgs.typeName);
+                writer.write(" {");
+                if (constructArgs.fields.length > 0) {
+                    writer.newLine();
+                    writer.indent();
+                    constructArgs.fields.forEach((field, index) => {
+                        writer.write(field.name);
+                        writer.write(": ");
+                        field.value.write(writer);
+                        if (index < constructArgs.fields.length - 1) {
+                            writer.write(",");
+                        }
+                        writer.newLine();
+                    });
+                    writer.dedent();
+                }
+                writer.write("}");
+                break;
+            }
             
             case "reference-of": {
                 const refArgs = this.args as Extract<Expression.Args, { type: "reference-of" }>;
@@ -323,6 +386,10 @@ export class Expression extends AstNode {
         return new Expression({ type: "reference", name });
     }
 
+    public static variable(name: string): Expression {
+        return Expression.reference(name);
+    }
+
     public static self(): Expression {
         return new Expression({ type: "self" });
     }
@@ -346,6 +413,20 @@ export class Expression extends AstNode {
             isAsync: args.isAsync,
             multiline: args.multiline
         });
+    }
+
+    public static methodChain(base: Expression, calls: Expression.MethodCall[]): Expression {
+        // Start with the base expression and chain method calls
+        let result = base;
+        for (const call of calls) {
+            result = Expression.methodCall({
+                target: result,
+                method: call.method,
+                args: call.args,
+                isAsync: call.isAsync
+            });
+        }
+        return result;
     }
 
     public static functionCall(func: string, args: Expression[], multiline = false): Expression {
@@ -380,6 +461,18 @@ export class Expression extends AstNode {
         return new Expression({ type: "string-literal", value });
     }
 
+    public static literal(value: string): Expression {
+        return Expression.stringLiteral(value);
+    }
+
+    public static numberLiteral(value: number): Expression {
+        return new Expression({ type: "number-literal", value });
+    }
+
+    public static booleanLiteral(value: boolean): Expression {
+        return new Expression({ type: "boolean-literal", value });
+    }
+
     public static formatString(template: string, args: Expression[]): Expression {
         return new Expression({ type: "format-string", template, args });
     }
@@ -390,6 +483,10 @@ export class Expression extends AstNode {
 
     public static structLiteral(name: string, fields: Array<{ name: string; value: Expression }>): Expression {
         return new Expression({ type: "struct-literal", name, fields });
+    }
+
+    public static structConstruction(typeName: string, fields: Expression.FieldAssignment[]): Expression {
+        return new Expression({ type: "struct-construction", typeName, fields });
     }
 
     public static referenceOf(inner: Expression, mutable?: boolean): Expression {
@@ -434,5 +531,38 @@ export class Expression extends AstNode {
 
     public static raw(value: string): Expression {
         return new Expression({ type: "raw", value });
+    }
+
+    // Convenience methods for common patterns
+    public static unwrapOr(expression: Expression, defaultValue: Expression): Expression {
+        return Expression.methodCall({
+            target: expression,
+            method: "unwrap_or",
+            args: [defaultValue]
+        });
+    }
+
+    public static toString(expression: Expression): Expression {
+        return Expression.methodCall({
+            target: expression,
+            method: "to_string",
+            args: []
+        });
+    }
+
+    public static andThen(expression: Expression, closure: Expression): Expression {
+        return Expression.methodCall({
+            target: expression,
+            method: "and_then",
+            args: [closure]
+        });
+    }
+
+    public static map(expression: Expression, closure: Expression): Expression {
+        return Expression.methodCall({
+            target: expression,
+            method: "map",
+            args: [closure]
+        });
     }
 } 

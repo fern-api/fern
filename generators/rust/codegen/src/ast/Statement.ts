@@ -2,6 +2,8 @@ import { AstNode } from "./AstNode";
 import { Writer } from "./Writer";
 import { Expression } from "./Expression";
 import { Type } from "./Type";
+import { Pattern } from "./Pattern";
+import { MatchArm } from "./MatchArm";
 
 export declare namespace Statement {
     type Args =
@@ -12,6 +14,7 @@ export declare namespace Statement {
         | { type: "if"; condition: Expression; then: Statement[]; else_?: Statement[] }
         | { type: "if-let"; pattern: string; value: Expression; then: Statement[]; else_?: Statement[] }
         | { type: "match"; expression: Expression; arms: MatchArm[] }
+        | { type: "match-enhanced"; expression: Expression; arms: import("./MatchArm").MatchArm[] }
         | { type: "while"; condition: Expression; body: Statement[] }
         | { type: "while-let"; pattern: string; value: Expression; body: Statement[] }
         | { type: "for"; pattern: string; iterable: Expression; body: Statement[] }
@@ -157,6 +160,22 @@ export class Statement extends AstNode {
                 break;
             }
 
+            case "match-enhanced": {
+                const matchArgs = this.args as Extract<Statement.Args, { type: "match-enhanced" }>;
+                writer.write("match ");
+                matchArgs.expression.write(writer);
+                writer.write(" {");
+                writer.newLine();
+                writer.indent();
+                matchArgs.arms.forEach(arm => {
+                    arm.write(writer);
+                    writer.newLine();
+                });
+                writer.dedent();
+                writer.write("}");
+                break;
+            }
+
             case "while": {
                 const whileArgs = this.args as Extract<Statement.Args, { type: "while" }>;
                 writer.write("while ");
@@ -292,6 +311,10 @@ export class Statement extends AstNode {
 
     public static match(expression: Expression, arms: Statement.MatchArm[]): Statement {
         return new Statement({ type: "match", expression, arms });
+    }
+
+    public static matchEnhanced(expression: Expression, arms: import("./MatchArm").MatchArm[]): Statement {
+        return new Statement({ type: "match-enhanced", expression, arms });
     }
 
     public static while(condition: Expression, body: Statement[]): Statement {

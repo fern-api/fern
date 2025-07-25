@@ -18,7 +18,9 @@ import {
     PUBLIC,
     Expression,
     Statement,
-    CodeBlock
+    CodeBlock,
+    Pattern,
+    MatchArm
 } from "./ast";
 
 // Factory functions for Type creation
@@ -116,6 +118,8 @@ export const rust = {
     Expression,
     Statement,
     CodeBlock,
+    Pattern,
+    MatchArm,
     attribute,
     field,
     struct,
