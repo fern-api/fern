@@ -1,4 +1,4 @@
-public struct Type: Codable, Hashable {
+public struct Type: Codable, Hashable, Sendable {
     public let one: Int
     public let two: Double
     public let three: String
@@ -10,11 +10,11 @@ public struct Type: Codable, Hashable {
     public let nine: String
     public let ten: [Int]
     public let eleven: Any
-    public let twelve: Any
+    public let twelve: [String: Bool]
     public let thirteen: Int64?
     public let fourteen: Any
     public let fifteen: [[Int]]
-    public let sixteen: [Any]
+    public let sixteen: [[String: Int]]
     public let seventeen: [UUID?]
     public let eighteen: Any
     public let nineteen: Name
@@ -26,7 +26,34 @@ public struct Type: Codable, Hashable {
     public let twentyfive: Date?
     public let additionalProperties: [String: JSONValue]
 
-    public init(one: Int, two: Double, three: String, four: Bool, five: Int64, six: Date, seven: Date, eight: UUID, nine: String, ten: [Int], eleven: Any, twelve: Any, thirteen: Int64? = nil, fourteen: Any, fifteen: [[Int]], sixteen: [Any], seventeen: [UUID?], eighteen: Any, nineteen: Name, twenty: UInt, twentyone: UInt64, twentytwo: Float, twentythree: String, twentyfour: Date? = nil, twentyfive: Date? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        one: Int,
+        two: Double,
+        three: String,
+        four: Bool,
+        five: Int64,
+        six: Date,
+        seven: Date,
+        eight: UUID,
+        nine: String,
+        ten: [Int],
+        eleven: Any,
+        twelve: [String: Bool],
+        thirteen: Int64? = nil,
+        fourteen: Any,
+        fifteen: [[Int]],
+        sixteen: [[String: Int]],
+        seventeen: [UUID?],
+        eighteen: Any,
+        nineteen: Name,
+        twenty: UInt,
+        twentyone: UInt64,
+        twentytwo: Float,
+        twentythree: String,
+        twentyfour: Date? = nil,
+        twentyfive: Date? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.one = one
         self.two = two
         self.three = three
@@ -68,11 +95,11 @@ public struct Type: Codable, Hashable {
         self.nine = try container.decode(String.self, forKey: .nine)
         self.ten = try container.decode([Int].self, forKey: .ten)
         self.eleven = try container.decode(Any.self, forKey: .eleven)
-        self.twelve = try container.decode(Any.self, forKey: .twelve)
+        self.twelve = try container.decode([String: Bool].self, forKey: .twelve)
         self.thirteen = try container.decodeIfPresent(Int64.self, forKey: .thirteen)
         self.fourteen = try container.decode(Any.self, forKey: .fourteen)
         self.fifteen = try container.decode([[Int]].self, forKey: .fifteen)
-        self.sixteen = try container.decode([Any].self, forKey: .sixteen)
+        self.sixteen = try container.decode([[String: Int]].self, forKey: .sixteen)
         self.seventeen = try container.decode([UUID?].self, forKey: .seventeen)
         self.eighteen = try container.decode(Any.self, forKey: .eighteen)
         self.nineteen = try container.decode(Name.self, forKey: .nineteen)
@@ -86,7 +113,7 @@ public struct Type: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.one, forKey: .one)
         try container.encode(self.two, forKey: .two)

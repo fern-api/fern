@@ -1,4 +1,4 @@
-public enum BasicType: String, Codable, Hashable, Sendable, CaseIterable {
+public enum BasicType: String, Codable, Hashable, CaseIterable, Sendable {
     case primitive
     case literal
 }

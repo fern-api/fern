@@ -1,10 +1,15 @@
-public struct PostWithObjectBody: Codable, Hashable {
+public struct PostWithObjectBody: Codable, Hashable, Sendable {
     public let string: String
     public let integer: Int
     public let nestedObject: ObjectWithOptionalField
     public let additionalProperties: [String: JSONValue]
 
-    public init(string: String, integer: Int, nestedObject: ObjectWithOptionalField, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        string: String,
+        integer: Int,
+        nestedObject: ObjectWithOptionalField,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.string = string
         self.integer = integer
         self.nestedObject = nestedObject
@@ -20,7 +25,7 @@ public struct PostWithObjectBody: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.string, forKey: .string)
         try container.encode(self.integer, forKey: .integer)

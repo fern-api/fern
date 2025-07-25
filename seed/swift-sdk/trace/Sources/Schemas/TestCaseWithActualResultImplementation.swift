@@ -1,9 +1,13 @@
-public struct TestCaseWithActualResultImplementation: Codable, Hashable {
+public struct TestCaseWithActualResultImplementation: Codable, Hashable, Sendable {
     public let getActualResult: NonVoidFunctionDefinition
     public let assertCorrectnessCheck: AssertCorrectnessCheck
     public let additionalProperties: [String: JSONValue]
 
-    public init(getActualResult: NonVoidFunctionDefinition, assertCorrectnessCheck: AssertCorrectnessCheck, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        getActualResult: NonVoidFunctionDefinition,
+        assertCorrectnessCheck: AssertCorrectnessCheck,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.getActualResult = getActualResult
         self.assertCorrectnessCheck = assertCorrectnessCheck
         self.additionalProperties = additionalProperties
@@ -17,7 +21,7 @@ public struct TestCaseWithActualResultImplementation: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.getActualResult, forKey: .getActualResult)
         try container.encode(self.assertCorrectnessCheck, forKey: .assertCorrectnessCheck)

@@ -1,9 +1,13 @@
-public struct UnexpectedLanguageError: Codable, Hashable {
+public struct UnexpectedLanguageError: Codable, Hashable, Sendable {
     public let expectedLanguage: Language
     public let actualLanguage: Language
     public let additionalProperties: [String: JSONValue]
 
-    public init(expectedLanguage: Language, actualLanguage: Language, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        expectedLanguage: Language,
+        actualLanguage: Language,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.expectedLanguage = expectedLanguage
         self.actualLanguage = actualLanguage
         self.additionalProperties = additionalProperties
@@ -17,7 +21,7 @@ public struct UnexpectedLanguageError: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.expectedLanguage, forKey: .expectedLanguage)
         try container.encode(self.actualLanguage, forKey: .actualLanguage)

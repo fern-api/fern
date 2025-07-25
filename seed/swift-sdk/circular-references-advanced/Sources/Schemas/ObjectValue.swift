@@ -1,7 +1,9 @@
-public struct ObjectValue: Codable, Hashable {
+public struct ObjectValue: Codable, Hashable, Sendable {
     public let additionalProperties: [String: JSONValue]
 
-    public init(additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.additionalProperties = additionalProperties
     }
 

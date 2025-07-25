@@ -1,4 +1,4 @@
-public enum KeyType: String, Codable, Hashable, Sendable, CaseIterable {
+public enum KeyType: String, Codable, Hashable, CaseIterable, Sendable {
     case name
     case value
 }

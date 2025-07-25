@@ -1,8 +1,11 @@
-public struct UsernameCursor: Codable, Hashable {
+public struct UsernameCursor: Codable, Hashable, Sendable {
     public let cursor: UsernamePage
     public let additionalProperties: [String: JSONValue]
 
-    public init(cursor: UsernamePage, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        cursor: UsernamePage,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.cursor = cursor
         self.additionalProperties = additionalProperties
     }
@@ -14,7 +17,7 @@ public struct UsernameCursor: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.cursor, forKey: .cursor)
     }

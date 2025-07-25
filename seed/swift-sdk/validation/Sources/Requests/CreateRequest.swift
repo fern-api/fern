@@ -1,11 +1,17 @@
-public struct CreateRequest: Codable, Hashable {
+public struct CreateRequest: Codable, Hashable, Sendable {
     public let decimal: Double
     public let even: Int
     public let name: String
     public let shape: Shape
     public let additionalProperties: [String: JSONValue]
 
-    public init(decimal: Double, even: Int, name: String, shape: Shape, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        decimal: Double,
+        even: Int,
+        name: String,
+        shape: Shape,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.decimal = decimal
         self.even = even
         self.name = name
@@ -23,7 +29,7 @@ public struct CreateRequest: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.decimal, forKey: .decimal)
         try container.encode(self.even, forKey: .even)

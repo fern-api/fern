@@ -1,4 +1,4 @@
-public struct SubmitRequestV2: Codable, Hashable {
+public struct SubmitRequestV2: Codable, Hashable, Sendable {
     public let submissionId: SubmissionId
     public let language: Language
     public let submissionFiles: [SubmissionFileInfo]
@@ -7,7 +7,15 @@ public struct SubmitRequestV2: Codable, Hashable {
     public let userId: String?
     public let additionalProperties: [String: JSONValue]
 
-    public init(submissionId: SubmissionId, language: Language, submissionFiles: [SubmissionFileInfo], problemId: ProblemId, problemVersion: Int? = nil, userId: String? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        submissionId: SubmissionId,
+        language: Language,
+        submissionFiles: [SubmissionFileInfo],
+        problemId: ProblemId,
+        problemVersion: Int? = nil,
+        userId: String? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.submissionId = submissionId
         self.language = language
         self.submissionFiles = submissionFiles
@@ -29,7 +37,7 @@ public struct SubmitRequestV2: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.submissionId, forKey: .submissionId)
         try container.encode(self.language, forKey: .language)

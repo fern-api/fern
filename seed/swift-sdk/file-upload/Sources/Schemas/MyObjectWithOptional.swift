@@ -1,9 +1,13 @@
-public struct MyObjectWithOptional: Codable, Hashable {
+public struct MyObjectWithOptional: Codable, Hashable, Sendable {
     public let prop: String
     public let optionalProp: String?
     public let additionalProperties: [String: JSONValue]
 
-    public init(prop: String, optionalProp: String? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        prop: String,
+        optionalProp: String? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.prop = prop
         self.optionalProp = optionalProp
         self.additionalProperties = additionalProperties
@@ -17,7 +21,7 @@ public struct MyObjectWithOptional: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.prop, forKey: .prop)
         try container.encodeIfPresent(self.optionalProp, forKey: .optionalProp)

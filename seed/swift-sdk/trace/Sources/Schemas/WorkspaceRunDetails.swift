@@ -1,10 +1,15 @@
-public struct WorkspaceRunDetails: Codable, Hashable {
+public struct WorkspaceRunDetails: Codable, Hashable, Sendable {
     public let exceptionV2: ExceptionV2?
     public let exception: ExceptionInfo?
     public let stdout: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(exceptionV2: ExceptionV2? = nil, exception: ExceptionInfo? = nil, stdout: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        exceptionV2: ExceptionV2? = nil,
+        exception: ExceptionInfo? = nil,
+        stdout: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.exceptionV2 = exceptionV2
         self.exception = exception
         self.stdout = stdout
@@ -20,7 +25,7 @@ public struct WorkspaceRunDetails: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encodeIfPresent(self.exceptionV2, forKey: .exceptionV2)
         try container.encodeIfPresent(self.exception, forKey: .exception)

@@ -1,10 +1,15 @@
-public struct StackFrame: Codable, Hashable {
+public struct StackFrame: Codable, Hashable, Sendable {
     public let methodName: String
     public let lineNumber: Int
     public let scopes: [Scope]
     public let additionalProperties: [String: JSONValue]
 
-    public init(methodName: String, lineNumber: Int, scopes: [Scope], additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        methodName: String,
+        lineNumber: Int,
+        scopes: [Scope],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.methodName = methodName
         self.lineNumber = lineNumber
         self.scopes = scopes
@@ -20,7 +25,7 @@ public struct StackFrame: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.methodName, forKey: .methodName)
         try container.encode(self.lineNumber, forKey: .lineNumber)

@@ -1,9 +1,13 @@
-public struct BuildingExecutorResponse: Codable, Hashable {
+public struct BuildingExecutorResponse: Codable, Hashable, Sendable {
     public let submissionId: SubmissionId
     public let status: ExecutionSessionStatus
     public let additionalProperties: [String: JSONValue]
 
-    public init(submissionId: SubmissionId, status: ExecutionSessionStatus, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        submissionId: SubmissionId,
+        status: ExecutionSessionStatus,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.submissionId = submissionId
         self.status = status
         self.additionalProperties = additionalProperties
@@ -17,7 +21,7 @@ public struct BuildingExecutorResponse: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.submissionId, forKey: .submissionId)
         try container.encode(self.status, forKey: .status)

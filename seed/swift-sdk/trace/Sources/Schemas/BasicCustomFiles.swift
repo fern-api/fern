@@ -1,11 +1,17 @@
-public struct BasicCustomFiles: Codable, Hashable {
+public struct BasicCustomFiles: Codable, Hashable, Sendable {
     public let methodName: String
     public let signature: NonVoidFunctionSignature
-    public let additionalFiles: Any
+    public let additionalFiles: [Language: Files]
     public let basicTestCaseTemplate: BasicTestCaseTemplate
     public let additionalProperties: [String: JSONValue]
 
-    public init(methodName: String, signature: NonVoidFunctionSignature, additionalFiles: Any, basicTestCaseTemplate: BasicTestCaseTemplate, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        methodName: String,
+        signature: NonVoidFunctionSignature,
+        additionalFiles: [Language: Files],
+        basicTestCaseTemplate: BasicTestCaseTemplate,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.methodName = methodName
         self.signature = signature
         self.additionalFiles = additionalFiles
@@ -17,13 +23,13 @@ public struct BasicCustomFiles: Codable, Hashable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.methodName = try container.decode(String.self, forKey: .methodName)
         self.signature = try container.decode(NonVoidFunctionSignature.self, forKey: .signature)
-        self.additionalFiles = try container.decode(Any.self, forKey: .additionalFiles)
+        self.additionalFiles = try container.decode([Language: Files].self, forKey: .additionalFiles)
         self.basicTestCaseTemplate = try container.decode(BasicTestCaseTemplate.self, forKey: .basicTestCaseTemplate)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.methodName, forKey: .methodName)
         try container.encode(self.signature, forKey: .signature)

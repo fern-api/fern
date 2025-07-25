@@ -1,9 +1,13 @@
-public struct InitializeProblemRequest: Codable, Hashable {
+public struct InitializeProblemRequest: Codable, Hashable, Sendable {
     public let problemId: ProblemId
     public let problemVersion: Int?
     public let additionalProperties: [String: JSONValue]
 
-    public init(problemId: ProblemId, problemVersion: Int? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        problemId: ProblemId,
+        problemVersion: Int? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.problemId = problemId
         self.problemVersion = problemVersion
         self.additionalProperties = additionalProperties
@@ -17,7 +21,7 @@ public struct InitializeProblemRequest: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.problemId, forKey: .problemId)
         try container.encodeIfPresent(self.problemVersion, forKey: .problemVersion)

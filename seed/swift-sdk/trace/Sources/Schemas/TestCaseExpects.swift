@@ -1,8 +1,11 @@
-public struct TestCaseExpects: Codable, Hashable {
+public struct TestCaseExpects: Codable, Hashable, Sendable {
     public let expectedStdout: String?
     public let additionalProperties: [String: JSONValue]
 
-    public init(expectedStdout: String? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        expectedStdout: String? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.expectedStdout = expectedStdout
         self.additionalProperties = additionalProperties
     }
@@ -14,7 +17,7 @@ public struct TestCaseExpects: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encodeIfPresent(self.expectedStdout, forKey: .expectedStdout)
     }

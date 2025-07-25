@@ -1,10 +1,15 @@
-public struct Moment: Codable, Hashable {
+public struct Moment: Codable, Hashable, Sendable {
     public let id: UUID
     public let date: Date
     public let datetime: Date
     public let additionalProperties: [String: JSONValue]
 
-    public init(id: UUID, date: Date, datetime: Date, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        id: UUID,
+        date: Date,
+        datetime: Date,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.id = id
         self.date = date
         self.datetime = datetime
@@ -20,7 +25,7 @@ public struct Moment: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.id, forKey: .id)
         try container.encode(self.date, forKey: .date)

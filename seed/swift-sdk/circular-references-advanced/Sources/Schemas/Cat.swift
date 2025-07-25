@@ -1,8 +1,11 @@
-public struct Cat: Codable, Hashable {
+public struct Cat: Codable, Hashable, Sendable {
     public let fruit: Fruit
     public let additionalProperties: [String: JSONValue]
 
-    public init(fruit: Fruit, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        fruit: Fruit,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.fruit = fruit
         self.additionalProperties = additionalProperties
     }
@@ -14,7 +17,7 @@ public struct Cat: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.fruit, forKey: .fruit)
     }

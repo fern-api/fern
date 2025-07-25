@@ -34,6 +34,8 @@ export function getQueryParamCaseName(swiftType: swift.Type): string {
         case "uuid":
             return "uuid";
         // TODO(kafkas): The following are currently unsupported.
+        case "data":
+            return "data";
         case "tuple":
             return "unknown";
         case "dictionary":

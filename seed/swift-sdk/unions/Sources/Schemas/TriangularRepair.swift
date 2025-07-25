@@ -1,8 +1,11 @@
-public struct TriangularRepair: Codable, Hashable {
+public struct TriangularRepair: Codable, Hashable, Sendable {
     public let value: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(value: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        value: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.value = value
         self.additionalProperties = additionalProperties
     }
@@ -14,7 +17,7 @@ public struct TriangularRepair: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.value, forKey: .value)
     }

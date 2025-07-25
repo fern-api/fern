@@ -39,13 +39,19 @@ type ExpressionStatement = {
     expression: Expression;
 };
 
+type ImportStatement = {
+    type: "import";
+    moduleName: string;
+};
+
 type InternalStatement =
     | ConstantDeclaration
     | VariableDeclaration
     | VariableAssignment
     | PropertyAssignment
     | Return
-    | ExpressionStatement;
+    | ExpressionStatement
+    | ImportStatement;
 
 export class Statement extends AstNode {
     private internalStatement: InternalStatement;
@@ -95,6 +101,11 @@ export class Statement extends AstNode {
                 this.internalStatement.expression.write(writer);
                 writer.newLine();
                 break;
+            case "import":
+                writer.write("import ");
+                writer.write(this.internalStatement.moduleName);
+                writer.newLine();
+                break;
             default:
                 assertNever(this.internalStatement);
         }
@@ -122,5 +133,9 @@ export class Statement extends AstNode {
 
     public static expressionStatement(expression: Expression): Statement {
         return new this({ type: "expression-statement", expression });
+    }
+
+    public static import(moduleName: string): Statement {
+        return new this({ type: "import", moduleName });
     }
 }

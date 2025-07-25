@@ -1,11 +1,17 @@
-public struct GetSubmissionStateResponse: Codable, Hashable {
+public struct GetSubmissionStateResponse: Codable, Hashable, Sendable {
     public let timeSubmitted: Date?
     public let submission: String
     public let language: Language
     public let submissionTypeState: SubmissionTypeState
     public let additionalProperties: [String: JSONValue]
 
-    public init(timeSubmitted: Date? = nil, submission: String, language: Language, submissionTypeState: SubmissionTypeState, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        timeSubmitted: Date? = nil,
+        submission: String,
+        language: Language,
+        submissionTypeState: SubmissionTypeState,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.timeSubmitted = timeSubmitted
         self.submission = submission
         self.language = language
@@ -23,7 +29,7 @@ public struct GetSubmissionStateResponse: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encodeIfPresent(self.timeSubmitted, forKey: .timeSubmitted)
         try container.encode(self.submission, forKey: .submission)

@@ -1,8 +1,11 @@
-public struct ImportingType: Codable, Hashable {
+public struct ImportingType: Codable, Hashable, Sendable {
     public let imported: Imported
     public let additionalProperties: [String: JSONValue]
 
-    public init(imported: Imported, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        imported: Imported,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.imported = imported
         self.additionalProperties = additionalProperties
     }
@@ -14,7 +17,7 @@ public struct ImportingType: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.imported, forKey: .imported)
     }
