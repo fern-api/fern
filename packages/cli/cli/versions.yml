@@ -5,6 +5,14 @@
       type: feat
   irVersion: 58
   createdAt: "2025-07-25"
+  version: 0.65.32
+
+- changelogEntry:
+    - summary: |
+        Fix openapi importer for query parameters that are inline union types.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-25"
   version: 0.65.31
 
 - changelogEntry:

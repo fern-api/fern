@@ -429,6 +429,22 @@ function getQueryParameterTypeReference({
                 }
             }
 
+            // TODO: (jsklan) currently this is hidden behind the objectQueryParameters flag,
+            // But eventually we should probably enable this by default
+            if (context.objectQueryParameters) {
+                return {
+                    value: buildTypeReference({
+                        schema,
+                        context,
+                        fileContainingReference,
+                        declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
+                        namespace,
+                        declarationDepth: 0
+                    }),
+                    allowMultiple: false
+                };
+            }
+
             // If no literal values, just pick the first schema of the undiscriminated union
             for (const [_, oneOfSchema] of Object.entries(schema.value.value.schemas)) {
                 return getQueryParameterTypeReference({
