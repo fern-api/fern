@@ -61,59 +61,116 @@ public class AsyncSeedExhaustiveClientBuilder {
 
   protected ClientOptions buildClientOptions() {
     ClientOptions.Builder builder = ClientOptions.builder();
-    ;
-    // Call configuration methods in order
-    configureEnvironment(builder);
-    configureAuthentication(builder);
-    configureHttpClient(builder);
-    configureTimeouts(builder);
-    configureRetries(builder);
-    ;
-    // Extension point for subclasses
-    configureAdditional(builder);
-    ;
+    setEnvironment(builder);
+    setAuthentication(builder);
+    setHttpClient(builder);
+    setTimeouts(builder);
+    setRetries(builder);
+    setAdditional(builder);
     return builder.build();
   }
 
-  protected void configureEnvironment(ClientOptions.Builder builder) {
+  /**
+   * Sets the environment configuration for the client.
+   * Override this method to modify URLs or add environment-specific logic.
+   *
+   * @param builder The ClientOptions.Builder to configure
+   */
+  protected void setEnvironment(ClientOptions.Builder builder) {
     builder.environment(this.environment);
   }
 
   /**
-   * Override this method to customize authentication
+   * Override this method to customize authentication.
+   * This method is called during client options construction to set up authentication headers.
+   *
+   * @param builder The ClientOptions.Builder to configure
+   *
+   * Example:
+   * <pre>{@code
+   * @Override
+   * protected void setAuthentication(ClientOptions.Builder builder) {
+   *     super.setAuthentication(builder); // Keep existing auth
+   *     builder.addHeader("X-API-Key", this.apiKey);
+   * }
+   * }</pre>
    */
-  protected void configureAuthentication(ClientOptions.Builder builder) {
+  protected void setAuthentication(ClientOptions.Builder builder) {
     if (this.token != null) {
       builder.addHeader("Authorization", "Bearer " + this.token);
     }
   }
 
-  protected void configureTimeouts(ClientOptions.Builder builder) {
+  /**
+   * Sets the request timeout configuration.
+   * Override this method to customize timeout behavior.
+   *
+   * @param builder The ClientOptions.Builder to configure
+   */
+  protected void setTimeouts(ClientOptions.Builder builder) {
     if (this.timeout.isPresent()) {
       builder.timeout(this.timeout.get());
     }
   }
 
-  protected void configureRetries(ClientOptions.Builder builder) {
+  /**
+   * Sets the retry configuration for failed requests.
+   * Override this method to implement custom retry strategies.
+   *
+   * @param builder The ClientOptions.Builder to configure
+   */
+  protected void setRetries(ClientOptions.Builder builder) {
     if (this.maxRetries.isPresent()) {
       builder.maxRetries(this.maxRetries.get());
     }
   }
 
-  protected void configureHttpClient(ClientOptions.Builder builder) {
+  /**
+   * Sets the OkHttp client configuration.
+   * Override this method to customize HTTP client behavior (interceptors, connection pools, etc).
+   *
+   * @param builder The ClientOptions.Builder to configure
+   */
+  protected void setHttpClient(ClientOptions.Builder builder) {
     if (this.httpClient != null) {
       builder.httpClient(this.httpClient);
     }
   }
 
   /**
-   * Extension point for subclasses to add additional configuration
+   * Override this method to add any additional configuration to the client.
+   * This method is called at the end of the configuration chain, allowing you to add
+   * custom headers, modify settings, or perform any other client customization.
+   *
+   * @param builder The ClientOptions.Builder to configure
+   *
+   * Example:
+   * <pre>{@code
+   * @Override
+   * protected void setAdditional(ClientOptions.Builder builder) {
+   *     builder.addHeader("X-Request-ID", () -> UUID.randomUUID().toString());
+   *     builder.addHeader("X-Client-Version", "1.0.0");
+   * }
+   * }</pre>
    */
-  protected void configureAdditional(ClientOptions.Builder builder) {
+  protected void setAdditional(ClientOptions.Builder builder) {
   }
 
   /**
-   * Override this method to add custom validation logic
+   * Override this method to add custom validation logic before the client is built.
+   * This method is called at the beginning of the build() method to ensure the configuration is valid.
+   * Throw an exception to prevent client creation if validation fails.
+   *
+   * Example:
+   * <pre>{@code
+   * @Override
+   * protected void validateConfiguration() {
+   *     super.validateConfiguration(); // Run parent validations
+   *     if (tenantId == null || tenantId.isEmpty()) {
+   *         throw new IllegalStateException("tenantId is required");
+   *     }
+   * }
+   * }</pre>
    */
   protected void validateConfiguration() {
   }
