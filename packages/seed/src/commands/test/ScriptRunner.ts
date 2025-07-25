@@ -86,7 +86,7 @@ export class ScriptRunner {
         containerId: string;
         script: DockerScriptConfig;
     }): Promise<ScriptRunner.RunResponse> {
-        taskContext.logger.info(`Running script ${script.commands[0] ?? ""} on ${id}`);
+        // taskContext.logger.info(`Running script ${script.commands[0] ?? ""} on ${id}`);
 
         const workDir = id.replace(":", "_");
         const scriptFile = await tmp.file();
@@ -145,7 +145,7 @@ export class ScriptRunner {
             "docker",
             ["exec", containerId, "/bin/sh", "-c", `chmod +x /${workDir}/test.sh && /${workDir}/test.sh`],
             {
-                doNotPipeOutput: true,
+                // doNotPipeOutput: true,
                 reject: false
             }
         );
@@ -175,6 +175,8 @@ export class ScriptRunner {
                 "-dit",
                 "-v",
                 cliVolumeBind,
+                "-v",
+                "~/Library/Caches/pypoetry:/root/.cache/pypoetry",
                 script.docker,
                 "/bin/sh"
             ]);
