@@ -5,7 +5,7 @@ public final class ServiceClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func post(request: Any, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func post(request: any Codable, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/",
@@ -14,7 +14,7 @@ public final class ServiceClient: Sendable {
         )
     }
 
-    public func justFile(request: Any, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func justFile(request: any Codable, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/just-file",
@@ -23,7 +23,7 @@ public final class ServiceClient: Sendable {
         )
     }
 
-    public func justFileWithQueryParams(maybeString: String? = nil, integer: Int, maybeInteger: Int? = nil, listOfStrings: String, optionalListOfStrings: String? = nil, request: Any, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func justFileWithQueryParams(maybeString: String? = nil, integer: Int, maybeInteger: Int? = nil, listOfStrings: String, optionalListOfStrings: String? = nil, request: any Codable, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/just-file-with-query-params",
@@ -39,7 +39,7 @@ public final class ServiceClient: Sendable {
         )
     }
 
-    public func withContentType(request: Any, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func withContentType(request: any Codable, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/with-content-type",
@@ -48,7 +48,7 @@ public final class ServiceClient: Sendable {
         )
     }
 
-    public func withFormEncoding(request: Any, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func withFormEncoding(request: any Codable, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/with-form-encoding",
@@ -57,7 +57,7 @@ public final class ServiceClient: Sendable {
         )
     }
 
-    public func withFormEncodedContainers(request: Any, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func withFormEncodedContainers(request: any Codable, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/",
@@ -66,7 +66,7 @@ public final class ServiceClient: Sendable {
         )
     }
 
-    public func optionalArgs(request: Any, requestOptions: RequestOptions? = nil) async throws -> String {
+    public func optionalArgs(request: any Codable, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .post,
             path: "/optional-args",

@@ -5,7 +5,7 @@ public final class UnknownClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func post(request: Any, requestOptions: RequestOptions? = nil) async throws -> [Any] {
+    public func post(request: any Codable, requestOptions: RequestOptions? = nil) async throws -> [Any] {
         return try await httpClient.performRequest(
             method: .post,
             path: "/",
