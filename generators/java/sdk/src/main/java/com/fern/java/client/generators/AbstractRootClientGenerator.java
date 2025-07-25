@@ -171,18 +171,42 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         // Create builders for configuration methods based on API spec
         MethodSpec.Builder configureAuthBuilder = null;
         if (hasAuth) {
-            configureAuthBuilder = MethodSpec.methodBuilder("configureAuthentication")
+            configureAuthBuilder = MethodSpec.methodBuilder("setAuthentication")
                     .addModifiers(Modifier.PROTECTED)
                     .addParameter(generatedClientOptions.builderClassName(), "builder")
-                    .addJavadoc("Override this method to customize authentication");
+                    .addJavadoc("Override this method to customize authentication.\n"
+                            + "This method is called during client options construction to set up authentication headers.\n"
+                            + "\n"
+                            + "@param builder The ClientOptions.Builder to configure\n"
+                            + "\n"
+                            + "Example:\n"
+                            + "<pre>{@code\n"
+                            + "@Override\n"
+                            + "protected void setAuthentication(ClientOptions.Builder builder) {\n"
+                            + "    super.setAuthentication(builder); // Keep existing auth\n"
+                            + "    builder.addHeader(\"X-API-Key\", this.apiKey);\n"
+                            + "}\n"
+                            + "}</pre>");
         }
 
         MethodSpec.Builder configureCustomHeadersBuilder = null;
         if (hasCustomHeaders) {
-            configureCustomHeadersBuilder = MethodSpec.methodBuilder("configureCustomHeaders")
+            configureCustomHeadersBuilder = MethodSpec.methodBuilder("setCustomHeaders")
                     .addModifiers(Modifier.PROTECTED)
                     .addParameter(generatedClientOptions.builderClassName(), "builder")
-                    .addJavadoc("Override this method to add custom headers");
+                    .addJavadoc("Override this method to add or modify custom headers.\n"
+                            + "This method is called during client options construction to set up custom headers defined in the API.\n"
+                            + "\n"
+                            + "@param builder The ClientOptions.Builder to configure\n"
+                            + "\n"
+                            + "Example:\n"
+                            + "<pre>{@code\n"
+                            + "@Override\n"
+                            + "protected void setCustomHeaders(ClientOptions.Builder builder) {\n"
+                            + "    super.setCustomHeaders(builder); // Keep existing headers\n"
+                            + "    builder.addHeader(\"X-Trace-ID\", generateTraceId());\n"
+                            + "}\n"
+                            + "}</pre>");
         }
 
         if (hasAuth || hasCustomHeaders) {
@@ -303,42 +327,41 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .addStatement(
                         "$T builder = $T.builder()",
                         generatedClientOptions.builderClassName(),
-                        generatedClientOptions.getClassName())
-                .addStatement("")
-                .addComment("Call configuration methods in order");
+                        generatedClientOptions.getClassName());
 
-        buildClientOptionsMethodBuilder.addStatement("configureEnvironment(builder)");
+        buildClientOptionsMethodBuilder.addStatement("setEnvironment(builder)");
 
         if (hasAuth) {
-            buildClientOptionsMethodBuilder.addStatement("configureAuthentication(builder)");
+            buildClientOptionsMethodBuilder.addStatement("setAuthentication(builder)");
         }
 
         if (hasCustomHeaders) {
-            buildClientOptionsMethodBuilder.addStatement("configureCustomHeaders(builder)");
+            buildClientOptionsMethodBuilder.addStatement("setCustomHeaders(builder)");
         }
 
         if (hasVariables) {
-            buildClientOptionsMethodBuilder.addStatement("configureVariables(builder)");
+            buildClientOptionsMethodBuilder.addStatement("setVariables(builder)");
         }
 
         buildClientOptionsMethodBuilder
-                .addStatement("configureHttpClient(builder)")
-                .addStatement("configureTimeouts(builder)")
-                .addStatement("configureRetries(builder)")
-                .addStatement("")
-                .addComment("Extension point for subclasses")
-                .addStatement("configureAdditional(builder)")
-                .addStatement("")
+                .addStatement("setHttpClient(builder)")
+                .addStatement("setTimeouts(builder)")
+                .addStatement("setRetries(builder)")
+                .addStatement("setAdditional(builder)")
                 .addStatement("return builder.build()");
 
         clientBuilder.addMethod(buildClientOptionsMethodBuilder.build());
 
-        MethodSpec configureEnvironmentMethod = MethodSpec.methodBuilder("configureEnvironment")
+        MethodSpec setEnvironmentMethod = MethodSpec.methodBuilder("setEnvironment")
                 .addModifiers(Modifier.PROTECTED)
                 .addParameter(generatedClientOptions.builderClassName(), "builder")
+                .addJavadoc("Sets the environment configuration for the client.\n"
+                        + "Override this method to modify URLs or add environment-specific logic.\n"
+                        + "\n"
+                        + "@param builder The ClientOptions.Builder to configure")
                 .addStatement("builder.$N(this.$N)", generatedClientOptions.environment(), environmentField)
                 .build();
-        clientBuilder.addMethod(configureEnvironmentMethod);
+        clientBuilder.addMethod(setEnvironmentMethod);
 
         if (hasAuth) {
             clientBuilder.addMethod(configureAuthBuilder.build());
@@ -349,55 +372,95 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         }
 
         if (hasVariables) {
-            MethodSpec configureVariablesMethod = MethodSpec.methodBuilder("configureVariables")
+            MethodSpec setVariablesMethod = MethodSpec.methodBuilder("setVariables")
                     .addModifiers(Modifier.PROTECTED)
                     .addParameter(generatedClientOptions.builderClassName(), "builder")
-                    .addJavadoc("Configure API variables defined in the specification")
-                    .addComment("Variables: "
+                    .addJavadoc("Override this method to configure API variables defined in the specification.\n"
+                            + "Available variables: "
                             + generatorContext.getIr().getVariables().stream()
                                     .map(v -> v.getName().getCamelCase().getSafeName())
-                                    .collect(java.util.stream.Collectors.joining(", ")))
+                                    .collect(java.util.stream.Collectors.joining(", "))
+                            + "\n\n"
+                            + "@param builder The ClientOptions.Builder to configure")
                     .build();
-            clientBuilder.addMethod(configureVariablesMethod);
+            clientBuilder.addMethod(setVariablesMethod);
         }
 
-        MethodSpec configureTimeoutsMethod = MethodSpec.methodBuilder("configureTimeouts")
+        MethodSpec setTimeoutsMethod = MethodSpec.methodBuilder("setTimeouts")
                 .addModifiers(Modifier.PROTECTED)
                 .addParameter(generatedClientOptions.builderClassName(), "builder")
+                .addJavadoc("Sets the request timeout configuration.\n"
+                        + "Override this method to customize timeout behavior.\n"
+                        + "\n"
+                        + "@param builder The ClientOptions.Builder to configure")
                 .beginControlFlow("if (this.timeout.isPresent())")
                 .addStatement("builder.timeout(this.timeout.get())")
                 .endControlFlow()
                 .build();
-        clientBuilder.addMethod(configureTimeoutsMethod);
+        clientBuilder.addMethod(setTimeoutsMethod);
 
-        MethodSpec configureRetriesMethod = MethodSpec.methodBuilder("configureRetries")
+        MethodSpec setRetriesMethod = MethodSpec.methodBuilder("setRetries")
                 .addModifiers(Modifier.PROTECTED)
                 .addParameter(generatedClientOptions.builderClassName(), "builder")
+                .addJavadoc("Sets the retry configuration for failed requests.\n"
+                        + "Override this method to implement custom retry strategies.\n"
+                        + "\n"
+                        + "@param builder The ClientOptions.Builder to configure")
                 .beginControlFlow("if (this.maxRetries.isPresent())")
                 .addStatement("builder.maxRetries(this.maxRetries.get())")
                 .endControlFlow()
                 .build();
-        clientBuilder.addMethod(configureRetriesMethod);
+        clientBuilder.addMethod(setRetriesMethod);
 
-        MethodSpec configureHttpClientMethod = MethodSpec.methodBuilder("configureHttpClient")
+        MethodSpec setHttpClientMethod = MethodSpec.methodBuilder("setHttpClient")
                 .addModifiers(Modifier.PROTECTED)
                 .addParameter(generatedClientOptions.builderClassName(), "builder")
+                .addJavadoc("Sets the OkHttp client configuration.\n"
+                        + "Override this method to customize HTTP client behavior (interceptors, connection pools, etc).\n"
+                        + "\n"
+                        + "@param builder The ClientOptions.Builder to configure")
                 .beginControlFlow("if (this.httpClient != null)")
                 .addStatement("builder.httpClient(this.httpClient)")
                 .endControlFlow()
                 .build();
-        clientBuilder.addMethod(configureHttpClientMethod);
+        clientBuilder.addMethod(setHttpClientMethod);
 
-        MethodSpec configureAdditionalMethod = MethodSpec.methodBuilder("configureAdditional")
+        MethodSpec setAdditionalMethod = MethodSpec.methodBuilder("setAdditional")
                 .addModifiers(Modifier.PROTECTED)
                 .addParameter(generatedClientOptions.builderClassName(), "builder")
-                .addJavadoc("Extension point for subclasses to add additional configuration")
+                .addJavadoc("Override this method to add any additional configuration to the client.\n"
+                        + "This method is called at the end of the configuration chain, allowing you to add\n"
+                        + "custom headers, modify settings, or perform any other client customization.\n"
+                        + "\n"
+                        + "@param builder The ClientOptions.Builder to configure\n"
+                        + "\n"
+                        + "Example:\n"
+                        + "<pre>{@code\n"
+                        + "@Override\n"
+                        + "protected void setAdditional(ClientOptions.Builder builder) {\n"
+                        + "    builder.addHeader(\"X-Request-ID\", () -> UUID.randomUUID().toString());\n"
+                        + "    builder.addHeader(\"X-Client-Version\", \"1.0.0\");\n"
+                        + "}\n"
+                        + "}</pre>")
                 .build();
-        clientBuilder.addMethod(configureAdditionalMethod);
+        clientBuilder.addMethod(setAdditionalMethod);
 
         MethodSpec validateConfigurationMethod = MethodSpec.methodBuilder("validateConfiguration")
                 .addModifiers(Modifier.PROTECTED)
-                .addJavadoc("Override this method to add custom validation logic")
+                .addJavadoc("Override this method to add custom validation logic before the client is built.\n"
+                        + "This method is called at the beginning of the build() method to ensure the configuration is valid.\n"
+                        + "Throw an exception to prevent client creation if validation fails.\n"
+                        + "\n"
+                        + "Example:\n"
+                        + "<pre>{@code\n"
+                        + "@Override\n"
+                        + "protected void validateConfiguration() {\n"
+                        + "    super.validateConfiguration(); // Run parent validations\n"
+                        + "    if (tenantId == null || tenantId.isEmpty()) {\n"
+                        + "        throw new IllegalStateException(\"tenantId is required\");\n"
+                        + "    }\n"
+                        + "}\n"
+                        + "}</pre>")
                 .build();
         clientBuilder.addMethod(validateConfigurationMethod);
 
