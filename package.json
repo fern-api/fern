@@ -33,7 +33,7 @@
     "format:fix:diff": "git diff --name-only --diff-filter=ACMR | xargs pnpm exec biome format --fix",
     "format:check": "pnpm exec biome format",
     "add-workspace": "yarn mrlint add-workspace",
-    "depcheck": "pnpm -r --no-bail depcheck",
+    "depcheck": "turbo depcheck",
     "codegen:local": "pnpm fern:local generate",
     "fern": "FERN_NO_VERSION_REDIRECTION=true node ./packages/cli/cli/dist/prod/cli.cjs",
     "fern:local": "FERN_NO_VERSION_REDIRECTION=true node ./packages/cli/cli/dist/prod/cli.cjs",
