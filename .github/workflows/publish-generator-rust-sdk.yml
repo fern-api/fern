@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - "dak/ci/rust-generator"
     paths:
       - "generators/rust/sdk/versions.yml"
   workflow_dispatch:
