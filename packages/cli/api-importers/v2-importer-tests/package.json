@@ -18,7 +18,9 @@
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
+    "compile:debug": "tsc --build --sourceMap",
     "test": "vitest --run",
+    "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --run -u",
     "test:update:v3": "vitest --passWithNoTests --run -u src/__test__/v3-docs.test.ts src/__test__/v3-sdks.test.ts",
     "test:update:v3-docs": "vitest --passWithNoTests --run -u src/__test__/v3-docs.test.ts",
