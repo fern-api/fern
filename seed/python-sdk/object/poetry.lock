@@ -433,6 +433,20 @@ files = [
 six = ">=1.5"
 
 [[package]]
+name = "respx"
+version = "0.22.0"
+description = "A utility for mocking out the Python HTTPX and HTTP Core libraries."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "respx-0.22.0-py2.py3-none-any.whl", hash = "sha256:631128d4c9aba15e56903fb5f66fb1eff412ce28dd387ca3a81339e52dbd3ad0"},
+    {file = "respx-0.22.0.tar.gz", hash = "sha256:3c8924caa2a50bd71aefc07aa812f2466ff489f1848c96e954a5362d17095d91"},
+]
+
+[package.dependencies]
+httpx = ">=0.25.0"
+
+[[package]]
 name = "ruff"
 version = "0.11.5"
 description = "An extremely fast Python linter and code formatter, written in Rust."
@@ -547,4 +561,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "8551b871abee465e23fb0966d51f2c155fd257b55bdcb0c02d095de19f92f358"
+content-hash = "3b1c1f9fd95391e16ae7b0e109d38876639a69a31da3e3a8739960716ca00ab7"
