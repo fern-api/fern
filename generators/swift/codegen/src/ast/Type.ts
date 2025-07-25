@@ -93,6 +93,13 @@ type ExistentialAny = {
     protocolName: string;
 };
 
+/**
+ * Represents our custom `JSONValue` type.
+ */
+type JsonValue = {
+    type: "json-value";
+};
+
 type InternalType =
     | String_
     | Bool
@@ -112,7 +119,8 @@ type InternalType =
     | Custom
     | Void
     | Any
-    | ExistentialAny;
+    | ExistentialAny
+    | JsonValue;
 
 export class Type extends AstNode {
     private internalType: InternalType;
@@ -214,6 +222,9 @@ export class Type extends AstNode {
                 writer.write("any ");
                 writer.write(this.internalType.protocolName);
                 break;
+            case "json-value":
+                writer.write("JSONValue");
+                break;
             default:
                 assertNever(this.internalType);
         }
@@ -298,5 +309,12 @@ export class Type extends AstNode {
 
     public static existentialAny(protocolName: string): Type {
         return new this({ type: "existential-any", protocolName });
+    }
+
+    /**
+     * Represents our custom `JSONValue` type.
+     */
+    public static jsonValue(): Type {
+        return new this({ type: "json-value" });
     }
 }
