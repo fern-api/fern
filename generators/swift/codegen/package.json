@@ -26,7 +26,7 @@
     "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "test": "vitest --run",
-    "test:debug": "pnpm run test --inspect-brk --no-file-parallelism",
+    "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --run -u"
   },
   "dependencies": {
