@@ -1,10 +1,10 @@
 public struct Script: Codable, Hashable, Sendable {
-    public let resourceType: Any
+    public let resourceType: JSONValue
     public let name: String
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        resourceType: Any,
+        resourceType: JSONValue,
         name: String,
         additionalProperties: [String: JSONValue] = .init()
     ) {
@@ -15,7 +15,7 @@ public struct Script: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.resourceType = try container.decode(Any.self, forKey: .resourceType)
+        self.resourceType = try container.decode(JSONValue.self, forKey: .resourceType)
         self.name = try container.decode(String.self, forKey: .name)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }

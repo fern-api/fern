@@ -13,7 +13,7 @@ public final class ServiceClient: Sendable {
         )
     }
 
-    public func unknownRequest(request: any Codable, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func unknownRequest(request: JSONValue, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/service",

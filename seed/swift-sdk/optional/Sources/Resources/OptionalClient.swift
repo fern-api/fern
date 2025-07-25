@@ -5,7 +5,7 @@ public final class OptionalClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func sendOptionalBody(request: [String: Any]?, requestOptions: RequestOptions? = nil) async throws -> String {
+    public func sendOptionalBody(request: [String: JSONValue]?, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .post,
             path: "/send-optional-body",

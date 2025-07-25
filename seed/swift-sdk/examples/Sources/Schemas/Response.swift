@@ -1,10 +1,10 @@
 public struct Response: Codable, Hashable, Sendable {
-    public let response: Any
+    public let response: JSONValue
     public let identifiers: [Identifier]
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        response: Any,
+        response: JSONValue,
         identifiers: [Identifier],
         additionalProperties: [String: JSONValue] = .init()
     ) {
@@ -15,7 +15,7 @@ public struct Response: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.response = try container.decode(Any.self, forKey: .response)
+        self.response = try container.decode(JSONValue.self, forKey: .response)
         self.identifiers = try container.decode([Identifier].self, forKey: .identifiers)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }

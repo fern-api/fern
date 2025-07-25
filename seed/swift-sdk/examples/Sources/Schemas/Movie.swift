@@ -4,10 +4,10 @@ public struct Movie: Codable, Hashable, Sendable {
     public let title: String
     public let from: String
     public let rating: Double
-    public let type: Any
+    public let type: JSONValue
     public let tag: Tag
     public let book: String?
-    public let metadata: [String: Any]
+    public let metadata: [String: JSONValue]
     public let revenue: Int64
     public let additionalProperties: [String: JSONValue]
 
@@ -17,10 +17,10 @@ public struct Movie: Codable, Hashable, Sendable {
         title: String,
         from: String,
         rating: Double,
-        type: Any,
+        type: JSONValue,
         tag: Tag,
         book: String? = nil,
-        metadata: [String: Any],
+        metadata: [String: JSONValue],
         revenue: Int64,
         additionalProperties: [String: JSONValue] = .init()
     ) {
@@ -44,10 +44,10 @@ public struct Movie: Codable, Hashable, Sendable {
         self.title = try container.decode(String.self, forKey: .title)
         self.from = try container.decode(String.self, forKey: .from)
         self.rating = try container.decode(Double.self, forKey: .rating)
-        self.type = try container.decode(Any.self, forKey: .type)
+        self.type = try container.decode(JSONValue.self, forKey: .type)
         self.tag = try container.decode(Tag.self, forKey: .tag)
         self.book = try container.decodeIfPresent(String.self, forKey: .book)
-        self.metadata = try container.decode([String: Any].self, forKey: .metadata)
+        self.metadata = try container.decode([String: JSONValue].self, forKey: .metadata)
         self.revenue = try container.decode(Int64.self, forKey: .revenue)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }

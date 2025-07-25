@@ -1,11 +1,11 @@
 public struct PatchProxyRequest: Codable, Hashable, Sendable {
-    public let application: Any
-    public let requireAuth: Any
+    public let application: JSONValue
+    public let requireAuth: JSONValue
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        application: Any,
-        requireAuth: Any,
+        application: JSONValue,
+        requireAuth: JSONValue,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.application = application
@@ -15,8 +15,8 @@ public struct PatchProxyRequest: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.application = try container.decode(Any.self, forKey: .application)
-        self.requireAuth = try container.decode(Any.self, forKey: .requireAuth)
+        self.application = try container.decode(JSONValue.self, forKey: .application)
+        self.requireAuth = try container.decode(JSONValue.self, forKey: .requireAuth)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

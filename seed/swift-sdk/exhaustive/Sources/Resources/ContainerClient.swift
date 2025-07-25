@@ -25,23 +25,23 @@ public final class ContainerClient: Sendable {
         )
     }
 
-    public func getAndReturnSetOfPrimitives(request: any Codable, requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func getAndReturnSetOfPrimitives(request: JSONValue, requestOptions: RequestOptions? = nil) async throws -> JSONValue {
         return try await httpClient.performRequest(
             method: .post,
             path: "/container/set-of-primitives",
             body: request,
             requestOptions: requestOptions,
-            responseType: Any.self
+            responseType: JSONValue.self
         )
     }
 
-    public func getAndReturnSetOfObjects(request: any Codable, requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func getAndReturnSetOfObjects(request: JSONValue, requestOptions: RequestOptions? = nil) async throws -> JSONValue {
         return try await httpClient.performRequest(
             method: .post,
             path: "/container/set-of-objects",
             body: request,
             requestOptions: requestOptions,
-            responseType: Any.self
+            responseType: JSONValue.self
         )
     }
 

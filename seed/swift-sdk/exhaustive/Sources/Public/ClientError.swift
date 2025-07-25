@@ -1,4 +1,4 @@
-public enum ClientError: Error {
+public enum ClientError: Foundation.Error {
     // Network & Client Errors
     case invalidURL
     case encodingError(Error)

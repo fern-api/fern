@@ -9,14 +9,14 @@ public struct Type: Codable, Hashable, Sendable {
     public let eight: UUID
     public let nine: String
     public let ten: [Int]
-    public let eleven: Any
+    public let eleven: JSONValue
     public let twelve: [String: Bool]
     public let thirteen: Int64?
-    public let fourteen: Any
+    public let fourteen: JSONValue
     public let fifteen: [[Int]]
     public let sixteen: [[String: Int]]
     public let seventeen: [UUID?]
-    public let eighteen: Any
+    public let eighteen: JSONValue
     public let nineteen: Name
     public let twenty: UInt
     public let twentyone: UInt64
@@ -37,14 +37,14 @@ public struct Type: Codable, Hashable, Sendable {
         eight: UUID,
         nine: String,
         ten: [Int],
-        eleven: Any,
+        eleven: JSONValue,
         twelve: [String: Bool],
         thirteen: Int64? = nil,
-        fourteen: Any,
+        fourteen: JSONValue,
         fifteen: [[Int]],
         sixteen: [[String: Int]],
         seventeen: [UUID?],
-        eighteen: Any,
+        eighteen: JSONValue,
         nineteen: Name,
         twenty: UInt,
         twentyone: UInt64,
@@ -94,14 +94,14 @@ public struct Type: Codable, Hashable, Sendable {
         self.eight = try container.decode(UUID.self, forKey: .eight)
         self.nine = try container.decode(String.self, forKey: .nine)
         self.ten = try container.decode([Int].self, forKey: .ten)
-        self.eleven = try container.decode(Any.self, forKey: .eleven)
+        self.eleven = try container.decode(JSONValue.self, forKey: .eleven)
         self.twelve = try container.decode([String: Bool].self, forKey: .twelve)
         self.thirteen = try container.decodeIfPresent(Int64.self, forKey: .thirteen)
-        self.fourteen = try container.decode(Any.self, forKey: .fourteen)
+        self.fourteen = try container.decode(JSONValue.self, forKey: .fourteen)
         self.fifteen = try container.decode([[Int]].self, forKey: .fifteen)
         self.sixteen = try container.decode([[String: Int]].self, forKey: .sixteen)
         self.seventeen = try container.decode([UUID?].self, forKey: .seventeen)
-        self.eighteen = try container.decode(Any.self, forKey: .eighteen)
+        self.eighteen = try container.decode(JSONValue.self, forKey: .eighteen)
         self.nineteen = try container.decode(Name.self, forKey: .nineteen)
         self.twenty = try container.decode(UInt.self, forKey: .twenty)
         self.twentyone = try container.decode(UInt64.self, forKey: .twentyone)
