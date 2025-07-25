@@ -1,10 +1,15 @@
-public struct Node: Codable, Hashable {
+public struct Node: Codable, Hashable, Sendable {
     public let name: String
     public let nodes: [Node]?
     public let trees: [Tree]?
     public let additionalProperties: [String: JSONValue]
 
-    public init(name: String, nodes: [Node]? = nil, trees: [Tree]? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        name: String,
+        nodes: [Node]? = nil,
+        trees: [Tree]? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.name = name
         self.nodes = nodes
         self.trees = trees
@@ -20,7 +25,7 @@ public struct Node: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.name, forKey: .name)
         try container.encodeIfPresent(self.nodes, forKey: .nodes)

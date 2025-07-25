@@ -71,7 +71,7 @@ export class ObjectGenerator {
         return swift.struct({
             name: this.name,
             accessLevel: swift.AccessLevel.Public,
-            conformances: [swift.Protocol.Codable, swift.Protocol.Hashable],
+            conformances: [swift.Protocol.Codable, swift.Protocol.Hashable, swift.Protocol.Sendable],
             properties: [
                 ...this.properties.map((p) => this.generateSwiftPropertyForProperty(p)),
                 swift.property({
@@ -118,7 +118,8 @@ export class ObjectGenerator {
                     this.additionalPropertiesInfo.propertyName,
                     swift.Expression.reference(this.additionalPropertiesInfo.propertyName)
                 )
-            ])
+            ]),
+            multiline: true
         });
     }
 
@@ -219,18 +220,17 @@ export class ObjectGenerator {
                     ? [
                           swift.Statement.variableDeclaration(
                               "container",
-                              swift.Expression.try(
-                                  swift.Expression.methodCall({
-                                      target: swift.Expression.reference("encoder"),
-                                      methodName: "container",
-                                      arguments_: [
-                                          swift.functionArgument({
-                                              label: "keyedBy",
-                                              value: swift.Expression.rawValue("CodingKeys.self")
-                                          })
-                                      ]
-                                  })
-                              )
+
+                              swift.Expression.methodCall({
+                                  target: swift.Expression.reference("encoder"),
+                                  methodName: "container",
+                                  arguments_: [
+                                      swift.functionArgument({
+                                          label: "keyedBy",
+                                          value: swift.Expression.rawValue("CodingKeys.self")
+                                      })
+                                  ]
+                              })
                           )
                       ]
                     : []),

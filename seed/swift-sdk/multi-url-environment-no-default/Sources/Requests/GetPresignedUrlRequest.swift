@@ -1,8 +1,11 @@
-public struct GetPresignedUrlRequest: Codable, Hashable {
+public struct GetPresignedUrlRequest: Codable, Hashable, Sendable {
     public let s3Key: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(s3Key: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        s3Key: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.s3Key = s3Key
         self.additionalProperties = additionalProperties
     }
@@ -14,7 +17,7 @@ public struct GetPresignedUrlRequest: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.s3Key, forKey: .s3Key)
     }

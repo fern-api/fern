@@ -1,9 +1,13 @@
-public struct DefaultProvidedFile: Codable, Hashable {
+public struct DefaultProvidedFile: Codable, Hashable, Sendable {
     public let file: FileInfoV2
     public let relatedTypes: [VariableType]
     public let additionalProperties: [String: JSONValue]
 
-    public init(file: FileInfoV2, relatedTypes: [VariableType], additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        file: FileInfoV2,
+        relatedTypes: [VariableType],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.file = file
         self.relatedTypes = relatedTypes
         self.additionalProperties = additionalProperties
@@ -17,7 +21,7 @@ public struct DefaultProvidedFile: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.file, forKey: .file)
         try container.encode(self.relatedTypes, forKey: .relatedTypes)

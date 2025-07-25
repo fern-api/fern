@@ -1,4 +1,4 @@
-public struct RecordingResponseNotification: Codable, Hashable {
+public struct RecordingResponseNotification: Codable, Hashable, Sendable {
     public let submissionId: SubmissionId
     public let testCaseId: String?
     public let lineNumber: Int
@@ -6,7 +6,14 @@ public struct RecordingResponseNotification: Codable, Hashable {
     public let tracedFile: TracedFile?
     public let additionalProperties: [String: JSONValue]
 
-    public init(submissionId: SubmissionId, testCaseId: String? = nil, lineNumber: Int, lightweightStackInfo: LightweightStackframeInformation, tracedFile: TracedFile? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        submissionId: SubmissionId,
+        testCaseId: String? = nil,
+        lineNumber: Int,
+        lightweightStackInfo: LightweightStackframeInformation,
+        tracedFile: TracedFile? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.submissionId = submissionId
         self.testCaseId = testCaseId
         self.lineNumber = lineNumber
@@ -26,7 +33,7 @@ public struct RecordingResponseNotification: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.submissionId, forKey: .submissionId)
         try container.encodeIfPresent(self.testCaseId, forKey: .testCaseId)

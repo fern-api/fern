@@ -1,9 +1,13 @@
-public struct TestCase: Codable, Hashable {
+public struct TestCase: Codable, Hashable, Sendable {
     public let id: String
     public let params: [VariableValue]
     public let additionalProperties: [String: JSONValue]
 
-    public init(id: String, params: [VariableValue], additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        id: String,
+        params: [VariableValue],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.id = id
         self.params = params
         self.additionalProperties = additionalProperties
@@ -17,7 +21,7 @@ public struct TestCase: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.id, forKey: .id)
         try container.encode(self.params, forKey: .params)

@@ -1,9 +1,13 @@
-public struct CreateMovieRequest: Codable, Hashable {
+public struct CreateMovieRequest: Codable, Hashable, Sendable {
     public let title: String
     public let rating: Double
     public let additionalProperties: [String: JSONValue]
 
-    public init(title: String, rating: Double, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        title: String,
+        rating: Double,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.title = title
         self.rating = rating
         self.additionalProperties = additionalProperties
@@ -17,7 +21,7 @@ public struct CreateMovieRequest: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.title, forKey: .title)
         try container.encode(self.rating, forKey: .rating)

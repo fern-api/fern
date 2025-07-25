@@ -49,7 +49,7 @@ export class SubClientGenerator {
         });
         const fileContents = swiftClass.toString();
         return new SwiftFile({
-            filename: this.subpackage.name.pascalCase.safeName + ".swift",
+            filename: `${this.subpackage.name.pascalCase.safeName}Client.swift`,
             directory: RelativeFilePath.of("Resources"),
             fileContents
         });
@@ -162,6 +162,14 @@ export class SubClientGenerator {
                         type: swift.Type.custom(endpoint.requestBody.name.pascalCase.unsafeName)
                     })
                 );
+            } else if (endpoint.requestBody.type === "bytes") {
+                params.push(
+                    swift.functionParameter({
+                        argumentLabel: "request",
+                        unsafeName: "request",
+                        type: swift.Type.data()
+                    })
+                );
             } else {
                 // TODO(kafkas): Handle other request body types
                 params.push(
@@ -187,20 +195,18 @@ export class SubClientGenerator {
     }
 
     private getMethodReturnTypeForEndpoint(endpoint: HttpEndpoint): swift.Type {
-        if (!endpoint.response) {
+        if (!endpoint.response || !endpoint.response.body) {
             return swift.Type.void();
         }
-        return (
-            endpoint.response.body?._visit({
-                json: (resp) => getSwiftTypeForTypeReference(resp.responseBodyType),
-                fileDownload: () => swift.Type.any(),
-                text: () => swift.Type.any(),
-                bytes: () => swift.Type.any(),
-                streaming: () => swift.Type.any(),
-                streamParameter: () => swift.Type.any(),
-                _other: () => swift.Type.any()
-            }) ?? swift.Type.any()
-        );
+        return endpoint.response.body._visit({
+            json: (resp) => getSwiftTypeForTypeReference(resp.responseBodyType),
+            fileDownload: () => swift.Type.any(),
+            text: () => swift.Type.any(),
+            bytes: () => swift.Type.any(),
+            streaming: () => swift.Type.any(),
+            streamParameter: () => swift.Type.any(),
+            _other: () => swift.Type.any()
+        });
     }
 
     private getMethodBodyForEndpoint(endpoint: HttpEndpoint): swift.CodeBlock {
@@ -251,12 +257,13 @@ export class SubClientGenerator {
                                             methodName: getQueryParamCaseName(swiftType),
                                             arguments_: [
                                                 swift.functionArgument({
-                                                    value: swiftType.isCustom
-                                                        ? swift.Expression.memberAccess({
-                                                              target: swift.Expression.reference("$0"),
-                                                              memberName: "rawValue"
-                                                          })
-                                                        : swift.Expression.reference("$0")
+                                                    value:
+                                                        swiftType.unwrappedType === "custom"
+                                                            ? swift.Expression.memberAccess({
+                                                                  target: swift.Expression.reference("$0"),
+                                                                  memberName: "rawValue"
+                                                              })
+                                                            : swift.Expression.reference("$0")
                                                 })
                                             ]
                                         })
@@ -269,16 +276,17 @@ export class SubClientGenerator {
                                         methodName: getQueryParamCaseName(swiftType),
                                         arguments_: [
                                             swift.functionArgument({
-                                                value: swiftType.isCustom
-                                                    ? swift.Expression.memberAccess({
-                                                          target: swift.Expression.reference(
+                                                value:
+                                                    swiftType.unwrappedType === "custom"
+                                                        ? swift.Expression.memberAccess({
+                                                              target: swift.Expression.reference(
+                                                                  queryParam.name.name.camelCase.unsafeName
+                                                              ),
+                                                              memberName: "rawValue"
+                                                          })
+                                                        : swift.Expression.reference(
                                                               queryParam.name.name.camelCase.unsafeName
-                                                          ),
-                                                          memberName: "rawValue"
-                                                      })
-                                                    : swift.Expression.reference(
-                                                          queryParam.name.name.camelCase.unsafeName
-                                                      )
+                                                          )
                                             })
                                         ]
                                     })
@@ -292,12 +300,21 @@ export class SubClientGenerator {
         }
 
         if (endpoint.requestBody) {
-            arguments_.push(
-                swift.functionArgument({
-                    label: "body",
-                    value: swift.Expression.reference("request")
-                })
-            );
+            if (endpoint.requestBody.type === "bytes") {
+                arguments_.push(
+                    swift.functionArgument({
+                        label: "fileData",
+                        value: swift.Expression.reference("request")
+                    })
+                );
+            } else {
+                arguments_.push(
+                    swift.functionArgument({
+                        label: "body",
+                        value: swift.Expression.reference("request")
+                    })
+                );
+            }
         }
 
         arguments_.push(
@@ -307,7 +324,9 @@ export class SubClientGenerator {
             })
         );
 
-        if (endpoint.response) {
+        const returnType = this.getMethodReturnTypeForEndpoint(endpoint);
+
+        if (returnType.type !== "void") {
             arguments_.push(
                 swift.functionArgument({
                     label: "responseType",
@@ -325,8 +344,7 @@ export class SubClientGenerator {
                     swift.Expression.await(
                         swift.Expression.methodCall({
                             target: swift.Expression.reference("httpClient"),
-                            // TODO(kafkas): Changes based on content type
-                            methodName: "performRequest",
+                            methodName: this.getHttpClientMethodNameForEndpoint(endpoint),
                             arguments_,
                             multiline: true
                         })
@@ -353,6 +371,13 @@ export class SubClientGenerator {
             default:
                 assertNever(method);
         }
+    }
+
+    private getHttpClientMethodNameForEndpoint(endpoint: HttpEndpoint): string {
+        if (endpoint.requestBody?.type === "bytes") {
+            return "performFileUpload";
+        }
+        return "performRequest";
     }
 
     private getSubpackages(): Subpackage[] {

@@ -1,9 +1,13 @@
-public struct CreatePaymentRequest: Codable, Hashable {
+public struct CreatePaymentRequest: Codable, Hashable, Sendable {
     public let amount: Int
     public let currency: Currency
     public let additionalProperties: [String: JSONValue]
 
-    public init(amount: Int, currency: Currency, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        amount: Int,
+        currency: Currency,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.amount = amount
         self.currency = currency
         self.additionalProperties = additionalProperties
@@ -17,7 +21,7 @@ public struct CreatePaymentRequest: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.amount, forKey: .amount)
         try container.encode(self.currency, forKey: .currency)

@@ -1,9 +1,13 @@
-public struct WorkspaceSubmissionUpdate: Codable, Hashable {
+public struct WorkspaceSubmissionUpdate: Codable, Hashable, Sendable {
     public let updateTime: Date
     public let updateInfo: WorkspaceSubmissionUpdateInfo
     public let additionalProperties: [String: JSONValue]
 
-    public init(updateTime: Date, updateInfo: WorkspaceSubmissionUpdateInfo, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        updateTime: Date,
+        updateInfo: WorkspaceSubmissionUpdateInfo,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.updateTime = updateTime
         self.updateInfo = updateInfo
         self.additionalProperties = additionalProperties
@@ -17,7 +21,7 @@ public struct WorkspaceSubmissionUpdate: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.updateTime, forKey: .updateTime)
         try container.encode(self.updateInfo, forKey: .updateInfo)

@@ -1,9 +1,13 @@
-public struct VoidFunctionDefinition: Codable, Hashable {
+public struct VoidFunctionDefinition: Codable, Hashable, Sendable {
     public let parameters: [Parameter]
     public let code: FunctionImplementationForMultipleLanguages
     public let additionalProperties: [String: JSONValue]
 
-    public init(parameters: [Parameter], code: FunctionImplementationForMultipleLanguages, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        parameters: [Parameter],
+        code: FunctionImplementationForMultipleLanguages,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.parameters = parameters
         self.code = code
         self.additionalProperties = additionalProperties
@@ -17,7 +21,7 @@ public struct VoidFunctionDefinition: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.parameters, forKey: .parameters)
         try container.encode(self.code, forKey: .code)

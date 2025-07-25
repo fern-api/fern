@@ -1,11 +1,17 @@
-public struct PaginatedConversationResponse: Codable, Hashable {
+public struct PaginatedConversationResponse: Codable, Hashable, Sendable {
     public let conversations: [Conversation]
     public let pages: CursorPages?
     public let totalCount: Int
     public let type: Any
     public let additionalProperties: [String: JSONValue]
 
-    public init(conversations: [Conversation], pages: CursorPages? = nil, totalCount: Int, type: Any, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        conversations: [Conversation],
+        pages: CursorPages? = nil,
+        totalCount: Int,
+        type: Any,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.conversations = conversations
         self.pages = pages
         self.totalCount = totalCount
@@ -23,7 +29,7 @@ public struct PaginatedConversationResponse: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.conversations, forKey: .conversations)
         try container.encodeIfPresent(self.pages, forKey: .pages)

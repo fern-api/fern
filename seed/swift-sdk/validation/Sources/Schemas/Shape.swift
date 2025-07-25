@@ -1,4 +1,4 @@
-public enum Shape: String, Codable, Hashable, Sendable, CaseIterable {
+public enum Shape: String, Codable, Hashable, CaseIterable, Sendable {
     case square = "SQUARE"
     case circle = "CIRCLE"
     case triangle = "TRIANGLE"

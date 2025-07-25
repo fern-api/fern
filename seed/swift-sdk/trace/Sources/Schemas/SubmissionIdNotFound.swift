@@ -1,8 +1,11 @@
-public struct SubmissionIdNotFound: Codable, Hashable {
+public struct SubmissionIdNotFound: Codable, Hashable, Sendable {
     public let missingSubmissionId: SubmissionId
     public let additionalProperties: [String: JSONValue]
 
-    public init(missingSubmissionId: SubmissionId, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        missingSubmissionId: SubmissionId,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.missingSubmissionId = missingSubmissionId
         self.additionalProperties = additionalProperties
     }
@@ -14,7 +17,7 @@ public struct SubmissionIdNotFound: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.missingSubmissionId, forKey: .missingSubmissionId)
     }

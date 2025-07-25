@@ -1,9 +1,13 @@
-public struct SendEvent: Codable, Hashable {
+public struct SendEvent: Codable, Hashable, Sendable {
     public let sendText: String
     public let sendParam: Int
     public let additionalProperties: [String: JSONValue]
 
-    public init(sendText: String, sendParam: Int, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        sendText: String,
+        sendParam: Int,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.sendText = sendText
         self.sendParam = sendParam
         self.additionalProperties = additionalProperties
@@ -17,7 +21,7 @@ public struct SendEvent: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.sendText, forKey: .sendText)
         try container.encode(self.sendParam, forKey: .sendParam)

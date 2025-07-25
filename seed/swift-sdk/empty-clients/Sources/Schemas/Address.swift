@@ -1,4 +1,4 @@
-public struct Address: Codable, Hashable {
+public struct Address: Codable, Hashable, Sendable {
     public let line1: String
     public let line2: String?
     public let city: String
@@ -7,7 +7,15 @@ public struct Address: Codable, Hashable {
     public let country: Any
     public let additionalProperties: [String: JSONValue]
 
-    public init(line1: String, line2: String? = nil, city: String, state: String, zip: String, country: Any, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        line1: String,
+        line2: String? = nil,
+        city: String,
+        state: String,
+        zip: String,
+        country: Any,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.line1 = line1
         self.line2 = line2
         self.city = city
@@ -29,7 +37,7 @@ public struct Address: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.line1, forKey: .line1)
         try container.encodeIfPresent(self.line2, forKey: .line2)

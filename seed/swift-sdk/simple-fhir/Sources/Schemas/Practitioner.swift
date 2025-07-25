@@ -1,9 +1,13 @@
-public struct Practitioner: Codable, Hashable {
+public struct Practitioner: Codable, Hashable, Sendable {
     public let resourceType: Any
     public let name: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(resourceType: Any, name: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        resourceType: Any,
+        name: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.resourceType = resourceType
         self.name = name
         self.additionalProperties = additionalProperties
@@ -17,7 +21,7 @@ public struct Practitioner: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.resourceType, forKey: .resourceType)
         try container.encode(self.name, forKey: .name)

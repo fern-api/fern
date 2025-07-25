@@ -1,13 +1,21 @@
-public struct Metadata: Codable, Hashable {
+public struct Metadata: Codable, Hashable, Sendable {
     public let createdAt: Date
     public let updatedAt: Date
     public let avatar: Any
     public let activated: Any?
     public let status: Status
-    public let values: Any?
+    public let values: [String: Any?]?
     public let additionalProperties: [String: JSONValue]
 
-    public init(createdAt: Date, updatedAt: Date, avatar: Any, activated: Any? = nil, status: Status, values: Any? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        createdAt: Date,
+        updatedAt: Date,
+        avatar: Any,
+        activated: Any? = nil,
+        status: Status,
+        values: [String: Any?]? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.createdAt = createdAt
         self.updatedAt = updatedAt
         self.avatar = avatar
@@ -24,12 +32,12 @@ public struct Metadata: Codable, Hashable {
         self.avatar = try container.decode(Any.self, forKey: .avatar)
         self.activated = try container.decodeIfPresent(Any.self, forKey: .activated)
         self.status = try container.decode(Status.self, forKey: .status)
-        self.values = try container.decodeIfPresent(Any.self, forKey: .values)
+        self.values = try container.decodeIfPresent([String: Any?].self, forKey: .values)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.createdAt, forKey: .createdAt)
         try container.encode(self.updatedAt, forKey: .updatedAt)

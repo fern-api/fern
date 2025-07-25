@@ -1,11 +1,17 @@
-public struct TestSubmissionState: Codable, Hashable {
+public struct TestSubmissionState: Codable, Hashable, Sendable {
     public let problemId: ProblemId
     public let defaultTestCases: [TestCase]
     public let customTestCases: [TestCase]
     public let status: TestSubmissionStatus
     public let additionalProperties: [String: JSONValue]
 
-    public init(problemId: ProblemId, defaultTestCases: [TestCase], customTestCases: [TestCase], status: TestSubmissionStatus, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        problemId: ProblemId,
+        defaultTestCases: [TestCase],
+        customTestCases: [TestCase],
+        status: TestSubmissionStatus,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.problemId = problemId
         self.defaultTestCases = defaultTestCases
         self.customTestCases = customTestCases
@@ -23,7 +29,7 @@ public struct TestSubmissionState: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.problemId, forKey: .problemId)
         try container.encode(self.defaultTestCases, forKey: .defaultTestCases)

@@ -1,9 +1,13 @@
-public struct SearchRequest: Codable, Hashable {
+public struct SearchRequest: Codable, Hashable, Sendable {
     public let pagination: StartingAfterPaging?
     public let query: SearchRequestQuery
     public let additionalProperties: [String: JSONValue]
 
-    public init(pagination: StartingAfterPaging? = nil, query: SearchRequestQuery, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        pagination: StartingAfterPaging? = nil,
+        query: SearchRequestQuery,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.pagination = pagination
         self.query = query
         self.additionalProperties = additionalProperties
@@ -17,7 +21,7 @@ public struct SearchRequest: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encodeIfPresent(self.pagination, forKey: .pagination)
         try container.encode(self.query, forKey: .query)

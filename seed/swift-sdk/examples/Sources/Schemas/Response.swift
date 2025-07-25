@@ -1,9 +1,13 @@
-public struct Response: Codable, Hashable {
+public struct Response: Codable, Hashable, Sendable {
     public let response: Any
     public let identifiers: [Identifier]
     public let additionalProperties: [String: JSONValue]
 
-    public init(response: Any, identifiers: [Identifier], additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        response: Any,
+        identifiers: [Identifier],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.response = response
         self.identifiers = identifiers
         self.additionalProperties = additionalProperties
@@ -17,7 +21,7 @@ public struct Response: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.response, forKey: .response)
         try container.encode(self.identifiers, forKey: .identifiers)
