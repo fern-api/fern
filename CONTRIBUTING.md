@@ -46,6 +46,26 @@ Many of our tests rely on [snapshot testing](https://jestjs.io/docs/snapshot-tes
 
 <br>
 
+## Debugging
+
+For debugging TypeScript code in tests, use the debug compilation and test scripts:
+
+1. **Compile for debugging**: `pnpm compile:debug`
+   - Required for all debug workflows
+   - Uses `--sourceMap` flag to generate source maps for proper TypeScript debugging
+   - Slower than standard compilation, which is why source maps are disabled by default
+
+2. **Run tests with debugger**: `pnpm test:debug [test-file-name]`
+   - Starts tests with Node.js debugger enabled
+   - Optionally specify a test file name to run only that test
+   - Manually attach VS Code debugger by opening Command Palette (Cmd+Shift+P) and selecting "Debug: Attach to Node Process"
+
+**Limitations**: Debug scripts only work with vitest tests. Some -- but not all -- of the workflows they won't work with:
+- Local Fern CLI builds (compiled to single executable CJS file)
+- Generators (run in Docker containers, not all written in TypeScript)
+
+<br>
+
 ## Repository Architecture
 
 Below we talk through the large components of this monorepo and how to contribute to each one.
@@ -171,7 +191,6 @@ Below are some examples of using the command.
 - Pointed at a fern folder with multiple apis: `pnpm seed run --generator ts-sdk --path /Users/jdoe/fern/apis/<name-of-api>`
 
 <br>
-
 ## Feedback
 
 If you have any feedback on what we could improve, please [open an issue](https://github.com/fern-api/fern/issues/new) to discuss it!
