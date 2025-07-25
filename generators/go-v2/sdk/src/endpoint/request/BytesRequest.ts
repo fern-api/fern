@@ -17,6 +17,9 @@ export class BytesRequest extends EndpointRequest {
     }
 
     public getRequestParameterType(): go.Type {
+        if (this.context.customConfig.useReaderForBytesRequest) {
+            return go.Type.reference(this.context.getIoReaderTypeReference());
+        }
         return go.Type.bytes();
     }
 
