@@ -40,8 +40,8 @@ export class StringEnumGenerator {
                 "String",
                 swift.Protocol.Codable,
                 swift.Protocol.Hashable,
-                swift.Protocol.Sendable,
-                swift.Protocol.CaseIterable
+                swift.Protocol.CaseIterable,
+                swift.Protocol.Sendable
             ],
             cases: this.enumTypeDeclaration.values.map((val) => ({
                 unsafeName: val.name.name.camelCase.unsafeName,

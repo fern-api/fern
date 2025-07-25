@@ -71,7 +71,7 @@ export class ObjectGenerator {
         return swift.struct({
             name: this.name,
             accessLevel: swift.AccessLevel.Public,
-            conformances: [swift.Protocol.Codable, swift.Protocol.Hashable],
+            conformances: [swift.Protocol.Codable, swift.Protocol.Hashable, swift.Protocol.Sendable],
             properties: [
                 ...this.properties.map((p) => this.generateSwiftPropertyForProperty(p)),
                 swift.property({
