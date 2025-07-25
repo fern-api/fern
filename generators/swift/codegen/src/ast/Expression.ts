@@ -282,9 +282,11 @@ export class Expression extends AstNode {
         }
         arrayLiteral.elements?.forEach((element, elementIdx) => {
             if (elementIdx > 0) {
-                writer.write(", ");
+                writer.write(",");
                 if (multiline) {
                     writer.newLine();
+                } else {
+                    writer.write(" ");
                 }
             }
             element.write(writer);
