@@ -147,11 +147,15 @@ export class SubClientGenerator {
 
         if (endpoint.requestBody) {
             if (endpoint.requestBody.type === "reference") {
+                const swiftType = getSwiftTypeForTypeReference(endpoint.requestBody.requestBodyType);
                 params.push(
                     swift.functionParameter({
                         argumentLabel: "request",
                         unsafeName: "request",
-                        type: getSwiftTypeForTypeReference(endpoint.requestBody.requestBodyType)
+                        type:
+                            swiftType.unwrappedType === "any"
+                                ? swift.Type.existentialAny(swift.Protocol.Codable)
+                                : swiftType
                     })
                 );
             } else if (endpoint.requestBody.type === "inlinedRequestBody") {
@@ -176,7 +180,7 @@ export class SubClientGenerator {
                     swift.functionParameter({
                         argumentLabel: "request",
                         unsafeName: "request",
-                        type: swift.Type.any()
+                        type: swift.Type.existentialAny(swift.Protocol.Codable)
                     })
                 );
             }

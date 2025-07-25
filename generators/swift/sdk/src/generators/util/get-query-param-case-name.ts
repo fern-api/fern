@@ -44,6 +44,8 @@ export function getQueryParamCaseName(swiftType: swift.Type): string {
             return "unknown";
         case "any":
             return "unknown";
+        case "existential-any":
+            return "unknown";
         default:
             assertNever(swiftType.type);
     }
