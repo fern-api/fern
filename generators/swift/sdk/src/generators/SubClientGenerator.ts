@@ -162,6 +162,14 @@ export class SubClientGenerator {
                         type: swift.Type.custom(endpoint.requestBody.name.pascalCase.unsafeName)
                     })
                 );
+            } else if (endpoint.requestBody.type === "bytes") {
+                params.push(
+                    swift.functionParameter({
+                        argumentLabel: "request",
+                        unsafeName: "request",
+                        type: swift.Type.data()
+                    })
+                );
             } else {
                 // TODO(kafkas): Handle other request body types
                 params.push(
@@ -292,12 +300,21 @@ export class SubClientGenerator {
         }
 
         if (endpoint.requestBody) {
-            arguments_.push(
-                swift.functionArgument({
-                    label: "body",
-                    value: swift.Expression.reference("request")
-                })
-            );
+            if (endpoint.requestBody.type === "bytes") {
+                arguments_.push(
+                    swift.functionArgument({
+                        label: "fileData",
+                        value: swift.Expression.reference("request")
+                    })
+                );
+            } else {
+                arguments_.push(
+                    swift.functionArgument({
+                        label: "body",
+                        value: swift.Expression.reference("request")
+                    })
+                );
+            }
         }
 
         arguments_.push(
@@ -327,8 +344,7 @@ export class SubClientGenerator {
                     swift.Expression.await(
                         swift.Expression.methodCall({
                             target: swift.Expression.reference("httpClient"),
-                            // TODO(kafkas): Changes based on content type
-                            methodName: "performRequest",
+                            methodName: this.getHttpClientMethodNameForEndpoint(endpoint),
                             arguments_,
                             multiline: true
                         })
@@ -355,6 +371,13 @@ export class SubClientGenerator {
             default:
                 assertNever(method);
         }
+    }
+
+    private getHttpClientMethodNameForEndpoint(endpoint: HttpEndpoint): string {
+        if (endpoint.requestBody?.type === "bytes") {
+            return "performFileUpload";
+        }
+        return "performRequest";
     }
 
     private getSubpackages(): Subpackage[] {

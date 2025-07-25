@@ -34,6 +34,10 @@ type Double = {
     type: "double";
 };
 
+type Data = {
+    type: "data";
+};
+
 type Date_ = {
     type: "date";
 };
@@ -89,6 +93,7 @@ type InternalType =
     | Int64
     | Float
     | Double
+    | Data
     | Date_
     | UUID
     | Tuple
@@ -149,6 +154,9 @@ export class Type extends AstNode {
                 break;
             case "double":
                 writer.write("Double");
+                break;
+            case "data":
+                writer.write("Data");
                 break;
             case "date":
                 writer.write("Date");
@@ -227,6 +235,10 @@ export class Type extends AstNode {
 
     public static double(): Type {
         return new this({ type: "double" });
+    }
+
+    public static data(): Type {
+        return new this({ type: "data" });
     }
 
     public static date(): Type {
