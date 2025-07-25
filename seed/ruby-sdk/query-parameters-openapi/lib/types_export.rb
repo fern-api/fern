@@ -1,0 +1,6 @@
+# frozen_string_literal: true
+
+require_relative "fern_query_parameters_openapi/types/user"
+require_relative "fern_query_parameters_openapi/types/nested_user"
+require_relative "fern_query_parameters_openapi/types/search_request_neighbor_required"
+require_relative "fern_query_parameters_openapi/types/search_response"
