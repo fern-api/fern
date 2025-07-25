@@ -1,3 +1,4 @@
+import { execSync } from "child_process";
 import { writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 
@@ -168,6 +169,7 @@ export class ScriptRunner {
     private async startContainers(context: TaskContext): Promise<void> {
         const absoluteFilePathToFernCli = await this.buildFernCli(context);
         const cliVolumeBind = `${absoluteFilePathToFernCli}:/fern`;
+        const poetryCacheDir = execSync("poetry config cache-dir", { encoding: "utf8" }).trim();
         // Start running a docker container for each script instance
         for (const script of this.workspace.workspaceConfig.scripts ?? []) {
             const startSeedCommand = await loggingExeca(undefined, "docker", [
@@ -176,7 +178,7 @@ export class ScriptRunner {
                 "-v",
                 cliVolumeBind,
                 "-v",
-                "~/Library/Caches/pypoetry:/root/.cache/pypoetry",
+                `${poetryCacheDir}:/root/.cache/pypoetry`,
                 script.docker,
                 "/bin/sh"
             ]);

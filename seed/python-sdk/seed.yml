@@ -306,12 +306,20 @@ scripts:
       # Tests now run a mock server, you can always run seed with --skip-scripts to save time
       - export NPM_CONFIG_CACHE="$(pwd)/.cache"
       - export HOME="$(pwd)/"
+      - 'echo "start: $SECONDS"'
       - poetry config virtualenvs.path .
+      - poetry config cache-dir /root/.cache/pypoetry
+      - 'echo "post virtualenv: $SECONDS"'
       - poetry add pydantic=^2.8
+      - 'echo "post add pydantic: $SECONDS"'
       - poetry lock
+      - 'echo "post lock: $SECONDS"'
       - poetry install
+      - 'echo "post install: $SECONDS"'
       - poetry run mypy ./src ./tests
+      - 'echo "post mypy: $SECONDS"'
       - poetry run pytest -rP .
+      - 'echo "post pytest: $SECONDS"'
   # Test Pydantic V1
   - docker: fernapi/python-seed
     commands:
