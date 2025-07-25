@@ -146,7 +146,6 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         MethodSpec.Builder buildMethod =
                 MethodSpec.methodBuilder("build").addModifiers(Modifier.PUBLIC).returns(className());
 
-        // Store timeout and retries as separate fields instead of using CLIENT_OPTIONS_BUILDER_NAME
         clientBuilder.addField(FieldSpec.builder(
                         ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Integer.class)),
                         "timeout")
@@ -165,7 +164,6 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         generatedEnvironmentsClass.getClassName(), ENVIRONMENT_FIELD_NAME)
                 .addModifiers(Modifier.PRIVATE);
 
-        // Check what features the API has
         boolean hasAuth = !generatorContext.getResolvedAuthSchemes().isEmpty();
         boolean hasCustomHeaders = !generatorContext.getIr().getHeaders().isEmpty();
         boolean hasVariables = !generatorContext.getIr().getVariables().isEmpty();
@@ -187,7 +185,6 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     .addJavadoc("Override this method to add custom headers");
         }
 
-        // Process auth schemes and headers only if needed
         if (hasAuth || hasCustomHeaders) {
             AuthSchemeHandler authSchemeHandler = new AuthSchemeHandler(
                     clientBuilder, buildMethod, configureAuthBuilder, configureCustomHeadersBuilder);
@@ -300,7 +297,6 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 })
                 .forEach(clientBuilder::addMethod);
 
-        // Build the buildClientOptions method dynamically based on API spec
         MethodSpec.Builder buildClientOptionsMethodBuilder = MethodSpec.methodBuilder("buildClientOptions")
                 .addModifiers(Modifier.PROTECTED)
                 .returns(generatedClientOptions.getClassName())
@@ -311,10 +307,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .addStatement("")
                 .addComment("Call configuration methods in order");
 
-        // Always configure environment
         buildClientOptionsMethodBuilder.addStatement("configureEnvironment(builder)");
 
-        // Only add configuration method calls based on what the API has
         if (hasAuth) {
             buildClientOptionsMethodBuilder.addStatement("configureAuthentication(builder)");
         }
@@ -327,7 +321,6 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             buildClientOptionsMethodBuilder.addStatement("configureVariables(builder)");
         }
 
-        // Always add standard client configurations
         buildClientOptionsMethodBuilder
                 .addStatement("configureHttpClient(builder)")
                 .addStatement("configureTimeouts(builder)")
@@ -340,7 +333,6 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
         clientBuilder.addMethod(buildClientOptionsMethodBuilder.build());
 
-        // Always add configureEnvironment method
         MethodSpec configureEnvironmentMethod = MethodSpec.methodBuilder("configureEnvironment")
                 .addModifiers(Modifier.PROTECTED)
                 .addParameter(generatedClientOptions.builderClassName(), "builder")
@@ -348,17 +340,14 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .build();
         clientBuilder.addMethod(configureEnvironmentMethod);
 
-        // Only add configureAuthentication if API has auth
         if (hasAuth) {
             clientBuilder.addMethod(configureAuthBuilder.build());
         }
 
-        // Only add configureCustomHeaders if API has custom headers
         if (hasCustomHeaders) {
             clientBuilder.addMethod(configureCustomHeadersBuilder.build());
         }
 
-        // Only add configureVariables if API has variables
         if (hasVariables) {
             MethodSpec configureVariablesMethod = MethodSpec.methodBuilder("configureVariables")
                     .addModifiers(Modifier.PROTECTED)
@@ -390,7 +379,6 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .build();
         clientBuilder.addMethod(configureRetriesMethod);
 
-        // Also need to configure httpClient in buildClientOptions
         MethodSpec configureHttpClientMethod = MethodSpec.methodBuilder("configureHttpClient")
                 .addModifiers(Modifier.PROTECTED)
                 .addParameter(generatedClientOptions.builderClassName(), "builder")
@@ -407,7 +395,6 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .build();
         clientBuilder.addMethod(configureAdditionalMethod);
 
-        // Add a validateConfiguration method
         MethodSpec validateConfigurationMethod = MethodSpec.methodBuilder("validateConfiguration")
                 .addModifiers(Modifier.PROTECTED)
                 .addJavadoc("Override this method to add custom validation logic")
@@ -472,7 +459,6 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .endControlFlow();
             }
 
-            // Add authentication to configureAuthentication method if it exists
             if (this.configureAuthMethod != null) {
                 this.configureAuthMethod
                         .beginControlFlow("if (this.$L != null)", fieldName)
@@ -496,7 +482,6 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             }
             this.clientBuilder.addField(usernameField.build());
 
-            // password
             String passwordFieldName = basic.getPassword().getCamelCase().getSafeName();
             FieldSpec.Builder passwordField =
                     FieldSpec.builder(String.class, passwordFieldName).addModifiers(Modifier.PRIVATE);
@@ -508,7 +493,6 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             }
             this.clientBuilder.addField(passwordField.build());
 
-            // add setter method
             ParameterSpec usernameParam =
                     ParameterSpec.builder(String.class, usernameFieldName).build();
             ParameterSpec passwordParam =
@@ -523,7 +507,6 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     .returns(builderName)
                     .build());
 
-            // Add validation to build() method
             if (isMandatory) {
                 this.buildMethod
                         .beginControlFlow("if (this.$L == null)", usernameFieldName)
@@ -547,7 +530,6 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .endControlFlow();
             }
 
-            // Add authentication to configureAuthentication method if it exists
             if (this.configureAuthMethod != null) {
                 this.configureAuthMethod
                         .beginControlFlow(
@@ -593,7 +575,6 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         clientGeneratorContext.getPoetClassNameFactory().getClientClassName(subpackage);
                 ClassName oauthTokenSupplierClassName =
                         generatedOAuthTokenSupplier.get().getClassName();
-                // Add OAuth to configureAuthentication method if it exists
                 if (configureAuthMethod != null) {
                     configureAuthMethod
                             .beginControlFlow("if (this.clientId != null && this.clientSecret != null)")
@@ -651,11 +632,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 createSetter(fieldName, header.getHeaderEnvVar(), Optional.of(literal));
             }
 
-            // Determine which method to add the header to
             MethodSpec.Builder targetMethod =
                     respectMandatoryAuth ? this.configureAuthMethod : this.configureCustomHeadersMethod;
 
-            // Skip if the target method doesn't exist
             if (targetMethod == null) {
                 return null;
             }
