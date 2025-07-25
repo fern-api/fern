@@ -1,14 +1,14 @@
 # Seed TypeScript Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FTypeScript)
-[![npm shield](https://img.shields.io/npm/v/@fern/oauth-client-credentials-with-variables)](https://www.npmjs.com/package/@fern/oauth-client-credentials-with-variables)
+[![npm shield](https://img.shields.io/npm/v/@fern/extends)](https://www.npmjs.com/package/@fern/extends)
 
 The Seed TypeScript library provides convenient access to the Seed API from TypeScript.
 
 ## Installation
 
 ```sh
-npm i -s @fern/oauth-client-credentials-with-variables
+npm i -s @fern/extends
 ```
 
 ## Reference
@@ -20,18 +20,13 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedOauthClientCredentialsWithVariablesClient } from "@fern/oauth-client-credentials-with-variables";
+import { SeedExtendsClient } from "@fern/extends";
 
-const client = new SeedOauthClientCredentialsWithVariablesClient({
-    environment: "YOUR_BASE_URL",
-    clientId: "YOUR_CLIENT_ID",
-    clientSecret: "YOUR_CLIENT_SECRET",
-    rootVariable: "YOUR_ROOT_VARIABLE",
-});
-await client.auth.getTokenWithClientCredentials({
-    client_id: "client_id",
-    client_secret: "client_secret",
-    scope: "scope",
+const client = new SeedExtendsClient({ environment: "YOUR_BASE_URL" });
+await client.extendedInlineRequestBody({
+    unique: "unique",
+    name: "name",
+    docs: "docs",
 });
 ```
 
@@ -41,9 +36,9 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { SeedOauthClientCredentialsWithVariables } from "@fern/oauth-client-credentials-with-variables";
+import { SeedExtends } from "@fern/extends";
 
-const request: SeedOauthClientCredentialsWithVariables.GetTokenRequest = {
+const request: SeedExtends.Inlined = {
     ...
 };
 ```
@@ -54,12 +49,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedOauthClientCredentialsWithVariablesError } from "@fern/oauth-client-credentials-with-variables";
+import { SeedExtendsError } from "@fern/extends";
 
 try {
-    await client.auth.getTokenWithClientCredentials(...);
+    await client.extendedInlineRequestBody(...);
 } catch (err) {
-    if (err instanceof SeedOauthClientCredentialsWithVariablesError) {
+    if (err instanceof SeedExtendsError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -75,7 +70,7 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-const response = await client.auth.getTokenWithClientCredentials(..., {
+const response = await client.extendedInlineRequestBody(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -87,7 +82,7 @@ const response = await client.auth.getTokenWithClientCredentials(..., {
 If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
 
 ```typescript
-const response = await client.auth.getTokenWithClientCredentials(..., {
+const response = await client.extendedInlineRequestBody(..., {
     queryParams: {
         'customQueryParamKey': 'custom query param value'
     }
@@ -109,7 +104,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.auth.getTokenWithClientCredentials(..., {
+const response = await client.extendedInlineRequestBody(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -119,7 +114,7 @@ const response = await client.auth.getTokenWithClientCredentials(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.auth.getTokenWithClientCredentials(..., {
+const response = await client.extendedInlineRequestBody(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -130,7 +125,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.auth.getTokenWithClientCredentials(..., {
+const response = await client.extendedInlineRequestBody(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -142,7 +137,7 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
 
 ```typescript
-const { data, rawResponse } = await client.auth.getTokenWithClientCredentials(...).withRawResponse();
+const { data, rawResponse } = await client.extendedInlineRequestBody(...).withRawResponse();
 
 console.log(data);
 console.log(rawResponse.headers['X-My-Header']);
@@ -165,9 +160,9 @@ The SDK provides a way for you to customize the underlying HTTP client / Fetch f
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { SeedOauthClientCredentialsWithVariablesClient } from "@fern/oauth-client-credentials-with-variables";
+import { SeedExtendsClient } from "@fern/extends";
 
-const client = new SeedOauthClientCredentialsWithVariablesClient({
+const client = new SeedExtendsClient({
     ...
     fetcher: // provide your implementation here
 });
