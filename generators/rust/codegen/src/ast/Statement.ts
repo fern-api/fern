@@ -10,9 +10,15 @@ export declare namespace Statement {
         | { type: "expression"; expression: Expression }
         | { type: "assignment"; target: Expression; value: Expression }
         | { type: "if"; condition: Expression; then: Statement[]; else_?: Statement[] }
+        | { type: "if-let"; pattern: string; value: Expression; then: Statement[]; else_?: Statement[] }
         | { type: "match"; expression: Expression; arms: MatchArm[] }
         | { type: "while"; condition: Expression; body: Statement[] }
+        | { type: "while-let"; pattern: string; value: Expression; body: Statement[] }
         | { type: "for"; pattern: string; iterable: Expression; body: Statement[] }
+        | { type: "loop"; body: Statement[] }
+        | { type: "break"; label?: string; value?: Expression }
+        | { type: "continue"; label?: string }
+        | { type: "unsafe"; body: Statement[] }
         | { type: "raw"; value: string };
 
     interface MatchArm {
@@ -63,23 +69,24 @@ export class Statement extends AstNode {
                 writer.write(";");
                 break;
 
-            case "if":
+            case "if": {
+                const ifArgs = this.args as Extract<Statement.Args, { type: "if" }>;
                 writer.write("if ");
-                this.args.condition.write(writer);
+                ifArgs.condition.write(writer);
                 writer.write(" {");
                 writer.newLine();
                 writer.indent();
-                this.args.then.forEach(stmt => {
+                ifArgs.then.forEach(stmt => {
                     stmt.write(writer);
                     writer.newLine();
                 });
                 writer.dedent();
                 writer.write("}");
-                if (this.args.else_) {
+                if (ifArgs.else_) {
                     writer.write(" else {");
                     writer.newLine();
                     writer.indent();
-                    this.args.else_.forEach(stmt => {
+                    ifArgs.else_.forEach(stmt => {
                         stmt.write(writer);
                         writer.newLine();
                     });
@@ -87,6 +94,36 @@ export class Statement extends AstNode {
                     writer.write("}");
                 }
                 break;
+            }
+
+            case "if-let": {
+                const ifLetArgs = this.args as Extract<Statement.Args, { type: "if-let" }>;
+                writer.write("if let ");
+                writer.write(ifLetArgs.pattern);
+                writer.write(" = ");
+                ifLetArgs.value.write(writer);
+                writer.write(" {");
+                writer.newLine();
+                writer.indent();
+                ifLetArgs.then.forEach(stmt => {
+                    stmt.write(writer);
+                    writer.newLine();
+                });
+                writer.dedent();
+                writer.write("}");
+                if (ifLetArgs.else_) {
+                    writer.write(" else {");
+                    writer.newLine();
+                    writer.indent();
+                    ifLetArgs.else_.forEach(stmt => {
+                        stmt.write(writer);
+                        writer.newLine();
+                    });
+                    writer.dedent();
+                    writer.write("}");
+                }
+                break;
+            }
 
             case "match": {
                 const matchArgs = this.args as Extract<Statement.Args, { type: "match" }>;
@@ -120,35 +157,111 @@ export class Statement extends AstNode {
                 break;
             }
 
-            case "while":
+            case "while": {
+                const whileArgs = this.args as Extract<Statement.Args, { type: "while" }>;
                 writer.write("while ");
-                this.args.condition.write(writer);
+                whileArgs.condition.write(writer);
                 writer.write(" {");
                 writer.newLine();
                 writer.indent();
-                this.args.body.forEach(stmt => {
+                whileArgs.body.forEach(stmt => {
                     stmt.write(writer);
                     writer.newLine();
                 });
                 writer.dedent();
                 writer.write("}");
                 break;
+            }
 
-            case "for":
-                writer.write("for ");
-                writer.write(this.args.pattern);
-                writer.write(" in ");
-                this.args.iterable.write(writer);
+            case "while-let": {
+                const whileLetArgs = this.args as Extract<Statement.Args, { type: "while-let" }>;
+                writer.write("while let ");
+                writer.write(whileLetArgs.pattern);
+                writer.write(" = ");
+                whileLetArgs.value.write(writer);
                 writer.write(" {");
                 writer.newLine();
                 writer.indent();
-                this.args.body.forEach(stmt => {
+                whileLetArgs.body.forEach(stmt => {
                     stmt.write(writer);
                     writer.newLine();
                 });
                 writer.dedent();
                 writer.write("}");
                 break;
+            }
+
+            case "for": {
+                const forArgs = this.args as Extract<Statement.Args, { type: "for" }>;
+                writer.write("for ");
+                writer.write(forArgs.pattern);
+                writer.write(" in ");
+                forArgs.iterable.write(writer);
+                writer.write(" {");
+                writer.newLine();
+                writer.indent();
+                forArgs.body.forEach(stmt => {
+                    stmt.write(writer);
+                    writer.newLine();
+                });
+                writer.dedent();
+                writer.write("}");
+                break;
+            }
+
+            case "loop": {
+                const loopArgs = this.args as Extract<Statement.Args, { type: "loop" }>;
+                writer.write("loop {");
+                writer.newLine();
+                writer.indent();
+                loopArgs.body.forEach(stmt => {
+                    stmt.write(writer);
+                    writer.newLine();
+                });
+                writer.dedent();
+                writer.write("}");
+                break;
+            }
+
+            case "break": {
+                const breakArgs = this.args as Extract<Statement.Args, { type: "break" }>;
+                writer.write("break");
+                if (breakArgs.label) {
+                    writer.write(" '");
+                    writer.write(breakArgs.label);
+                }
+                if (breakArgs.value) {
+                    writer.write(" ");
+                    breakArgs.value.write(writer);
+                }
+                writer.write(";");
+                break;
+            }
+
+            case "continue": {
+                const continueArgs = this.args as Extract<Statement.Args, { type: "continue" }>;
+                writer.write("continue");
+                if (continueArgs.label) {
+                    writer.write(" '");
+                    writer.write(continueArgs.label);
+                }
+                writer.write(";");
+                break;
+            }
+
+            case "unsafe": {
+                const unsafeArgs = this.args as Extract<Statement.Args, { type: "unsafe" }>;
+                writer.write("unsafe {");
+                writer.newLine();
+                writer.indent();
+                unsafeArgs.body.forEach(stmt => {
+                    stmt.write(writer);
+                    writer.newLine();
+                });
+                writer.dedent();
+                writer.write("}");
+                break;
+            }
 
             case "raw":
                 writer.write(this.args.value);
@@ -187,6 +300,30 @@ export class Statement extends AstNode {
 
     public static for(pattern: string, iterable: Expression, body: Statement[]): Statement {
         return new Statement({ type: "for", pattern, iterable, body });
+    }
+
+    public static ifLet(pattern: string, value: Expression, then: Statement[], else_?: Statement[]): Statement {
+        return new Statement({ type: "if-let", pattern, value, then, else_ });
+    }
+
+    public static whileLet(pattern: string, value: Expression, body: Statement[]): Statement {
+        return new Statement({ type: "while-let", pattern, value, body });
+    }
+
+    public static loop(body: Statement[]): Statement {
+        return new Statement({ type: "loop", body });
+    }
+
+    public static break(label?: string, value?: Expression): Statement {
+        return new Statement({ type: "break", label, value });
+    }
+
+    public static continue(label?: string): Statement {
+        return new Statement({ type: "continue", label });
+    }
+
+    public static unsafe(body: Statement[]): Statement {
+        return new Statement({ type: "unsafe", body });
     }
 
     public static raw(value: string): Statement {

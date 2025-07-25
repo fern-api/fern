@@ -12,6 +12,8 @@ import {
     NewtypeStruct,
     Method,
     ImplBlock,
+    Module,
+    Client,
     Visibility,
     PUBLIC,
     Expression,
@@ -84,6 +86,14 @@ export function implBlock(args: ImplBlock.Args): ImplBlock {
     return new ImplBlock(args);
 }
 
+export function module(args: Module.Args): Module {
+    return new Module(args);
+}
+
+export function client(args: Client.Args): Client {
+    return new Client(args);
+}
+
 // Factory function for Writer creation
 export function writer(): Writer {
     return new Writer();
@@ -101,6 +111,8 @@ export const rust = {
     NewtypeStruct,
     Method,
     ImplBlock,
+    Module,
+    Client,
     Expression,
     Statement,
     CodeBlock,
@@ -112,6 +124,8 @@ export const rust = {
     newtypeStruct,
     method,
     implBlock,
+    module,
+    client,
     writer,
     visibility: {
         public: PUBLIC as Visibility,

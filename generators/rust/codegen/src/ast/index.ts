@@ -14,6 +14,8 @@ export { EnumVariant } from "./EnumVariant";
 export { Method } from "./Method";
 export type { FunctionParameter } from "./Method";
 export { ImplBlock } from "./ImplBlock";
+export { Module } from "./Module";
+export { Client } from "./Client";
 export {
     PrimitiveType,
     PUBLIC,
