@@ -6536,83 +6536,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "Index Using Instructor Model",
-              "description": "",
-              "path": "/v1/document-indexes",
-              "pathParameters": {},
-              "queryParameters": {},
-              "headers": {},
-              "requestBody": {
-                "label": "My Document Index",
-                "name": "my-document-index",
-                "indexing_config": {
-                  "chunking": {
-                    "chunker_name": "sentence-chunker",
-                    "chunker_config": {
-                      "character_limit": 1000,
-                      "min_overlap_ratio": 0.5
-                    }
-                  },
-                  "vectorizer": {
-                    "model_name": "hkunlp/instructor-xl",
-                    "config": {
-                      "instruction_domain": "",
-                      "instruction_document_text_type": "plain_text",
-                      "instruction_query_text_type": "plain_text"
-                    }
-                  }
-                },
-                "copy_documents_from_index_id": {}
-              },
-              "requestBodyV3": {
-                "type": "json",
-                "value": {
-                  "label": "My Document Index",
-                  "name": "my-document-index",
-                  "indexing_config": {
-                    "chunking": {
-                      "chunker_name": "sentence-chunker",
-                      "chunker_config": {
-                        "character_limit": 1000,
-                        "min_overlap_ratio": 0.5
-                      }
-                    },
-                    "vectorizer": {
-                      "model_name": "hkunlp/instructor-xl",
-                      "config": {
-                        "instruction_domain": "",
-                        "instruction_document_text_type": "plain_text",
-                        "instruction_query_text_type": "plain_text"
-                      }
-                    }
-                  },
-                  "copy_documents_from_index_id": {}
-                }
-              },
-              "responseStatusCode": 201,
-              "responseBody": {
-                "id": "string",
-                "created": "2024-01-15T09:30:00Z",
-                "label": "string",
-                "name": "string",
-                "status": "ACTIVE",
-                "environment": "DEVELOPMENT",
-                "indexing_config": {}
-              },
-              "responseBodyV3": {
-                "type": "json",
-                "value": {
-                  "id": "string",
-                  "created": "2024-01-15T09:30:00Z",
-                  "label": "string",
-                  "name": "string",
-                  "status": "ACTIVE",
-                  "environment": "DEVELOPMENT",
-                  "indexing_config": {}
-                }
-              }
-            },
-            {
               "name": "Index Using a Sentence Transformers Model",
               "description": "",
               "path": "/v1/document-indexes",
@@ -6725,6 +6648,82 @@
                       "model_name": "text-embedding-ada-002",
                       "config": {
                         "add_openai_api_key": true
+                      }
+                    }
+                  },
+                  "copy_documents_from_index_id": {}
+                }
+              },
+              "responseStatusCode": 201,
+              "responseBody": {
+                "id": "string",
+                "created": "2024-01-15T09:30:00Z",
+                "label": "string",
+                "name": "string",
+                "status": "ACTIVE",
+                "environment": "DEVELOPMENT",
+                "indexing_config": {}
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "id": "string",
+                  "created": "2024-01-15T09:30:00Z",
+                  "label": "string",
+                  "name": "string",
+                  "status": "ACTIVE",
+                  "environment": "DEVELOPMENT",
+                  "indexing_config": {}
+                }
+              }
+            },
+            {
+              "description": "",
+              "path": "/v1/document-indexes",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "label": "My Document Index",
+                "name": "my-document-index",
+                "indexing_config": {
+                  "chunking": {
+                    "chunker_name": "sentence-chunker",
+                    "chunker_config": {
+                      "character_limit": 1000,
+                      "min_overlap_ratio": 0.5
+                    }
+                  },
+                  "vectorizer": {
+                    "model_name": "hkunlp/instructor-xl",
+                    "config": {
+                      "instruction_domain": "",
+                      "instruction_document_text_type": "plain_text",
+                      "instruction_query_text_type": "plain_text"
+                    }
+                  }
+                },
+                "copy_documents_from_index_id": {}
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "label": "My Document Index",
+                  "name": "my-document-index",
+                  "indexing_config": {
+                    "chunking": {
+                      "chunker_name": "sentence-chunker",
+                      "chunker_config": {
+                        "character_limit": 1000,
+                        "min_overlap_ratio": 0.5
+                      }
+                    },
+                    "vectorizer": {
+                      "model_name": "hkunlp/instructor-xl",
+                      "config": {
+                        "instruction_domain": "",
+                        "instruction_document_text_type": "plain_text",
+                        "instruction_query_text_type": "plain_text"
                       }
                     }
                   },
@@ -7773,106 +7772,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "Basic Example",
-              "description": "",
-              "path": "/v1/sandboxes/id/scenarios",
-              "pathParameters": {
-                "id": "id"
-              },
-              "queryParameters": {},
-              "headers": {},
-              "requestBody": {
-                "label": "Scenario 1",
-                "inputs": [
-                  {
-                    "key": "var_1",
-                    "type": "TEXT",
-                    "value": "Hello, world!"
-                  },
-                  {
-                    "key": "var_2",
-                    "type": "TEXT",
-                    "value": "Why hello, there!"
-                  }
-                ],
-                "metric_input_params": {
-                  "params": {}
-                },
-                "id": "3ee58bf2-1e5c-415e-8b6c-02ca8b77f29d"
-              },
-              "requestBodyV3": {
-                "type": "json",
-                "value": {
-                  "label": "Scenario 1",
-                  "inputs": [
-                    {
-                      "key": "var_1",
-                      "type": "TEXT",
-                      "value": "Hello, world!"
-                    },
-                    {
-                      "key": "var_2",
-                      "type": "TEXT",
-                      "value": "Why hello, there!"
-                    }
-                  ],
-                  "metric_input_params": {
-                    "params": {}
-                  },
-                  "id": "3ee58bf2-1e5c-415e-8b6c-02ca8b77f29d"
-                }
-              },
-              "responseStatusCode": 200,
-              "responseBody": {
-                "label": "Untitled Scenario",
-                "inputs": [
-                  {
-                    "key": "string",
-                    "type": "TEXT",
-                    "value": "string",
-                    "chat_history": [
-                      {
-                        "text": "string",
-                        "role": "SYSTEM"
-                      }
-                    ]
-                  }
-                ],
-                "id": "string",
-                "metric_input_params": {
-                  "params": {
-                    "target": "string"
-                  }
-                }
-              },
-              "responseBodyV3": {
-                "type": "json",
-                "value": {
-                  "label": "Untitled Scenario",
-                  "inputs": [
-                    {
-                      "key": "string",
-                      "type": "TEXT",
-                      "value": "string",
-                      "chat_history": [
-                        {
-                          "text": "string",
-                          "role": "SYSTEM"
-                        }
-                      ]
-                    }
-                  ],
-                  "id": "string",
-                  "metric_input_params": {
-                    "params": {
-                      "target": "string"
-                    }
-                  }
-                }
-              }
-            },
-            {
-              "name": "Chat History Example",
               "description": "",
               "path": "/v1/sandboxes/id/scenarios",
               "pathParameters": {
@@ -7927,6 +7826,104 @@
                     "params": {}
                   },
                   "id": "50c55d1d-4c37-4c83-afc1-9d895f286320"
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "label": "Untitled Scenario",
+                "inputs": [
+                  {
+                    "key": "string",
+                    "type": "TEXT",
+                    "value": "string",
+                    "chat_history": [
+                      {
+                        "text": "string",
+                        "role": "SYSTEM"
+                      }
+                    ]
+                  }
+                ],
+                "id": "string",
+                "metric_input_params": {
+                  "params": {
+                    "target": "string"
+                  }
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "label": "Untitled Scenario",
+                  "inputs": [
+                    {
+                      "key": "string",
+                      "type": "TEXT",
+                      "value": "string",
+                      "chat_history": [
+                        {
+                          "text": "string",
+                          "role": "SYSTEM"
+                        }
+                      ]
+                    }
+                  ],
+                  "id": "string",
+                  "metric_input_params": {
+                    "params": {
+                      "target": "string"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "description": "",
+              "path": "/v1/sandboxes/id/scenarios",
+              "pathParameters": {
+                "id": "id"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "label": "Scenario 1",
+                "inputs": [
+                  {
+                    "key": "var_1",
+                    "type": "TEXT",
+                    "value": "Hello, world!"
+                  },
+                  {
+                    "key": "var_2",
+                    "type": "TEXT",
+                    "value": "Why hello, there!"
+                  }
+                ],
+                "metric_input_params": {
+                  "params": {}
+                },
+                "id": "3ee58bf2-1e5c-415e-8b6c-02ca8b77f29d"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "label": "Scenario 1",
+                  "inputs": [
+                    {
+                      "key": "var_1",
+                      "type": "TEXT",
+                      "value": "Hello, world!"
+                    },
+                    {
+                      "key": "var_2",
+                      "type": "TEXT",
+                      "value": "Why hello, there!"
+                    }
+                  ],
+                  "metric_input_params": {
+                    "params": {}
+                  },
+                  "id": "3ee58bf2-1e5c-415e-8b6c-02ca8b77f29d"
                 }
               },
               "responseStatusCode": 200,

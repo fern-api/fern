@@ -6,6 +6,77 @@ import (
 	fmt "fmt"
 )
 
+type Request struct {
+	Union *MetadataUnion `json:"union,omitempty" url:"union,omitempty"`
+}
+
+type TypeWithOptionalUnion struct {
+	MyUnion *MyUnion `json:"myUnion,omitempty" url:"myUnion,omitempty"`
+}
+
+// Several different types are accepted.
+type MyUnion struct {
+	String          string
+	StringList      []string
+	Integer         int
+	IntegerList     []int
+	IntegerListList [][]int
+	StringSet       []string
+}
+
+// Nested layer 2.
+type NestedUnionL2 struct {
+	Boolean    bool
+	StringSet  []string
+	StringList []string
+}
+
+// Nested layer 1.
+type NestedUnionL1 struct {
+	Integer       int
+	StringSet     []string
+	StringList    []string
+	NestedUnionL2 *NestedUnionL2
+}
+
+// Nested union root.
+type NestedUnionRoot struct {
+	String        string
+	StringList    []string
+	NestedUnionL1 *NestedUnionL1
+}
+
+// Duplicate types.
+type UnionWithDuplicateTypes struct {
+	String     string
+	StringList []string
+	Integer    int
+	StringSet  []string
+}
+
+type MetadataUnion struct {
+	OptionalMetadata OptionalMetadata
+	NamedMetadata    *NamedMetadata
+}
+
+type NamedMetadata struct {
+	Name  string         `json:"name" url:"name"`
+	Value map[string]any `json:"value" url:"value"`
+}
+
+type OptionalMetadata = map[string]any
+
+// Undiscriminated unions can act as a map key
+// as long as all of their values are valid keys
+// (i.e. do they have a valid string representation).
+type Metadata = map[*Key]string
+
+type Key struct {
+	KeyType *KeyType
+
+	defaultStringLiteral string
+}
+
 type KeyType string
 
 const (

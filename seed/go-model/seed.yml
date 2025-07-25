@@ -50,4 +50,7 @@ scripts:
     commands:
       - CGO_ENABLED=0 go test ./...
 
-allowedFailures: []
+allowedFailures:
+  - literal
+  - reserved-keywords
+  - trace

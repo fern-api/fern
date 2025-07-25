@@ -6,6 +6,32 @@ import (
 	fmt "fmt"
 )
 
+type TorU struct {
+	T *T
+	U *U
+}
+
+type T struct {
+	Child *TorU `json:"child" url:"child"`
+}
+
+type U struct {
+	Child *T `json:"child" url:"child"`
+}
+
+type FieldValue struct {
+	Type           string
+	PrimitiveValue *PrimitiveValue
+	ObjectValue    ObjectValue
+	ContainerValue *ContainerValue
+}
+
+type ContainerValue struct {
+	Type     string
+	List     []*FieldValue
+	Optional *FieldValue
+}
+
 type PrimitiveValue string
 
 const (
@@ -26,4 +52,14 @@ func NewPrimitiveValueFromString(s string) (PrimitiveValue, error) {
 
 func (p PrimitiveValue) Ptr() *PrimitiveValue {
 	return &p
+}
+
+type ObjectValue struct{}
+
+type JsonLike struct {
+	JsonLikeList      []*JsonLike
+	StringJsonLikeMap map[string]*JsonLike
+	String            string
+	Integer           int
+	Boolean           bool
 }

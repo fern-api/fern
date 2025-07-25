@@ -6,6 +6,16 @@ import (
 	fmt "fmt"
 )
 
+type SearchRequestQuery struct {
+	SingleFilterSearchRequest   *SingleFilterSearchRequest
+	MultipleFilterSearchRequest *MultipleFilterSearchRequest
+}
+
+type MultipleFilterSearchRequest struct {
+	Operator *MultipleFilterSearchRequestOperator `json:"operator,omitempty" url:"operator,omitempty"`
+	Value    *MultipleFilterSearchRequestValue    `json:"value,omitempty" url:"value,omitempty"`
+}
+
 type MultipleFilterSearchRequestOperator string
 
 const (
@@ -26,6 +36,17 @@ func NewMultipleFilterSearchRequestOperatorFromString(s string) (MultipleFilterS
 
 func (m MultipleFilterSearchRequestOperator) Ptr() *MultipleFilterSearchRequestOperator {
 	return &m
+}
+
+type MultipleFilterSearchRequestValue struct {
+	MultipleFilterSearchRequestList []*MultipleFilterSearchRequest
+	SingleFilterSearchRequestList   []*SingleFilterSearchRequest
+}
+
+type SingleFilterSearchRequest struct {
+	Field    *string                            `json:"field,omitempty" url:"field,omitempty"`
+	Operator *SingleFilterSearchRequestOperator `json:"operator,omitempty" url:"operator,omitempty"`
+	Value    *string                            `json:"value,omitempty" url:"value,omitempty"`
 }
 
 type SingleFilterSearchRequestOperator string
@@ -72,4 +93,35 @@ func NewSingleFilterSearchRequestOperatorFromString(s string) (SingleFilterSearc
 
 func (s SingleFilterSearchRequestOperator) Ptr() *SingleFilterSearchRequestOperator {
 	return &s
+}
+
+type SearchRequest struct {
+	Pagination *StartingAfterPaging `json:"pagination,omitempty" url:"pagination,omitempty"`
+	Query      *SearchRequestQuery  `json:"query" url:"query"`
+}
+
+type PaginatedConversationResponse struct {
+	Conversations []*Conversation `json:"conversations" url:"conversations"`
+	Pages         *CursorPages    `json:"pages,omitempty" url:"pages,omitempty"`
+	TotalCount    int             `json:"total_count" url:"total_count"`
+
+	type_ string
+}
+
+type CursorPages struct {
+	Next       *StartingAfterPaging `json:"next,omitempty" url:"next,omitempty"`
+	Page       *int                 `json:"page,omitempty" url:"page,omitempty"`
+	PerPage    *int                 `json:"per_page,omitempty" url:"per_page,omitempty"`
+	TotalPages *int                 `json:"total_pages,omitempty" url:"total_pages,omitempty"`
+
+	type_ string
+}
+
+type StartingAfterPaging struct {
+	PerPage       int     `json:"per_page" url:"per_page"`
+	StartingAfter *string `json:"starting_after,omitempty" url:"starting_after,omitempty"`
+}
+
+type Conversation struct {
+	Foo string `json:"foo" url:"foo"`
 }

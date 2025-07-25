@@ -6,6 +6,21 @@ import (
 	fmt "fmt"
 )
 
+type Organization struct {
+	Name string `json:"name" url:"name"`
+}
+
+type User struct {
+	UserName        string            `json:"userName" url:"userName"`
+	MetadataTags    []string          `json:"metadata_tags" url:"metadata_tags"`
+	ExtraProperties map[string]string `json:"EXTRA_PROPERTIES" url:"EXTRA_PROPERTIES"`
+}
+
+type NestedUser struct {
+	Name       string `json:"Name" url:"Name"`
+	NestedUser *User  `json:"NestedUser" url:"NestedUser"`
+}
+
 type ResourceStatus string
 
 const (
@@ -26,4 +41,11 @@ func NewResourceStatusFromString(s string) (ResourceStatus, error) {
 
 func (r ResourceStatus) Ptr() *ResourceStatus {
 	return &r
+}
+
+type Resource struct {
+	ResourceType string
+	Status       *ResourceStatus
+	User         User
+	Organization Organization
 }

@@ -22,6 +22,7 @@ types:
 
   V2HttpEndpointExample:
     properties:
+      displayName: optional<string>
       request: optional<V2HttpEndpointRequest>
       response: optional<V2HttpEndpointResponse>
       codeSamples: optional<list<V2HttpEndpointCodeSample>>

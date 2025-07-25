@@ -2649,7 +2649,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "one-file",
               "description": "",
               "path": "/base/",
               "pathParameters": {},
@@ -2662,8 +2661,8 @@
                   "string"
                 ],
                 "my_file.jpg": "@my_file.jpg",
-                "metadata[subsystem]": "uploader",
-                "metadata[pet]": "cat"
+                "another_file.jpg": "@another_file.jpg",
+                "metadata[subsystem]": "uploader"
               },
               "requestBodyV3": {
                 "type": "form",
@@ -2705,7 +2704,6 @@
               }
             },
             {
-              "name": "two-files",
               "description": "",
               "path": "/base/",
               "pathParameters": {},
@@ -2718,8 +2716,8 @@
                   "string"
                 ],
                 "my_file.jpg": "@my_file.jpg",
-                "another_file.jpg": "@another_file.jpg",
-                "metadata[subsystem]": "uploader"
+                "metadata[subsystem]": "uploader",
+                "metadata[pet]": "cat"
               },
               "requestBodyV3": {
                 "type": "form",
@@ -3519,55 +3517,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "Upload_fromURLUpload_example",
-              "description": "",
-              "path": "/from_url/",
-              "pathParameters": {},
-              "queryParameters": {},
-              "headers": {},
-              "requestBody": {
-                "pub_key": "YOUR_PUBLIC_KEY",
-                "source_url": "https://source.unsplash.com/featured",
-                "metadata[subsystem]": "uploader",
-                "metadata[pet]": "cat"
-              },
-              "requestBodyV3": {
-                "type": "form",
-                "value": {
-                  "pub_key": {
-                    "type": "json",
-                    "value": "YOUR_PUBLIC_KEY"
-                  },
-                  "source_url": {
-                    "type": "json",
-                    "value": "https://source.unsplash.com/featured"
-                  },
-                  "store": {
-                    "type": "json"
-                  },
-                  "filename": {
-                    "type": "json"
-                  },
-                  "check_URL_duplicates": {
-                    "type": "json"
-                  },
-                  "save_URL_duplicates": {
-                    "type": "json"
-                  },
-                  "metadata[{key}]": {
-                    "type": "json"
-                  },
-                  "signature": {
-                    "type": "json"
-                  },
-                  "expire": {
-                    "type": "json"
-                  }
-                }
-              },
-              "responseStatusCode": 200
-            },
-            {
               "name": "type-token",
               "description": "",
               "path": "/from_url/",
@@ -3720,6 +3669,66 @@
                   "is_image": true,
                   "is_stored": true,
                   "is_ready": true
+                }
+              }
+            },
+            {
+              "name": "Upload_fromURLUpload_example",
+              "description": "",
+              "path": "/from_url/",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "pub_key": "YOUR_PUBLIC_KEY",
+                "source_url": "https://source.unsplash.com/featured",
+                "metadata[subsystem]": "uploader",
+                "metadata[pet]": "cat"
+              },
+              "requestBodyV3": {
+                "type": "form",
+                "value": {
+                  "pub_key": {
+                    "type": "json",
+                    "value": "YOUR_PUBLIC_KEY"
+                  },
+                  "source_url": {
+                    "type": "json",
+                    "value": "https://source.unsplash.com/featured"
+                  },
+                  "store": {
+                    "type": "json"
+                  },
+                  "filename": {
+                    "type": "json"
+                  },
+                  "check_URL_duplicates": {
+                    "type": "json"
+                  },
+                  "save_URL_duplicates": {
+                    "type": "json"
+                  },
+                  "metadata[{key}]": {
+                    "type": "json"
+                  },
+                  "signature": {
+                    "type": "json"
+                  },
+                  "expire": {
+                    "type": "json"
+                  }
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "token",
+                "token": "945ebb27-1fd6-46c6-a859-b9893712d650"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "token",
+                  "token": "945ebb27-1fd6-46c6-a859-b9893712d650"
                 }
               }
             }

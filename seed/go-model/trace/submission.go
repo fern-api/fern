@@ -3,90 +3,622 @@
 package trace
 
 import (
-	fmt "fmt"
+    uuid "github.com/google/uuid"
+    fmt "fmt"
+    v2 "github.com/trace/fern/v2"
+    time "time"
 )
+
+
+type SubmissionId = uuid.UUID
+
+type ShareId = string
+
+type SubmissionRequest struct {
+    Type string
+    InitializeProblemRequest InitializeProblemRequest
+    InitializeWorkspaceRequest any
+    SubmitV2 SubmitRequestV2
+    WorkspaceSubmit WorkspaceSubmitRequest
+    Stop StopRequest
+}
+
+
+type InitializeProblemRequest struct {
+    ProblemId ProblemId `json:"problemId" url:"problemId"`
+    ProblemVersion *int `json:"problemVersion,omitempty" url:"problemVersion,omitempty"`
+}
+
+
+type SubmitRequestV2 struct {
+    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+    Language *Language `json:"language" url:"language"`
+    SubmissionFiles []*SubmissionFileInfo `json:"submissionFiles" url:"submissionFiles"`
+    ProblemId ProblemId `json:"problemId" url:"problemId"`
+    ProblemVersion *int `json:"problemVersion,omitempty" url:"problemVersion,omitempty"`
+    UserId *string `json:"userId,omitempty" url:"userId,omitempty"`
+}
+
+
+type WorkspaceSubmitRequest struct {
+    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+    Language *Language `json:"language" url:"language"`
+    SubmissionFiles []*SubmissionFileInfo `json:"submissionFiles" url:"submissionFiles"`
+    UserId *string `json:"userId,omitempty" url:"userId,omitempty"`
+}
+
+
+type SubmissionFileInfo struct {
+    Directory string `json:"directory" url:"directory"`
+    Filename string `json:"filename" url:"filename"`
+    Contents string `json:"contents" url:"contents"`
+}
+
 
 // Keep in sync with SubmissionType.
 type SubmissionTypeEnum string
 
 const (
-	SubmissionTypeEnumTest = "TEST"
+    SubmissionTypeEnumTest = "TEST"
 )
-
-func NewSubmissionTypeEnumFromString(s string) (SubmissionTypeEnum, error) {
-	switch s {
-	case "TEST":
-		return SubmissionTypeEnumTest, nil
-	}
-	var t SubmissionTypeEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
+func NewSubmissionTypeEnumFromString(s string) (SubmissionTypeEnum, error){
+    switch s{
+        case "TEST":
+            return SubmissionTypeEnumTest, nil
+    }
+    var t SubmissionTypeEnum
+    return "", fmt.Errorf("%s is not a valid %T", s, t)
 }
 
-func (s SubmissionTypeEnum) Ptr() *SubmissionTypeEnum {
-	return &s
+func (s SubmissionTypeEnum) Ptr() *SubmissionTypeEnum{
+    return &s
 }
+
+
+type StopRequest struct {
+    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+}
+
+
+type SubmissionResponse struct {
+    Type string
+    ServerInitialized any
+    ProblemInitialized ProblemId
+    WorkspaceInitialized any
+    ServerErrored ExceptionInfo
+    CodeExecutionUpdate *CodeExecutionUpdate
+    Terminated TerminatedResponse
+}
+
+
+type CodeExecutionUpdate struct {
+    Type string
+    BuildingExecutor BuildingExecutorResponse
+    Running RunningResponse
+    Errored ErroredResponse
+    Stopped StoppedResponse
+    Graded GradedResponse
+    GradedV2 GradedResponseV2
+    WorkspaceRan WorkspaceRanResponse
+    Recording RecordingResponseNotification
+    Recorded RecordedResponseNotification
+    InvalidRequest InvalidRequestResponse
+    Finished FinishedResponse
+}
+
+
+type BuildingExecutorResponse struct {
+    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+    Status *ExecutionSessionStatus `json:"status" url:"status"`
+}
+
+
+type RunningResponse struct {
+    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+    State *RunningSubmissionState `json:"state" url:"state"`
+}
+
 
 type RunningSubmissionState string
 
 const (
-	RunningSubmissionStateQueueingSubmission           = "QUEUEING_SUBMISSION"
-	RunningSubmissionStateKillingHistoricalSubmissions = "KILLING_HISTORICAL_SUBMISSIONS"
-	RunningSubmissionStateWritingSubmissionToFile      = "WRITING_SUBMISSION_TO_FILE"
-	RunningSubmissionStateCompilingSubmission          = "COMPILING_SUBMISSION"
-	RunningSubmissionStateRunningSubmission            = "RUNNING_SUBMISSION"
+    RunningSubmissionStateQueueingSubmission = "QUEUEING_SUBMISSION"
+    RunningSubmissionStateKillingHistoricalSubmissions = "KILLING_HISTORICAL_SUBMISSIONS"
+    RunningSubmissionStateWritingSubmissionToFile = "WRITING_SUBMISSION_TO_FILE"
+    RunningSubmissionStateCompilingSubmission = "COMPILING_SUBMISSION"
+    RunningSubmissionStateRunningSubmission = "RUNNING_SUBMISSION"
 )
-
-func NewRunningSubmissionStateFromString(s string) (RunningSubmissionState, error) {
-	switch s {
-	case "QUEUEING_SUBMISSION":
-		return RunningSubmissionStateQueueingSubmission, nil
-	case "KILLING_HISTORICAL_SUBMISSIONS":
-		return RunningSubmissionStateKillingHistoricalSubmissions, nil
-	case "WRITING_SUBMISSION_TO_FILE":
-		return RunningSubmissionStateWritingSubmissionToFile, nil
-	case "COMPILING_SUBMISSION":
-		return RunningSubmissionStateCompilingSubmission, nil
-	case "RUNNING_SUBMISSION":
-		return RunningSubmissionStateRunningSubmission, nil
-	}
-	var t RunningSubmissionState
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
+func NewRunningSubmissionStateFromString(s string) (RunningSubmissionState, error){
+    switch s{
+        case "QUEUEING_SUBMISSION":
+            return RunningSubmissionStateQueueingSubmission, nil
+        case "KILLING_HISTORICAL_SUBMISSIONS":
+            return RunningSubmissionStateKillingHistoricalSubmissions, nil
+        case "WRITING_SUBMISSION_TO_FILE":
+            return RunningSubmissionStateWritingSubmissionToFile, nil
+        case "COMPILING_SUBMISSION":
+            return RunningSubmissionStateCompilingSubmission, nil
+        case "RUNNING_SUBMISSION":
+            return RunningSubmissionStateRunningSubmission, nil
+    }
+    var t RunningSubmissionState
+    return "", fmt.Errorf("%s is not a valid %T", s, t)
 }
 
-func (r RunningSubmissionState) Ptr() *RunningSubmissionState {
-	return &r
+func (r RunningSubmissionState) Ptr() *RunningSubmissionState{
+    return &r
 }
+
+
+type ErroredResponse struct {
+    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+    ErrorInfo *ErrorInfo `json:"errorInfo" url:"errorInfo"`
+}
+
+
+type ErrorInfo struct {
+    Type string
+    CompileError CompileError
+    RuntimeError RuntimeError
+    InternalError InternalError
+}
+
+
+type CompileError struct {
+    Message string `json:"message" url:"message"`
+}
+
+
+type RuntimeError struct {
+    Message string `json:"message" url:"message"`
+}
+
+
+type InternalError struct {
+    ExceptionInfo *ExceptionInfo `json:"exceptionInfo" url:"exceptionInfo"`
+}
+
+
+type StoppedResponse struct {
+    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+}
+
+
+type WorkspaceRanResponse struct {
+    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+    RunDetails *WorkspaceRunDetails `json:"runDetails" url:"runDetails"`
+}
+
+
+type WorkspaceRunDetails struct {
+    ExceptionV2 *ExceptionV2 `json:"exceptionV2,omitempty" url:"exceptionV2,omitempty"`
+    Exception *ExceptionInfo `json:"exception,omitempty" url:"exception,omitempty"`
+    Stdout string `json:"stdout" url:"stdout"`
+}
+
+
+type GradedResponse struct {
+    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+    TestCases map[string]*TestCaseResultWithStdout `json:"testCases" url:"testCases"`
+}
+
+
+type GradedResponseV2 struct {
+    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+    TestCases map[v2.TestCaseId]*TestCaseGrade `json:"testCases" url:"testCases"`
+}
+
+
+type TestCaseGrade struct {
+    Type string
+    Hidden TestCaseHiddenGrade
+    NonHidden TestCaseNonHiddenGrade
+}
+
+
+type TestCaseHiddenGrade struct {
+    Passed bool `json:"passed" url:"passed"`
+}
+
+
+type TestCaseNonHiddenGrade struct {
+    Passed bool `json:"passed" url:"passed"`
+    ActualResult *VariableValue `json:"actualResult,omitempty" url:"actualResult,omitempty"`
+    Exception *ExceptionV2 `json:"exception,omitempty" url:"exception,omitempty"`
+    Stdout string `json:"stdout" url:"stdout"`
+}
+
+
+type RecordedResponseNotification struct {
+    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+    TraceResponsesSize int `json:"traceResponsesSize" url:"traceResponsesSize"`
+    TestCaseId *string `json:"testCaseId,omitempty" url:"testCaseId,omitempty"`
+}
+
+
+type RecordingResponseNotification struct {
+    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+    TestCaseId *string `json:"testCaseId,omitempty" url:"testCaseId,omitempty"`
+    LineNumber int `json:"lineNumber" url:"lineNumber"`
+    LightweightStackInfo *LightweightStackframeInformation `json:"lightweightStackInfo" url:"lightweightStackInfo"`
+    TracedFile *TracedFile `json:"tracedFile,omitempty" url:"tracedFile,omitempty"`
+}
+
+
+type LightweightStackframeInformation struct {
+    NumStackFrames int `json:"numStackFrames" url:"numStackFrames"`
+    TopStackFrameMethodName string `json:"topStackFrameMethodName" url:"topStackFrameMethodName"`
+}
+
+
+type TestCaseResultWithStdout struct {
+    Result *TestCaseResult `json:"result" url:"result"`
+    Stdout string `json:"stdout" url:"stdout"`
+}
+
+
+type TestCaseResult struct {
+    ExpectedResult *VariableValue `json:"expectedResult" url:"expectedResult"`
+    ActualResult *ActualResult `json:"actualResult" url:"actualResult"`
+    Passed bool `json:"passed" url:"passed"`
+}
+
+
+type ActualResult struct {
+    Type string
+    Value *VariableValue
+    Exception ExceptionInfo
+    ExceptionV2 *ExceptionV2
+}
+
+
+type ExceptionV2 struct {
+    Type string
+    Generic ExceptionInfo
+    Timeout any
+}
+
+
+type ExceptionInfo struct {
+    ExceptionType string `json:"exceptionType" url:"exceptionType"`
+    ExceptionMessage string `json:"exceptionMessage" url:"exceptionMessage"`
+    ExceptionStacktrace string `json:"exceptionStacktrace" url:"exceptionStacktrace"`
+}
+
+
+type InvalidRequestResponse struct {
+    Request *SubmissionRequest `json:"request" url:"request"`
+    Cause *InvalidRequestCause `json:"cause" url:"cause"`
+}
+
+
+type InvalidRequestCause struct {
+    Type string
+    SubmissionIdNotFound SubmissionIdNotFound
+    CustomTestCasesUnsupported CustomTestCasesUnsupported
+    UnexpectedLanguage UnexpectedLanguageError
+}
+
+
+type ExistingSubmissionExecuting struct {
+    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+}
+
+
+type SubmissionIdNotFound struct {
+    MissingSubmissionId SubmissionId `json:"missingSubmissionId" url:"missingSubmissionId"`
+}
+
+
+type CustomTestCasesUnsupported struct {
+    ProblemId ProblemId `json:"problemId" url:"problemId"`
+    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+}
+
+
+type UnexpectedLanguageError struct {
+    ExpectedLanguage *Language `json:"expectedLanguage" url:"expectedLanguage"`
+    ActualLanguage *Language `json:"actualLanguage" url:"actualLanguage"`
+}
+
+
+type TerminatedResponse struct {}
+
+
+type FinishedResponse struct {
+    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+}
+
+
+type StdoutResponse struct {
+    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+    Stdout string `json:"stdout" url:"stdout"`
+}
+
+
+type StderrResponse struct {
+    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+    Stderr string `json:"stderr" url:"stderr"`
+}
+
+
+type TraceResponse struct {
+    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+    LineNumber int `json:"lineNumber" url:"lineNumber"`
+    ReturnValue *DebugVariableValue `json:"returnValue,omitempty" url:"returnValue,omitempty"`
+    ExpressionLocation *ExpressionLocation `json:"expressionLocation,omitempty" url:"expressionLocation,omitempty"`
+    Stack *StackInformation `json:"stack" url:"stack"`
+    Stdout *string `json:"stdout,omitempty" url:"stdout,omitempty"`
+}
+
+
+type TraceResponseV2 struct {
+    SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
+    LineNumber int `json:"lineNumber" url:"lineNumber"`
+    File *TracedFile `json:"file" url:"file"`
+    ReturnValue *DebugVariableValue `json:"returnValue,omitempty" url:"returnValue,omitempty"`
+    ExpressionLocation *ExpressionLocation `json:"expressionLocation,omitempty" url:"expressionLocation,omitempty"`
+    Stack *StackInformation `json:"stack" url:"stack"`
+    Stdout *string `json:"stdout,omitempty" url:"stdout,omitempty"`
+}
+
+
+type TracedFile struct {
+    Filename string `json:"filename" url:"filename"`
+    Directory string `json:"directory" url:"directory"`
+}
+
+
+type ExpressionLocation struct {
+    Start int `json:"start" url:"start"`
+    Offset int `json:"offset" url:"offset"`
+}
+
+
+type StackInformation struct {
+    NumStackFrames int `json:"numStackFrames" url:"numStackFrames"`
+    TopStackFrame *StackFrame `json:"topStackFrame,omitempty" url:"topStackFrame,omitempty"`
+}
+
+
+type StackFrame struct {
+    MethodName string `json:"methodName" url:"methodName"`
+    LineNumber int `json:"lineNumber" url:"lineNumber"`
+    Scopes []*Scope `json:"scopes" url:"scopes"`
+}
+
+
+type Scope struct {
+    Variables map[string]*DebugVariableValue `json:"variables" url:"variables"`
+}
+
+
+type ExecutionSessionResponse struct {
+    SessionId string `json:"sessionId" url:"sessionId"`
+    ExecutionSessionUrl *string `json:"executionSessionUrl,omitempty" url:"executionSessionUrl,omitempty"`
+    Language *Language `json:"language" url:"language"`
+    Status *ExecutionSessionStatus `json:"status" url:"status"`
+}
+
 
 type ExecutionSessionStatus string
 
 const (
-	ExecutionSessionStatusCreatingContainer     = "CREATING_CONTAINER"
-	ExecutionSessionStatusProvisioningContainer = "PROVISIONING_CONTAINER"
-	ExecutionSessionStatusPendingContainer      = "PENDING_CONTAINER"
-	ExecutionSessionStatusRunningContainer      = "RUNNING_CONTAINER"
-	ExecutionSessionStatusLiveContainer         = "LIVE_CONTAINER"
-	ExecutionSessionStatusFailedToLaunch        = "FAILED_TO_LAUNCH"
+    ExecutionSessionStatusCreatingContainer = "CREATING_CONTAINER"
+    ExecutionSessionStatusProvisioningContainer = "PROVISIONING_CONTAINER"
+    ExecutionSessionStatusPendingContainer = "PENDING_CONTAINER"
+    ExecutionSessionStatusRunningContainer = "RUNNING_CONTAINER"
+    ExecutionSessionStatusLiveContainer = "LIVE_CONTAINER"
+    ExecutionSessionStatusFailedToLaunch = "FAILED_TO_LAUNCH"
 )
-
-func NewExecutionSessionStatusFromString(s string) (ExecutionSessionStatus, error) {
-	switch s {
-	case "CREATING_CONTAINER":
-		return ExecutionSessionStatusCreatingContainer, nil
-	case "PROVISIONING_CONTAINER":
-		return ExecutionSessionStatusProvisioningContainer, nil
-	case "PENDING_CONTAINER":
-		return ExecutionSessionStatusPendingContainer, nil
-	case "RUNNING_CONTAINER":
-		return ExecutionSessionStatusRunningContainer, nil
-	case "LIVE_CONTAINER":
-		return ExecutionSessionStatusLiveContainer, nil
-	case "FAILED_TO_LAUNCH":
-		return ExecutionSessionStatusFailedToLaunch, nil
-	}
-	var t ExecutionSessionStatus
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
+func NewExecutionSessionStatusFromString(s string) (ExecutionSessionStatus, error){
+    switch s{
+        case "CREATING_CONTAINER":
+            return ExecutionSessionStatusCreatingContainer, nil
+        case "PROVISIONING_CONTAINER":
+            return ExecutionSessionStatusProvisioningContainer, nil
+        case "PENDING_CONTAINER":
+            return ExecutionSessionStatusPendingContainer, nil
+        case "RUNNING_CONTAINER":
+            return ExecutionSessionStatusRunningContainer, nil
+        case "LIVE_CONTAINER":
+            return ExecutionSessionStatusLiveContainer, nil
+        case "FAILED_TO_LAUNCH":
+            return ExecutionSessionStatusFailedToLaunch, nil
+    }
+    var t ExecutionSessionStatus
+    return "", fmt.Errorf("%s is not a valid %T", s, t)
 }
 
-func (e ExecutionSessionStatus) Ptr() *ExecutionSessionStatus {
-	return &e
+func (e ExecutionSessionStatus) Ptr() *ExecutionSessionStatus{
+    return &e
 }
+
+
+type SubmissionStatusV2 struct {
+    Type string
+    Test TestSubmissionStatusV2
+    Workspace WorkspaceSubmissionStatusV2
+}
+
+
+type TestSubmissionStatusV2 struct {
+    Updates []*TestSubmissionUpdate `json:"updates" url:"updates"`
+    ProblemId ProblemId `json:"problemId" url:"problemId"`
+    ProblemVersion int `json:"problemVersion" url:"problemVersion"`
+    ProblemInfo *v2.ProblemInfoV2 `json:"problemInfo" url:"problemInfo"`
+}
+
+
+type WorkspaceSubmissionStatusV2 struct {
+    Updates []*WorkspaceSubmissionUpdate `json:"updates" url:"updates"`
+}
+
+
+type TestSubmissionUpdate struct {
+    UpdateTime time.Time `json:"updateTime" url:"updateTime"`
+    UpdateInfo *TestSubmissionUpdateInfo `json:"updateInfo" url:"updateInfo"`
+}
+
+
+type TestSubmissionUpdateInfo struct {
+    Type string
+    Running *RunningSubmissionState
+    Stopped any
+    Errored *ErrorInfo
+    GradedTestCase GradedTestCaseUpdate
+    RecordedTestCase RecordedTestCaseUpdate
+    Finished any
+}
+
+
+type WorkspaceSubmissionUpdate struct {
+    UpdateTime time.Time `json:"updateTime" url:"updateTime"`
+    UpdateInfo *WorkspaceSubmissionUpdateInfo `json:"updateInfo" url:"updateInfo"`
+}
+
+
+type WorkspaceSubmissionUpdateInfo struct {
+    Type string
+    Running *RunningSubmissionState
+    Ran WorkspaceRunDetails
+    Stopped any
+    Traced any
+    TracedV2 WorkspaceTracedUpdate
+    Errored *ErrorInfo
+    Finished any
+}
+
+
+type GradedTestCaseUpdate struct {
+    TestCaseId v2.TestCaseId `json:"testCaseId" url:"testCaseId"`
+    Grade *TestCaseGrade `json:"grade" url:"grade"`
+}
+
+
+type RecordedTestCaseUpdate struct {
+    TestCaseId v2.TestCaseId `json:"testCaseId" url:"testCaseId"`
+    TraceResponsesSize int `json:"traceResponsesSize" url:"traceResponsesSize"`
+}
+
+
+type WorkspaceTracedUpdate struct {
+    TraceResponsesSize int `json:"traceResponsesSize" url:"traceResponsesSize"`
+}
+
+
+type SubmissionTypeState struct {
+    Type string
+    Test TestSubmissionState
+    Workspace WorkspaceSubmissionState
+}
+
+
+type WorkspaceSubmissionState struct {
+    Status *WorkspaceSubmissionStatus `json:"status" url:"status"`
+}
+
+
+type WorkspaceSubmissionStatus struct {
+    Type string
+    Stopped any
+    Errored *ErrorInfo
+    Running *RunningSubmissionState
+    Ran WorkspaceRunDetails
+    Traced WorkspaceRunDetails
+}
+
+
+type TestSubmissionState struct {
+    ProblemId ProblemId `json:"problemId" url:"problemId"`
+    DefaultTestCases []*TestCase `json:"defaultTestCases" url:"defaultTestCases"`
+    CustomTestCases []*TestCase `json:"customTestCases" url:"customTestCases"`
+    Status *TestSubmissionStatus `json:"status" url:"status"`
+}
+
+
+type TestSubmissionStatus struct {
+    Type string
+    Stopped any
+    Errored *ErrorInfo
+    Running *RunningSubmissionState
+    TestCaseIdToState map[string]*SubmissionStatusForTestCase
+}
+
+
+type SubmissionStatusForTestCase struct {
+    Type string
+    Graded TestCaseResultWithStdout
+    GradedV2 *TestCaseGrade
+    Traced TracedTestCase
+}
+
+
+type TracedTestCase struct {
+    Result *TestCaseResultWithStdout `json:"result" url:"result"`
+    TraceResponsesSize int `json:"traceResponsesSize" url:"traceResponsesSize"`
+}
+
+
+type TraceResponsesPage struct {
+    // If present, use this to load subsequent pages.
+    // The offset is the id of the next trace response to load.
+    Offset *int `json:"offset,omitempty" url:"offset,omitempty"`
+    TraceResponses []*TraceResponse `json:"traceResponses" url:"traceResponses"`
+}
+
+
+type TraceResponsesPageV2 struct {
+    // If present, use this to load subsequent pages.
+    // The offset is the id of the next trace response to load.
+    Offset *int `json:"offset,omitempty" url:"offset,omitempty"`
+    TraceResponses []*TraceResponseV2 `json:"traceResponses" url:"traceResponses"`
+}
+
+
+type GetTraceResponsesPageRequest struct {
+    Offset *int `json:"offset,omitempty" url:"offset,omitempty"`
+}
+
+
+type WorkspaceStarterFilesResponse struct {
+    Files map[*Language]*WorkspaceFiles `json:"files" url:"files"`
+}
+
+
+type WorkspaceStarterFilesResponseV2 struct {
+    FilesByLanguage map[*Language]*v2.Files `json:"filesByLanguage" url:"filesByLanguage"`
+}
+
+
+type WorkspaceFiles struct {
+    MainFile *FileInfo `json:"mainFile" url:"mainFile"`
+    ReadOnlyFiles []*FileInfo `json:"readOnlyFiles" url:"readOnlyFiles"`
+}
+
+
+type ExecutionSessionState struct {
+    LastTimeContacted *string `json:"lastTimeContacted,omitempty" url:"lastTimeContacted,omitempty"`
+    // The auto-generated session id. Formatted as a uuid.
+    SessionId string `json:"sessionId" url:"sessionId"`
+    IsWarmInstance bool `json:"isWarmInstance" url:"isWarmInstance"`
+    AwsTaskId *string `json:"awsTaskId,omitempty" url:"awsTaskId,omitempty"`
+    Language *Language `json:"language" url:"language"`
+    Status *ExecutionSessionStatus `json:"status" url:"status"`
+}
+
+
+type GetExecutionSessionStateResponse struct {
+    States map[string]*ExecutionSessionState `json:"states" url:"states"`
+    NumWarmingInstances *int `json:"numWarmingInstances,omitempty" url:"numWarmingInstances,omitempty"`
+    WarmingSessionIds []string `json:"warmingSessionIds" url:"warmingSessionIds"`
+}
+
+
+type GetSubmissionStateResponse struct {
+    TimeSubmitted *time.Time `json:"timeSubmitted,omitempty" url:"timeSubmitted,omitempty"`
+    Submission string `json:"submission" url:"submission"`
+    Language *Language `json:"language" url:"language"`
+    SubmissionTypeState *SubmissionTypeState `json:"submissionTypeState" url:"submissionTypeState"`
+}
+

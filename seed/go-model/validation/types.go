@@ -6,6 +6,16 @@ import (
 	fmt "fmt"
 )
 
+type SmallInteger = int
+
+type LargeInteger = int
+
+type Double = float64
+
+type Word = string
+
+type Sentence = string
+
 type Shape string
 
 const (
@@ -29,4 +39,12 @@ func NewShapeFromString(s string) (Shape, error) {
 
 func (s Shape) Ptr() *Shape {
 	return &s
+}
+
+// Defines properties with default values and validation rules.
+type Type struct {
+	Decimal float64 `json:"decimal" url:"decimal"`
+	Even    int     `json:"even" url:"even"`
+	Name    string  `json:"name" url:"name"`
+	Shape   *Shape  `json:"shape" url:"shape"`
 }
