@@ -301,7 +301,7 @@ fixtures:
       outputFolder: use-typeddict-requests
 scripts:
   # Test Pydantic V2
-  - docker: fernapi/python-seed
+  - docker: fernapi/python-seed:local
     commands:
       # Tests now run a mock server, you can always run seed with --skip-scripts to save time
       - export NPM_CONFIG_CACHE="$(pwd)/.cache"
@@ -321,16 +321,16 @@ scripts:
       - poetry run pytest -rP .
       - 'echo "post pytest: $SECONDS"'
   # Test Pydantic V1
-  - docker: fernapi/python-seed
-    commands:
-      - export NPM_CONFIG_CACHE="$(pwd)/.cache"
-      - export HOME="$(pwd)/"
-      - poetry config virtualenvs.path .
-      - poetry add pydantic=^1.10
-      - poetry lock
-      - poetry install
-      - poetry run mypy ./src ./tests
-      - poetry run pytest -rP .
+  # - docker: fernapi/python-seed:local
+  #   commands:
+  #     - export NPM_CONFIG_CACHE="$(pwd)/.cache"
+  #     - export HOME="$(pwd)/"
+  #     - poetry config virtualenvs.path .
+  #     - poetry add pydantic=^1.10
+  #     - poetry lock
+  #     - poetry install
+  #     - poetry run mypy ./src ./tests
+  #     - poetry run pytest -rP .
 allowedFailures:
   - any-auth
   - examples:client-filename

@@ -6,8 +6,8 @@ ENV POETRY_VERSION 1.8.5
 RUN set -ex; pip install --no-cache-dir poetry==$POETRY_VERSION;
 
 
-RUN apt update && apt upgrade -y
-RUN apt install nodejs npm -y
-RUN npm install -g fern-api
+# RUN apt update && apt upgrade -y
+# RUN apt install nodejs npm -y
+# RUN npm install -g fern-api
 
 CMD [ "poetry" ]
