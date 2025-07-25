@@ -7,10 +7,13 @@ import com.seed.anyAuth.core.ClientOptions;
 import com.seed.anyAuth.core.Environment;
 import com.seed.anyAuth.core.OAuthTokenSupplier;
 import com.seed.anyAuth.resources.auth.AuthClient;
+import java.util.Optional;
 import okhttp3.OkHttpClient;
 
 public class SeedAnyAuthClientBuilder {
-    private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
+    private Optional<Integer> timeout = Optional.empty();
+
+    private Optional<Integer> maxRetries = Optional.empty();
 
     private String token = System.getenv("MY_TOKEN");
 
@@ -21,6 +24,8 @@ public class SeedAnyAuthClientBuilder {
     private String clientSecret = System.getenv("MY_CLIENT_SECRET");
 
     private Environment environment;
+
+    private OkHttpClient httpClient;
 
     /**
      * Sets token.
@@ -67,7 +72,7 @@ public class SeedAnyAuthClientBuilder {
      * Sets the timeout (in seconds) for the client. Defaults to 60 seconds.
      */
     public SeedAnyAuthClientBuilder timeout(int timeout) {
-        this.clientOptionsBuilder.timeout(timeout);
+        this.timeout = Optional.of(timeout);
         return this;
     }
 
@@ -75,7 +80,7 @@ public class SeedAnyAuthClientBuilder {
      * Sets the maximum number of retries for the client. Defaults to 2 retries.
      */
     public SeedAnyAuthClientBuilder maxRetries(int maxRetries) {
-        this.clientOptionsBuilder.maxRetries(maxRetries);
+        this.maxRetries = Optional.of(maxRetries);
         return this;
     }
 
@@ -83,25 +88,137 @@ public class SeedAnyAuthClientBuilder {
      * Sets the underlying OkHttp client
      */
     public SeedAnyAuthClientBuilder httpClient(OkHttpClient httpClient) {
-        this.clientOptionsBuilder.httpClient(httpClient);
+        this.httpClient = httpClient;
         return this;
     }
 
     protected ClientOptions buildClientOptions() {
-        clientOptionsBuilder.environment(this.environment);
-        return clientOptionsBuilder.build();
+        ClientOptions.Builder builder = ClientOptions.builder();
+        setEnvironment(builder);
+        setAuthentication(builder);
+        setHttpClient(builder);
+        setTimeouts(builder);
+        setRetries(builder);
+        setAdditional(builder);
+        return builder.build();
     }
 
+    /**
+     * Sets the environment configuration for the client.
+     * Override this method to modify URLs or add environment-specific logic.
+     *
+     * @param builder The ClientOptions.Builder to configure
+     */
+    protected void setEnvironment(ClientOptions.Builder builder) {
+        builder.environment(this.environment);
+    }
+
+    /**
+     * Override this method to customize authentication.
+     * This method is called during client options construction to set up authentication headers.
+     *
+     * @param builder The ClientOptions.Builder to configure
+     *
+     * Example:
+     * <pre>{@code
+     * @Override
+     * protected void setAuthentication(ClientOptions.Builder builder) {
+     *     super.setAuthentication(builder); // Keep existing auth
+     *     builder.addHeader("X-API-Key", this.apiKey);
+     * }
+     * }</pre>
+     */
+    protected void setAuthentication(ClientOptions.Builder builder) {
+        if (this.token != null) {
+            builder.addHeader("Authorization", "Bearer " + this.token);
+        }
+        builder.addHeader("X-API-Key", this.apiKey);
+        if (this.clientId != null && this.clientSecret != null) {
+            AuthClient authClient = new AuthClient(
+                    ClientOptions.builder().environment(this.environment).build());
+            OAuthTokenSupplier oAuthTokenSupplier =
+                    new OAuthTokenSupplier(this.clientId, this.clientSecret, authClient);
+            builder.addHeader("Authorization", oAuthTokenSupplier);
+        }
+    }
+
+    /**
+     * Sets the request timeout configuration.
+     * Override this method to customize timeout behavior.
+     *
+     * @param builder The ClientOptions.Builder to configure
+     */
+    protected void setTimeouts(ClientOptions.Builder builder) {
+        if (this.timeout.isPresent()) {
+            builder.timeout(this.timeout.get());
+        }
+    }
+
+    /**
+     * Sets the retry configuration for failed requests.
+     * Override this method to implement custom retry strategies.
+     *
+     * @param builder The ClientOptions.Builder to configure
+     */
+    protected void setRetries(ClientOptions.Builder builder) {
+        if (this.maxRetries.isPresent()) {
+            builder.maxRetries(this.maxRetries.get());
+        }
+    }
+
+    /**
+     * Sets the OkHttp client configuration.
+     * Override this method to customize HTTP client behavior (interceptors, connection pools, etc).
+     *
+     * @param builder The ClientOptions.Builder to configure
+     */
+    protected void setHttpClient(ClientOptions.Builder builder) {
+        if (this.httpClient != null) {
+            builder.httpClient(this.httpClient);
+        }
+    }
+
+    /**
+     * Override this method to add any additional configuration to the client.
+     * This method is called at the end of the configuration chain, allowing you to add
+     * custom headers, modify settings, or perform any other client customization.
+     *
+     * @param builder The ClientOptions.Builder to configure
+     *
+     * Example:
+     * <pre>{@code
+     * @Override
+     * protected void setAdditional(ClientOptions.Builder builder) {
+     *     builder.addHeader("X-Request-ID", () -> UUID.randomUUID().toString());
+     *     builder.addHeader("X-Client-Version", "1.0.0");
+     * }
+     * }</pre>
+     */
+    protected void setAdditional(ClientOptions.Builder builder) {}
+
+    /**
+     * Override this method to add custom validation logic before the client is built.
+     * This method is called at the beginning of the build() method to ensure the configuration is valid.
+     * Throw an exception to prevent client creation if validation fails.
+     *
+     * Example:
+     * <pre>{@code
+     * @Override
+     * protected void validateConfiguration() {
+     *     super.validateConfiguration(); // Run parent validations
+     *     if (tenantId == null || tenantId.isEmpty()) {
+     *         throw new IllegalStateException("tenantId is required");
+     *     }
+     * }
+     * }</pre>
+     */
+    protected void validateConfiguration() {}
+
     public SeedAnyAuthClient build() {
-        this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + this.token);
         if (apiKey == null) {
             throw new RuntimeException("Please provide apiKey or set the MY_API_KEY environment variable.");
         }
-        this.clientOptionsBuilder.addHeader("X-API-Key", this.apiKey);
-        AuthClient authClient = new AuthClient(
-                ClientOptions.builder().environment(this.environment).build());
-        OAuthTokenSupplier oAuthTokenSupplier = new OAuthTokenSupplier(clientId, clientSecret, authClient);
-        this.clientOptionsBuilder.addHeader("Authorization", oAuthTokenSupplier);
+        validateConfiguration();
         return new SeedAnyAuthClient(buildClientOptions());
     }
 }
