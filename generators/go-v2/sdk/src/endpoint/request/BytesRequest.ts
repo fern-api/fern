@@ -4,7 +4,6 @@ import { HttpEndpoint, HttpService, SdkRequest } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { EndpointRequest } from "./EndpointRequest";
-import { IoReaderTypeReference } from "@fern-api/go-ast/src/ast";
 
 export class BytesRequest extends EndpointRequest {
     // biome-ignore lint/complexity/noUselessConstructor: allow
