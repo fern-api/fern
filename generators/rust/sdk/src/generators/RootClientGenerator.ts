@@ -19,18 +19,18 @@ export class RootClientGenerator {
 
     public generate(): RustFile {
         const subpackages = this.getSubpackages();
-        
+
         // Add module declarations for sub-clients
-        const moduleDeclarations = subpackages.map(subpackage => 
-            `pub mod ${subpackage.name.snakeCase.safeName};`
-        ).join("\n");
-        
-        const reExports = subpackages.map(subpackage =>
-            `pub use ${subpackage.name.snakeCase.safeName}::${this.getSubClientName(subpackage)};`
-        ).join("\n");
-        
+        const moduleDeclarations = subpackages
+            .map((subpackage) => `pub mod ${subpackage.name.snakeCase.safeName};`)
+            .join("\n");
+
+        const reExports = subpackages
+            .map((subpackage) => `pub use ${subpackage.name.snakeCase.safeName}::${this.getSubClientName(subpackage)};`)
+            .join("\n");
+
         let fileContents = "";
-        
+
         // Only generate root client if there are multiple services
         if (subpackages.length > 1) {
             const clientName = this.getRootClientName();
@@ -39,21 +39,11 @@ export class RootClientGenerator {
                 fields: this.generateFields(subpackages),
                 constructors: [this.generateConstructor(subpackages)]
             });
-            
-            fileContents = [
-                moduleDeclarations,
-                "",
-                rustRootClient.toString(),
-                "",
-                reExports
-            ].join("\n");
+
+            fileContents = [moduleDeclarations, "", rustRootClient.toString(), "", reExports].join("\n");
         } else {
             // For single service, just export the module and re-export the client
-            fileContents = [
-                moduleDeclarations,
-                "",
-                reExports
-            ].join("\n");
+            fileContents = [moduleDeclarations, "", reExports].join("\n");
         }
 
         return new RustFile({
@@ -63,21 +53,23 @@ export class RootClientGenerator {
         });
     }
 
-    
     private generateFields(subpackages: Subpackage[]): any[] {
         // Generate fields for each sub-client from IR subpackages
-        return subpackages.map(subpackage => ({
+        return subpackages.map((subpackage) => ({
             name: subpackage.name.snakeCase.safeName, // Use proper snake_case from IR
-            type: this.getSubClientName(subpackage),  // Use proper PascalCase client name
+            type: this.getSubClientName(subpackage), // Use proper PascalCase client name
             visibility: "pub" // Public for direct access to sub-clients
         }));
     }
 
     private generateConstructor(subpackages: Subpackage[]): any {
         const defaultBaseUrl = this.getDefaultBaseUrl();
-        const subClientInits = subpackages.map(subpackage => 
-            `${subpackage.name.snakeCase.safeName}: ${this.getSubClientName(subpackage)}::new("${defaultBaseUrl}".to_string())`
-        ).join(",\n    ");
+        const subClientInits = subpackages
+            .map(
+                (subpackage) =>
+                    `${subpackage.name.snakeCase.safeName}: ${this.getSubClientName(subpackage)}::new("${defaultBaseUrl}".to_string())`
+            )
+            .join(",\n    ");
 
         return {
             name: "new",

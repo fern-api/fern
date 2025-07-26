@@ -27,7 +27,15 @@ export class Module extends AstNode {
     public readonly enums?: Enum[];
     public readonly rawDeclarations?: string[];
 
-    public constructor({ imports, useStatements, moduleDeclarations, structs, implBlocks, enums, rawDeclarations }: Module.Args) {
+    public constructor({
+        imports,
+        useStatements,
+        moduleDeclarations,
+        structs,
+        implBlocks,
+        enums,
+        rawDeclarations
+    }: Module.Args) {
         super();
         this.imports = imports;
         this.useStatements = useStatements;
@@ -110,4 +118,4 @@ export class Module extends AstNode {
             });
         }
     }
-} 
+}

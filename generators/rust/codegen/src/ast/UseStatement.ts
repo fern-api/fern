@@ -25,10 +25,10 @@ export class UseStatement extends AstNode {
         if (this.isPublic) {
             writer.write("pub ");
         }
-        
+
         writer.write("use ");
         writer.write(this.path);
-        
+
         if (this.items && this.items.length > 0) {
             writer.write("::{");
             this.items.forEach((item, index) => {
@@ -39,7 +39,7 @@ export class UseStatement extends AstNode {
             });
             writer.write("}");
         }
-        
+
         writer.write(";");
     }
-} 
+}

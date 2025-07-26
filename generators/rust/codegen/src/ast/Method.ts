@@ -124,4 +124,4 @@ export class Method extends AstNode {
             writer.write(";");
         }
     }
-} 
+}

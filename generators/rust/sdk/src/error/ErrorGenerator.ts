@@ -25,8 +25,7 @@ export class ErrorGenerator {
     constructor(private readonly context: SdkGeneratorContext) {}
 
     public generateErrorRs(): string {
-        const fileBuilder = new RustFileBuilder()
-            .addUse("thiserror", ["Error"]);
+        const fileBuilder = new RustFileBuilder().addUse("thiserror", ["Error"]);
 
         const errorEnum = this.buildErrorEnum();
         const errorImpl = this.buildErrorImpl();
@@ -171,24 +170,20 @@ export class ErrorGenerator {
 
         const parseBodyStatements = [
             Statement.expression(Expression.raw(`// Parse error body for ${errorName}`)),
-            Statement.ifLet(
-                "Some(body_str)",
-                Expression.variable("body"),
-                [
-                    Statement.ifLet(
-                        "Ok(parsed)",
-                        Expression.functionCall("serde_json::from_str::<serde_json::Value>", [Expression.variable("body_str")]),
-                        [Statement.return(successConstruction)]
-                    )
-                ]
-            ),
+            Statement.ifLet("Some(body_str)", Expression.variable("body"), [
+                Statement.ifLet(
+                    "Ok(parsed)",
+                    Expression.functionCall("serde_json::from_str::<serde_json::Value>", [
+                        Expression.variable("body_str")
+                    ]),
+                    [Statement.return(successConstruction)]
+                )
+            ]),
             Statement.return(fallbackConstruction)
         ];
 
         return MatchArm.withStatements(Pattern.literal(statusCode), parseBodyStatements);
     }
-
-
 
     private buildSuccessConstruction(errorName: string, errorDeclaration: ErrorDeclaration): Expression {
         const fieldAssignments = this.buildFieldAssignments(errorDeclaration);

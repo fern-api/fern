@@ -177,7 +177,10 @@ class TupleType extends Type {
 }
 
 class ArrayType extends Type {
-    constructor(private readonly inner: Type, private readonly size?: number) {
+    constructor(
+        private readonly inner: Type,
+        private readonly size?: number
+    ) {
         super();
     }
 
@@ -214,7 +217,10 @@ class ImmutableReferenceType extends Type {
 }
 
 class LifetimeType extends Type {
-    constructor(private readonly name: string, private readonly inner: Type) {
+    constructor(
+        private readonly name: string,
+        private readonly inner: Type
+    ) {
         super();
     }
 
@@ -227,7 +233,10 @@ class LifetimeType extends Type {
 }
 
 class GenericType extends Type {
-    constructor(private readonly name: string, private readonly bounds?: Type[]) {
+    constructor(
+        private readonly name: string,
+        private readonly bounds?: Type[]
+    ) {
         super();
     }
 
@@ -255,7 +264,10 @@ class TraitType extends Type {
 }
 
 class ClosureType extends Type {
-    constructor(private readonly params: Type[], private readonly returnType: Type) {
+    constructor(
+        private readonly params: Type[],
+        private readonly returnType: Type
+    ) {
         super();
     }
 

@@ -183,4 +183,4 @@ export class Pattern extends AstNode {
     public static raw(value: string): Pattern {
         return new Pattern({ type: "raw", value });
     }
-} 
+}

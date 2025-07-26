@@ -46,7 +46,7 @@ export class MatchArm extends AstNode {
             if (this.body.length > 0) {
                 writer.newLine();
                 writer.indent();
-                this.body.forEach(stmt => {
+                this.body.forEach((stmt) => {
                     stmt.write(writer);
                     writer.newLine();
                 });
@@ -80,4 +80,4 @@ export class MatchArm extends AstNode {
     public static withoutComma(pattern: Pattern, body: Statement[] | Expression, guard?: Expression): MatchArm {
         return new MatchArm({ pattern, guard, body, trailing_comma: false });
     }
-} 
+}

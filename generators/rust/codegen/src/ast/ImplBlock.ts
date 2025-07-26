@@ -38,11 +38,11 @@ export class ImplBlock extends AstNode {
 
         // Write impl declaration
         writer.write("impl ");
-        
+
         if (this.traitName) {
             writer.write(`${this.traitName} for `);
         }
-        
+
         this.targetType.write(writer);
         writer.write(" {");
         writer.newLine();
@@ -58,4 +58,4 @@ export class ImplBlock extends AstNode {
 
         writer.write("}");
     }
-} 
+}

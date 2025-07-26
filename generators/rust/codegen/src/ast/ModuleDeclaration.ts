@@ -22,9 +22,9 @@ export class ModuleDeclaration extends AstNode {
         if (this.isPublic) {
             writer.write("pub ");
         }
-        
+
         writer.write("mod ");
         writer.write(this.name);
         writer.write(";");
     }
-} 
+}

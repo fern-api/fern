@@ -5,11 +5,18 @@ import { Type } from "./Type";
 type Statement = any;
 
 export declare namespace Expression {
-    type Args = 
+    type Args =
         | { type: "reference"; name: string }
         | { type: "self" }
         | { type: "field-access"; target: Expression; field: string }
-        | { type: "method-call"; target: Expression; method: string; args: Expression[]; isAsync?: boolean; multiline?: boolean }
+        | {
+              type: "method-call";
+              target: Expression;
+              method: string;
+              args: Expression[];
+              isAsync?: boolean;
+              multiline?: boolean;
+          }
         | { type: "method-chain"; calls: MethodCall[] }
         | { type: "function-call"; function: string; args: Expression[]; multiline?: boolean }
         | { type: "await"; expression: Expression }
@@ -59,24 +66,24 @@ export class Expression extends AstNode {
             case "reference":
                 writer.write(this.args.name);
                 break;
-            
+
             case "self":
                 writer.write("self");
                 break;
-            
+
             case "field-access":
                 this.args.target.write(writer);
                 writer.write(".");
                 writer.write(this.args.field);
                 break;
-            
+
             case "method-call": {
                 const methodArgs = this.args as Extract<Expression.Args, { type: "method-call" }>;
                 methodArgs.target.write(writer);
                 writer.write(".");
                 writer.write(methodArgs.method);
                 writer.write("(");
-                
+
                 if (methodArgs.multiline && methodArgs.args.length > 1) {
                     writer.newLine();
                     writer.indent();
@@ -95,7 +102,7 @@ export class Expression extends AstNode {
                         arg.write(writer);
                     });
                 }
-                
+
                 writer.write(")");
                 if (methodArgs.isAsync) {
                     writer.write(".await");
@@ -120,12 +127,12 @@ export class Expression extends AstNode {
                 });
                 break;
             }
-            
+
             case "function-call": {
                 const funcArgs = this.args as Extract<Expression.Args, { type: "function-call" }>;
                 writer.write(funcArgs.function);
                 writer.write("(");
-                
+
                 if (funcArgs.multiline && funcArgs.args.length > 1) {
                     writer.newLine();
                     writer.indent();
@@ -144,43 +151,43 @@ export class Expression extends AstNode {
                         arg.write(writer);
                     });
                 }
-                
+
                 writer.write(")");
                 break;
             }
-            
+
             case "await":
                 this.args.expression.write(writer);
                 writer.write(".await");
                 break;
-            
+
             case "try":
                 this.args.expression.write(writer);
                 writer.write("?");
                 break;
-            
+
             case "ok":
                 writer.write("Ok(");
                 this.args.value.write(writer);
                 writer.write(")");
                 break;
-            
+
             case "err":
                 writer.write("Err(");
                 this.args.value.write(writer);
                 writer.write(")");
                 break;
-            
+
             case "some":
                 writer.write("Some(");
                 this.args.value.write(writer);
                 writer.write(")");
                 break;
-            
+
             case "none":
                 writer.write("None");
                 break;
-            
+
             case "string-literal":
                 writer.write(JSON.stringify(this.args.value));
                 break;
@@ -192,17 +199,17 @@ export class Expression extends AstNode {
             case "boolean-literal":
                 writer.write(this.args.value.toString());
                 break;
-            
+
             case "format-string":
                 writer.write("format!(");
                 writer.write(JSON.stringify(this.args.template));
-                this.args.args.forEach(arg => {
+                this.args.args.forEach((arg) => {
                     writer.write(", ");
                     arg.write(writer);
                 });
                 writer.write(")");
                 break;
-            
+
             case "vec-literal":
                 writer.write("vec![");
                 this.args.elements.forEach((elem, index) => {
@@ -211,7 +218,7 @@ export class Expression extends AstNode {
                 });
                 writer.write("]");
                 break;
-            
+
             case "struct-literal":
                 writer.write(this.args.name);
                 writer.write(" { ");
@@ -245,7 +252,7 @@ export class Expression extends AstNode {
                 writer.write("}");
                 break;
             }
-            
+
             case "reference-of": {
                 const refArgs = this.args as Extract<Expression.Args, { type: "reference-of" }>;
                 writer.write("&");
@@ -253,21 +260,21 @@ export class Expression extends AstNode {
                 refArgs.inner.write(writer);
                 break;
             }
-            
+
             case "dereference": {
                 const derefArgs = this.args as Extract<Expression.Args, { type: "dereference" }>;
                 writer.write("*");
                 derefArgs.inner.write(writer);
                 break;
             }
-            
+
             case "clone": {
                 const cloneArgs = this.args as Extract<Expression.Args, { type: "clone" }>;
                 cloneArgs.expression.write(writer);
                 writer.write(".clone()");
                 break;
             }
-            
+
             case "if-let": {
                 const ifLetArgs = this.args as Extract<Expression.Args, { type: "if-let" }>;
                 writer.write("if let ");
@@ -284,7 +291,7 @@ export class Expression extends AstNode {
                 }
                 break;
             }
-            
+
             case "if-condition": {
                 const ifArgs = this.args as Extract<Expression.Args, { type: "if-condition" }>;
                 writer.write("if ");
@@ -299,14 +306,14 @@ export class Expression extends AstNode {
                 }
                 break;
             }
-            
+
             case "block": {
                 const blockArgs = this.args as Extract<Expression.Args, { type: "block" }>;
                 writer.write("{ ");
                 if (blockArgs.statements.length > 0) {
                     writer.newLine();
                     writer.indent();
-                    blockArgs.statements.forEach(stmt => {
+                    blockArgs.statements.forEach((stmt) => {
                         // @ts-ignore - Statement write method exists
                         stmt.write(writer);
                         writer.newLine();
@@ -322,7 +329,7 @@ export class Expression extends AstNode {
                 writer.write(" }");
                 break;
             }
-            
+
             case "tuple": {
                 const tupleArgs = this.args as Extract<Expression.Args, { type: "tuple" }>;
                 writer.write("(");
@@ -333,7 +340,7 @@ export class Expression extends AstNode {
                 writer.write(")");
                 break;
             }
-            
+
             case "array": {
                 const arrayArgs = this.args as Extract<Expression.Args, { type: "array" }>;
                 writer.write("[");
@@ -344,7 +351,7 @@ export class Expression extends AstNode {
                 writer.write("]");
                 break;
             }
-            
+
             case "macro-call": {
                 const macroArgs = this.args as Extract<Expression.Args, { type: "macro-call" }>;
                 writer.write(macroArgs.name);
@@ -356,7 +363,7 @@ export class Expression extends AstNode {
                 writer.write(")");
                 break;
             }
-            
+
             case "closure": {
                 const closureArgs = this.args as Extract<Expression.Args, { type: "closure" }>;
                 writer.write("|");
@@ -372,7 +379,7 @@ export class Expression extends AstNode {
                 closureArgs.body.write(writer);
                 break;
             }
-            
+
             case "raw": {
                 const rawArgs = this.args as Extract<Expression.Args, { type: "raw" }>;
                 writer.write(rawArgs.value);
@@ -398,17 +405,17 @@ export class Expression extends AstNode {
         return new Expression({ type: "field-access", target, field });
     }
 
-    public static methodCall(args: { 
-        target: Expression; 
-        method: string; 
-        args: Expression[]; 
+    public static methodCall(args: {
+        target: Expression;
+        method: string;
+        args: Expression[];
         isAsync?: boolean;
         multiline?: boolean;
     }): Expression {
-        return new Expression({ 
-            type: "method-call", 
-            target: args.target, 
-            method: args.method, 
+        return new Expression({
+            type: "method-call",
+            target: args.target,
+            method: args.method,
             args: args.args,
             isAsync: args.isAsync,
             multiline: args.multiline
@@ -565,4 +572,4 @@ export class Expression extends AstNode {
             args: [closure]
         });
     }
-} 
+}

@@ -79,7 +79,7 @@ export class Statement extends AstNode {
                 writer.write(" {");
                 writer.newLine();
                 writer.indent();
-                ifArgs.then.forEach(stmt => {
+                ifArgs.then.forEach((stmt) => {
                     stmt.write(writer);
                     writer.newLine();
                 });
@@ -89,7 +89,7 @@ export class Statement extends AstNode {
                     writer.write(" else {");
                     writer.newLine();
                     writer.indent();
-                    ifArgs.else_.forEach(stmt => {
+                    ifArgs.else_.forEach((stmt) => {
                         stmt.write(writer);
                         writer.newLine();
                     });
@@ -108,7 +108,7 @@ export class Statement extends AstNode {
                 writer.write(" {");
                 writer.newLine();
                 writer.indent();
-                ifLetArgs.then.forEach(stmt => {
+                ifLetArgs.then.forEach((stmt) => {
                     stmt.write(writer);
                     writer.newLine();
                 });
@@ -118,7 +118,7 @@ export class Statement extends AstNode {
                     writer.write(" else {");
                     writer.newLine();
                     writer.indent();
-                    ifLetArgs.else_.forEach(stmt => {
+                    ifLetArgs.else_.forEach((stmt) => {
                         stmt.write(writer);
                         writer.newLine();
                     });
@@ -144,7 +144,7 @@ export class Statement extends AstNode {
                     writer.write(" => {");
                     writer.newLine();
                     writer.indent();
-                    arm.body.forEach(stmt => {
+                    arm.body.forEach((stmt) => {
                         stmt.write(writer);
                         writer.newLine();
                     });
@@ -167,7 +167,7 @@ export class Statement extends AstNode {
                 writer.write(" {");
                 writer.newLine();
                 writer.indent();
-                matchArgs.arms.forEach(arm => {
+                matchArgs.arms.forEach((arm) => {
                     arm.write(writer);
                     writer.newLine();
                 });
@@ -183,7 +183,7 @@ export class Statement extends AstNode {
                 writer.write(" {");
                 writer.newLine();
                 writer.indent();
-                whileArgs.body.forEach(stmt => {
+                whileArgs.body.forEach((stmt) => {
                     stmt.write(writer);
                     writer.newLine();
                 });
@@ -201,7 +201,7 @@ export class Statement extends AstNode {
                 writer.write(" {");
                 writer.newLine();
                 writer.indent();
-                whileLetArgs.body.forEach(stmt => {
+                whileLetArgs.body.forEach((stmt) => {
                     stmt.write(writer);
                     writer.newLine();
                 });
@@ -219,7 +219,7 @@ export class Statement extends AstNode {
                 writer.write(" {");
                 writer.newLine();
                 writer.indent();
-                forArgs.body.forEach(stmt => {
+                forArgs.body.forEach((stmt) => {
                     stmt.write(writer);
                     writer.newLine();
                 });
@@ -233,7 +233,7 @@ export class Statement extends AstNode {
                 writer.write("loop {");
                 writer.newLine();
                 writer.indent();
-                loopArgs.body.forEach(stmt => {
+                loopArgs.body.forEach((stmt) => {
                     stmt.write(writer);
                     writer.newLine();
                 });
@@ -273,7 +273,7 @@ export class Statement extends AstNode {
                 writer.write("unsafe {");
                 writer.newLine();
                 writer.indent();
-                unsafeArgs.body.forEach(stmt => {
+                unsafeArgs.body.forEach((stmt) => {
                     stmt.write(writer);
                     writer.newLine();
                 });
@@ -352,4 +352,4 @@ export class Statement extends AstNode {
     public static raw(value: string): Statement {
         return new Statement({ type: "raw", value });
     }
-} 
+}

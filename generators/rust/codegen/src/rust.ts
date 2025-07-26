@@ -82,8 +82,6 @@ export function method(args: Method.Args): Method {
     return new Method(args);
 }
 
-
-
 export function implBlock(args: ImplBlock.Args): ImplBlock {
     return new ImplBlock(args);
 }

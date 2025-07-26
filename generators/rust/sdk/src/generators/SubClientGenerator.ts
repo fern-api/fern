@@ -80,15 +80,15 @@ use reqwest::Client;
         // Generate method signature
         const parameters = params.map((param) => {
             let paramType = param.type;
-            
+
             if (param.isRef) {
                 paramType = `&${paramType}`;
             }
-            
+
             if (param.optional) {
                 paramType = `Option<${paramType}>`;
             }
-            
+
             return `${param.name}: ${paramType}`;
         });
 

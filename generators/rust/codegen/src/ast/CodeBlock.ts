@@ -4,7 +4,7 @@ import { Statement } from "./Statement";
 import { Expression } from "./Expression";
 
 export declare namespace CodeBlock {
-    type Args = 
+    type Args =
         | { type: "statements"; statements: Statement[] }
         | { type: "expression"; expression: Expression }
         | { type: "empty" };
@@ -62,12 +62,12 @@ export class CodeBlock extends AstNode {
 
     public static fromStatementsAndExpression(statements: Statement[], expression: Expression): CodeBlock {
         // In Rust, we can have statements followed by a final expression (implicit return)
-        return new CodeBlock({ 
-            type: "statements", 
+        return new CodeBlock({
+            type: "statements",
             statements: [
                 ...statements,
                 Statement.raw(expression.toString()) // Expression without semicolon
             ]
         });
     }
-} 
+}

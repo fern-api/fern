@@ -8,15 +8,15 @@ import { Writer } from "./Writer";
 export declare namespace Client {
     interface Args {
         name: string;
-        fields?: Field[];        // ← All struct fields passed from outside
+        fields?: Field[]; // ← All struct fields passed from outside
         constructors?: SimpleMethod[]; // ← All constructors passed from outside
-        methods?: SimpleMethod[];      // ← All methods passed from outside
+        methods?: SimpleMethod[]; // ← All methods passed from outside
     }
 
     interface Field {
         name: string;
         type: string;
-        visibility: 'pub' | 'private';
+        visibility: "pub" | "private";
     }
 
     interface SimpleMethod {
