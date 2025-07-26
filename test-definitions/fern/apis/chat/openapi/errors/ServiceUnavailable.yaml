@@ -1,0 +1,10 @@
+description: |
+  This error is returned when the service is unavailable. This could be due to:
+    - Too many users trying to access the service at the same time
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        data:
+          type: string

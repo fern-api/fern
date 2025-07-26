@@ -1,0 +1,95 @@
+post:
+  summary: Chat with the model
+  operationId: chatv2
+  x-fern-audiences: ['v2-beta']
+  x-fern-sdk-group-name: v2
+  x-fern-sdk-method-name: chat
+  description: |
+    Generates a message from the model in response to a provided conversation. To learn how to use the Chat API with Streaming and RAG follow our Text Generation guides.
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - messages
+            - model
+          properties:
+            model:
+              type: string
+              description: The name of a compatible [Cohere model](https://docs.cohere.com/docs/models) (such as command-r or command-r-plus) or the ID of a [fine-tuned](https://docs.cohere.com/docs/chat-fine-tuning) model.
+            documents:
+              type: array
+              items:
+                type: string
+              description: |
+                A list of relevant documents that the model can cite to generate a more accurate reply. Each document is either a string or document object with content and metadata.
+            safety_mode:
+              enum: [ 'CONTEXTUAL', 'STRICT', 'NONE' ]
+              description: |
+                Used to select the [safety instruction](/docs/safety-modes) inserted into the prompt. Defaults to `CONTEXTUAL`.
+                When `NONE` is specified, the safety instruction will be omitted.
+
+                Safety modes are not yet configurable in combination with `tools`, `tool_results` and `documents` parameters.
+
+                **Note**: This parameter is only compatible with models [Command R 08-2024](/docs/command-r#august-2024-release), [Command R+ 08-2024](/docs/command-r-plus#august-2024-release) and newer.
+
+                Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock, Private Deployments
+            max_tokens:
+              type: integer
+              description: |
+                The maximum number of tokens the model will generate as part of the response. Note: Setting a low value may result in incomplete generations.
+            stop_sequences:
+              type: array
+              items:
+                type: string
+              description: |
+                A list of up to 5 strings that the model will use to stop generation. If the model generates a string that matches any of the strings in the list, it will stop generating tokens and return the generated text up to that point not including the stop sequence.
+            temperature:
+              type: number
+              format: float
+              minimum: 0
+              maximum: 1
+              description: |
+                Defaults to `0.3`.
+
+                A non-negative float that tunes the degree of randomness in generation. Lower temperatures mean less random generations, and higher temperatures mean more random generations.
+
+                Randomness can be further maximized by increasing the  value of the `p` parameter.
+            return_prompt:
+              type: boolean
+              x-internal: true
+              description: Whether to return the prompt in the response.
+  responses:
+    '400':
+      $ref: "./errors/BadRequest.yaml"
+    '401':
+      $ref: "./errors/Unauthorized.yaml"
+    '403':
+      $ref: "./errors/Forbidden.yaml"
+    '404':
+      $ref: "./errors/NotFound.yaml"
+    '422':
+      $ref: "./errors/UnprocessableEntity.yaml"
+    '429':
+      $ref: './errors/RateLimit.yaml'
+    '498':
+      $ref: "./errors/InvalidToken.yaml"
+    '499':
+      $ref: "./errors/RequestCancelled.yaml"
+    '500':
+      $ref: "./errors/InternalServerError.yaml"
+    '501':
+      $ref: "./errors/NotImplemented.yaml"
+    '503':
+      $ref: "./errors/ServiceUnavailable.yaml"
+    '504':
+      $ref: "./errors/GatewayTimeout.yaml"
+    '200':
+      description: 'OK'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: string
