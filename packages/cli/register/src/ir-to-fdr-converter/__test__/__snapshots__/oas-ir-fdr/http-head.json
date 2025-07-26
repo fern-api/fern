@@ -164,7 +164,7 @@
       },
       {
         "auth": false,
-        "method": "GET",
+        "method": "HEAD",
         "id": "headMethodsShouldNotDefineAResponseBody",
         "originalEndpointId": "endpoint_.headMethodsShouldNotDefineAResponseBody",
         "name": "HEAD methods should not define a response body.",

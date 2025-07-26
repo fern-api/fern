@@ -493,10 +493,7 @@ function convertHttpMethod(method: Ir.http.HttpMethod): FdrCjsSdk.HttpMethod {
         put: () => FdrCjsSdk.HttpMethod.Put,
         patch: () => FdrCjsSdk.HttpMethod.Patch,
         delete: () => FdrCjsSdk.HttpMethod.Delete,
-
-        // TODO: Temporary workaround; update to FdrCjsSdk.HttpMethod.Head once we update the FDR SDK.
-        //       A HEAD request is most similar to a GET, so this is the closest we can get for now.
-        head: () => FdrCjsSdk.HttpMethod.Get,
+        head: () => FdrCjsSdk.HttpMethod.Head,
         _other: () => {
             throw new Error("Unknown http method: " + method);
         }
