@@ -1,3 +1,5 @@
+use crate::metadata::Metadata;
+use crate::tag::Tag;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

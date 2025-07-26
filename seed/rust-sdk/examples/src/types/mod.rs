@@ -1,4 +1,4 @@
-pub mod type;
+pub mod r#type;
 pub mod identifier;
 pub mod basic_type;
 pub mod complex_type;
@@ -32,7 +32,7 @@ pub mod entity;
 pub mod big_entity;
 pub mod cron_job;
 
-pub use type::{*};
+pub use r#type::{*};
 pub use identifier::{*};
 pub use basic_type::{*};
 pub use complex_type::{*};

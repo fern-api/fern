@@ -1,0 +1,318 @@
+# Fern API - Cursor Rules
+
+## Project Overview
+Fern is a platform that transforms API definitions into production-ready SDKs and beautiful documentation. This is a TypeScript/Node.js monorepo using pnpm workspaces, with generators for multiple programming languages (TypeScript, Python, Java, Go, Ruby, PHP, C#, Swift, Rust).
+
+## Architecture & Structure
+
+### Core Components
+- **CLI**: Main command-line interface in `packages/cli/`
+- **Generators**: Language-specific code generators in `generators/`
+- **Core Packages**: Shared utilities in `packages/core/`, `packages/commons/`
+- **Documentation**: Fern's own docs in `fern/` directory
+- **Seed**: Testing framework for generators in `packages/seed/`
+
+### Key Directories
+- `packages/`: Core packages and CLI components
+- `generators/`: Language-specific generators (typescript, python, java, go, etc.)
+- `fern/`: Fern's own documentation and configuration
+- `seed/`: Generated test outputs for each generator
+- `test-definitions/`: Test API definitions for generator testing
+
+## Development Standards
+
+### Package Management
+- Use **pnpm** as the package manager (not npm or yarn)
+- All packages are managed through pnpm workspaces
+- Node.js 18+ required
+
+### TypeScript Configuration
+- Strict TypeScript settings enabled
+- Use `@fern-api/configs/tsconfig/main.json` as base config
+- Target: ESNext, Module: ESNext
+- Strict mode enabled with `noImplicitAny`, `noImplicitReturns`, etc.
+
+### Code Style & Formatting
+- **Biome** for formatting and linting (not Prettier)
+- 4-space indentation for TypeScript/JavaScript
+- 2-space indentation for YAML/JSON/Markdown
+- Line width: 120 characters
+- Double quotes for strings
+- Semicolons required
+- Trailing commas: none
+
+### Linting Rules
+- ESLint with TypeScript strict rules
+- Biome for formatting and additional linting
+- No console.log in production code (allowed in tests)
+- Strict boolean expressions
+- No unused variables
+- No explicit any (unless necessary)
+
+## Generator Development
+
+### Generator Structure
+Each generator follows a consistent structure:
+```
+generators/{language}/
+├── base/           # Base generator configuration
+├── sdk/            # SDK generator
+├── model/          # Model generator (if applicable)
+├── dynamic-snippets/ # Dynamic code snippets
+├── formatter/      # Code formatting utilities
+└── package.json    # Generator-specific dependencies
+```
+
+### Generator Guidelines
+- Generators can be written in TypeScript or the target language
+- Use Docker containers for language-specific generators
+- Follow the base generator pattern for consistency
+- Include comprehensive tests with seed framework
+- Support both Fern Definition and OpenAPI inputs
+
+### Testing Generators
+- Use the seed framework: `pnpm seed test --generator {generator-id}`
+- Test against fixtures in `test-definitions/`
+- Ensure generated code compiles and works correctly
+- Run scripts to validate generated output
+
+## CLI Development
+
+### CLI Architecture
+- Main entry point: `packages/cli/cli/src/cli.ts`
+- Modular command structure
+- Context-based error handling
+- Support for local and cloud environments
+
+### CLI Guidelines
+- Use yargs for command-line argument parsing
+- Implement proper error handling with `FernCliError`
+- Support both local and cloud generation modes
+- Include comprehensive help text
+- Follow the existing command patterns
+
+## API Definition Support
+
+### Fern Definition
+- Primary API definition format
+- YAML-based, more readable than OpenAPI
+- Supports types, services, errors, and documentation
+- Schema validation with JSON Schema
+
+### OpenAPI Support
+- Import OpenAPI specs into Fern
+- Convert to Fern Definition format
+- Support for REST APIs, Webhooks, WebSockets
+- Maintain compatibility with OpenAPI ecosystem
+
+## Documentation
+
+### Fern Docs
+- Self-hosted documentation using Fern's docs product
+- Configuration in `fern/docs.yml`
+- Markdown-based content with custom components
+- Version control with git
+- SEO and search optimization
+
+### Code Documentation
+- JSDoc comments for public APIs
+- Comprehensive README files for each package
+- Inline documentation for complex logic
+- API reference generation
+
+## Testing Strategy
+
+### Unit Tests
+- Jest for TypeScript packages
+- Vitest for newer packages
+- Snapshot testing for generators
+- Comprehensive coverage requirements
+
+### Integration Tests
+- End-to-end tests with `pnpm test:ete`
+- Seed framework for generator testing
+- Docker-based testing for language-specific generators
+- Cross-platform compatibility testing
+
+### Test Guidelines
+- Use descriptive test names
+- Group related tests with describe blocks
+- Mock external dependencies
+- Test both success and error cases
+- Update snapshots when API changes
+
+## Build & Deployment
+
+### Build Process
+- Turbo for monorepo build orchestration
+- TypeScript compilation with strict settings
+- Docker builds for generators
+- Parallel builds for independent packages
+
+### Development Workflow
+1. `pnpm install` - Install dependencies
+2. `pnpm compile` - Compile all packages
+3. `pnpm test` - Run unit tests
+4. `pnpm test:ete` - Run integration tests
+5. `pnpm lint:eslint` - Lint code
+6. `pnpm format` - Format code with Biome
+
+## Common Patterns
+
+### Error Handling
+- Use `FernCliError` for CLI errors
+- `LoggableFernCliError` for user-facing errors
+- Proper error context and stack traces
+- Graceful degradation when possible
+
+### Logging
+- Structured logging with levels (debug, info, warn, error)
+- Context-aware logging
+- No console.log in production code
+- Proper error reporting to monitoring systems
+
+### Configuration
+- YAML-based configuration files
+- Environment variable support
+- Validation with JSON Schema
+- Default values and fallbacks
+
+### File System Operations
+- Use `@fern-api/fs-utils` for file operations
+- Support for absolute and relative paths
+- Cross-platform compatibility
+- Proper error handling for file operations
+
+## Language-Specific Guidelines
+
+### TypeScript/JavaScript
+- Use modern ES2022+ features
+- Prefer async/await over Promises
+- Use TypeScript strict mode
+- Proper type definitions for all APIs
+
+### Python (for generators)
+- Use type hints
+- Follow PEP 8 style guide
+- Use Poetry for dependency management
+- Include comprehensive docstrings
+
+### Java (for generators)
+- Use Maven or Gradle for build management
+- Follow Java naming conventions
+- Include comprehensive Javadoc
+- Use modern Java features (8+)
+
+### Go (for generators)
+- Use Go modules
+- Follow Go naming conventions
+- Include comprehensive godoc
+- Use Go 1.19+ features
+
+## Performance Considerations
+
+### Generator Performance
+- Optimize for large API definitions
+- Use streaming for file operations
+- Minimize memory usage
+- Parallel processing where possible
+
+### CLI Performance
+- Lazy loading of heavy dependencies
+- Caching for repeated operations
+- Progress indicators for long-running tasks
+- Efficient file system operations
+
+## Security Guidelines
+
+### Input Validation
+- Validate all user inputs
+- Sanitize file paths and URLs
+- Use parameterized queries for databases
+- Validate configuration files
+
+### Dependencies
+- Regular security audits
+- Pin dependency versions
+- Use trusted package sources
+- Monitor for vulnerabilities
+
+## Contributing Guidelines
+
+### Code Review
+- All changes require review
+- Follow existing code patterns
+- Include tests for new features
+- Update documentation as needed
+
+### Pull Requests
+- Clear description of changes
+- Link to related issues
+- Include test coverage
+- Update relevant documentation
+
+### Commit Messages
+- Use conventional commit format
+- Clear and descriptive messages
+- Reference issue numbers
+- Separate concerns in different commits
+
+## Environment Setup
+
+### Required Tools
+- Node.js 18+
+- pnpm 9.4.0+
+- Docker (for generator testing)
+- Git
+
+### Development Environment
+- VS Code with TypeScript support
+- ESLint and Biome extensions
+- Docker Desktop
+- Git hooks (Husky)
+
+### Environment Variables
+- `FERN_NO_VERSION_REDIRECTION=true` for local development
+- `POSTHOG_API_KEY` for analytics (optional)
+- Various API keys for testing
+
+## Troubleshooting
+
+### Common Issues
+- Node version compatibility
+- Docker daemon not running
+- pnpm workspace issues
+- TypeScript compilation errors
+- Generator build failures
+
+### Debug Commands
+- `pnpm compile` - Rebuild all packages
+- `pnpm seed:build` - Rebuild seed CLI
+- `pnpm test:update` - Update test snapshots
+- `pnpm lint:eslint:fix` - Auto-fix linting issues
+
+## Best Practices
+
+### Code Organization
+- Keep functions small and focused
+- Use meaningful variable names
+- Avoid deep nesting
+- Prefer composition over inheritance
+
+### Error Handling
+- Fail fast and fail loudly
+- Provide helpful error messages
+- Log errors with context
+- Handle edge cases gracefully
+
+### Performance
+- Profile before optimizing
+- Use appropriate data structures
+- Minimize I/O operations
+- Cache expensive computations
+
+### Maintainability
+- Write self-documenting code
+- Use consistent patterns
+- Refactor regularly
+- Keep dependencies up to date 

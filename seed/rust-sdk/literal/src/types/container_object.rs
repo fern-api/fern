@@ -1,3 +1,4 @@
+use crate::nested_object_with_literals::NestedObjectWithLiterals;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
