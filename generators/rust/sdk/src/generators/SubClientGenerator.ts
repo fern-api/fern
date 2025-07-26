@@ -6,6 +6,13 @@ import { HttpEndpoint, HttpService, Subpackage } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
+interface EndpointParameter {
+    name: string;
+    type: string;
+    isRef: boolean;
+    optional: boolean;
+}
+
 export class SubClientGenerator {
     private readonly context: SdkGeneratorContext;
     private readonly subpackage: Subpackage;
@@ -49,7 +56,7 @@ use reqwest::Client;
 `;
     }
 
-    private generateFields(): any[] {
+    private generateFields(): rust.Client.Field[] {
         // Standard HTTP client fields - public for direct access
         return [
             { name: "client", type: "Client", visibility: "pub" },
@@ -57,7 +64,7 @@ use reqwest::Client;
         ];
     }
 
-    private generateConstructor(): any {
+    private generateConstructor(): rust.Client.SimpleMethod {
         return {
             name: "new",
             parameters: ["base_url: String"],
@@ -70,11 +77,11 @@ use reqwest::Client;
         };
     }
 
-    private convertEndpointsToHttpMethods(endpoints: HttpEndpoint[]): any[] {
+    private convertEndpointsToHttpMethods(endpoints: HttpEndpoint[]): rust.Client.SimpleMethod[] {
         return endpoints.map((endpoint) => this.generateHttpMethod(endpoint));
     }
 
-    private generateHttpMethod(endpoint: HttpEndpoint): any {
+    private generateHttpMethod(endpoint: HttpEndpoint): rust.Client.SimpleMethod {
         const params = this.extractParametersFromEndpoint(endpoint);
 
         // Generate method signature
@@ -101,8 +108,8 @@ use reqwest::Client;
         };
     }
 
-    private extractParametersFromEndpoint(endpoint: HttpEndpoint): any[] {
-        const params: any[] = [];
+    private extractParametersFromEndpoint(endpoint: HttpEndpoint): EndpointParameter[] {
+        const params: EndpointParameter[] = [];
 
         // Add path parameters
         endpoint.fullPath.parts.forEach((part) => {

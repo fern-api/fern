@@ -169,7 +169,9 @@ class TupleType extends Type {
     public write(writer: Writer): void {
         writer.write("(");
         this.types.forEach((type, index) => {
-            if (index > 0) writer.write(", ");
+            if (index > 0) {
+                writer.write(", ");
+            }
             type.write(writer);
         });
         writer.write(")");
@@ -245,7 +247,9 @@ class GenericType extends Type {
         if (this.bounds && this.bounds.length > 0) {
             writer.write(": ");
             this.bounds.forEach((bound, index) => {
-                if (index > 0) writer.write(" + ");
+                if (index > 0) {
+                    writer.write(" + ");
+                }
                 bound.write(writer);
             });
         }
@@ -274,7 +278,9 @@ class ClosureType extends Type {
     public write(writer: Writer): void {
         writer.write("Box<dyn Fn(");
         this.params.forEach((param, index) => {
-            if (index > 0) writer.write(", ");
+            if (index > 0) {
+                writer.write(", ");
+            }
             param.write(writer);
         });
         writer.write(") -> ");

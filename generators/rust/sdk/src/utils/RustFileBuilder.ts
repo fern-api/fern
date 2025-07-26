@@ -1,4 +1,4 @@
-import { AstNode } from "@fern-api/rust-codegen";
+import { AstNode, Writer } from "@fern-api/rust-codegen";
 
 export class RustFileBuilder {
     private imports: string[] = [];
@@ -26,7 +26,7 @@ export class RustFileBuilder {
     public addRawCode(code: string): this {
         // For now, we'll add raw code as a simple wrapper
         const rawNode = new (class extends AstNode {
-            public write(writer: any): void {
+            public write(writer: Writer): void {
                 writer.write(code);
             }
         })();

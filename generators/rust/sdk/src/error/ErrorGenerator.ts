@@ -297,9 +297,15 @@ export class ErrorGenerator {
     }
 
     private parseRustType(typeStr: string): Type {
-        if (typeStr === "String") return Type.string();
-        if (typeStr === "Option<String>") return Type.option(Type.string());
-        if (typeStr === "Option<u64>") return Type.option(Type.primitive(PrimitiveType.U64));
+        if (typeStr === "String") {
+            return Type.string();
+        }
+        if (typeStr === "Option<String>") {
+            return Type.option(Type.string());
+        }
+        if (typeStr === "Option<u64>") {
+            return Type.option(Type.primitive(PrimitiveType.U64));
+        }
         return Type.reference(new Reference({ name: typeStr }));
     }
 

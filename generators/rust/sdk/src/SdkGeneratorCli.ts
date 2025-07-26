@@ -144,7 +144,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     private generateModelFiles(context: SdkGeneratorContext): RustFile[] {
         const modelFiles = generateModels({ context: context.toModelGeneratorContext() });
         return modelFiles.map(
-            (file: any) =>
+            (file: RustFile) =>
                 new RustFile({
                     filename: file.filename,
                     directory: RelativeFilePath.of("src/types"),
@@ -237,7 +237,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         return Object.keys(context.ir.types).length > 0;
     }
 
-    private getFileContents(file: any): string {
+    private getFileContents(file: RustFile): string {
         return typeof file.fileContents === "string" ? file.fileContents : file.fileContents.toString();
     }
 

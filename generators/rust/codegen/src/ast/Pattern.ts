@@ -75,7 +75,9 @@ export class Pattern extends AstNode {
                 if (structArgs.fields.length > 0) {
                     writer.write(" { ");
                     structArgs.fields.forEach((field, index) => {
-                        if (index > 0) writer.write(", ");
+                        if (index > 0) {
+                            writer.write(", ");
+                        }
                         writer.write(field.name);
                         if (field.pattern) {
                             writer.write(": ");
@@ -91,7 +93,9 @@ export class Pattern extends AstNode {
                 const tupleArgs = this.args as Extract<Pattern.Args, { type: "tuple" }>;
                 writer.write("(");
                 tupleArgs.elements.forEach((elem, index) => {
-                    if (index > 0) writer.write(", ");
+                    if (index > 0) {
+                        writer.write(", ");
+                    }
                     elem.write(writer);
                 });
                 writer.write(")");
@@ -101,7 +105,9 @@ export class Pattern extends AstNode {
             case "reference": {
                 const refArgs = this.args as Extract<Pattern.Args, { type: "reference" }>;
                 writer.write("&");
-                if (refArgs.mutable) writer.write("mut ");
+                if (refArgs.mutable) {
+                    writer.write("mut ");
+                }
                 refArgs.inner.write(writer);
                 break;
             }
@@ -110,7 +116,9 @@ export class Pattern extends AstNode {
                 const sliceArgs = this.args as Extract<Pattern.Args, { type: "slice" }>;
                 writer.write("[");
                 sliceArgs.elements.forEach((elem, index) => {
-                    if (index > 0) writer.write(", ");
+                    if (index > 0) {
+                        writer.write(", ");
+                    }
                     elem.write(writer);
                 });
                 writer.write("]");

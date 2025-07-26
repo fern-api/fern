@@ -40,7 +40,9 @@ export class Statement extends AstNode {
         switch (this.args.type) {
             case "let":
                 writer.write("let ");
-                if (this.args.mutable) writer.write("mut ");
+                if (this.args.mutable) {
+                    writer.write("mut ");
+                }
                 writer.write(this.args.name);
                 if (this.args.type_) {
                     writer.write(": ");

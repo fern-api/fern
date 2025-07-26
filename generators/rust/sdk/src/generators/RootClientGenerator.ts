@@ -53,7 +53,7 @@ export class RootClientGenerator {
         });
     }
 
-    private generateFields(subpackages: Subpackage[]): any[] {
+    private generateFields(subpackages: Subpackage[]): rust.Client.Field[] {
         // Generate fields for each sub-client from IR subpackages
         return subpackages.map((subpackage) => ({
             name: subpackage.name.snakeCase.safeName, // Use proper snake_case from IR
@@ -62,7 +62,7 @@ export class RootClientGenerator {
         }));
     }
 
-    private generateConstructor(subpackages: Subpackage[]): any {
+    private generateConstructor(subpackages: Subpackage[]): rust.Client.SimpleMethod {
         const defaultBaseUrl = this.getDefaultBaseUrl();
         const subClientInits = subpackages
             .map(

@@ -24,9 +24,7 @@
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {
-    "@fern-api/configs": "workspace:*",
-    "@fern-api/core-utils": "workspace:*",
-    "@fern-fern/ir-sdk": "58.2.0"
+    "@fern-api/configs": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^18.7.18",

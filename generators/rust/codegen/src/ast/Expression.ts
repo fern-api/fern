@@ -1,8 +1,6 @@
-import { AstNode } from "./AstNode";
-import { Writer } from "./Writer";
+import { AstNode, Writer } from "./index";
 import { Type } from "./Type";
-// Forward declaration - Statement will be imported when needed
-type Statement = any;
+import { Statement } from "./Statement";
 
 export declare namespace Expression {
     type Args =
@@ -98,7 +96,9 @@ export class Expression extends AstNode {
                     writer.dedent();
                 } else {
                     methodArgs.args.forEach((arg, index) => {
-                        if (index > 0) writer.write(", ");
+                        if (index > 0) {
+                            writer.write(", ");
+                        }
                         arg.write(writer);
                     });
                 }
@@ -113,11 +113,15 @@ export class Expression extends AstNode {
             case "method-chain": {
                 const chainArgs = this.args as Extract<Expression.Args, { type: "method-chain" }>;
                 chainArgs.calls.forEach((call, index) => {
-                    if (index > 0) writer.write(".");
+                    if (index > 0) {
+                        writer.write(".");
+                    }
                     writer.write(call.method);
                     writer.write("(");
                     call.args.forEach((arg, argIndex) => {
-                        if (argIndex > 0) writer.write(", ");
+                        if (argIndex > 0) {
+                            writer.write(", ");
+                        }
                         arg.write(writer);
                     });
                     writer.write(")");
@@ -147,7 +151,9 @@ export class Expression extends AstNode {
                     writer.dedent();
                 } else {
                     funcArgs.args.forEach((arg, index) => {
-                        if (index > 0) writer.write(", ");
+                        if (index > 0) {
+                            writer.write(", ");
+                        }
                         arg.write(writer);
                     });
                 }
@@ -213,7 +219,9 @@ export class Expression extends AstNode {
             case "vec-literal":
                 writer.write("vec![");
                 this.args.elements.forEach((elem, index) => {
-                    if (index > 0) writer.write(", ");
+                    if (index > 0) {
+                        writer.write(", ");
+                    }
                     elem.write(writer);
                 });
                 writer.write("]");
@@ -223,7 +231,9 @@ export class Expression extends AstNode {
                 writer.write(this.args.name);
                 writer.write(" { ");
                 this.args.fields.forEach((field, index) => {
-                    if (index > 0) writer.write(", ");
+                    if (index > 0) {
+                        writer.write(", ");
+                    }
                     writer.write(field.name);
                     writer.write(": ");
                     field.value.write(writer);
@@ -256,7 +266,9 @@ export class Expression extends AstNode {
             case "reference-of": {
                 const refArgs = this.args as Extract<Expression.Args, { type: "reference-of" }>;
                 writer.write("&");
-                if (refArgs.mutable) writer.write("mut ");
+                if (refArgs.mutable) {
+                    writer.write("mut ");
+                }
                 refArgs.inner.write(writer);
                 break;
             }
@@ -334,7 +346,9 @@ export class Expression extends AstNode {
                 const tupleArgs = this.args as Extract<Expression.Args, { type: "tuple" }>;
                 writer.write("(");
                 tupleArgs.elements.forEach((elem, index) => {
-                    if (index > 0) writer.write(", ");
+                    if (index > 0) {
+                        writer.write(", ");
+                    }
                     elem.write(writer);
                 });
                 writer.write(")");
@@ -345,7 +359,9 @@ export class Expression extends AstNode {
                 const arrayArgs = this.args as Extract<Expression.Args, { type: "array" }>;
                 writer.write("[");
                 arrayArgs.elements.forEach((elem, index) => {
-                    if (index > 0) writer.write(", ");
+                    if (index > 0) {
+                        writer.write(", ");
+                    }
                     elem.write(writer);
                 });
                 writer.write("]");
@@ -357,7 +373,9 @@ export class Expression extends AstNode {
                 writer.write(macroArgs.name);
                 writer.write("!(");
                 macroArgs.args.forEach((arg, index) => {
-                    if (index > 0) writer.write(", ");
+                    if (index > 0) {
+                        writer.write(", ");
+                    }
                     arg.write(writer);
                 });
                 writer.write(")");
@@ -368,7 +386,9 @@ export class Expression extends AstNode {
                 const closureArgs = this.args as Extract<Expression.Args, { type: "closure" }>;
                 writer.write("|");
                 closureArgs.parameters.forEach((param, index) => {
-                    if (index > 0) writer.write(", ");
+                    if (index > 0) {
+                        writer.write(", ");
+                    }
                     writer.write(param.name);
                     if (param.type) {
                         writer.write(": ");
