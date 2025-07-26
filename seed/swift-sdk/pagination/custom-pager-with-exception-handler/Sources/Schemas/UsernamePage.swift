@@ -1,9 +1,13 @@
-public struct UsernamePage: Codable, Hashable {
+public struct UsernamePage: Codable, Hashable, Sendable {
     public let after: String?
     public let data: [String]
     public let additionalProperties: [String: JSONValue]
 
-    public init(after: String? = nil, data: [String], additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        after: String? = nil,
+        data: [String],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.after = after
         self.data = data
         self.additionalProperties = additionalProperties
@@ -17,7 +21,7 @@ public struct UsernamePage: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encodeIfPresent(self.after, forKey: .after)
         try container.encode(self.data, forKey: .data)

@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
@@ -51,7 +52,7 @@ export class RootClientGenerator {
         });
         const fileContents = swiftClass.toString();
         return new SwiftFile({
-            filename: "Client.swift",
+            filename: `${this.projectNamePascalCase}Client.swift`,
             directory: RelativeFilePath.of(""),
             fileContents
         });
@@ -79,6 +80,29 @@ export class RootClientGenerator {
     }
 
     private generateInitializer(): swift.Initializer {
+        let defaultBaseUrlValue: swift.Expression | undefined;
+
+        if (this.context.ir.environments) {
+            if (this.context.ir.environments.environments.type === "singleBaseUrl") {
+                const defaultEnvId = this.context.ir.environments.defaultEnvironment;
+
+                // If no default environment is specified, use the first environment
+                const defaultEnvironment = this.context.ir.environments.environments.environments.find((e, idx) =>
+                    defaultEnvId == null ? idx === 0 : e.id === defaultEnvId
+                );
+                if (defaultEnvironment != null) {
+                    defaultBaseUrlValue = swift.Expression.memberAccess({
+                        target: swift.Expression.reference(`${this.projectNamePascalCase}Environment`),
+                        memberName: `${defaultEnvironment.name.camelCase.unsafeName}.rawValue`
+                    });
+                }
+            } else if (this.context.ir.environments.environments.type === "multipleBaseUrls") {
+                // TODO(kafkas): Handle multiple environments
+            } else {
+                assertNever(this.context.ir.environments.environments);
+            }
+        }
+
         return swift.initializer({
             accessLevel: swift.AccessLevel.Public,
             parameters: [
@@ -86,14 +110,11 @@ export class RootClientGenerator {
                     argumentLabel: "baseURL",
                     unsafeName: "baseURL",
                     type: swift.Type.string(),
-                    defaultValue: swift.Expression.memberAccess({
-                        target: swift.Expression.reference(`${this.projectNamePascalCase}Environment`),
-                        memberName: "default.rawValue"
-                    })
+                    defaultValue: defaultBaseUrlValue
                 }),
                 swift.functionParameter({
                     argumentLabel: "apiKey",
-                    unsafeName: "qpiKey",
+                    unsafeName: "apiKey",
                     type: swift.Type.string()
                 }),
                 swift.functionParameter({
@@ -157,7 +178,8 @@ export class RootClientGenerator {
                                 label: "urlSession",
                                 value: swift.Expression.reference("urlSession")
                             })
-                        ]
+                        ],
+                        multiline: true
                     })
                 ),
                 ...this.getSubpackages().map((subpackage) => {
@@ -174,7 +196,8 @@ export class RootClientGenerator {
                         })
                     );
                 })
-            ])
+            ]),
+            multiline: true
         });
     }
 

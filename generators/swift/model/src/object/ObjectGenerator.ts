@@ -29,8 +29,7 @@ export class ObjectGenerator {
         this.additionalPropertiesInfo = this.getAdditionalPropertiesInfo(properties);
     }
 
-    // biome-ignore lint/suspicious/useGetterReturn: This getter intentionally does not return a value in the default case
-    private get fileDirectory(): RelativeFilePath {
+    private getFileDirectory(): RelativeFilePath {
         switch (this.objectType) {
             case "schema":
                 return RelativeFilePath.of("Schemas");
@@ -41,7 +40,7 @@ export class ObjectGenerator {
         }
     }
 
-    private get filename(): string {
+    private getFilename(): string {
         return this.name + ".swift";
     }
 
@@ -61,8 +60,8 @@ export class ObjectGenerator {
         const swiftStruct = this.generateStructForTypeDeclaration();
         const fileContents = swiftStruct.toString();
         return new SwiftFile({
-            filename: this.filename,
-            directory: this.fileDirectory,
+            filename: this.getFilename(),
+            directory: this.getFileDirectory(),
             fileContents
         });
     }
@@ -72,7 +71,7 @@ export class ObjectGenerator {
         return swift.struct({
             name: this.name,
             accessLevel: swift.AccessLevel.Public,
-            conformances: [swift.Protocol.Codable, swift.Protocol.Hashable],
+            conformances: [swift.Protocol.Codable, swift.Protocol.Hashable, swift.Protocol.Sendable],
             properties: [
                 ...this.properties.map((p) => this.generateSwiftPropertyForProperty(p)),
                 swift.property({
@@ -119,7 +118,8 @@ export class ObjectGenerator {
                     this.additionalPropertiesInfo.propertyName,
                     swift.Expression.reference(this.additionalPropertiesInfo.propertyName)
                 )
-            ])
+            ]),
+            multiline: true
         });
     }
 
@@ -220,18 +220,17 @@ export class ObjectGenerator {
                     ? [
                           swift.Statement.variableDeclaration(
                               "container",
-                              swift.Expression.try(
-                                  swift.Expression.methodCall({
-                                      target: swift.Expression.reference("encoder"),
-                                      methodName: "container",
-                                      arguments_: [
-                                          swift.functionArgument({
-                                              label: "keyedBy",
-                                              value: swift.Expression.rawValue("CodingKeys.self")
-                                          })
-                                      ]
-                                  })
-                              )
+
+                              swift.Expression.methodCall({
+                                  target: swift.Expression.reference("encoder"),
+                                  methodName: "container",
+                                  arguments_: [
+                                      swift.functionArgument({
+                                          label: "keyedBy",
+                                          value: swift.Expression.rawValue("CodingKeys.self")
+                                      })
+                                  ]
+                              })
                           )
                       ]
                     : []),

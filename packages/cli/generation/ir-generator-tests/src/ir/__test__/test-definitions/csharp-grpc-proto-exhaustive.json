@@ -168,6 +168,7 @@
                         },
                         "status-code": 200
                     },
+                    "v2Responses": null,
                     "errors": [],
                     "userSpecifiedExamples": [
                         {

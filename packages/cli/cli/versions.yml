@@ -1,6 +1,54 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fallback to `https` if no schemes are specified in a Swagger 2.0 spec.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-25"
+  version: 0.65.32
+
+- changelogEntry:
+    - summary: |
+        Fix openapi importer for query parameters that are inline union types.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-25"
+  version: 0.65.31
+
+- changelogEntry:
+    - summary: |
+        Support example generation for multiple examples.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-24"
+  version: 0.65.30
+
+- changelogEntry:
+    - summary: |
+        Support multiple 2XX responses on http endpoints part 2.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-23"
+  version: 0.65.29
+        
+- changelogEntry:
+    - summary: |
+        endpoint example creation ignores global auth headers 
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-23"
+  version: 0.65.28
+
+- changelogEntry:
+    - summary: |
+        Support multiple 2XX responses on http endpoints.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-23"
+  version: 0.65.27
+
+- changelogEntry:
+    - summary: |
         Support RBAC roles across products.
       type: feat
   irVersion: 58
@@ -796,14 +844,7 @@
 
 - changelogEntry:
     - summary: | 
-        The `<Code>` component now supports more flexible prop ordering and additional properties. You can now specify `maxLines` and `focus` props in any order relative to the `src` prop. For example:
-
-        ```mdx
-        <Code src="../snippets/example.ts" maxLines={20} focus={1-18} />
-        <Code maxLines={20} focus={1-18} src="../snippets/example.ts" />
-        ```
-
-        Both formats will work the same way, preserving the specified properties in the generated markdown. The component will automatically detect and include any additional props in the code block's metastring.
+        The `<Code>` component now supports more flexible prop ordering and additional properties. You can now specify `maxLines` and `focus` props in any order relative to the `src` prop. Regardless of order, formats will work the same way, preserving the specified properties in the generated markdown. The component will automatically detect and include any additional props in the code block's metastring.
       type: fix
   irVersion: 58
   createdAt: "2025-05-28"
@@ -1117,7 +1158,7 @@
 
 - changelogEntry:
     - summary: |
-        Add support for preserving `maxLines` and `focus` attributes when using `<Code src="..." />` components in docs. 
+        Add support for preserving `maxLines` and `focus` attributes when using `<Code>` components in docs. 
         These attributes are now properly carried over to the generated code blocks, allowing you to control 
         the display of referenced code snippets with features like line limits and syntax highlighting focus.
       type: fix
@@ -3684,7 +3725,7 @@
          specs:
            - openapi: ./path/to/openapi.yml
              settings:
-               object-query-paramaters: true
+               object-query-parameters: true
         ```
       type: fix
   irVersion: 53

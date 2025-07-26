@@ -1,11 +1,11 @@
 import { AbstractFormatter, File } from "@fern-api/base-generator";
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseGoCustomConfigSchema, go } from "@fern-api/go-ast";
 
 export declare namespace GoFile {
     interface Args {
-        /* The node to be written to the Go source file */
-        node: go.AstNode;
+        /* The node(s) to be written to the Go source file */
+        node: go.AstNode | go.AstNode[];
         /* Directory of the file */
         directory: RelativeFilePath;
         /* Filename of the file */
@@ -25,7 +25,17 @@ export declare namespace GoFile {
     }
 }
 
-export class GoFile extends File {
+export class GoFile {
+    private nodes: go.AstNode[];
+    private directory: RelativeFilePath;
+    private filename: string;
+    private packageName: string;
+    private rootImportPath: string;
+    private importPath: string;
+    private customConfig: BaseGoCustomConfigSchema;
+    private formatter?: AbstractFormatter;
+    private includeGeneratedCodeHeader: boolean;
+
     constructor({
         node,
         directory,
@@ -37,19 +47,40 @@ export class GoFile extends File {
         formatter,
         includeGeneratedCodeHeader = true
     }: GoFile.Args) {
-        super(
-            filename,
-            directory,
-            getFileContent({
-                node,
-                packageName,
-                rootImportPath,
-                importPath,
-                customConfig,
-                formatter,
-                includeGeneratedCodeHeader
-            })
-        );
+        this.nodes = Array.isArray(node) ? node : [node];
+        this.directory = directory;
+        this.filename = filename;
+        this.packageName = packageName;
+        this.rootImportPath = rootImportPath;
+        this.importPath = importPath;
+        this.customConfig = customConfig;
+        this.formatter = formatter;
+        this.includeGeneratedCodeHeader = includeGeneratedCodeHeader;
+    }
+
+    public merge(other: GoFile): void {
+        this.nodes = [...this.nodes, ...other.nodes];
+    }
+
+    public toFile(): File {
+        const fileContents = getFileContent({
+            node: this.nodes,
+            packageName: this.packageName,
+            rootImportPath: this.rootImportPath,
+            importPath: this.importPath,
+            customConfig: this.customConfig,
+            formatter: this.formatter,
+            includeGeneratedCodeHeader: this.includeGeneratedCodeHeader
+        });
+        return new File(this.filename, this.directory, fileContents);
+    }
+
+    public getFullyQualifiedName(): string {
+        return join(this.directory, RelativeFilePath.of(this.filename));
+    }
+
+    public async write(absolutePathToDirectory: AbsoluteFilePath): Promise<void> {
+        return this.toFile().write(absolutePathToDirectory);
     }
 }
 
@@ -62,7 +93,8 @@ function getFileContent({
     formatter,
     includeGeneratedCodeHeader
 }: Omit<GoFile.Args, "directory" | "filename">): string {
-    const content = node.toString({
+    const multiNode = new go.MultiNode({ nodes: Array.isArray(node) ? node : [node] });
+    const content = multiNode.toString({
         packageName,
         rootImportPath,
         importPath,

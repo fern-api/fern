@@ -1308,6 +1308,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Ignition_StartIgnition_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -1451,6 +1466,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Tokens_ExchangeToken_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -1608,6 +1638,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Accounts_GetAccount_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -1772,6 +1817,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Policies_GetPolicy_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -2039,6 +2099,21 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Carriers_GetCarrier_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -2164,6 +2239,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Carriers_GetCarriers_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [

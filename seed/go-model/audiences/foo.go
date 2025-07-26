@@ -8,11 +8,47 @@ import (
 	internal "github.com/audiences/fern/internal"
 )
 
+type ImportingType struct {
+	Imported Imported `json:"imported" url:"imported"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (i *ImportingType) GetImported() Imported {
+	if i == nil {
+		return ""
+	}
+	return i.Imported
+}
+
+func (i *ImportingType) GetExtraProperties() map[string]any {
+	if i == nil {
+		return nil
+	}
+	return i.extraProperties
+}
+
+func (i *ImportingType) String() string {
+	if len(i.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(i.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(i); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", i)
+}
+
+type OptionalString = *string
+
 type FilteredType struct {
 	PublicProperty  *string `json:"public_property,omitempty" url:"public_property,omitempty"`
 	PrivateProperty int     `json:"private_property" url:"private_property"`
 
-	extraProperties map[string]interface{}
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
 func (f *FilteredType) GetPublicProperty() *string {
@@ -29,69 +65,21 @@ func (f *FilteredType) GetPrivateProperty() int {
 	return f.PrivateProperty
 }
 
-func (f *FilteredType) GetExtraProperties() map[string]interface{} {
+func (f *FilteredType) GetExtraProperties() map[string]any {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
-func (f *FilteredType) UnmarshalJSON(data []byte) error {
-	type unmarshaler FilteredType
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*f = FilteredType(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *f)
-	if err != nil {
-		return err
-	}
-	f.extraProperties = extraProperties
-	return nil
-}
-
 func (f *FilteredType) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(f); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", f)
 }
-
-type ImportingType struct {
-	Imported Imported `json:"imported" url:"imported"`
-
-	extraProperties map[string]interface{}
-}
-
-func (i *ImportingType) GetImported() Imported {
-	if i == nil {
-		return ""
-	}
-	return i.Imported
-}
-
-func (i *ImportingType) GetExtraProperties() map[string]interface{} {
-	return i.extraProperties
-}
-
-func (i *ImportingType) UnmarshalJSON(data []byte) error {
-	type unmarshaler ImportingType
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*i = ImportingType(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *i)
-	if err != nil {
-		return err
-	}
-	i.extraProperties = extraProperties
-	return nil
-}
-
-func (i *ImportingType) String() string {
-	if value, err := internal.StringifyJSON(i); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", i)
-}
-
-type OptionalString = *string

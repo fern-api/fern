@@ -1,4 +1,4 @@
-public struct SendLiteralsInlinedRequest: Codable, Hashable {
+public struct SendLiteralsInlinedRequest: Codable, Hashable, Sendable {
     public let prompt: Any
     public let context: Any?
     public let query: String
@@ -9,7 +9,17 @@ public struct SendLiteralsInlinedRequest: Codable, Hashable {
     public let objectWithLiteral: ATopLevelLiteral
     public let additionalProperties: [String: JSONValue]
 
-    public init(prompt: Any, context: Any? = nil, query: String, temperature: Double? = nil, stream: Any, aliasedContext: SomeAliasedLiteral, maybeContext: SomeAliasedLiteral? = nil, objectWithLiteral: ATopLevelLiteral, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        prompt: Any,
+        context: Any? = nil,
+        query: String,
+        temperature: Double? = nil,
+        stream: Any,
+        aliasedContext: SomeAliasedLiteral,
+        maybeContext: SomeAliasedLiteral? = nil,
+        objectWithLiteral: ATopLevelLiteral,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.prompt = prompt
         self.context = context
         self.query = query
@@ -35,7 +45,7 @@ public struct SendLiteralsInlinedRequest: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.prompt, forKey: .prompt)
         try container.encodeIfPresent(self.context, forKey: .context)

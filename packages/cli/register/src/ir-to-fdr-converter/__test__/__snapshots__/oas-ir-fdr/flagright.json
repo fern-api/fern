@@ -7470,6 +7470,21 @@
           "statusCode": 201,
           "description": "Created"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "post-consumer-transaction_Response_201"
+                }
+              },
+              "statusCode": 201,
+              "description": "Created"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
@@ -7692,6 +7707,21 @@
           "statusCode": 200,
           "description": "OK"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "TransactionWithRulesResult"
+                }
+              },
+              "statusCode": 200,
+              "description": "OK"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
@@ -7907,8 +7937,184 @@
           "statusCode": 201,
           "description": "Created"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "TransactionEventMonitoringResult"
+                }
+              },
+              "statusCode": 201,
+              "description": "Created"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
+          {
+            "name": "example-1",
+            "description": "",
+            "path": "/events/transaction",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBodyV3": {
+              "type": "json"
+            },
+            "responseStatusCode": 201,
+            "responseBody": {
+              "eventId": "7b80a539eea6e78acbd6d458e5971482",
+              "transaction": {
+                "transactionId": "7b80a539eea6e78acbd6d458e5971482",
+                "originUserId": "8650a2611d0771cba03310f74bf6",
+                "destinationUserId": "9350a2611e0771cba03310f74bf6",
+                "originAmountDetails": {
+                  "country": "DE",
+                  "transactionAmount": 800,
+                  "transactionCurrency": "EUR"
+                },
+                "destinationAmountDetails": {
+                  "country": "IN",
+                  "transactionAmount": 68351.34,
+                  "transactionCurrency": "INR"
+                },
+                "promotionCodeUsed": true,
+                "timestamp": 1641654664000,
+                "originPaymentDetails": {
+                  "method": "CARD",
+                  "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                  "cardIssuedCountry": "US",
+                  "transactionReferenceField": "Deposit",
+                  "3dsDone": true
+                },
+                "destinationPaymentDetails": {
+                  "method": "CARD",
+                  "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                  "cardIssuedCountry": "IN",
+                  "transactionReferenceField": "Deposit",
+                  "3dsDone": true
+                },
+                "reference": "loan repayment",
+                "deviceData": {
+                  "batteryLevel": 95,
+                  "deviceLatitude": 13.0033,
+                  "deviceLongitude": 76.1004,
+                  "ipAddress": "10.23.191.2",
+                  "deviceIdentifier": "3c49f915d04485e34caba",
+                  "vpnUsed": false,
+                  "operatingSystem": "Android 11.2",
+                  "deviceMaker": "ASUS",
+                  "deviceModel": "Zenphone M2 Pro Max",
+                  "deviceYear": "2018",
+                  "appVersion": "1.1.0"
+                },
+                "tags": [
+                  {
+                    "key": "customKey",
+                    "value": "customValue"
+                  }
+                ]
+              },
+              "executedRules": [
+                {
+                  "ruleId": "R-1a",
+                  "ruleInstanceId": "string",
+                  "ruleName": "Proof of funds for high value transactions",
+                  "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                  "ruleAction": "BLOCK",
+                  "ruleHit": true
+                }
+              ],
+              "hitRules": [
+                {
+                  "ruleId": "R-1a",
+                  "ruleInstanceId": "string",
+                  "ruleName": "Proof of funds for high value transactions",
+                  "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                  "ruleAction": "BLOCK"
+                }
+              ]
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "eventId": "7b80a539eea6e78acbd6d458e5971482",
+                "transaction": {
+                  "transactionId": "7b80a539eea6e78acbd6d458e5971482",
+                  "originUserId": "8650a2611d0771cba03310f74bf6",
+                  "destinationUserId": "9350a2611e0771cba03310f74bf6",
+                  "originAmountDetails": {
+                    "country": "DE",
+                    "transactionAmount": 800,
+                    "transactionCurrency": "EUR"
+                  },
+                  "destinationAmountDetails": {
+                    "country": "IN",
+                    "transactionAmount": 68351.34,
+                    "transactionCurrency": "INR"
+                  },
+                  "promotionCodeUsed": true,
+                  "timestamp": 1641654664000,
+                  "originPaymentDetails": {
+                    "method": "CARD",
+                    "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                    "cardIssuedCountry": "US",
+                    "transactionReferenceField": "Deposit",
+                    "3dsDone": true
+                  },
+                  "destinationPaymentDetails": {
+                    "method": "CARD",
+                    "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                    "cardIssuedCountry": "IN",
+                    "transactionReferenceField": "Deposit",
+                    "3dsDone": true
+                  },
+                  "reference": "loan repayment",
+                  "deviceData": {
+                    "batteryLevel": 95,
+                    "deviceLatitude": 13.0033,
+                    "deviceLongitude": 76.1004,
+                    "ipAddress": "10.23.191.2",
+                    "deviceIdentifier": "3c49f915d04485e34caba",
+                    "vpnUsed": false,
+                    "operatingSystem": "Android 11.2",
+                    "deviceMaker": "ASUS",
+                    "deviceModel": "Zenphone M2 Pro Max",
+                    "deviceYear": "2018",
+                    "appVersion": "1.1.0"
+                  },
+                  "tags": [
+                    {
+                      "key": "customKey",
+                      "value": "customValue"
+                    }
+                  ]
+                },
+                "executedRules": [
+                  {
+                    "ruleId": "R-1a",
+                    "ruleInstanceId": "string",
+                    "ruleName": "Proof of funds for high value transactions",
+                    "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                    "ruleAction": "BLOCK",
+                    "ruleHit": true
+                  }
+                ],
+                "hitRules": [
+                  {
+                    "ruleId": "R-1a",
+                    "ruleInstanceId": "string",
+                    "ruleName": "Proof of funds for high value transactions",
+                    "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                    "ruleAction": "BLOCK"
+                  }
+                ]
+              }
+            }
+          },
           {
             "name": "example-2",
             "description": "",
@@ -7946,18 +8152,6 @@
                   "vpnUsed": true
                 }
               }
-            },
-            "responseStatusCode": 201
-          },
-          {
-            "name": "example-1",
-            "description": "",
-            "path": "/events/transaction",
-            "pathParameters": {},
-            "queryParameters": {},
-            "headers": {},
-            "requestBodyV3": {
-              "type": "json"
             },
             "responseStatusCode": 201,
             "responseBody": {
@@ -8169,6 +8363,21 @@
           },
           "statusCode": 201,
           "description": "Created"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "post-consumer-user_Response_201"
+                }
+              },
+              "statusCode": 201,
+              "description": "Created"
+            }
+          ]
         },
         "errorsV2": [
           {
@@ -8433,6 +8642,21 @@
           "statusCode": 200,
           "description": "OK"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "User"
+                }
+              },
+              "statusCode": 200,
+              "description": "OK"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
@@ -8634,6 +8858,21 @@
           "statusCode": 201,
           "description": "Created"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "post-business-user_Response_201"
+                }
+              },
+              "statusCode": 201,
+              "description": "Created"
+            }
+          ]
+        },
         "errorsV2": [
           {
             "type": {
@@ -8778,6 +9017,21 @@
           },
           "statusCode": 200,
           "description": "OK"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "Business"
+                }
+              },
+              "statusCode": 200,
+              "description": "OK"
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [
@@ -9219,6 +9473,21 @@
           },
           "statusCode": 201,
           "description": "Created"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "UserWithRulesResult"
+                }
+              },
+              "statusCode": 201,
+              "description": "Created"
+            }
+          ]
         },
         "errorsV2": [
           {
@@ -10468,6 +10737,21 @@
           },
           "statusCode": 201,
           "description": "Created"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "BusinessWithRulesResult"
+                }
+              },
+              "statusCode": 201,
+              "description": "Created"
+            }
+          ]
         },
         "errorsV2": [
           {

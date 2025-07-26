@@ -1,11 +1,17 @@
-public struct LightweightProblemInfoV2: Codable, Hashable {
+public struct LightweightProblemInfoV2: Codable, Hashable, Sendable {
     public let problemId: ProblemId
     public let problemName: String
     public let problemVersion: Int
     public let variableTypes: Any
     public let additionalProperties: [String: JSONValue]
 
-    public init(problemId: ProblemId, problemName: String, problemVersion: Int, variableTypes: Any, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        problemId: ProblemId,
+        problemName: String,
+        problemVersion: Int,
+        variableTypes: Any,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.problemId = problemId
         self.problemName = problemName
         self.problemVersion = problemVersion
@@ -23,7 +29,7 @@ public struct LightweightProblemInfoV2: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.problemId, forKey: .problemId)
         try container.encode(self.problemName, forKey: .problemName)

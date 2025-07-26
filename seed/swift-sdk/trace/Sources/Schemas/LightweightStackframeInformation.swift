@@ -1,9 +1,13 @@
-public struct LightweightStackframeInformation: Codable, Hashable {
+public struct LightweightStackframeInformation: Codable, Hashable, Sendable {
     public let numStackFrames: Int
     public let topStackFrameMethodName: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(numStackFrames: Int, topStackFrameMethodName: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        numStackFrames: Int,
+        topStackFrameMethodName: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.numStackFrames = numStackFrames
         self.topStackFrameMethodName = topStackFrameMethodName
         self.additionalProperties = additionalProperties
@@ -17,7 +21,7 @@ public struct LightweightStackframeInformation: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.numStackFrames, forKey: .numStackFrames)
         try container.encode(self.topStackFrameMethodName, forKey: .topStackFrameMethodName)

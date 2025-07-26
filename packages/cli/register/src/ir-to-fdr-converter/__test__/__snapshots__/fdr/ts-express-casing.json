@@ -123,6 +123,7 @@
             },
             "statusCode": 201
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -199,6 +200,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [
             {
               "type": {

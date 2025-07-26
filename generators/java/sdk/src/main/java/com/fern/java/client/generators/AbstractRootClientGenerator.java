@@ -46,6 +46,7 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
+import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.util.Base64;
 import java.util.Map;
@@ -141,29 +142,91 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
     }
 
     private TypeSpec getClientBuilder() {
-        TypeSpec.Builder clientBuilder =
-                TypeSpec.classBuilder(builderName).addModifiers(Modifier.PUBLIC, Modifier.FINAL);
+        TypeSpec.Builder clientBuilder = TypeSpec.classBuilder(builderName).addModifiers(Modifier.PUBLIC);
         MethodSpec.Builder buildMethod =
                 MethodSpec.methodBuilder("build").addModifiers(Modifier.PUBLIC).returns(className());
 
-        clientBuilder.addField(FieldSpec.builder(generatedClientOptions.builderClassName(), CLIENT_OPTIONS_BUILDER_NAME)
+        clientBuilder.addField(FieldSpec.builder(
+                        ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Integer.class)),
+                        "timeout")
                 .addModifiers(Modifier.PRIVATE)
-                .initializer("$T.builder()", generatedClientOptions.getClassName())
+                .initializer("$T.empty()", Optional.class)
+                .build());
+
+        clientBuilder.addField(FieldSpec.builder(
+                        ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Integer.class)),
+                        "maxRetries")
+                .addModifiers(Modifier.PRIVATE)
+                .initializer("$T.empty()", Optional.class)
                 .build());
 
         FieldSpec.Builder environmentFieldBuilder = FieldSpec.builder(
                         generatedEnvironmentsClass.getClassName(), ENVIRONMENT_FIELD_NAME)
                 .addModifiers(Modifier.PRIVATE);
 
-        AuthSchemeHandler authSchemeHandler = new AuthSchemeHandler(clientBuilder, buildMethod);
-        generatorContext.getResolvedAuthSchemes().forEach(authScheme -> authScheme.visit(authSchemeHandler));
-        generatorContext.getIr().getHeaders().forEach(httpHeader -> {
-            authSchemeHandler.visitNonAuthHeader(HeaderAuthScheme.builder()
-                    .name(httpHeader.getName())
-                    .valueType(httpHeader.getValueType())
-                    .docs(httpHeader.getDocs())
-                    .build());
-        });
+        boolean hasAuth = !generatorContext.getResolvedAuthSchemes().isEmpty();
+        boolean hasCustomHeaders = !generatorContext.getIr().getHeaders().isEmpty();
+        boolean hasVariables = !generatorContext.getIr().getVariables().isEmpty();
+
+        // Create builders for configuration methods based on API spec
+        MethodSpec.Builder configureAuthBuilder = null;
+        if (hasAuth) {
+            configureAuthBuilder = MethodSpec.methodBuilder("setAuthentication")
+                    .addModifiers(Modifier.PROTECTED)
+                    .addParameter(generatedClientOptions.builderClassName(), "builder")
+                    .addJavadoc("Override this method to customize authentication.\n"
+                            + "This method is called during client options construction to set up authentication headers.\n"
+                            + "\n"
+                            + "@param builder The ClientOptions.Builder to configure\n"
+                            + "\n"
+                            + "Example:\n"
+                            + "<pre>{@code\n"
+                            + "@Override\n"
+                            + "protected void setAuthentication(ClientOptions.Builder builder) {\n"
+                            + "    super.setAuthentication(builder); // Keep existing auth\n"
+                            + "    builder.addHeader(\"X-API-Key\", this.apiKey);\n"
+                            + "}\n"
+                            + "}</pre>");
+        }
+
+        MethodSpec.Builder configureCustomHeadersBuilder = null;
+        if (hasCustomHeaders) {
+            configureCustomHeadersBuilder = MethodSpec.methodBuilder("setCustomHeaders")
+                    .addModifiers(Modifier.PROTECTED)
+                    .addParameter(generatedClientOptions.builderClassName(), "builder")
+                    .addJavadoc("Override this method to add or modify custom headers.\n"
+                            + "This method is called during client options construction to set up custom headers defined in the API.\n"
+                            + "\n"
+                            + "@param builder The ClientOptions.Builder to configure\n"
+                            + "\n"
+                            + "Example:\n"
+                            + "<pre>{@code\n"
+                            + "@Override\n"
+                            + "protected void setCustomHeaders(ClientOptions.Builder builder) {\n"
+                            + "    super.setCustomHeaders(builder); // Keep existing headers\n"
+                            + "    builder.addHeader(\"X-Trace-ID\", generateTraceId());\n"
+                            + "}\n"
+                            + "}</pre>");
+        }
+
+        if (hasAuth || hasCustomHeaders) {
+            AuthSchemeHandler authSchemeHandler = new AuthSchemeHandler(
+                    clientBuilder, buildMethod, configureAuthBuilder, configureCustomHeadersBuilder);
+
+            if (hasAuth) {
+                generatorContext.getResolvedAuthSchemes().forEach(authScheme -> authScheme.visit(authSchemeHandler));
+            }
+
+            if (hasCustomHeaders) {
+                generatorContext.getIr().getHeaders().forEach(httpHeader -> {
+                    authSchemeHandler.visitNonAuthHeader(HeaderAuthScheme.builder()
+                            .name(httpHeader.getName())
+                            .valueType(httpHeader.getValueType())
+                            .docs(httpHeader.getDocs())
+                            .build());
+                });
+            }
+        }
 
         if (generatedEnvironmentsClass.defaultEnvironmentConstant().isPresent()) {
             environmentFieldBuilder.initializer(
@@ -210,7 +273,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .addJavadoc("Sets the timeout (in seconds) for the client. Defaults to 60 seconds.")
                 .addParameter(int.class, "timeout")
                 .returns(builderName)
-                .addStatement("this.$L.timeout(timeout)", CLIENT_OPTIONS_BUILDER_NAME)
+                .addStatement("this.timeout = $T.of(timeout)", Optional.class)
                 .addStatement("return this")
                 .build());
 
@@ -219,8 +282,12 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .addJavadoc("Sets the maximum number of retries for the client. Defaults to 2 retries.")
                 .addParameter(int.class, "maxRetries")
                 .returns(builderName)
-                .addStatement("this.$L.maxRetries(maxRetries)", CLIENT_OPTIONS_BUILDER_NAME)
+                .addStatement("this.maxRetries = $T.of(maxRetries)", Optional.class)
                 .addStatement("return this")
+                .build());
+
+        clientBuilder.addField(FieldSpec.builder(OkHttpClient.class, "httpClient")
+                .addModifiers(Modifier.PRIVATE)
                 .build());
 
         clientBuilder.addMethod(MethodSpec.methodBuilder("httpClient")
@@ -228,7 +295,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .addJavadoc("Sets the underlying OkHttp client")
                 .returns(builderName)
                 .addParameter(OkHttpClient.class, "httpClient")
-                .addStatement("this.$L.httpClient(httpClient)", CLIENT_OPTIONS_BUILDER_NAME)
+                .addStatement("this.httpClient = httpClient")
                 .addStatement("return this")
                 .build());
 
@@ -254,13 +321,152 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 })
                 .forEach(clientBuilder::addMethod);
 
-        clientBuilder.addMethod(buildMethod
+        MethodSpec.Builder buildClientOptionsMethodBuilder = MethodSpec.methodBuilder("buildClientOptions")
+                .addModifiers(Modifier.PROTECTED)
+                .returns(generatedClientOptions.getClassName())
                 .addStatement(
-                        "$L.$N(this.$N)",
-                        CLIENT_OPTIONS_BUILDER_NAME,
-                        generatedClientOptions.environment(),
-                        environmentField)
-                .addStatement("return new $T($L.build())", className(), CLIENT_OPTIONS_BUILDER_NAME)
+                        "$T builder = $T.builder()",
+                        generatedClientOptions.builderClassName(),
+                        generatedClientOptions.getClassName());
+
+        buildClientOptionsMethodBuilder.addStatement("setEnvironment(builder)");
+
+        if (hasAuth) {
+            buildClientOptionsMethodBuilder.addStatement("setAuthentication(builder)");
+        }
+
+        if (hasCustomHeaders) {
+            buildClientOptionsMethodBuilder.addStatement("setCustomHeaders(builder)");
+        }
+
+        if (hasVariables) {
+            buildClientOptionsMethodBuilder.addStatement("setVariables(builder)");
+        }
+
+        buildClientOptionsMethodBuilder
+                .addStatement("setHttpClient(builder)")
+                .addStatement("setTimeouts(builder)")
+                .addStatement("setRetries(builder)")
+                .addStatement("setAdditional(builder)")
+                .addStatement("return builder.build()");
+
+        clientBuilder.addMethod(buildClientOptionsMethodBuilder.build());
+
+        MethodSpec setEnvironmentMethod = MethodSpec.methodBuilder("setEnvironment")
+                .addModifiers(Modifier.PROTECTED)
+                .addParameter(generatedClientOptions.builderClassName(), "builder")
+                .addJavadoc("Sets the environment configuration for the client.\n"
+                        + "Override this method to modify URLs or add environment-specific logic.\n"
+                        + "\n"
+                        + "@param builder The ClientOptions.Builder to configure")
+                .addStatement("builder.$N(this.$N)", generatedClientOptions.environment(), environmentField)
+                .build();
+        clientBuilder.addMethod(setEnvironmentMethod);
+
+        if (hasAuth) {
+            clientBuilder.addMethod(configureAuthBuilder.build());
+        }
+
+        if (hasCustomHeaders) {
+            clientBuilder.addMethod(configureCustomHeadersBuilder.build());
+        }
+
+        if (hasVariables) {
+            MethodSpec setVariablesMethod = MethodSpec.methodBuilder("setVariables")
+                    .addModifiers(Modifier.PROTECTED)
+                    .addParameter(generatedClientOptions.builderClassName(), "builder")
+                    .addJavadoc("Override this method to configure API variables defined in the specification.\n"
+                            + "Available variables: "
+                            + generatorContext.getIr().getVariables().stream()
+                                    .map(v -> v.getName().getCamelCase().getSafeName())
+                                    .collect(java.util.stream.Collectors.joining(", "))
+                            + "\n\n"
+                            + "@param builder The ClientOptions.Builder to configure")
+                    .build();
+            clientBuilder.addMethod(setVariablesMethod);
+        }
+
+        MethodSpec setTimeoutsMethod = MethodSpec.methodBuilder("setTimeouts")
+                .addModifiers(Modifier.PROTECTED)
+                .addParameter(generatedClientOptions.builderClassName(), "builder")
+                .addJavadoc("Sets the request timeout configuration.\n"
+                        + "Override this method to customize timeout behavior.\n"
+                        + "\n"
+                        + "@param builder The ClientOptions.Builder to configure")
+                .beginControlFlow("if (this.timeout.isPresent())")
+                .addStatement("builder.timeout(this.timeout.get())")
+                .endControlFlow()
+                .build();
+        clientBuilder.addMethod(setTimeoutsMethod);
+
+        MethodSpec setRetriesMethod = MethodSpec.methodBuilder("setRetries")
+                .addModifiers(Modifier.PROTECTED)
+                .addParameter(generatedClientOptions.builderClassName(), "builder")
+                .addJavadoc("Sets the retry configuration for failed requests.\n"
+                        + "Override this method to implement custom retry strategies.\n"
+                        + "\n"
+                        + "@param builder The ClientOptions.Builder to configure")
+                .beginControlFlow("if (this.maxRetries.isPresent())")
+                .addStatement("builder.maxRetries(this.maxRetries.get())")
+                .endControlFlow()
+                .build();
+        clientBuilder.addMethod(setRetriesMethod);
+
+        MethodSpec setHttpClientMethod = MethodSpec.methodBuilder("setHttpClient")
+                .addModifiers(Modifier.PROTECTED)
+                .addParameter(generatedClientOptions.builderClassName(), "builder")
+                .addJavadoc("Sets the OkHttp client configuration.\n"
+                        + "Override this method to customize HTTP client behavior (interceptors, connection pools, etc).\n"
+                        + "\n"
+                        + "@param builder The ClientOptions.Builder to configure")
+                .beginControlFlow("if (this.httpClient != null)")
+                .addStatement("builder.httpClient(this.httpClient)")
+                .endControlFlow()
+                .build();
+        clientBuilder.addMethod(setHttpClientMethod);
+
+        MethodSpec setAdditionalMethod = MethodSpec.methodBuilder("setAdditional")
+                .addModifiers(Modifier.PROTECTED)
+                .addParameter(generatedClientOptions.builderClassName(), "builder")
+                .addJavadoc("Override this method to add any additional configuration to the client.\n"
+                        + "This method is called at the end of the configuration chain, allowing you to add\n"
+                        + "custom headers, modify settings, or perform any other client customization.\n"
+                        + "\n"
+                        + "@param builder The ClientOptions.Builder to configure\n"
+                        + "\n"
+                        + "Example:\n"
+                        + "<pre>{@code\n"
+                        + "@Override\n"
+                        + "protected void setAdditional(ClientOptions.Builder builder) {\n"
+                        + "    builder.addHeader(\"X-Request-ID\", () -> UUID.randomUUID().toString());\n"
+                        + "    builder.addHeader(\"X-Client-Version\", \"1.0.0\");\n"
+                        + "}\n"
+                        + "}</pre>")
+                .build();
+        clientBuilder.addMethod(setAdditionalMethod);
+
+        MethodSpec validateConfigurationMethod = MethodSpec.methodBuilder("validateConfiguration")
+                .addModifiers(Modifier.PROTECTED)
+                .addJavadoc("Override this method to add custom validation logic before the client is built.\n"
+                        + "This method is called at the beginning of the build() method to ensure the configuration is valid.\n"
+                        + "Throw an exception to prevent client creation if validation fails.\n"
+                        + "\n"
+                        + "Example:\n"
+                        + "<pre>{@code\n"
+                        + "@Override\n"
+                        + "protected void validateConfiguration() {\n"
+                        + "    super.validateConfiguration(); // Run parent validations\n"
+                        + "    if (tenantId == null || tenantId.isEmpty()) {\n"
+                        + "        throw new IllegalStateException(\"tenantId is required\");\n"
+                        + "    }\n"
+                        + "}\n"
+                        + "}</pre>")
+                .build();
+        clientBuilder.addMethod(validateConfigurationMethod);
+
+        clientBuilder.addMethod(buildMethod
+                .addStatement("validateConfiguration()")
+                .addStatement("return new $T(buildClientOptions())", className())
                 .build());
 
         return clientBuilder.build();
@@ -281,11 +487,19 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
         private final TypeSpec.Builder clientBuilder;
         private final MethodSpec.Builder buildMethod;
+        private final MethodSpec.Builder configureAuthMethod;
+        private final MethodSpec.Builder configureCustomHeadersMethod;
         private final boolean isMandatory;
 
-        private AuthSchemeHandler(TypeSpec.Builder clientBuilder, MethodSpec.Builder buildMethod) {
+        private AuthSchemeHandler(
+                TypeSpec.Builder clientBuilder,
+                MethodSpec.Builder buildMethod,
+                MethodSpec.Builder configureAuthMethod,
+                MethodSpec.Builder configureCustomHeadersMethod) {
             this.clientBuilder = clientBuilder;
             this.buildMethod = buildMethod;
+            this.configureAuthMethod = configureAuthMethod;
+            this.configureCustomHeadersMethod = configureCustomHeadersMethod;
             this.isMandatory = clientGeneratorContext.getIr().getSdkConfig().getIsAuthMandatory();
         }
 
@@ -293,6 +507,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         public Void visitBearer(BearerAuthScheme bearer) {
             String fieldName = bearer.getToken().getCamelCase().getSafeName();
             createSetter(fieldName, bearer.getTokenEnvVar(), Optional.empty());
+
+            // Add validation to build() method
             if (isMandatory) {
                 this.buildMethod
                         .beginControlFlow("if ($L == null)", fieldName)
@@ -305,12 +521,13 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                                                 bearer.getTokenEnvVar().get()))
                         .endControlFlow();
             }
-            this.buildMethod.addStatement(
-                    "this.$L.addHeader($S, $S + this.$L)",
-                    CLIENT_OPTIONS_BUILDER_NAME,
-                    "Authorization",
-                    "Bearer ",
-                    fieldName);
+
+            if (this.configureAuthMethod != null) {
+                this.configureAuthMethod
+                        .beginControlFlow("if (this.$L != null)", fieldName)
+                        .addStatement("builder.addHeader($S, $S + this.$L)", "Authorization", "Bearer ", fieldName)
+                        .endControlFlow();
+            }
             return null;
         }
 
@@ -328,7 +545,6 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             }
             this.clientBuilder.addField(usernameField.build());
 
-            // password
             String passwordFieldName = basic.getPassword().getCamelCase().getSafeName();
             FieldSpec.Builder passwordField =
                     FieldSpec.builder(String.class, passwordFieldName).addModifiers(Modifier.PRIVATE);
@@ -340,7 +556,6 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             }
             this.clientBuilder.addField(passwordField.build());
 
-            // add setter method
             ParameterSpec usernameParam =
                     ParameterSpec.builder(String.class, usernameFieldName).build();
             ParameterSpec passwordParam =
@@ -378,20 +593,20 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .endControlFlow();
             }
 
-            this.buildMethod
-                    .addStatement(
-                            "String unencodedToken = $L + \":\" + $L",
-                            basic.getUsername().getCamelCase().getSafeName(),
-                            basic.getPassword().getCamelCase().getSafeName())
-                    .addStatement(
-                            "String encodedToken = $T.getEncoder().encodeToString(unencodedToken.getBytes())",
-                            Base64.class)
-                    .addStatement(
-                            "this.$L.addHeader($S, $S + $L)",
-                            CLIENT_OPTIONS_BUILDER_NAME,
-                            "Authorization",
-                            "Bearer ",
-                            "encodedToken");
+            if (this.configureAuthMethod != null) {
+                this.configureAuthMethod
+                        .beginControlFlow(
+                                "if (this.$L != null && this.$L != null)", usernameFieldName, passwordFieldName)
+                        .addStatement(
+                                "String unencodedToken = this.$L + \":\" + this.$L",
+                                usernameFieldName,
+                                passwordFieldName)
+                        .addStatement(
+                                "String encodedToken = $T.getEncoder().encodeToString(unencodedToken.getBytes())",
+                                Base64.class)
+                        .addStatement("builder.addHeader($S, $S + encodedToken)", "Authorization", "Basic ")
+                        .endControlFlow();
+            }
             return null;
         }
 
@@ -423,21 +638,22 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         clientGeneratorContext.getPoetClassNameFactory().getClientClassName(subpackage);
                 ClassName oauthTokenSupplierClassName =
                         generatedOAuthTokenSupplier.get().getClassName();
-                buildMethod
-                        .addStatement(
-                                "$T authClient = new $T($T.builder().environment(this.$L).build())",
-                                authClientClassName,
-                                authClientClassName,
-                                generatedClientOptions.getClassName(),
-                                ENVIRONMENT_FIELD_NAME)
-                        .addStatement(
-                                "$T oAuthTokenSupplier = new $T(clientId, clientSecret, authClient)",
-                                oauthTokenSupplierClassName,
-                                oauthTokenSupplierClassName)
-                        .addStatement(
-                                "this.$L.addHeader($S, oAuthTokenSupplier)",
-                                CLIENT_OPTIONS_BUILDER_NAME,
-                                "Authorization");
+                if (configureAuthMethod != null) {
+                    configureAuthMethod
+                            .beginControlFlow("if (this.clientId != null && this.clientSecret != null)")
+                            .addStatement(
+                                    "$T authClient = new $T($T.builder().environment(this.$L).build())",
+                                    authClientClassName,
+                                    authClientClassName,
+                                    generatedClientOptions.getClassName(),
+                                    ENVIRONMENT_FIELD_NAME)
+                            .addStatement(
+                                    "$T oAuthTokenSupplier = new $T(this.clientId, this.clientSecret, authClient)",
+                                    oauthTokenSupplierClassName,
+                                    oauthTokenSupplierClassName)
+                            .addStatement("builder.addHeader($S, oAuthTokenSupplier)", "Authorization")
+                            .endControlFlow();
+                }
                 return null;
             }
 
@@ -479,27 +695,30 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 createSetter(fieldName, header.getHeaderEnvVar(), Optional.of(literal));
             }
 
+            MethodSpec.Builder targetMethod =
+                    respectMandatoryAuth ? this.configureAuthMethod : this.configureCustomHeadersMethod;
+
+            if (targetMethod == null) {
+                return null;
+            }
+
             Boolean shouldWrapInConditional = header.getValueType().isContainer()
                     && header.getValueType().getContainer().get().isOptional();
-            MethodSpec.Builder maybeConditionalAdditionFlow = this.buildMethod;
+            MethodSpec.Builder maybeConditionalAdditionFlow = targetMethod;
             // If the header is optional, wrap the add in a presence check so it does not get added unless it's non-null
             if (shouldWrapInConditional) {
-                maybeConditionalAdditionFlow = this.buildMethod.beginControlFlow("if ($L != null)", fieldName);
+                maybeConditionalAdditionFlow = targetMethod.beginControlFlow("if (this.$L != null)", fieldName);
             }
 
             if (header.getPrefix().isPresent()) {
                 maybeConditionalAdditionFlow = maybeConditionalAdditionFlow.addStatement(
-                        "this.$L.addHeader($S, $S + this.$L)",
-                        CLIENT_OPTIONS_BUILDER_NAME,
+                        "builder.addHeader($S, $S + this.$L)",
                         header.getName().getWireValue(),
                         header.getPrefix().get(),
                         fieldName);
             } else {
                 maybeConditionalAdditionFlow = maybeConditionalAdditionFlow.addStatement(
-                        "this.$L.addHeader($S, this.$L)",
-                        CLIENT_OPTIONS_BUILDER_NAME,
-                        header.getName().getWireValue(),
-                        fieldName);
+                        "builder.addHeader($S, this.$L)", header.getName().getWireValue(), fieldName);
             }
 
             if (shouldWrapInConditional) {

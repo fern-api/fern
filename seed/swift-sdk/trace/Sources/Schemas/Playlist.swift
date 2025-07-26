@@ -1,9 +1,13 @@
-public struct Playlist: Codable, Hashable {
+public struct Playlist: Codable, Hashable, Sendable {
     public let playlistId: PlaylistId
     public let ownerId: UserId
     public let additionalProperties: [String: JSONValue]
 
-    public init(playlistId: PlaylistId, ownerId: UserId, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        playlistId: PlaylistId,
+        ownerId: UserId,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.playlistId = playlistId
         self.ownerId = ownerId
         self.additionalProperties = additionalProperties
@@ -17,7 +21,7 @@ public struct Playlist: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.playlistId, forKey: .playlistId)
         try container.encode(self.ownerId, forKey: .ownerId)

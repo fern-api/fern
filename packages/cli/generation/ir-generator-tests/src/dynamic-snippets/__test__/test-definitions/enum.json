@@ -556,7 +556,7 @@
                             "safeName": "L"
                         }
                     },
-                    "wireValue": "Hello\\0World"
+                    "wireValue": "Hello\\x00World"
                 },
                 {
                     "name": {
@@ -732,7 +732,7 @@
                             "safeName": "T"
                         }
                     },
-                    "wireValue": "\\n\\r\\t\\0\\u0008\\f\\v\\u0007"
+                    "wireValue": "\\n\\r\\t\\x00\\u0008\\f\\v\\u0007"
                 },
                 {
                     "name": {

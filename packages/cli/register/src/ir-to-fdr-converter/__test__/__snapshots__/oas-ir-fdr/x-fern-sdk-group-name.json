@@ -119,6 +119,21 @@
           "statusCode": 200,
           "description": "Success"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "User"
+                }
+              },
+              "statusCode": 200,
+              "description": "Success"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {

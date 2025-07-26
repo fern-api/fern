@@ -1,4 +1,4 @@
-public enum WeatherReport: String, Codable, Hashable, Sendable, CaseIterable {
+public enum WeatherReport: String, Codable, Hashable, CaseIterable, Sendable {
     case sunny = "SUNNY"
     case cloudy = "CLOUDY"
     case raining = "RAINING"

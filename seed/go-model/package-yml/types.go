@@ -12,7 +12,8 @@ type EchoRequest struct {
 	Name string `json:"name" url:"name"`
 	Size int    `json:"size" url:"size"`
 
-	extraProperties map[string]interface{}
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
 func (e *EchoRequest) GetName() string {
@@ -29,26 +30,19 @@ func (e *EchoRequest) GetSize() int {
 	return e.Size
 }
 
-func (e *EchoRequest) GetExtraProperties() map[string]interface{} {
+func (e *EchoRequest) GetExtraProperties() map[string]any {
+	if e == nil {
+		return nil
+	}
 	return e.extraProperties
 }
 
-func (e *EchoRequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler EchoRequest
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*e = EchoRequest(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
-	if err != nil {
-		return err
-	}
-	e.extraProperties = extraProperties
-	return nil
-}
-
 func (e *EchoRequest) String() string {
+	if len(e.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}

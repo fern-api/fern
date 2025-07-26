@@ -71,7 +71,7 @@ export class GoZeroValueMapper {
             dateTime: () => this.context.getZeroTime(),
             uuid: () => this.context.getZeroUuid(),
             base64: () => go.TypeInstantiation.nil(),
-            bigInteger: () => go.TypeInstantiation.int(0),
+            bigInteger: () => go.TypeInstantiation.string(""),
             _other: () => go.TypeInstantiation.nil()
         });
     }

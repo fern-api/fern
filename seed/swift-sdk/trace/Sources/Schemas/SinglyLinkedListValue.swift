@@ -1,9 +1,13 @@
-public struct SinglyLinkedListValue: Codable, Hashable {
+public struct SinglyLinkedListValue: Codable, Hashable, Sendable {
     public let head: NodeId?
-    public let nodes: Any
+    public let nodes: [NodeId: SinglyLinkedListNodeValue]
     public let additionalProperties: [String: JSONValue]
 
-    public init(head: NodeId? = nil, nodes: Any, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        head: NodeId? = nil,
+        nodes: [NodeId: SinglyLinkedListNodeValue],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.head = head
         self.nodes = nodes
         self.additionalProperties = additionalProperties
@@ -12,12 +16,12 @@ public struct SinglyLinkedListValue: Codable, Hashable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.head = try container.decodeIfPresent(NodeId.self, forKey: .head)
-        self.nodes = try container.decode(Any.self, forKey: .nodes)
+        self.nodes = try container.decode([NodeId: SinglyLinkedListNodeValue].self, forKey: .nodes)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encodeIfPresent(self.head, forKey: .head)
         try container.encode(self.nodes, forKey: .nodes)

@@ -1,10 +1,15 @@
-public struct GetTokenRequest: Codable, Hashable {
+public struct GetTokenRequest: Codable, Hashable, Sendable {
     public let clientId: String
     public let clientSecret: String
     public let grantType: Any
     public let additionalProperties: [String: JSONValue]
 
-    public init(clientId: String, clientSecret: String, grantType: Any, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        clientId: String,
+        clientSecret: String,
+        grantType: Any,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.clientId = clientId
         self.clientSecret = clientSecret
         self.grantType = grantType
@@ -20,7 +25,7 @@ public struct GetTokenRequest: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.clientId, forKey: .clientId)
         try container.encode(self.clientSecret, forKey: .clientSecret)

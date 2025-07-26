@@ -1,9 +1,13 @@
-public struct ProblemFiles: Codable, Hashable {
+public struct ProblemFiles: Codable, Hashable, Sendable {
     public let solutionFile: FileInfo
     public let readOnlyFiles: [FileInfo]
     public let additionalProperties: [String: JSONValue]
 
-    public init(solutionFile: FileInfo, readOnlyFiles: [FileInfo], additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        solutionFile: FileInfo,
+        readOnlyFiles: [FileInfo],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.solutionFile = solutionFile
         self.readOnlyFiles = readOnlyFiles
         self.additionalProperties = additionalProperties
@@ -17,7 +21,7 @@ public struct ProblemFiles: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.solutionFile, forKey: .solutionFile)
         try container.encode(self.readOnlyFiles, forKey: .readOnlyFiles)

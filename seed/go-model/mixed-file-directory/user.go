@@ -13,7 +13,8 @@ type User struct {
 	Name string `json:"name" url:"name"`
 	Age  int    `json:"age" url:"age"`
 
-	extraProperties map[string]interface{}
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
 func (u *User) GetId() Id {
@@ -37,26 +38,19 @@ func (u *User) GetAge() int {
 	return u.Age
 }
 
-func (u *User) GetExtraProperties() map[string]interface{} {
+func (u *User) GetExtraProperties() map[string]any {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
-func (u *User) UnmarshalJSON(data []byte) error {
-	type unmarshaler User
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*u = User(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *u)
-	if err != nil {
-		return err
-	}
-	u.extraProperties = extraProperties
-	return nil
-}
-
 func (u *User) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}

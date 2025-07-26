@@ -1,8 +1,11 @@
-public struct TestCaseHiddenGrade: Codable, Hashable {
+public struct TestCaseHiddenGrade: Codable, Hashable, Sendable {
     public let passed: Bool
     public let additionalProperties: [String: JSONValue]
 
-    public init(passed: Bool, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        passed: Bool,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.passed = passed
         self.additionalProperties = additionalProperties
     }
@@ -14,7 +17,7 @@ public struct TestCaseHiddenGrade: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.passed, forKey: .passed)
     }

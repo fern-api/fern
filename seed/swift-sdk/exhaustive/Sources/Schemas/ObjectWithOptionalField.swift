@@ -1,4 +1,4 @@
-public struct ObjectWithOptionalField: Codable, Hashable {
+public struct ObjectWithOptionalField: Codable, Hashable, Sendable {
     public let string: String?
     public let integer: Int?
     public let long: Int64?
@@ -10,11 +10,26 @@ public struct ObjectWithOptionalField: Codable, Hashable {
     public let base64: String?
     public let list: [String]?
     public let set: Any?
-    public let map: Any?
+    public let map: [Int: String]?
     public let bigint: String?
     public let additionalProperties: [String: JSONValue]
 
-    public init(string: String? = nil, integer: Int? = nil, long: Int64? = nil, double: Double? = nil, bool: Bool? = nil, datetime: Date? = nil, date: Date? = nil, uuid: UUID? = nil, base64: String? = nil, list: [String]? = nil, set: Any? = nil, map: Any? = nil, bigint: String? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        string: String? = nil,
+        integer: Int? = nil,
+        long: Int64? = nil,
+        double: Double? = nil,
+        bool: Bool? = nil,
+        datetime: Date? = nil,
+        date: Date? = nil,
+        uuid: UUID? = nil,
+        base64: String? = nil,
+        list: [String]? = nil,
+        set: Any? = nil,
+        map: [Int: String]? = nil,
+        bigint: String? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.string = string
         self.integer = integer
         self.long = long
@@ -44,13 +59,13 @@ public struct ObjectWithOptionalField: Codable, Hashable {
         self.base64 = try container.decodeIfPresent(String.self, forKey: .base64)
         self.list = try container.decodeIfPresent([String].self, forKey: .list)
         self.set = try container.decodeIfPresent(Any.self, forKey: .set)
-        self.map = try container.decodeIfPresent(Any.self, forKey: .map)
+        self.map = try container.decodeIfPresent([Int: String].self, forKey: .map)
         self.bigint = try container.decodeIfPresent(String.self, forKey: .bigint)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encodeIfPresent(self.string, forKey: .string)
         try container.encodeIfPresent(self.integer, forKey: .integer)

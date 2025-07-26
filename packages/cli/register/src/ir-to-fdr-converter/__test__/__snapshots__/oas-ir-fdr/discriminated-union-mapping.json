@@ -147,6 +147,23 @@
           "statusCode": 200,
           "description": "A simple API response."
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 200,
+              "description": "A simple API response."
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
@@ -220,6 +237,23 @@
           },
           "statusCode": 200,
           "description": "A simple API response."
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 200,
+              "description": "A simple API response."
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [

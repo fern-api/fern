@@ -334,6 +334,21 @@
           "statusCode": 200,
           "description": "User created successfully"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "User"
+                }
+              },
+              "statusCode": 200,
+              "description": "User created successfully"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
@@ -447,6 +462,21 @@
           "statusCode": 200,
           "description": "User retrieved successfully"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "User"
+                }
+              },
+              "statusCode": 200,
+              "description": "User retrieved successfully"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
@@ -543,6 +573,21 @@
           },
           "statusCode": 200,
           "description": "User object validated successfully"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "validateAUserObject_Response_200"
+                }
+              },
+              "statusCode": 200,
+              "description": "User object validated successfully"
+            }
+          ]
         },
         "errorsV2": [
           {

@@ -11,284 +11,27 @@ import (
 
 type Email = *string
 
-type Metadata struct {
-	CreatedAt time.Time          `json:"createdAt" url:"createdAt"`
-	UpdatedAt time.Time          `json:"updatedAt" url:"updatedAt"`
-	Avatar    *string            `json:"avatar,omitempty" url:"avatar,omitempty"`
-	Activated *bool              `json:"activated,omitempty" url:"activated,omitempty"`
-	Status    *Status            `json:"status" url:"status"`
-	Values    map[string]*string `json:"values,omitempty" url:"values,omitempty"`
+type UserId = string
 
-	extraProperties map[string]interface{}
-}
-
-func (m *Metadata) GetCreatedAt() time.Time {
-	if m == nil {
-		return time.Time{}
-	}
-	return m.CreatedAt
-}
-
-func (m *Metadata) GetUpdatedAt() time.Time {
-	if m == nil {
-		return time.Time{}
-	}
-	return m.UpdatedAt
-}
-
-func (m *Metadata) GetAvatar() *string {
-	if m == nil {
-		return nil
-	}
-	return m.Avatar
-}
-
-func (m *Metadata) GetActivated() *bool {
-	if m == nil {
-		return nil
-	}
-	return m.Activated
-}
-
-func (m *Metadata) GetStatus() *Status {
-	if m == nil {
-		return nil
-	}
-	return m.Status
-}
-
-func (m *Metadata) GetValues() map[string]*string {
-	if m == nil {
-		return nil
-	}
-	return m.Values
-}
-
-func (m *Metadata) GetExtraProperties() map[string]interface{} {
-	return m.extraProperties
-}
-
-func (m *Metadata) UnmarshalJSON(data []byte) error {
-	type embed Metadata
-	var unmarshaler = struct {
-		embed
-		CreatedAt *internal.DateTime `json:"createdAt"`
-		UpdatedAt *internal.DateTime `json:"updatedAt"`
-	}{
-		embed: embed(*m),
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	*m = Metadata(unmarshaler.embed)
-	m.CreatedAt = unmarshaler.CreatedAt.Time()
-	m.UpdatedAt = unmarshaler.UpdatedAt.Time()
-	extraProperties, err := internal.ExtractExtraProperties(data, *m)
-	if err != nil {
-		return err
-	}
-	m.extraProperties = extraProperties
-	return nil
-}
-
-func (m *Metadata) MarshalJSON() ([]byte, error) {
-	type embed Metadata
-	var marshaler = struct {
-		embed
-		CreatedAt *internal.DateTime `json:"createdAt"`
-		UpdatedAt *internal.DateTime `json:"updatedAt"`
-	}{
-		embed:     embed(*m),
-		CreatedAt: internal.NewDateTime(m.CreatedAt),
-		UpdatedAt: internal.NewDateTime(m.UpdatedAt),
-	}
-	return json.Marshal(marshaler)
-}
-
-func (m *Metadata) String() string {
-	if value, err := internal.StringifyJSON(m); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", m)
-}
-
-type Status struct {
-	Type        string
-	Active      interface{}
-	Archived    *time.Time
-	SoftDeleted *time.Time
-}
-
-func (s *Status) GetType() string {
-	if s == nil {
-		return ""
-	}
-	return s.Type
-}
-
-func (s *Status) GetActive() interface{} {
-	if s == nil {
-		return nil
-	}
-	return s.Active
-}
-
-func (s *Status) GetArchived() *time.Time {
-	if s == nil {
-		return nil
-	}
-	return s.Archived
-}
-
-func (s *Status) GetSoftDeleted() *time.Time {
-	if s == nil {
-		return nil
-	}
-	return s.SoftDeleted
-}
-
-func (s *Status) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	s.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", s)
-	}
-	switch unmarshaler.Type {
-	case "active":
-		value := make(map[string]interface{})
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		s.Active = value
-	case "archived":
-		var valueUnmarshaler struct {
-			Archived *internal.DateTime `json:"value,omitempty"`
-		}
-		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
-			return err
-		}
-		s.Archived = valueUnmarshaler.Archived.TimePtr()
-	case "soft-deleted":
-		var valueUnmarshaler struct {
-			SoftDeleted *internal.DateTime `json:"value,omitempty"`
-		}
-		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
-			return err
-		}
-		s.SoftDeleted = valueUnmarshaler.SoftDeleted.TimePtr()
-	}
-	return nil
-}
-
-func (s Status) MarshalJSON() ([]byte, error) {
-	if err := s.validate(); err != nil {
-		return nil, err
-	}
-	if s.Active != nil {
-		var marshaler = struct {
-			Type   string      `json:"type"`
-			Active interface{} `json:"active,omitempty"`
-		}{
-			Type:   "active",
-			Active: s.Active,
-		}
-		return json.Marshal(marshaler)
-	}
-	if s.Archived != nil {
-		var marshaler = struct {
-			Type     string             `json:"type"`
-			Archived *internal.DateTime `json:"value,omitempty"`
-		}{
-			Type:     "archived",
-			Archived: internal.NewOptionalDateTime(s.Archived),
-		}
-		return json.Marshal(marshaler)
-	}
-	if s.SoftDeleted != nil {
-		var marshaler = struct {
-			Type        string             `json:"type"`
-			SoftDeleted *internal.DateTime `json:"value,omitempty"`
-		}{
-			Type:        "soft-deleted",
-			SoftDeleted: internal.NewOptionalDateTime(s.SoftDeleted),
-		}
-		return json.Marshal(marshaler)
-	}
-	return nil, fmt.Errorf("type %T does not define a non-empty union type", s)
-}
-
-type StatusVisitor interface {
-	VisitActive(interface{}) error
-	VisitArchived(*time.Time) error
-	VisitSoftDeleted(*time.Time) error
-}
-
-func (s *Status) Accept(visitor StatusVisitor) error {
-	if s.Active != nil {
-		return visitor.VisitActive(s.Active)
-	}
-	if s.Archived != nil {
-		return visitor.VisitArchived(s.Archived)
-	}
-	if s.SoftDeleted != nil {
-		return visitor.VisitSoftDeleted(s.SoftDeleted)
-	}
-	return fmt.Errorf("type %T does not define a non-empty union type", s)
-}
-
-func (s *Status) validate() error {
-	if s == nil {
-		return fmt.Errorf("type %T is nil", s)
-	}
-	var fields []string
-	if s.Active != nil {
-		fields = append(fields, "active")
-	}
-	if s.Archived != nil {
-		fields = append(fields, "archived")
-	}
-	if s.SoftDeleted != nil {
-		fields = append(fields, "soft-deleted")
-	}
-	if len(fields) == 0 {
-		if s.Type != "" {
-			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.Type)
-		}
-		return fmt.Errorf("type %T is empty", s)
-	}
-	if len(fields) > 1 {
-		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", s, fields)
-	}
-	if s.Type != "" {
-		field := fields[0]
-		if s.Type != field {
-			return fmt.Errorf(
-				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
-				s,
-				s.Type,
-				s,
-			)
-		}
-	}
-	return nil
+type WeirdNumber struct {
+	Integer                int
+	DoubleOptional         *float64
+	StringOptionalOptional *string
+	Double                 float64
 }
 
 type User struct {
-	Name           string                 `json:"name" url:"name"`
-	Id             UserId                 `json:"id" url:"id"`
-	Tags           []string               `json:"tags,omitempty" url:"tags,omitempty"`
-	Metadata       *Metadata              `json:"metadata,omitempty" url:"metadata,omitempty"`
-	Email          Email                  `json:"email,omitempty" url:"email,omitempty"`
-	FavoriteNumber *WeirdNumber           `json:"favorite-number" url:"favorite-number"`
-	Numbers        []int                  `json:"numbers,omitempty" url:"numbers,omitempty"`
-	Strings        map[string]interface{} `json:"strings,omitempty" url:"strings,omitempty"`
+	Name           string         `json:"name" url:"name"`
+	Id             UserId         `json:"id" url:"id"`
+	Tags           []string       `json:"tags" url:"tags"`
+	Metadata       *Metadata      `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Email          Email          `json:"email" url:"email"`
+	FavoriteNumber *WeirdNumber   `json:"favorite-number" url:"favorite-number"`
+	Numbers        []int          `json:"numbers,omitempty" url:"numbers,omitempty"`
+	Strings        map[string]any `json:"strings,omitempty" url:"strings,omitempty"`
 
-	extraProperties map[string]interface{}
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
 func (u *User) GetName() string {
@@ -340,141 +83,108 @@ func (u *User) GetNumbers() []int {
 	return u.Numbers
 }
 
-func (u *User) GetStrings() map[string]interface{} {
+func (u *User) GetStrings() map[string]any {
 	if u == nil {
 		return nil
 	}
 	return u.Strings
 }
 
-func (u *User) GetExtraProperties() map[string]interface{} {
+func (u *User) GetExtraProperties() map[string]any {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
-func (u *User) UnmarshalJSON(data []byte) error {
-	type unmarshaler User
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*u = User(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *u)
-	if err != nil {
-		return err
-	}
-	u.extraProperties = extraProperties
-	return nil
-}
-
 func (u *User) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
 }
 
-type UserId = string
-
-type WeirdNumber struct {
-	Integer        int
-	DoubleOptional *float64
-	StringOptional *string
-	Double         float64
-
-	typ string
+type Status struct {
+	Type        string
+	Active      any
+	Archived    *time.Time
+	SoftDeleted *time.Time
 }
 
-func (w *WeirdNumber) GetInteger() int {
-	if w == nil {
-		return 0
+type Metadata struct {
+	CreatedAt time.Time          `json:"createdAt" url:"createdAt"`
+	UpdatedAt time.Time          `json:"updatedAt" url:"updatedAt"`
+	Avatar    *string            `json:"avatar" url:"avatar"`
+	Activated *bool              `json:"activated,omitempty" url:"activated,omitempty"`
+	Status    *Status            `json:"status" url:"status"`
+	Values    map[string]*string `json:"values,omitempty" url:"values,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (m *Metadata) GetCreatedAt() time.Time {
+	if m == nil {
+		return time.Time{}
 	}
-	return w.Integer
+	return m.CreatedAt
 }
 
-func (w *WeirdNumber) GetDoubleOptional() *float64 {
-	if w == nil {
+func (m *Metadata) GetUpdatedAt() time.Time {
+	if m == nil {
+		return time.Time{}
+	}
+	return m.UpdatedAt
+}
+
+func (m *Metadata) GetAvatar() *string {
+	if m == nil {
 		return nil
 	}
-	return w.DoubleOptional
+	return m.Avatar
 }
 
-func (w *WeirdNumber) GetStringOptional() *string {
-	if w == nil {
+func (m *Metadata) GetActivated() *bool {
+	if m == nil {
 		return nil
 	}
-	return w.StringOptional
+	return m.Activated
 }
 
-func (w *WeirdNumber) GetDouble() float64 {
-	if w == nil {
-		return 0
-	}
-	return w.Double
-}
-
-func (w *WeirdNumber) UnmarshalJSON(data []byte) error {
-	var valueInteger int
-	if err := json.Unmarshal(data, &valueInteger); err == nil {
-		w.typ = "Integer"
-		w.Integer = valueInteger
+func (m *Metadata) GetStatus() *Status {
+	if m == nil {
 		return nil
 	}
-	var valueDoubleOptional *float64
-	if err := json.Unmarshal(data, &valueDoubleOptional); err == nil {
-		w.typ = "DoubleOptional"
-		w.DoubleOptional = valueDoubleOptional
-		return nil
-	}
-	var valueStringOptional *string
-	if err := json.Unmarshal(data, &valueStringOptional); err == nil {
-		w.typ = "StringOptional"
-		w.StringOptional = valueStringOptional
-		return nil
-	}
-	var valueDouble float64
-	if err := json.Unmarshal(data, &valueDouble); err == nil {
-		w.typ = "Double"
-		w.Double = valueDouble
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, w)
+	return m.Status
 }
 
-func (w WeirdNumber) MarshalJSON() ([]byte, error) {
-	if w.typ == "Integer" || w.Integer != 0 {
-		return json.Marshal(w.Integer)
+func (m *Metadata) GetValues() map[string]*string {
+	if m == nil {
+		return nil
 	}
-	if w.typ == "DoubleOptional" || w.DoubleOptional != nil {
-		return json.Marshal(w.DoubleOptional)
-	}
-	if w.typ == "StringOptional" || w.StringOptional != nil {
-		return json.Marshal(w.StringOptional)
-	}
-	if w.typ == "Double" || w.Double != 0 {
-		return json.Marshal(w.Double)
-	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", w)
+	return m.Values
 }
 
-type WeirdNumberVisitor interface {
-	VisitInteger(int) error
-	VisitDoubleOptional(*float64) error
-	VisitStringOptional(*string) error
-	VisitDouble(float64) error
+func (m *Metadata) GetExtraProperties() map[string]any {
+	if m == nil {
+		return nil
+	}
+	return m.extraProperties
 }
 
-func (w *WeirdNumber) Accept(visitor WeirdNumberVisitor) error {
-	if w.typ == "Integer" || w.Integer != 0 {
-		return visitor.VisitInteger(w.Integer)
+func (m *Metadata) String() string {
+	if len(m.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
+			return value
+		}
 	}
-	if w.typ == "DoubleOptional" || w.DoubleOptional != nil {
-		return visitor.VisitDoubleOptional(w.DoubleOptional)
+	if value, err := internal.StringifyJSON(m); err == nil {
+		return value
 	}
-	if w.typ == "StringOptional" || w.StringOptional != nil {
-		return visitor.VisitStringOptional(w.StringOptional)
-	}
-	if w.typ == "Double" || w.Double != 0 {
-		return visitor.VisitDouble(w.Double)
-	}
-	return fmt.Errorf("type %T does not include a non-empty union type", w)
+	return fmt.Sprintf("%#v", m)
 }

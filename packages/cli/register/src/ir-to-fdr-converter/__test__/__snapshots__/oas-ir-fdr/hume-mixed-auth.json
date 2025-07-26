@@ -2211,6 +2211,15 @@
         "properties": []
       }
     },
+    "Tools_deleteToolVersion_Response_204": {
+      "description": "Empty response body",
+      "name": "Tools_deleteToolVersion_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "Tools_updateToolName_Response_200": {
       "description": "Empty response body",
       "name": "Tools_updateToolName_Response_200",
@@ -2223,6 +2232,15 @@
     "Prompts_deletePromptVersion_Response_200": {
       "description": "Empty response body",
       "name": "Prompts_deletePromptVersion_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Prompts_deletePromptVersion_Response_204": {
+      "description": "Empty response body",
+      "name": "Prompts_deletePromptVersion_Response_204",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2247,6 +2265,15 @@
         "properties": []
       }
     },
+    "Custom Voices_deleteCustomVoice_Response_204": {
+      "description": "Empty response body",
+      "name": "Custom Voices_deleteCustomVoice_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "Custom Voices_updateCustomVoiceName_Response_200": {
       "description": "Empty response body",
       "name": "Custom Voices_updateCustomVoiceName_Response_200",
@@ -2259,6 +2286,15 @@
     "Configs_deleteConfig_Response_200": {
       "description": "Empty response body",
       "name": "Configs_deleteConfig_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Configs_deleteConfig_Response_204": {
+      "description": "Empty response body",
+      "name": "Configs_deleteConfig_Response_204",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2283,6 +2319,15 @@
         "properties": []
       }
     },
+    "Tools_deleteToolVersion_1_Response_204": {
+      "description": "Empty response body",
+      "name": "Tools_deleteToolVersion_1_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "Prompts_deletePromptVersion_1_Response_200": {
       "description": "Empty response body",
       "name": "Prompts_deletePromptVersion_1_Response_200",
@@ -2292,9 +2337,27 @@
         "properties": []
       }
     },
+    "Prompts_deletePromptVersion_1_Response_204": {
+      "description": "Empty response body",
+      "name": "Prompts_deletePromptVersion_1_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "Configs_deleteConfigVersion_Response_200": {
       "description": "Empty response body",
       "name": "Configs_deleteConfigVersion_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Configs_deleteConfigVersion_Response_204": {
+      "description": "Empty response body",
+      "name": "Configs_deleteConfigVersion_Response_204",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2641,6 +2704,20 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -2705,6 +2782,20 @@
             },
             "statusCode": 201,
             "description": "Created"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -2821,6 +2912,20 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -2908,6 +3013,20 @@
             "statusCode": 201,
             "description": "Created"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -2987,9 +3106,36 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Tools_deleteToolVersion_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Tools_deleteToolVersion_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
+              "name": "deleteToolVersionExample",
               "description": "",
               "path": "/v0/evi/tools/id",
               "pathParameters": {
@@ -2998,6 +3144,22 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "name": "deleteToolVersionExample",
+              "description": "",
+              "path": "/v0/evi/tools/id",
+              "pathParameters": {
+                "id": "id"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 204,
               "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
@@ -3079,6 +3241,21 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Tools_updateToolName_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -3181,6 +3358,20 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -3276,9 +3467,36 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Tools_deleteToolVersion_1_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Tools_deleteToolVersion_1_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
+              "name": "deleteToolVersion1Example",
               "description": "",
               "path": "/v0/evi/tools/id/version/1",
               "pathParameters": {
@@ -3288,6 +3506,23 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "name": "deleteToolVersion1Example",
+              "description": "",
+              "path": "/v0/evi/tools/id/version/1",
+              "pathParameters": {
+                "id": "id",
+                "version": 1
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 204,
               "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
@@ -3386,6 +3621,20 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -3522,6 +3771,20 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -3586,6 +3849,20 @@
             },
             "statusCode": 201,
             "description": "Created"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -3702,6 +3979,20 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -3789,6 +4080,20 @@
             "statusCode": 201,
             "description": "Created"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -3868,9 +4173,36 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Prompts_deletePromptVersion_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Prompts_deletePromptVersion_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
+              "name": "deletePromptVersionExample",
               "description": "",
               "path": "/v0/evi/prompts/id",
               "pathParameters": {
@@ -3879,6 +4211,22 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "name": "deletePromptVersionExample",
+              "description": "",
+              "path": "/v0/evi/prompts/id",
+              "pathParameters": {
+                "id": "id"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 204,
               "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
@@ -3960,6 +4308,21 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Prompts_updatePromptName_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -4062,6 +4425,20 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -4157,9 +4534,36 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Prompts_deletePromptVersion_1_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Prompts_deletePromptVersion_1_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
+              "name": "deletePromptVersion1Example",
               "description": "",
               "path": "/v0/evi/prompts/id/version/1",
               "pathParameters": {
@@ -4169,6 +4573,23 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "name": "deletePromptVersion1Example",
+              "description": "",
+              "path": "/v0/evi/prompts/id/version/1",
+              "pathParameters": {
+                "id": "id",
+                "version": 1
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 204,
               "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
@@ -4267,6 +4688,20 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -4390,6 +4825,20 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -4454,6 +4903,20 @@
             },
             "statusCode": 201,
             "description": "Created"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -4530,6 +4993,20 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -4618,6 +5095,20 @@
             "statusCode": 201,
             "description": "Created"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -4697,9 +5188,36 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Custom Voices_deleteCustomVoice_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Custom Voices_deleteCustomVoice_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
+              "name": "deleteCustomVoiceExample",
               "description": "",
               "path": "/v0/evi/custom_voices/id",
               "pathParameters": {
@@ -4708,6 +5226,22 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "name": "deleteCustomVoiceExample",
+              "description": "",
+              "path": "/v0/evi/custom_voices/id",
+              "pathParameters": {
+                "id": "id"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 204,
               "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
@@ -4789,6 +5323,21 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Custom Voices_updateCustomVoiceName_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -4929,6 +5478,20 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -4993,6 +5556,20 @@
             },
             "statusCode": 201,
             "description": "Created"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -5110,6 +5687,20 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -5197,6 +5788,20 @@
             "statusCode": 201,
             "description": "Created"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -5276,9 +5881,36 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Configs_deleteConfig_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Configs_deleteConfig_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
+              "name": "deleteConfigExample",
               "description": "",
               "path": "/v0/evi/configs/id",
               "pathParameters": {
@@ -5287,6 +5919,22 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "name": "deleteConfigExample",
+              "description": "",
+              "path": "/v0/evi/configs/id",
+              "pathParameters": {
+                "id": "id"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 204,
               "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
@@ -5368,6 +6016,21 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Configs_updateConfigName_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -5470,6 +6133,20 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -5565,9 +6242,36 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Configs_deleteConfigVersion_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Configs_deleteConfigVersion_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
+              "name": "deleteConfigVersionExample",
               "description": "",
               "path": "/v0/evi/configs/id/version/1",
               "pathParameters": {
@@ -5577,6 +6281,23 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "name": "deleteConfigVersionExample",
+              "description": "",
+              "path": "/v0/evi/configs/id/version/1",
+              "pathParameters": {
+                "id": "id",
+                "version": 1
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 204,
               "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
@@ -5675,6 +6396,20 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -5799,6 +6534,20 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -5912,6 +6661,20 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -5986,6 +6749,20 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -6106,6 +6883,20 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -6218,6 +7009,20 @@
             },
             "statusCode": 200,
             "description": "Success"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -6334,6 +7139,20 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -6449,6 +7268,20 @@
             "statusCode": 200,
             "description": "Success"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -6513,6 +7346,20 @@
           },
           "statusCode": 200,
           "description": "A list of available language models with details about their providers and built-in tools."
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 200,
+              "description": "A list of available language models with details about their providers and built-in tools."
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [
@@ -6604,6 +7451,20 @@
           },
           "statusCode": 200,
           "description": "Successful Response"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 200,
+              "description": "Successful Response"
+            }
+          ]
         },
         "errorsV2": [
           {
@@ -6711,6 +7572,20 @@
           "statusCode": 200,
           "description": "Successful Response"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 200,
+              "description": "Successful Response"
+            }
+          ]
+        },
         "errorsV2": [
           {
             "type": {
@@ -6809,6 +7684,20 @@
           "statusCode": 200,
           "description": "Successful Response"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 200,
+              "description": "Successful Response"
+            }
+          ]
+        },
         "errorsV2": [
           {
             "type": {
@@ -6878,6 +7767,20 @@
           },
           "statusCode": 200,
           "description": "A list of available voice names and sample audio file URLs."
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 200,
+              "description": "A list of available voice names and sample audio file URLs."
+            }
+          ]
         },
         "errorsV2": [
           {

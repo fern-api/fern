@@ -10,173 +10,16 @@ import (
 
 type Animal struct {
 	Animal string
-	Dog    *Dog
-	Cat    *Cat
-}
-
-func (a *Animal) GetAnimal() string {
-	if a == nil {
-		return ""
-	}
-	return a.Animal
-}
-
-func (a *Animal) GetDog() *Dog {
-	if a == nil {
-		return nil
-	}
-	return a.Dog
-}
-
-func (a *Animal) GetCat() *Cat {
-	if a == nil {
-		return nil
-	}
-	return a.Cat
-}
-
-func (a *Animal) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Animal string `json:"animal"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	a.Animal = unmarshaler.Animal
-	if unmarshaler.Animal == "" {
-		return fmt.Errorf("%T did not include discriminant animal", a)
-	}
-	switch unmarshaler.Animal {
-	case "dog":
-		value := new(Dog)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		a.Dog = value
-	case "cat":
-		value := new(Cat)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		a.Cat = value
-	}
-	return nil
-}
-
-func (a Animal) MarshalJSON() ([]byte, error) {
-	if err := a.validate(); err != nil {
-		return nil, err
-	}
-	if a.Dog != nil {
-		return internal.MarshalJSONWithExtraProperty(a.Dog, "animal", "dog")
-	}
-	if a.Cat != nil {
-		return internal.MarshalJSONWithExtraProperty(a.Cat, "animal", "cat")
-	}
-	return nil, fmt.Errorf("type %T does not define a non-empty union type", a)
-}
-
-type AnimalVisitor interface {
-	VisitDog(*Dog) error
-	VisitCat(*Cat) error
-}
-
-func (a *Animal) Accept(visitor AnimalVisitor) error {
-	if a.Dog != nil {
-		return visitor.VisitDog(a.Dog)
-	}
-	if a.Cat != nil {
-		return visitor.VisitCat(a.Cat)
-	}
-	return fmt.Errorf("type %T does not define a non-empty union type", a)
-}
-
-func (a *Animal) validate() error {
-	if a == nil {
-		return fmt.Errorf("type %T is nil", a)
-	}
-	var fields []string
-	if a.Dog != nil {
-		fields = append(fields, "dog")
-	}
-	if a.Cat != nil {
-		fields = append(fields, "cat")
-	}
-	if len(fields) == 0 {
-		if a.Animal != "" {
-			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", a, a.Animal)
-		}
-		return fmt.Errorf("type %T is empty", a)
-	}
-	if len(fields) > 1 {
-		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", a, fields)
-	}
-	if a.Animal != "" {
-		field := fields[0]
-		if a.Animal != field {
-			return fmt.Errorf(
-				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
-				a,
-				a.Animal,
-				a,
-			)
-		}
-	}
-	return nil
-}
-
-type Cat struct {
-	Name        string `json:"name" url:"name"`
-	LikesToMeow bool   `json:"likesToMeow" url:"likesToMeow"`
-
-	extraProperties map[string]interface{}
-}
-
-func (c *Cat) GetName() string {
-	if c == nil {
-		return ""
-	}
-	return c.Name
-}
-
-func (c *Cat) GetLikesToMeow() bool {
-	if c == nil {
-		return false
-	}
-	return c.LikesToMeow
-}
-
-func (c *Cat) GetExtraProperties() map[string]interface{} {
-	return c.extraProperties
-}
-
-func (c *Cat) UnmarshalJSON(data []byte) error {
-	type unmarshaler Cat
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*c = Cat(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *c)
-	if err != nil {
-		return err
-	}
-	c.extraProperties = extraProperties
-	return nil
-}
-
-func (c *Cat) String() string {
-	if value, err := internal.StringifyJSON(c); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", c)
+	Dog    Dog
+	Cat    Cat
 }
 
 type Dog struct {
 	Name        string `json:"name" url:"name"`
 	LikesToWoof bool   `json:"likesToWoof" url:"likesToWoof"`
 
-	extraProperties map[string]interface{}
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
 func (d *Dog) GetName() string {
@@ -193,28 +36,62 @@ func (d *Dog) GetLikesToWoof() bool {
 	return d.LikesToWoof
 }
 
-func (d *Dog) GetExtraProperties() map[string]interface{} {
+func (d *Dog) GetExtraProperties() map[string]any {
+	if d == nil {
+		return nil
+	}
 	return d.extraProperties
 }
 
-func (d *Dog) UnmarshalJSON(data []byte) error {
-	type unmarshaler Dog
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*d = Dog(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *d)
-	if err != nil {
-		return err
-	}
-	d.extraProperties = extraProperties
-	return nil
-}
-
 func (d *Dog) String() string {
+	if len(d.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(d); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", d)
+}
+
+type Cat struct {
+	Name        string `json:"name" url:"name"`
+	LikesToMeow bool   `json:"likesToMeow" url:"likesToMeow"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (c *Cat) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *Cat) GetLikesToMeow() bool {
+	if c == nil {
+		return false
+	}
+	return c.LikesToMeow
+}
+
+func (c *Cat) GetExtraProperties() map[string]any {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *Cat) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
 }

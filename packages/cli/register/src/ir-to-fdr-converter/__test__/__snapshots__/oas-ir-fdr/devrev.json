@@ -7980,6 +7980,21 @@
             "statusCode": 200,
             "description": "Success."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "artifacts-locate-response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -8152,6 +8167,21 @@
             },
             "statusCode": 200,
             "description": "Success."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "artifacts-prepare-response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -8343,6 +8373,21 @@
             "statusCode": 201,
             "description": "Success."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "auth-tokens-create-response"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Success."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -8514,6 +8559,21 @@
             "statusCode": 200,
             "description": "Success."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "auth-tokens_delete_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -8681,6 +8741,21 @@
             },
             "statusCode": 200,
             "description": "Success."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "auth-tokens-get-response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -8956,6 +9031,21 @@
             "statusCode": 200,
             "description": "Success."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "auth-tokens-list-response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -9207,6 +9297,21 @@
             "statusCode": 200,
             "description": "Success."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "auth-tokens_selfDelete_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -9376,6 +9481,21 @@
             },
             "statusCode": 200,
             "description": "Success."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "auth-tokens-update-response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -9646,6 +9766,21 @@
             "statusCode": 201,
             "description": "Success."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "dev-org-auth-connections-create-response"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Success."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -9806,6 +9941,21 @@
             },
             "statusCode": 200,
             "description": "Success."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "auth-connection_dev-org-auth-connections-delete_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -9979,6 +10129,21 @@
             "statusCode": 200,
             "description": "Success."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "dev-org-auth-connections-get-response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -10136,6 +10301,21 @@
             },
             "statusCode": 200,
             "description": "Success."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "dev-org-auth-connections-list-response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -10296,6 +10476,21 @@
             },
             "statusCode": 200,
             "description": "Success."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "auth-connection_dev-org-auth-connections-toggle_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -10470,6 +10665,21 @@
             },
             "statusCode": 201,
             "description": "Success."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "dev-org-auth-connections-update-response"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Success."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -10727,6 +10937,21 @@
             "statusCode": 200,
             "description": "Success."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "dev-users-list-response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -10963,6 +11188,21 @@
             },
             "statusCode": 200,
             "description": "Success."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "dev-users-self-response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -11216,6 +11456,21 @@
             },
             "statusCode": 201,
             "description": "Success."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "parts-create-response"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Success."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -11500,6 +11755,21 @@
             "statusCode": 200,
             "description": "Success."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "parts-delete-response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -11671,6 +11941,21 @@
             },
             "statusCode": 200,
             "description": "Success."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "parts-get-response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -12052,6 +12337,21 @@
             "statusCode": 200,
             "description": "Success."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "parts-list-response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -12337,6 +12637,21 @@
             },
             "statusCode": 200,
             "description": "Success."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "parts-update-response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -12645,6 +12960,21 @@
             "statusCode": 201,
             "description": "Success."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "rev-orgs-create-response"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Success."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -12876,6 +13206,21 @@
             "statusCode": 200,
             "description": "Success."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "rev-orgs-delete-response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -13047,6 +13392,21 @@
             },
             "statusCode": 200,
             "description": "Success."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "rev-orgs-get-response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -13414,6 +13774,21 @@
             "statusCode": 200,
             "description": "Success."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "rev-orgs-list-response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -13656,6 +14031,21 @@
             },
             "statusCode": 200,
             "description": "Success."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "rev-orgs-update-response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -13912,6 +14302,21 @@
             "statusCode": 201,
             "description": "Success."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "tags-create-response"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Success."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -14145,6 +14550,21 @@
             "statusCode": 200,
             "description": "Success."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "tags-delete-response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -14316,6 +14736,21 @@
             },
             "statusCode": 200,
             "description": "Success."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "tags-get-response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -14581,6 +15016,21 @@
             "statusCode": 200,
             "description": "Success."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "tags-list-response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -14812,6 +15262,21 @@
             },
             "statusCode": 200,
             "description": "Success."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "tags-update-response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -15070,6 +15535,21 @@
             "statusCode": 201,
             "description": "Success."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "timeline-entries-create-response"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Success."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -15304,6 +15784,21 @@
             },
             "statusCode": 200,
             "description": "Success."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "timeline-entries-get-response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -15587,6 +16082,21 @@
             "statusCode": 200,
             "description": "Success."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "timeline-entries-list-response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -15842,6 +16352,21 @@
             "statusCode": 200,
             "description": "Success."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "timeline-entries-update-response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -16090,6 +16615,21 @@
             "statusCode": 201,
             "description": "Success."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "webhooks-create-response"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Success."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -16325,6 +16865,21 @@
             "statusCode": 200,
             "description": "Success."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "webhooks-delete-response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -16496,6 +17051,21 @@
             },
             "statusCode": 200,
             "description": "Success."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "webhooks-get-response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -16724,6 +17294,21 @@
             },
             "statusCode": 200,
             "description": "Success."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "webhooks-list-response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -16954,6 +17539,21 @@
             },
             "statusCode": 200,
             "description": "Success."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "webhooks-update-response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -17213,6 +17813,21 @@
             },
             "statusCode": 201,
             "description": "Success."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "works-create-response"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Success."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -17545,6 +18160,21 @@
             "statusCode": 200,
             "description": "Success."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "works-delete-response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -17857,6 +18487,21 @@
             },
             "statusCode": 200,
             "description": "Success."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "works-export-response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -18185,6 +18830,21 @@
             },
             "statusCode": 200,
             "description": "Success."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "works-get-response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -18690,6 +19350,21 @@
             "statusCode": 200,
             "description": "Success."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "works-list-response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -19023,6 +19698,21 @@
             },
             "statusCode": 200,
             "description": "Success."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "works-update-response"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success."
+              }
+            ]
           },
           "errorsV2": [
             {

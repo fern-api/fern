@@ -1,4 +1,4 @@
-public struct ExecutionSessionState: Codable, Hashable {
+public struct ExecutionSessionState: Codable, Hashable, Sendable {
     public let lastTimeContacted: String?
     public let sessionId: String
     public let isWarmInstance: Bool
@@ -7,7 +7,15 @@ public struct ExecutionSessionState: Codable, Hashable {
     public let status: ExecutionSessionStatus
     public let additionalProperties: [String: JSONValue]
 
-    public init(lastTimeContacted: String? = nil, sessionId: String, isWarmInstance: Bool, awsTaskId: String? = nil, language: Language, status: ExecutionSessionStatus, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        lastTimeContacted: String? = nil,
+        sessionId: String,
+        isWarmInstance: Bool,
+        awsTaskId: String? = nil,
+        language: Language,
+        status: ExecutionSessionStatus,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.lastTimeContacted = lastTimeContacted
         self.sessionId = sessionId
         self.isWarmInstance = isWarmInstance
@@ -29,7 +37,7 @@ public struct ExecutionSessionState: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encodeIfPresent(self.lastTimeContacted, forKey: .lastTimeContacted)
         try container.encode(self.sessionId, forKey: .sessionId)

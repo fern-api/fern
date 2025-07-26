@@ -1,8 +1,11 @@
-public struct DoubleOptional: Codable, Hashable {
+public struct DoubleOptional: Codable, Hashable, Sendable {
     public let optionalAlias: OptionalAlias?
     public let additionalProperties: [String: JSONValue]
 
-    public init(optionalAlias: OptionalAlias? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        optionalAlias: OptionalAlias? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.optionalAlias = optionalAlias
         self.additionalProperties = additionalProperties
     }
@@ -14,7 +17,7 @@ public struct DoubleOptional: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encodeIfPresent(self.optionalAlias, forKey: .optionalAlias)
     }

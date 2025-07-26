@@ -122,6 +122,23 @@
           "statusCode": 201,
           "description": "The sample response"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 201,
+              "description": "The sample response"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
@@ -242,6 +259,23 @@
           },
           "statusCode": 201,
           "description": "The sample response"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 201,
+              "description": "The sample response"
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [

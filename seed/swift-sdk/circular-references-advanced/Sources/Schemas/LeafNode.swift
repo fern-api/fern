@@ -1,7 +1,9 @@
-public struct LeafNode: Codable, Hashable {
+public struct LeafNode: Codable, Hashable, Sendable {
     public let additionalProperties: [String: JSONValue]
 
-    public init(additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.additionalProperties = additionalProperties
     }
 

@@ -9,11 +9,12 @@ import (
 )
 
 type File struct {
-	Name     string   `json:"name" url:"name"`
-	Contents string   `json:"contents" url:"contents"`
-	Info     FileInfo `json:"info" url:"info"`
+	Name     string    `json:"name" url:"name"`
+	Contents string    `json:"contents" url:"contents"`
+	Info     *FileInfo `json:"info" url:"info"`
 
-	extraProperties map[string]interface{}
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
 func (f *File) GetName() string {
@@ -30,33 +31,26 @@ func (f *File) GetContents() string {
 	return f.Contents
 }
 
-func (f *File) GetInfo() FileInfo {
+func (f *File) GetInfo() *FileInfo {
 	if f == nil {
-		return ""
+		return nil
 	}
 	return f.Info
 }
 
-func (f *File) GetExtraProperties() map[string]interface{} {
+func (f *File) GetExtraProperties() map[string]any {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
-func (f *File) UnmarshalJSON(data []byte) error {
-	type unmarshaler File
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*f = File(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *f)
-	if err != nil {
-		return err
-	}
-	f.extraProperties = extraProperties
-	return nil
-}
-
 func (f *File) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(f); err == nil {
 		return value
 	}
@@ -67,9 +61,9 @@ type FileInfo string
 
 const (
 	// A regular file (e.g. foo.txt).
-	FileInfoRegular FileInfo = "REGULAR"
+	FileInfoRegular = "REGULAR"
 	// A directory (e.g. foo/).
-	FileInfoDirectory FileInfo = "DIRECTORY"
+	FileInfoDirectory = "DIRECTORY"
 )
 
 func NewFileInfoFromString(s string) (FileInfo, error) {

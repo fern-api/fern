@@ -31,6 +31,8 @@ export declare namespace SeedAuthEnvironmentVariablesClient {
         xAnotherHeader?: string;
         /** Override the X-API-Version header */
         xApiVersion?: "01-01-2000";
+        /** Additional query string parameters to include in the request. */
+        queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
         headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }

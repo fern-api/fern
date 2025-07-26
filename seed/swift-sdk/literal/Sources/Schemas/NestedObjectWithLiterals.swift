@@ -1,10 +1,15 @@
-public struct NestedObjectWithLiterals: Codable, Hashable {
+public struct NestedObjectWithLiterals: Codable, Hashable, Sendable {
     public let literal1: Any
     public let literal2: Any
     public let strProp: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(literal1: Any, literal2: Any, strProp: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        literal1: Any,
+        literal2: Any,
+        strProp: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.literal1 = literal1
         self.literal2 = literal2
         self.strProp = strProp
@@ -20,7 +25,7 @@ public struct NestedObjectWithLiterals: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.literal1, forKey: .literal1)
         try container.encode(self.literal2, forKey: .literal2)

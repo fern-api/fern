@@ -5,16 +5,21 @@ package com.seed.trace;
 
 import com.seed.trace.core.ClientOptions;
 import com.seed.trace.core.Environment;
+import java.util.Optional;
 import okhttp3.OkHttpClient;
 
-public final class SeedTraceClientBuilder {
-    private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
+public class SeedTraceClientBuilder {
+    private Optional<Integer> timeout = Optional.empty();
+
+    private Optional<Integer> maxRetries = Optional.empty();
 
     private String token = null;
 
     private String xRandomHeader = null;
 
     private Environment environment = Environment.PROD;
+
+    private OkHttpClient httpClient;
 
     /**
      * Sets token
@@ -46,7 +51,7 @@ public final class SeedTraceClientBuilder {
      * Sets the timeout (in seconds) for the client. Defaults to 60 seconds.
      */
     public SeedTraceClientBuilder timeout(int timeout) {
-        this.clientOptionsBuilder.timeout(timeout);
+        this.timeout = Optional.of(timeout);
         return this;
     }
 
@@ -54,7 +59,7 @@ public final class SeedTraceClientBuilder {
      * Sets the maximum number of retries for the client. Defaults to 2 retries.
      */
     public SeedTraceClientBuilder maxRetries(int maxRetries) {
-        this.clientOptionsBuilder.maxRetries(maxRetries);
+        this.maxRetries = Optional.of(maxRetries);
         return this;
     }
 
@@ -62,16 +67,148 @@ public final class SeedTraceClientBuilder {
      * Sets the underlying OkHttp client
      */
     public SeedTraceClientBuilder httpClient(OkHttpClient httpClient) {
-        this.clientOptionsBuilder.httpClient(httpClient);
+        this.httpClient = httpClient;
         return this;
     }
 
-    public SeedTraceClient build() {
-        this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + this.token);
-        if (xRandomHeader != null) {
-            this.clientOptionsBuilder.addHeader("X-Random-Header", this.xRandomHeader);
+    protected ClientOptions buildClientOptions() {
+        ClientOptions.Builder builder = ClientOptions.builder();
+        setEnvironment(builder);
+        setAuthentication(builder);
+        setCustomHeaders(builder);
+        setHttpClient(builder);
+        setTimeouts(builder);
+        setRetries(builder);
+        setAdditional(builder);
+        return builder.build();
+    }
+
+    /**
+     * Sets the environment configuration for the client.
+     * Override this method to modify URLs or add environment-specific logic.
+     *
+     * @param builder The ClientOptions.Builder to configure
+     */
+    protected void setEnvironment(ClientOptions.Builder builder) {
+        builder.environment(this.environment);
+    }
+
+    /**
+     * Override this method to customize authentication.
+     * This method is called during client options construction to set up authentication headers.
+     *
+     * @param builder The ClientOptions.Builder to configure
+     *
+     * Example:
+     * <pre>{@code
+     * @Override
+     * protected void setAuthentication(ClientOptions.Builder builder) {
+     *     super.setAuthentication(builder); // Keep existing auth
+     *     builder.addHeader("X-API-Key", this.apiKey);
+     * }
+     * }</pre>
+     */
+    protected void setAuthentication(ClientOptions.Builder builder) {
+        if (this.token != null) {
+            builder.addHeader("Authorization", "Bearer " + this.token);
         }
-        clientOptionsBuilder.environment(this.environment);
-        return new SeedTraceClient(clientOptionsBuilder.build());
+    }
+
+    /**
+     * Override this method to add or modify custom headers.
+     * This method is called during client options construction to set up custom headers defined in the API.
+     *
+     * @param builder The ClientOptions.Builder to configure
+     *
+     * Example:
+     * <pre>{@code
+     * @Override
+     * protected void setCustomHeaders(ClientOptions.Builder builder) {
+     *     super.setCustomHeaders(builder); // Keep existing headers
+     *     builder.addHeader("X-Trace-ID", generateTraceId());
+     * }
+     * }</pre>
+     */
+    protected void setCustomHeaders(ClientOptions.Builder builder) {
+        if (this.xRandomHeader != null) {
+            builder.addHeader("X-Random-Header", this.xRandomHeader);
+        }
+    }
+
+    /**
+     * Sets the request timeout configuration.
+     * Override this method to customize timeout behavior.
+     *
+     * @param builder The ClientOptions.Builder to configure
+     */
+    protected void setTimeouts(ClientOptions.Builder builder) {
+        if (this.timeout.isPresent()) {
+            builder.timeout(this.timeout.get());
+        }
+    }
+
+    /**
+     * Sets the retry configuration for failed requests.
+     * Override this method to implement custom retry strategies.
+     *
+     * @param builder The ClientOptions.Builder to configure
+     */
+    protected void setRetries(ClientOptions.Builder builder) {
+        if (this.maxRetries.isPresent()) {
+            builder.maxRetries(this.maxRetries.get());
+        }
+    }
+
+    /**
+     * Sets the OkHttp client configuration.
+     * Override this method to customize HTTP client behavior (interceptors, connection pools, etc).
+     *
+     * @param builder The ClientOptions.Builder to configure
+     */
+    protected void setHttpClient(ClientOptions.Builder builder) {
+        if (this.httpClient != null) {
+            builder.httpClient(this.httpClient);
+        }
+    }
+
+    /**
+     * Override this method to add any additional configuration to the client.
+     * This method is called at the end of the configuration chain, allowing you to add
+     * custom headers, modify settings, or perform any other client customization.
+     *
+     * @param builder The ClientOptions.Builder to configure
+     *
+     * Example:
+     * <pre>{@code
+     * @Override
+     * protected void setAdditional(ClientOptions.Builder builder) {
+     *     builder.addHeader("X-Request-ID", () -> UUID.randomUUID().toString());
+     *     builder.addHeader("X-Client-Version", "1.0.0");
+     * }
+     * }</pre>
+     */
+    protected void setAdditional(ClientOptions.Builder builder) {}
+
+    /**
+     * Override this method to add custom validation logic before the client is built.
+     * This method is called at the beginning of the build() method to ensure the configuration is valid.
+     * Throw an exception to prevent client creation if validation fails.
+     *
+     * Example:
+     * <pre>{@code
+     * @Override
+     * protected void validateConfiguration() {
+     *     super.validateConfiguration(); // Run parent validations
+     *     if (tenantId == null || tenantId.isEmpty()) {
+     *         throw new IllegalStateException("tenantId is required");
+     *     }
+     * }
+     * }</pre>
+     */
+    protected void validateConfiguration() {}
+
+    public SeedTraceClient build() {
+        validateConfiguration();
+        return new SeedTraceClient(buildClientOptions());
     }
 }

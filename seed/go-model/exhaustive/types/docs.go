@@ -66,7 +66,8 @@ type ObjectWithDocs struct {
 	// - &: HTML entities
 	String string `json:"string" url:"string"`
 
-	extraProperties map[string]interface{}
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
 func (o *ObjectWithDocs) GetString() string {
@@ -76,26 +77,19 @@ func (o *ObjectWithDocs) GetString() string {
 	return o.String
 }
 
-func (o *ObjectWithDocs) GetExtraProperties() map[string]interface{} {
+func (o *ObjectWithDocs) GetExtraProperties() map[string]any {
+	if o == nil {
+		return nil
+	}
 	return o.extraProperties
 }
 
-func (o *ObjectWithDocs) UnmarshalJSON(data []byte) error {
-	type unmarshaler ObjectWithDocs
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*o = ObjectWithDocs(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *o)
-	if err != nil {
-		return err
-	}
-	o.extraProperties = extraProperties
-	return nil
-}
-
 func (o *ObjectWithDocs) String() string {
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(o); err == nil {
 		return value
 	}

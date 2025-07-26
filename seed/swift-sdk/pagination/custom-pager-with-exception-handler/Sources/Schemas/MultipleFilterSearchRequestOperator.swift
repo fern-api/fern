@@ -1,4 +1,4 @@
-public enum MultipleFilterSearchRequestOperator: String, Codable, Hashable, Sendable, CaseIterable {
+public enum MultipleFilterSearchRequestOperator: String, Codable, Hashable, CaseIterable, Sendable {
     case and = "AND"
     case or = "OR"
 }

@@ -1,11 +1,17 @@
-public struct SendEnumInlinedRequest: Codable, Hashable {
+public struct SendEnumInlinedRequest: Codable, Hashable, Sendable {
     public let operand: Operand
     public let maybeOperand: Operand?
     public let operandOrColor: ColorOrOperand
     public let maybeOperandOrColor: ColorOrOperand?
     public let additionalProperties: [String: JSONValue]
 
-    public init(operand: Operand, maybeOperand: Operand? = nil, operandOrColor: ColorOrOperand, maybeOperandOrColor: ColorOrOperand? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        operand: Operand,
+        maybeOperand: Operand? = nil,
+        operandOrColor: ColorOrOperand,
+        maybeOperandOrColor: ColorOrOperand? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.operand = operand
         self.maybeOperand = maybeOperand
         self.operandOrColor = operandOrColor
@@ -23,7 +29,7 @@ public struct SendEnumInlinedRequest: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.operand, forKey: .operand)
         try container.encodeIfPresent(self.maybeOperand, forKey: .maybeOperand)

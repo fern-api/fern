@@ -1,8 +1,11 @@
-public struct Request: Codable, Hashable {
+public struct Request: Codable, Hashable, Sendable {
     public let union: MetadataUnion?
     public let additionalProperties: [String: JSONValue]
 
-    public init(union: MetadataUnion? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        union: MetadataUnion? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.union = union
         self.additionalProperties = additionalProperties
     }
@@ -14,7 +17,7 @@ public struct Request: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encodeIfPresent(self.union, forKey: .union)
     }

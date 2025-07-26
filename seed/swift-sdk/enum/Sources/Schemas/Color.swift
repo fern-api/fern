@@ -1,4 +1,4 @@
-public enum Color: String, Codable, Hashable, Sendable, CaseIterable {
+public enum Color: String, Codable, Hashable, CaseIterable, Sendable {
     case red
     case blue
 }

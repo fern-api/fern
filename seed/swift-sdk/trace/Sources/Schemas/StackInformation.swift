@@ -1,9 +1,13 @@
-public struct StackInformation: Codable, Hashable {
+public struct StackInformation: Codable, Hashable, Sendable {
     public let numStackFrames: Int
     public let topStackFrame: StackFrame?
     public let additionalProperties: [String: JSONValue]
 
-    public init(numStackFrames: Int, topStackFrame: StackFrame? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        numStackFrames: Int,
+        topStackFrame: StackFrame? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.numStackFrames = numStackFrames
         self.topStackFrame = topStackFrame
         self.additionalProperties = additionalProperties
@@ -17,7 +21,7 @@ public struct StackInformation: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.numStackFrames, forKey: .numStackFrames)
         try container.encodeIfPresent(self.topStackFrame, forKey: .topStackFrame)

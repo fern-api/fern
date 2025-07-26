@@ -13,7 +13,8 @@ type Event struct {
 	Id   fern.Id `json:"id" url:"id"`
 	Name string  `json:"name" url:"name"`
 
-	extraProperties map[string]interface{}
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
 func (e *Event) GetId() fern.Id {
@@ -30,26 +31,19 @@ func (e *Event) GetName() string {
 	return e.Name
 }
 
-func (e *Event) GetExtraProperties() map[string]interface{} {
+func (e *Event) GetExtraProperties() map[string]any {
+	if e == nil {
+		return nil
+	}
 	return e.extraProperties
 }
 
-func (e *Event) UnmarshalJSON(data []byte) error {
-	type unmarshaler Event
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*e = Event(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
-	if err != nil {
-		return err
-	}
-	e.extraProperties = extraProperties
-	return nil
-}
-
 func (e *Event) String() string {
+	if len(e.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}

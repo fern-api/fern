@@ -51,6 +51,7 @@
             },
             "statusCode": 200
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {

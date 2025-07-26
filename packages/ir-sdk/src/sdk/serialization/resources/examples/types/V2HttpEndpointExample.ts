@@ -13,6 +13,7 @@ export const V2HttpEndpointExample: core.serialization.ObjectSchema<
     serializers.V2HttpEndpointExample.Raw,
     FernIr.V2HttpEndpointExample
 > = core.serialization.objectWithoutOptionalProperties({
+    displayName: core.serialization.string().optional(),
     request: V2HttpEndpointRequest.optional(),
     response: V2HttpEndpointResponse.optional(),
     codeSamples: core.serialization.list(V2HttpEndpointCodeSample).optional(),
@@ -20,6 +21,7 @@ export const V2HttpEndpointExample: core.serialization.ObjectSchema<
 
 export declare namespace V2HttpEndpointExample {
     export interface Raw {
+        displayName?: string | null;
         request?: V2HttpEndpointRequest.Raw | null;
         response?: V2HttpEndpointResponse.Raw | null;
         codeSamples?: V2HttpEndpointCodeSample.Raw[] | null;

@@ -12,7 +12,8 @@ type Organization struct {
 	Name string   `json:"name" url:"name"`
 	Tags []string `json:"tags" url:"tags"`
 
-	extraProperties map[string]interface{}
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
 func (o *Organization) GetName() string {
@@ -29,26 +30,19 @@ func (o *Organization) GetTags() []string {
 	return o.Tags
 }
 
-func (o *Organization) GetExtraProperties() map[string]interface{} {
+func (o *Organization) GetExtraProperties() map[string]any {
+	if o == nil {
+		return nil
+	}
 	return o.extraProperties
 }
 
-func (o *Organization) UnmarshalJSON(data []byte) error {
-	type unmarshaler Organization
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*o = Organization(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *o)
-	if err != nil {
-		return err
-	}
-	o.extraProperties = extraProperties
-	return nil
-}
-
 func (o *Organization) String() string {
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(o); err == nil {
 		return value
 	}

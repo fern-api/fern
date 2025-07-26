@@ -13,7 +13,7 @@ export type SpecialEnum =
     | "Hello\\fWorld"
     | "Hello\\u0008World"
     | "Hello\\vWorld"
-    | "Hello\\0World"
+    | "Hello\\x00World"
     | "Hello\\u0007World"
     | "Hello\\u0001World"
     | "Hello\\u0002World"
@@ -21,7 +21,7 @@ export type SpecialEnum =
     | "Hello\\u007FWorld"
     | "Hello\\u009FWorld"
     | 'Line 1\\n"Quote"\\tTab\\\\Backslash\\r\\nLine 2\\0Null'
-    | "\\n\\r\\t\\0\\u0008\\f\\v\\u0007"
+    | "\\n\\r\\t\\x00\\u0008\\f\\v\\u0007"
     | "Hello \u4E16\u754C"
     | "caf\u00E9"
     | "\uD83D\uDE80"
@@ -46,7 +46,7 @@ export const SpecialEnum = {
     I: "Hello\\fWorld",
     J: "Hello\\u0008World",
     K: "Hello\\vWorld",
-    L: "Hello\\0World",
+    L: "Hello\\x00World",
     M: "Hello\\u0007World",
     N: "Hello\\u0001World",
     O: "Hello\\u0002World",
@@ -54,7 +54,7 @@ export const SpecialEnum = {
     Q: "Hello\\u007FWorld",
     R: "Hello\\u009FWorld",
     S: 'Line 1\\n"Quote"\\tTab\\\\Backslash\\r\\nLine 2\\0Null',
-    T: "\\n\\r\\t\\0\\u0008\\f\\v\\u0007",
+    T: "\\n\\r\\t\\x00\\u0008\\f\\v\\u0007",
     U: "Hello \u4E16\u754C",
     V: "caf\u00E9",
     W: "\uD83D\uDE80",

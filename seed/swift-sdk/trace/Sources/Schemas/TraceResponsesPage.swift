@@ -1,9 +1,13 @@
-public struct TraceResponsesPage: Codable, Hashable {
+public struct TraceResponsesPage: Codable, Hashable, Sendable {
     public let offset: Int?
     public let traceResponses: [TraceResponse]
     public let additionalProperties: [String: JSONValue]
 
-    public init(offset: Int? = nil, traceResponses: [TraceResponse], additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        offset: Int? = nil,
+        traceResponses: [TraceResponse],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.offset = offset
         self.traceResponses = traceResponses
         self.additionalProperties = additionalProperties
@@ -17,7 +21,7 @@ public struct TraceResponsesPage: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encodeIfPresent(self.offset, forKey: .offset)
         try container.encode(self.traceResponses, forKey: .traceResponses)

@@ -29,6 +29,7 @@ import { GoProject } from "../project/GoProject";
 import { GoTypeMapper } from "./GoTypeMapper";
 import { GoValueFormatter } from "./GoValueFormatter";
 import { GoZeroValueMapper } from "./GoZeroValueMapper";
+import { GoFieldMapper } from "./GoFieldMapper";
 
 export interface FileLocation {
     importPath: string;
@@ -40,6 +41,7 @@ export abstract class AbstractGoGeneratorContext<
 > extends AbstractGeneratorContext {
     private rootImportPath: string;
     public readonly project: GoProject;
+    public readonly goFieldMapper: GoFieldMapper;
     public readonly goTypeMapper: GoTypeMapper;
     public readonly goValueFormatter: GoValueFormatter;
     public readonly goZeroValueMapper: GoZeroValueMapper;
@@ -52,6 +54,7 @@ export abstract class AbstractGoGeneratorContext<
     ) {
         super(config, generatorNotificationService);
         this.project = new GoProject({ context: this });
+        this.goFieldMapper = new GoFieldMapper(this);
         this.goTypeMapper = new GoTypeMapper(this);
         this.goValueFormatter = new GoValueFormatter(this);
         this.goZeroValueMapper = new GoZeroValueMapper(this);
@@ -98,7 +101,7 @@ export abstract class AbstractGoGeneratorContext<
     }
 
     public getReceiverName(name: Name): string {
-        return name.camelCase.unsafeName.charAt(0).toUpperCase();
+        return name.camelCase.unsafeName.charAt(0).toLowerCase();
     }
 
     public getRootImportPath(): string {
@@ -128,8 +131,58 @@ export abstract class AbstractGoGeneratorContext<
         return name.pascalCase.unsafeName;
     }
 
+    public getLiteralFieldName(name: Name): string {
+        return name.camelCase.safeName;
+    }
+
     public getParameterName(name: Name): string {
         return name.camelCase.safeName;
+    }
+
+    public callFmtErrorf(format: string, args: go.AstNode[]): go.FuncInvocation {
+        return go.invokeFunc({
+            func: go.typeReference({ name: "Errorf", importPath: "fmt" }),
+            arguments_: [go.TypeInstantiation.string(format), ...args],
+            multiline: false
+        });
+    }
+
+    public callFmtSprintf(format: string, args: go.AstNode[]): go.FuncInvocation {
+        return go.invokeFunc({
+            func: go.typeReference({ name: "Sprintf", importPath: "fmt" }),
+            arguments_: [go.TypeInstantiation.string(format), ...args],
+            multiline: false
+        });
+    }
+
+    public callInternalStringifyJSON(arg: go.TypeInstantiation): go.FuncInvocation {
+        return this.callInternalFunc({
+            name: "StringifyJSON",
+            arguments_: [arg],
+            multiline: false
+        });
+    }
+
+    public callInternalFunc({
+        name,
+        arguments_,
+        generics,
+        multiline = true
+    }: {
+        name: string;
+        arguments_: go.AstNode[];
+        generics?: go.Type[];
+        multiline?: boolean;
+    }): go.FuncInvocation {
+        return go.invokeFunc({
+            func: go.typeReference({
+                name,
+                importPath: this.getInternalImportPath(),
+                generics
+            }),
+            arguments_,
+            multiline
+        });
     }
 
     public maybeUnwrapIterable(typeReference: TypeReference): TypeReference | undefined {
@@ -269,6 +322,13 @@ export abstract class AbstractGoGeneratorContext<
         return go.typeReference({
             name: "Context",
             importPath: "context"
+        });
+    }
+
+    public getJsonRawMessageTypeReference(): go.TypeReference {
+        return go.typeReference({
+            name: "RawMessage",
+            importPath: "encoding/json"
         });
     }
 
@@ -523,4 +583,6 @@ export abstract class AbstractGoGeneratorContext<
             directory: RelativeFilePath.of(parts.join("/"))
         };
     }
+
+    public abstract getInternalAsIsFiles(): string[];
 }

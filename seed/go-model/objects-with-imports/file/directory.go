@@ -14,7 +14,8 @@ type Directory struct {
 	Files       []*fern.File `json:"files,omitempty" url:"files,omitempty"`
 	Directories []*Directory `json:"directories,omitempty" url:"directories,omitempty"`
 
-	extraProperties map[string]interface{}
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
 func (d *Directory) GetName() string {
@@ -38,26 +39,19 @@ func (d *Directory) GetDirectories() []*Directory {
 	return d.Directories
 }
 
-func (d *Directory) GetExtraProperties() map[string]interface{} {
+func (d *Directory) GetExtraProperties() map[string]any {
+	if d == nil {
+		return nil
+	}
 	return d.extraProperties
 }
 
-func (d *Directory) UnmarshalJSON(data []byte) error {
-	type unmarshaler Directory
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*d = Directory(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *d)
-	if err != nil {
-		return err
-	}
-	d.extraProperties = extraProperties
-	return nil
-}
-
 func (d *Directory) String() string {
+	if len(d.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(d); err == nil {
 		return value
 	}

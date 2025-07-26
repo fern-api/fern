@@ -12671,6 +12671,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "responses.AccountSummaryResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -12791,6 +12806,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "responses.AccountHistoricalDataResp"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -12892,6 +12922,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "responses.GetAccountsInfoResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -13005,6 +13050,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "responses.GetAccountMarginConfigsResp"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -13149,6 +13209,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "responses.UpdateAccountMarginConfigResp"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -13245,6 +13320,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "responses.AccountProfileResp"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -13453,6 +13543,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "responses.AccountProfileResp"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -13637,6 +13742,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "responses.AccountProfileResp"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -13809,6 +13929,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "responses.AccountProfileResp"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -13983,6 +14118,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "responses.AccountSettingsResp"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -14088,6 +14238,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "responses.AccountProfileResp"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -14271,6 +14436,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "responses.GetSubAccountsResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -14372,6 +14552,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Account_get-balance_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -14544,6 +14739,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Account_listFills_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -14746,6 +14956,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Account_get-funding_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -14862,6 +15087,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Account_get-positions_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -15035,6 +15275,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Account_tradebusts_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -15184,6 +15439,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Account_transactions_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -15390,6 +15660,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Algos_get-open-algo-orders_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -15514,6 +15799,21 @@
             },
             "statusCode": 201,
             "description": "Created"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "responses.AlgoOrderResp"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -15755,6 +16055,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Algos_get-algo-orders-history_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -15891,6 +16206,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "responses.AlgoOrderResp"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -16013,6 +16343,21 @@
             },
             "statusCode": 204,
             "description": "No Content"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Algos_cancel-algo-order_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No Content"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -16157,6 +16502,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "responses.AuthResp"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -16298,6 +16658,21 @@
             "statusCode": 200,
             "description": "An empty response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Authentication_onboarding_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "An empty response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -16422,6 +16797,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "responses.BBOResp"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -16581,6 +16971,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Markets_get-funding-data_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -16694,6 +17099,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Markets_get-markets_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -16946,6 +17366,7 @@
             }
           ],
           "headers": [],
+          "responsesV2": {},
           "errorsV2": [
             {
               "type": {
@@ -17056,6 +17477,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Markets_get-markets-summary_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -17229,6 +17665,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "responses.AskBidArray"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -17343,6 +17794,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "responses.InsuranceAccountResp"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -17449,6 +17915,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Liquidations_get-liquidations_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -17561,6 +18042,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Orders_get-open-orders_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -17720,6 +18216,21 @@
             },
             "statusCode": 201,
             "description": "Created"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "responses.OrderResp"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -17892,6 +18403,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Orders_cancelAll_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -18082,6 +18608,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Orders_get-orders_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -18250,6 +18791,21 @@
             },
             "statusCode": 201,
             "description": "Created"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "responses.BatchResponse"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -18449,6 +19005,21 @@
             "statusCode": 200,
             "description": "List of cancellation results"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "responses.CancelOrderBatchResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of cancellation results"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -18566,6 +19137,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "responses.OrderResp"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -18723,6 +19309,21 @@
             "statusCode": 204,
             "description": "No Content"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Orders_cancelByClientId_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No Content"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -18817,6 +19418,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "responses.OrderResp"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -18989,6 +19605,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "responses.OrderResp"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -19169,6 +19800,21 @@
             },
             "statusCode": 204,
             "description": "No Content"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Orders_cancel_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No Content"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -19379,6 +20025,21 @@
             "statusCode": 200,
             "description": "QR code image"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Referrals_get-referral-qr-code_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "QR code image"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -19438,6 +20099,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Referrals_get-referrals-summary_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -19555,6 +20231,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "responses.SystemConfigResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -19678,6 +20369,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "responses.SystemStateResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -19741,6 +20447,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "responses.SystemTimeResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -19880,6 +20601,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Transfers_get-transfers_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -20137,6 +20873,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Vaults_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -20315,6 +21066,21 @@
             "statusCode": 201,
             "description": "Created"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "responses.VaultResp"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -20453,6 +21219,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Vaults_getAccountSummary_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -20573,6 +21354,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Vaults_getBalance_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -20664,6 +21460,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "responses.VaultsConfigResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -20793,6 +21604,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Vaults_getHistoricalData_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -20918,6 +21744,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Vaults_getPositions_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -21065,6 +21906,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Vaults_getSummary_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -21207,6 +22063,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Vaults_getTransfers_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -22773,6 +23644,21 @@
           },
           "statusCode": 200,
           "description": "OK"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "Trades_Response_200"
+                }
+              },
+              "statusCode": 200,
+              "description": "OK"
+            }
+          ]
         },
         "errorsV2": [
           {

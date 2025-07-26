@@ -3345,6 +3345,21 @@
             "statusCode": 200,
             "description": "A paginated result set"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "search_vals_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A paginated result set"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -3495,6 +3510,21 @@
             "statusCode": 200,
             "description": "Default Response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "User"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Default Response"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -3611,6 +3641,21 @@
             },
             "statusCode": 200,
             "description": "A Val"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "alias_val_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A Val"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -3730,6 +3775,21 @@
             "statusCode": 200,
             "description": "Your user information, with tier and email included"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "me_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Your user information, with tier and email included"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -3837,6 +3897,21 @@
             },
             "statusCode": 200,
             "description": "A paginated result set"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "me_likes_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A paginated result set"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -4019,6 +4094,21 @@
             "statusCode": 200,
             "description": "A paginated result set"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "me_comments_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A paginated result set"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -4191,6 +4281,21 @@
             "statusCode": 200,
             "description": "A paginated result set"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "me_references_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A paginated result set"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -4328,6 +4433,24 @@
             "statusCode": 200,
             "description": "List of blobs that you’ve stored"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "V1BlobGetResponsesContentApplicationJsonSchemaItems"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of blobs that you’ve stored"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -4416,6 +4539,17 @@
             },
             "statusCode": 200,
             "description": "Binary contents of the returned file"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "fileDownload"
+                },
+                "statusCode": 200,
+                "description": "Binary contents of the returned file"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -4513,6 +4647,21 @@
             "statusCode": 201,
             "description": "Successfully stored as blob"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "blobs_store_Response_201"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successfully stored as blob"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -4600,6 +4749,21 @@
             },
             "statusCode": 204,
             "description": "Blob successfully deleted"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "blobs_delete_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Blob successfully deleted"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -4692,6 +4856,21 @@
             },
             "statusCode": 200,
             "description": "Default Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "User"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Default Response"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -4817,6 +4996,21 @@
             },
             "statusCode": 200,
             "description": "A paginated result set"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "users_vals_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A paginated result set"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -4970,22 +5164,46 @@
             "statusCode": 200,
             "description": "Default Response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ResultSet"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Default Response"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
-              "name": "example1",
               "description": "",
               "path": "/v1/sqlite/execute",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "statement": "SELECT 1;"
+                "statement": {
+                  "sql": "SELECT * FROM table WHERE column = ?;",
+                  "args": [
+                    1
+                  ]
+                }
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "statement": "SELECT 1;"
+                  "statement": {
+                    "sql": "SELECT * FROM table WHERE column = ?;",
+                    "args": [
+                      1
+                    ]
+                  }
                 }
               },
               "responseStatusCode": 200,
@@ -5024,29 +5242,18 @@
               }
             },
             {
-              "name": "example2",
               "description": "",
               "path": "/v1/sqlite/execute",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "statement": {
-                  "sql": "SELECT * FROM table WHERE column = ?;",
-                  "args": [
-                    1
-                  ]
-                }
+                "statement": "SELECT 1;"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "statement": {
-                    "sql": "SELECT * FROM table WHERE column = ?;",
-                    "args": [
-                      1
-                    ]
-                  }
+                  "statement": "SELECT 1;"
                 }
               },
               "responseStatusCode": 200,
@@ -5164,6 +5371,24 @@
             },
             "statusCode": 200,
             "description": "Array of results from the statements executed"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "ResultSet"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Array of results from the statements executed"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -5322,6 +5547,24 @@
             "statusCode": 200,
             "description": "Default Response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "nullable",
+                    "itemType": {
+                      "type": "id",
+                      "value": "V1EvalPostResponsesContentApplicationJsonSchema"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Default Response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -5339,30 +5582,6 @@
           ],
           "examples": [
             {
-              "name": "example1",
-              "description": "",
-              "path": "/v1/eval",
-              "pathParameters": {},
-              "queryParameters": {},
-              "headers": {},
-              "requestBody": {
-                "code": "export default 1"
-              },
-              "requestBodyV3": {
-                "type": "json",
-                "value": {
-                  "code": "export default 1"
-                }
-              },
-              "responseStatusCode": 200,
-              "responseBody": {},
-              "responseBodyV3": {
-                "type": "json",
-                "value": {}
-              }
-            },
-            {
-              "name": "example2",
               "description": "",
               "path": "/v1/eval",
               "pathParameters": {},
@@ -5381,6 +5600,28 @@
                   "args": [
                     1
                   ]
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "description": "",
+              "path": "/v1/eval",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "code": "export default 1"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "code": "export default 1"
                 }
               },
               "responseStatusCode": 200,
@@ -5470,6 +5711,24 @@
             },
             "statusCode": 200,
             "description": "Default Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "nullable",
+                    "itemType": {
+                      "type": "id",
+                      "value": "V1EvalCodeGetResponsesContentApplicationJsonSchema"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Default Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -5582,6 +5841,21 @@
             "statusCode": 200,
             "description": "Default Response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "vals_runGet_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Default Response"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -5689,6 +5963,21 @@
             },
             "statusCode": 200,
             "description": "Default Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "vals_runPost_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Default Response"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -5840,6 +6129,21 @@
             },
             "statusCode": 200,
             "description": "Default Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ExtendedVal"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Default Response"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -5999,6 +6303,21 @@
             "statusCode": 200,
             "description": "Default Response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "vals_put_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Default Response"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -6089,6 +6408,21 @@
             },
             "statusCode": 200,
             "description": "Default Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ExtendedVal"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Default Response"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -6280,10 +6614,48 @@
             "statusCode": 204,
             "description": "Val successfully updated"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "vals_update_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Val successfully updated"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
-              "name": "example1",
+              "description": "",
+              "path": "/v1/vals/val_id",
+              "pathParameters": {
+                "val_id": "val_id"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "type": "http"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "http"
+                }
+              },
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
               "description": "",
               "path": "/v1/vals/val_id",
               "pathParameters": {
@@ -6300,31 +6672,6 @@
                 "value": {
                   "name": "myVal",
                   "readme": "# Updated readme"
-                }
-              },
-              "responseStatusCode": 204,
-              "responseBody": {},
-              "responseBodyV3": {
-                "type": "json",
-                "value": {}
-              }
-            },
-            {
-              "name": "example2",
-              "description": "",
-              "path": "/v1/vals/val_id",
-              "pathParameters": {
-                "val_id": "val_id"
-              },
-              "queryParameters": {},
-              "headers": {},
-              "requestBody": {
-                "type": "http"
-              },
-              "requestBodyV3": {
-                "type": "json",
-                "value": {
-                  "type": "http"
                 }
               },
               "responseStatusCode": 204,
@@ -6398,6 +6745,21 @@
             },
             "statusCode": 204,
             "description": "Val successfully deleted"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "vals_delete_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Val successfully deleted"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -6519,6 +6881,21 @@
             },
             "statusCode": 200,
             "description": "A paginated result set"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "vals_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A paginated result set"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -6706,6 +7083,21 @@
             },
             "statusCode": 201,
             "description": "Default Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ExtendedVal"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Default Response"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -6895,6 +7287,21 @@
             "statusCode": 200,
             "description": "Default Response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ExtendedVal"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Default Response"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -7044,6 +7451,21 @@
             "statusCode": 204,
             "description": "Version successfully deleted"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "vals_deleteVersion_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Version successfully deleted"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -7158,6 +7580,21 @@
             },
             "statusCode": 200,
             "description": "The evaluation_id was successfully searched for and the evaluation was either already done or now has been cancelled"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "vals_cancel_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "The evaluation_id was successfully searched for and the evaluation was either already done or now has been cancelled"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -7372,6 +7809,21 @@
             },
             "statusCode": 200,
             "description": "Successfully sent email"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "emails_send_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successfully sent email"
+              }
+            ]
           },
           "errorsV2": [
             {

@@ -26,6 +26,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -64,6 +65,7 @@
               "type": "fileDownload"
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {

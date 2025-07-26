@@ -1,4 +1,4 @@
-import { GeneratorConfig, GeneratorNotificationService } from "@fern-api/base-generator";
+import { File, GeneratorConfig, GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractGoGeneratorCli } from "@fern-api/go-base";
 
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
@@ -6,6 +6,7 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { generateModels } from "./generateModels";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 
 export class ModelGeneratorCLI extends AbstractGoGeneratorCli<ModelCustomConfigSchema, ModelGeneratorContext> {
     protected constructContext({
@@ -39,7 +40,17 @@ export class ModelGeneratorCLI extends AbstractGoGeneratorCli<ModelCustomConfigS
     }
 
     protected async generate(context: ModelGeneratorContext): Promise<void> {
+        this.generateDocs(context);
         generateModels(context);
-        await context.project.persist();
+        await context.project.persist({ tidy: true });
+    }
+
+    private generateDocs(context: ModelGeneratorContext): void {
+        // TODO: This is a temporary, in-development solution for the fernapi/fern-go-model generator.
+        // Once all of the model generator is built out, this can safely be removed. This has no impact
+        // on any user-facing functionality.
+        context.project.addRawFiles(
+            new File("doc.go", RelativeFilePath.of("."), `package ${context.getRootPackageName()}`)
+        );
     }
 }

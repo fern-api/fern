@@ -1,10 +1,15 @@
-public struct RecordedResponseNotification: Codable, Hashable {
+public struct RecordedResponseNotification: Codable, Hashable, Sendable {
     public let submissionId: SubmissionId
     public let traceResponsesSize: Int
     public let testCaseId: String?
     public let additionalProperties: [String: JSONValue]
 
-    public init(submissionId: SubmissionId, traceResponsesSize: Int, testCaseId: String? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        submissionId: SubmissionId,
+        traceResponsesSize: Int,
+        testCaseId: String? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.submissionId = submissionId
         self.traceResponsesSize = traceResponsesSize
         self.testCaseId = testCaseId
@@ -20,7 +25,7 @@ public struct RecordedResponseNotification: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.submissionId, forKey: .submissionId)
         try container.encode(self.traceResponsesSize, forKey: .traceResponsesSize)

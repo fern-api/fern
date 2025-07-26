@@ -1,7 +1,7 @@
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { DefaultBaseGoCustomConfigSchema } from "@fern-api/go-ast";
-import { AbstractGoGeneratorCli } from "@fern-api/go-base";
+import { AbstractGoGeneratorCli, ModuleConfigWriter } from "@fern-api/go-base";
 import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -11,7 +11,6 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { ClientGenerator } from "./client/ClientGenerator";
-import { ModuleConfigWriter } from "./module/ModuleConfigWriter";
 import { RawClientGenerator } from "./raw-client/RawClientGenerator";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
 import { convertIr } from "./utils/convertIr";
@@ -55,7 +54,6 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
-        await this.writeGoMod(context);
         this.generateClients(context);
         this.generateRawClients(context);
 
@@ -72,16 +70,6 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
         }
 
         await context.project.persist();
-    }
-
-    private async writeGoMod(context: SdkGeneratorContext): Promise<void> {
-        const moduleConfig = context.getModuleConfig({ outputMode: context.config.output.mode });
-        if (moduleConfig == null) {
-            return;
-        }
-        // We write the go.mod file to disk upfront so that 'go fmt' can be run on the project.
-        const moduleConfigWriter = new ModuleConfigWriter({ context, moduleConfig });
-        await context.project.writeRawFile(moduleConfigWriter.generate());
     }
 
     private generateRawClients(context: SdkGeneratorContext) {

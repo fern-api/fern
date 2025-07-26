@@ -1,11 +1,17 @@
-public struct ExecutionSessionResponse: Codable, Hashable {
+public struct ExecutionSessionResponse: Codable, Hashable, Sendable {
     public let sessionId: String
     public let executionSessionUrl: String?
     public let language: Language
     public let status: ExecutionSessionStatus
     public let additionalProperties: [String: JSONValue]
 
-    public init(sessionId: String, executionSessionUrl: String? = nil, language: Language, status: ExecutionSessionStatus, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        sessionId: String,
+        executionSessionUrl: String? = nil,
+        language: Language,
+        status: ExecutionSessionStatus,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.sessionId = sessionId
         self.executionSessionUrl = executionSessionUrl
         self.language = language
@@ -23,7 +29,7 @@ public struct ExecutionSessionResponse: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.sessionId, forKey: .sessionId)
         try container.encodeIfPresent(self.executionSessionUrl, forKey: .executionSessionUrl)

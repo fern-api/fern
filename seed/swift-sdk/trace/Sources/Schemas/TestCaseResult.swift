@@ -1,10 +1,15 @@
-public struct TestCaseResult: Codable, Hashable {
+public struct TestCaseResult: Codable, Hashable, Sendable {
     public let expectedResult: VariableValue
     public let actualResult: ActualResult
     public let passed: Bool
     public let additionalProperties: [String: JSONValue]
 
-    public init(expectedResult: VariableValue, actualResult: ActualResult, passed: Bool, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        expectedResult: VariableValue,
+        actualResult: ActualResult,
+        passed: Bool,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.expectedResult = expectedResult
         self.actualResult = actualResult
         self.passed = passed
@@ -20,7 +25,7 @@ public struct TestCaseResult: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.expectedResult, forKey: .expectedResult)
         try container.encode(self.actualResult, forKey: .actualResult)

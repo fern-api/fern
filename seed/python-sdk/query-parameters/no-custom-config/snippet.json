@@ -1,0 +1,18 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/user",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getUsername"
+            },
+            "snippet": {
+                "sync_client": "import datetime\nimport uuid\n\nfrom seed import SeedQueryParameters\nfrom seed.user import NestedUser, User\n\nclient = SeedQueryParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.user.get_username(\n    limit=1,\n    id=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n    date=datetime.date.fromisoformat(\n        \"2023-01-15\",\n    ),\n    deadline=datetime.datetime.fromisoformat(\n        \"2024-01-15 09:30:00+00:00\",\n    ),\n    bytes=\"SGVsbG8gd29ybGQh\",\n    user=User(\n        name=\"name\",\n        tags=[\"tags\", \"tags\"],\n    ),\n    user_list=[\n        User(\n            name=\"name\",\n            tags=[\"tags\", \"tags\"],\n        ),\n        User(\n            name=\"name\",\n            tags=[\"tags\", \"tags\"],\n        ),\n    ],\n    optional_deadline=datetime.datetime.fromisoformat(\n        \"2024-01-15 09:30:00+00:00\",\n    ),\n    key_value={\"keyValue\": \"keyValue\"},\n    optional_string=\"optionalString\",\n    nested_user=NestedUser(\n        name=\"name\",\n        user=User(\n            name=\"name\",\n            tags=[\"tags\", \"tags\"],\n        ),\n    ),\n    optional_user=User(\n        name=\"name\",\n        tags=[\"tags\", \"tags\"],\n    ),\n    exclude_user=User(\n        name=\"name\",\n        tags=[\"tags\", \"tags\"],\n    ),\n    filter=\"filter\",\n)\n",
+                "async_client": "import asyncio\nimport datetime\nimport uuid\n\nfrom seed import AsyncSeedQueryParameters\nfrom seed.user import NestedUser, User\n\nclient = AsyncSeedQueryParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.user.get_username(\n        limit=1,\n        id=uuid.UUID(\n            \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        ),\n        date=datetime.date.fromisoformat(\n            \"2023-01-15\",\n        ),\n        deadline=datetime.datetime.fromisoformat(\n            \"2024-01-15 09:30:00+00:00\",\n        ),\n        bytes=\"SGVsbG8gd29ybGQh\",\n        user=User(\n            name=\"name\",\n            tags=[\"tags\", \"tags\"],\n        ),\n        user_list=[\n            User(\n                name=\"name\",\n                tags=[\"tags\", \"tags\"],\n            ),\n            User(\n                name=\"name\",\n                tags=[\"tags\", \"tags\"],\n            ),\n        ],\n        optional_deadline=datetime.datetime.fromisoformat(\n            \"2024-01-15 09:30:00+00:00\",\n        ),\n        key_value={\"keyValue\": \"keyValue\"},\n        optional_string=\"optionalString\",\n        nested_user=NestedUser(\n            name=\"name\",\n            user=User(\n                name=\"name\",\n                tags=[\"tags\", \"tags\"],\n            ),\n        ),\n        optional_user=User(\n            name=\"name\",\n            tags=[\"tags\", \"tags\"],\n        ),\n        exclude_user=User(\n            name=\"name\",\n            tags=[\"tags\", \"tags\"],\n        ),\n        filter=\"filter\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

@@ -117,5 +117,14 @@ jobs:
         with:
           schema-path: "fern-versions-yml.schema.json"
           file-path: "generators/ruby/model/versions.yml"
-
+      - name: Validate rust-sdk versions.yml
+        uses: ./.github/actions/validate-yml
+        with:
+          schema-path: "fern-versions-yml.schema.json"
+          file-path: "generators/rust/sdk/versions.yml"
+      - name: Validate rust-model versions.yml
+        uses: ./.github/actions/validate-yml
+        with:
+          schema-path: "fern-versions-yml.schema.json"
+          file-path: "generators/rust/model/versions.yml"
 

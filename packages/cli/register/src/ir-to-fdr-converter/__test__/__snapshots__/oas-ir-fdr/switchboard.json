@@ -2009,6 +2009,21 @@
             "statusCode": 204,
             "description": "No Content"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Auth_andRedirect_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No Content"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -2092,6 +2107,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ListExtensionV1EnvelopeDefaultMetaWrapper"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -2218,6 +2248,21 @@
             },
             "statusCode": 201,
             "description": "Created"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ExtensionV1EnvelopeDefaultMetaWrapper"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -2350,6 +2395,21 @@
             "statusCode": 204,
             "description": "No Content"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Extensions_delete_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No Content"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -2431,6 +2491,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ExtensionV1EnvelopeDefaultMetaWrapper"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -2622,6 +2697,21 @@
             "statusCode": 200,
             "description": "OK"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ListProfileV1EnvelopeDefaultMetaWrapper"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -2757,6 +2847,21 @@
             },
             "statusCode": 201,
             "description": "Created"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ProfileV1EnvelopeDefaultMetaWrapper"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -2911,6 +3016,21 @@
             "statusCode": 204,
             "description": "No Content"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Profiles_delete_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No Content"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -2995,6 +3115,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ProfileV1EnvelopeDefaultMetaWrapper"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -3217,6 +3352,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SessionsWithPaginationEnvelopeDefaultMetaWrapper"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -3450,6 +3600,21 @@
             "statusCode": 201,
             "description": "Created"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SessionWithConnectionInfoEnvelopeDefaultMetaWrapper"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -3618,6 +3783,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SessionWithConnectionInfoEnvelopeDefaultMetaWrapper"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -3824,6 +4004,21 @@
             "statusCode": 204,
             "description": "No Content"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Sessions_terminate_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No Content"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -3907,6 +4102,24 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "stream",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Sessions_events_Response_200"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -4092,6 +4305,21 @@
             "statusCode": 201,
             "description": "Created"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "WindowEnvelopeDefaultMetaWrapper"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -4253,6 +4481,21 @@
             },
             "statusCode": 201,
             "description": "Created"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ModelResponseExternalSessionAiResponseMetadataWrapper"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -4423,6 +4666,21 @@
             },
             "statusCode": 201,
             "description": "Created"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ScrapeModelResponseExternalSessionAiResponseMetadataWrapper"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -4611,6 +4869,21 @@
             },
             "statusCode": 201,
             "description": "Created"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ModelResponseExternalSessionAiResponseMetadataWrapper"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [

@@ -14,7 +14,8 @@ type Node struct {
 	Label    *string           `json:"label,omitempty" url:"label,omitempty"`
 	Metadata *commons.Metadata `json:"metadata,omitempty" url:"metadata,omitempty"`
 
-	extraProperties map[string]interface{}
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
 func (n *Node) GetId() string {
@@ -38,26 +39,19 @@ func (n *Node) GetMetadata() *commons.Metadata {
 	return n.Metadata
 }
 
-func (n *Node) GetExtraProperties() map[string]interface{} {
+func (n *Node) GetExtraProperties() map[string]any {
+	if n == nil {
+		return nil
+	}
 	return n.extraProperties
 }
 
-func (n *Node) UnmarshalJSON(data []byte) error {
-	type unmarshaler Node
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*n = Node(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *n)
-	if err != nil {
-		return err
-	}
-	n.extraProperties = extraProperties
-	return nil
-}
-
 func (n *Node) String() string {
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(n); err == nil {
 		return value
 	}
@@ -67,7 +61,8 @@ func (n *Node) String() string {
 type Tree struct {
 	Nodes []*Node `json:"nodes,omitempty" url:"nodes,omitempty"`
 
-	extraProperties map[string]interface{}
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
 func (t *Tree) GetNodes() []*Node {
@@ -77,26 +72,19 @@ func (t *Tree) GetNodes() []*Node {
 	return t.Nodes
 }
 
-func (t *Tree) GetExtraProperties() map[string]interface{} {
+func (t *Tree) GetExtraProperties() map[string]any {
+	if t == nil {
+		return nil
+	}
 	return t.extraProperties
 }
 
-func (t *Tree) UnmarshalJSON(data []byte) error {
-	type unmarshaler Tree
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*t = Tree(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *t)
-	if err != nil {
-		return err
-	}
-	t.extraProperties = extraProperties
-	return nil
-}
-
 func (t *Tree) String() string {
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(t); err == nil {
 		return value
 	}

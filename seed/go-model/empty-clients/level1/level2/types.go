@@ -8,15 +8,57 @@ import (
 	internal "github.com/empty-clients/fern/internal"
 )
 
-type Address struct {
-	Line1   string  `json:"line1" url:"line1"`
-	Line2   *string `json:"line2,omitempty" url:"line2,omitempty"`
-	City    string  `json:"city" url:"city"`
-	State   string  `json:"state" url:"state"`
-	Zip     string  `json:"zip" url:"zip"`
-	country string
+type Person struct {
+	Name    string   `json:"name" url:"name"`
+	Address *Address `json:"address" url:"address"`
 
-	extraProperties map[string]interface{}
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (p *Person) GetName() string {
+	if p == nil {
+		return ""
+	}
+	return p.Name
+}
+
+func (p *Person) GetAddress() *Address {
+	if p == nil {
+		return nil
+	}
+	return p.Address
+}
+
+func (p *Person) GetExtraProperties() map[string]any {
+	if p == nil {
+		return nil
+	}
+	return p.extraProperties
+}
+
+func (p *Person) String() string {
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
+}
+
+type Address struct {
+	Line1 string  `json:"line1" url:"line1"`
+	Line2 *string `json:"line2,omitempty" url:"line2,omitempty"`
+	City  string  `json:"city" url:"city"`
+	State string  `json:"state" url:"state"`
+	Zip   string  `json:"zip" url:"zip"`
+
+	country         string
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
 func (a *Address) GetLine1() string {
@@ -54,100 +96,28 @@ func (a *Address) GetZip() string {
 	return a.Zip
 }
 
-func (a *Address) Country() string {
+func (a *Address) GetCountry() string {
+	if a == nil {
+		return ""
+	}
 	return a.country
 }
 
-func (a *Address) GetExtraProperties() map[string]interface{} {
+func (a *Address) GetExtraProperties() map[string]any {
+	if a == nil {
+		return nil
+	}
 	return a.extraProperties
 }
 
-func (a *Address) UnmarshalJSON(data []byte) error {
-	type embed Address
-	var unmarshaler = struct {
-		embed
-		Country string `json:"country"`
-	}{
-		embed: embed(*a),
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	*a = Address(unmarshaler.embed)
-	if unmarshaler.Country != "USA" {
-		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", a, "USA", unmarshaler.Country)
-	}
-	a.country = unmarshaler.Country
-	extraProperties, err := internal.ExtractExtraProperties(data, *a, "country")
-	if err != nil {
-		return err
-	}
-	a.extraProperties = extraProperties
-	return nil
-}
-
-func (a *Address) MarshalJSON() ([]byte, error) {
-	type embed Address
-	var marshaler = struct {
-		embed
-		Country string `json:"country"`
-	}{
-		embed:   embed(*a),
-		Country: "USA",
-	}
-	return json.Marshal(marshaler)
-}
-
 func (a *Address) String() string {
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(a); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", a)
-}
-
-type Person struct {
-	Name    string   `json:"name" url:"name"`
-	Address *Address `json:"address" url:"address"`
-
-	extraProperties map[string]interface{}
-}
-
-func (p *Person) GetName() string {
-	if p == nil {
-		return ""
-	}
-	return p.Name
-}
-
-func (p *Person) GetAddress() *Address {
-	if p == nil {
-		return nil
-	}
-	return p.Address
-}
-
-func (p *Person) GetExtraProperties() map[string]interface{} {
-	return p.extraProperties
-}
-
-func (p *Person) UnmarshalJSON(data []byte) error {
-	type unmarshaler Person
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*p = Person(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *p)
-	if err != nil {
-		return err
-	}
-	p.extraProperties = extraProperties
-	return nil
-}
-
-func (p *Person) String() string {
-	if value, err := internal.StringifyJSON(p); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", p)
 }

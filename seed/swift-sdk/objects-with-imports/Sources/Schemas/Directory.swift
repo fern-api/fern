@@ -1,10 +1,15 @@
-public struct Directory: Codable, Hashable {
+public struct Directory: Codable, Hashable, Sendable {
     public let name: String
     public let files: [File]?
     public let directories: [Directory]?
     public let additionalProperties: [String: JSONValue]
 
-    public init(name: String, files: [File]? = nil, directories: [Directory]? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        name: String,
+        files: [File]? = nil,
+        directories: [Directory]? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.name = name
         self.files = files
         self.directories = directories
@@ -20,7 +25,7 @@ public struct Directory: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.name, forKey: .name)
         try container.encodeIfPresent(self.files, forKey: .files)

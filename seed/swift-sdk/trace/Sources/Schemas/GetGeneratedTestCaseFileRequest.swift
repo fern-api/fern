@@ -1,9 +1,13 @@
-public struct GetGeneratedTestCaseFileRequest: Codable, Hashable {
+public struct GetGeneratedTestCaseFileRequest: Codable, Hashable, Sendable {
     public let template: TestCaseTemplate?
     public let testCase: TestCaseV2
     public let additionalProperties: [String: JSONValue]
 
-    public init(template: TestCaseTemplate? = nil, testCase: TestCaseV2, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        template: TestCaseTemplate? = nil,
+        testCase: TestCaseV2,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.template = template
         self.testCase = testCase
         self.additionalProperties = additionalProperties
@@ -17,7 +21,7 @@ public struct GetGeneratedTestCaseFileRequest: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encodeIfPresent(self.template, forKey: .template)
         try container.encode(self.testCase, forKey: .testCase)

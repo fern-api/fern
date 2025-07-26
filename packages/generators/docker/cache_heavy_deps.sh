@@ -14,7 +14,7 @@ yarn add \
   @types/node-fetch@^2.6.12 \
   @types/node@^18.19.70 \
   @types/qs@^6.9.17 \
-  form-data@^4.0.0 \
+  form-data@^4.0.4 \
   jest-environment-jsdom@^29.7.0 \
   jest@^29.7.0 \
   node-fetch@^2.7.0 \

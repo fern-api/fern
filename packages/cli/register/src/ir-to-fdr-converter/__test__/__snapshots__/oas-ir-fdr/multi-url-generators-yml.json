@@ -147,6 +147,21 @@
           "statusCode": 200,
           "description": "Successful response"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "User"
+                }
+              },
+              "statusCode": 200,
+              "description": "Successful response"
+            }
+          ]
+        },
         "errorsV2": [
           {
             "type": {
@@ -260,6 +275,21 @@
           "statusCode": 200,
           "description": "Successful response"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "User"
+                }
+              },
+              "statusCode": 200,
+              "description": "Successful response"
+            }
+          ]
+        },
         "errorsV2": [
           {
             "type": {
@@ -356,6 +386,21 @@
           },
           "statusCode": 200,
           "description": "Successful response"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "Token"
+                }
+              },
+              "statusCode": 200,
+              "description": "Successful response"
+            }
+          ]
         },
         "errorsV2": [
           {

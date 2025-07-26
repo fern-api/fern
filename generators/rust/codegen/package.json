@@ -17,8 +17,10 @@
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
+    "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
     "test": "vitest --passWithNoTests --run",
+    "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {

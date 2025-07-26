@@ -403,7 +403,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
 
     private TypeSpec createBuilder(Map<VariableId, FieldSpec> variableFields) {
         TypeSpec.Builder builder = TypeSpec.classBuilder(builderClassName)
-                .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
+                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .addField(FieldSpec.builder(environmentField.type, environmentField.name)
                         .addModifiers(Modifier.PRIVATE)
                         .build())
@@ -467,6 +467,14 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         addApiVersionToBuilder(builder);
 
         builder.addMethod(getBuildMethod(variableFields));
+
+        Map<VariableId, MethodSpec> variableGetters = variableFields.entrySet().stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, entry -> MethodSpec.methodBuilder(entry.getValue().name)
+                        .addModifiers(Modifier.PUBLIC)
+                        .returns(entry.getValue().type)
+                        .addStatement("return this.$L", entry.getValue().name)
+                        .build()));
+        builder.addMethod(getFromMethod(variableFields, variableGetters));
 
         return builder.build();
     }
@@ -618,6 +626,43 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                             .addStatement("return this.$N", variableField)
                             .build();
                 }));
+    }
+
+    private MethodSpec getFromMethod(
+            Map<VariableId, FieldSpec> variableFields, Map<VariableId, MethodSpec> variableGetters) {
+        MethodSpec.Builder fromMethod = MethodSpec.methodBuilder("from")
+                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                .returns(builderClassName)
+                .addParameter(className, "clientOptions")
+                .addJavadoc("Create a new Builder initialized with values from an existing ClientOptions")
+                .addStatement("$T builder = new $T()", builderClassName, builderClassName)
+                .addStatement("builder.$L = clientOptions.$L()", environmentField.name, environmentField.name)
+                // We can only copy what's accessible via public methods so we can't get headers directly
+                .addStatement(
+                        "builder.$L = $T.of(clientOptions.$L(null))",
+                        TIMEOUT_FIELD.name,
+                        Optional.class,
+                        TIMEOUT_FIELD.name)
+                .addStatement("builder.$L = clientOptions.$L()", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name);
+
+        for (Map.Entry<VariableId, FieldSpec> entry : variableFields.entrySet()) {
+            MethodSpec getter = variableGetters.get(entry.getKey());
+            if (getter != null) {
+                fromMethod.addStatement("builder.$L = clientOptions.$N()", entry.getValue().name, getter);
+            }
+        }
+
+        if (clientGeneratorContext.getIr().getApiVersion().isPresent()) {
+            fromMethod.addStatement(
+                    "if (clientOptions.$L != null) builder.$L = clientOptions.$L",
+                    apiVersionField.name,
+                    apiVersionField.name,
+                    apiVersionField.name);
+        }
+
+        fromMethod.addStatement("return builder");
+
+        return fromMethod.build();
     }
 
     private MethodSpec getBuildMethod(Map<VariableId, FieldSpec> variableFields) {

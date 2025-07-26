@@ -18,7 +18,9 @@
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
+    "compile:debug": "tsc --build --sourceMap",
     "test": "vitest --run",
+    "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --run -u",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",

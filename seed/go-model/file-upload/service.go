@@ -10,54 +10,12 @@ import (
 
 type Id = string
 
-type MyAliasObject = *MyObject
-
-type MyCollectionAliasObject = []*MyObject
-
-type MyObject struct {
-	Foo string `json:"foo" url:"foo"`
-
-	extraProperties map[string]interface{}
-}
-
-func (m *MyObject) GetFoo() string {
-	if m == nil {
-		return ""
-	}
-	return m.Foo
-}
-
-func (m *MyObject) GetExtraProperties() map[string]interface{} {
-	return m.extraProperties
-}
-
-func (m *MyObject) UnmarshalJSON(data []byte) error {
-	type unmarshaler MyObject
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*m = MyObject(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *m)
-	if err != nil {
-		return err
-	}
-	m.extraProperties = extraProperties
-	return nil
-}
-
-func (m *MyObject) String() string {
-	if value, err := internal.StringifyJSON(m); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", m)
-}
-
 type MyObjectWithOptional struct {
 	Prop         string  `json:"prop" url:"prop"`
 	OptionalProp *string `json:"optionalProp,omitempty" url:"optionalProp,omitempty"`
 
-	extraProperties map[string]interface{}
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
 func (m *MyObjectWithOptional) GetProp() string {
@@ -74,26 +32,56 @@ func (m *MyObjectWithOptional) GetOptionalProp() *string {
 	return m.OptionalProp
 }
 
-func (m *MyObjectWithOptional) GetExtraProperties() map[string]interface{} {
+func (m *MyObjectWithOptional) GetExtraProperties() map[string]any {
+	if m == nil {
+		return nil
+	}
 	return m.extraProperties
 }
 
-func (m *MyObjectWithOptional) UnmarshalJSON(data []byte) error {
-	type unmarshaler MyObjectWithOptional
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
+func (m *MyObjectWithOptional) String() string {
+	if len(m.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
+			return value
+		}
 	}
-	*m = MyObjectWithOptional(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *m)
-	if err != nil {
-		return err
+	if value, err := internal.StringifyJSON(m); err == nil {
+		return value
 	}
-	m.extraProperties = extraProperties
-	return nil
+	return fmt.Sprintf("%#v", m)
 }
 
-func (m *MyObjectWithOptional) String() string {
+type MyAliasObject = *MyObject
+
+type MyCollectionAliasObject = []*MyObject
+
+type MyObject struct {
+	Foo string `json:"foo" url:"foo"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (m *MyObject) GetFoo() string {
+	if m == nil {
+		return ""
+	}
+	return m.Foo
+}
+
+func (m *MyObject) GetExtraProperties() map[string]any {
+	if m == nil {
+		return nil
+	}
+	return m.extraProperties
+}
+
+func (m *MyObject) String() string {
+	if len(m.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(m); err == nil {
 		return value
 	}
@@ -103,8 +91,8 @@ func (m *MyObjectWithOptional) String() string {
 type ObjectType string
 
 const (
-	ObjectTypeFoo ObjectType = "FOO"
-	ObjectTypeBar ObjectType = "BAR"
+	ObjectTypeFoo = "FOO"
+	ObjectTypeBar = "BAR"
 )
 
 func NewObjectTypeFromString(s string) (ObjectType, error) {
