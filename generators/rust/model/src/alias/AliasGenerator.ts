@@ -4,14 +4,21 @@ import { rust, Attribute, PUBLIC } from "@fern-api/rust-codegen";
 import { AliasTypeDeclaration, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 import { generateRustTypeForTypeReference } from "../converters";
 import { isChronoType, isUuidType, isCollectionType, isUnknownType, isDateTimeType } from "../utils/primitiveTypeUtils";
+import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 export class AliasGenerator {
     private readonly typeDeclaration: TypeDeclaration;
     private readonly aliasTypeDeclaration: AliasTypeDeclaration;
+    private readonly context: ModelGeneratorContext;
 
-    public constructor(typeDeclaration: TypeDeclaration, aliasTypeDeclaration: AliasTypeDeclaration) {
+    public constructor(
+        typeDeclaration: TypeDeclaration,
+        aliasTypeDeclaration: AliasTypeDeclaration,
+        context: ModelGeneratorContext
+    ) {
         this.typeDeclaration = typeDeclaration;
         this.aliasTypeDeclaration = aliasTypeDeclaration;
+        this.context = context;
     }
 
     public generate(): RustFile {
@@ -58,7 +65,7 @@ export class AliasGenerator {
         // Add imports for custom named types FIRST
         const customTypes = this.getCustomTypesUsedInAlias();
         customTypes.forEach((typeName) => {
-            const moduleNameEscaped = this.escapeRustKeyword(typeName.snakeCase.unsafeName);
+            const moduleNameEscaped = this.context.escapeRustKeyword(typeName.snakeCase.unsafeName);
             writer.writeLine(`use crate::${moduleNameEscaped}::${typeName.pascalCase.unsafeName};`);
         });
 
@@ -148,47 +155,5 @@ export class AliasGenerator {
         extractNamedTypesRecursively(this.aliasTypeDeclaration.aliasOf);
 
         return customTypeNames;
-    }
-
-    private escapeRustKeyword(name: string): string {
-        const rustKeywords = new Set([
-            "as",
-            "break",
-            "const",
-            "continue",
-            "crate",
-            "else",
-            "enum",
-            "extern",
-            "false",
-            "fn",
-            "for",
-            "if",
-            "impl",
-            "in",
-            "let",
-            "loop",
-            "match",
-            "mod",
-            "move",
-            "mut",
-            "pub",
-            "ref",
-            "return",
-            "self",
-            "Self",
-            "static",
-            "struct",
-            "super",
-            "trait",
-            "true",
-            "type",
-            "unsafe",
-            "use",
-            "where",
-            "while"
-        ]);
-
-        return rustKeywords.has(name) ? `r#${name}` : name;
     }
 }

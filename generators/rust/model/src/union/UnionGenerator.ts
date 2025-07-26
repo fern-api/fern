@@ -10,14 +10,21 @@ import {
     isUnknownType,
     isUuidType
 } from "../utils/primitiveTypeUtils";
+import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 export class UnionGenerator {
     private readonly typeDeclaration: TypeDeclaration;
     private readonly unionTypeDeclaration: UnionTypeDeclaration;
+    private readonly context: ModelGeneratorContext;
 
-    public constructor(typeDeclaration: TypeDeclaration, unionTypeDeclaration: UnionTypeDeclaration) {
+    public constructor(
+        typeDeclaration: TypeDeclaration,
+        unionTypeDeclaration: UnionTypeDeclaration,
+        context: ModelGeneratorContext
+    ) {
         this.typeDeclaration = typeDeclaration;
         this.unionTypeDeclaration = unionTypeDeclaration;
+        this.context = context;
     }
 
     public generate(): RustFile {
@@ -44,7 +51,7 @@ export class UnionGenerator {
         // Add imports for variant types FIRST
         const variantTypes = this.getVariantTypesUsedInUnion();
         variantTypes.forEach((typeName) => {
-            const moduleNameEscaped = this.escapeRustKeyword(typeName.snakeCase.unsafeName);
+            const moduleNameEscaped = this.context.escapeRustKeyword(typeName.snakeCase.unsafeName);
             writer.writeLine(`use crate::${moduleNameEscaped}::${typeName.pascalCase.unsafeName};`);
         });
 
@@ -302,47 +309,5 @@ export class UnionGenerator {
         });
 
         return variantTypeNames;
-    }
-
-    private escapeRustKeyword(name: string): string {
-        const rustKeywords = new Set([
-            "as",
-            "break",
-            "const",
-            "continue",
-            "crate",
-            "else",
-            "enum",
-            "extern",
-            "false",
-            "fn",
-            "for",
-            "if",
-            "impl",
-            "in",
-            "let",
-            "loop",
-            "match",
-            "mod",
-            "move",
-            "mut",
-            "pub",
-            "ref",
-            "return",
-            "self",
-            "Self",
-            "static",
-            "struct",
-            "super",
-            "trait",
-            "true",
-            "type",
-            "unsafe",
-            "use",
-            "where",
-            "while"
-        ]);
-
-        return rustKeywords.has(name) ? `r#${name}` : name;
     }
 }

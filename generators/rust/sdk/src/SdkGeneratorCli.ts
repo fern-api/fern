@@ -217,7 +217,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
         for (const [_typeId, typeDeclaration] of Object.entries(context.ir.types)) {
             const rawModuleName = typeDeclaration.name.name.snakeCase.unsafeName;
-            const escapedModuleName = this.escapeRustKeyword(rawModuleName);
+            const escapedModuleName = context.escapeRustKeyword(rawModuleName);
             moduleDeclarations.push(new ModuleDeclaration({ name: escapedModuleName, isPublic: true }));
             useStatements.push(new UseStatement({ path: escapedModuleName, items: ["*"], isPublic: true }));
         }
@@ -239,47 +239,5 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
     private getFileContents(file: RustFile): string {
         return typeof file.fileContents === "string" ? file.fileContents : file.fileContents.toString();
-    }
-
-    private escapeRustKeyword(name: string): string {
-        const rustKeywords = new Set([
-            "as",
-            "break",
-            "const",
-            "continue",
-            "crate",
-            "else",
-            "enum",
-            "extern",
-            "false",
-            "fn",
-            "for",
-            "if",
-            "impl",
-            "in",
-            "let",
-            "loop",
-            "match",
-            "mod",
-            "move",
-            "mut",
-            "pub",
-            "ref",
-            "return",
-            "self",
-            "Self",
-            "static",
-            "struct",
-            "super",
-            "trait",
-            "true",
-            "type",
-            "unsafe",
-            "use",
-            "where",
-            "while"
-        ]);
-
-        return rustKeywords.has(name) ? `r#${name}` : name;
     }
 }

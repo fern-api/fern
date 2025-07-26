@@ -89,7 +89,7 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
         if (context.ir.types) {
             Object.values(context.ir.types).forEach((typeDeclaration) => {
                 const rawTypeName = typeDeclaration.name.name.snakeCase.unsafeName;
-                const escapedTypeName = this.escapeRustKeyword(rawTypeName);
+                const escapedTypeName = context.escapeRustKeyword(rawTypeName);
                 writer.writeLine(`pub mod ${escapedTypeName};`);
             });
         }
@@ -100,7 +100,7 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
         if (context.ir.types) {
             Object.values(context.ir.types).forEach((typeDeclaration) => {
                 const rawTypeName = typeDeclaration.name.name.snakeCase.unsafeName;
-                const escapedTypeName = this.escapeRustKeyword(rawTypeName);
+                const escapedTypeName = context.escapeRustKeyword(rawTypeName);
                 writer.writeLine(`pub use ${escapedTypeName}::{*};`);
             });
         }
@@ -159,47 +159,5 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
     private getTypeModuleName(typeDeclaration: TypeDeclaration): string {
         // Use the proper snake_case name from the IR
         return typeDeclaration.name.name.snakeCase.safeName;
-    }
-
-    private escapeRustKeyword(name: string): string {
-        const rustKeywords = new Set([
-            "as",
-            "break",
-            "const",
-            "continue",
-            "crate",
-            "else",
-            "enum",
-            "extern",
-            "false",
-            "fn",
-            "for",
-            "if",
-            "impl",
-            "in",
-            "let",
-            "loop",
-            "match",
-            "mod",
-            "move",
-            "mut",
-            "pub",
-            "ref",
-            "return",
-            "self",
-            "Self",
-            "static",
-            "struct",
-            "super",
-            "trait",
-            "true",
-            "type",
-            "unsafe",
-            "use",
-            "where",
-            "while"
-        ]);
-
-        return rustKeywords.has(name) ? `r#${name}` : name;
     }
 }

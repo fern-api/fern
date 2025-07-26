@@ -5,6 +5,7 @@ import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationServi
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { RustProject } from "../project";
+import { RUST_KEYWORDS, RUST_RESERVED_TYPES } from "../constants";
 
 export const BaseRustCustomConfigSchema = z.object({
     packageName: z.string().optional(),
@@ -36,5 +37,19 @@ export abstract class AbstractRustGeneratorContext<
 
     private getDefaultPackageName(): string {
         return `${this.config.organization}_${this.ir.apiName.snakeCase.unsafeName}`.toLowerCase();
+    }
+
+    /**
+     * Escapes Rust keywords by prefixing them with 'r#'
+     */
+    public escapeRustKeyword(name: string): string {
+        return RUST_KEYWORDS.has(name) ? `r#${name}` : name;
+    }
+
+    /**
+     * Escapes Rust reserved types by prefixing them with 'r#'
+     */
+    public escapeRustReservedType(name: string): string {
+        return RUST_RESERVED_TYPES.has(name) ? `r#${name}` : name;
     }
 }

@@ -22,7 +22,7 @@ pub enum SpecialEnum {
     J,
     #[serde(rename = "Hello\vWorld")]
     K,
-    #[serde(rename = "Hello\0World")]
+    #[serde(rename = "Hello\x00World")]
     L,
     #[serde(rename = "Hello\u0007World")]
     M,
@@ -38,7 +38,7 @@ pub enum SpecialEnum {
     R,
     #[serde(rename = "Line 1\n"Quote"\tTab\\Backslash\r\nLine 2\0Null")]
     S,
-    #[serde(rename = "\n\r\t\0\u0008\f\v\u0007")]
+    #[serde(rename = "\n\r\t\x00\u0008\f\v\u0007")]
     T,
     #[serde(rename = "Hello 世界")]
     U,

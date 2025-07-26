@@ -13,14 +13,21 @@ import {
     isOptionalType,
     getInnerTypeFromOptional
 } from "../utils/primitiveTypeUtils";
+import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 export class StructGenerator {
     private readonly typeDeclaration: TypeDeclaration;
     private readonly objectTypeDeclaration: ObjectTypeDeclaration;
+    private readonly context: ModelGeneratorContext;
 
-    public constructor(typeDeclaration: TypeDeclaration, objectTypeDeclaration: ObjectTypeDeclaration) {
+    public constructor(
+        typeDeclaration: TypeDeclaration,
+        objectTypeDeclaration: ObjectTypeDeclaration,
+        context: ModelGeneratorContext
+    ) {
         this.typeDeclaration = typeDeclaration;
         this.objectTypeDeclaration = objectTypeDeclaration;
+        this.context = context;
     }
 
     public generate(): RustFile {
@@ -58,7 +65,7 @@ export class StructGenerator {
         // Add imports for custom named types referenced in fields FIRST
         const customTypes = this.getCustomTypesUsedInFields();
         customTypes.forEach((typeName) => {
-            const moduleNameEscaped = this.escapeRustKeyword(typeName.snakeCase.unsafeName);
+            const moduleNameEscaped = this.context.escapeRustKeyword(typeName.snakeCase.unsafeName);
             writer.writeLine(`use crate::${moduleNameEscaped}::${typeName.pascalCase.unsafeName};`);
         });
 
@@ -66,7 +73,7 @@ export class StructGenerator {
         if (this.objectTypeDeclaration.extends.length > 0) {
             this.objectTypeDeclaration.extends.forEach((parentType) => {
                 const parentTypeName = parentType.name.pascalCase.unsafeName;
-                const moduleNameEscaped = this.escapeRustKeyword(parentType.name.snakeCase.unsafeName);
+                const moduleNameEscaped = this.context.escapeRustKeyword(parentType.name.snakeCase.unsafeName);
                 writer.writeLine(`use crate::${moduleNameEscaped}::${parentTypeName};`);
             });
         }
@@ -127,7 +134,7 @@ export class StructGenerator {
     private generateRustFieldForProperty(property: ObjectProperty): rust.Field {
         const fieldType = this.getFieldType(property);
         const fieldAttributes = this.generateFieldAttributes(property);
-        const fieldName = this.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
+        const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
 
         return rust.field({
             name: fieldName,
@@ -263,47 +270,5 @@ export class StructGenerator {
         });
 
         return customTypeNames;
-    }
-
-    private escapeRustKeyword(name: string): string {
-        const rustKeywords = new Set([
-            "as",
-            "break",
-            "const",
-            "continue",
-            "crate",
-            "else",
-            "enum",
-            "extern",
-            "false",
-            "fn",
-            "for",
-            "if",
-            "impl",
-            "in",
-            "let",
-            "loop",
-            "match",
-            "mod",
-            "move",
-            "mut",
-            "pub",
-            "ref",
-            "return",
-            "self",
-            "Self",
-            "static",
-            "struct",
-            "super",
-            "trait",
-            "true",
-            "type",
-            "unsafe",
-            "use",
-            "where",
-            "while"
-        ]);
-
-        return rustKeywords.has(name) ? `r#${name}` : name;
     }
 }

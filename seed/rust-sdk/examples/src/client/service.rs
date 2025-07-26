@@ -15,26 +15,26 @@ impl ServiceClient {
         }
     }
 
-    pub async fn check(&self, id: &String) -> Result<serde_json::Value, ApiError> {
+    pub async fn get_file(&self, filename: &String) -> Result<serde_json::Value, ApiError> {
         todo!()
     }
 
-    pub async fn ping(&self) -> Result<serde_json::Value, ApiError> {
+}
+nc fn ping(&self) -> Result<serde_json::Value, ApiError> {
         todo!()
     }
 
-    pub async fn get_metadata(
-        &self,
-        shallow: Option<&String>,
-        tag: Option<&String>,
-    ) -> Result<serde_json::Value, ApiError> {
+}
+n::Value, ApiError> {
         todo!()
     }
 
-    pub async fn create_big_entity(
-        &self,
-        request: &serde_json::Value,
-    ) -> Result<serde_json::Value, ApiError> {
+    pub async fn get_metadata(&self, shallow: Option<&String>, tag: Option<&String>) -> Result<serde_json::Value, ApiError> {
         todo!()
     }
+
+    pub async fn create_big_entity(&self, request: &serde_json::Value) -> Result<serde_json::Value, ApiError> {
+        todo!()
+    }
+
 }
