@@ -8,34 +8,37 @@ import { Writer } from "./Writer";
 export declare namespace Client {
     interface Args {
         name: string;
-        isRoot?: boolean;
-        subClients?: string[]; // Just names, keep it simple
-        methods?: SimpleMethod[];
+        fields?: Field[];        // ← All struct fields passed from outside
+        constructors?: SimpleMethod[]; // ← All constructors passed from outside
+        methods?: SimpleMethod[];      // ← All methods passed from outside
+    }
+
+    interface Field {
+        name: string;
+        type: string;
+        visibility: 'pub' | 'private';
     }
 
     interface SimpleMethod {
         name: string;
         parameters?: string[];
         returnType?: string;
+        isAsync?: boolean;
+        body?: string;
     }
 }
 
 export class Client extends AstNode {
     public readonly name: string;
-    public readonly isRoot: boolean;
-    public readonly subClients: string[];
+    public readonly fields: Client.Field[];
+    public readonly constructors: Client.SimpleMethod[];
     public readonly methods: Client.SimpleMethod[];
 
-    public constructor({
-        name,
-        isRoot = false,
-        subClients = [],
-        methods = []
-    }: Client.Args) {
+    public constructor({ name, fields = [], constructors = [], methods = [] }: Client.Args) {
         super();
         this.name = name;
-        this.isRoot = isRoot;
-        this.subClients = subClients;
+        this.fields = fields;
+        this.constructors = constructors;
         this.methods = methods;
     }
 
@@ -43,7 +46,7 @@ export class Client extends AstNode {
         // Generate struct
         this.writeStruct(writer);
         writer.newLine();
-        
+
         // Generate impl
         this.writeImpl(writer);
     }
@@ -52,16 +55,13 @@ export class Client extends AstNode {
         writer.write(`pub struct ${this.name} {`);
         writer.newLine();
         writer.indent();
-        
-        if (this.isRoot) {
-            // Root client has sub-clients as fields
-            this.subClients.forEach(subClient => {
-                writer.write(`pub ${subClient.toLowerCase()}: ${subClient},`);
-                writer.newLine();
-            });
-        }
-        // Sub-clients are empty structs for now
-        
+
+        // Just render whatever fields were passed in (like Swift pattern)
+        this.fields.forEach((field) => {
+            writer.write(`${field.visibility} ${field.name}: ${field.type},`);
+            writer.newLine();
+        });
+
         writer.dedent();
         writer.write("}");
         writer.newLine();
@@ -71,37 +71,19 @@ export class Client extends AstNode {
         writer.write(`impl ${this.name} {`);
         writer.newLine();
         writer.indent();
-        
-        // Constructor
-        writer.write("pub fn new() -> Self {");
-        writer.newLine();
-        writer.indent();
-        
-        if (this.isRoot) {
-            writer.write("Self {");
+
+        // Render constructors (like Swift pattern)
+        this.constructors.forEach((constructor) => {
+            this.writeMethod(writer, constructor);
             writer.newLine();
-            writer.indent();
-            this.subClients.forEach(subClient => {
-                writer.write(`${subClient.toLowerCase()}: ${subClient}::new(),`);
-                writer.newLine();
-            });
-            writer.dedent();
-            writer.write("}");
-        } else {
-            writer.write("Self");
-        }
-        
-        writer.newLine();
-        writer.dedent();
-        writer.write("}");
-        writer.newLine();
-        
-        // Methods
-        this.methods.forEach(method => {
-            writer.newLine();
-            this.writeMethod(writer, method);
         });
-        
+
+        // Render methods (like Swift pattern)
+        this.methods.forEach((method) => {
+            this.writeMethod(writer, method);
+            writer.newLine();
+        });
+
         writer.dedent();
         writer.write("}");
         writer.newLine();
@@ -110,14 +92,27 @@ export class Client extends AstNode {
     private writeMethod(writer: Writer, method: Client.SimpleMethod): void {
         const params = method.parameters?.join(", ") || "";
         const returnType = method.returnType || "String";
-        
-        writer.write(`pub fn ${method.name}(&self${params ? ", " + params : ""}) -> ${returnType} {`);
+        const asyncKeyword = method.isAsync ? "async " : "";
+
+        // Don't add &self for constructors
+        const selfParam = method.name === "new" ? "" : "&self";
+        const allParams = selfParam && params ? `${selfParam}, ${params}` : selfParam + params;
+
+        writer.write(`pub ${asyncKeyword}fn ${method.name}(${allParams}) -> ${returnType} {`);
         writer.newLine();
         writer.indent();
-        writer.write('todo!("Implement API call")');
+
+        if (method.body) {
+            // Use provided method body implementation
+            writer.write(method.body.toString());
+        } else {
+            // Default fallback
+            writer.write('todo!("Implement API call")');
+        }
+
         writer.newLine();
         writer.dedent();
         writer.write("}");
         writer.newLine();
     }
-} 
+}

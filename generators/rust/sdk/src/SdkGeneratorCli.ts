@@ -13,6 +13,7 @@ import { ErrorGenerator } from "./error/ErrorGenerator";
 import { RootClientGenerator } from "./generators/RootClientGenerator";
 import { SubClientGenerator } from "./generators/SubClientGenerator";
 
+
 export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     // ===========================
     // LIFECYCLE METHODS
@@ -114,6 +115,8 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         });
     }
 
+
+
     private generateSubClientFiles(context: SdkGeneratorContext, files: RustFile[]): void {
         Object.values(context.ir.subpackages).forEach((subpackage) => {
             if (subpackage.service != null || subpackage.hasEndpointsInTree) {
@@ -180,7 +183,23 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         }
 
         // Add re-exports
-        useStatements.push(new UseStatement({ path: "client", items: [clientName], isPublic: true }));
+        const clientExports = [];
+        const subpackages = Object.values(context.ir.subpackages).filter(
+            (subpackage) => subpackage.service != null || subpackage.hasEndpointsInTree
+        );
+        
+        // Only add root client if there are multiple services
+        if (subpackages.length > 1) {
+            clientExports.push(clientName);
+        }
+        
+        // Add all sub-clients
+        subpackages.forEach((subpackage) => {
+            const subClientName = `${subpackage.name.pascalCase.safeName}Client`;
+            clientExports.push(subClientName);
+        });
+        
+        useStatements.push(new UseStatement({ path: "client", items: clientExports, isPublic: true }));
         useStatements.push(new UseStatement({ path: "error", items: ["ApiError"], isPublic: true }));
 
         if (hasTypes) {

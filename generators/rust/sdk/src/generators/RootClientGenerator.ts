@@ -19,21 +19,80 @@ export class RootClientGenerator {
 
     public generate(): RustFile {
         const subpackages = this.getSubpackages();
-        const clientName = this.getRootClientName();
+        
+        // Add module declarations for sub-clients
+        const moduleDeclarations = subpackages.map(subpackage => 
+            `pub mod ${subpackage.name.snakeCase.safeName};`
+        ).join("\n");
+        
+        const reExports = subpackages.map(subpackage =>
+            `pub use ${subpackage.name.snakeCase.safeName}::${this.getSubClientName(subpackage)};`
+        ).join("\n");
+        
+        let fileContents = "";
+        
+        // Only generate root client if there are multiple services
+        if (subpackages.length > 1) {
+            const clientName = this.getRootClientName();
+            const rustRootClient = rust.client({
+                name: clientName,
+                fields: this.generateFields(subpackages),
+                constructors: [this.generateConstructor(subpackages)]
+            });
+            
+            fileContents = [
+                moduleDeclarations,
+                "",
+                rustRootClient.toString(),
+                "",
+                reExports
+            ].join("\n");
+        } else {
+            // For single service, just export the module and re-export the client
+            fileContents = [
+                moduleDeclarations,
+                "",
+                reExports
+            ].join("\n");
+        }
 
-        // Simple client generation - no bloat!
-        const rustRootClient = rust.client({
-            name: clientName,
-            isRoot: true,
-            subClients: subpackages.map((subpackage) => this.getSubClientName(subpackage))
-        });
-
-        const fileContents = rustRootClient.toString();
         return new RustFile({
             filename: "mod.rs",
             directory: RelativeFilePath.of("src/client"),
             fileContents
         });
+    }
+
+    
+    private generateFields(subpackages: Subpackage[]): any[] {
+        // Generate fields for each sub-client from IR subpackages
+        return subpackages.map(subpackage => ({
+            name: subpackage.name.snakeCase.safeName, // Use proper snake_case from IR
+            type: this.getSubClientName(subpackage),  // Use proper PascalCase client name
+            visibility: "pub" // Public for direct access to sub-clients
+        }));
+    }
+
+    private generateConstructor(subpackages: Subpackage[]): any {
+        const defaultBaseUrl = this.getDefaultBaseUrl();
+        const subClientInits = subpackages.map(subpackage => 
+            `${subpackage.name.snakeCase.safeName}: ${this.getSubClientName(subpackage)}::new("${defaultBaseUrl}".to_string())`
+        ).join(",\n    ");
+
+        return {
+            name: "new",
+            parameters: [],
+            returnType: "Self",
+            isAsync: false,
+            body: `Self {
+    ${subClientInits}
+}`
+        };
+    }
+
+    private getDefaultBaseUrl(): string {
+        // Simple: just use a placeholder URL since methods are todo!()
+        return "";
     }
 
     private getRootClientName(): string {
