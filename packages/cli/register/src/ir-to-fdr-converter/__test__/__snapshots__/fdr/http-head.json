@@ -38,7 +38,7 @@
       "endpoints": [
         {
           "auth": false,
-          "method": "GET",
+          "method": "HEAD",
           "id": "head",
           "originalEndpointId": "endpoint_user.head",
           "name": "Head",
