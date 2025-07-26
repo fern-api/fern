@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use crate::tree::Tree;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Node {

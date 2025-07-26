@@ -1,5 +1,5 @@
 use serde::{Deserialize, Serialize};
-use crate::types::movie::Movie;
+use crate::movie::Movie;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct ExtendedMovie {

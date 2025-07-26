@@ -1,3 +1,6 @@
+use crate::submission_id::SubmissionId;
+use crate::lightweight_stackframe_information::LightweightStackframeInformation;
+use crate::traced_file::TracedFile;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

@@ -1,3 +1,5 @@
+use crate::circle::Circle;
+use crate::square::Square;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

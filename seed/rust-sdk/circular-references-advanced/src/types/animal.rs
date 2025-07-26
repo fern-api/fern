@@ -1,3 +1,5 @@
+use crate::cat::Cat;
+use crate::dog::Dog;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

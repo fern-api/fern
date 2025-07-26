@@ -55,6 +55,10 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
         });
         files.push(libFile);
 
+        // Generate mod.rs for types directory
+        const typesModFile = this.generateTypesModFile(context);
+        files.push(typesModFile);
+
         // Generate models using the new generator system
         const modelFiles = generateModels({ context });
         files.push(...modelFiles);
@@ -68,15 +72,46 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
         writer.writeLine("//! Generated models by Fern");
         writer.newLine();
 
-        // Add module declarations for each type
-        if (context.ir.types) {
-            Object.values(context.ir.types).forEach((typeDeclaration) => {
-                const typeName = this.getTypeModuleName(typeDeclaration);
-                writer.writeLine(`pub mod ${typeName};`);
-            });
+        // Add types module declaration
+        if (context.ir.types && Object.keys(context.ir.types).length > 0) {
+            writer.writeLine("pub mod types;");
+            writer.newLine();
+            writer.writeLine("pub use types::*;");
         }
 
         return writer.toString();
+    }
+
+    private generateTypesModFile(context: ModelGeneratorContext): RustFile {
+        const writer = new Writer();
+
+        // Add module declarations for each type
+        if (context.ir.types) {
+            Object.values(context.ir.types).forEach((typeDeclaration) => {
+                const rawTypeName = typeDeclaration.name.name.snakeCase.unsafeName;
+                const escapedTypeName = context.escapeRustKeyword(rawTypeName);
+                writer.writeLine(`pub mod ${escapedTypeName};`);
+            });
+        }
+
+        writer.newLine();
+
+        // Add public use statements for each type
+        if (context.ir.types) {
+            Object.values(context.ir.types).forEach((typeDeclaration) => {
+                const rawTypeName = typeDeclaration.name.name.snakeCase.unsafeName;
+                const escapedTypeName = context.escapeRustKeyword(rawTypeName);
+                writer.writeLine(`pub use ${escapedTypeName}::{*};`);
+            });
+        }
+
+        writer.newLine();
+
+        return new RustFile({
+            filename: "mod.rs",
+            directory: RelativeFilePath.of("src"),
+            fileContents: writer.toString()
+        });
     }
 
     private generateModels(context: ModelGeneratorContext): RustFile[] {

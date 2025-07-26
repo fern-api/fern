@@ -1,5 +1,5 @@
+use crate::user_page::UserPage;
 use serde::{Deserialize, Serialize};
-use crate::types::user_page::UserPage;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct ListUsersExtendedResponse {

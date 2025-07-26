@@ -1,3 +1,6 @@
+use crate::submission_id::SubmissionId;
+use crate::language::Language;
+use crate::submission_file_info::SubmissionFileInfo;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

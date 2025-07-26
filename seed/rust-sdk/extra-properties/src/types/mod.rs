@@ -1,6 +1,6 @@
-// Generated types module
-
 pub mod failure;
-pub use failure::*;
 pub mod user;
-pub use user::*;
+
+pub use failure::{*};
+pub use user::{*};
+

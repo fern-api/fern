@@ -1,3 +1,5 @@
+use crate::color::Color;
+use crate::operand::Operand;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

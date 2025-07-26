@@ -1,3 +1,4 @@
+use crate::optional_alias::OptionalAlias;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

@@ -1,3 +1,4 @@
+use crate::metadata_union::MetadataUnion;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

@@ -1,5 +1,7 @@
-use serde::{Deserialize, Serialize};
+use crate::problem_id::ProblemId;
+use crate::variable_type::VariableType;
 use std::collections::HashMap;
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct LightweightProblemInfoV2 {

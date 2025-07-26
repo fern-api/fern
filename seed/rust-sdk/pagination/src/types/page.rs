@@ -1,3 +1,4 @@
+use crate::next_page::NextPage;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

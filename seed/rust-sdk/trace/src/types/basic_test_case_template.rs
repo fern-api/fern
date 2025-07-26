@@ -1,3 +1,6 @@
+use crate::test_case_template_id::TestCaseTemplateId;
+use crate::test_case_implementation_description::TestCaseImplementationDescription;
+use crate::parameter_id::ParameterId;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

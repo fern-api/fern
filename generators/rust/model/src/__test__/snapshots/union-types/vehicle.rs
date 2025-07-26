@@ -1,3 +1,6 @@
+use crate::car::Car;
+use crate::motorcycle::Motorcycle;
+use crate::truck::Truck;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

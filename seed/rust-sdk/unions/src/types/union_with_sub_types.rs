@@ -1,3 +1,5 @@
+use crate::foo::Foo;
+use crate::foo_extended::FooExtended;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

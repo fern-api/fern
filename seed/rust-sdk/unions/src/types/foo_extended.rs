@@ -1,5 +1,5 @@
+use crate::foo::Foo;
 use serde::{Deserialize, Serialize};
-use crate::types::foo::Foo;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct FooExtended {

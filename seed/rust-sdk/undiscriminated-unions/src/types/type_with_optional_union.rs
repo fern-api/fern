@@ -1,3 +1,4 @@
+use crate::my_union::MyUnion;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

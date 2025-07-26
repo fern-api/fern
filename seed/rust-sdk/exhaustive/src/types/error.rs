@@ -1,3 +1,5 @@
+use crate::error_category::ErrorCategory;
+use crate::error_code::ErrorCode;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

@@ -1,6 +1,7 @@
+use crate::movie::Movie;
+use crate::with_metadata::WithMetadata;
+use crate::with_docs::WithDocs;
 use serde::{Deserialize, Serialize};
-use crate::types::with_metadata::WithMetadata;
-use crate::types::with_docs::WithDocs;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Response {

@@ -1,3 +1,4 @@
+use crate::file_info::FileInfo;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

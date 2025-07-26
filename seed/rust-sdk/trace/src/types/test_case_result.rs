@@ -1,3 +1,5 @@
+use crate::variable_value::VariableValue;
+use crate::actual_result::ActualResult;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

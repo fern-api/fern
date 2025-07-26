@@ -2,7 +2,7 @@ import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractRustGeneratorContext } from "@fern-api/rust-base";
 import { ModelGeneratorContext } from "@fern-api/rust-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { IntermediateRepresentation, Subpackage, SubpackageId, HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
 import { RustGeneratorAgent } from "./RustGeneratorAgent";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 
@@ -25,6 +25,22 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
 
     public getClientName(): string {
         return this.customConfig.clientName ?? `${this.ir.apiName.pascalCase.safeName}Client`;
+    }
+
+    public getSubpackageOrThrow(subpackageId: SubpackageId): Subpackage {
+        const subpackage = this.ir.subpackages[subpackageId];
+        if (subpackage == null) {
+            throw new Error(`Subpackage with id ${subpackageId} not found`);
+        }
+        return subpackage;
+    }
+
+    public getHttpServiceOrThrow(serviceId: ServiceId): HttpService {
+        const service = this.ir.services[serviceId];
+        if (service == null) {
+            throw new Error(`Service with id ${serviceId} not found`);
+        }
+        return service;
     }
 
     public toModelGeneratorContext(): ModelGeneratorContext {

@@ -1,3 +1,7 @@
+use crate::running_submission_state::RunningSubmissionState;
+use crate::error_info::ErrorInfo;
+use crate::graded_test_case_update::GradedTestCaseUpdate;
+use crate::recorded_test_case_update::RecordedTestCaseUpdate;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

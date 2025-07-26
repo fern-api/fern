@@ -1,3 +1,4 @@
+use crate::movie_id::MovieId;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

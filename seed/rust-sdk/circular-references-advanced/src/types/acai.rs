@@ -1,5 +1,5 @@
+use crate::berry::Berry;
 use serde::{Deserialize, Serialize};
-use crate::types::berry::Berry;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Acai {

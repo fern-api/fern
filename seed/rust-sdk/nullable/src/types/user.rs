@@ -1,3 +1,7 @@
+use crate::user_id::UserId;
+use crate::metadata::Metadata;
+use crate::email::Email;
+use crate::weird_number::WeirdNumber;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

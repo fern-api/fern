@@ -1,3 +1,5 @@
+use crate::credit_card::CreditCard;
+use crate::bank_transfer::BankTransfer;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

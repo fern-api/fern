@@ -1,3 +1,5 @@
+use crate::optional_metadata::OptionalMetadata;
+use crate::named_metadata::NamedMetadata;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

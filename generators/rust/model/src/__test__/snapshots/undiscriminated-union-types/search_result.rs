@@ -1,3 +1,6 @@
+use crate::user::User;
+use crate::product::Product;
+use crate::category::Category;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

@@ -1,3 +1,4 @@
+use crate::folder_c_foo::FolderCFoo;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

@@ -1,8 +1,9 @@
-use serde::{Deserialize, Serialize};
+use crate::name::Name;
 use chrono::{DateTime, Utc};
 use std::collections::HashMap;
 use uuid::Uuid;
 use serde_json::Value;
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Type {

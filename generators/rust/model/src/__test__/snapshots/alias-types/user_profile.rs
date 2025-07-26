@@ -1,3 +1,7 @@
+use crate::user_id::UserID;
+use crate::user_email::UserEmail;
+use crate::user_age::UserAge;
+use crate::user_tags::UserTags;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

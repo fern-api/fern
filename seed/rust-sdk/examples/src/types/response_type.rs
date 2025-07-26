@@ -1,6 +1,7 @@
+use crate::r#type::Type;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct ResponseType {
-    pub type: Type,
+    pub r#type: Type,
 }

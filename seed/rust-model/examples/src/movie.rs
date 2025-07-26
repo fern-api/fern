@@ -1,5 +1,7 @@
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+use crate::movie_id::MovieId;
+use crate::tag::Tag;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Movie {
@@ -9,7 +11,8 @@ pub struct Movie {
     pub title: String,
     pub from: String,
     pub rating: f64,
-    pub type: String,
+    #[serde(rename = "type")]
+    pub type_: String,
     pub tag: Tag,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub book: Option<String>,

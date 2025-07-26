@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use crate::file::File;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Directory {

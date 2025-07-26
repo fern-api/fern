@@ -1,5 +1,11 @@
-use serde::{Deserialize, Serialize};
+use crate::problem_description::ProblemDescription;
+use crate::language::Language;
+use crate::problem_files::ProblemFiles;
+use crate::variable_type_and_name::VariableTypeAndName;
+use crate::variable_type::VariableType;
+use crate::test_case_with_expected_result::TestCaseWithExpectedResult;
 use std::collections::HashMap;
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct CreateProblemRequest {

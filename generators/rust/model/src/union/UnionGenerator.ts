@@ -10,14 +10,21 @@ import {
     isUnknownType,
     isUuidType
 } from "../utils/primitiveTypeUtils";
+import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 export class UnionGenerator {
     private readonly typeDeclaration: TypeDeclaration;
     private readonly unionTypeDeclaration: UnionTypeDeclaration;
+    private readonly context: ModelGeneratorContext;
 
-    public constructor(typeDeclaration: TypeDeclaration, unionTypeDeclaration: UnionTypeDeclaration) {
+    public constructor(
+        typeDeclaration: TypeDeclaration,
+        unionTypeDeclaration: UnionTypeDeclaration,
+        context: ModelGeneratorContext
+    ) {
         this.typeDeclaration = typeDeclaration;
         this.unionTypeDeclaration = unionTypeDeclaration;
+        this.context = context;
     }
 
     public generate(): RustFile {
@@ -41,7 +48,12 @@ export class UnionGenerator {
     }
 
     private writeUseStatements(writer: rust.Writer): void {
-        writer.writeLine("use serde::{Deserialize, Serialize};");
+        // Add imports for variant types FIRST
+        const variantTypes = this.getVariantTypesUsedInUnion();
+        variantTypes.forEach((typeName) => {
+            const moduleNameEscaped = this.context.escapeRustKeyword(typeName.snakeCase.unsafeName);
+            writer.writeLine(`use crate::${moduleNameEscaped}::${typeName.pascalCase.unsafeName};`);
+        });
 
         // Add chrono if we have datetime fields
         if (this.hasDateTimeFields()) {
@@ -62,6 +74,9 @@ export class UnionGenerator {
         if (this.hasJsonValueFields()) {
             writer.writeLine("use serde_json::Value;");
         }
+
+        // Add serde imports LAST
+        writer.writeLine("use serde::{Deserialize, Serialize};");
     }
 
     private generateUnionEnum(writer: rust.Writer): void {
@@ -252,5 +267,47 @@ export class UnionGenerator {
                 _other: () => false
             });
         });
+    }
+
+    private getVariantTypesUsedInUnion(): { snakeCase: { unsafeName: string }; pascalCase: { unsafeName: string } }[] {
+        const variantTypeNames: { snakeCase: { unsafeName: string }; pascalCase: { unsafeName: string } }[] = [];
+        const visited = new Set<string>();
+
+        this.unionTypeDeclaration.types.forEach((unionType) => {
+            unionType.shape._visit({
+                noProperties: () => {
+                    // No additional types needed for empty variants
+                },
+                singleProperty: (singleProperty) => {
+                    // Check if the single property type is a named type
+                    if (singleProperty.type.type === "named") {
+                        const typeName = singleProperty.type.name.originalName;
+                        if (!visited.has(typeName)) {
+                            visited.add(typeName);
+                            variantTypeNames.push({
+                                snakeCase: { unsafeName: singleProperty.type.name.snakeCase.unsafeName },
+                                pascalCase: { unsafeName: singleProperty.type.name.pascalCase.unsafeName }
+                            });
+                        }
+                    }
+                },
+                samePropertiesAsObject: (declaredTypeName) => {
+                    // This variant references another object type
+                    const typeName = declaredTypeName.name.originalName;
+                    if (!visited.has(typeName)) {
+                        visited.add(typeName);
+                        variantTypeNames.push({
+                            snakeCase: { unsafeName: declaredTypeName.name.snakeCase.unsafeName },
+                            pascalCase: { unsafeName: declaredTypeName.name.pascalCase.unsafeName }
+                        });
+                    }
+                },
+                _other: () => {
+                    // Unknown shape, skip
+                }
+            });
+        });
+
+        return variantTypeNames;
     }
 }

@@ -1,5 +1,6 @@
-use serde::{Deserialize, Serialize};
+use crate::nested_union_l_2::NestedUnionL2;
 use std::collections::HashMap;
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]

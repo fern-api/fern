@@ -1,5 +1,5 @@
+use crate::root_type::RootType;
 use serde::{Deserialize, Serialize};
-use crate::types::root_type::RootType;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct A {
