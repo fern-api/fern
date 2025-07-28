@@ -87,7 +87,7 @@ export class SubClientGenerator {
                 });
             }),
             swift.property({
-                unsafeName: "httpClient",
+                unsafeName: this.httpClientPropertyInfo.propertyName,
                 accessLevel: swift.AccessLevel.Private,
                 declarationType: swift.DeclarationType.Let,
                 type: swift.Type.custom("HTTPClient")
@@ -107,7 +107,7 @@ export class SubClientGenerator {
             ],
             body: swift.CodeBlock.withStatements([
                 swift.Statement.propertyAssignment(
-                    "httpClient",
+                    this.httpClientPropertyInfo.propertyName,
                     swift.Expression.classInitialization({
                         unsafeName: "HTTPClient",
                         arguments_: [
@@ -372,7 +372,7 @@ export class SubClientGenerator {
                 swift.Expression.try(
                     swift.Expression.await(
                         swift.Expression.methodCall({
-                            target: swift.Expression.reference("httpClient"),
+                            target: swift.Expression.reference(this.httpClientPropertyInfo.propertyName),
                             methodName: this.getHttpClientMethodNameForEndpoint(endpoint),
                             arguments_,
                             multiline: true
