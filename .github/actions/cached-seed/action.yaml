@@ -64,11 +64,6 @@ runs:
       shell: bash
       run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
-    - name: Install protoc-gen-openapi
-      if: steps.cache.outputs.cache-hit != 'true'
-      shell: bash
-      run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
-
     - name: Setup Blacksmith Docker
       if: steps.cache.outputs.cache-hit != 'true'
       uses: useblacksmith/build-push-action@v1
