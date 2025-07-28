@@ -145,7 +145,7 @@ exports[`migrateFromV53ToV52 > simple 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "6f2a6c0a",
+                "id": "d76d2e32",
                 "name": null,
                 "queryParameters": [
                   {
