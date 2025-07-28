@@ -13,7 +13,7 @@ export async function runFernCli(
         ...(includeAuthToken ? { FERN_TOKEN: process.env.FERN_ORG_TOKEN_DEV } : {})
     };
 
-    return loggingExeca(undefined, "node", [path.join(__dirname, "../../../cli/dist/dev/cli.cjs"), ...args], {
+    return loggingExeca(undefined, "node", ["--enable-source-maps", path.join(__dirname, "../../../cli/dist/dev/cli.cjs"), ...args], {
         ...options,
         env,
         doNotPipeOutput: options?.reject === false
@@ -25,7 +25,7 @@ export async function runFernCliWithoutAuthToken(args: string[], options?: Optio
 }
 
 export function captureFernCli(args: string[], options?: Options): import("execa").ExecaChildProcess {
-    return runExeca(undefined, "node", [path.join(__dirname, "../../../cli/dist/dev/cli.cjs"), ...args], {
+    return runExeca(undefined, "node", ["--enable-source-maps", path.join(__dirname, "../../../cli/dist/dev/cli.cjs"), ...args], {
         ...options,
         env: {
             ...options?.env,

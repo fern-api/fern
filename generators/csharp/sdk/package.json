@@ -26,7 +26,7 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck",
-    "dist:cli": "rm -rf ./lib && rm -rf ./dist && pnpm compile && tsup ./src/cli.ts --format cjs && cp -R ../base/src/asIs dist",
+    "dist:cli": "rm -rf ./lib && rm -rf ./dist && pnpm compile && tsup ./src/cli.ts --format cjs --sourcemap && cp -R ../base/src/asIs dist",
     "publish:cli": "pnpm dist:cli && cd dist && yarn npm publish",
     "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-csharp-sdk:latest ../../.."
   },
