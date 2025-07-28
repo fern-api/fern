@@ -19,31 +19,39 @@ export class RootClientGenerator {
     private readonly projectNamePascalCase: string;
     private readonly package_: Package;
     private readonly context: SdkGeneratorContext;
-    private readonly configPropertyInfo;
+    private readonly httpClientPropertyInfo;
 
     public constructor({ projectNamePascalCase, package_, context }: RootClientGenerator.Args) {
         this.projectNamePascalCase = projectNamePascalCase;
         this.package_ = package_;
         this.context = context;
-        this.configPropertyInfo = this.getConfigPropertyInfo();
+        this.httpClientPropertyInfo = this.getHttpClientPropertyInfo();
     }
 
-    private getConfigPropertyInfo() {
+    private getHttpClientPropertyInfo() {
         const subpackages = this.getSubpackages();
-        const propertyNames = new Set(subpackages.map((subpackage) => subpackage.name.camelCase.unsafeName));
-        let propertyName = "config";
-        while (propertyNames.has(propertyName)) {
+        const otherPropertyNames = new Set(subpackages.map((subpackage) => subpackage.name.camelCase.unsafeName));
+        let propertyName = "httpClient";
+        while (otherPropertyNames.has(propertyName)) {
             propertyName = "_" + propertyName;
         }
         return {
             propertyName,
-            swiftType: swift.Type.custom("ClientConfig")
+            swiftType: swift.Type.custom("HTTPClient")
         };
+    }
+
+    private getClientName() {
+        return `${this.projectNamePascalCase}Client`;
+    }
+
+    private getSubClientName(subpackage: Subpackage) {
+        return `${subpackage.name.pascalCase.unsafeName}Client`;
     }
 
     public generate(): SwiftFile {
         const swiftClass = swift.class_({
-            name: this.getRootClientName(),
+            name: this.getClientName(),
             final: true,
             accessLevel: swift.AccessLevel.Public,
             conformances: [swift.Protocol.Sendable],
@@ -71,10 +79,10 @@ export class RootClientGenerator {
                 });
             }),
             swift.property({
-                unsafeName: this.configPropertyInfo.propertyName,
+                unsafeName: "httpClient",
                 accessLevel: swift.AccessLevel.Private,
                 declarationType: swift.DeclarationType.Let,
-                type: this.configPropertyInfo.swiftType
+                type: swift.Type.custom("HTTPClient")
             })
         ];
     }
@@ -149,8 +157,8 @@ export class RootClientGenerator {
                 })
             ],
             body: swift.CodeBlock.withStatements([
-                swift.Statement.propertyAssignment(
-                    this.configPropertyInfo.propertyName,
+                swift.Statement.constantDeclaration(
+                    "config",
                     swift.Expression.classInitialization({
                         unsafeName: "ClientConfig",
                         arguments_: [
@@ -182,6 +190,15 @@ export class RootClientGenerator {
                         multiline: true
                     })
                 ),
+                swift.Statement.propertyAssignment(
+                    this.httpClientPropertyInfo.propertyName,
+                    swift.Expression.classInitialization({
+                        unsafeName: "HTTPClient",
+                        arguments_: [
+                            swift.functionArgument({ label: "config", value: swift.Expression.reference("config") })
+                        ]
+                    })
+                ),
                 ...this.getSubpackages().map((subpackage) => {
                     return swift.Statement.propertyAssignment(
                         subpackage.name.camelCase.unsafeName,
@@ -190,7 +207,7 @@ export class RootClientGenerator {
                             arguments_: [
                                 swift.functionArgument({
                                     label: "config",
-                                    value: swift.Expression.reference(this.configPropertyInfo.propertyName)
+                                    value: swift.Expression.reference("config")
                                 })
                             ]
                         })
@@ -199,14 +216,6 @@ export class RootClientGenerator {
             ]),
             multiline: true
         });
-    }
-
-    private getRootClientName() {
-        return `${this.projectNamePascalCase}Client`;
-    }
-
-    private getSubClientName(subpackage: Subpackage) {
-        return `${subpackage.name.pascalCase.unsafeName}Client`;
     }
 
     private getSubpackages(): Subpackage[] {
