@@ -6,7 +6,7 @@ import { getSwiftTypeForTypeReference } from "@fern-api/swift-model";
 
 import { HttpEndpoint, HttpMethod, Subpackage } from "@fern-fern/ir-sdk/api";
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { formatEndpointPathForSwift } from "./util/format-endpoint-path-for-swift";
 import { getQueryParamCaseName } from "./util/get-query-param-case-name";
 import { parseEndpointPath } from "./util/parse-endpoint-path";

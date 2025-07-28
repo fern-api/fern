@@ -8,8 +8,10 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { formatEndpointPathForSwift } from "../format-endpoint-path-for-swift";
 
-const pathToTestDefinitions = resolve(__dirname, "../../../../../../../test-definitions/fern/apis");
-const testDefinitionNames = readdirSync(pathToTestDefinitions);
+const pathToTestDefinitions = resolve(__dirname, "../../../../../../../../test-definitions/fern/apis");
+const testDefinitionNames = readdirSync(pathToTestDefinitions, { withFileTypes: true })
+    .filter((dirent) => dirent.isDirectory())
+    .map((dirent) => dirent.name);
 
 async function getIRForTestDefinition(testDefinitionName: string): Promise<IntermediateRepresentation> {
     const absolutePathToWorkspace = AbsoluteFilePath.of(resolve(pathToTestDefinitions, testDefinitionName));
