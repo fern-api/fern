@@ -5,21 +5,17 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": [
-    "./src/**/*"
-  ],
-  "exclude": [
-    "./src/**/__test__/**/generated"
-  ],
+  "include": ["./src/**/*"],
+  "exclude": ["./src/**/__test__/**/generated"],
   "references": [
     {
-      "path": "../../../../packages/cli/logger"
+      "path": "../commons"
     },
     {
       "path": "../../../base"
     },
     {
-      "path": "../commons"
+      "path": "../../../../packages/cli/logger"
     }
   ]
 }

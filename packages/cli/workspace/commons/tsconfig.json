@@ -5,24 +5,31 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": [
-    "./src/**/*"
-  ],
+  "include": ["./src/**/*"],
   "references": [
     {
-      "path": "../../../commons/core-utils"
+      "path": "../../task-context"
     },
     {
       "path": "../../../commons/path-utils"
     },
     {
-      "path": "../../configuration"
+      "path": "../../api-importers/openapi/openapi-ir-to-fern"
+    },
+    {
+      "path": "../../api-importers/openapi/openapi-ir-parser"
+    },
+    {
+      "path": "../../api-importers/openapi/openapi-ir"
     },
     {
       "path": "../../fern-definition/schema"
     },
     {
-      "path": "../../task-context"
+      "path": "../../../commons/core-utils"
+    },
+    {
+      "path": "../../configuration"
     }
   ]
 }

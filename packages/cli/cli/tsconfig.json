@@ -5,120 +5,133 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": [
-    "./src/**/*"
-  ],
+  "include": ["./src/**/*"],
   "references": [
     {
-      "path": "../../commons/casings-generator"
-    },
-    {
-      "path": "../../commons/core-utils"
-    },
-    {
-      "path": "../../commons/fs-utils"
-    },
-    {
-      "path": "../../commons/ir-utils"
-    },
-    {
-      "path": "../../commons/logging-execa"
-    },
-    {
-      "path": "../../core"
-    },
-    {
-      "path": "../../ir-sdk"
-    },
-    {
-      "path": "../auth"
-    },
-    {
-      "path": "../cli-logger"
-    },
-    {
-      "path": "../cli-migrations"
-    },
-    {
-      "path": "../cli-source-resolver"
-    },
-    {
-      "path": "../configuration"
-    },
-    {
-      "path": "../configuration-loader"
-    },
-    {
-      "path": "../docs-preview"
-    },
-    {
-      "path": "../docs-resolver"
-    },
-    {
-      "path": "../fern-definition/formatter"
-    },
-    {
-      "path": "../fern-definition/ir-to-jsonschema"
-    },
-    {
-      "path": "../fern-definition/schema"
-    },
-    {
-      "path": "../fern-definition/validator"
-    },
-    {
-      "path": "../generation/ir-generator"
-    },
-    {
-      "path": "../generation/ir-migrations"
-    },
-    {
-      "path": "../generation/protoc-gen-fern"
-    },
-    {
-      "path": "../init"
-    },
-    {
-      "path": "../logger"
-    },
-    {
-      "path": "../login"
-    },
-    {
-      "path": "../mock"
-    },
-    {
-      "path": "../posthog-manager"
-    },
-    {
-      "path": "../project-loader"
-    },
-    {
-      "path": "../register"
-    },
-    {
-      "path": "../semver-utils"
+      "path": "../workspace/loader"
     },
     {
       "path": "../task-context"
     },
     {
-      "path": "../workspace/commons"
+      "path": "../semver-utils"
     },
     {
-      "path": "../workspace/lazy-fern-workspace"
+      "path": "../generation/remote-generation/remote-workspace-runner"
     },
     {
-      "path": "../workspace/loader"
+      "path": "../register"
+    },
+    {
+      "path": "../generation/protoc-gen-fern"
+    },
+    {
+      "path": "../project-loader"
+    },
+    {
+      "path": "../posthog-manager"
     },
     {
       "path": "../workspace/oss-validator"
     },
     {
-      "path": "../yaml/docs-validator"
+      "path": "../api-importers/openapi/openapi-ir-to-fern"
+    },
+    {
+      "path": "../api-importers/openapi/openapi-ir-parser"
+    },
+    {
+      "path": "../api-importers/openapi/openapi-ir"
+    },
+    {
+      "path": "../mock"
+    },
+    {
+      "path": "../login"
+    },
+    {
+      "path": "../../commons/logging-execa"
+    },
+    {
+      "path": "../logger"
+    },
+    {
+      "path": "../generation/local-generation/local-workspace-runner"
+    },
+    {
+      "path": "../workspace/lazy-fern-workspace"
+    },
+    {
+      "path": "../../commons/ir-utils"
+    },
+    {
+      "path": "../fern-definition/ir-to-jsonschema"
+    },
+    {
+      "path": "../../ir-sdk"
+    },
+    {
+      "path": "../generation/ir-migrations"
+    },
+    {
+      "path": "../generation/ir-generator"
+    },
+    {
+      "path": "../init"
     },
     {
       "path": "../yaml/generators-validator"
+    },
+    {
+      "path": "../../commons/fs-utils"
+    },
+    {
+      "path": "../fern-definition/validator"
+    },
+    {
+      "path": "../fern-definition/schema"
+    },
+    {
+      "path": "../fern-definition/formatter"
+    },
+    {
+      "path": "../yaml/docs-validator"
+    },
+    {
+      "path": "../docs-resolver"
+    },
+    {
+      "path": "../docs-preview"
+    },
+    {
+      "path": "../../commons/core-utils"
+    },
+    {
+      "path": "../../core"
+    },
+    {
+      "path": "../configuration-loader"
+    },
+    {
+      "path": "../configuration"
+    },
+    {
+      "path": "../cli-source-resolver"
+    },
+    {
+      "path": "../cli-migrations"
+    },
+    {
+      "path": "../cli-logger"
+    },
+    {
+      "path": "../../commons/casings-generator"
+    },
+    {
+      "path": "../auth"
+    },
+    {
+      "path": "../workspace/commons"
     }
   ]
 }

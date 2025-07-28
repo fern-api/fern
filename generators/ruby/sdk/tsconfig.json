@@ -5,12 +5,13 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": [
-    "./src/**/*"
-  ],
+  "include": ["./src/**/*"],
   "references": [
     {
-      "path": "../../../packages/commons/fs-utils"
+      "path": "../cli"
+    },
+    {
+      "path": "../codegen"
     },
     {
       "path": "../../../packages/commons/logging-execa"
@@ -19,7 +20,7 @@
       "path": "../../base"
     },
     {
-      "path": "../codegen"
+      "path": "../../../packages/commons/fs-utils"
     },
     {
       "path": "../model"

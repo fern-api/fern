@@ -5,22 +5,25 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": [
-    "./src/**/*",
-    "./src/*.json"
-  ],
+  "include": ["./src/**/*", "./src/*.json"],
   "references": [
     {
-      "path": "../../../commons/core-utils"
+      "path": "../../task-context"
     },
     {
       "path": "../../../commons/path-utils"
     },
     {
-      "path": "../../configuration"
+      "path": "../../api-importers/openapi/openapi-ir-parser"
     },
     {
-      "path": "../../task-context"
+      "path": "../../api-importers/openapi/openapi-ir"
+    },
+    {
+      "path": "../../../commons/core-utils"
+    },
+    {
+      "path": "../../configuration"
     },
     {
       "path": "../commons"

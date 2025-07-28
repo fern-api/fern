@@ -5,36 +5,37 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": [
-    "./src/**/*"
-  ],
+  "include": ["./src/**/*"],
   "references": [
     {
-      "path": "../../commons/fs-utils"
+      "path": "../workspace/loader"
     },
     {
-      "path": "../../commons/logging-execa"
-    },
-    {
-      "path": "../../ir-sdk"
-    },
-    {
-      "path": "../docs-resolver"
-    },
-    {
-      "path": "../logger"
-    },
-    {
-      "path": "../project-loader"
-    },
-    {
-      "path": "../register"
+      "path": "../docs-markdown-utils"
     },
     {
       "path": "../task-context"
     },
     {
-      "path": "../workspace/loader"
+      "path": "../register"
+    },
+    {
+      "path": "../project-loader"
+    },
+    {
+      "path": "../../commons/logging-execa"
+    },
+    {
+      "path": "../logger"
+    },
+    {
+      "path": "../../ir-sdk"
+    },
+    {
+      "path": "../../commons/fs-utils"
+    },
+    {
+      "path": "../docs-resolver"
     }
   ]
 }

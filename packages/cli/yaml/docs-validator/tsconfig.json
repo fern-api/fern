@@ -5,46 +5,46 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": [
-    "./src/**/*",
-    "./src/**/*.json"
-  ],
+  "include": ["./src/**/*", "./src/**/*.json"],
   "references": [
     {
-      "path": "../../../commons/core-utils"
+      "path": "../../cli-source-resolver"
     },
     {
-      "path": "../../../commons/fs-utils"
-    },
-    {
-      "path": "../../configuration-loader"
-    },
-    {
-      "path": "../../docs-markdown-utils"
-    },
-    {
-      "path": "../../docs-resolver"
-    },
-    {
-      "path": "../../fern-definition/schema"
-    },
-    {
-      "path": "../../generation/ir-generator"
-    },
-    {
-      "path": "../../logger"
-    },
-    {
-      "path": "../../project-loader"
+      "path": "../../workspace/loader"
     },
     {
       "path": "../../task-context"
     },
     {
+      "path": "../../project-loader"
+    },
+    {
+      "path": "../../logger"
+    },
+    {
       "path": "../../workspace/lazy-fern-workspace"
     },
     {
-      "path": "../../workspace/loader"
+      "path": "../../generation/ir-generator"
+    },
+    {
+      "path": "../../../commons/fs-utils"
+    },
+    {
+      "path": "../../fern-definition/schema"
+    },
+    {
+      "path": "../../docs-resolver"
+    },
+    {
+      "path": "../../docs-markdown-utils"
+    },
+    {
+      "path": "../../../commons/core-utils"
+    },
+    {
+      "path": "../../configuration-loader"
     }
   ]
 }

@@ -5,12 +5,31 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": [
-    "./src/**/*"
-  ],
+  "include": ["./src/**/*"],
   "references": [
     {
-      "path": "../../../../commons/core-utils"
+      "path": "../../../workspace/lazy-fern-workspace"
+    },
+    {
+      "path": "../../../workspace/loader"
+    },
+    {
+      "path": "../../../task-context"
+    },
+    {
+      "path": "../../../register"
+    },
+    {
+      "path": "../../../logger"
+    },
+    {
+      "path": "../../../../ir-sdk"
+    },
+    {
+      "path": "../../ir-migrations"
+    },
+    {
+      "path": "../../ir-generator"
     },
     {
       "path": "../../../../commons/fs-utils"
@@ -19,40 +38,22 @@
       "path": "../../../../commons/logging-execa"
     },
     {
+      "path": "../../../docs-resolver"
+    },
+    {
+      "path": "../../../../commons/core-utils"
+    },
+    {
       "path": "../../../../core"
-    },
-    {
-      "path": "../../../../ir-sdk"
-    },
-    {
-      "path": "../../../auth"
-    },
-    {
-      "path": "../../../cli-source-resolver"
     },
     {
       "path": "../../../configuration"
     },
     {
-      "path": "../../../docs-resolver"
+      "path": "../../../cli-source-resolver"
     },
     {
-      "path": "../../../logger"
-    },
-    {
-      "path": "../../../register"
-    },
-    {
-      "path": "../../../task-context"
-    },
-    {
-      "path": "../../../workspace/loader"
-    },
-    {
-      "path": "../../ir-generator"
-    },
-    {
-      "path": "../../ir-migrations"
+      "path": "../../../auth"
     }
   ]
 }

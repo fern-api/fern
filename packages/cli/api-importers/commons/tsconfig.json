@@ -5,21 +5,19 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": [
-    "./src/**/*"
-  ],
+  "include": ["./src/**/*"],
   "references": [
-    {
-      "path": "../../../cli/fern-definition/schema"
-    },
-    {
-      "path": "../../../commons/core-utils"
-    },
     {
       "path": "../../task-context"
     },
     {
       "path": "../../../commons/path-utils"
     },
+    {
+      "path": "../../fern-definition/schema"
+    },
+    {
+      "path": "../../configuration"
+    }
   ]
 }
