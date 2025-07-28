@@ -56,7 +56,7 @@ jobs:
         # Parse JSON array containing names of all filters matching any of changed files
         # e.g. ['package1', 'package2'] if both package folders contains changes
         package: ${{ fromJSON(needs.changes.outputs.packages) }}
-        runner: [blacksmith-4vcpu-ubuntu-2404, ubuntu-24.04-arm]
+        runner: [blacksmith-4vcpu-ubuntu-2404, blacksmith-4vcpu-ubuntu-2404-arm]
         arch: [amd64, arm64]
         exclude:
           # Avoid building arm64 on amd64 runner and vice versa
