@@ -62,7 +62,7 @@ jobs:
           # Avoid building arm64 on amd64 runner and vice versa
           - runner: blacksmith-4vcpu-ubuntu-2404
             arch: arm64
-          - runner: ubuntu-24.04-arm
+          - runner: blacksmith-4vcpu-ubuntu-2404-arm
             arch: amd64
     runs-on: ${{ matrix.runner }}
     needs: [changes, generate-sha]
