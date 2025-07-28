@@ -36,7 +36,7 @@ export class Switch extends AstNode {
         const cases = this.cases;
         if (this.default != null) {
             cases.push({
-                on: new Identifier({ name: "default" }),
+                on: new Identifier("default"),
                 body: this.default
             });
         }

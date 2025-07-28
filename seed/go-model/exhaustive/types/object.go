@@ -128,6 +128,20 @@ func (o *ObjectWithOptionalField) GetExtraProperties() map[string]any {
 	return o.extraProperties
 }
 
+func (o *ObjectWithOptionalField) MarshalJSON() ([]byte, error) {
+	type embed ObjectWithOptionalField
+	var marshaler = struct {
+		embed
+		Datetime *internal.DateTime `json:"datetime"`
+		Date     *internal.Date     `json:"date"`
+	}{
+		embed:    embed(*o),
+		Datetime: internal.NewOptionalDateTime(o.Datetime),
+		Date:     internal.NewOptionalDate(o.Date),
+	}
+	return json.Marshal(marshaler)
+}
+
 func (o *ObjectWithOptionalField) String() string {
 	if len(o.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {

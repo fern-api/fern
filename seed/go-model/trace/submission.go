@@ -25,7 +25,6 @@ type SubmissionRequest struct {
     Stop StopRequest
 }
 
-
 type InitializeProblemRequest struct {
     ProblemId ProblemId `json:"problemId" url:"problemId"`
     ProblemVersion *int `json:"problemVersion,omitempty" url:"problemVersion,omitempty"`
@@ -314,7 +313,6 @@ type SubmissionResponse struct {
     Terminated TerminatedResponse
 }
 
-
 type CodeExecutionUpdate struct {
     Type string
     BuildingExecutor BuildingExecutorResponse
@@ -329,7 +327,6 @@ type CodeExecutionUpdate struct {
     InvalidRequest InvalidRequestResponse
     Finished FinishedResponse
 }
-
 
 type BuildingExecutorResponse struct {
     SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
@@ -494,7 +491,6 @@ type ErrorInfo struct {
     RuntimeError RuntimeError
     InternalError InternalError
 }
-
 
 type CompileError struct {
     Message string `json:"message" url:"message"`
@@ -813,7 +809,6 @@ type TestCaseGrade struct {
     Hidden TestCaseHiddenGrade
     NonHidden TestCaseNonHiddenGrade
 }
-
 
 type TestCaseHiddenGrade struct {
     Passed bool `json:"passed" url:"passed"`
@@ -1164,13 +1159,11 @@ type ActualResult struct {
     ExceptionV2 *ExceptionV2
 }
 
-
 type ExceptionV2 struct {
     Type string
     Generic ExceptionInfo
     Timeout any
 }
-
 
 type ExceptionInfo struct {
     ExceptionType string `json:"exceptionType" url:"exceptionType"`
@@ -1270,7 +1263,6 @@ type InvalidRequestCause struct {
     CustomTestCasesUnsupported CustomTestCasesUnsupported
     UnexpectedLanguage UnexpectedLanguageError
 }
-
 
 type ExistingSubmissionExecuting struct {
     SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
@@ -2031,7 +2023,6 @@ type SubmissionStatusV2 struct {
     Workspace WorkspaceSubmissionStatusV2
 }
 
-
 type TestSubmissionStatusV2 struct {
     Updates []*TestSubmissionUpdate `json:"updates" url:"updates"`
     ProblemId ProblemId `json:"problemId" url:"problemId"`
@@ -2153,6 +2144,18 @@ func (t *TestSubmissionUpdate) GetExtraProperties() map[string]any{
     return t.extraProperties
 }
 
+func (t *TestSubmissionUpdate) MarshalJSON() ([]byte, error){
+    type embed TestSubmissionUpdate
+    var marshaler = struct{
+        embed
+        UpdateTime *internal.DateTime `json:"updateTime"`
+    }{
+        embed: embed(*t),
+        UpdateTime: internal.NewDateTime(t.UpdateTime),
+    }
+    return json.Marshal(marshaler)
+}
+
 func (t *TestSubmissionUpdate) String() string{
     if len(t.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
@@ -2175,7 +2178,6 @@ type TestSubmissionUpdateInfo struct {
     RecordedTestCase RecordedTestCaseUpdate
     Finished any
 }
-
 
 type WorkspaceSubmissionUpdate struct {
     UpdateTime time.Time `json:"updateTime" url:"updateTime"`
@@ -2206,6 +2208,18 @@ func (w *WorkspaceSubmissionUpdate) GetExtraProperties() map[string]any{
     return w.extraProperties
 }
 
+func (w *WorkspaceSubmissionUpdate) MarshalJSON() ([]byte, error){
+    type embed WorkspaceSubmissionUpdate
+    var marshaler = struct{
+        embed
+        UpdateTime *internal.DateTime `json:"updateTime"`
+    }{
+        embed: embed(*w),
+        UpdateTime: internal.NewDateTime(w.UpdateTime),
+    }
+    return json.Marshal(marshaler)
+}
+
 func (w *WorkspaceSubmissionUpdate) String() string{
     if len(w.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
@@ -2229,7 +2243,6 @@ type WorkspaceSubmissionUpdateInfo struct {
     Errored *ErrorInfo
     Finished any
 }
-
 
 type GradedTestCaseUpdate struct {
     TestCaseId v2.TestCaseId `json:"testCaseId" url:"testCaseId"`
@@ -2355,7 +2368,6 @@ type SubmissionTypeState struct {
     Workspace WorkspaceSubmissionState
 }
 
-
 type WorkspaceSubmissionState struct {
     Status *WorkspaceSubmissionStatus `json:"status" url:"status"`
 
@@ -2398,7 +2410,6 @@ type WorkspaceSubmissionStatus struct {
     Ran WorkspaceRunDetails
     Traced WorkspaceRunDetails
 }
-
 
 type TestSubmissionState struct {
     ProblemId ProblemId `json:"problemId" url:"problemId"`
@@ -2466,14 +2477,12 @@ type TestSubmissionStatus struct {
     TestCaseIdToState map[string]*SubmissionStatusForTestCase
 }
 
-
 type SubmissionStatusForTestCase struct {
     Type string
     Graded TestCaseResultWithStdout
     GradedV2 *TestCaseGrade
     Traced TracedTestCase
 }
-
 
 type TracedTestCase struct {
     Result *TestCaseResultWithStdout `json:"result" url:"result"`
@@ -2917,6 +2926,18 @@ func (g *GetSubmissionStateResponse) GetExtraProperties() map[string]any{
         return nil
     }
     return g.extraProperties
+}
+
+func (g *GetSubmissionStateResponse) MarshalJSON() ([]byte, error){
+    type embed GetSubmissionStateResponse
+    var marshaler = struct{
+        embed
+        TimeSubmitted *internal.DateTime `json:"timeSubmitted"`
+    }{
+        embed: embed(*g),
+        TimeSubmitted: internal.NewOptionalDateTime(g.TimeSubmitted),
+    }
+    return json.Marshal(marshaler)
 }
 
 func (g *GetSubmissionStateResponse) String() string{

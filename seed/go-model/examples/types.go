@@ -208,6 +208,18 @@ func (m *Movie) GetExtraProperties() map[string]any {
 	return m.extraProperties
 }
 
+func (m *Movie) MarshalJSON() ([]byte, error) {
+	type embed Movie
+	var marshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*m),
+		Type:  "movie",
+	}
+	return json.Marshal(marshaler)
+}
+
 func (m *Movie) String() string {
 	if len(m.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
@@ -451,6 +463,18 @@ func (e *ExtendedMovie) GetExtraProperties() map[string]any {
 	return e.extraProperties
 }
 
+func (e *ExtendedMovie) MarshalJSON() ([]byte, error) {
+	type embed ExtendedMovie
+	var marshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*e),
+		Type:  "movie",
+	}
+	return json.Marshal(marshaler)
+}
+
 func (e *ExtendedMovie) String() string {
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
@@ -498,6 +522,20 @@ func (m *Moment) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return m.extraProperties
+}
+
+func (m *Moment) MarshalJSON() ([]byte, error) {
+	type embed Moment
+	var marshaler = struct {
+		embed
+		Date     *internal.Date     `json:"date"`
+		Datetime *internal.DateTime `json:"datetime"`
+	}{
+		embed:    embed(*m),
+		Date:     internal.NewDate(m.Date),
+		Datetime: internal.NewDateTime(m.Datetime),
+	}
+	return json.Marshal(marshaler)
 }
 
 func (m *Moment) String() string {

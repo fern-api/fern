@@ -48,7 +48,7 @@ export class EnumGenerator extends AbstractModelGenerator {
         members: go.Enum.Member[];
     }): go.Func {
         const switch_ = go.switch_({
-            on: go.identifier({ name: STRING_VALUE_PARAM_NAME }),
+            on: go.identifier(STRING_VALUE_PARAM_NAME),
             cases: members.map((member) => ({
                 on: go.TypeInstantiation.string(member.value),
                 body: go.codeblock((writer) => {
@@ -69,8 +69,8 @@ export class EnumGenerator extends AbstractModelGenerator {
                 writer.write('return "", ');
                 writer.writeNode(
                     this.context.callFmtErrorf("%s is not a valid %T", [
-                        go.identifier({ name: STRING_VALUE_PARAM_NAME }),
-                        go.identifier({ name: TYPE_PARAMETER_NAME })
+                        go.identifier(STRING_VALUE_PARAM_NAME),
+                        go.identifier(TYPE_PARAMETER_NAME)
                     ])
                 );
                 writer.newLine();
