@@ -25,21 +25,40 @@ export class SubClientGenerator {
     private readonly context: SdkGeneratorContext;
     private readonly serviceId?: ServiceId;
     private readonly service?: HttpService;
+    private readonly httpClientPropertyInfo;
 
     public constructor({ subpackage, context, serviceId, service }: SubClientGenerator.Args) {
         this.subpackage = subpackage;
         this.context = context;
         this.serviceId = serviceId;
         this.service = service;
+        this.httpClientPropertyInfo = this.getHttpClientPropertyInfo();
     }
 
-    private getSubClientName() {
+    private getHttpClientPropertyInfo() {
+        const subpackages = this.getSubpackages();
+        const otherPropertyNames = new Set(subpackages.map((subpackage) => subpackage.name.camelCase.unsafeName));
+        let propertyName = "httpClient";
+        while (otherPropertyNames.has(propertyName)) {
+            propertyName = "_" + propertyName;
+        }
+        return {
+            propertyName,
+            swiftType: swift.Type.custom("HTTPClient")
+        };
+    }
+
+    private getClientName() {
         return `${this.subpackage.name.pascalCase.unsafeName}Client`;
+    }
+
+    private getSubClientName(subpackage: Subpackage) {
+        return `${subpackage.name.pascalCase.unsafeName}Client`;
     }
 
     public generate(): SwiftFile {
         const swiftClass = swift.class_({
-            name: this.getSubClientName(),
+            name: this.getClientName(),
             final: true,
             accessLevel: swift.AccessLevel.Public,
             conformances: [swift.Protocol.Sendable],
@@ -56,7 +75,17 @@ export class SubClientGenerator {
     }
 
     private generateProperties(): swift.Property[] {
+        const subpackages = this.getSubpackages();
         return [
+            ...subpackages.map((subpackage) => {
+                const clientName = this.getSubClientName(subpackage);
+                return swift.property({
+                    unsafeName: subpackage.name.camelCase.unsafeName,
+                    accessLevel: swift.AccessLevel.Public,
+                    declarationType: swift.DeclarationType.Let,
+                    type: swift.Type.custom(clientName)
+                });
+            }),
             swift.property({
                 unsafeName: "httpClient",
                 accessLevel: swift.AccessLevel.Private,
