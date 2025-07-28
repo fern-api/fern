@@ -72,7 +72,16 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
 
     private replaceTemplateVariables(content: string): string {
         // Replace CLIENT_NAME template variable if context supports it
-        if ("getClientName" in this.context && typeof this.context.getClientName === "function") {
+        if (
+            "getApiClientBuilderClientName" in this.context &&
+            typeof this.context.getApiClientBuilderClientName === "function"
+        ) {
+            const clientName = (
+                this.context as { getApiClientBuilderClientName(): string }
+            ).getApiClientBuilderClientName();
+            content = content.replace(/\{\{CLIENT_NAME\}\}/g, clientName);
+        } else if ("getClientName" in this.context && typeof this.context.getClientName === "function") {
+            // Fallback to original method for backward compatibility
             const clientName = (this.context as { getClientName(): string }).getClientName();
             content = content.replace(/\{\{CLIENT_NAME\}\}/g, clientName);
         }

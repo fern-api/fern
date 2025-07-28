@@ -27,6 +27,21 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
         return this.customConfig.clientName ?? `${this.ir.apiName.pascalCase.safeName}Client`;
     }
 
+    public getApiClientBuilderClientName(): string {
+        // For api_client_builder.rs template, we need to reference the actual client that exists
+        const subpackages = this.ir.rootPackage.subpackages
+            .map((subpackageId) => this.getSubpackageOrThrow(subpackageId))
+            .filter((subpackage) => subpackage.service != null || subpackage.hasEndpointsInTree);
+
+        if (subpackages.length === 1 && subpackages[0] != null) {
+            // Single service - use the sub-client name
+            return `${subpackages[0].name.pascalCase.safeName}Client`;
+        } else {
+            // Multiple services or no subpackages - use the root client name
+            return this.getClientName();
+        }
+    }
+
     public getCoreAsIsFiles(): AsIsFileDefinition[] {
         return Object.values(AsIsFiles);
     }
