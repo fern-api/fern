@@ -6,7 +6,7 @@ public final class ExhaustiveClient: Sendable {
     public let noReqBody: NoReqBodyClient
     public let reqWithHeaders: ReqWithHeadersClient
     public let types: TypesClient
-    private let config: ClientConfig
+    private let httpClient: HTTPClient
 
     public init(
         baseURL: String,
@@ -17,7 +17,7 @@ public final class ExhaustiveClient: Sendable {
         maxRetries: Int? = nil,
         urlSession: URLSession? = nil
     ) {
-        self.config = ClientConfig(
+        let config = ClientConfig(
             baseURL: baseURL,
             apiKey: apiKey,
             token: token,
@@ -25,6 +25,7 @@ public final class ExhaustiveClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
+        self.httpClient = HTTPClient(config: config)
         self.endpoints = EndpointsClient(config: config)
         self.generalErrors = GeneralErrorsClient(config: config)
         self.inlinedRequests = InlinedRequestsClient(config: config)

@@ -1,4 +1,6 @@
 public final class V2Client: Sendable {
+    public let problem: ProblemClient
+    public let v3: V3Client
     private let httpClient: HTTPClient
 
     public init(config: ClientConfig) {

@@ -1,6 +1,6 @@
 public final class PublicObjectClient: Sendable {
     public let service: ServiceClient
-    private let config: ClientConfig
+    private let httpClient: HTTPClient
 
     public init(
         baseURL: String,
@@ -11,7 +11,7 @@ public final class PublicObjectClient: Sendable {
         maxRetries: Int? = nil,
         urlSession: URLSession? = nil
     ) {
-        self.config = ClientConfig(
+        let config = ClientConfig(
             baseURL: baseURL,
             apiKey: apiKey,
             token: token,
@@ -19,6 +19,7 @@ public final class PublicObjectClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
+        self.httpClient = HTTPClient(config: config)
         self.service = ServiceClient(config: config)
     }
 }

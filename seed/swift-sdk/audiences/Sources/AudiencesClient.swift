@@ -5,7 +5,7 @@ public final class AudiencesClient: Sendable {
     public let folderC: FolderCClient
     public let folderD: FolderDClient
     public let foo: FooClient
-    private let config: ClientConfig
+    private let httpClient: HTTPClient
 
     public init(
         baseURL: String = AudiencesEnvironment.environmentA.rawValue,
@@ -16,7 +16,7 @@ public final class AudiencesClient: Sendable {
         maxRetries: Int? = nil,
         urlSession: URLSession? = nil
     ) {
-        self.config = ClientConfig(
+        let config = ClientConfig(
             baseURL: baseURL,
             apiKey: apiKey,
             token: token,
@@ -24,6 +24,7 @@ public final class AudiencesClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
+        self.httpClient = HTTPClient(config: config)
         self.commons = CommonsClient(config: config)
         self.folderA = FolderAClient(config: config)
         self.folderB = FolderBClient(config: config)

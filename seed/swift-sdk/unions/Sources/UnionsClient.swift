@@ -2,7 +2,7 @@ public final class UnionsClient: Sendable {
     public let bigunion: BigunionClient
     public let types: TypesClient
     public let union: UnionClient
-    private let config: ClientConfig
+    private let httpClient: HTTPClient
 
     public init(
         baseURL: String,
@@ -13,7 +13,7 @@ public final class UnionsClient: Sendable {
         maxRetries: Int? = nil,
         urlSession: URLSession? = nil
     ) {
-        self.config = ClientConfig(
+        let config = ClientConfig(
             baseURL: baseURL,
             apiKey: apiKey,
             token: token,
@@ -21,6 +21,7 @@ public final class UnionsClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
+        self.httpClient = HTTPClient(config: config)
         self.bigunion = BigunionClient(config: config)
         self.types = TypesClient(config: config)
         self.union = UnionClient(config: config)

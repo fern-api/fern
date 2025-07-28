@@ -1,7 +1,7 @@
 public final class MultiUrlEnvironmentNoDefaultClient: Sendable {
     public let ec2: Ec2Client
     public let s3: S3Client
-    private let config: ClientConfig
+    private let httpClient: HTTPClient
 
     public init(
         baseURL: String,
@@ -12,7 +12,7 @@ public final class MultiUrlEnvironmentNoDefaultClient: Sendable {
         maxRetries: Int? = nil,
         urlSession: URLSession? = nil
     ) {
-        self.config = ClientConfig(
+        let config = ClientConfig(
             baseURL: baseURL,
             apiKey: apiKey,
             token: token,
@@ -20,6 +20,7 @@ public final class MultiUrlEnvironmentNoDefaultClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
+        self.httpClient = HTTPClient(config: config)
         self.ec2 = Ec2Client(config: config)
         self.s3 = S3Client(config: config)
     }

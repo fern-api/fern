@@ -1,7 +1,7 @@
 public final class MixedFileDirectoryClient: Sendable {
     public let organization: OrganizationClient
     public let user: UserClient
-    private let config: ClientConfig
+    private let httpClient: HTTPClient
 
     public init(
         baseURL: String,
@@ -12,7 +12,7 @@ public final class MixedFileDirectoryClient: Sendable {
         maxRetries: Int? = nil,
         urlSession: URLSession? = nil
     ) {
-        self.config = ClientConfig(
+        let config = ClientConfig(
             baseURL: baseURL,
             apiKey: apiKey,
             token: token,
@@ -20,6 +20,7 @@ public final class MixedFileDirectoryClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
+        self.httpClient = HTTPClient(config: config)
         self.organization = OrganizationClient(config: config)
         self.user = UserClient(config: config)
     }

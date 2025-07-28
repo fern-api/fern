@@ -1,4 +1,5 @@
 public final class EventsClient: Sendable {
+    public let metadata: MetadataClient
     private let httpClient: HTTPClient
 
     public init(config: ClientConfig) {

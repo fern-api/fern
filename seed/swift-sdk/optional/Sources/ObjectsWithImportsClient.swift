@@ -1,6 +1,6 @@
 public final class ObjectsWithImportsClient: Sendable {
     public let optional: OptionalClient
-    private let config: ClientConfig
+    private let httpClient: HTTPClient
 
     public init(
         baseURL: String,
@@ -11,7 +11,7 @@ public final class ObjectsWithImportsClient: Sendable {
         maxRetries: Int? = nil,
         urlSession: URLSession? = nil
     ) {
-        self.config = ClientConfig(
+        let config = ClientConfig(
             baseURL: baseURL,
             apiKey: apiKey,
             token: token,
@@ -19,6 +19,7 @@ public final class ObjectsWithImportsClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
+        self.httpClient = HTTPClient(config: config)
         self.optional = OptionalClient(config: config)
     }
 }

@@ -4,7 +4,7 @@ public final class ExamplesClient: Sendable {
     public let health: HealthClient
     public let service: ServiceClient
     public let types: TypesClient
-    private let config: ClientConfig
+    private let httpClient: HTTPClient
 
     public init(
         baseURL: String = ExamplesEnvironment.production.rawValue,
@@ -15,7 +15,7 @@ public final class ExamplesClient: Sendable {
         maxRetries: Int? = nil,
         urlSession: URLSession? = nil
     ) {
-        self.config = ClientConfig(
+        let config = ClientConfig(
             baseURL: baseURL,
             apiKey: apiKey,
             token: token,
@@ -23,6 +23,7 @@ public final class ExamplesClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
+        self.httpClient = HTTPClient(config: config)
         self.commons = CommonsClient(config: config)
         self.file = FileClient(config: config)
         self.health = HealthClient(config: config)

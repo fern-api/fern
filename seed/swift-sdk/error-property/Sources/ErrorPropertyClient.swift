@@ -1,7 +1,7 @@
 public final class ErrorPropertyClient: Sendable {
     public let errors: ErrorsClient
     public let propertyBasedError: PropertyBasedErrorClient
-    private let config: ClientConfig
+    private let httpClient: HTTPClient
 
     public init(
         baseURL: String,
@@ -12,7 +12,7 @@ public final class ErrorPropertyClient: Sendable {
         maxRetries: Int? = nil,
         urlSession: URLSession? = nil
     ) {
-        self.config = ClientConfig(
+        let config = ClientConfig(
             baseURL: baseURL,
             apiKey: apiKey,
             token: token,
@@ -20,6 +20,7 @@ public final class ErrorPropertyClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
+        self.httpClient = HTTPClient(config: config)
         self.errors = ErrorsClient(config: config)
         self.propertyBasedError = PropertyBasedErrorClient(config: config)
     }
