@@ -30,4 +30,24 @@ public final class ExamplesClient: Sendable {
         self.service = ServiceClient(config: config)
         self.types = TypesClient(config: config)
     }
+
+    public func echo(request: String, requestOptions: RequestOptions? = nil) async throws -> String {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: String.self
+        )
+    }
+
+    public func createType(request: Type, requestOptions: RequestOptions? = nil) async throws -> Identifier {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: Identifier.self
+        )
+    }
 }

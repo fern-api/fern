@@ -20,4 +20,12 @@ public final class LicenseClient: Sendable {
         )
         self.httpClient = HTTPClient(config: config)
     }
+
+    public func get(requestOptions: RequestOptions? = nil) async throws -> Void {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/",
+            requestOptions: requestOptions
+        )
+    }
 }

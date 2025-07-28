@@ -4,7 +4,7 @@ import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { getSwiftTypeForTypeReference } from "@fern-api/swift-model";
 
-import { HttpEndpoint, HttpMethod, HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, HttpMethod, Subpackage } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { formatEndpointPathForSwift } from "./util/format-endpoint-path-for-swift";
@@ -15,24 +15,24 @@ export declare namespace SubClientGenerator {
     interface Args {
         subpackage: Subpackage;
         context: SdkGeneratorContext;
-        serviceId?: ServiceId;
-        service?: HttpService;
     }
 }
 
 export class SubClientGenerator {
     private readonly subpackage: Subpackage;
     private readonly context: SdkGeneratorContext;
-    private readonly serviceId?: ServiceId;
-    private readonly service?: HttpService;
     private readonly httpClientPropertyInfo;
 
-    public constructor({ subpackage, context, serviceId, service }: SubClientGenerator.Args) {
+    public constructor({ subpackage, context }: SubClientGenerator.Args) {
         this.subpackage = subpackage;
         this.context = context;
-        this.serviceId = serviceId;
-        this.service = service;
         this.httpClientPropertyInfo = this.getHttpClientPropertyInfo();
+    }
+
+    private get service() {
+        return this.subpackage.service != null
+            ? this.context.getHttpServiceOrThrow(this.subpackage.service)
+            : undefined;
     }
 
     private getHttpClientPropertyInfo() {

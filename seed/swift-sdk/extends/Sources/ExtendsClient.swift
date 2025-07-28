@@ -20,4 +20,13 @@ public final class ExtendsClient: Sendable {
         )
         self.httpClient = HTTPClient(config: config)
     }
+
+    public func extendedInlineRequestBody(request: Inlined, requestOptions: RequestOptions? = nil) async throws -> Void {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/extends/extended-inline-request-body",
+            body: request,
+            requestOptions: requestOptions
+        )
+    }
 }

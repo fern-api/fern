@@ -78,12 +78,9 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
 
         // Resources/**/*.swift
         Object.entries(context.ir.subpackages).forEach(([_, subpackage]) => {
-            const service = subpackage.service != null ? context.getHttpServiceOrThrow(subpackage.service) : undefined;
             const subclientGenerator = new SubClientGenerator({
                 context,
-                subpackage,
-                serviceId: subpackage.service,
-                service
+                subpackage
             });
             files.push(subclientGenerator.generate());
         });

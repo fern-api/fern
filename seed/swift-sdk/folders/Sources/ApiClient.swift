@@ -24,4 +24,12 @@ public final class ApiClient: Sendable {
         self.a = AClient(config: config)
         self.folder = FolderClient(config: config)
     }
+
+    public func foo(requestOptions: RequestOptions? = nil) async throws -> Void {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/",
+            requestOptions: requestOptions
+        )
+    }
 }
