@@ -25,10 +25,10 @@
       "path": "../../../workspace/browser-compatible-fern-workspace"
     },
     {
-      "path": "../../../workspace/loader"
+      "path": "../../../workspace/lazy-fern-workspace"
     },
     {
-      "path": "../../../workspace/lazy-fern-workspace"
+      "path": "../../../workspace/loader"
     }
   ]
 }

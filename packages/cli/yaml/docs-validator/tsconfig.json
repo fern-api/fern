@@ -23,20 +23,28 @@
       "path": "../../docs-markdown-utils"
     },
     {
+      "path": "../../docs-resolver"
+    },
+    {
+      "path": "../../fern-definition/schema"
+    },
+    {
+      "path": "../../generation/ir-generator"
+    },
+    {
       "path": "../../logger"
-    },
-    {
-      "path": "../../task-context"
-    },
-    {
-      "path": "../../workspace/loader"
     },
     {
       "path": "../../project-loader"
     },
     {
-      "path": "../../fern-definition/schema"
+      "path": "../../task-context"
     },
-    { "path": "../../docs-resolver" }
+    {
+      "path": "../../workspace/lazy-fern-workspace"
+    },
+    {
+      "path": "../../workspace/loader"
+    }
   ]
 }

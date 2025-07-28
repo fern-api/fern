@@ -1,24 +1,67 @@
 {
   "extends": "@fern-api/configs/tsconfig/main.json",
-  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
-  "include": ["./src/**/*"],
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src"
+  },
+  "include": [
+    "./src/**/*"
+  ],
   "references": [
-    { "path": "../../../../packages/commons/core-utils" },
-    { "path": "../../../../packages/commons/fs-utils" },
-    { "path": "../../model/type-generator" },
-    { "path": "../../model/type-reference-converters" },
-    { "path": "../../model/type-reference-example-generator" },
-    { "path": "../../model/type-schema-generator" },
-    { "path": "../../utils/commons" },
-    { "path": "../../utils/contexts" },
-    { "path": "../../utils/resolvers" },
-    { "path": "../express-endpoint-type-schemas-generator" },
-    { "path": "../express-error-generator" },
-    { "path": "../express-error-schema-generator" },
-    { "path": "../express-inlined-request-body-generator" },
-    { "path": "../express-inlined-request-body-schema-generator" },
-    { "path": "../express-register-generator" },
-    { "path": "../express-service-generator" },
-    { "path": "../generic-express-error-generators" }
+    {
+      "path": "../../../../packages/cli/logger"
+    },
+    {
+      "path": "../../../../packages/commons/core-utils"
+    },
+    {
+      "path": "../../../../packages/commons/fs-utils"
+    },
+    {
+      "path": "../../model/type-generator"
+    },
+    {
+      "path": "../../model/type-reference-converters"
+    },
+    {
+      "path": "../../model/type-reference-example-generator"
+    },
+    {
+      "path": "../../model/type-schema-generator"
+    },
+    {
+      "path": "../../utils/commons"
+    },
+    {
+      "path": "../../utils/contexts"
+    },
+    {
+      "path": "../../utils/resolvers"
+    },
+    {
+      "path": "../express-endpoint-type-schemas-generator"
+    },
+    {
+      "path": "../express-error-generator"
+    },
+    {
+      "path": "../express-error-schema-generator"
+    },
+    {
+      "path": "../express-inlined-request-body-generator"
+    },
+    {
+      "path": "../express-inlined-request-body-schema-generator"
+    },
+    {
+      "path": "../express-register-generator"
+    },
+    {
+      "path": "../express-service-generator"
+    },
+    {
+      "path": "../generic-express-error-generators"
+    }
   ]
 }

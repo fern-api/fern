@@ -17,31 +17,7 @@
       "path": "../../../commons/path-utils"
     },
     {
-      "path": "../../../commons/logging-execa"
-    },
-    {
-      "path": "../../api-importers/conjure/conjure-to-fern"
-    },
-    {
-      "path": "../../../core"
-    },
-    {
       "path": "../../configuration"
-    },
-    {
-      "path": "../../cli-logger"
-    },
-    {
-      "path": "../../logger"
-    },
-    {
-      "path": "../../api-importers/openapi/openapi-ir-parser"
-    },
-    {
-      "path": "../../api-importers/openapi/openapi-ir"
-    },
-    {
-      "path": "../../semver-utils"
     },
     {
       "path": "../../task-context"

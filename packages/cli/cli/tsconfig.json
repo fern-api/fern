@@ -10,16 +10,19 @@
   ],
   "references": [
     {
+      "path": "../../commons/casings-generator"
+    },
+    {
       "path": "../../commons/core-utils"
     },
     {
       "path": "../../commons/fs-utils"
     },
     {
-      "path": "../../commons/logging-execa"
+      "path": "../../commons/ir-utils"
     },
     {
-      "path": "../../commons/ir-utils"
+      "path": "../../commons/logging-execa"
     },
     {
       "path": "../../core"
@@ -31,7 +34,16 @@
       "path": "../auth"
     },
     {
+      "path": "../cli-logger"
+    },
+    {
+      "path": "../cli-migrations"
+    },
+    {
       "path": "../cli-source-resolver"
+    },
+    {
+      "path": "../configuration"
     },
     {
       "path": "../configuration-loader"
@@ -40,22 +52,31 @@
       "path": "../docs-preview"
     },
     {
+      "path": "../docs-resolver"
+    },
+    {
+      "path": "../fern-definition/formatter"
+    },
+    {
+      "path": "../fern-definition/ir-to-jsonschema"
+    },
+    {
+      "path": "../fern-definition/schema"
+    },
+    {
+      "path": "../fern-definition/validator"
+    },
+    {
       "path": "../generation/ir-generator"
     },
     {
       "path": "../generation/ir-migrations"
     },
     {
-      "path": "../generation/local-generation/local-workspace-runner"
-    },
-    {
-      "path": "../generation/remote-generation/remote-workspace-runner"
+      "path": "../generation/protoc-gen-fern"
     },
     {
       "path": "../init"
-    },
-    {
-      "path": "../cli-logger"
     },
     {
       "path": "../logger"
@@ -65,15 +86,6 @@
     },
     {
       "path": "../mock"
-    },
-    {
-      "path": "../api-importers/openapi/openapi-ir"
-    },
-    {
-      "path": "../api-importers/openapi/openapi-ir-to-fern"
-    },
-    {
-      "path": "../api-importers/openapi/openapi-ir-parser"
     },
     {
       "path": "../posthog-manager"
@@ -91,46 +103,22 @@
       "path": "../task-context"
     },
     {
-      "path": "../workspace/loader"
-    },
-    {
       "path": "../workspace/commons"
     },
     {
       "path": "../workspace/lazy-fern-workspace"
     },
     {
-      "path": "../yaml/docs-validator"
-    },
-    {
-      "path": "../yaml/generators-validator"
-    },
-    {
-      "path": "../fern-definition/formatter"
-    },
-    {
-      "path": "../fern-definition/validator"
+      "path": "../workspace/loader"
     },
     {
       "path": "../workspace/oss-validator"
     },
     {
-      "path": "../cli-migrations"
+      "path": "../yaml/docs-validator"
     },
     {
-      "path": "../fern-definition/schema"
-    },
-    {
-      "path": "../fern-definition/ir-to-jsonschema"
-    },
-    {
-      "path": "../docs-resolver"
-    },
-    {
-      "path": "../../../generators/typescript/utils/commons"
-    },
-    {
-      "path": "../generation/protoc-gen-fern"
+      "path": "../yaml/generators-validator"
     }
   ]
 }

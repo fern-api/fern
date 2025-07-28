@@ -10,28 +10,19 @@
   ],
   "references": [
     {
+      "path": "../../../commons/core-utils"
+    },
+    {
       "path": "../../../commons/path-utils"
-    },
-    {
-      "path": "../../api-importers/openapi/openapi-ir"
-    },
-    {
-      "path": "../../api-importers/openapi/openapi-ir-parser"
-    },
-    {
-      "path": "../../api-importers/openapi/openapi-ir-to-fern"
     },
     {
       "path": "../../configuration"
     },
     {
-      "path": "../../logger"
+      "path": "../../fern-definition/schema"
     },
     {
       "path": "../../task-context"
-    },
-    {
-      "path": "../../fern-definition/schema"
     }
   ]
 }

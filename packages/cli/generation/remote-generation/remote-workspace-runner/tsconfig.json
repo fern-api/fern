@@ -16,6 +16,9 @@
       "path": "../../../../commons/fs-utils"
     },
     {
+      "path": "../../../../commons/logging-execa"
+    },
+    {
       "path": "../../../../core"
     },
     {

@@ -1,5 +1,22 @@
 {
-    "extends": "@fern-api/configs/tsconfig/main.json",
-    "include": ["src/**/*.ts"],
-    "exclude": ["src/**/__test__"]
+  "extends": "@fern-api/configs/tsconfig/main.json",
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/**/__test__"],
+  "references": [
+    {
+      "path": "../../../packages/commons/core-utils"
+    },
+    {
+      "path": "../../../packages/commons/fs-utils"
+    },
+    {
+      "path": "../../base"
+    },
+    {
+      "path": "../ast"
+    },
+    {
+      "path": "../base"
+    }
+  ]
 }

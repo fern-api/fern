@@ -40,7 +40,13 @@
       "path": "../../../../commons/logging-execa"
     },
     {
+      "path": "../../../../core"
+    },
+    {
       "path": "../../../../ir-sdk"
+    },
+    {
+      "path": "../../../auth"
     },
     {
       "path": "../../../cli-source-resolver"
@@ -49,31 +55,22 @@
       "path": "../../../configuration"
     },
     {
+      "path": "../../../configuration-loader"
+    },
+    {
       "path": "../../../task-context"
     },
     {
-      "path": "../../../workspace/loader"
+      "path": "../../../workspace/commons"
     },
     {
-      "path": "../../../workspace/commons"
+      "path": "../../../workspace/loader"
     },
     {
       "path": "../../ir-generator"
     },
     {
       "path": "../../ir-migrations"
-    },
-    {
-      "path": "../docker-utils"
-    },
-    {
-      "path": "../../../auth"
-    },
-    {
-      "path": "../../../../../packages/core"
-    },
-    {
-      "path": "../../../configuration-loader"
     }
   ]
 }

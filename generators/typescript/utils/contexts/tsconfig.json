@@ -1,7 +1,25 @@
 {
   "extends": "@fern-api/configs/tsconfig/main.json",
-  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
-  "include": ["./src/**/*"],
-  "exclude": ["./src/**/__test__/**/generated"],
-  "references": [{ "path": "../../../../packages/cli/logger" }, { "path": "../commons" }]
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src"
+  },
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "./src/**/__test__/**/generated"
+  ],
+  "references": [
+    {
+      "path": "../../../../packages/cli/logger"
+    },
+    {
+      "path": "../../../base"
+    },
+    {
+      "path": "../commons"
+    }
+  ]
 }

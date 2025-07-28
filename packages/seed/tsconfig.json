@@ -13,9 +13,6 @@
       "path": "../cli/configuration"
     },
     {
-      "path": "../cli/generation/local-generation/local-workspace-runner"
-    },
-    {
       "path": "../cli/logger"
     },
     {
@@ -25,10 +22,10 @@
       "path": "../cli/task-context"
     },
     {
-      "path": "../cli/workspace/loader"
+      "path": "../cli/workspace/commons"
     },
     {
-      "path": "../cli/workspace/commons"
+      "path": "../cli/workspace/loader"
     },
     {
       "path": "../commons/core-utils"
