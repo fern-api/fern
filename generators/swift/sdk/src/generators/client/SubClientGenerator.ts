@@ -63,9 +63,10 @@ export class SubClientGenerator {
             methods: this.generateMethods()
         });
         const fileContents = swiftClass.toString();
+        const fernFilepathDir = this.context.getDirectoryForFernFilepath(this.subpackage.fernFilepath);
         return new SwiftFile({
             filename: `${this.subpackage.name.pascalCase.safeName}Client.swift`,
-            directory: RelativeFilePath.of("Resources"),
+            directory: RelativeFilePath.of(`Resources/${fernFilepathDir}`),
             fileContents
         });
     }
