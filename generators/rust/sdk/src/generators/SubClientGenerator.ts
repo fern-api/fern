@@ -57,7 +57,7 @@ use reqwest::Method;
 
     private generateFields(): rust.Client.Field[] {
         // Use HttpClient which contains the configuration
-        return [{ name: "http_client", type: "HttpClient", visibility: "private" }];
+        return [{ name: "http_client", type: "HttpClient", visibility: "pub" }];
     }
 
     private generateConstructor(): rust.Client.SimpleMethod {
@@ -97,7 +97,7 @@ use reqwest::Method;
         ];
 
         const httpMethod = this.getHttpMethod(endpoint);
-        const path = this.getEndpointPath(endpoint);
+        const pathExpression = this.getPathExpression(endpoint);
         const requestBody = this.getRequestBody(endpoint, params);
 
         return {
@@ -107,7 +107,7 @@ use reqwest::Method;
             isAsync: true,
             body: `self.http_client.execute_request(
             Method::${httpMethod},
-            "${path}",
+            ${pathExpression},
             ${requestBody},
             options,
         ).await`
@@ -164,20 +164,26 @@ use reqwest::Method;
         return endpoint.method.toUpperCase();
     }
 
-    private getEndpointPath(endpoint: HttpEndpoint): string {
-        // Convert path parameters to string interpolation format
+    private getPathExpression(endpoint: HttpEndpoint): string {
+        const pathParams: string[] = [];
         let path = endpoint.fullPath.head;
+
         endpoint.fullPath.parts.forEach((part) => {
             if (part.pathParameter) {
                 const pathParam = endpoint.allPathParameters.find((p) => p.name.originalName === part.pathParameter);
                 if (pathParam) {
-                    path += `/{${pathParam.name.snakeCase.safeName}}`;
+                    path += "/{}";
+                    pathParams.push(pathParam.name.snakeCase.safeName);
                 }
             } else {
                 path += part.tail;
             }
         });
-        return path;
+
+        if (pathParams.length > 0) {
+            return `&format!("${path}", ${pathParams.join(", ")})`;
+        }
+        return `"${path}"`;
     }
 
     private getRequestBody(endpoint: HttpEndpoint, params: EndpointParameter[]): string {

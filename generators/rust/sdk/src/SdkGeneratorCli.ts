@@ -174,6 +174,11 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         // Add module declarations
         moduleDeclarations.push(new ModuleDeclaration({ name: "client", isPublic: true }));
         moduleDeclarations.push(new ModuleDeclaration({ name: "error", isPublic: true }));
+        moduleDeclarations.push(new ModuleDeclaration({ name: "client_config", isPublic: true }));
+        moduleDeclarations.push(new ModuleDeclaration({ name: "api_client_builder", isPublic: true }));
+        moduleDeclarations.push(new ModuleDeclaration({ name: "http_client", isPublic: true }));
+        moduleDeclarations.push(new ModuleDeclaration({ name: "request_options", isPublic: true }));
+        moduleDeclarations.push(new ModuleDeclaration({ name: "client_error", isPublic: true }));
 
         if (hasTypes) {
             moduleDeclarations.push(new ModuleDeclaration({ name: "types", isPublic: true }));
@@ -202,6 +207,13 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         if (hasTypes) {
             useStatements.push(new UseStatement({ path: "types", items: ["*"], isPublic: true }));
         }
+
+        // Add re-exports
+        useStatements.push(new UseStatement({ path: "client_config", items: ["*"], isPublic: true }));
+        useStatements.push(new UseStatement({ path: "api_client_builder", items: ["*"], isPublic: true }));
+        useStatements.push(new UseStatement({ path: "http_client", items: ["*"], isPublic: true }));
+        useStatements.push(new UseStatement({ path: "request_options", items: ["*"], isPublic: true }));
+        useStatements.push(new UseStatement({ path: "client_error", items: ["*"], isPublic: true }));
 
         return new Module({
             moduleDeclarations,

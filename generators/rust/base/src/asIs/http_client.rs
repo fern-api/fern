@@ -1,4 +1,3 @@
-use std::collections::HashMap;
 use std::str::FromStr;
 use reqwest::{Client, Request, Response, Method, header::{HeaderName, HeaderValue}};
 use serde::de::DeserializeOwned;

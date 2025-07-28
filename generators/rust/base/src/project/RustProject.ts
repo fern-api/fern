@@ -55,14 +55,29 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
         const { context, absolutePathToOutputDirectory } = this;
         await Promise.all(
             context.getCoreAsIsFiles().map(async (def) => {
+                let fileContents = await def.loadContents();
+
+                // Replace template variables
+                fileContents = this.replaceTemplateVariables(fileContents);
+
                 const rustFile = new RustFile({
                     filename: def.filename,
                     directory: def.directory,
-                    fileContents: await def.loadContents()
+                    fileContents
                 });
                 await rustFile.write(absolutePathToOutputDirectory);
             })
         );
+    }
+
+    private replaceTemplateVariables(content: string): string {
+        // Replace CLIENT_NAME template variable if context supports it
+        if ("getClientName" in this.context && typeof this.context.getClientName === "function") {
+            const clientName = (this.context as { getClientName(): string }).getClientName();
+            content = content.replace(/\{\{CLIENT_NAME\}\}/g, clientName);
+        }
+
+        return content;
     }
 
     private async writeCargoToml(): Promise<void> {

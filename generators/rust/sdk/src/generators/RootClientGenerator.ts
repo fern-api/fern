@@ -60,11 +60,10 @@ export class RootClientGenerator {
 
     private generateFields(subpackages: Subpackage[]): rust.Client.Field[] {
         return [
-            // Private config field to store the client configuration
             {
                 name: "config",
                 type: "ClientConfig",
-                visibility: "private" as const
+                visibility: "pub" as const
             },
             // Generate fields for each sub-client from IR subpackages
             ...subpackages.map((subpackage) => ({
