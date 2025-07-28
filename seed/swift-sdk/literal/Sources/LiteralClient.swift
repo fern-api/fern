@@ -23,11 +23,11 @@ public final class LiteralClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
-        self.httpClient = HTTPClient(config: config)
         self.headers = HeadersClient(config: config)
         self.inlined = InlinedClient(config: config)
         self.path = PathClient(config: config)
         self.query = QueryClient(config: config)
         self.reference = ReferenceClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 }

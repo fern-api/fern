@@ -24,12 +24,12 @@ public final class AudiencesClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
-        self.httpClient = HTTPClient(config: config)
         self.commons = CommonsClient(config: config)
         self.folderA = FolderAClient(config: config)
         self.folderB = FolderBClient(config: config)
         self.folderC = FolderCClient(config: config)
         self.folderD = FolderDClient(config: config)
         self.foo = FooClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 }

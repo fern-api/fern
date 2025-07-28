@@ -19,7 +19,7 @@ public final class ServerSentEventsClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
-        self.httpClient = HTTPClient(config: config)
         self.completions = CompletionsClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 }

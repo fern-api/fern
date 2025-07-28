@@ -19,8 +19,8 @@ public final class PackageYmlClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
-        self.httpClient = HTTPClient(config: config)
         self.service = ServiceClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 
     public func echo(id: String, request: EchoRequest, requestOptions: RequestOptions? = nil) async throws -> String {

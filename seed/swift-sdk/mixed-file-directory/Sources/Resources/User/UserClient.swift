@@ -3,6 +3,7 @@ public final class UserClient: Sendable {
     private let httpClient: HTTPClient
 
     public init(config: ClientConfig) {
+        self.events = EventsClient(config: config)
         self.httpClient = HTTPClient(config: config)
     }
 

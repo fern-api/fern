@@ -19,7 +19,7 @@ public final class MultiLineDocsClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
-        self.httpClient = HTTPClient(config: config)
         self.user = UserClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 }

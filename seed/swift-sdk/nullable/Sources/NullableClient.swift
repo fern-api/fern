@@ -19,7 +19,7 @@ public final class NullableClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
-        self.httpClient = HTTPClient(config: config)
         self.nullable = NullableClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 }

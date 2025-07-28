@@ -20,8 +20,8 @@ public final class ObjectsWithImportsClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
-        self.httpClient = HTTPClient(config: config)
         self.commons = CommonsClient(config: config)
         self.file = FileClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 }

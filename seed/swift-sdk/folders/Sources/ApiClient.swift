@@ -20,9 +20,9 @@ public final class ApiClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
-        self.httpClient = HTTPClient(config: config)
         self.a = AClient(config: config)
         self.folder = FolderClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 
     public func foo(requestOptions: RequestOptions? = nil) async throws -> Void {

@@ -19,7 +19,7 @@ public final class OauthClientCredentialsDefaultClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
-        self.httpClient = HTTPClient(config: config)
         self.auth = AuthClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 }

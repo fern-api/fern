@@ -28,7 +28,6 @@ public final class TraceClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
-        self.httpClient = HTTPClient(config: config)
         self.v2 = V2Client(config: config)
         self.admin = AdminClient(config: config)
         self.commons = CommonsClient(config: config)
@@ -39,5 +38,6 @@ public final class TraceClient: Sendable {
         self.problem = ProblemClient(config: config)
         self.submission = SubmissionClient(config: config)
         self.sysprop = SyspropClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 }

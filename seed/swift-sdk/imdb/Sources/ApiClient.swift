@@ -19,7 +19,7 @@ public final class ApiClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
-        self.httpClient = HTTPClient(config: config)
         self.imdb = ImdbClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 }

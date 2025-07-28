@@ -20,8 +20,8 @@ public final class CustomAuthClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
-        self.httpClient = HTTPClient(config: config)
         self.customAuth = CustomAuthClient(config: config)
         self.errors = ErrorsClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 }

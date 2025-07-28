@@ -3,6 +3,7 @@ public final class FolderCClient: Sendable {
     private let httpClient: HTTPClient
 
     public init(config: ClientConfig) {
+        self.common = CommonClient(config: config)
         self.httpClient = HTTPClient(config: config)
     }
 }

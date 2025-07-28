@@ -19,7 +19,7 @@ public final class EmptyClientsClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
-        self.httpClient = HTTPClient(config: config)
         self.level1 = Level1Client(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 }

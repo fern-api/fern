@@ -19,7 +19,7 @@ public final class SingleUrlEnvironmentNoDefaultClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
-        self.httpClient = HTTPClient(config: config)
         self.dummy = DummyClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 }

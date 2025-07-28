@@ -23,11 +23,11 @@ public final class EnumClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
-        self.httpClient = HTTPClient(config: config)
         self.headers = HeadersClient(config: config)
         self.inlinedRequest = InlinedRequestClient(config: config)
         self.pathParam = PathParamClient(config: config)
         self.queryParam = QueryParamClient(config: config)
         self.unknown = UnknownClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 }

@@ -19,7 +19,7 @@ public final class NurseryApiClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
-        self.httpClient = HTTPClient(config: config)
         self.package = PackageClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 }

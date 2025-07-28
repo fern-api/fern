@@ -20,8 +20,8 @@ public final class PathParametersClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
-        self.httpClient = HTTPClient(config: config)
         self.organizations = OrganizationsClient(config: config)
         self.user = UserClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 }

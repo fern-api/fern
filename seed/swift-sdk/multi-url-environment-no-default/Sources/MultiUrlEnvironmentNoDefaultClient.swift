@@ -20,8 +20,8 @@ public final class MultiUrlEnvironmentNoDefaultClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
-        self.httpClient = HTTPClient(config: config)
         self.ec2 = Ec2Client(config: config)
         self.s3 = S3Client(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 }

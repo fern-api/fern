@@ -3,6 +3,7 @@ public final class EventsClient: Sendable {
     private let httpClient: HTTPClient
 
     public init(config: ClientConfig) {
+        self.metadata = MetadataClient(config: config)
         self.httpClient = HTTPClient(config: config)
     }
 

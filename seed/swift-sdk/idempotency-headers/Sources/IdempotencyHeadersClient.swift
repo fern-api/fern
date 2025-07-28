@@ -19,7 +19,7 @@ public final class IdempotencyHeadersClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
-        self.httpClient = HTTPClient(config: config)
         self.payment = PaymentClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 }

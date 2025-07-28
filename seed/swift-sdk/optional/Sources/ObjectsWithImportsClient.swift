@@ -19,7 +19,7 @@ public final class ObjectsWithImportsClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
-        self.httpClient = HTTPClient(config: config)
         self.optional = OptionalClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 }

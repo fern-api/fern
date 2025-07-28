@@ -19,7 +19,7 @@ public final class UndiscriminatedUnionsClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
-        self.httpClient = HTTPClient(config: config)
         self.union = UnionClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 }

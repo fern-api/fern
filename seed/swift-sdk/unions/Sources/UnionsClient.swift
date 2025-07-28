@@ -21,9 +21,9 @@ public final class UnionsClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
-        self.httpClient = HTTPClient(config: config)
         self.bigunion = BigunionClient(config: config)
         self.types = TypesClient(config: config)
         self.union = UnionClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 }

@@ -6,6 +6,10 @@ public final class TypesClient: Sendable {
     private let httpClient: HTTPClient
 
     public init(config: ClientConfig) {
+        self.docs = DocsClient(config: config)
+        self.enum = EnumClient(config: config)
+        self.object = ObjectClient(config: config)
+        self.union = UnionClient(config: config)
         self.httpClient = HTTPClient(config: config)
     }
 }

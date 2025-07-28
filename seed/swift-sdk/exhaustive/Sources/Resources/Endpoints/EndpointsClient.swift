@@ -12,6 +12,16 @@ public final class EndpointsClient: Sendable {
     private let httpClient: HTTPClient
 
     public init(config: ClientConfig) {
+        self.container = ContainerClient(config: config)
+        self.contentType = ContentTypeClient(config: config)
+        self.enum = EnumClient(config: config)
+        self.httpMethods = HttpMethodsClient(config: config)
+        self.object = ObjectClient(config: config)
+        self.params = ParamsClient(config: config)
+        self.primitive = PrimitiveClient(config: config)
+        self.put = PutClient(config: config)
+        self.union = UnionClient(config: config)
+        self.urls = UrlsClient(config: config)
         self.httpClient = HTTPClient(config: config)
     }
 }

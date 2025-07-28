@@ -20,8 +20,8 @@ public final class BasicAuthEnvironmentVariablesClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
-        self.httpClient = HTTPClient(config: config)
         self.basicAuth = BasicAuthClient(config: config)
         self.errors = ErrorsClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 }

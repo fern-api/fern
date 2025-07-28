@@ -20,8 +20,8 @@ public final class ErrorPropertyClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
-        self.httpClient = HTTPClient(config: config)
         self.errors = ErrorsClient(config: config)
         self.propertyBasedError = PropertyBasedErrorClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 }

@@ -20,8 +20,8 @@ public final class PaginationClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
-        self.httpClient = HTTPClient(config: config)
         self.complex = ComplexClient(config: config)
         self.users = UsersClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 }

@@ -19,7 +19,7 @@ public final class WebsocketClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
-        self.httpClient = HTTPClient(config: config)
         self.realtime = RealtimeClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 }

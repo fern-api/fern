@@ -23,12 +23,12 @@ public final class ExamplesClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
-        self.httpClient = HTTPClient(config: config)
         self.commons = CommonsClient(config: config)
         self.file = FileClient(config: config)
         self.health = HealthClient(config: config)
         self.service = ServiceClient(config: config)
         self.types = TypesClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 
     public func echo(request: String, requestOptions: RequestOptions? = nil) async throws -> String {

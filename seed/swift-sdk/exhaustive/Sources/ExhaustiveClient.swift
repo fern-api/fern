@@ -25,7 +25,6 @@ public final class ExhaustiveClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
-        self.httpClient = HTTPClient(config: config)
         self.endpoints = EndpointsClient(config: config)
         self.generalErrors = GeneralErrorsClient(config: config)
         self.inlinedRequests = InlinedRequestsClient(config: config)
@@ -33,5 +32,6 @@ public final class ExhaustiveClient: Sendable {
         self.noReqBody = NoReqBodyClient(config: config)
         self.reqWithHeaders = ReqWithHeadersClient(config: config)
         self.types = TypesClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 }

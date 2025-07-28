@@ -19,7 +19,7 @@ public final class UnknownAsAnyClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
-        self.httpClient = HTTPClient(config: config)
         self.unknown = UnknownClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 }
