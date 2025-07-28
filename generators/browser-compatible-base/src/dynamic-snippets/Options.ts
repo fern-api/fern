@@ -20,4 +20,10 @@ export interface Options {
 
     // Style of the generated snippets. By default, the executable style is used.
     style?: Style;
+
+    // Whether to capture the response from the method call into a variable
+    captureResponse?: boolean;
+
+    // Optional name for the response variable (defaults to "response")
+    responseVariableName?: string;
 }

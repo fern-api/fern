@@ -6,6 +6,7 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { PythonGeneratorAgent } from "./PythonGeneratorAgent";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
+import { PythonWireTestGenerator } from "./test-generation/PythonWireTestGenerator";
 
 export class SdkGeneratorContext extends AbstractPythonGeneratorContext<SdkCustomConfigSchema> {
     public readonly generatorAgent: PythonGeneratorAgent;
@@ -24,6 +25,19 @@ export class SdkGeneratorContext extends AbstractPythonGeneratorContext<SdkCusto
             config: this.config,
             ir: this.ir
         });
+
+        // optionally generate wire tests
+        if (this.customConfig.should_generate_wire_tests) {
+            try {
+                const wireTestGenerator = new PythonWireTestGenerator(this);
+                const wireTestFiles = wireTestGenerator.generateWireTests();
+                wireTestFiles.forEach((file) => {
+                    this.project.addRawFiles(file);
+                });
+            } catch (error) {
+                this.logger.warn(`Failed to generate wire tests: ${error}`);
+            }
+        }
     }
 
     public getRawAsIsFiles(): string[] {
