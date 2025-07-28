@@ -174,6 +174,18 @@ func (a *Account) GetExtraProperties() map[string]any {
 	return a.extraProperties
 }
 
+func (a *Account) MarshalJSON() ([]byte, error) {
+	type embed Account
+	var marshaler = struct {
+		embed
+		ResourceType string `json:"resource_type"`
+	}{
+		embed:        embed(*a),
+		ResourceType: "Account",
+	}
+	return json.Marshal(marshaler)
+}
+
 func (a *Account) String() string {
 	if len(a.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
@@ -247,6 +259,18 @@ func (p *Patient) GetExtraProperties() map[string]any {
 	return p.extraProperties
 }
 
+func (p *Patient) MarshalJSON() ([]byte, error) {
+	type embed Patient
+	var marshaler = struct {
+		embed
+		ResourceType string `json:"resource_type"`
+	}{
+		embed:        embed(*p),
+		ResourceType: "Patient",
+	}
+	return json.Marshal(marshaler)
+}
+
 func (p *Patient) String() string {
 	if len(p.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
@@ -312,6 +336,18 @@ func (p *Practitioner) GetExtraProperties() map[string]any {
 	return p.extraProperties
 }
 
+func (p *Practitioner) MarshalJSON() ([]byte, error) {
+	type embed Practitioner
+	var marshaler = struct {
+		embed
+		ResourceType string `json:"resource_type"`
+	}{
+		embed:        embed(*p),
+		ResourceType: "Practitioner",
+	}
+	return json.Marshal(marshaler)
+}
+
 func (p *Practitioner) String() string {
 	if len(p.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
@@ -375,6 +411,18 @@ func (s *Script) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return s.extraProperties
+}
+
+func (s *Script) MarshalJSON() ([]byte, error) {
+	type embed Script
+	var marshaler = struct {
+		embed
+		ResourceType string `json:"resource_type"`
+	}{
+		embed:        embed(*s),
+		ResourceType: "Script",
+	}
+	return json.Marshal(marshaler)
 }
 
 func (s *Script) String() string {

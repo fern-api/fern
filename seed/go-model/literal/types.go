@@ -45,6 +45,18 @@ func (s *SendResponse) GetExtraProperties() map[string]any {
 	return s.extraProperties
 }
 
+func (s *SendResponse) MarshalJSON() ([]byte, error) {
+	type embed SendResponse
+	var marshaler = struct {
+		embed
+		Success bool `json:"success"`
+	}{
+		embed:   embed(*s),
+		Success: true,
+	}
+	return json.Marshal(marshaler)
+}
+
 func (s *SendResponse) String() string {
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {

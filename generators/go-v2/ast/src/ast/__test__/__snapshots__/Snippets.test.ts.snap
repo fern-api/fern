@@ -219,9 +219,11 @@ import (
     nestedcommon "github.com/acme/acme-go/nested/common"
 )
 
+
 type Foo struct {
     Name common.Identifier
 }
+
 type Bar struct {
     Name nestedcommon.Identifier
 }

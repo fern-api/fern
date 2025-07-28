@@ -65,6 +65,18 @@ func (a *ANestedLiteral) GetExtraProperties() map[string]any{
     return a.extraProperties
 }
 
+func (a *ANestedLiteral) MarshalJSON() ([]byte, error){
+    type embed ANestedLiteral
+    var marshaler = struct{
+        embed
+        MyLiteral string `json:"myLiteral"`
+    }{
+        embed: embed(*a),
+        MyLiteral: "How super cool",
+    }
+    return json.Marshal(marshaler)
+}
+
 func (a *ANestedLiteral) String() string{
     if len(a.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
@@ -86,7 +98,6 @@ type DiscriminatedLiteral struct {
     LiteralGeorge bool
 }
 
-
 type UndiscriminatedLiteral struct {
     String string
     $endingStringLiteral string
@@ -95,4 +106,3 @@ type UndiscriminatedLiteral struct {
     FalseLiteral bool
     Boolean bool
 }
-
