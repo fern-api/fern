@@ -177,6 +177,20 @@ func (m *Metadata) GetExtraProperties() map[string]any {
 	return m.extraProperties
 }
 
+func (m *Metadata) MarshalJSON() ([]byte, error) {
+	type embed Metadata
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"createdAt"`
+		UpdatedAt *internal.DateTime `json:"updatedAt"`
+	}{
+		embed:     embed(*m),
+		CreatedAt: internal.NewDateTime(m.CreatedAt),
+		UpdatedAt: internal.NewDateTime(m.UpdatedAt),
+	}
+	return json.Marshal(marshaler)
+}
+
 func (m *Metadata) String() string {
 	if len(m.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {

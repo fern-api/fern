@@ -110,6 +110,18 @@ func (a *Address) GetExtraProperties() map[string]any {
 	return a.extraProperties
 }
 
+func (a *Address) MarshalJSON() ([]byte, error) {
+	type embed Address
+	var marshaler = struct {
+		embed
+		Country string `json:"country"`
+	}{
+		embed:   embed(*a),
+		Country: "USA",
+	}
+	return json.Marshal(marshaler)
+}
+
 func (a *Address) String() string {
 	if len(a.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {

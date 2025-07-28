@@ -159,7 +159,6 @@ type PlaylistIdNotFoundErrorBody struct {
     PlaylistId PlaylistId
 }
 
-
 type ReservedKeywordEnum string
 
 const (

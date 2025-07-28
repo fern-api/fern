@@ -262,6 +262,18 @@ func (p *PaginatedConversationResponse) GetExtraProperties() map[string]any {
 	return p.extraProperties
 }
 
+func (p *PaginatedConversationResponse) MarshalJSON() ([]byte, error) {
+	type embed PaginatedConversationResponse
+	var marshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*p),
+		Type:  "conversation.list",
+	}
+	return json.Marshal(marshaler)
+}
+
 func (p *PaginatedConversationResponse) String() string {
 	if len(p.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
@@ -325,6 +337,18 @@ func (c *CursorPages) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return c.extraProperties
+}
+
+func (c *CursorPages) MarshalJSON() ([]byte, error) {
+	type embed CursorPages
+	var marshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*c),
+		Type:  "pages",
+	}
+	return json.Marshal(marshaler)
 }
 
 func (c *CursorPages) String() string {
