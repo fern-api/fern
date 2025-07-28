@@ -121,7 +121,7 @@
     "semver": "^7.6.2",
     "tar": "^6.2.1",
     "tmp-promise": "^3.0.3",
-    "tsup": "^8.3.5",
+    "tsdown": "^0.13.0",
     "typescript": "5.7.2",
     "undici": "^6.21.1",
     "url-join": "^5.0.0",

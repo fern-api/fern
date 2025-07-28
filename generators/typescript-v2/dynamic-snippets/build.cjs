@@ -1,7 +1,7 @@
 const { NodeModulesPolyfillPlugin } = require('@esbuild-plugins/node-modules-polyfill');
 const { NodeGlobalsPolyfillPlugin } = require('@esbuild-plugins/node-globals-polyfill');
 const packageJson = require("./package.json");
-const tsup = require('tsup');
+const tsdown = require('tsdown');
 const { writeFile, mkdir } = require("fs/promises");
 const path = require("path");
 
@@ -24,14 +24,14 @@ async function main() {
         tsconfig: "./build.tsconfig.json"
     };
 
-    await tsup.build({
+    await tsdown.build({
         ...config,
         format: ['cjs'],
         outDir: 'dist/cjs',
         clean: true,
     });
 
-    await tsup.build({
+    await tsdown.build({
         ...config,
         format: ['esm'],
         outDir: 'dist/esm',

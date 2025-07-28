@@ -14,8 +14,8 @@
   "scripts": {
     "preinstall": "cd sdk && npm run build && npm run prepack",
     "dev": "concurrently 'npm run build:watch' 'nodemon --env-file=.env -q --watch dist dist/index.js'",
-    "build": "tsup src/index.ts --dts --clean",
-    "build:watch": "tsup src/index.ts --dts --watch",
+    "build": "tsdown src/index.ts --dts --clean",
+    "build:watch": "tsdown src/index.ts --dts --watch",
     "test": "jest"
   },
   "dependencies": {
@@ -30,7 +30,7 @@
     "jest": "^29.7.0",
     "nodemon": "^3.1.9",
     "ts-jest": "^29.3.1",
-    "tsup": "^8.4.0",
+    "tsdown": "^0.13.0",
     "typescript": "^5.8.2"
   }
 }

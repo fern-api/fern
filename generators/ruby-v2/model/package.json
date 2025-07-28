@@ -26,14 +26,14 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck",
-    "dist:cli": "pnpm compile && tsup ./src/cli.ts --format cjs",
+    "dist:cli": "pnpm compile && tsdown ./src/cli.ts --format cjs",
     "publish:cli": "pnpm dist:cli && cd dist && yarn npm publish",
     "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-go-model:latest ../../.."
   },
   "devDependencies": {
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
     "esbuild": "^0.25.0",
-    "tsup": "^8.0.2",
+    "tsdown": "^0.13.0",
     "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",

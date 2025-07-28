@@ -1,10 +1,10 @@
 const packageJson = require("./package.json");
-const tsup = require('tsup');
+const tsdown = require('tsdown');
 
 main();
 
 async function main() {
-    await tsup.build({
+    await tsdown.build({
         entry: ['src/cli.ts'],
         format: ['cjs'],
         minify: false,

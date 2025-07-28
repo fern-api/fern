@@ -47,7 +47,7 @@
     "eslint": "^8.56.0",
     "lodash-es": "^4.17.21",
     "prettier": "^3.4.2",
-    "tsup": "^8.3.5",
+    "tsdown": "^0.13.0",
     "typescript": "5.7.2",
     "vitest": "^2.1.9"
   }

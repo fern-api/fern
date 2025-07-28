@@ -52,7 +52,7 @@
     "@types/uuid": "^9.0.8",
     "lodash-es": "^4.17.21",
     "string.prototype.replaceall": "^1.0.10",
-    "tsup": "^8.3.5",
+    "tsdown": "^0.13.0",
     "url-join": "^5.0.0",
     "uuid": "^9.0.1",
     "vitest": "^2.1.9"

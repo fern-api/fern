@@ -12,6 +12,8 @@
     { "path": "../../utils/commons" },
     { "path": "../../utils/contexts" },
     { "path": "../../utils/resolvers" },
-    { "path": "../generator" }
+    { "path": "../generator" },
+    { "path": "../../../typescript-v2/ast" },
+    { "path": "../../../typescript-v2/base" }
   ]
 }

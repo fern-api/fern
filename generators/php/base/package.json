@@ -25,10 +25,7 @@
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "depcheck": "depcheck",
-    "dist:cli": "pnpm compile && tsup ./src/cli.ts --format cjs",
-    "publish:cli": "pnpm dist:cli && cd dist && yarn npm publish",
-    "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-go-model:latest ../../.."
+    "depcheck": "depcheck"
   },
   "devDependencies": {
     "@fern-api/base-generator": "workspace:*",
@@ -42,8 +39,6 @@
     "@types/lodash-es": "^4.17.12",
     "@types/node": "18.15.3",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
-    "esbuild": "^0.25.0",
-    "tsup": "^8.0.2",
     "depcheck": "^1.4.7",
     "eslint": "^8.56.0",
     "lodash-es": "^4.17.21",

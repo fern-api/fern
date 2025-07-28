@@ -7,6 +7,12 @@
     { "path": "../../../packages/commons/fs-utils" },
     { "path": "../../base" },
     { "path": "../../typescript-v2/ast" },
+    { "path": "../../typescript-v2/base" },
+    { "path": "../../typescript/sdk/cli" },
+    { "path": "../../typescript/utils/abstract-generator-cli" },
+    { "path": "../../typescript/utils/commons" },
+    { "path": "../../typescript/utils/contexts" },
+    { "path": "../../typescript/sdk/generator" },
     { "path": "../model" }
   ]
 }

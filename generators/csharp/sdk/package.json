@@ -26,7 +26,7 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck",
-    "dist:cli": "rm -rf ./lib && rm -rf ./dist && pnpm compile && tsup ./src/cli.ts --format cjs && cp -R ../base/src/asIs dist",
+    "dist:cli": "rm -rf ./lib && rm -rf ./dist && pnpm compile && tsdown ./src/cli.ts --format cjs && cp -R ../base/src/asIs dist",
     "publish:cli": "pnpm dist:cli && cd dist && yarn npm publish",
     "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-csharp-sdk:latest ../../.."
   },
@@ -53,7 +53,7 @@
     "eslint": "^8.56.0",
     "lodash-es": "^4.17.21",
     "prettier": "^3.4.2",
-    "tsup": "^8.3.5",
+    "tsdown": "^0.13.0",
     "typescript": "5.7.2",
     "url-join": "^5.0.0",
     "vitest": "^2.1.9",

@@ -1,12 +1,12 @@
 const packageJson = require("./package.json");
-const tsup = require('tsup');
+const tsdown = require('tsdown');
 const { writeFile, rename } = require("fs/promises");
 const path = require("path");
 
 main();
 
 async function main() {
-    tsup.build({
+    await tsdown.build({
         entry: ['src/**/*.ts', '!src/__test__'],
         format: ['cjs'],
         clean: true,

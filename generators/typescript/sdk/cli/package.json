@@ -26,7 +26,7 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck",
-    "dist:cli": "rm -rf ./lib && rm -rf ./dist && pnpm compile && tsup ./src/nodeCli.ts --format cjs",
+    "dist:cli": "rm -rf ./lib && rm -rf ./dist && pnpm compile && tsdown ./src/nodeCli.ts --format cjs",
     "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-typescript-node-sdk:latest -t fernapi/fern-typescript-sdk:latest ../../../.."
   },
   "devDependencies": {
@@ -43,7 +43,7 @@
     "@types/jest": "^29.5.14",
     "@types/tmp": "^0.2.4",
     "ts-loader": "^9.3.1",
-    "tsup": "^8.3.5",
+    "tsdown": "^0.13.0",
     "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",

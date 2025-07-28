@@ -10,7 +10,7 @@
     "depcheck",
     "@yarnpkg/esbuild-plugin-pnp",
     "esbuild",
-    "tsup"
+    "tsdown"
   ],
   "ignore-patterns": [
     "lib",
