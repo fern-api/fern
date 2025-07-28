@@ -91,13 +91,11 @@ jobs:
           password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v6
+        uses: useblacksmith/build-push-action@v1
         with:
           context: .
           file: ./docker/seed/Dockerfile.${{ matrix.package }}
           platforms: linux/${{ matrix.arch }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=min
           push: true
           # use short SHA if modded, or just use latest if nothing changed
           tags: ${{ steps.meta.outputs.tags }}

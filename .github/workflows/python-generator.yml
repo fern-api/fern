@@ -38,6 +38,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Setup Blacksmith Docker
+        uses: useblacksmith/build-push-action@v1
+        with:
+          setup-only: true
+
       - name: Install Poetry
         uses: snok/install-poetry@v1
         with:
