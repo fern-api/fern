@@ -31,6 +31,11 @@ export class RootClientGenerator {
 
         let fileContents = "";
 
+        // Add imports for config types
+        const imports = `use crate::{ClientConfig, ClientError};
+
+`;
+
         // Only generate root client if there are multiple services
         if (subpackages.length > 1) {
             const clientName = this.getRootClientName();
@@ -40,10 +45,10 @@ export class RootClientGenerator {
                 constructors: [this.generateConstructor(subpackages)]
             });
 
-            fileContents = [moduleDeclarations, "", rustRootClient.toString(), "", reExports].join("\n");
+            fileContents = [imports, moduleDeclarations, "", rustRootClient.toString(), "", reExports].join("\n");
         } else {
             // For single service, just export the module and re-export the client
-            fileContents = [moduleDeclarations, "", reExports].join("\n");
+            fileContents = [imports, moduleDeclarations, "", reExports].join("\n");
         }
 
         return new RustFile({
@@ -54,31 +59,39 @@ export class RootClientGenerator {
     }
 
     private generateFields(subpackages: Subpackage[]): rust.Client.Field[] {
-        // Generate fields for each sub-client from IR subpackages
-        return subpackages.map((subpackage) => ({
-            name: subpackage.name.snakeCase.safeName, // Use proper snake_case from IR
-            type: this.getSubClientName(subpackage), // Use proper PascalCase client name
-            visibility: "pub" // Public for direct access to sub-clients
-        }));
+        return [
+            // Private config field to store the client configuration
+            {
+                name: "config",
+                type: "ClientConfig",
+                visibility: "private" as const
+            },
+            // Generate fields for each sub-client from IR subpackages
+            ...subpackages.map((subpackage) => ({
+                name: subpackage.name.snakeCase.safeName, // Use proper snake_case from IR
+                type: this.getSubClientName(subpackage), // Use proper PascalCase client name
+                visibility: "pub" as const // Public for direct access to sub-clients
+            }))
+        ];
     }
 
     private generateConstructor(subpackages: Subpackage[]): rust.Client.SimpleMethod {
-        const defaultBaseUrl = this.getDefaultBaseUrl();
         const subClientInits = subpackages
             .map(
                 (subpackage) =>
-                    `${subpackage.name.snakeCase.safeName}: ${this.getSubClientName(subpackage)}::new("${defaultBaseUrl}".to_string())`
+                    `${subpackage.name.snakeCase.safeName}: ${this.getSubClientName(subpackage)}::new(config.clone())?`
             )
-            .join(",\n    ");
+            .join(",\n            ");
 
         return {
             name: "new",
-            parameters: [],
-            returnType: "Self",
+            parameters: ["config: ClientConfig"],
+            returnType: "Result<Self, ClientError>",
             isAsync: false,
-            body: `Self {
-    ${subClientInits}
-}`
+            body: `Ok(Self {
+            config: config.clone(),
+            ${subClientInits}
+        })`
         };
     }
 

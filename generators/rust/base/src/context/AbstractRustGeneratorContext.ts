@@ -6,6 +6,7 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { RustProject } from "../project";
 import { RUST_KEYWORDS, RUST_RESERVED_TYPES } from "../constants";
+import { AsIsFileDefinition } from "../AsIs";
 
 export const BaseRustCustomConfigSchema = z.object({
     packageName: z.string().optional(),
@@ -52,4 +53,9 @@ export abstract class AbstractRustGeneratorContext<
     public escapeRustReservedType(name: string): string {
         return RUST_RESERVED_TYPES.has(name) ? `r#${name}` : name;
     }
+
+    /**
+     * Get the core AsIs template files for this generator type
+     */
+    public abstract getCoreAsIsFiles(): AsIsFileDefinition[];
 }

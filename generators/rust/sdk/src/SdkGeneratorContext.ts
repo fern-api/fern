@@ -1,5 +1,5 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { AbstractRustGeneratorContext } from "@fern-api/rust-base";
+import { AbstractRustGeneratorContext, AsIsFileDefinition, AsIsFiles } from "@fern-api/rust-base";
 import { ModelGeneratorContext } from "@fern-api/rust-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation, Subpackage, SubpackageId, HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
@@ -25,6 +25,10 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
 
     public getClientName(): string {
         return this.customConfig.clientName ?? `${this.ir.apiName.pascalCase.safeName}Client`;
+    }
+
+    public getCoreAsIsFiles(): AsIsFileDefinition[] {
+        return Object.values(AsIsFiles);
     }
 
     public getSubpackageOrThrow(subpackageId: SubpackageId): Subpackage {

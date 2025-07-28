@@ -1,7 +1,7 @@
-FROM node:18-alpine3.18
+FROM node:20.18-alpine3.20 AS node
 
-RUN apk --no-cache add git
+COPY generators/rust/sdk/dist /dist
 
-COPY generators/rust/sdk/dist/cli.cjs /dist/cli.cjs
+RUN npm install -f -g @fern-api/generator-cli
 
-ENTRYPOINT ["node", "/dist/cli.cjs"] 
+ENTRYPOINT ["node", "/dist/cli.cjs", "rust-sdk"]

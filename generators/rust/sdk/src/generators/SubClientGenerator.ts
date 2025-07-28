@@ -49,31 +49,25 @@ export class SubClientGenerator {
     }
 
     private addImports(): string {
-        return `use crate::error::ApiError;
-use crate::types::*;
-use reqwest::Client;
+        return `use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use reqwest::Method;
 
 `;
     }
 
     private generateFields(): rust.Client.Field[] {
-        // Standard HTTP client fields - public for direct access
-        return [
-            { name: "client", type: "Client", visibility: "pub" },
-            { name: "base_url", type: "String", visibility: "pub" }
-        ];
+        // Use HttpClient which contains the configuration
+        return [{ name: "http_client", type: "HttpClient", visibility: "private" }];
     }
 
     private generateConstructor(): rust.Client.SimpleMethod {
         return {
             name: "new",
-            parameters: ["base_url: String"],
-            returnType: "Self",
+            parameters: ["config: ClientConfig"],
+            returnType: "Result<Self, ClientError>",
             isAsync: false,
-            body: `Self {
-            client: Client::new(),
-            base_url,
-        }`
+            body: `let http_client = HttpClient::new(config)?;
+        Ok(Self { http_client })`
         };
     }
 
@@ -84,27 +78,39 @@ use reqwest::Client;
     private generateHttpMethod(endpoint: HttpEndpoint): rust.Client.SimpleMethod {
         const params = this.extractParametersFromEndpoint(endpoint);
 
-        // Generate method signature
-        const parameters = params.map((param) => {
-            let paramType = param.type;
+        // Generate method signature with RequestOptions parameter
+        const parameters = [
+            ...params.map((param) => {
+                let paramType = param.type;
 
-            if (param.isRef) {
-                paramType = `&${paramType}`;
-            }
+                if (param.isRef) {
+                    paramType = `&${paramType}`;
+                }
 
-            if (param.optional) {
-                paramType = `Option<${paramType}>`;
-            }
+                if (param.optional) {
+                    paramType = `Option<${paramType}>`;
+                }
 
-            return `${param.name}: ${paramType}`;
-        });
+                return `${param.name}: ${paramType}`;
+            }),
+            "options: Option<RequestOptions>"
+        ];
+
+        const httpMethod = this.getHttpMethod(endpoint);
+        const path = this.getEndpointPath(endpoint);
+        const requestBody = this.getRequestBody(endpoint, params);
 
         return {
             name: endpoint.name.snakeCase.safeName,
             parameters,
-            returnType: `Result<${this.getReturnType(endpoint)}, ApiError>`,
+            returnType: `Result<${this.getReturnType(endpoint)}, ClientError>`,
             isAsync: true,
-            body: "todo!()"
+            body: `self.http_client.execute_request(
+            Method::${httpMethod},
+            "${path}",
+            ${requestBody},
+            options,
+        ).await`
         };
     }
 
@@ -152,5 +158,34 @@ use reqwest::Client;
     private getReturnType(endpoint: HttpEndpoint): string {
         // Simple: just use serde_json::Value for all responses
         return "serde_json::Value";
+    }
+
+    private getHttpMethod(endpoint: HttpEndpoint): string {
+        return endpoint.method.toUpperCase();
+    }
+
+    private getEndpointPath(endpoint: HttpEndpoint): string {
+        // Convert path parameters to string interpolation format
+        let path = endpoint.fullPath.head;
+        endpoint.fullPath.parts.forEach((part) => {
+            if (part.pathParameter) {
+                const pathParam = endpoint.allPathParameters.find((p) => p.name.originalName === part.pathParameter);
+                if (pathParam) {
+                    path += `/{${pathParam.name.snakeCase.safeName}}`;
+                }
+            } else {
+                path += part.tail;
+            }
+        });
+        return path;
+    }
+
+    private getRequestBody(endpoint: HttpEndpoint, params: EndpointParameter[]): string {
+        // Check if there's a request body parameter
+        const requestBodyParam = params.find((param) => param.name === "request");
+        if (requestBodyParam && endpoint.requestBody) {
+            return "Some(serde_json::to_value(request).unwrap_or_default())";
+        }
+        return "None";
     }
 }

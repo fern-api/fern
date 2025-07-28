@@ -39,6 +39,9 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
         this.context.logger.debug(`mkdir ${absolutePathToSrcDirectory}`);
         await mkdir(absolutePathToSrcDirectory, { recursive: true });
 
+        // Copy template files first
+        await this.persistStaticSourceFiles();
+
         // Write all source files
         await Promise.all(this.sourceFiles.map((file) => file.write(this.absolutePathToOutputDirectory)));
 
@@ -46,6 +49,20 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
         await this.writeCargoToml();
         await this.writeGitignore();
         await this.writeRustfmtConfig();
+    }
+
+    private async persistStaticSourceFiles(): Promise<void> {
+        const { context, absolutePathToOutputDirectory } = this;
+        await Promise.all(
+            context.getCoreAsIsFiles().map(async (def) => {
+                const rustFile = new RustFile({
+                    filename: def.filename,
+                    directory: def.directory,
+                    fileContents: await def.loadContents()
+                });
+                await rustFile.write(absolutePathToOutputDirectory);
+            })
+        );
     }
 
     private async writeCargoToml(): Promise<void> {

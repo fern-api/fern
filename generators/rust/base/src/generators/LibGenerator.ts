@@ -20,17 +20,29 @@ export class LibGenerator {
     }
 
     private generateLibContent(): string {
-        return `//! ${this.context.ir.apiDisplayName ?? this.context.ir.apiName.pascalCase.unsafeName} SDK
-//!
-//! This crate provides a Rust SDK for the ${this.context.ir.apiDisplayName ?? this.context.ir.apiName.pascalCase.unsafeName} API.
-
-pub mod client;
+        const clientName = this.getClientName();
+        return `pub mod client;
+pub mod error;
 pub mod types;
-pub mod errors;
+pub mod client_config;
+pub mod http_client;
+pub mod api_client_builder;
+pub mod client_error;
+pub mod request_options;
 
-pub use client::*;
-pub use types::*;
-pub use errors::*;
+pub use client::{${clientName}};
+pub use error::{ApiError};
+pub use types::{*};
+pub use client_config::{*};
+pub use http_client::{*};
+pub use api_client_builder::{*};
+pub use client_error::{*};
+pub use request_options::{*};
 `;
+    }
+
+    private getClientName(): string {
+        // This will be overridden by SDK-specific generators
+        return this.context.ir.apiName.pascalCase.safeName + "Client";
     }
 }
