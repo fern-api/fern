@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add lfs-override param to override output mode.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-28"
+  version: 0.65.35
+
+- changelogEntry:
+    - summary: |
         Patch support for RBAC roles across products.
       type: fix
   irVersion: 58
