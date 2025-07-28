@@ -6,30 +6,15 @@ import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 
 export declare namespace PackageSwiftGenerator {
     interface Args {
-        projectNamePascalCase: string;
-        context: SdkGeneratorContext;
+        sdkGeneratorContext: SdkGeneratorContext;
     }
 }
 
 export class PackageSwiftGenerator {
-    private readonly projectNamePascalCase: string;
-    private readonly context: SdkGeneratorContext;
+    private readonly sdkGeneratorContext: SdkGeneratorContext;
 
-    public constructor({ projectNamePascalCase, context }: PackageSwiftGenerator.Args) {
-        this.projectNamePascalCase = projectNamePascalCase;
-        this.context = context;
-    }
-
-    private get packageName(): string {
-        return this.projectNamePascalCase;
-    }
-
-    private get libraryName(): string {
-        return this.projectNamePascalCase;
-    }
-
-    private get targetName(): string {
-        return `${this.projectNamePascalCase}Target`;
+    public constructor({ sdkGeneratorContext }: PackageSwiftGenerator.Args) {
+        this.sdkGeneratorContext = sdkGeneratorContext;
     }
 
     public generate(): SwiftFile {
@@ -48,7 +33,7 @@ export class PackageSwiftGenerator {
                         arguments_: [
                             swift.functionArgument({
                                 label: "name",
-                                value: swift.Expression.rawStringValue(this.packageName)
+                                value: swift.Expression.rawStringValue(this.sdkGeneratorContext.packageName)
                             }),
                             swift.functionArgument({
                                 label: "platforms",
@@ -99,12 +84,18 @@ export class PackageSwiftGenerator {
                                             arguments_: [
                                                 swift.functionArgument({
                                                     label: "name",
-                                                    value: swift.Expression.rawStringValue(this.libraryName)
+                                                    value: swift.Expression.rawStringValue(
+                                                        this.sdkGeneratorContext.libraryName
+                                                    )
                                                 }),
                                                 swift.functionArgument({
                                                     label: "targets",
                                                     value: swift.Expression.arrayLiteral({
-                                                        elements: [swift.Expression.rawStringValue(this.targetName)]
+                                                        elements: [
+                                                            swift.Expression.rawStringValue(
+                                                                this.sdkGeneratorContext.targetName
+                                                            )
+                                                        ]
                                                     })
                                                 })
                                             ],
@@ -129,7 +120,9 @@ export class PackageSwiftGenerator {
                                             arguments_: [
                                                 swift.functionArgument({
                                                     label: "name",
-                                                    value: swift.Expression.rawStringValue(this.targetName)
+                                                    value: swift.Expression.rawStringValue(
+                                                        this.sdkGeneratorContext.targetName
+                                                    )
                                                 }),
                                                 swift.functionArgument({
                                                     label: "path",

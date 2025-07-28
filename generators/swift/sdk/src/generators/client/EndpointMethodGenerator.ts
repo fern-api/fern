@@ -4,21 +4,22 @@ import { getSwiftTypeForTypeReference } from "@fern-api/swift-model";
 
 import { HttpEndpoint, HttpMethod } from "@fern-fern/ir-sdk/api";
 
+import { ClientGeneratorContext } from "./ClientGeneratorContext";
 import { formatEndpointPathForSwift } from "./util/format-endpoint-path-for-swift";
 import { getQueryParamCaseName } from "./util/get-query-param-case-name";
 import { parseEndpointPath } from "./util/parse-endpoint-path";
 
 export declare namespace EndpointMethodGenerator {
     interface Args {
-        httpClientPropertyName: string;
+        clientGeneratorContext: ClientGeneratorContext;
     }
 }
 
 export class EndpointMethodGenerator {
-    private readonly httpClientPropertyName: string;
+    private readonly clientGeneratorContext: ClientGeneratorContext;
 
-    public constructor({ httpClientPropertyName }: EndpointMethodGenerator.Args) {
-        this.httpClientPropertyName = httpClientPropertyName;
+    public constructor({ clientGeneratorContext }: EndpointMethodGenerator.Args) {
+        this.clientGeneratorContext = clientGeneratorContext;
     }
 
     public generateMethod(endpoint: HttpEndpoint): swift.Method {
@@ -272,7 +273,9 @@ export class EndpointMethodGenerator {
                 swift.Expression.try(
                     swift.Expression.await(
                         swift.Expression.methodCall({
-                            target: swift.Expression.reference(this.httpClientPropertyName),
+                            target: swift.Expression.reference(
+                                this.clientGeneratorContext.httpClient.property.unsafeName
+                            ),
                             methodName: this.getHttpClientMethodNameForEndpoint(endpoint),
                             arguments_,
                             multiline: true
