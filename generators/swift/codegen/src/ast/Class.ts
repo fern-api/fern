@@ -61,7 +61,7 @@ export class Class extends AstNode {
             property.write(writer);
             writer.newLine();
         });
-        if (this.initializers) {
+        if (this.initializers && this.initializers.length > 0) {
             writer.newLine();
             this.initializers.forEach((initializer, initializerIdx) => {
                 if (initializerIdx > 0) {
@@ -71,7 +71,7 @@ export class Class extends AstNode {
                 writer.newLine();
             });
         }
-        if (this.methods) {
+        if (this.methods && this.methods.length > 0) {
             writer.newLine();
             this.methods.forEach((method, methodIdx) => {
                 if (methodIdx > 0) {
