@@ -44,6 +44,24 @@ func (c *Cat) GetExtraProperties() map[string]any {
 	return c.extraProperties
 }
 
+func (c *Cat) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Cat
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = Cat(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (c *Cat) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -75,6 +93,24 @@ func (d *Dog) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return d.extraProperties
+}
+
+func (d *Dog) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Dog
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*d = Dog(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
+	if err != nil {
+		return err
+	}
+	d.extraProperties = extraProperties
+	d.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (d *Dog) String() string {
@@ -110,6 +146,24 @@ func (a *Acai) GetExtraProperties() map[string]any {
 	return a.extraProperties
 }
 
+func (a *Acai) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Acai
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = Acai(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (a *Acai) String() string {
 	if len(a.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
@@ -141,6 +195,24 @@ func (f *Fig) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return f.extraProperties
+}
+
+func (f *Fig) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Fig
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = Fig(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (f *Fig) String() string {
@@ -176,6 +248,24 @@ func (b *Berry) GetExtraProperties() map[string]any {
 	return b.extraProperties
 }
 
+func (b *Berry) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Berry
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = Berry(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+	b.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (b *Berry) String() string {
 	if len(b.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
@@ -209,6 +299,24 @@ func (b *BranchNode) GetExtraProperties() map[string]any {
 	return b.extraProperties
 }
 
+func (b *BranchNode) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler BranchNode
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = BranchNode(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+	b.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (b *BranchNode) String() string {
 	if len(b.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
@@ -231,6 +339,24 @@ func (l *LeafNode) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return l.extraProperties
+}
+
+func (l *LeafNode) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler LeafNode
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = LeafNode(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (l *LeafNode) String() string {
@@ -264,6 +390,24 @@ func (n *NodesWrapper) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return n.extraProperties
+}
+
+func (n *NodesWrapper) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler NodesWrapper
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = NodesWrapper(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+	n.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (n *NodesWrapper) String() string {
@@ -318,6 +462,24 @@ func (o *ObjectValue) GetExtraProperties() map[string]any {
 	return o.extraProperties
 }
 
+func (o *ObjectValue) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ObjectValue
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = ObjectValue(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (o *ObjectValue) String() string {
 	if len(o.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
@@ -367,6 +529,24 @@ func (o *ObjectFieldValue) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return o.extraProperties
+}
+
+func (o *ObjectFieldValue) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ObjectFieldValue
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = ObjectFieldValue(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (o *ObjectFieldValue) String() string {

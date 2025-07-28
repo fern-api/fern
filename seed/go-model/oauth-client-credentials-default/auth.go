@@ -38,6 +38,24 @@ func (t *TokenResponse) GetExtraProperties() map[string]any {
 	return t.extraProperties
 }
 
+func (t *TokenResponse) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler TokenResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = TokenResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (t *TokenResponse) String() string {
 	if len(t.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {

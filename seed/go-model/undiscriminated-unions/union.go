@@ -29,6 +29,24 @@ func (r *Request) GetExtraProperties() map[string]any {
 	return r.extraProperties
 }
 
+func (r *Request) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Request
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = Request(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (r *Request) String() string {
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
@@ -60,6 +78,24 @@ func (t *TypeWithOptionalUnion) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return t.extraProperties
+}
+
+func (t *TypeWithOptionalUnion) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler TypeWithOptionalUnion
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = TypeWithOptionalUnion(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (t *TypeWithOptionalUnion) String() string {
@@ -146,6 +182,24 @@ func (n *NamedMetadata) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return n.extraProperties
+}
+
+func (n *NamedMetadata) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler NamedMetadata
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = NamedMetadata(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+	n.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (n *NamedMetadata) String() string {

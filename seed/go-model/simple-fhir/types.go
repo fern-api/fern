@@ -37,6 +37,24 @@ func (m *Memo) GetExtraProperties() map[string]any {
 	return m.extraProperties
 }
 
+func (m *Memo) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Memo
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*m = Memo(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+	m.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (m *Memo) String() string {
 	if len(m.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
@@ -84,6 +102,24 @@ func (b *BaseResource) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return b.extraProperties
+}
+
+func (b *BaseResource) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler BaseResource
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = BaseResource(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+	b.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (b *BaseResource) String() string {
@@ -174,6 +210,33 @@ func (a *Account) GetExtraProperties() map[string]any {
 	return a.extraProperties
 }
 
+func (a *Account) UnmarshalJSON(
+	data []byte,
+) error {
+	type embed Account
+	var unmarshaler = struct {
+		embed
+		ResourceType string `json:"resource_type"`
+	}{
+		embed: embed(*a),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*a = Account(unmarshaler.embed)
+	if unmarshaler.ResourceType != "Account" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", a, "Account", unmarshaler.ResourceType)
+	}
+	a.resourceType = unmarshaler.ResourceType
+	extraProperties, err := internal.ExtractExtraProperties(data, *a, "resourceType")
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (a *Account) MarshalJSON() ([]byte, error) {
 	type embed Account
 	var marshaler = struct {
@@ -259,6 +322,33 @@ func (p *Patient) GetExtraProperties() map[string]any {
 	return p.extraProperties
 }
 
+func (p *Patient) UnmarshalJSON(
+	data []byte,
+) error {
+	type embed Patient
+	var unmarshaler = struct {
+		embed
+		ResourceType string `json:"resource_type"`
+	}{
+		embed: embed(*p),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*p = Patient(unmarshaler.embed)
+	if unmarshaler.ResourceType != "Patient" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", p, "Patient", unmarshaler.ResourceType)
+	}
+	p.resourceType = unmarshaler.ResourceType
+	extraProperties, err := internal.ExtractExtraProperties(data, *p, "resourceType")
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (p *Patient) MarshalJSON() ([]byte, error) {
 	type embed Patient
 	var marshaler = struct {
@@ -336,6 +426,33 @@ func (p *Practitioner) GetExtraProperties() map[string]any {
 	return p.extraProperties
 }
 
+func (p *Practitioner) UnmarshalJSON(
+	data []byte,
+) error {
+	type embed Practitioner
+	var unmarshaler = struct {
+		embed
+		ResourceType string `json:"resource_type"`
+	}{
+		embed: embed(*p),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*p = Practitioner(unmarshaler.embed)
+	if unmarshaler.ResourceType != "Practitioner" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", p, "Practitioner", unmarshaler.ResourceType)
+	}
+	p.resourceType = unmarshaler.ResourceType
+	extraProperties, err := internal.ExtractExtraProperties(data, *p, "resourceType")
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (p *Practitioner) MarshalJSON() ([]byte, error) {
 	type embed Practitioner
 	var marshaler = struct {
@@ -411,6 +528,33 @@ func (s *Script) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return s.extraProperties
+}
+
+func (s *Script) UnmarshalJSON(
+	data []byte,
+) error {
+	type embed Script
+	var unmarshaler = struct {
+		embed
+		ResourceType string `json:"resource_type"`
+	}{
+		embed: embed(*s),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*s = Script(unmarshaler.embed)
+	if unmarshaler.ResourceType != "Script" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", s, "Script", unmarshaler.ResourceType)
+	}
+	s.resourceType = unmarshaler.ResourceType
+	extraProperties, err := internal.ExtractExtraProperties(data, *s, "resourceType")
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (s *Script) MarshalJSON() ([]byte, error) {
