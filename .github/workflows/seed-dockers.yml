@@ -19,7 +19,7 @@ env:
 
 jobs:
   changes:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     outputs:
       packages: ${{ steps.filter.outputs.changes }}
     steps:
@@ -41,7 +41,7 @@ jobs:
               - 'docker/seed/Dockerfile.csharp'
               - '.github/workflows/seed-dockers.yml'
   generate-sha:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     outputs:
       sha: ${{ steps.sha.outputs.sha }}
     steps:
@@ -56,11 +56,11 @@ jobs:
         # Parse JSON array containing names of all filters matching any of changed files
         # e.g. ['package1', 'package2'] if both package folders contains changes
         package: ${{ fromJSON(needs.changes.outputs.packages) }}
-        runner: [ubuntu-latest, ubuntu-24.04-arm]
+        runner: [blacksmith-4vcpu-ubuntu-2404, ubuntu-24.04-arm]
         arch: [amd64, arm64]
         exclude:
           # Avoid building arm64 on amd64 runner and vice versa
-          - runner: ubuntu-latest
+          - runner: blacksmith-4vcpu-ubuntu-2404
             arch: arm64
           - runner: ubuntu-24.04-arm
             arch: amd64
@@ -108,7 +108,7 @@ jobs:
   merge-manifests:
     if: ${{ needs.changes.outputs.packages != '' && toJSON(fromJSON(needs.changes.outputs.packages)) != '[]' }}
     needs: [changes, build-container, generate-sha]
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     steps:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3

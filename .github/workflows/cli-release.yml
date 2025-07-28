@@ -18,7 +18,7 @@ env:
 jobs:
   run:
     if: github.repository == 'fern-api/fern'
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     outputs:
       version: ${{ steps.get_version.outputs.VERSION }}
     steps:

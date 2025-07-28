@@ -25,7 +25,7 @@ env:
 jobs:
   changes:
     if: github.repository == 'fern-api/fern'
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     outputs:
       seed: ${{ github.event_name == 'workflow_dispatch' || steps.filter.outputs.seed }}
       ruby: ${{ steps.filter.outputs.ruby }}

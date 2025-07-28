@@ -15,7 +15,7 @@ env:
 
 jobs:
   run:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     if: ${{ inputs.version != null }}
     steps:
       - name: Checkout repo

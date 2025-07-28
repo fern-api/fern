@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   copy-changelogs:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     steps:
       - name: Checkout main branch of fern repo
         uses: actions/checkout@v4

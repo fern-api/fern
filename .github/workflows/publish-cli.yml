@@ -22,7 +22,7 @@ on:
 jobs:
   dev:
     if: ${{ inputs.version == null && github.repository == 'fern-api/fern' }}
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     env:
       NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
       AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
@@ -57,7 +57,7 @@ jobs:
   live-test:
     if: ${{ inputs.version == null && github.repository == 'fern-api/fern' }}
     environment: Fern Prod
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -80,7 +80,7 @@ jobs:
   prod:
     # needs: [live-test]
     if: ${{ inputs.version == null }}
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     env:
       NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
       AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
@@ -122,7 +122,7 @@ jobs:
           pnpm seed register cli
 
   manual:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     if: ${{ inputs.version != null }}
     env:
       NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
