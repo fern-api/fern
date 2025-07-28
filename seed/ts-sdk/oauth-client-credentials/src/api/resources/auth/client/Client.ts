@@ -14,7 +14,6 @@ export declare namespace Auth {
         baseUrl?: core.Supplier<string>;
         /** Additional headers to include in requests. */
         headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
-        authProvider: core.AuthProvider; // TODO: remove inside auth endpoint
     }
 
     export interface RequestOptions {
@@ -58,7 +57,6 @@ export class Auth {
         request: SeedOauthClientCredentials.GetTokenRequest,
         requestOptions?: Auth.RequestOptions,
     ): Promise<core.WithRawResponse<SeedOauthClientCredentials.TokenResponse>> {
-        const authRequest = await this._options.authProvider.getAuthRequest();
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -66,11 +64,7 @@ export class Auth {
                 "/token",
             ),
             method: "POST",
-            headers: mergeHeaders(
-                this._options?.headers,
-                authRequest.headers,
-                requestOptions?.headers,
-            ),
+            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
             contentType: "application/json",
             requestType: "json",
             body: { ...request, audience: "https://api.example.com", grant_type: "client_credentials" },
@@ -133,7 +127,6 @@ export class Auth {
         request: SeedOauthClientCredentials.RefreshTokenRequest,
         requestOptions?: Auth.RequestOptions,
     ): Promise<core.WithRawResponse<SeedOauthClientCredentials.TokenResponse>> {
-        const authRequest = await this._options.authProvider.getAuthRequest();
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -141,11 +134,7 @@ export class Auth {
                 "/token",
             ),
             method: "POST",
-            headers: mergeHeaders(
-                this._options?.headers,
-                authRequest.headers,
-                requestOptions?.headers,
-            ),
+            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
             contentType: "application/json",
             requestType: "json",
             body: { ...request, audience: "https://api.example.com", grant_type: "refresh_token" },

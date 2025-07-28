@@ -3,7 +3,7 @@ import { ModelContext } from "@fern-typescript/contexts";
 import { AbstractRawSingleUnionType } from "@fern-typescript/union-schema-generator";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
-import { DeclaredTypeName } from "@fern-fern/ir-sdk/api";
+import { DeclaredTypeName } from "@fern-fern/ir-sdk";
 
 export declare namespace RawSamePropertiesAsObjectSingleUnionType {
     export interface Init extends AbstractRawSingleUnionType.Init {

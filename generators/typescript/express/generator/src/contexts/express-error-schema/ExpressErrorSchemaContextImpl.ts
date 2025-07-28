@@ -5,7 +5,7 @@ import { ExpressErrorSchemaGenerator } from "@fern-typescript/express-error-sche
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { SourceFile } from "ts-morph";
 
-import { DeclaredErrorName } from "@fern-fern/ir-sdk/api";
+import { DeclaredErrorName } from "@fern-fern/ir-sdk";
 
 import { ExpressErrorDeclarationReferencer } from "../../declaration-referencers/ExpressErrorDeclarationReferencer";
 import { getSchemaImportStrategy } from "../getSchemaImportStrategy";

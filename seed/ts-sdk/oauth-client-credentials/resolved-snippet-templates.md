@@ -3,8 +3,6 @@ import { SeedOauthClientCredentialsClient } from "@fern/oauth-client-credentials
 
 const client = new SeedOauthClientCredentialsClient({
   environment: "YOUR_BASE_URL",
-  clientId: "YOUR_AUTHORIZATION",
-  clientSecret: "YOUR_AUTHORIZATION",
 });
 await client.auth.getTokenWithClientCredentials({
   client_id: "client_id",
@@ -20,8 +18,6 @@ import { SeedOauthClientCredentialsClient } from "@fern/oauth-client-credentials
 
 const client = new SeedOauthClientCredentialsClient({
   environment: "YOUR_BASE_URL",
-  clientId: "YOUR_AUTHORIZATION",
-  clientSecret: "YOUR_AUTHORIZATION",
 });
 await client.auth.refreshToken({
   client_id: "client_id",

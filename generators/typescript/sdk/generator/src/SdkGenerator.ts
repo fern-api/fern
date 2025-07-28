@@ -21,7 +21,11 @@ import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
 import { GenericAPISdkErrorGenerator, TimeoutSdkErrorGenerator } from "@fern-typescript/generic-sdk-error-generators";
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
 import { ErrorResolver, PackageResolver, TypeResolver } from "@fern-typescript/resolvers";
-import { SdkClientClassGenerator, WebsocketClassGenerator } from "@fern-typescript/sdk-client-class-generator";
+import {
+    AuthProvidersGenerator,
+    SdkClientClassGenerator,
+    WebsocketClassGenerator
+} from "@fern-typescript/sdk-client-class-generator";
 import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator/src/oauth-generator/OAuthTokenProviderGenerator";
 import { SdkEndpointTypeSchemasGenerator } from "@fern-typescript/sdk-endpoint-type-schemas-generator";
 import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator";
@@ -36,6 +40,7 @@ import { Directory, Project, SourceFile, ts } from "ts-morph";
 import { v4 as uuidv4 } from "uuid";
 
 import { ReferenceConfigBuilder } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
@@ -50,7 +55,7 @@ import {
     TypeDeclaration,
     TypeId,
     WebSocketChannel
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-fern/ir-sdk";
 import { FdrSnippetTemplate, FdrSnippetTemplateClient, FdrSnippetTemplateEnvironment } from "@fern-fern/snippet-sdk";
 
 import { TemplateGenerator } from "./TemplateGenerator";
@@ -526,6 +531,9 @@ export class SdkGenerator {
         this.context.logger.debug("Generated request wrappers");
         this.generateVersion();
         this.context.logger.debug("Generated version");
+        this.context.logger.debug("Generating auth providers");
+        this.generateAuthProviders();
+        this.context.logger.debug("Generated auth providers");
 
         if (this.config.neverThrowErrors) {
             this.generateEndpointErrorUnion();
@@ -1287,6 +1295,25 @@ export class SdkGenerator {
             .filter((param) => param.name !== "requestOptions")
             .map((param) => (param.name === "request" ? "{ ...params }" : param.name))
             .join(", ")})`;
+    }
+
+    private generateAuthProviders(): void {
+        for (const authScheme of this.intermediateRepresentation.auth.schemes) {
+            const authProvidersGenerator = new AuthProvidersGenerator({
+                ir: this.intermediateRepresentation,
+                authScheme
+            });
+            if (!authProvidersGenerator.shouldWriteFile()) {
+                continue;
+            }
+            this.withSourceFile({
+                filepath: authProvidersGenerator.getFilePath(),
+                run: ({ sourceFile, importsManager }) => {
+                    const context = this.generateSdkContext({ sourceFile, importsManager });
+                    authProvidersGenerator.writeToFile(context);
+                }
+            });
+        }
     }
 
     private generateVersion(): void {

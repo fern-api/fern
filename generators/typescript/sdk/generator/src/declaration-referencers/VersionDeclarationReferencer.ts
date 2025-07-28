@@ -8,7 +8,7 @@ import {
 } from "@fern-typescript/commons";
 import { SourceFile, ts } from "ts-morph";
 
-import { ApiVersionScheme } from "@fern-fern/ir-sdk/api";
+import { ApiVersionScheme } from "@fern-fern/ir-sdk";
 
 import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
 

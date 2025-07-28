@@ -7,7 +7,7 @@ import {
     SingleUnionTypeGenerator
 } from "@fern-typescript/union-generator";
 
-import { ErrorDeclaration, ErrorDiscriminationStrategy, ResponseError } from "@fern-fern/ir-sdk/api";
+import { ErrorDeclaration, ErrorDiscriminationStrategy, ResponseError } from "@fern-fern/ir-sdk";
 
 export declare namespace ParsedSingleUnionTypeForError {
     export interface Init {

@@ -16,7 +16,7 @@ import {
     HttpRequestBody,
     HttpService,
     IntermediateRepresentation
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-fern/ir-sdk";
 
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams";

@@ -35,7 +35,7 @@
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-fern/ir-sdk": "^58.2.0"
+    "@fern-fern/ir-sdk": "file:/Users/niels/fern/packages/ir-sdk"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",

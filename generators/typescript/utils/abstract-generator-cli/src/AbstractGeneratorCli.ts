@@ -12,8 +12,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER, LogLevel, Logger, createLogger } from "@fern-api/logger";
 
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import * as serializers from "@fern-fern/ir-sdk/serialization";
+import { AuthScheme, IntermediateRepresentation, serialization } from "@fern-fern/ir-sdk";
 
 import { publishPackage } from "./publishPackage";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows";
@@ -92,8 +91,26 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
 
             const ir = await parseIR({
                 absolutePathToIR: AbsoluteFilePath.of(config.irFilepath),
-                parse: serializers.IntermediateRepresentation.parse
+                parse: serialization.IntermediateRepresentation.parse
             });
+            ir.auth = {
+                ...ir.auth,
+                schemes: [
+                    AuthScheme.inferred({
+                        tokenEndpoint: {
+                            endpoint: {
+                                endpointId: "endpoint_auth.getTokenWithClientCredentials",
+                                serviceId: "service_auth",
+                                subpackageId: "subpackage_auth"
+                            },
+                            authenticatedRequestHeaders: [],
+                            expiryProperty: undefined
+                        },
+                        docs: undefined,
+                        refreshEndpoint: undefined
+                    })
+                ]
+            };
 
             const generatorContext = new GeneratorContextImpl(logger, version);
             const typescriptProject = await this.generateTypescriptProject({

@@ -1,6 +1,6 @@
 import { PackageId, Reference } from "@fern-typescript/commons";
 
-import { Name, WebSocketChannel, WebSocketMessageBodyReference } from "@fern-fern/ir-sdk/api";
+import { Name, WebSocketChannel, WebSocketMessageBodyReference } from "@fern-fern/ir-sdk";
 
 import { GeneratedWebsocketTypeSchema } from "./GeneratedWebsocketTypeSchema";
 

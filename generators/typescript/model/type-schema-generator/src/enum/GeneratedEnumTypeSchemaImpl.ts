@@ -3,7 +3,7 @@ import { Zurg, getTextOfTsNode } from "@fern-typescript/commons";
 import { BaseContext, GeneratedEnumTypeSchema } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
 
-import { EnumTypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { EnumTypeDeclaration } from "@fern-fern/ir-sdk";
 
 import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
 

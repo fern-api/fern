@@ -624,6 +624,8 @@ export class DynamicSnippetsConverter {
                     clientId: this.casingsGenerator.generateName("clientId"),
                     clientSecret: this.casingsGenerator.generateName("clientSecret")
                 });
+            case "inferred":
+                throw "TODO: Handle inferred auth scheme";
             default:
                 assertNever(scheme);
         }
@@ -653,6 +655,8 @@ export class DynamicSnippetsConverter {
                     clientId: "<clientId>",
                     clientSecret: "<clientSecret>"
                 });
+            case "inferred":
+                throw "TODO: Handle inferred auth scheme";
             default:
                 assertNever(scheme);
         }

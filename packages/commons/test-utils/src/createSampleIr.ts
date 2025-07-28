@@ -5,7 +5,7 @@ import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { TaskContext, createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk";
 
 export interface CreateSampleIrOptions {
     workspaceName?: string;

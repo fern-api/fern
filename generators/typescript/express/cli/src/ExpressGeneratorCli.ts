@@ -5,7 +5,7 @@ import { ExpressGenerator } from "@fern-typescript/express-generator";
 import { camelCase, upperFirst } from "lodash-es";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk";
 
 import { ExpressCustomConfig } from "./custom-config/ExpressCustomConfig";
 import { ExpressCustomConfigSchema } from "./custom-config/schema/ExpressCustomConfigSchema";

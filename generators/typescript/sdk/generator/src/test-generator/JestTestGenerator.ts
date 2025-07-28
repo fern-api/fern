@@ -17,8 +17,8 @@ import { Code, arrayOf, code, literalOf } from "ts-poet";
 
 import { assertNever } from "@fern-api/core-utils";
 
-import * as IR from "@fern-fern/ir-sdk/api";
-import { ExampleRequestBody } from "@fern-fern/ir-sdk/api";
+import * as IR from "@fern-fern/ir-sdk";
+import { ExampleRequestBody } from "@fern-fern/ir-sdk";
 
 const DEFAULT_PACKAGE_PATH = "src";
 
@@ -292,6 +292,10 @@ describe("test", () => {
                     baseOptions[OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME] = code`"test"`;
                     baseOptions[OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME] = code`"test"`;
                 },
+                inferred: () => {
+                    return;
+                    throw "TODO: Handle inferred auth scheme";
+                },
                 _other: () => {
                     // noop
                     return;
@@ -470,6 +474,8 @@ describe("${serviceName}", () => {
                     case "bearer":
                     case "header":
                         return false; // supported
+                    case "inferred":
+                        return false; // TODO: handle inferred auth scheme
                     case "oauth":
                         return true; // not supported
                     default:

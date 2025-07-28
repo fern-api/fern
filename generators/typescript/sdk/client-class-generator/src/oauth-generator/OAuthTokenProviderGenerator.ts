@@ -13,7 +13,7 @@ import {
     OAuthClientCredentials,
     OAuthScheme,
     ResponseProperty
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-fern/ir-sdk";
 
 export class OAuthTokenProviderGenerator {
     public static readonly OAUTH_TOKEN_PROVIDER_CLASS_NAME = "OAuthTokenProvider";

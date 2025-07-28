@@ -2,7 +2,7 @@ import { ExportedFilePath, Reference, getExportedDirectoriesForFernFilepath } fr
 
 import { RelativeFilePath } from "@fern-api/fs-utils";
 
-import { DeclaredErrorName } from "@fern-fern/ir-sdk/api";
+import { DeclaredErrorName } from "@fern-fern/ir-sdk";
 
 import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
 import { DeclarationReferencer } from "./DeclarationReferencer";

@@ -1,7 +1,7 @@
 import { TypeReferenceNode } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 
-import { TypeReference } from "@fern-fern/ir-sdk/api";
+import { TypeReference } from "@fern-fern/ir-sdk";
 
 import { ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter";
 import { AbstractTypeReferenceToTypeNodeConverter } from "./AbstractTypeReferenceToTypeNodeConverter";

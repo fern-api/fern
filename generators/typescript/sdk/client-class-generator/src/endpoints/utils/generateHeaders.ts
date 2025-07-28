@@ -9,7 +9,7 @@ import {
     HttpHeader,
     HttpService,
     IntermediateRepresentation
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-fern/ir-sdk";
 
 import { GeneratedHeader } from "../../GeneratedHeader";
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";

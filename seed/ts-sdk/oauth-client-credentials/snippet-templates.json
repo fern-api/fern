@@ -34,38 +34,6 @@
                                         "type": "generic"
                                     },
                                     "type": "template"
-                                },
-                                {
-                                    "value": {
-                                        "imports": [],
-                                        "templateString": "clientId: $FERN_INPUT",
-                                        "isOptional": false,
-                                        "templateInputs": [
-                                            {
-                                                "location": "AUTH",
-                                                "path": "Authorization",
-                                                "type": "payload"
-                                            }
-                                        ],
-                                        "type": "generic"
-                                    },
-                                    "type": "template"
-                                },
-                                {
-                                    "value": {
-                                        "imports": [],
-                                        "templateString": "clientSecret: $FERN_INPUT",
-                                        "isOptional": false,
-                                        "templateInputs": [
-                                            {
-                                                "location": "AUTH",
-                                                "path": "Authorization",
-                                                "type": "payload"
-                                            }
-                                        ],
-                                        "type": "generic"
-                                    },
-                                    "type": "template"
                                 }
                             ],
                             "type": "generic"
@@ -179,38 +147,6 @@
                                         "templateString": "environment: \"YOUR_BASE_URL\"",
                                         "isOptional": false,
                                         "templateInputs": [],
-                                        "type": "generic"
-                                    },
-                                    "type": "template"
-                                },
-                                {
-                                    "value": {
-                                        "imports": [],
-                                        "templateString": "clientId: $FERN_INPUT",
-                                        "isOptional": false,
-                                        "templateInputs": [
-                                            {
-                                                "location": "AUTH",
-                                                "path": "Authorization",
-                                                "type": "payload"
-                                            }
-                                        ],
-                                        "type": "generic"
-                                    },
-                                    "type": "template"
-                                },
-                                {
-                                    "value": {
-                                        "imports": [],
-                                        "templateString": "clientSecret: $FERN_INPUT",
-                                        "isOptional": false,
-                                        "templateInputs": [
-                                            {
-                                                "location": "AUTH",
-                                                "path": "Authorization",
-                                                "type": "payload"
-                                            }
-                                        ],
                                         "type": "generic"
                                     },
                                     "type": "template"

@@ -4,7 +4,7 @@ import { ts } from "ts-morph";
 
 import { assertNever } from "@fern-api/core-utils";
 
-import { HttpPath, PathParameter, PathParameterLocation, SdkRequest } from "@fern-fern/ir-sdk/api";
+import { HttpPath, PathParameter, PathParameterLocation, SdkRequest } from "@fern-fern/ir-sdk";
 
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";
 

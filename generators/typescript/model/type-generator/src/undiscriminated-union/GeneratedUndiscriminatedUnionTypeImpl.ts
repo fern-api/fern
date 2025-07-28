@@ -18,7 +18,7 @@ import {
     ExampleTypeShape,
     UndiscriminatedUnionMember,
     UndiscriminatedUnionTypeDeclaration
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-fern/ir-sdk";
 
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 

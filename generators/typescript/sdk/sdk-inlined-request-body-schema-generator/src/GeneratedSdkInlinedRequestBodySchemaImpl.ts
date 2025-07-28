@@ -10,7 +10,7 @@ import {
 import { GeneratedSdkInlinedRequestBodySchema, SdkContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
 
-import { HttpEndpoint, InlinedRequestBody, InlinedRequestBodyProperty } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, InlinedRequestBody, InlinedRequestBodyProperty } from "@fern-fern/ir-sdk";
 
 export declare namespace GeneratedSdkInlinedRequestBodySchemaImpl {
     export interface Init extends AbstractGeneratedSchema.Init {

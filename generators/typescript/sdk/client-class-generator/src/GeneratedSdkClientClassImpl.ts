@@ -25,6 +25,7 @@ import {
     PropertySignatureStructure,
     Scope,
     StructureKind,
+    TypeAliasDeclarationStructure,
     ts
 } from "ts-morph";
 import { Code, code } from "ts-poet";
@@ -39,8 +40,10 @@ import {
     HeaderAuthScheme,
     HttpEndpoint,
     HttpHeader,
+    HttpRequestBody,
     HttpResponseBody,
     HttpService,
+    InferredAuthScheme,
     IntermediateRepresentation,
     OAuthScheme,
     Package,
@@ -48,7 +51,7 @@ import {
     SubpackageId,
     VariableDeclaration,
     VariableId
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-fern/ir-sdk";
 
 import { GeneratedHeader } from "./GeneratedHeader";
 import { GeneratedWrappedService } from "./GeneratedWrappedService";
@@ -136,6 +139,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private oauthAuthScheme: OAuthScheme | undefined;
     private bearerAuthScheme: BearerAuthScheme | undefined;
     private basicAuthScheme: BasicAuthScheme | undefined;
+    private inferredAuthScheme: InferredAuthScheme | undefined;
     private readonly authHeaders: HeaderAuthScheme[];
     private readonly service: HttpService | undefined;
     private readonly omitFernHeaders: boolean;
@@ -206,47 +210,12 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 const requestBody = endpoint.requestBody ?? undefined;
 
                 const getGeneratedEndpointRequest = () => {
-                    if (requestBody?.type === "bytes") {
-                        return new GeneratedBytesEndpointRequest({
-                            ir: this.intermediateRepresentation,
-                            packageId,
-                            service,
-                            endpoint,
-                            requestBody,
-                            generatedSdkClientClass: this,
-                            retainOriginalCasing: this.retainOriginalCasing,
-                            exportsManager: this.exportsManager
-                        });
-                    }
-                    if (requestBody?.type === "fileUpload") {
-                        return new GeneratedFileUploadEndpointRequest({
-                            importsManager: this.importsManager,
-                            ir: this.intermediateRepresentation,
-                            packageId,
-                            service,
-                            endpoint,
-                            requestBody,
-                            generatedSdkClientClass: this,
-                            retainOriginalCasing: this.retainOriginalCasing,
-                            inlineFileProperties: this.inlineFileProperties,
-                            includeSerdeLayer: this.includeSerdeLayer,
-                            allowExtraFields: this.allowExtraFields,
-                            omitUndefined: this.omitUndefined,
-                            formDataSupport: this.formDataSupport
-                        });
-                    } else {
-                        return new GeneratedDefaultEndpointRequest({
-                            ir: this.intermediateRepresentation,
-                            packageId,
-                            sdkRequest: endpoint.sdkRequest ?? undefined,
-                            service,
-                            endpoint,
-                            requestBody,
-                            generatedSdkClientClass: this,
-                            retainOriginalCasing: this.retainOriginalCasing,
-                            exportsManager: this.exportsManager
-                        });
-                    }
+                    return this.getGeneratedEndpointRequest({
+                        endpoint,
+                        requestBody,
+                        packageId,
+                        service
+                    });
                 };
 
                 const getGeneratedEndpointResponse = ({
@@ -429,9 +398,66 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 oauth: (oauthScheme) => {
                     this.oauthAuthScheme = oauthScheme;
                 },
+                inferred: (inferredAuthScheme) => {
+                    this.inferredAuthScheme = inferredAuthScheme;
+                },
                 _other: () => {
                     throw new Error("Unknown auth scheme: " + authScheme.type);
                 }
+            });
+        }
+    }
+
+    private getGeneratedEndpointRequest({
+        endpoint,
+        requestBody,
+        packageId,
+        service
+    }: {
+        endpoint: HttpEndpoint;
+        requestBody: HttpRequestBody | undefined;
+        packageId: PackageId;
+        service: HttpService;
+    }): GeneratedBytesEndpointRequest | GeneratedDefaultEndpointRequest | GeneratedFileUploadEndpointRequest {
+        if (requestBody?.type === "bytes") {
+            return new GeneratedBytesEndpointRequest({
+                ir: this.intermediateRepresentation,
+                packageId,
+                service,
+                endpoint,
+                requestBody,
+                generatedSdkClientClass: this,
+                retainOriginalCasing: this.retainOriginalCasing,
+                exportsManager: this.exportsManager
+            });
+        }
+        if (requestBody?.type === "fileUpload") {
+            return new GeneratedFileUploadEndpointRequest({
+                importsManager: this.importsManager,
+                ir: this.intermediateRepresentation,
+                packageId,
+                service,
+                endpoint,
+                requestBody,
+                generatedSdkClientClass: this,
+                retainOriginalCasing: this.retainOriginalCasing,
+                inlineFileProperties: this.inlineFileProperties,
+                includeSerdeLayer: this.includeSerdeLayer,
+                allowExtraFields: this.allowExtraFields,
+                omitUndefined: this.omitUndefined,
+                formDataSupport: this.formDataSupport
+            });
+        } else {
+            return new GeneratedDefaultEndpointRequest({
+                ir: this.intermediateRepresentation,
+                packageId,
+                sdkRequest: endpoint.sdkRequest ?? undefined,
+                service,
+                endpoint,
+                requestBody,
+                generatedSdkClientClass: this,
+                retainOriginalCasing: this.retainOriginalCasing,
+                exportsManager: this.exportsManager
             });
         }
     }
@@ -1315,6 +1341,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
     private generateOptionsInterface(context: SdkContext): InterfaceDeclarationStructure {
         const properties: OptionalKind<PropertySignatureStructure>[] = [];
+        const iExtends: string[] = [];
 
         if (!this.requireDefaultEnvironment) {
             const generatedEnvironments = context.environments.getGeneratedEnvironments();
@@ -1339,7 +1366,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             hasQuestionToken: true,
             docs: ["Specify a custom URL to connect the client to."]
         });
-
+        console.log("this.isRoot", this.isRoot);
+        console.log("this.inferredAuthScheme", this.inferredAuthScheme);
         if (this.isRoot && this.oauthAuthScheme != null && context.generateOAuthClients) {
             properties.push({
                 name: getPropertyKey(OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME),
@@ -1365,6 +1393,39 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 ),
                 hasQuestionToken: this.oauthAuthScheme.configuration.clientSecretEnvVar != null
             });
+        } else if (this.isRoot && this.inferredAuthScheme != null) {
+            const service =
+                this.intermediateRepresentation.services[this.inferredAuthScheme.tokenEndpoint.endpoint.serviceId];
+            if (!service) {
+                throw new Error(
+                    `failed to find service with id ${this.inferredAuthScheme?.tokenEndpoint.endpoint.serviceId}`
+                );
+            }
+
+            const tokenEndpointReference = this.inferredAuthScheme.tokenEndpoint.endpoint;
+            const endpoint = service?.endpoints.find(
+                (endpoint: HttpEndpoint) => endpoint.id === tokenEndpointReference.endpointId
+            );
+            if (!endpoint) {
+                throw new Error(`failed to find endpoint with id ${tokenEndpointReference.endpointId}`);
+            }
+            const tokenEndpointPackageId = tokenEndpointReference.subpackageId;
+            const endpointRequest = this.getGeneratedEndpointRequest({
+                endpoint,
+                requestBody: endpoint.requestBody,
+                packageId: tokenEndpointPackageId
+                    ? {
+                          isRoot: false,
+                          subpackageId: tokenEndpointPackageId
+                      }
+                    : { isRoot: true },
+                service
+            });
+            const requestParam = endpointRequest.getRequestParameter(context);
+            console.log("requestParam", requestParam);
+            if (requestParam) {
+                iExtends.push(getTextOfTsNode(requestParam));
+            }
         }
 
         for (const variable of this.intermediateRepresentation.variables) {

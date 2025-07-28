@@ -12,7 +12,7 @@ import { SourceFile } from "ts-morph";
 
 import { Logger } from "@fern-api/logger";
 
-import { Constants } from "@fern-fern/ir-sdk/api";
+import { Constants } from "@fern-fern/ir-sdk";
 
 export declare namespace BaseContextImpl {
     export interface Init {

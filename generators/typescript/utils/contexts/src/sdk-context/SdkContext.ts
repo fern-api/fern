@@ -5,7 +5,7 @@ import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { Logger } from "@fern-api/logger";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk";
 
 import { BaseContext } from "../base-context";
 import { EndpointErrorUnionContext } from "./endpoint-error-union";

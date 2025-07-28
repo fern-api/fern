@@ -1,7 +1,7 @@
 import { Zurg, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
-import { NameAndWireValue } from "@fern-fern/ir-sdk/api";
+import { NameAndWireValue } from "@fern-fern/ir-sdk";
 
 import { RawSingleUnionType } from "./RawSingleUnionType";
 

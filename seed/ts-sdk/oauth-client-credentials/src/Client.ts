@@ -3,11 +3,12 @@
  */
 
 import * as core from "./core/index.js";
+import * as SeedOauthClientCredentials from "./api/index.js";
 import { mergeHeaders } from "./core/headers.js";
 import { Auth } from "./api/resources/auth/client/Client.js";
 
 export declare namespace SeedOauthClientCredentialsClient {
-    export interface Options extends core.AuthProvider.Options {
+    export interface Options {
         environment: core.Supplier<string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
@@ -29,7 +30,6 @@ export declare namespace SeedOauthClientCredentialsClient {
 
 export class SeedOauthClientCredentialsClient {
     protected readonly _options: SeedOauthClientCredentialsClient.Options;
-    protected readonly _authProvider: core.AuthProvider;
     protected _auth: Auth | undefined;
 
     constructor(_options: SeedOauthClientCredentialsClient.Options) {
@@ -47,13 +47,9 @@ export class SeedOauthClientCredentialsClient {
                 _options?.headers,
             ),
         };
-        this._authProvider = new core.AuthProvider(this, { ...this._options });
     }
 
     public get auth(): Auth {
-        return (this._auth ??= new Auth({
-            ...this._options,
-            authProvider: this._authProvider,
-        }));
+        return (this._auth ??= new Auth(this._options));
     }
 }

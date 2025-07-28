@@ -26,7 +26,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-fern/ir-sdk": "58.2.0",
+    "@fern-fern/ir-sdk": "file:/Users/niels/fern/packages/ir-sdk",
     "@fern-typescript/abstract-error-class-generator": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",

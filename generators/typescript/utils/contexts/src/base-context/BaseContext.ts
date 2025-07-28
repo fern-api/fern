@@ -4,7 +4,7 @@ import { SourceFile } from "ts-morph";
 
 import { Logger } from "@fern-api/logger";
 
-import { Constants } from "@fern-fern/ir-sdk/api";
+import { Constants } from "@fern-fern/ir-sdk";
 
 import { TypeContext, TypeSchemaContext } from "../model-context";
 import { JsonContext } from "./json";

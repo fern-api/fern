@@ -1,6 +1,6 @@
 import { NpmPackage, PackageId, Reference } from "@fern-typescript/commons";
 
-import { WebSocketChannel, WebSocketChannelId } from "@fern-fern/ir-sdk/api";
+import { WebSocketChannel, WebSocketChannelId } from "@fern-fern/ir-sdk";
 
 import { GeneratedWebsocketSocketClass } from "./GeneratedWebsocketSocketClass";
 
