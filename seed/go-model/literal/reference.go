@@ -77,6 +77,22 @@ func (s *SendRequest) GetExtraProperties() map[string]any {
 	return s.extraProperties
 }
 
+func (s *SendRequest) MarshalJSON() ([]byte, error) {
+	type embed SendRequest
+	var marshaler = struct {
+		embed
+		Prompt string `json:"prompt"`
+		Stream bool   `json:"stream"`
+		Ending string `json:"ending"`
+	}{
+		embed:  embed(*s),
+		Prompt: "You are a helpful assistant",
+		Stream: false,
+		Ending: "$ending",
+	}
+	return json.Marshal(marshaler)
+}
+
 func (s *SendRequest) String() string {
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
@@ -157,6 +173,20 @@ func (n *NestedObjectWithLiterals) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return n.extraProperties
+}
+
+func (n *NestedObjectWithLiterals) MarshalJSON() ([]byte, error) {
+	type embed NestedObjectWithLiterals
+	var marshaler = struct {
+		embed
+		Literal1 string `json:"literal1"`
+		Literal2 string `json:"literal2"`
+	}{
+		embed:    embed(*n),
+		Literal1: "literal1",
+		Literal2: "literal2",
+	}
+	return json.Marshal(marshaler)
 }
 
 func (n *NestedObjectWithLiterals) String() string {

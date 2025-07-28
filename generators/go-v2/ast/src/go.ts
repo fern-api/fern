@@ -14,7 +14,8 @@ import {
     Pointer,
     Selector,
     Struct,
-    Switch
+    Switch,
+    TypeDeclaration
 } from "./ast";
 
 export function alias(args: Alias.Args): Alias {
@@ -69,12 +70,16 @@ export function selector(args: Selector.Args): Selector {
     return new Selector(args);
 }
 
-export function struct(args: Struct.Args): Struct {
+export function struct(args: Struct.Args = {}): Struct {
     return new Struct(args);
 }
 
 export function switch_(args: Switch.Args): Switch {
     return new Switch(args);
+}
+
+export function typeDeclaration(args: TypeDeclaration.Args): TypeDeclaration {
+    return new TypeDeclaration(args);
 }
 
 export function typeReference(args: GoTypeReference.Args): GoTypeReference {
@@ -99,6 +104,7 @@ export {
     Selector,
     Struct,
     Type,
+    TypeDeclaration,
     TypeInstantiation,
     type StructField,
     Writer,

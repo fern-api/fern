@@ -224,6 +224,26 @@ func (t *Type) GetExtraProperties() map[string]any {
 	return t.extraProperties
 }
 
+func (t *Type) MarshalJSON() ([]byte, error) {
+	type embed Type
+	var marshaler = struct {
+		embed
+		Six        *internal.DateTime `json:"six"`
+		Seven      *internal.Date     `json:"seven"`
+		Eighteen   string             `json:"eighteen"`
+		Twentyfour *internal.DateTime `json:"twentyfour"`
+		Twentyfive *internal.Date     `json:"twentyfive"`
+	}{
+		embed:      embed(*t),
+		Six:        internal.NewDateTime(t.Six),
+		Seven:      internal.NewDate(t.Seven),
+		Eighteen:   "eighteen",
+		Twentyfour: internal.NewOptionalDateTime(t.Twentyfour),
+		Twentyfive: internal.NewOptionalDate(t.Twentyfive),
+	}
+	return json.Marshal(marshaler)
+}
+
 func (t *Type) String() string {
 	if len(t.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {

@@ -29,6 +29,16 @@ func (u *User) GetExtraProperties() map[string]any {
 	return u.ExtraProperties
 }
 
+func (u *User) MarshalJSON() ([]byte, error) {
+	type embed User
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	return internal.MarshalJSONWithExtraProperties(marshaler, u.ExtraProperties)
+}
+
 func (u *User) String() string {
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {

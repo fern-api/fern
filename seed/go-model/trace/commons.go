@@ -29,7 +29,6 @@ type VariableType struct {
     DoublyLinkedListType any
 }
 
-
 type ListType struct {
     ValueType *VariableType `json:"valueType" url:"valueType"`
     // Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.
@@ -130,7 +129,6 @@ type VariableValue struct {
     NullValue any
 }
 
-
 type DebugVariableValue struct {
     Type string
     IntegerValue int
@@ -147,7 +145,6 @@ type DebugVariableValue struct {
     NullValue any
     GenericValue GenericValue
 }
-
 
 type GenericValue struct {
     StringifiedType *string `json:"stringifiedType,omitempty" url:"stringifiedType,omitempty"`

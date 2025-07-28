@@ -29,6 +29,18 @@ func (f *Failure) GetExtraProperties() map[string]any {
 	return f.ExtraProperties
 }
 
+func (f *Failure) MarshalJSON() ([]byte, error) {
+	type embed Failure
+	var marshaler = struct {
+		embed
+		Status string `json:"status"`
+	}{
+		embed:  embed(*f),
+		Status: "failure",
+	}
+	return internal.MarshalJSONWithExtraProperties(marshaler, f.ExtraProperties)
+}
+
 func (f *Failure) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
