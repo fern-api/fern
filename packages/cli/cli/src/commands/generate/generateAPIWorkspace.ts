@@ -119,32 +119,31 @@ function applyLfsOverride(
     context: TaskContext
 ): generatorsYml.GeneratorGroup {
     const baseAbsolutePath = AbsoluteFilePath.of(resolve(cwd(), lfsOverridePath));
-    
-    // Count generators and track languages for duplicate handling  
+
+    // Count generators and track languages for duplicate handling
     const languageCount: Record<string, number> = {};
     const modifiedGenerators: generatorsYml.GeneratorInvocation[] = [];
 
     for (const generator of group.generators) {
         const language = generator.language ?? getLanguageFromGeneratorName(generator.name);
-        
+
         let outputPath: AbsoluteFilePath;
-        
+
         if (group.generators.length === 1) {
             // Single generator: use the provided path directly
             outputPath = baseAbsolutePath;
         } else {
             // Multiple generators: create subdirectories
             const languageDir = language || "unknown";
-            
+
             if (languageCount[languageDir] == null) {
                 languageCount[languageDir] = 0;
             }
             languageCount[languageDir]++;
-            
-            const dirName = languageCount[languageDir] === 1 
-                ? languageDir 
-                : `${languageDir}-${languageCount[languageDir]}`;
-                
+
+            const dirName =
+                languageCount[languageDir] === 1 ? languageDir : `${languageDir}-${languageCount[languageDir]}`;
+
             outputPath = join(baseAbsolutePath, RelativeFilePath.of(dirName));
         }
 
@@ -156,7 +155,7 @@ function applyLfsOverride(
         };
 
         modifiedGenerators.push(modifiedGenerator);
-        
+
         context.logger.info(
             `Overriding output for generator '${generator.name}' to local-file-system at: ${outputPath}`
         );
@@ -170,16 +169,33 @@ function applyLfsOverride(
 
 function getLanguageFromGeneratorName(generatorName: string): string {
     // Try to extract language from common generator naming patterns
-    if (generatorName.includes("typescript") || generatorName.includes("ts")) return "typescript";
-    if (generatorName.includes("python") || generatorName.includes("py")) return "python";
-    if (generatorName.includes("java")) return "java";
-    if (generatorName.includes("go")) return "go";
-    if (generatorName.includes("ruby")) return "ruby";
-    if (generatorName.includes("csharp") || generatorName.includes("c#")) return "csharp";
-    if (generatorName.includes("swift")) return "swift";
-    if (generatorName.includes("php")) return "php";
-    if (generatorName.includes("rust")) return "rust";
-    
+    if (generatorName.includes("typescript") || generatorName.includes("ts")) {
+        return "typescript";
+    }
+    if (generatorName.includes("python") || generatorName.includes("py")) {
+        return "python";
+    }
+    if (generatorName.includes("java")) {
+        return "java";
+    }
+    if (generatorName.includes("go")) {
+        return "go";
+    }
+    if (generatorName.includes("ruby")) {
+        return "ruby";
+    }
+    if (generatorName.includes("csharp") || generatorName.includes("c#")) {
+        return "csharp";
+    }
+    if (generatorName.includes("swift")) {
+        return "swift";
+    }
+    if (generatorName.includes("php")) {
+        return "php";
+    }
+    if (generatorName.includes("rust")) {
+        return "rust";
+    }
     // If we can't determine the language, use the generator name itself
     return generatorName.replace(/[^a-zA-Z0-9]/g, "-").toLowerCase();
 }
