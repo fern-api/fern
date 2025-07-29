@@ -64,6 +64,21 @@ export abstract class AbstractGoGeneratorContext<
         });
     }
 
+    public getTypePackageName({ fernFilepath }: { fernFilepath: FernFilepath }): string {
+        const fileLocation = this.getPackageLocation(fernFilepath);
+        if (fileLocation.importPath === this.getRootImportPath()) {
+            return this.getRootPackageName();
+        }
+        return fileLocation.importPath.split("/").pop() ?? "";
+    }
+
+    public getTypeFilename({ fernFilepath }: { fernFilepath: FernFilepath }): string {
+        if (fernFilepath.file != null) {
+            return `${fernFilepath.file.snakeCase.unsafeName}.go`;
+        }
+        return "types.go";
+    }
+
     public getHttpServiceOrThrow(serviceId: ServiceId): HttpService {
         const service = this.ir.services[serviceId];
         if (service == null) {
