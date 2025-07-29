@@ -35,7 +35,7 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck",
-    "build": "tsup ./src/cli.ts --format cjs --sourcemap",
+    "build": "pnpm compile && tsup ./src/cli.ts --format cjs --sourcemap",
     "dockerTagLocal": "./docker/create_docker.sh local",
     "dockerTagVersion": "./docker/create_docker.sh"
   },
@@ -48,7 +48,7 @@
     "@fern-typescript/express-generator": "workspace:*",
     "@types/lodash-es": "^4.17.12",
     "lodash-es": "^4.17.21",
-    "tsup": "^8.3.5",
+    "tsup": "^8.5.0",
     "zod": "^3.22.3",
     "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",

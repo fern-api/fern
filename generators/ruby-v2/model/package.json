@@ -40,7 +40,7 @@
     "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-go-model:latest ../../.."
   },
   "devDependencies": {
-    "tsup": "^8.0.2",
+    "tsup": "^8.5.0",
     "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",

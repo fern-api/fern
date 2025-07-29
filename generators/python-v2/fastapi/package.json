@@ -40,7 +40,7 @@
     "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-fastapi-server-v2:latest ../../.."
   },
   "devDependencies": {
-    "tsup": "^8.3.5",
+    "tsup": "^8.5.0",
     "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",

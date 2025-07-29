@@ -89,7 +89,8 @@
     "tsx": "^4.20.3",
     "turbo": "^2.5.4",
     "typescript": "5.7.2",
-    "vitest": "^2.1.9"
+    "vitest": "^2.1.9",
+    "tsup": "^8.5.0"
   },
   "resolutions": {
     "@babel/traverse": "7.23.2",

@@ -55,7 +55,7 @@
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "sort-package-json": "3.3.1",
-    "tsup": "^8.3.5",
+    "tsup": "^8.5.0",
     "typescript": "5.7.2",
     "vitest": "^2.1.9",
     "zod": "^3.25.75"

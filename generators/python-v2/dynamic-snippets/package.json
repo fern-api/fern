@@ -52,7 +52,7 @@
     "string.prototype.replaceall": "^1.0.10",
     "depcheck": "^1.4.7",
     "lodash-es": "^4.17.21",
-    "tsup": "^8.3.5",
+    "tsup": "^8.5.0",
     "typescript": "5.7.2",
     "vitest": "^2.1.9"
   }
