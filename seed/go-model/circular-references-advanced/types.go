@@ -29,6 +29,24 @@ func (i *ImportingA) GetExtraProperties() map[string]any {
 	return i.extraProperties
 }
 
+func (i *ImportingA) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ImportingA
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*i = ImportingA(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *i)
+	if err != nil {
+		return err
+	}
+	i.extraProperties = extraProperties
+	i.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (i *ImportingA) String() string {
 	if len(i.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(i.rawJSON); err == nil {
@@ -60,6 +78,24 @@ func (r *RootType) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return r.extraProperties
+}
+
+func (r *RootType) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler RootType
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = RootType(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (r *RootType) String() string {

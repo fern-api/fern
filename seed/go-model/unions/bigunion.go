@@ -66,6 +66,24 @@ func (n *NormalSweet) GetExtraProperties() map[string]any {
 	return n.extraProperties
 }
 
+func (n *NormalSweet) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler NormalSweet
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = NormalSweet(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+	n.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (n *NormalSweet) String() string {
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
@@ -97,6 +115,24 @@ func (t *ThankfulFactor) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return t.extraProperties
+}
+
+func (t *ThankfulFactor) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ThankfulFactor
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = ThankfulFactor(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (t *ThankfulFactor) String() string {
@@ -132,6 +168,24 @@ func (j *JumboEnd) GetExtraProperties() map[string]any {
 	return j.extraProperties
 }
 
+func (j *JumboEnd) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler JumboEnd
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*j = JumboEnd(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *j)
+	if err != nil {
+		return err
+	}
+	j.extraProperties = extraProperties
+	j.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (j *JumboEnd) String() string {
 	if len(j.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(j.rawJSON); err == nil {
@@ -163,6 +217,24 @@ func (h *HastyPain) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return h.extraProperties
+}
+
+func (h *HastyPain) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler HastyPain
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*h = HastyPain(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *h)
+	if err != nil {
+		return err
+	}
+	h.extraProperties = extraProperties
+	h.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (h *HastyPain) String() string {
@@ -198,6 +270,24 @@ func (m *MistySnow) GetExtraProperties() map[string]any {
 	return m.extraProperties
 }
 
+func (m *MistySnow) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler MistySnow
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*m = MistySnow(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+	m.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (m *MistySnow) String() string {
 	if len(m.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
@@ -229,6 +319,24 @@ func (d *DistinctFailure) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return d.extraProperties
+}
+
+func (d *DistinctFailure) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler DistinctFailure
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*d = DistinctFailure(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
+	if err != nil {
+		return err
+	}
+	d.extraProperties = extraProperties
+	d.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (d *DistinctFailure) String() string {
@@ -264,6 +372,24 @@ func (p *PracticalPrinciple) GetExtraProperties() map[string]any {
 	return p.extraProperties
 }
 
+func (p *PracticalPrinciple) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler PracticalPrinciple
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*p = PracticalPrinciple(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (p *PracticalPrinciple) String() string {
 	if len(p.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
@@ -295,6 +421,24 @@ func (l *LimpingStep) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return l.extraProperties
+}
+
+func (l *LimpingStep) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler LimpingStep
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = LimpingStep(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (l *LimpingStep) String() string {
@@ -330,6 +474,24 @@ func (v *VibrantExcitement) GetExtraProperties() map[string]any {
 	return v.extraProperties
 }
 
+func (v *VibrantExcitement) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler VibrantExcitement
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*v = VibrantExcitement(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *v)
+	if err != nil {
+		return err
+	}
+	v.extraProperties = extraProperties
+	v.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (v *VibrantExcitement) String() string {
 	if len(v.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(v.rawJSON); err == nil {
@@ -361,6 +523,24 @@ func (a *ActiveDiamond) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return a.extraProperties
+}
+
+func (a *ActiveDiamond) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ActiveDiamond
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = ActiveDiamond(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (a *ActiveDiamond) String() string {
@@ -396,6 +576,24 @@ func (p *PopularLimit) GetExtraProperties() map[string]any {
 	return p.extraProperties
 }
 
+func (p *PopularLimit) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler PopularLimit
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*p = PopularLimit(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (p *PopularLimit) String() string {
 	if len(p.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
@@ -427,6 +625,24 @@ func (f *FalseMirror) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return f.extraProperties
+}
+
+func (f *FalseMirror) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler FalseMirror
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = FalseMirror(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (f *FalseMirror) String() string {
@@ -462,6 +678,24 @@ func (p *PrimaryBlock) GetExtraProperties() map[string]any {
 	return p.extraProperties
 }
 
+func (p *PrimaryBlock) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler PrimaryBlock
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*p = PrimaryBlock(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (p *PrimaryBlock) String() string {
 	if len(p.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
@@ -493,6 +727,24 @@ func (r *RotatingRatio) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return r.extraProperties
+}
+
+func (r *RotatingRatio) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler RotatingRatio
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = RotatingRatio(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (r *RotatingRatio) String() string {
@@ -528,6 +780,24 @@ func (c *ColorfulCover) GetExtraProperties() map[string]any {
 	return c.extraProperties
 }
 
+func (c *ColorfulCover) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ColorfulCover
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ColorfulCover(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (c *ColorfulCover) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -559,6 +829,24 @@ func (d *DisloyalValue) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return d.extraProperties
+}
+
+func (d *DisloyalValue) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler DisloyalValue
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*d = DisloyalValue(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
+	if err != nil {
+		return err
+	}
+	d.extraProperties = extraProperties
+	d.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (d *DisloyalValue) String() string {
@@ -594,6 +882,24 @@ func (g *GruesomeCoach) GetExtraProperties() map[string]any {
 	return g.extraProperties
 }
 
+func (g *GruesomeCoach) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler GruesomeCoach
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GruesomeCoach(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (g *GruesomeCoach) String() string {
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
@@ -625,6 +931,24 @@ func (t *TotalWork) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return t.extraProperties
+}
+
+func (t *TotalWork) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler TotalWork
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = TotalWork(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (t *TotalWork) String() string {
@@ -660,6 +984,24 @@ func (h *HarmoniousPlay) GetExtraProperties() map[string]any {
 	return h.extraProperties
 }
 
+func (h *HarmoniousPlay) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler HarmoniousPlay
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*h = HarmoniousPlay(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *h)
+	if err != nil {
+		return err
+	}
+	h.extraProperties = extraProperties
+	h.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (h *HarmoniousPlay) String() string {
 	if len(h.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(h.rawJSON); err == nil {
@@ -691,6 +1033,24 @@ func (u *UniqueStress) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return u.extraProperties
+}
+
+func (u *UniqueStress) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler UniqueStress
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UniqueStress(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (u *UniqueStress) String() string {
@@ -726,6 +1086,24 @@ func (u *UnwillingSmoke) GetExtraProperties() map[string]any {
 	return u.extraProperties
 }
 
+func (u *UnwillingSmoke) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler UnwillingSmoke
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UnwillingSmoke(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (u *UnwillingSmoke) String() string {
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
@@ -757,6 +1135,24 @@ func (f *FrozenSleep) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return f.extraProperties
+}
+
+func (f *FrozenSleep) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler FrozenSleep
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = FrozenSleep(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (f *FrozenSleep) String() string {
@@ -792,6 +1188,24 @@ func (d *DiligentDeal) GetExtraProperties() map[string]any {
 	return d.extraProperties
 }
 
+func (d *DiligentDeal) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler DiligentDeal
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*d = DiligentDeal(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
+	if err != nil {
+		return err
+	}
+	d.extraProperties = extraProperties
+	d.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (d *DiligentDeal) String() string {
 	if len(d.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
@@ -823,6 +1237,24 @@ func (a *AttractiveScript) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return a.extraProperties
+}
+
+func (a *AttractiveScript) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler AttractiveScript
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = AttractiveScript(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (a *AttractiveScript) String() string {
@@ -858,6 +1290,24 @@ func (h *HoarseMouse) GetExtraProperties() map[string]any {
 	return h.extraProperties
 }
 
+func (h *HoarseMouse) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler HoarseMouse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*h = HoarseMouse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *h)
+	if err != nil {
+		return err
+	}
+	h.extraProperties = extraProperties
+	h.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (h *HoarseMouse) String() string {
 	if len(h.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(h.rawJSON); err == nil {
@@ -889,6 +1339,24 @@ func (c *CircularCard) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return c.extraProperties
+}
+
+func (c *CircularCard) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler CircularCard
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CircularCard(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (c *CircularCard) String() string {
@@ -924,6 +1392,24 @@ func (p *PotableBad) GetExtraProperties() map[string]any {
 	return p.extraProperties
 }
 
+func (p *PotableBad) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler PotableBad
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*p = PotableBad(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (p *PotableBad) String() string {
 	if len(p.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
@@ -957,6 +1443,24 @@ func (t *TriangularRepair) GetExtraProperties() map[string]any {
 	return t.extraProperties
 }
 
+func (t *TriangularRepair) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler TriangularRepair
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = TriangularRepair(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (t *TriangularRepair) String() string {
 	if len(t.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
@@ -988,6 +1492,24 @@ func (g *GaseousRoad) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return g.extraProperties
+}
+
+func (g *GaseousRoad) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler GaseousRoad
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GaseousRoad(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (g *GaseousRoad) String() string {

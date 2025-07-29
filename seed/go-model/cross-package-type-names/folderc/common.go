@@ -30,6 +30,24 @@ func (f *Foo) GetExtraProperties() map[string]any {
 	return f.extraProperties
 }
 
+func (f *Foo) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Foo
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = Foo(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (f *Foo) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {

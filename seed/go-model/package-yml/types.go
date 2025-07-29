@@ -37,6 +37,24 @@ func (e *EchoRequest) GetExtraProperties() map[string]any {
 	return e.extraProperties
 }
 
+func (e *EchoRequest) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler EchoRequest
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*e = EchoRequest(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	if err != nil {
+		return err
+	}
+	e.extraProperties = extraProperties
+	e.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (e *EchoRequest) String() string {
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {

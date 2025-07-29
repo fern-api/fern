@@ -48,6 +48,24 @@ func (m *Movie) GetExtraProperties() map[string]any {
 	return m.extraProperties
 }
 
+func (m *Movie) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Movie
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*m = Movie(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+	m.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (m *Movie) String() string {
 	if len(m.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
@@ -87,6 +105,24 @@ func (c *CreateMovieRequest) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return c.extraProperties
+}
+
+func (c *CreateMovieRequest) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler CreateMovieRequest
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateMovieRequest(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (c *CreateMovieRequest) String() string {

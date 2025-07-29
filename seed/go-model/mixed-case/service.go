@@ -29,6 +29,24 @@ func (o *Organization) GetExtraProperties() map[string]any {
 	return o.extraProperties
 }
 
+func (o *Organization) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Organization
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = Organization(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (o *Organization) String() string {
 	if len(o.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
@@ -78,6 +96,24 @@ func (u *User) GetExtraProperties() map[string]any {
 	return u.extraProperties
 }
 
+func (u *User) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler User
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = User(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (u *User) String() string {
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
@@ -117,6 +153,24 @@ func (n *NestedUser) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return n.extraProperties
+}
+
+func (n *NestedUser) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler NestedUser
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = NestedUser(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+	n.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (n *NestedUser) String() string {

@@ -30,6 +30,24 @@ func (p *Package) GetExtraProperties() map[string]any{
     return p.extraProperties
 }
 
+func (p *Package) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler Package
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *p = Package(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *p)
+    if err != nil {
+        return err
+    }
+    p.extraProperties = extraProperties
+    p.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (p *Package) String() string{
     if len(p.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
@@ -70,6 +88,24 @@ func (r *Record) GetExtraProperties() map[string]any{
         return nil
     }
     return r.extraProperties
+}
+
+func (r *Record) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler Record
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *r = Record(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *r)
+    if err != nil {
+        return err
+    }
+    r.extraProperties = extraProperties
+    r.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (r *Record) String() string{
