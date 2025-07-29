@@ -21597,7 +21597,6 @@
           ],
           "examples": [
             {
-              "name": "usersReplaceUserExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/users/user_id",
               "pathParameters": {
@@ -21732,7 +21731,6 @@
               }
             },
             {
-              "name": "usersReplaceUserExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/users/user_id",
               "pathParameters": {
