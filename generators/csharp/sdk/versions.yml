@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.1.2
+  changelogEntry:
+    - summary: |
+        Generate methods to support FileDownload (returns a `Task<Stream>`) and streaming JSON responses (returns an `IAsyncEnumberable<...>`) .
+      type: fix
+  createdAt: '2025-07-23'
+  irVersion: 58
 - version: 2.1.1
   changelogEntry:
     - summary: |

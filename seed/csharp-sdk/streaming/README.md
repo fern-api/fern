@@ -23,7 +23,12 @@ Instantiate and use the client with the following:
 using SeedStreaming;
 
 var client = new SeedStreamingClient();
-await client.Dummy.GenerateStreamAsync(new GenerateStreamRequest { Stream = true, NumEvents = 1 });
+var pager = await client.Dummy.GenerateStreamAsync(new GenerateStreamRequest { Stream = true, NumEvents = 1 });
+
+await foreach (var item in pager)
+{
+    // do something with item
+}
 ```
 
 ## Exception Handling

@@ -19,6 +19,7 @@ export enum MethodType {
 export class Method extends AstNode {
     public readonly name: string;
     public readonly isAsync: boolean;
+    public readonly isAsyncEnumerable: boolean;
     public readonly access: Access | undefined;
     public readonly return: Type | TypeParameter | undefined;
     public readonly noBody: boolean;
@@ -37,6 +38,7 @@ export class Method extends AstNode {
     constructor({
         name,
         isAsync,
+        isAsyncEnumerable,
         override,
         access,
         return_,
@@ -56,6 +58,7 @@ export class Method extends AstNode {
         super();
         this.name = name;
         this.isAsync = isAsync ?? false;
+        this.isAsyncEnumerable = isAsyncEnumerable ?? false;
         this.override = override ?? false;
         this.access = access;
         this.return = return_;
@@ -111,11 +114,16 @@ export class Method extends AstNode {
             }
         } else {
             if (this.isAsync) {
-                // Don't add a class reference for Task<T> since we don't want the writer
-                // to detect a conflict between Task<T> and Task and add a fully qualified name
-                writer.write("Task<");
-                this.return.write(writer);
-                writer.write(">");
+                if (this.isAsyncEnumerable) {
+                    // if the return type is an async enumerable, we don't want to add a class reference for Task<T>
+                    this.return.write(writer);
+                } else {
+                    // Don't add a class reference for Task<T> since we don't want the writer
+                    // to detect a conflict between Task<T> and Task and add a fully qualified name
+                    writer.write("Task<");
+                    this.return.write(writer);
+                    writer.write(">");
+                }
             } else {
                 this.return.write(writer);
             }
@@ -188,6 +196,8 @@ export namespace Method {
         override?: boolean;
         /* Whether the method is sync or async. Defaults to false. */
         isAsync?: boolean;
+        /* Whether the method is an async enumerable. Defaults to false. */
+        isAsyncEnumerable?: boolean;
         /* The return type of the method */
         return_?: Type | TypeParameter;
         /* The name of the method */
