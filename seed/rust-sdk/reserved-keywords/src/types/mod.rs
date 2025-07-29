@@ -1,6 +1,6 @@
-// Generated types module
-
 pub mod package;
-pub use package::*;
 pub mod record;
-pub use record::*;
+
+pub use package::{*};
+pub use record::{*};
+

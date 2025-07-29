@@ -2603,6 +2603,9 @@ importers:
       '@fern-api/rust-base':
         specifier: workspace:*
         version: link:../base
+      '@fern-api/rust-codegen':
+        specifier: workspace:*
+        version: link:../codegen
       '@fern-api/rust-model':
         specifier: workspace:*
         version: link:../model

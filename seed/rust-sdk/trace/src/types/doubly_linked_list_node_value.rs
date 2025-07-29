@@ -1,3 +1,4 @@
+use crate::node_id::NodeId;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

@@ -1,5 +1,5 @@
 use serde::{Deserialize, Serialize};
-use serde_json::Value;
+use crate::identifier::Identifier;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Response {

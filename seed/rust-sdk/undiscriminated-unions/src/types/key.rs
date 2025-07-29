@@ -1,3 +1,4 @@
+use crate::key_type::KeyType;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

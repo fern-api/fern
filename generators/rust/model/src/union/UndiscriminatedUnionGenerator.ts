@@ -11,17 +11,21 @@ import {
 
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference";
 import { isCollectionType, isDateTimeType, isUnknownType, isUuidType } from "../utils/primitiveTypeUtils";
+import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 export class UndiscriminatedUnionGenerator {
     private readonly typeDeclaration: TypeDeclaration;
     private readonly undiscriminatedUnionTypeDeclaration: UndiscriminatedUnionTypeDeclaration;
+    private readonly context: ModelGeneratorContext;
 
     public constructor(
         typeDeclaration: TypeDeclaration,
-        undiscriminatedUnionTypeDeclaration: UndiscriminatedUnionTypeDeclaration
+        undiscriminatedUnionTypeDeclaration: UndiscriminatedUnionTypeDeclaration,
+        context: ModelGeneratorContext
     ) {
         this.typeDeclaration = typeDeclaration;
         this.undiscriminatedUnionTypeDeclaration = undiscriminatedUnionTypeDeclaration;
+        this.context = context;
     }
 
     public generate(): RustFile {
@@ -44,7 +48,12 @@ export class UndiscriminatedUnionGenerator {
     }
 
     private writeUseStatements(writer: rust.Writer): void {
-        writer.writeLine("use serde::{Deserialize, Serialize};");
+        // Add imports for variant types FIRST
+        const variantTypes = this.getVariantTypesUsedInUnion();
+        variantTypes.forEach((typeName) => {
+            const moduleNameEscaped = this.context.escapeRustKeyword(typeName.snakeCase.unsafeName);
+            writer.writeLine(`use crate::${moduleNameEscaped}::${typeName.pascalCase.unsafeName};`);
+        });
 
         // Add chrono if we have datetime fields
         if (this.hasDateTimeFields()) {
@@ -65,6 +74,9 @@ export class UndiscriminatedUnionGenerator {
         if (this.hasJsonValueFields()) {
             writer.writeLine("use serde_json::Value;");
         }
+
+        // Add serde imports LAST
+        writer.writeLine("use serde::{Deserialize, Serialize};");
     }
 
     private generateUndiscriminatedUnionEnum(writer: rust.Writer): void {
@@ -242,5 +254,25 @@ export class UndiscriminatedUnionGenerator {
 
     private hasFieldsOfType(predicate: (typeRef: TypeReference) => boolean): boolean {
         return this.undiscriminatedUnionTypeDeclaration.members.some((member) => predicate(member.type));
+    }
+
+    private getVariantTypesUsedInUnion(): { snakeCase: { unsafeName: string }; pascalCase: { unsafeName: string } }[] {
+        const variantTypeNames: { snakeCase: { unsafeName: string }; pascalCase: { unsafeName: string } }[] = [];
+        const visited = new Set<string>();
+
+        this.undiscriminatedUnionTypeDeclaration.members.forEach((member) => {
+            if (member.type.type === "named") {
+                const typeName = member.type.name.originalName;
+                if (!visited.has(typeName)) {
+                    visited.add(typeName);
+                    variantTypeNames.push({
+                        snakeCase: { unsafeName: member.type.name.snakeCase.unsafeName },
+                        pascalCase: { unsafeName: member.type.name.pascalCase.unsafeName }
+                    });
+                }
+            }
+        });
+
+        return variantTypeNames;
     }
 }

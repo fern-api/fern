@@ -1,3 +1,15 @@
+use crate::cast_member::CastMember;
+use crate::extended_movie::ExtendedMovie;
+use crate::entity::Entity;
+use crate::metadata::Metadata;
+use crate::event_info::EventInfo;
+use crate::data::Data;
+use crate::migration::Migration;
+use crate::exception::Exception;
+use crate::test::Test;
+use crate::node::Node;
+use crate::directory::Directory;
+use crate::moment::Moment;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

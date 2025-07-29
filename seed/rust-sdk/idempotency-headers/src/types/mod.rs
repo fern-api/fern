@@ -1,4 +1,4 @@
-// Generated types module
-
 pub mod currency;
-pub use currency::*;
+
+pub use currency::{*};
+
