@@ -160,7 +160,7 @@ class CoreUtilities:
                 "UniversalRootModel",
             }
 
-        if v1_on_v2:
+        if is_v1_on_v2:
             exports.remove("IS_PYDANTIC_V2")
 
         self._copy_file_to_project(
