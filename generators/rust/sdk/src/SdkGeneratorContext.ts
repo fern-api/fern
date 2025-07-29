@@ -62,6 +62,22 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
         return service;
     }
 
+    public getSubpackageOrThrow(subpackageId: SubpackageId): Subpackage {
+        const subpackage = this.ir.subpackages[subpackageId];
+        if (subpackage == null) {
+            throw new Error(`Subpackage with id ${subpackageId} not found`);
+        }
+        return subpackage;
+    }
+
+    public getHttpServiceOrThrow(serviceId: ServiceId): HttpService {
+        const service = this.ir.services[serviceId];
+        if (service == null) {
+            throw new Error(`Service with id ${serviceId} not found`);
+        }
+        return service;
+    }
+
     public toModelGeneratorContext(): ModelGeneratorContext {
         return new ModelGeneratorContext(
             this.ir,

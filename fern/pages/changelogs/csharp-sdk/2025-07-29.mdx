@@ -1,0 +1,37 @@
+## 2.1.3
+**`(fix):`** uses fully qualified class name `System.IO.Stream` for downloads
+
+## 2.1.2
+**`(feat):`** Generate methods to support FileDownload (returns a `Task<Stream>`).
+Example:
+
+```csharp
+  var request = new FooAudioRequest {
+    Format = Format.Wav,
+    Song = "Happy Birthday"
+  };
+  var stream = await client.Songs.CreateSongAsync(request);
+  // copy the stream to a file
+  using (var fileStream = new FileStream("song.wav", FileMode.Create, FileAccess.Write))
+  {
+    await stream.CopyToAsync(fileStream);
+  }
+```
+
+
+**`(feat):`** Generate streaming/SSE JSON responses (returns an `IAsyncEnumerable<...>`).
+Example:
+
+```csharp
+var request = new FooRequest
+{
+    Names = ["Bob", "Alice"]
+};
+
+// iterate over the list of items returned
+await foreach( var item in client.People.CreatePeopleStreamingAsync(request)) {
+  Console.WriteLine($"Text for {item.Name} : {item.Text}");
+}
+```
+
+

@@ -1,7 +1,7 @@
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using global::System.Threading.Tasks;
 using SeedStreaming.Core;
 
 namespace SeedStreaming;
@@ -18,7 +18,7 @@ public partial class DummyClient
     /// <example><code>
     /// await client.Dummy.GenerateStreamAsync(new GenerateStreamRequest { Stream = true, NumEvents = 1 });
     /// </code></example>
-    public async global::System.Threading.Tasks.Task GenerateStreamAsync(
+    public async IAsyncEnumerable<StreamResponse> GenerateStreamAsync(
         GenerateStreamRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -37,6 +37,30 @@ public partial class DummyClient
                 cancellationToken
             )
             .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            string? line;
+            using var reader = new StreamReader(await response.Raw.Content.ReadAsStreamAsync());
+            while (!string.IsNullOrEmpty(line = await reader.ReadLineAsync()))
+            {
+                var chunk = (StreamResponse?)null;
+                try
+                {
+                    chunk = JsonUtils.Deserialize<StreamResponse>(line);
+                }
+                catch (JsonException)
+                {
+                    throw new SeedStreamingException(
+                        $"Unable to deserialize JSON response '{line}'"
+                    );
+                }
+                if (chunk is not null)
+                {
+                    yield return chunk;
+                }
+            }
+            yield break;
+        }
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedStreamingApiException(
