@@ -65,7 +65,8 @@
     "definition:generate": "pnpm fern generate --local --api fern-definition",
     "generators:generate": "pnpm fern generate --local --api generators-yml",
     "prepare": "husky",
-    "pre-commit": "tsx scripts/pre-commit.ts"
+    "pre-commit": "tsx scripts/pre-commit.ts",
+    "fix:references": "npx nx g @nx/js:typescript-sync --updateReferences=true --updatePaths=false"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
@@ -75,6 +76,7 @@
     "@blueprintjs/eslint-plugin": "^6.1.6",
     "@blueprintjs/stylelint-plugin": "^4.1.14",
     "@fern-api/configs": "workspace:*",
+    "@nx/js": "^21.3.8",
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "@types/jest": "^29.5.14",
     "@types/lodash-es": "^4.17.12",
@@ -99,6 +101,7 @@
     "is-ci": "^4.1.0",
     "jsonc-parser": "~3.3.1",
     "lodash-es": "^4.17.21",
+    "nx": "^21.3.8",
     "prettier": "^3.4.2",
     "react": "^18.2.0",
     "stylelint": "^14.11.0",

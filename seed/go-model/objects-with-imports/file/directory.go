@@ -46,6 +46,24 @@ func (d *Directory) GetExtraProperties() map[string]any {
 	return d.extraProperties
 }
 
+func (d *Directory) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Directory
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*d = Directory(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
+	if err != nil {
+		return err
+	}
+	d.extraProperties = extraProperties
+	d.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (d *Directory) String() string {
 	if len(d.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {

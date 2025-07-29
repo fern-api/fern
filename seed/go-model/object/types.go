@@ -224,6 +224,41 @@ func (t *Type) GetExtraProperties() map[string]any {
 	return t.extraProperties
 }
 
+func (t *Type) UnmarshalJSON(
+	data []byte,
+) error {
+	type embed Type
+	var unmarshaler = struct {
+		embed
+		Six        *internal.DateTime `json:"six"`
+		Seven      *internal.Date     `json:"seven"`
+		Eighteen   string             `json:"eighteen"`
+		Twentyfour *internal.DateTime `json:"twentyfour"`
+		Twentyfive *internal.Date     `json:"twentyfive"`
+	}{
+		embed: embed(*t),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*t = Type(unmarshaler.embed)
+	t.Six = unmarshaler.Six.Time()
+	t.Seven = unmarshaler.Seven.Time()
+	if unmarshaler.Eighteen != "eighteen" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", t, "eighteen", unmarshaler.Eighteen)
+	}
+	t.eighteen = unmarshaler.Eighteen
+	t.Twentyfour = unmarshaler.Twentyfour.TimePtr()
+	t.Twentyfive = unmarshaler.Twentyfive.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *t, "eighteen")
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (t *Type) MarshalJSON() ([]byte, error) {
 	type embed Type
 	var marshaler = struct {
@@ -283,6 +318,24 @@ func (n *Name) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return n.extraProperties
+}
+
+func (n *Name) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Name
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = Name(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+	n.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (n *Name) String() string {

@@ -45,6 +45,24 @@ func (o *Organization) GetExtraProperties() map[string]any {
 	return o.extraProperties
 }
 
+func (o *Organization) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Organization
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = Organization(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (o *Organization) String() string {
 	if len(o.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
@@ -76,6 +94,24 @@ func (c *CreateOrganizationRequest) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return c.extraProperties
+}
+
+func (c *CreateOrganizationRequest) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler CreateOrganizationRequest
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateOrganizationRequest(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (c *CreateOrganizationRequest) String() string {

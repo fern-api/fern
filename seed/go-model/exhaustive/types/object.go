@@ -128,6 +128,32 @@ func (o *ObjectWithOptionalField) GetExtraProperties() map[string]any {
 	return o.extraProperties
 }
 
+func (o *ObjectWithOptionalField) UnmarshalJSON(
+	data []byte,
+) error {
+	type embed ObjectWithOptionalField
+	var unmarshaler = struct {
+		embed
+		Datetime *internal.DateTime `json:"datetime"`
+		Date     *internal.Date     `json:"date"`
+	}{
+		embed: embed(*o),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*o = ObjectWithOptionalField(unmarshaler.embed)
+	o.Datetime = unmarshaler.Datetime.TimePtr()
+	o.Date = unmarshaler.Date.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (o *ObjectWithOptionalField) MarshalJSON() ([]byte, error) {
 	type embed ObjectWithOptionalField
 	var marshaler = struct {
@@ -175,6 +201,24 @@ func (o *ObjectWithRequiredField) GetExtraProperties() map[string]any {
 	return o.extraProperties
 }
 
+func (o *ObjectWithRequiredField) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ObjectWithRequiredField
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = ObjectWithRequiredField(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (o *ObjectWithRequiredField) String() string {
 	if len(o.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
@@ -206,6 +250,24 @@ func (o *ObjectWithMapOfMap) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return o.extraProperties
+}
+
+func (o *ObjectWithMapOfMap) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ObjectWithMapOfMap
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = ObjectWithMapOfMap(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (o *ObjectWithMapOfMap) String() string {
@@ -249,6 +311,24 @@ func (n *NestedObjectWithOptionalField) GetExtraProperties() map[string]any {
 	return n.extraProperties
 }
 
+func (n *NestedObjectWithOptionalField) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler NestedObjectWithOptionalField
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = NestedObjectWithOptionalField(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+	n.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (n *NestedObjectWithOptionalField) String() string {
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
@@ -290,6 +370,24 @@ func (n *NestedObjectWithRequiredField) GetExtraProperties() map[string]any {
 	return n.extraProperties
 }
 
+func (n *NestedObjectWithRequiredField) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler NestedObjectWithRequiredField
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = NestedObjectWithRequiredField(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+	n.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (n *NestedObjectWithRequiredField) String() string {
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
@@ -321,6 +419,24 @@ func (d *DoubleOptional) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return d.extraProperties
+}
+
+func (d *DoubleOptional) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler DoubleOptional
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*d = DoubleOptional(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
+	if err != nil {
+		return err
+	}
+	d.extraProperties = extraProperties
+	d.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (d *DoubleOptional) String() string {

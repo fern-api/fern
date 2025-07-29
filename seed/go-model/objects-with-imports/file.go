@@ -45,6 +45,24 @@ func (f *File) GetExtraProperties() map[string]any {
 	return f.extraProperties
 }
 
+func (f *File) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler File
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = File(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (f *File) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {

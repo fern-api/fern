@@ -5,9 +5,7 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": ["./src/**/*"],
-  "references": [
-    { "path": "../../../packages/commons/core-utils" },
-    { "path": "../../base" }
+  "include": [
+    "./src/**/*"
   ]
-} 
+}

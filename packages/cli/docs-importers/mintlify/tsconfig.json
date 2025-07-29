@@ -1,6 +1,31 @@
 {
   "extends": "@fern-api/configs/tsconfig/main.json",
-  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
-  "include": ["./src/**/*"],
-  "references": [ { "path": "../../../commons/core-utils" }, { "path": "../../../commons/fs-utils" }, { "path": "../commons" }, { "path": "../../task-context" }, { "path": "../../logger" }]
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src"
+  },
+  "include": [
+    "./src/**/*"
+  ],
+  "references": [
+    {
+      "path": "../../../commons/core-utils"
+    },
+    {
+      "path": "../../../commons/fs-utils"
+    },
+    {
+      "path": "../../configuration"
+    },
+    {
+      "path": "../../logger"
+    },
+    {
+      "path": "../../task-context"
+    },
+    {
+      "path": "../commons"
+    }
+  ]
 }

@@ -65,6 +65,24 @@ func (m *Migration) GetExtraProperties() map[string]any{
     return m.extraProperties
 }
 
+func (m *Migration) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler Migration
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *m = Migration(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *m)
+    if err != nil {
+        return err
+    }
+    m.extraProperties = extraProperties
+    m.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (m *Migration) String() string{
     if len(m.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(m.rawJSON); err == nil {

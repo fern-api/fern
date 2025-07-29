@@ -10,10 +10,16 @@
   ],
   "references": [
     {
+      "path": "../../../commons/casings-generator"
+    },
+    {
       "path": "../../../commons/core-utils"
     },
     {
       "path": "../../../commons/fs-utils"
+    },
+    {
+      "path": "../../../commons/ir-utils"
     },
     {
       "path": "../../../ir-sdk"
@@ -38,12 +44,6 @@
     },
     {
       "path": "../schema"
-    },
-    {
-      "path": "../../../commons/casings-generator"
-    },
-    {
-      "path": "../../../commons/ir-utils"
     }
   ]
 }

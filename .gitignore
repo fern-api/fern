@@ -6,6 +6,9 @@ node_modules
 # turbo
 .turbo
 
+# nx
+.nx
+
 # production
 packages/**/build
 packages/**/lib

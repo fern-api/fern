@@ -37,6 +37,24 @@ func (e *ExampleType) GetExtraProperties() map[string]any {
 	return e.extraProperties
 }
 
+func (e *ExampleType) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ExampleType
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*e = ExampleType(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	if err != nil {
+		return err
+	}
+	e.extraProperties = extraProperties
+	e.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (e *ExampleType) String() string {
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
@@ -86,6 +104,24 @@ func (n *NestedType) GetExtraProperties() map[string]any {
 	return n.extraProperties
 }
 
+func (n *NestedType) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler NestedType
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = NestedType(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+	n.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (n *NestedType) String() string {
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
@@ -117,6 +153,24 @@ func (d *Docs) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return d.extraProperties
+}
+
+func (d *Docs) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Docs
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*d = Docs(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
+	if err != nil {
+		return err
+	}
+	d.extraProperties = extraProperties
+	d.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (d *Docs) String() string {
@@ -158,6 +212,24 @@ func (j *Json) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return j.extraProperties
+}
+
+func (j *Json) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Json
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*j = Json(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *j)
+	if err != nil {
+		return err
+	}
+	j.extraProperties = extraProperties
+	j.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (j *Json) String() string {

@@ -121,6 +121,24 @@ func (f *Foo) GetExtraProperties() map[string]any {
 	return f.extraProperties
 }
 
+func (f *Foo) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Foo
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = Foo(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (f *Foo) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -162,6 +180,24 @@ func (f *FooExtended) GetExtraProperties() map[string]any {
 	return f.extraProperties
 }
 
+func (f *FooExtended) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler FooExtended
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = FooExtended(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (f *FooExtended) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -193,6 +229,24 @@ func (b *Bar) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return b.extraProperties
+}
+
+func (b *Bar) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Bar
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = Bar(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+	b.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (b *Bar) String() string {

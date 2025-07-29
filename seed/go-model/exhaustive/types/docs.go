@@ -84,6 +84,24 @@ func (o *ObjectWithDocs) GetExtraProperties() map[string]any {
 	return o.extraProperties
 }
 
+func (o *ObjectWithDocs) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ObjectWithDocs
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = ObjectWithDocs(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (o *ObjectWithDocs) String() string {
 	if len(o.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {

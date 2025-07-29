@@ -1,18 +1,31 @@
 {
   "extends": "@fern-api/configs/tsconfig/main.json",
-  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
-  "include": ["./src/**/*"],
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src"
+  },
+  "include": [
+    "./src/**/*"
+  ],
   "references": [
-    { "path": "../../../packages/commons/core-utils" },
-    { "path": "../../../packages/commons/fs-utils" },
-    { "path": "../../base" },
-    { "path": "../../typescript-v2/ast" },
-    { "path": "../../typescript-v2/base" },
-    { "path": "../../typescript/sdk/cli" },
-    { "path": "../../typescript/utils/abstract-generator-cli" },
-    { "path": "../../typescript/utils/commons" },
-    { "path": "../../typescript/utils/contexts" },
-    { "path": "../../typescript/sdk/generator" },
-    { "path": "../model" }
+    {
+      "path": "../../../packages/commons/fs-utils"
+    },
+    {
+      "path": "../../base"
+    },
+    {
+      "path": "../../typescript-v2/ast"
+    },
+    {
+      "path": "../../typescript/sdk/cli"
+    },
+    {
+      "path": "../base"
+    },
+    {
+      "path": "../model"
+    }
   ]
 }

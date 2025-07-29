@@ -153,6 +153,14 @@ export abstract class AbstractGoGeneratorContext<
         });
     }
 
+    public newJsonRawMessage(arg: go.AstNode): go.FuncInvocation {
+        return go.invokeFunc({
+            func: go.typeReference({ name: "RawMessage", importPath: "encoding/json" }),
+            arguments_: [arg],
+            multiline: false
+        });
+    }
+
     public callFmtErrorf(format: string, args: go.AstNode[]): go.FuncInvocation {
         return go.invokeFunc({
             func: go.typeReference({ name: "Errorf", importPath: "fmt" }),
@@ -173,6 +181,22 @@ export abstract class AbstractGoGeneratorContext<
         return go.invokeFunc({
             func: go.typeReference({ name: "Marshal", importPath: "encoding/json" }),
             arguments_: [arg],
+            multiline: false
+        });
+    }
+
+    public callJsonUnmarshal({ data, value }: { data: go.AstNode; value: go.AstNode }): go.FuncInvocation {
+        return go.invokeFunc({
+            func: go.typeReference({ name: "Unmarshal", importPath: "encoding/json" }),
+            arguments_: [data, value],
+            multiline: false
+        });
+    }
+
+    public callExtractExtraProperties(args: go.AstNode[]): go.FuncInvocation {
+        return this.callInternalFunc({
+            name: "ExtractExtraProperties",
+            arguments_: args,
             multiline: false
         });
     }
