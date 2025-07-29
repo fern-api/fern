@@ -20,4 +20,4 @@ COPY generators/php/sdk/dist /dist
 
 RUN npm install -f -g @fern-api/generator-cli
 
-ENTRYPOINT ["node", "/dist/cli.cjs"]
+ENTRYPOINT ["node", "--enable-source-maps", "/dist/cli.cjs"]

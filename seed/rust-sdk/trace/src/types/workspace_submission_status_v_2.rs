@@ -1,3 +1,4 @@
+use crate::workspace_submission_update::WorkspaceSubmissionUpdate;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

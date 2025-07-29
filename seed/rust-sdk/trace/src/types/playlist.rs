@@ -1,5 +1,7 @@
+use crate::playlist_id::PlaylistId;
+use crate::user_id::UserId;
+use crate::playlist_create_request::PlaylistCreateRequest;
 use serde::{Deserialize, Serialize};
-use crate::types::playlist_create_request::PlaylistCreateRequest;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Playlist {

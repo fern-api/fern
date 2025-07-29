@@ -1,3 +1,3 @@
 FROM node:18.1.0-alpine
 COPY dist /dist
-ENTRYPOINT ["node", "/dist/cli.cjs"]
+ENTRYPOINT ["node", "--enable-source-maps", "/dist/cli.cjs"]

@@ -1,5 +1,5 @@
+use crate::json::Json;
 use serde::{Deserialize, Serialize};
-use crate::types::json::Json;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct NestedType {

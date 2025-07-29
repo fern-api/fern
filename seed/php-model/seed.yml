@@ -17,7 +17,7 @@ test:
     workingDirectory: generators/php
     buildCommand:
       - pnpm --filter @fern-api/php-model dist:cli
-    runCommand: node model/dist/cli.cjs
+    runCommand: node --enable-source-maps model/dist/cli.cjs
 
 language: php
 generatorType: Model

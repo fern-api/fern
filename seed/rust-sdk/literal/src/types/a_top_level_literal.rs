@@ -1,3 +1,4 @@
+use crate::a_nested_literal::ANestedLiteral;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

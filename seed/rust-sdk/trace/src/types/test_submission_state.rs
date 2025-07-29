@@ -1,3 +1,6 @@
+use crate::problem_id::ProblemId;
+use crate::test_case::TestCase;
+use crate::test_submission_status::TestSubmissionStatus;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
