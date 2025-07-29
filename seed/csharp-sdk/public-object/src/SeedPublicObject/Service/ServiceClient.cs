@@ -14,7 +14,7 @@ public partial class ServiceClient
         _client = client;
     }
 
-    public async Task<Stream> GetAsync(
+    public async Task<System.IO.Stream> GetAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
