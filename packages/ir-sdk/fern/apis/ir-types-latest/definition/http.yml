@@ -161,6 +161,7 @@ types:
       name: commons.NameAndWireValue
       valueType: types.TypeReference
       v2Examples: optional<examples.V2SchemaExamples>
+      propertyAccess: optional<types.ObjectPropertyAccess>
 
   FileUploadRequest:
     extends: 

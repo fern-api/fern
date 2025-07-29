@@ -59554,7 +59554,8 @@
                         "type": "string",
                         "format": "objectid"
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "Unique identifier for the Site",
@@ -59568,7 +59569,8 @@
                           "format": "objectid"
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "Title of the Page",
@@ -59608,7 +59610,8 @@
                           "format": "objectid"
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "Unique identifier for a linked Collection, value will be null if the Page is not part of a Collection.",
@@ -59622,7 +59625,8 @@
                           "format": "objectid"
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "The date the Page was created",
@@ -59636,7 +59640,8 @@
                           "format": "date-time"
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "The date the Page was most recently updated",
@@ -59650,7 +59655,8 @@
                           "format": "date-time"
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "Whether the Page has been archived",
@@ -59664,7 +59670,8 @@
                           "default": false
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "Whether the Page is a draft",
@@ -59678,7 +59685,8 @@
                           "default": false
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "Indicates whether the Page supports [Page Branching](https://university.webflow.com/lesson/page-branching)",
@@ -59692,7 +59700,8 @@
                           "default": false
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "Indicates whether the Page is restricted by [Memberships Controls](https://university.webflow.com/lesson/webflow-memberships-overview#how-to-manage-page-restrictions)",
@@ -59706,7 +59715,8 @@
                           "default": false
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "SEO-related fields for the Page",
@@ -59745,7 +59755,8 @@
                           }
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "Relative path of the published page URL",
@@ -59758,7 +59769,8 @@
                           "type": "string"
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   }
                 ]
               }
@@ -63102,7 +63114,8 @@
                       "value": {
                         "type": "string"
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "Identifier for the locale of the CMS item",
@@ -63129,7 +63142,8 @@
                           "format": "date-string"
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "The date the item was last updated",
@@ -63143,7 +63157,8 @@
                           "format": "date-string"
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "The date the item was created",
@@ -63157,7 +63172,8 @@
                           "format": "date-string"
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "Boolean determining if the Item is set to archived",
@@ -63779,7 +63795,8 @@
                       "value": {
                         "type": "string"
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "Identifier for the locale of the CMS item",
@@ -63806,7 +63823,8 @@
                           "format": "date-string"
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "The date the item was last updated",
@@ -63820,7 +63838,8 @@
                           "format": "date-string"
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "The date the item was created",
@@ -63834,7 +63853,8 @@
                           "format": "date-string"
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "Boolean determining if the Item is set to archived",
@@ -64119,7 +64139,8 @@
                       "value": {
                         "type": "string"
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "Array of identifiers for the locales where the item will be created",
@@ -64152,7 +64173,8 @@
                           }
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "The date the item was last updated",
@@ -64166,7 +64188,8 @@
                           "format": "date-string"
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "The date the item was created",
@@ -64180,7 +64203,8 @@
                           "format": "date-string"
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "Boolean determining if the Item is set to archived",
@@ -65010,7 +65034,8 @@
                       "value": {
                         "type": "string"
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "Identifier for the locale of the CMS item",
@@ -65037,7 +65062,8 @@
                           "format": "date-string"
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "The date the item was last updated",
@@ -65051,7 +65077,8 @@
                           "format": "date-string"
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "The date the item was created",
@@ -65065,7 +65092,8 @@
                           "format": "date-string"
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "Boolean determining if the Item is set to archived",
@@ -65786,7 +65814,8 @@
                       "value": {
                         "type": "string"
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "Identifier for the locale of the CMS item",
@@ -65813,7 +65842,8 @@
                           "format": "date-string"
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "The date the item was last updated",
@@ -65827,7 +65857,8 @@
                           "format": "date-string"
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "The date the item was created",
@@ -65841,7 +65872,8 @@
                           "format": "date-string"
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "Boolean determining if the Item is set to archived",
@@ -66566,7 +66598,8 @@
                           "format": "date-string"
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "Date when the Site's scripts were created",
@@ -66580,7 +66613,8 @@
                           "format": "date-string"
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   }
                 ]
               }
@@ -67220,7 +67254,8 @@
                           "format": "date-string"
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "Date when the Site's scripts were created",
@@ -67234,7 +67269,8 @@
                           "format": "date-string"
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   }
                 ]
               }
@@ -70616,7 +70652,8 @@
                           "format": "objectid"
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "* `form_submission` - Sends the [form_submission](#form_submission) event\n* `site_publish` - Sends a [site_publish](#site_publish) event\n* `page_created` - Send the [page_created](#page_created) event\n* `page_metadata_updated` - Sends the [page_metadata_updated](#page_metadata_updated) event\n* `page_deleted` - Sends the [page_deleted](#page_deleted) event\n* `ecomm_new_order` - Sends the new [ecomm_new_order](#ecomm_new_order) event\n* `ecomm_order_changed` - Sends the [ecomm_order_changed](#ecomm_order_changed) event\n* `ecomm_inventory_changed` - Sends the [ecomm_inventory_changed](#ecomm_inventory_changed) event\n* `user_account_added` - Sends the [user_account_added](#user_account_added) event\n* `user_account_updated` - Sends the [user_account_updated](#user_account_updated) event\n* `user_account_deleted` - Sends the [user_account_deleted](#user_account_deleted) event\n* `collection_item_created` - Sends the [collection_item_created](#collection_item_created) event\n* `collection_item_changed` - Sends the [collection_item_changed](#collection_item_changed) event\n* `collection_item_deleted` - Sends the [collection_item_deleted](#collection_item_deleted) event\n* `collection_item_unpublished` - Sends the [collection_item_unpublished](#collection_item_unpublished) event\n",
@@ -70654,7 +70691,8 @@
                           "format": "objectid"
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "Unique identifier for the Site the Webhook is registered in",
@@ -70668,7 +70706,8 @@
                           "format": "objectid"
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "Only supported for the `form_submission` trigger type. Filter for the form you want Webhooks to be sent for. ",
@@ -70693,7 +70732,8 @@
                           "format": "date-time"
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   },
                   {
                     "description": "Date the Webhook registration was created",
@@ -70707,7 +70747,8 @@
                           "format": "date-time"
                         }
                       }
-                    }
+                    },
+                    "propertyAccess": "READ_ONLY"
                   }
                 ]
               }
