@@ -54,7 +54,7 @@
     "@fern-fern/generator-exec-sdk": "^0.0.1045",
     "@fern-fern/ir-sdk": "^58.2.0",
     "@types/node": "18.15.3",
-    "tsup": "^8.0.2",
+    "tsup": "^8.5.0",
     "depcheck": "^1.4.7",
     "eslint": "^8.56.0",
     "lodash-es": "^4.17.21",

@@ -52,7 +52,7 @@
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
     "esbuild": "^0.25.0",
     "ts-loader": "^9.3.1",
-    "tsup": "^8.3.5",
+    "tsup": "^8.5.0",
     "zod": "^3.22.3",
     "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",

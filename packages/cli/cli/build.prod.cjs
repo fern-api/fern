@@ -1,6 +1,6 @@
 const packageJson = require("./package.json");
 const tsup = require('tsup');
-const { writeFile, truncate } = require("fs/promises");
+const { writeFile } = require("fs/promises");
 const path = require("path");
 
 main();
@@ -19,7 +19,7 @@ async function main() {
             DEFAULT_FDR_ORIGIN: "https://registry.buildwithfern.com",
             VENUS_AUDIENCE: "venus-prod",
             LOCAL_STORAGE_FOLDER: ".fern",
-            POSTHOG_API_KEY: process.env.POSTHOG_API_KEY,
+            POSTHOG_API_KEY: process.env.POSTHOG_API_KEY ?? "",
             DOCS_DOMAIN_SUFFIX: "docs.buildwithfern.com",
             DOCS_PREVIEW_BUCKET: 'https://prod-local-preview-bundle2.s3.amazonaws.com/',
             APP_DOCS_TAR_PREVIEW_BUCKET: 'https://prod-local-preview-bundle4.s3.amazonaws.com/',
