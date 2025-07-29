@@ -8,7 +8,7 @@
   "engines": {
     "npm": "please-use-pnpm",
     "pnpm": "^9.4.0",
-    "node": ">=18.0.0"
+    "node": ">=20.0.0"
   },
   "scripts": {
     "bootstrap": "./scripts/bootstrap.sh",
