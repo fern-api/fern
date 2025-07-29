@@ -56,14 +56,7 @@ class CoreUtilities:
             )
         )
 
-        self._copy_file_to_project(
-            project=project,
-            relative_filepath_on_disk=utilities_path,
-            filepath_in_project=Filepath(
-                directories=self.filepath,
-                file=Filepath.FilepathPart(module_name="pydantic_utilities"),
-            ),
-            exports={
+        exports = {
                 "parse_obj_as",
                 "UniversalBaseModel",
                 "IS_PYDANTIC_V2",
@@ -71,7 +64,19 @@ class CoreUtilities:
                 "universal_field_validator",
                 "update_forward_refs",
                 "UniversalRootModel",
-            },
+            }
+
+        if v1_on_v2:
+            exports.remove("IS_PYDANTIC_V2")
+
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk=utilities_path,
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="pydantic_utilities"),
+            ),
+            exports=exports,
         )
         project.add_dependency(PYDANTIC_CORE_DEPENDENCY)
 
