@@ -1,4 +1,4 @@
-public struct TraceResponse: Codable, Hashable {
+public struct TraceResponse: Codable, Hashable, Sendable {
     public let submissionId: SubmissionId
     public let lineNumber: Int
     public let returnValue: DebugVariableValue?
@@ -7,7 +7,15 @@ public struct TraceResponse: Codable, Hashable {
     public let stdout: String?
     public let additionalProperties: [String: JSONValue]
 
-    public init(submissionId: SubmissionId, lineNumber: Int, returnValue: DebugVariableValue? = nil, expressionLocation: ExpressionLocation? = nil, stack: StackInformation, stdout: String? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        submissionId: SubmissionId,
+        lineNumber: Int,
+        returnValue: DebugVariableValue? = nil,
+        expressionLocation: ExpressionLocation? = nil,
+        stack: StackInformation,
+        stdout: String? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.submissionId = submissionId
         self.lineNumber = lineNumber
         self.returnValue = returnValue
@@ -29,7 +37,7 @@ public struct TraceResponse: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.submissionId, forKey: .submissionId)
         try container.encode(self.lineNumber, forKey: .lineNumber)

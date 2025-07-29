@@ -1,10 +1,15 @@
-public struct SingleFilterSearchRequest: Codable, Hashable {
+public struct SingleFilterSearchRequest: Codable, Hashable, Sendable {
     public let field: String?
     public let `operator`: SingleFilterSearchRequestOperator?
     public let value: String?
     public let additionalProperties: [String: JSONValue]
 
-    public init(field: String? = nil, operator: SingleFilterSearchRequestOperator? = nil, value: String? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        field: String? = nil,
+        operator: SingleFilterSearchRequestOperator? = nil,
+        value: String? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.field = field
         self.operator = `operator`
         self.value = value
@@ -20,7 +25,7 @@ public struct SingleFilterSearchRequest: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encodeIfPresent(self.field, forKey: .field)
         try container.encodeIfPresent(self.operator, forKey: .operator)

@@ -1,4 +1,4 @@
-public struct BigEntity: Codable, Hashable {
+public struct BigEntity: Codable, Hashable, Sendable {
     public let castMember: CastMember?
     public let extendedMovie: ExtendedMovie?
     public let entity: Entity?
@@ -14,7 +14,22 @@ public struct BigEntity: Codable, Hashable {
     public let moment: Moment?
     public let additionalProperties: [String: JSONValue]
 
-    public init(castMember: CastMember? = nil, extendedMovie: ExtendedMovie? = nil, entity: Entity? = nil, metadata: Metadata? = nil, commonMetadata: Metadata? = nil, eventInfo: EventInfo? = nil, data: Data? = nil, migration: Migration? = nil, exception: Exception? = nil, test: Test? = nil, node: Node? = nil, directory: Directory? = nil, moment: Moment? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        castMember: CastMember? = nil,
+        extendedMovie: ExtendedMovie? = nil,
+        entity: Entity? = nil,
+        metadata: Metadata? = nil,
+        commonMetadata: Metadata? = nil,
+        eventInfo: EventInfo? = nil,
+        data: Data? = nil,
+        migration: Migration? = nil,
+        exception: Exception? = nil,
+        test: Test? = nil,
+        node: Node? = nil,
+        directory: Directory? = nil,
+        moment: Moment? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.castMember = castMember
         self.extendedMovie = extendedMovie
         self.entity = entity
@@ -50,7 +65,7 @@ public struct BigEntity: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encodeIfPresent(self.castMember, forKey: .castMember)
         try container.encodeIfPresent(self.extendedMovie, forKey: .extendedMovie)

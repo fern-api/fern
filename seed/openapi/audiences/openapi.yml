@@ -1,0 +1,126 @@
+openapi: 3.0.1
+info:
+  title: Audiences API
+  version: ''
+paths:
+  /:
+    get:
+      operationId: folderA_service_getDirectThread
+      tags:
+        - FolderAService
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/folder-aResponse'
+    post:
+      operationId: foo_find
+      tags:
+        - Foo
+      parameters:
+        - name: optionalString
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/OptionalString'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportingType'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                publicProperty:
+                  type: string
+                  nullable: true
+                privateProperty:
+                  type: integer
+                  nullable: true
+  /partner-path:
+    get:
+      operationId: folderD_service_getDirectThread
+      tags:
+        - FolderDService
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/folder-dResponse'
+components:
+  schemas:
+    Imported:
+      title: Imported
+      type: string
+    folder-aResponse:
+      title: folder-aResponse
+      type: object
+      properties:
+        foo:
+          $ref: '#/components/schemas/folder-bFoo'
+          nullable: true
+    folder-bFoo:
+      title: folder-bFoo
+      type: object
+      properties:
+        foo:
+          $ref: '#/components/schemas/folder-cFolderCFoo'
+          nullable: true
+    folder-cFolderCFoo:
+      title: folder-cFolderCFoo
+      type: object
+      properties:
+        bar_property:
+          type: string
+          format: uuid
+      required:
+        - bar_property
+    folder-dResponse:
+      title: folder-dResponse
+      type: object
+      properties:
+        foo:
+          type: string
+      required:
+        - foo
+    ImportingType:
+      title: ImportingType
+      type: object
+      properties:
+        imported:
+          $ref: '#/components/schemas/Imported'
+      required:
+        - imported
+    OptionalString:
+      title: OptionalString
+      type: string
+      nullable: true
+    FilteredType:
+      title: FilteredType
+      type: object
+      properties:
+        public_property:
+          type: string
+          nullable: true
+        private_property:
+          type: integer
+      required:
+        - private_property
+  securitySchemes: {}
+servers:
+  - url: https://api.example.a.com
+    description: environment-a
+  - url: https://api.example.b.com
+    description: environment-b

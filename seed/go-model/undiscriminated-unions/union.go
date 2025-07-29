@@ -3,15 +3,111 @@
 package undiscriminatedunions
 
 import (
+	json "encoding/json"
 	fmt "fmt"
+	internal "github.com/undiscriminated-unions/fern/internal"
 )
 
 type Request struct {
 	Union *MetadataUnion `json:"union,omitempty" url:"union,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (r *Request) GetUnion() *MetadataUnion {
+	if r == nil {
+		return nil
+	}
+	return r.Union
+}
+
+func (r *Request) GetExtraProperties() map[string]any {
+	if r == nil {
+		return nil
+	}
+	return r.extraProperties
+}
+
+func (r *Request) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Request
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = Request(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *Request) String() string {
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
 }
 
 type TypeWithOptionalUnion struct {
 	MyUnion *MyUnion `json:"myUnion,omitempty" url:"myUnion,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (t *TypeWithOptionalUnion) GetMyUnion() *MyUnion {
+	if t == nil {
+		return nil
+	}
+	return t.MyUnion
+}
+
+func (t *TypeWithOptionalUnion) GetExtraProperties() map[string]any {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *TypeWithOptionalUnion) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler TypeWithOptionalUnion
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = TypeWithOptionalUnion(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (t *TypeWithOptionalUnion) String() string {
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
 }
 
 // Several different types are accepted.
@@ -62,6 +158,60 @@ type MetadataUnion struct {
 type NamedMetadata struct {
 	Name  string         `json:"name" url:"name"`
 	Value map[string]any `json:"value" url:"value"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (n *NamedMetadata) GetName() string {
+	if n == nil {
+		return ""
+	}
+	return n.Name
+}
+
+func (n *NamedMetadata) GetValue() map[string]any {
+	if n == nil {
+		return nil
+	}
+	return n.Value
+}
+
+func (n *NamedMetadata) GetExtraProperties() map[string]any {
+	if n == nil {
+		return nil
+	}
+	return n.extraProperties
+}
+
+func (n *NamedMetadata) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler NamedMetadata
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = NamedMetadata(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+	n.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (n *NamedMetadata) String() string {
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(n); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", n)
 }
 
 type OptionalMetadata = map[string]any

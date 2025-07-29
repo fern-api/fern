@@ -2,7 +2,67 @@
 
 package api
 
+import (
+	json "encoding/json"
+	fmt "fmt"
+	internal "github.com/go-content-type/fern/internal"
+)
+
 type CreateMovieRequest struct {
 	Title  string  `json:"title" url:"title"`
 	Rating float64 `json:"rating" url:"rating"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateMovieRequest) GetTitle() string {
+	if c == nil {
+		return ""
+	}
+	return c.Title
+}
+
+func (c *CreateMovieRequest) GetRating() float64 {
+	if c == nil {
+		return 0
+	}
+	return c.Rating
+}
+
+func (c *CreateMovieRequest) GetExtraProperties() map[string]any {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateMovieRequest) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler CreateMovieRequest
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateMovieRequest(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateMovieRequest) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
 }

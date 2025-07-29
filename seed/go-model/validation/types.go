@@ -3,7 +3,9 @@
 package validation
 
 import (
+	json "encoding/json"
 	fmt "fmt"
+	internal "github.com/validation/fern/internal"
 )
 
 type SmallInteger = int
@@ -47,4 +49,72 @@ type Type struct {
 	Even    int     `json:"even" url:"even"`
 	Name    string  `json:"name" url:"name"`
 	Shape   *Shape  `json:"shape" url:"shape"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (t *Type) GetDecimal() float64 {
+	if t == nil {
+		return 0
+	}
+	return t.Decimal
+}
+
+func (t *Type) GetEven() int {
+	if t == nil {
+		return 0
+	}
+	return t.Even
+}
+
+func (t *Type) GetName() string {
+	if t == nil {
+		return ""
+	}
+	return t.Name
+}
+
+func (t *Type) GetShape() *Shape {
+	if t == nil {
+		return nil
+	}
+	return t.Shape
+}
+
+func (t *Type) GetExtraProperties() map[string]any {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *Type) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Type
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = Type(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (t *Type) String() string {
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
 }

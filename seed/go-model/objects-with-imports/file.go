@@ -3,13 +3,76 @@
 package objectswithimports
 
 import (
+	json "encoding/json"
 	fmt "fmt"
+	internal "github.com/objects-with-imports/fern/internal"
 )
 
 type File struct {
 	Name     string    `json:"name" url:"name"`
 	Contents string    `json:"contents" url:"contents"`
 	Info     *FileInfo `json:"info" url:"info"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (f *File) GetName() string {
+	if f == nil {
+		return ""
+	}
+	return f.Name
+}
+
+func (f *File) GetContents() string {
+	if f == nil {
+		return ""
+	}
+	return f.Contents
+}
+
+func (f *File) GetInfo() *FileInfo {
+	if f == nil {
+		return nil
+	}
+	return f.Info
+}
+
+func (f *File) GetExtraProperties() map[string]any {
+	if f == nil {
+		return nil
+	}
+	return f.extraProperties
+}
+
+func (f *File) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler File
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = File(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *File) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
 }
 
 type FileInfo string

@@ -7,6 +7,7 @@ import { Type } from "../Type";
 import { TypeInstantiation } from "../TypeInstantiation";
 import { AstNode } from "../core/AstNode";
 import { GoFile } from "../core/GoFile";
+import { MultiNode } from "../MultiNode";
 
 interface TestCase {
     description: string;
@@ -316,7 +317,7 @@ describe("file", () => {
                 )
             })
         );
-        file.add(foo, bar);
+        file.add(new MultiNode({ nodes: [foo, bar] }));
         const content = file.toString({
             packageName: "example",
             rootImportPath: "github.com/acme/acme-go",

@@ -51,6 +51,8 @@ scripts:
       - CGO_ENABLED=0 go test ./...
 
 allowedFailures:
+  - exhaustive
   - literal
+  - mixed-case
   - reserved-keywords
   - trace

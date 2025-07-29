@@ -5,42 +5,40 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": [
-    "./src/**/*"
-  ],
+  "include": ["./src/**/*"],
   "references": [
     {
-      "path": "../cli/configuration"
-    },
-    {
-      "path": "../cli/generation/local-generation/local-workspace-runner"
-    },
-    {
-      "path": "../cli/logger"
-    },
-    {
-      "path": "../cli/login"
+      "path": "../cli/workspace/loader"
     },
     {
       "path": "../cli/task-context"
     },
     {
-      "path": "../cli/workspace/loader"
-    },
-    {
-      "path": "../cli/workspace/commons"
-    },
-    {
-      "path": "../commons/core-utils"
-    },
-    {
-      "path": "../commons/fs-utils"
+      "path": "../cli/login"
     },
     {
       "path": "../commons/logging-execa"
     },
     {
+      "path": "../cli/logger"
+    },
+    {
+      "path": "../cli/generation/local-generation/local-workspace-runner"
+    },
+    {
       "path": "../ir-sdk"
+    },
+    {
+      "path": "../commons/fs-utils"
+    },
+    {
+      "path": "../commons/core-utils"
+    },
+    {
+      "path": "../cli/configuration"
+    },
+    {
+      "path": "../cli/workspace/commons"
     }
   ]
 }

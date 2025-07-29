@@ -11,14 +11,24 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
+  "exports":{
+    ".": {
+      "development": "./src/index.ts",
+      "source": "./src/index.ts",
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "default": "./lib/index.js"
+    }
+  },
   "files": [
     "lib"
   ],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
+    "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
-    "dist:cli": "pnpm compile && tsup ./src/cli.ts --format cjs",
+    "dist:cli": "pnpm compile && tsup ./src/cli.ts --format cjs --sourcemap",
     "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-swift-model:latest ../../..",
     "format": "pnpm format:src && pnpm format:package-json",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
@@ -28,6 +38,7 @@
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "publish:cli": "pnpm dist:cli && cd dist && yarn npm publish",
     "test": "vitest --passWithNoTests --run",
+    "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "devDependencies": {

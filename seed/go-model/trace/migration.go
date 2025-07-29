@@ -4,6 +4,8 @@ package trace
 
 import (
     fmt "fmt"
+    json "encoding/json"
+    internal "github.com/trace/fern/internal"
 )
 
 
@@ -37,5 +39,59 @@ func (m MigrationStatus) Ptr() *MigrationStatus{
 type Migration struct {
     Name string `json:"name" url:"name"`
     Status *MigrationStatus `json:"status" url:"status"`
+
+    extraProperties map[string]any
+    rawJSON json.RawMessage
+}
+
+func (m *Migration) GetName() string{
+    if m == nil {
+        return ""
+    }
+    return m.Name
+}
+
+func (m *Migration) GetStatus() *MigrationStatus{
+    if m == nil {
+        return nil
+    }
+    return m.Status
+}
+
+func (m *Migration) GetExtraProperties() map[string]any{
+    if m == nil {
+        return nil
+    }
+    return m.extraProperties
+}
+
+func (m *Migration) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler Migration
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *m = Migration(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *m)
+    if err != nil {
+        return err
+    }
+    m.extraProperties = extraProperties
+    m.rawJSON = json.RawMessage(data)
+    return nil
+}
+
+func (m *Migration) String() string{
+    if len(m.rawJSON) > 0 {
+        if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
+            return value
+        }
+    }
+    if value, err := internal.StringifyJSON(m); err == nil {
+        return value
+    }
+    return fmt.Sprintf("%#v", m)
 }
 

@@ -265,6 +265,15 @@ fixtures:
     - customConfig:
         use_inheritance_for_extended_models: false
       outputFolder: no-inheritance-for-extended-models
+  query-parameters:
+    - customConfig: null
+      outputFolder: no-custom-config
+  query-parameters-openapi:
+    - customConfig: null
+      outputFolder: no-custom-config
+  query-parameters-openapi-as-objects:
+    - customConfig: null
+      outputFolder: no-custom-config
   simple-fhir:
     - customConfig:
         use_inheritance_for_extended_models: false

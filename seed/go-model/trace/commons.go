@@ -3,6 +3,8 @@
 package trace
 
 import (
+    json "encoding/json"
+    internal "github.com/trace/fern/internal"
     fmt "fmt"
 )
 
@@ -27,17 +29,124 @@ type VariableType struct {
     DoublyLinkedListType any
 }
 
-
 type ListType struct {
     ValueType *VariableType `json:"valueType" url:"valueType"`
     // Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.
     IsFixedLength *bool `json:"isFixedLength,omitempty" url:"isFixedLength,omitempty"`
+
+    extraProperties map[string]any
+    rawJSON json.RawMessage
+}
+
+func (l *ListType) GetValueType() *VariableType{
+    if l == nil {
+        return nil
+    }
+    return l.ValueType
+}
+
+func (l *ListType) GetIsFixedLength() *bool{
+    if l == nil {
+        return nil
+    }
+    return l.IsFixedLength
+}
+
+func (l *ListType) GetExtraProperties() map[string]any{
+    if l == nil {
+        return nil
+    }
+    return l.extraProperties
+}
+
+func (l *ListType) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler ListType
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *l = ListType(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *l)
+    if err != nil {
+        return err
+    }
+    l.extraProperties = extraProperties
+    l.rawJSON = json.RawMessage(data)
+    return nil
+}
+
+func (l *ListType) String() string{
+    if len(l.rawJSON) > 0 {
+        if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+            return value
+        }
+    }
+    if value, err := internal.StringifyJSON(l); err == nil {
+        return value
+    }
+    return fmt.Sprintf("%#v", l)
 }
 
 
 type MapType struct {
     KeyType *VariableType `json:"keyType" url:"keyType"`
     ValueType *VariableType `json:"valueType" url:"valueType"`
+
+    extraProperties map[string]any
+    rawJSON json.RawMessage
+}
+
+func (m *MapType) GetKeyType() *VariableType{
+    if m == nil {
+        return nil
+    }
+    return m.KeyType
+}
+
+func (m *MapType) GetValueType() *VariableType{
+    if m == nil {
+        return nil
+    }
+    return m.ValueType
+}
+
+func (m *MapType) GetExtraProperties() map[string]any{
+    if m == nil {
+        return nil
+    }
+    return m.extraProperties
+}
+
+func (m *MapType) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler MapType
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *m = MapType(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *m)
+    if err != nil {
+        return err
+    }
+    m.extraProperties = extraProperties
+    m.rawJSON = json.RawMessage(data)
+    return nil
+}
+
+func (m *MapType) String() string{
+    if len(m.rawJSON) > 0 {
+        if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
+            return value
+        }
+    }
+    if value, err := internal.StringifyJSON(m); err == nil {
+        return value
+    }
+    return fmt.Sprintf("%#v", m)
 }
 
 
@@ -56,7 +165,6 @@ type VariableValue struct {
     NullValue any
 }
 
-
 type DebugVariableValue struct {
     Type string
     IntegerValue int
@@ -74,27 +182,235 @@ type DebugVariableValue struct {
     GenericValue GenericValue
 }
 
-
 type GenericValue struct {
     StringifiedType *string `json:"stringifiedType,omitempty" url:"stringifiedType,omitempty"`
     StringifiedValue string `json:"stringifiedValue" url:"stringifiedValue"`
+
+    extraProperties map[string]any
+    rawJSON json.RawMessage
+}
+
+func (g *GenericValue) GetStringifiedType() *string{
+    if g == nil {
+        return nil
+    }
+    return g.StringifiedType
+}
+
+func (g *GenericValue) GetStringifiedValue() string{
+    if g == nil {
+        return ""
+    }
+    return g.StringifiedValue
+}
+
+func (g *GenericValue) GetExtraProperties() map[string]any{
+    if g == nil {
+        return nil
+    }
+    return g.extraProperties
+}
+
+func (g *GenericValue) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler GenericValue
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *g = GenericValue(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *g)
+    if err != nil {
+        return err
+    }
+    g.extraProperties = extraProperties
+    g.rawJSON = json.RawMessage(data)
+    return nil
+}
+
+func (g *GenericValue) String() string{
+    if len(g.rawJSON) > 0 {
+        if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+            return value
+        }
+    }
+    if value, err := internal.StringifyJSON(g); err == nil {
+        return value
+    }
+    return fmt.Sprintf("%#v", g)
 }
 
 
 type MapValue struct {
     KeyValuePairs []*KeyValuePair `json:"keyValuePairs" url:"keyValuePairs"`
+
+    extraProperties map[string]any
+    rawJSON json.RawMessage
+}
+
+func (m *MapValue) GetKeyValuePairs() []*KeyValuePair{
+    if m == nil {
+        return nil
+    }
+    return m.KeyValuePairs
+}
+
+func (m *MapValue) GetExtraProperties() map[string]any{
+    if m == nil {
+        return nil
+    }
+    return m.extraProperties
+}
+
+func (m *MapValue) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler MapValue
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *m = MapValue(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *m)
+    if err != nil {
+        return err
+    }
+    m.extraProperties = extraProperties
+    m.rawJSON = json.RawMessage(data)
+    return nil
+}
+
+func (m *MapValue) String() string{
+    if len(m.rawJSON) > 0 {
+        if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
+            return value
+        }
+    }
+    if value, err := internal.StringifyJSON(m); err == nil {
+        return value
+    }
+    return fmt.Sprintf("%#v", m)
 }
 
 
 type KeyValuePair struct {
     Key *VariableValue `json:"key" url:"key"`
     Value *VariableValue `json:"value" url:"value"`
+
+    extraProperties map[string]any
+    rawJSON json.RawMessage
+}
+
+func (k *KeyValuePair) GetKey() *VariableValue{
+    if k == nil {
+        return nil
+    }
+    return k.Key
+}
+
+func (k *KeyValuePair) GetValue() *VariableValue{
+    if k == nil {
+        return nil
+    }
+    return k.Value
+}
+
+func (k *KeyValuePair) GetExtraProperties() map[string]any{
+    if k == nil {
+        return nil
+    }
+    return k.extraProperties
+}
+
+func (k *KeyValuePair) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler KeyValuePair
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *k = KeyValuePair(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *k)
+    if err != nil {
+        return err
+    }
+    k.extraProperties = extraProperties
+    k.rawJSON = json.RawMessage(data)
+    return nil
+}
+
+func (k *KeyValuePair) String() string{
+    if len(k.rawJSON) > 0 {
+        if value, err := internal.StringifyJSON(k.rawJSON); err == nil {
+            return value
+        }
+    }
+    if value, err := internal.StringifyJSON(k); err == nil {
+        return value
+    }
+    return fmt.Sprintf("%#v", k)
 }
 
 
 type BinaryTreeValue struct {
     Root *NodeId `json:"root,omitempty" url:"root,omitempty"`
     Nodes map[NodeId]*BinaryTreeNodeValue `json:"nodes" url:"nodes"`
+
+    extraProperties map[string]any
+    rawJSON json.RawMessage
+}
+
+func (b *BinaryTreeValue) GetRoot() *NodeId{
+    if b == nil {
+        return nil
+    }
+    return b.Root
+}
+
+func (b *BinaryTreeValue) GetNodes() map[NodeId]*BinaryTreeNodeValue{
+    if b == nil {
+        return nil
+    }
+    return b.Nodes
+}
+
+func (b *BinaryTreeValue) GetExtraProperties() map[string]any{
+    if b == nil {
+        return nil
+    }
+    return b.extraProperties
+}
+
+func (b *BinaryTreeValue) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler BinaryTreeValue
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *b = BinaryTreeValue(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *b)
+    if err != nil {
+        return err
+    }
+    b.extraProperties = extraProperties
+    b.rawJSON = json.RawMessage(data)
+    return nil
+}
+
+func (b *BinaryTreeValue) String() string{
+    if len(b.rawJSON) > 0 {
+        if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+            return value
+        }
+    }
+    if value, err := internal.StringifyJSON(b); err == nil {
+        return value
+    }
+    return fmt.Sprintf("%#v", b)
 }
 
 
@@ -103,18 +419,194 @@ type BinaryTreeNodeValue struct {
     Val float64 `json:"val" url:"val"`
     Right *NodeId `json:"right,omitempty" url:"right,omitempty"`
     Left *NodeId `json:"left,omitempty" url:"left,omitempty"`
+
+    extraProperties map[string]any
+    rawJSON json.RawMessage
+}
+
+func (b *BinaryTreeNodeValue) GetNodeId() NodeId{
+    if b == nil {
+        return ""
+    }
+    return b.NodeId
+}
+
+func (b *BinaryTreeNodeValue) GetVal() float64{
+    if b == nil {
+        return 0
+    }
+    return b.Val
+}
+
+func (b *BinaryTreeNodeValue) GetRight() *NodeId{
+    if b == nil {
+        return nil
+    }
+    return b.Right
+}
+
+func (b *BinaryTreeNodeValue) GetLeft() *NodeId{
+    if b == nil {
+        return nil
+    }
+    return b.Left
+}
+
+func (b *BinaryTreeNodeValue) GetExtraProperties() map[string]any{
+    if b == nil {
+        return nil
+    }
+    return b.extraProperties
+}
+
+func (b *BinaryTreeNodeValue) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler BinaryTreeNodeValue
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *b = BinaryTreeNodeValue(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *b)
+    if err != nil {
+        return err
+    }
+    b.extraProperties = extraProperties
+    b.rawJSON = json.RawMessage(data)
+    return nil
+}
+
+func (b *BinaryTreeNodeValue) String() string{
+    if len(b.rawJSON) > 0 {
+        if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+            return value
+        }
+    }
+    if value, err := internal.StringifyJSON(b); err == nil {
+        return value
+    }
+    return fmt.Sprintf("%#v", b)
 }
 
 
 type BinaryTreeNodeAndTreeValue struct {
     NodeId NodeId `json:"nodeId" url:"nodeId"`
     FullTree *BinaryTreeValue `json:"fullTree" url:"fullTree"`
+
+    extraProperties map[string]any
+    rawJSON json.RawMessage
+}
+
+func (b *BinaryTreeNodeAndTreeValue) GetNodeId() NodeId{
+    if b == nil {
+        return ""
+    }
+    return b.NodeId
+}
+
+func (b *BinaryTreeNodeAndTreeValue) GetFullTree() *BinaryTreeValue{
+    if b == nil {
+        return nil
+    }
+    return b.FullTree
+}
+
+func (b *BinaryTreeNodeAndTreeValue) GetExtraProperties() map[string]any{
+    if b == nil {
+        return nil
+    }
+    return b.extraProperties
+}
+
+func (b *BinaryTreeNodeAndTreeValue) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler BinaryTreeNodeAndTreeValue
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *b = BinaryTreeNodeAndTreeValue(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *b)
+    if err != nil {
+        return err
+    }
+    b.extraProperties = extraProperties
+    b.rawJSON = json.RawMessage(data)
+    return nil
+}
+
+func (b *BinaryTreeNodeAndTreeValue) String() string{
+    if len(b.rawJSON) > 0 {
+        if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+            return value
+        }
+    }
+    if value, err := internal.StringifyJSON(b); err == nil {
+        return value
+    }
+    return fmt.Sprintf("%#v", b)
 }
 
 
 type SinglyLinkedListValue struct {
     Head *NodeId `json:"head,omitempty" url:"head,omitempty"`
     Nodes map[NodeId]*SinglyLinkedListNodeValue `json:"nodes" url:"nodes"`
+
+    extraProperties map[string]any
+    rawJSON json.RawMessage
+}
+
+func (s *SinglyLinkedListValue) GetHead() *NodeId{
+    if s == nil {
+        return nil
+    }
+    return s.Head
+}
+
+func (s *SinglyLinkedListValue) GetNodes() map[NodeId]*SinglyLinkedListNodeValue{
+    if s == nil {
+        return nil
+    }
+    return s.Nodes
+}
+
+func (s *SinglyLinkedListValue) GetExtraProperties() map[string]any{
+    if s == nil {
+        return nil
+    }
+    return s.extraProperties
+}
+
+func (s *SinglyLinkedListValue) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler SinglyLinkedListValue
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *s = SinglyLinkedListValue(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *s)
+    if err != nil {
+        return err
+    }
+    s.extraProperties = extraProperties
+    s.rawJSON = json.RawMessage(data)
+    return nil
+}
+
+func (s *SinglyLinkedListValue) String() string{
+    if len(s.rawJSON) > 0 {
+        if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+            return value
+        }
+    }
+    if value, err := internal.StringifyJSON(s); err == nil {
+        return value
+    }
+    return fmt.Sprintf("%#v", s)
 }
 
 
@@ -122,18 +614,187 @@ type SinglyLinkedListNodeValue struct {
     NodeId NodeId `json:"nodeId" url:"nodeId"`
     Val float64 `json:"val" url:"val"`
     Next *NodeId `json:"next,omitempty" url:"next,omitempty"`
+
+    extraProperties map[string]any
+    rawJSON json.RawMessage
+}
+
+func (s *SinglyLinkedListNodeValue) GetNodeId() NodeId{
+    if s == nil {
+        return ""
+    }
+    return s.NodeId
+}
+
+func (s *SinglyLinkedListNodeValue) GetVal() float64{
+    if s == nil {
+        return 0
+    }
+    return s.Val
+}
+
+func (s *SinglyLinkedListNodeValue) GetNext() *NodeId{
+    if s == nil {
+        return nil
+    }
+    return s.Next
+}
+
+func (s *SinglyLinkedListNodeValue) GetExtraProperties() map[string]any{
+    if s == nil {
+        return nil
+    }
+    return s.extraProperties
+}
+
+func (s *SinglyLinkedListNodeValue) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler SinglyLinkedListNodeValue
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *s = SinglyLinkedListNodeValue(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *s)
+    if err != nil {
+        return err
+    }
+    s.extraProperties = extraProperties
+    s.rawJSON = json.RawMessage(data)
+    return nil
+}
+
+func (s *SinglyLinkedListNodeValue) String() string{
+    if len(s.rawJSON) > 0 {
+        if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+            return value
+        }
+    }
+    if value, err := internal.StringifyJSON(s); err == nil {
+        return value
+    }
+    return fmt.Sprintf("%#v", s)
 }
 
 
 type SinglyLinkedListNodeAndListValue struct {
     NodeId NodeId `json:"nodeId" url:"nodeId"`
     FullList *SinglyLinkedListValue `json:"fullList" url:"fullList"`
+
+    extraProperties map[string]any
+    rawJSON json.RawMessage
+}
+
+func (s *SinglyLinkedListNodeAndListValue) GetNodeId() NodeId{
+    if s == nil {
+        return ""
+    }
+    return s.NodeId
+}
+
+func (s *SinglyLinkedListNodeAndListValue) GetFullList() *SinglyLinkedListValue{
+    if s == nil {
+        return nil
+    }
+    return s.FullList
+}
+
+func (s *SinglyLinkedListNodeAndListValue) GetExtraProperties() map[string]any{
+    if s == nil {
+        return nil
+    }
+    return s.extraProperties
+}
+
+func (s *SinglyLinkedListNodeAndListValue) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler SinglyLinkedListNodeAndListValue
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *s = SinglyLinkedListNodeAndListValue(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *s)
+    if err != nil {
+        return err
+    }
+    s.extraProperties = extraProperties
+    s.rawJSON = json.RawMessage(data)
+    return nil
+}
+
+func (s *SinglyLinkedListNodeAndListValue) String() string{
+    if len(s.rawJSON) > 0 {
+        if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+            return value
+        }
+    }
+    if value, err := internal.StringifyJSON(s); err == nil {
+        return value
+    }
+    return fmt.Sprintf("%#v", s)
 }
 
 
 type DoublyLinkedListValue struct {
     Head *NodeId `json:"head,omitempty" url:"head,omitempty"`
     Nodes map[NodeId]*DoublyLinkedListNodeValue `json:"nodes" url:"nodes"`
+
+    extraProperties map[string]any
+    rawJSON json.RawMessage
+}
+
+func (d *DoublyLinkedListValue) GetHead() *NodeId{
+    if d == nil {
+        return nil
+    }
+    return d.Head
+}
+
+func (d *DoublyLinkedListValue) GetNodes() map[NodeId]*DoublyLinkedListNodeValue{
+    if d == nil {
+        return nil
+    }
+    return d.Nodes
+}
+
+func (d *DoublyLinkedListValue) GetExtraProperties() map[string]any{
+    if d == nil {
+        return nil
+    }
+    return d.extraProperties
+}
+
+func (d *DoublyLinkedListValue) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler DoublyLinkedListValue
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *d = DoublyLinkedListValue(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *d)
+    if err != nil {
+        return err
+    }
+    d.extraProperties = extraProperties
+    d.rawJSON = json.RawMessage(data)
+    return nil
+}
+
+func (d *DoublyLinkedListValue) String() string{
+    if len(d.rawJSON) > 0 {
+        if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
+            return value
+        }
+    }
+    if value, err := internal.StringifyJSON(d); err == nil {
+        return value
+    }
+    return fmt.Sprintf("%#v", d)
 }
 
 
@@ -142,41 +803,426 @@ type DoublyLinkedListNodeValue struct {
     Val float64 `json:"val" url:"val"`
     Next *NodeId `json:"next,omitempty" url:"next,omitempty"`
     Prev *NodeId `json:"prev,omitempty" url:"prev,omitempty"`
+
+    extraProperties map[string]any
+    rawJSON json.RawMessage
+}
+
+func (d *DoublyLinkedListNodeValue) GetNodeId() NodeId{
+    if d == nil {
+        return ""
+    }
+    return d.NodeId
+}
+
+func (d *DoublyLinkedListNodeValue) GetVal() float64{
+    if d == nil {
+        return 0
+    }
+    return d.Val
+}
+
+func (d *DoublyLinkedListNodeValue) GetNext() *NodeId{
+    if d == nil {
+        return nil
+    }
+    return d.Next
+}
+
+func (d *DoublyLinkedListNodeValue) GetPrev() *NodeId{
+    if d == nil {
+        return nil
+    }
+    return d.Prev
+}
+
+func (d *DoublyLinkedListNodeValue) GetExtraProperties() map[string]any{
+    if d == nil {
+        return nil
+    }
+    return d.extraProperties
+}
+
+func (d *DoublyLinkedListNodeValue) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler DoublyLinkedListNodeValue
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *d = DoublyLinkedListNodeValue(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *d)
+    if err != nil {
+        return err
+    }
+    d.extraProperties = extraProperties
+    d.rawJSON = json.RawMessage(data)
+    return nil
+}
+
+func (d *DoublyLinkedListNodeValue) String() string{
+    if len(d.rawJSON) > 0 {
+        if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
+            return value
+        }
+    }
+    if value, err := internal.StringifyJSON(d); err == nil {
+        return value
+    }
+    return fmt.Sprintf("%#v", d)
 }
 
 
 type DoublyLinkedListNodeAndListValue struct {
     NodeId NodeId `json:"nodeId" url:"nodeId"`
     FullList *DoublyLinkedListValue `json:"fullList" url:"fullList"`
+
+    extraProperties map[string]any
+    rawJSON json.RawMessage
+}
+
+func (d *DoublyLinkedListNodeAndListValue) GetNodeId() NodeId{
+    if d == nil {
+        return ""
+    }
+    return d.NodeId
+}
+
+func (d *DoublyLinkedListNodeAndListValue) GetFullList() *DoublyLinkedListValue{
+    if d == nil {
+        return nil
+    }
+    return d.FullList
+}
+
+func (d *DoublyLinkedListNodeAndListValue) GetExtraProperties() map[string]any{
+    if d == nil {
+        return nil
+    }
+    return d.extraProperties
+}
+
+func (d *DoublyLinkedListNodeAndListValue) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler DoublyLinkedListNodeAndListValue
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *d = DoublyLinkedListNodeAndListValue(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *d)
+    if err != nil {
+        return err
+    }
+    d.extraProperties = extraProperties
+    d.rawJSON = json.RawMessage(data)
+    return nil
+}
+
+func (d *DoublyLinkedListNodeAndListValue) String() string{
+    if len(d.rawJSON) > 0 {
+        if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
+            return value
+        }
+    }
+    if value, err := internal.StringifyJSON(d); err == nil {
+        return value
+    }
+    return fmt.Sprintf("%#v", d)
 }
 
 
 type DebugMapValue struct {
     KeyValuePairs []*DebugKeyValuePairs `json:"keyValuePairs" url:"keyValuePairs"`
+
+    extraProperties map[string]any
+    rawJSON json.RawMessage
+}
+
+func (d *DebugMapValue) GetKeyValuePairs() []*DebugKeyValuePairs{
+    if d == nil {
+        return nil
+    }
+    return d.KeyValuePairs
+}
+
+func (d *DebugMapValue) GetExtraProperties() map[string]any{
+    if d == nil {
+        return nil
+    }
+    return d.extraProperties
+}
+
+func (d *DebugMapValue) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler DebugMapValue
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *d = DebugMapValue(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *d)
+    if err != nil {
+        return err
+    }
+    d.extraProperties = extraProperties
+    d.rawJSON = json.RawMessage(data)
+    return nil
+}
+
+func (d *DebugMapValue) String() string{
+    if len(d.rawJSON) > 0 {
+        if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
+            return value
+        }
+    }
+    if value, err := internal.StringifyJSON(d); err == nil {
+        return value
+    }
+    return fmt.Sprintf("%#v", d)
 }
 
 
 type DebugKeyValuePairs struct {
     Key *DebugVariableValue `json:"key" url:"key"`
     Value *DebugVariableValue `json:"value" url:"value"`
+
+    extraProperties map[string]any
+    rawJSON json.RawMessage
+}
+
+func (d *DebugKeyValuePairs) GetKey() *DebugVariableValue{
+    if d == nil {
+        return nil
+    }
+    return d.Key
+}
+
+func (d *DebugKeyValuePairs) GetValue() *DebugVariableValue{
+    if d == nil {
+        return nil
+    }
+    return d.Value
+}
+
+func (d *DebugKeyValuePairs) GetExtraProperties() map[string]any{
+    if d == nil {
+        return nil
+    }
+    return d.extraProperties
+}
+
+func (d *DebugKeyValuePairs) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler DebugKeyValuePairs
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *d = DebugKeyValuePairs(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *d)
+    if err != nil {
+        return err
+    }
+    d.extraProperties = extraProperties
+    d.rawJSON = json.RawMessage(data)
+    return nil
+}
+
+func (d *DebugKeyValuePairs) String() string{
+    if len(d.rawJSON) > 0 {
+        if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
+            return value
+        }
+    }
+    if value, err := internal.StringifyJSON(d); err == nil {
+        return value
+    }
+    return fmt.Sprintf("%#v", d)
 }
 
 
 type TestCase struct {
     Id string `json:"id" url:"id"`
     Params []*VariableValue `json:"params" url:"params"`
+
+    extraProperties map[string]any
+    rawJSON json.RawMessage
+}
+
+func (t *TestCase) GetId() string{
+    if t == nil {
+        return ""
+    }
+    return t.Id
+}
+
+func (t *TestCase) GetParams() []*VariableValue{
+    if t == nil {
+        return nil
+    }
+    return t.Params
+}
+
+func (t *TestCase) GetExtraProperties() map[string]any{
+    if t == nil {
+        return nil
+    }
+    return t.extraProperties
+}
+
+func (t *TestCase) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler TestCase
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *t = TestCase(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *t)
+    if err != nil {
+        return err
+    }
+    t.extraProperties = extraProperties
+    t.rawJSON = json.RawMessage(data)
+    return nil
+}
+
+func (t *TestCase) String() string{
+    if len(t.rawJSON) > 0 {
+        if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+            return value
+        }
+    }
+    if value, err := internal.StringifyJSON(t); err == nil {
+        return value
+    }
+    return fmt.Sprintf("%#v", t)
 }
 
 
 type TestCaseWithExpectedResult struct {
     TestCase *TestCase `json:"testCase" url:"testCase"`
     ExpectedResult *VariableValue `json:"expectedResult" url:"expectedResult"`
+
+    extraProperties map[string]any
+    rawJSON json.RawMessage
+}
+
+func (t *TestCaseWithExpectedResult) GetTestCase() *TestCase{
+    if t == nil {
+        return nil
+    }
+    return t.TestCase
+}
+
+func (t *TestCaseWithExpectedResult) GetExpectedResult() *VariableValue{
+    if t == nil {
+        return nil
+    }
+    return t.ExpectedResult
+}
+
+func (t *TestCaseWithExpectedResult) GetExtraProperties() map[string]any{
+    if t == nil {
+        return nil
+    }
+    return t.extraProperties
+}
+
+func (t *TestCaseWithExpectedResult) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler TestCaseWithExpectedResult
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *t = TestCaseWithExpectedResult(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *t)
+    if err != nil {
+        return err
+    }
+    t.extraProperties = extraProperties
+    t.rawJSON = json.RawMessage(data)
+    return nil
+}
+
+func (t *TestCaseWithExpectedResult) String() string{
+    if len(t.rawJSON) > 0 {
+        if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+            return value
+        }
+    }
+    if value, err := internal.StringifyJSON(t); err == nil {
+        return value
+    }
+    return fmt.Sprintf("%#v", t)
 }
 
 
 type FileInfo struct {
     Filename string `json:"filename" url:"filename"`
     Contents string `json:"contents" url:"contents"`
+
+    extraProperties map[string]any
+    rawJSON json.RawMessage
+}
+
+func (f *FileInfo) GetFilename() string{
+    if f == nil {
+        return ""
+    }
+    return f.Filename
+}
+
+func (f *FileInfo) GetContents() string{
+    if f == nil {
+        return ""
+    }
+    return f.Contents
+}
+
+func (f *FileInfo) GetExtraProperties() map[string]any{
+    if f == nil {
+        return nil
+    }
+    return f.extraProperties
+}
+
+func (f *FileInfo) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler FileInfo
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *f = FileInfo(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *f)
+    if err != nil {
+        return err
+    }
+    f.extraProperties = extraProperties
+    f.rawJSON = json.RawMessage(data)
+    return nil
+}
+
+func (f *FileInfo) String() string{
+    if len(f.rawJSON) > 0 {
+        if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+            return value
+        }
+    }
+    if value, err := internal.StringifyJSON(f); err == nil {
+        return value
+    }
+    return fmt.Sprintf("%#v", f)
 }
 
 

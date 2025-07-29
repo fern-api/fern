@@ -19,7 +19,7 @@ test:
     workingDirectory: generators/rust
     buildCommand:
       - pnpm --filter @fern-api/rust-model dist:cli
-    runCommand: node ./model/dist/cli.cjs
+    runCommand: node --enable-source-maps ./model/dist/cli.cjs
 
 publish:
   workingDirectory: generators/rust

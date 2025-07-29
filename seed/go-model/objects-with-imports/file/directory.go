@@ -3,11 +3,75 @@
 package file
 
 import (
+	json "encoding/json"
+	fmt "fmt"
 	fern "github.com/objects-with-imports/fern"
+	internal "github.com/objects-with-imports/fern/internal"
 )
 
 type Directory struct {
 	Name        string       `json:"name" url:"name"`
 	Files       []*fern.File `json:"files,omitempty" url:"files,omitempty"`
 	Directories []*Directory `json:"directories,omitempty" url:"directories,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (d *Directory) GetName() string {
+	if d == nil {
+		return ""
+	}
+	return d.Name
+}
+
+func (d *Directory) GetFiles() []*fern.File {
+	if d == nil {
+		return nil
+	}
+	return d.Files
+}
+
+func (d *Directory) GetDirectories() []*Directory {
+	if d == nil {
+		return nil
+	}
+	return d.Directories
+}
+
+func (d *Directory) GetExtraProperties() map[string]any {
+	if d == nil {
+		return nil
+	}
+	return d.extraProperties
+}
+
+func (d *Directory) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Directory
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*d = Directory(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
+	if err != nil {
+		return err
+	}
+	d.extraProperties = extraProperties
+	d.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (d *Directory) String() string {
+	if len(d.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(d); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", d)
 }

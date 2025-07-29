@@ -62,9 +62,9 @@ import { GeneratedNonThrowingEndpointResponse } from "./endpoints/default/endpoi
 import { GeneratedThrowingEndpointResponse } from "./endpoints/default/endpoint-response/GeneratedThrowingEndpointResponse";
 import { getNonVariablePathParameters } from "./endpoints/utils/getNonVariablePathParameters";
 import { getLiteralValueForHeader, isLiteralHeader } from "./endpoints/utils/isLiteralHeader";
+import { REQUEST_OPTIONS_ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME } from "./endpoints/utils/requestOptionsParameter";
 import { OAuthTokenProviderGenerator } from "./oauth-generator/OAuthTokenProviderGenerator";
 import { GeneratedDefaultWebsocketImplementation } from "./websocket/GeneratedDefaultWebsocketImplementation";
-import { REQUEST_OPTIONS_ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME } from "./endpoints/utils/requestOptionsParameter";
 
 export declare namespace GeneratedSdkClientClassImpl {
     export interface Init {
@@ -1304,6 +1304,18 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     )
                 );
             }
+        }
+
+        for (const variable of this.intermediateRepresentation.variables) {
+            if (variable.type.type === "container" && variable.type.container.type === "literal") {
+                continue;
+            }
+            properties.push(
+                ts.factory.createPropertyAssignment(
+                    getPropertyKey(this.getOptionNameForVariable(variable)),
+                    ts.factory.createStringLiteral(`YOUR_${variable.name.screamingSnakeCase.unsafeName}`)
+                )
+            );
         }
 
         const generatedVersion = context.versionContext.getGeneratedVersion();

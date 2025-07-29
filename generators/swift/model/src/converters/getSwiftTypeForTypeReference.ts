@@ -9,7 +9,11 @@ export function getSwiftTypeForTypeReference(typeReference: TypeReference): swif
             return typeReference.container._visit({
                 // TODO(kafkas): Handle these cases
                 literal: () => swift.Type.any(),
-                map: () => swift.Type.any(),
+                map: (type) =>
+                    swift.Type.dictionary(
+                        getSwiftTypeForTypeReference(type.keyType),
+                        getSwiftTypeForTypeReference(type.valueType)
+                    ),
                 set: () => swift.Type.any(),
                 nullable: () => swift.Type.any(),
                 optional: (ref) => swift.Type.optional(getSwiftTypeForTypeReference(ref)),
@@ -17,7 +21,6 @@ export function getSwiftTypeForTypeReference(typeReference: TypeReference): swif
                 _other: () => swift.Type.any()
             });
         case "primitive":
-            // TODO(kafkas): Do we not look at typeReference.primitive.v2?
             return PrimitiveTypeV1._visit(typeReference.primitive.v1, {
                 string: () => swift.Type.string(),
                 boolean: () => swift.Type.bool(),

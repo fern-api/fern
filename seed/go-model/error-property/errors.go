@@ -2,6 +2,59 @@
 
 package errorproperty
 
+import (
+	json "encoding/json"
+	fmt "fmt"
+	internal "github.com/error-property/fern/internal"
+)
+
 type PropertyBasedErrorTestBody struct {
 	Message string `json:"message" url:"message"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (p *PropertyBasedErrorTestBody) GetMessage() string {
+	if p == nil {
+		return ""
+	}
+	return p.Message
+}
+
+func (p *PropertyBasedErrorTestBody) GetExtraProperties() map[string]any {
+	if p == nil {
+		return nil
+	}
+	return p.extraProperties
+}
+
+func (p *PropertyBasedErrorTestBody) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler PropertyBasedErrorTestBody
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*p = PropertyBasedErrorTestBody(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (p *PropertyBasedErrorTestBody) String() string {
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
 }

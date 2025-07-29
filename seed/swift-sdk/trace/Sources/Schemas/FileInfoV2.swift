@@ -1,11 +1,17 @@
-public struct FileInfoV2: Codable, Hashable {
+public struct FileInfoV2: Codable, Hashable, Sendable {
     public let filename: String
     public let directory: String
     public let contents: String
     public let editable: Bool
     public let additionalProperties: [String: JSONValue]
 
-    public init(filename: String, directory: String, contents: String, editable: Bool, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        filename: String,
+        directory: String,
+        contents: String,
+        editable: Bool,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.filename = filename
         self.directory = directory
         self.contents = contents
@@ -23,7 +29,7 @@ public struct FileInfoV2: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.filename, forKey: .filename)
         try container.encode(self.directory, forKey: .directory)

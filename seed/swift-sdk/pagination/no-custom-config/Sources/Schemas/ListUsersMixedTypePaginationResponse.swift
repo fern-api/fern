@@ -1,9 +1,13 @@
-public struct ListUsersMixedTypePaginationResponse: Codable, Hashable {
+public struct ListUsersMixedTypePaginationResponse: Codable, Hashable, Sendable {
     public let next: String
     public let data: [User]
     public let additionalProperties: [String: JSONValue]
 
-    public init(next: String, data: [User], additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        next: String,
+        data: [User],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.next = next
         self.data = data
         self.additionalProperties = additionalProperties
@@ -17,7 +21,7 @@ public struct ListUsersMixedTypePaginationResponse: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.next, forKey: .next)
         try container.encode(self.data, forKey: .data)

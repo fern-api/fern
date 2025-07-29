@@ -1,11 +1,17 @@
-public struct Page: Codable, Hashable {
+public struct Page: Codable, Hashable, Sendable {
     public let page: Int
     public let next: NextPage?
     public let perPage: Int
     public let totalPage: Int
     public let additionalProperties: [String: JSONValue]
 
-    public init(page: Int, next: NextPage? = nil, perPage: Int, totalPage: Int, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        page: Int,
+        next: NextPage? = nil,
+        perPage: Int,
+        totalPage: Int,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.page = page
         self.next = next
         self.perPage = perPage
@@ -23,7 +29,7 @@ public struct Page: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.page, forKey: .page)
         try container.encodeIfPresent(self.next, forKey: .next)

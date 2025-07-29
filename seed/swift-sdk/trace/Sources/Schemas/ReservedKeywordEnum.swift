@@ -1,4 +1,4 @@
-public enum ReservedKeywordEnum: String, Codable, Hashable, Sendable, CaseIterable {
+public enum ReservedKeywordEnum: String, Codable, Hashable, CaseIterable, Sendable {
     case `is`
     case `as`
 }

@@ -2,7 +2,7 @@ import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
-import { AbstractGoGeneratorContext, FileLocation, ModuleConfig } from "@fern-api/go-base";
+import { AbstractGoGeneratorContext, AsIsFiles, FileLocation, ModuleConfig } from "@fern-api/go-base";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import {
@@ -50,6 +50,10 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             readmeConfigBuilder: new ReadmeConfigBuilder(),
             ir
         });
+    }
+
+    public getInternalAsIsFiles(): string[] {
+        return [];
     }
 
     public getClientClassName(subpackage?: Subpackage): string {
@@ -673,28 +677,6 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             importPath: [this.getRootImportPath(), ...parts].join("/"),
             directory: RelativeFilePath.of(parts.join("/"))
         };
-    }
-
-    private callInternalFunc({
-        name,
-        arguments_,
-        generics,
-        multiline = true
-    }: {
-        name: string;
-        arguments_: go.AstNode[];
-        generics?: go.Type[];
-        multiline?: boolean;
-    }): go.FuncInvocation {
-        return go.invokeFunc({
-            func: go.typeReference({
-                name,
-                importPath: this.getInternalImportPath(),
-                generics
-            }),
-            arguments_,
-            multiline
-        });
     }
 
     private getNetHttpMethodTypeReferenceName(method: HttpMethod): string {

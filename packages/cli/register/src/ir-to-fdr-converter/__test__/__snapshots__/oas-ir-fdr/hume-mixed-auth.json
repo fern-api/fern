@@ -3135,7 +3135,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "deleteToolVersionExample",
               "description": "",
               "path": "/v0/evi/tools/id",
               "pathParameters": {
@@ -3151,7 +3150,6 @@
               }
             },
             {
-              "name": "deleteToolVersionExample",
               "description": "",
               "path": "/v0/evi/tools/id",
               "pathParameters": {
@@ -3496,7 +3494,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "deleteToolVersion1Example",
               "description": "",
               "path": "/v0/evi/tools/id/version/1",
               "pathParameters": {
@@ -3513,7 +3510,6 @@
               }
             },
             {
-              "name": "deleteToolVersion1Example",
               "description": "",
               "path": "/v0/evi/tools/id/version/1",
               "pathParameters": {
@@ -4202,7 +4198,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "deletePromptVersionExample",
               "description": "",
               "path": "/v0/evi/prompts/id",
               "pathParameters": {
@@ -4218,7 +4213,6 @@
               }
             },
             {
-              "name": "deletePromptVersionExample",
               "description": "",
               "path": "/v0/evi/prompts/id",
               "pathParameters": {
@@ -4563,7 +4557,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "deletePromptVersion1Example",
               "description": "",
               "path": "/v0/evi/prompts/id/version/1",
               "pathParameters": {
@@ -4580,7 +4573,6 @@
               }
             },
             {
-              "name": "deletePromptVersion1Example",
               "description": "",
               "path": "/v0/evi/prompts/id/version/1",
               "pathParameters": {
@@ -5217,7 +5209,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "deleteCustomVoiceExample",
               "description": "",
               "path": "/v0/evi/custom_voices/id",
               "pathParameters": {
@@ -5233,7 +5224,6 @@
               }
             },
             {
-              "name": "deleteCustomVoiceExample",
               "description": "",
               "path": "/v0/evi/custom_voices/id",
               "pathParameters": {
@@ -5910,7 +5900,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "deleteConfigExample",
               "description": "",
               "path": "/v0/evi/configs/id",
               "pathParameters": {
@@ -5926,7 +5915,6 @@
               }
             },
             {
-              "name": "deleteConfigExample",
               "description": "",
               "path": "/v0/evi/configs/id",
               "pathParameters": {
@@ -6271,7 +6259,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "deleteConfigVersionExample",
               "description": "",
               "path": "/v0/evi/configs/id/version/1",
               "pathParameters": {
@@ -6288,7 +6275,6 @@
               }
             },
             {
-              "name": "deleteConfigVersionExample",
               "description": "",
               "path": "/v0/evi/configs/id/version/1",
               "pathParameters": {

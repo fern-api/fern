@@ -14,11 +14,22 @@
   "source": "src/index.ts",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "exports":{
+    ".": {
+      "development": "./src/index.ts",
+      "source": "./src/index.ts",
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "default": "./lib/index.js"
+    }
+  },
   "sideEffects": false,
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
+    "compile:debug": "tsc --build --sourceMap",
     "test": "vitest --run src/utils/__test__",
+    "test:debug": "vitest --run --inspect src/utils/__test__",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",

@@ -2,7 +2,60 @@
 
 package license
 
+import (
+	json "encoding/json"
+	fmt "fmt"
+	internal "github.com/license/fern/internal"
+)
+
 // A simple type with just a name.
 type Type struct {
 	Name string `json:"name" url:"name"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (t *Type) GetName() string {
+	if t == nil {
+		return ""
+	}
+	return t.Name
+}
+
+func (t *Type) GetExtraProperties() map[string]any {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *Type) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Type
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = Type(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (t *Type) String() string {
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
 }

@@ -1,10 +1,15 @@
-public struct ExceptionInfo: Codable, Hashable {
+public struct ExceptionInfo: Codable, Hashable, Sendable {
     public let exceptionType: String
     public let exceptionMessage: String
     public let exceptionStacktrace: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(exceptionType: String, exceptionMessage: String, exceptionStacktrace: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        exceptionType: String,
+        exceptionMessage: String,
+        exceptionStacktrace: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.exceptionType = exceptionType
         self.exceptionMessage = exceptionMessage
         self.exceptionStacktrace = exceptionStacktrace
@@ -20,7 +25,7 @@ public struct ExceptionInfo: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.exceptionType, forKey: .exceptionType)
         try container.encode(self.exceptionMessage, forKey: .exceptionMessage)

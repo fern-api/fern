@@ -1,4 +1,4 @@
-public struct GetTokenRequest: Codable, Hashable {
+public struct GetTokenRequest: Codable, Hashable, Sendable {
     public let clientId: String
     public let clientSecret: String
     public let audience: Any
@@ -6,7 +6,14 @@ public struct GetTokenRequest: Codable, Hashable {
     public let scope: String?
     public let additionalProperties: [String: JSONValue]
 
-    public init(clientId: String, clientSecret: String, audience: Any, grantType: Any, scope: String? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        clientId: String,
+        clientSecret: String,
+        audience: Any,
+        grantType: Any,
+        scope: String? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.clientId = clientId
         self.clientSecret = clientSecret
         self.audience = audience
@@ -26,7 +33,7 @@ public struct GetTokenRequest: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.clientId, forKey: .clientId)
         try container.encode(self.clientSecret, forKey: .clientSecret)

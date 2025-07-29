@@ -1,8 +1,11 @@
-public struct RootType: Codable, Hashable {
+public struct RootType: Codable, Hashable, Sendable {
     public let s: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(s: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        s: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.s = s
         self.additionalProperties = additionalProperties
     }
@@ -14,7 +17,7 @@ public struct RootType: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.s, forKey: .s)
     }

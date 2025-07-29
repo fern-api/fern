@@ -1,4 +1,4 @@
-public enum RunningSubmissionState: String, Codable, Hashable, Sendable, CaseIterable {
+public enum RunningSubmissionState: String, Codable, Hashable, CaseIterable, Sendable {
     case queueingSubmission = "QUEUEING_SUBMISSION"
     case killingHistoricalSubmissions = "KILLING_HISTORICAL_SUBMISSIONS"
     case writingSubmissionToFile = "WRITING_SUBMISSION_TO_FILE"

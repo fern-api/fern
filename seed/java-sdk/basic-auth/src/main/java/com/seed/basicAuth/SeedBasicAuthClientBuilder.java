@@ -6,16 +6,21 @@ package com.seed.basicAuth;
 import com.seed.basicAuth.core.ClientOptions;
 import com.seed.basicAuth.core.Environment;
 import java.util.Base64;
+import java.util.Optional;
 import okhttp3.OkHttpClient;
 
 public class SeedBasicAuthClientBuilder {
-    private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
+    private Optional<Integer> timeout = Optional.empty();
+
+    private Optional<Integer> maxRetries = Optional.empty();
 
     private String username = null;
 
     private String password = null;
 
     private Environment environment;
+
+    private OkHttpClient httpClient;
 
     public SeedBasicAuthClientBuilder credentials(String username, String password) {
         this.username = username;
@@ -32,7 +37,7 @@ public class SeedBasicAuthClientBuilder {
      * Sets the timeout (in seconds) for the client. Defaults to 60 seconds.
      */
     public SeedBasicAuthClientBuilder timeout(int timeout) {
-        this.clientOptionsBuilder.timeout(timeout);
+        this.timeout = Optional.of(timeout);
         return this;
     }
 
@@ -40,7 +45,7 @@ public class SeedBasicAuthClientBuilder {
      * Sets the maximum number of retries for the client. Defaults to 2 retries.
      */
     public SeedBasicAuthClientBuilder maxRetries(int maxRetries) {
-        this.clientOptionsBuilder.maxRetries(maxRetries);
+        this.maxRetries = Optional.of(maxRetries);
         return this;
     }
 
@@ -48,14 +53,125 @@ public class SeedBasicAuthClientBuilder {
      * Sets the underlying OkHttp client
      */
     public SeedBasicAuthClientBuilder httpClient(OkHttpClient httpClient) {
-        this.clientOptionsBuilder.httpClient(httpClient);
+        this.httpClient = httpClient;
         return this;
     }
 
     protected ClientOptions buildClientOptions() {
-        clientOptionsBuilder.environment(this.environment);
-        return clientOptionsBuilder.build();
+        ClientOptions.Builder builder = ClientOptions.builder();
+        setEnvironment(builder);
+        setAuthentication(builder);
+        setHttpClient(builder);
+        setTimeouts(builder);
+        setRetries(builder);
+        setAdditional(builder);
+        return builder.build();
     }
+
+    /**
+     * Sets the environment configuration for the client.
+     * Override this method to modify URLs or add environment-specific logic.
+     *
+     * @param builder The ClientOptions.Builder to configure
+     */
+    protected void setEnvironment(ClientOptions.Builder builder) {
+        builder.environment(this.environment);
+    }
+
+    /**
+     * Override this method to customize authentication.
+     * This method is called during client options construction to set up authentication headers.
+     *
+     * @param builder The ClientOptions.Builder to configure
+     *
+     * Example:
+     * <pre>{@code
+     * @Override
+     * protected void setAuthentication(ClientOptions.Builder builder) {
+     *     super.setAuthentication(builder); // Keep existing auth
+     *     builder.addHeader("X-API-Key", this.apiKey);
+     * }
+     * }</pre>
+     */
+    protected void setAuthentication(ClientOptions.Builder builder) {
+        if (this.username != null && this.password != null) {
+            String unencodedToken = this.username + ":" + this.password;
+            String encodedToken = Base64.getEncoder().encodeToString(unencodedToken.getBytes());
+            builder.addHeader("Authorization", "Basic " + encodedToken);
+        }
+    }
+
+    /**
+     * Sets the request timeout configuration.
+     * Override this method to customize timeout behavior.
+     *
+     * @param builder The ClientOptions.Builder to configure
+     */
+    protected void setTimeouts(ClientOptions.Builder builder) {
+        if (this.timeout.isPresent()) {
+            builder.timeout(this.timeout.get());
+        }
+    }
+
+    /**
+     * Sets the retry configuration for failed requests.
+     * Override this method to implement custom retry strategies.
+     *
+     * @param builder The ClientOptions.Builder to configure
+     */
+    protected void setRetries(ClientOptions.Builder builder) {
+        if (this.maxRetries.isPresent()) {
+            builder.maxRetries(this.maxRetries.get());
+        }
+    }
+
+    /**
+     * Sets the OkHttp client configuration.
+     * Override this method to customize HTTP client behavior (interceptors, connection pools, etc).
+     *
+     * @param builder The ClientOptions.Builder to configure
+     */
+    protected void setHttpClient(ClientOptions.Builder builder) {
+        if (this.httpClient != null) {
+            builder.httpClient(this.httpClient);
+        }
+    }
+
+    /**
+     * Override this method to add any additional configuration to the client.
+     * This method is called at the end of the configuration chain, allowing you to add
+     * custom headers, modify settings, or perform any other client customization.
+     *
+     * @param builder The ClientOptions.Builder to configure
+     *
+     * Example:
+     * <pre>{@code
+     * @Override
+     * protected void setAdditional(ClientOptions.Builder builder) {
+     *     builder.addHeader("X-Request-ID", () -> UUID.randomUUID().toString());
+     *     builder.addHeader("X-Client-Version", "1.0.0");
+     * }
+     * }</pre>
+     */
+    protected void setAdditional(ClientOptions.Builder builder) {}
+
+    /**
+     * Override this method to add custom validation logic before the client is built.
+     * This method is called at the beginning of the build() method to ensure the configuration is valid.
+     * Throw an exception to prevent client creation if validation fails.
+     *
+     * Example:
+     * <pre>{@code
+     * @Override
+     * protected void validateConfiguration() {
+     *     super.validateConfiguration(); // Run parent validations
+     *     if (tenantId == null || tenantId.isEmpty()) {
+     *         throw new IllegalStateException("tenantId is required");
+     *     }
+     * }
+     * }</pre>
+     */
+    protected void validateConfiguration() {}
 
     public SeedBasicAuthClient build() {
         if (this.username == null) {
@@ -64,9 +180,7 @@ public class SeedBasicAuthClientBuilder {
         if (this.password == null) {
             throw new RuntimeException("Please provide password");
         }
-        String unencodedToken = username + ":" + password;
-        String encodedToken = Base64.getEncoder().encodeToString(unencodedToken.getBytes());
-        this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + encodedToken);
+        validateConfiguration();
         return new SeedBasicAuthClient(buildClientOptions());
     }
 }

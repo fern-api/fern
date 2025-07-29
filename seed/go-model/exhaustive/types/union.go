@@ -2,6 +2,12 @@
 
 package types
 
+import (
+	json "encoding/json"
+	fmt "fmt"
+	internal "github.com/exhaustive/fern/internal"
+)
+
 type Animal struct {
 	Animal string
 	Dog    Dog
@@ -11,9 +17,117 @@ type Animal struct {
 type Dog struct {
 	Name        string `json:"name" url:"name"`
 	LikesToWoof bool   `json:"likesToWoof" url:"likesToWoof"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (d *Dog) GetName() string {
+	if d == nil {
+		return ""
+	}
+	return d.Name
+}
+
+func (d *Dog) GetLikesToWoof() bool {
+	if d == nil {
+		return false
+	}
+	return d.LikesToWoof
+}
+
+func (d *Dog) GetExtraProperties() map[string]any {
+	if d == nil {
+		return nil
+	}
+	return d.extraProperties
+}
+
+func (d *Dog) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Dog
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*d = Dog(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
+	if err != nil {
+		return err
+	}
+	d.extraProperties = extraProperties
+	d.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (d *Dog) String() string {
+	if len(d.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(d); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", d)
 }
 
 type Cat struct {
 	Name        string `json:"name" url:"name"`
 	LikesToMeow bool   `json:"likesToMeow" url:"likesToMeow"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (c *Cat) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *Cat) GetLikesToMeow() bool {
+	if c == nil {
+		return false
+	}
+	return c.LikesToMeow
+}
+
+func (c *Cat) GetExtraProperties() map[string]any {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *Cat) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Cat
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = Cat(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *Cat) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
 }

@@ -17,5 +17,6 @@ export { Selector } from "./Selector";
 export { Struct } from "./Struct";
 export { Switch } from "./Switch";
 export { Type } from "./Type";
+export { TypeDeclaration } from "./TypeDeclaration";
 export { TypeInstantiation, type StructField } from "./TypeInstantiation";
 export { TimeTypeReference, UuidTypeReference, IoReaderTypeReference } from "./Type";

@@ -98,6 +98,6 @@ export class Enum extends AstNode {
     }
 
     public static getMemberIdentifier({ name, member }: { name: string; member: Enum.Member }): Identifier {
-        return new Identifier({ name: `${name}${member.name}` });
+        return new Identifier(`${name}${member.name}`);
     }
 }

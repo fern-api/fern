@@ -1,9 +1,13 @@
-public struct GenericValue: Codable, Hashable {
+public struct GenericValue: Codable, Hashable, Sendable {
     public let stringifiedType: String?
     public let stringifiedValue: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(stringifiedType: String? = nil, stringifiedValue: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        stringifiedType: String? = nil,
+        stringifiedValue: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.stringifiedType = stringifiedType
         self.stringifiedValue = stringifiedValue
         self.additionalProperties = additionalProperties
@@ -17,7 +21,7 @@ public struct GenericValue: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encodeIfPresent(self.stringifiedType, forKey: .stringifiedType)
         try container.encode(self.stringifiedValue, forKey: .stringifiedValue)

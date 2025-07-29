@@ -3,7 +3,9 @@
 package api
 
 import (
+	json "encoding/json"
 	fmt "fmt"
+	internal "github.com/circular-references/fern/internal"
 )
 
 type TorU struct {
@@ -13,10 +15,104 @@ type TorU struct {
 
 type T struct {
 	Child *TorU `json:"child" url:"child"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (t *T) GetChild() *TorU {
+	if t == nil {
+		return nil
+	}
+	return t.Child
+}
+
+func (t *T) GetExtraProperties() map[string]any {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *T) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler T
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = T(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (t *T) String() string {
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
 }
 
 type U struct {
 	Child *T `json:"child" url:"child"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (u *U) GetChild() *T {
+	if u == nil {
+		return nil
+	}
+	return u.Child
+}
+
+func (u *U) GetExtraProperties() map[string]any {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *U) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler U
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = U(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *U) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
 }
 
 type FieldValue struct {
@@ -54,7 +150,47 @@ func (p PrimitiveValue) Ptr() *PrimitiveValue {
 	return &p
 }
 
-type ObjectValue struct{}
+type ObjectValue struct {
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (o *ObjectValue) GetExtraProperties() map[string]any {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *ObjectValue) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ObjectValue
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = ObjectValue(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *ObjectValue) String() string {
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
 
 type JsonLike struct {
 	JsonLikeList      []*JsonLike

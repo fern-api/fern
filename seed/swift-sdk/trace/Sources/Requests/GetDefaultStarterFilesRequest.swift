@@ -1,10 +1,15 @@
-public struct GetDefaultStarterFilesRequest: Codable, Hashable {
+public struct GetDefaultStarterFilesRequest: Codable, Hashable, Sendable {
     public let inputParams: [VariableTypeAndName]
     public let outputType: VariableType
     public let methodName: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(inputParams: [VariableTypeAndName], outputType: VariableType, methodName: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        inputParams: [VariableTypeAndName],
+        outputType: VariableType,
+        methodName: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.inputParams = inputParams
         self.outputType = outputType
         self.methodName = methodName
@@ -20,7 +25,7 @@ public struct GetDefaultStarterFilesRequest: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.inputParams, forKey: .inputParams)
         try container.encode(self.outputType, forKey: .outputType)

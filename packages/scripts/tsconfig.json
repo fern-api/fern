@@ -1,13 +1,22 @@
 {
   "extends": "@fern-api/configs/tsconfig/main.json",
-  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src",  "types": ["node"] },
-  "include": ["./src/**/*"],
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src",
+    "types": [
+      "node"
+    ]
+  },
+  "include": [
+    "./src/**/*"
+  ],
   "references": [
     {
-      "path": "../commons/fs-utils"
+      "path": "../cli/generation/ir-migrations"
     },
     {
-      "path": "../cli/generation/ir-migrations"
+      "path": "../commons/fs-utils"
     }
   ]
 }

@@ -1,9 +1,13 @@
-public struct InvalidRequestResponse: Codable, Hashable {
+public struct InvalidRequestResponse: Codable, Hashable, Sendable {
     public let request: SubmissionRequest
     public let cause: InvalidRequestCause
     public let additionalProperties: [String: JSONValue]
 
-    public init(request: SubmissionRequest, cause: InvalidRequestCause, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        request: SubmissionRequest,
+        cause: InvalidRequestCause,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.request = request
         self.cause = cause
         self.additionalProperties = additionalProperties
@@ -17,7 +21,7 @@ public struct InvalidRequestResponse: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.request, forKey: .request)
         try container.encode(self.cause, forKey: .cause)

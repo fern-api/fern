@@ -1,6 +1,46 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        convertIrToFdrApi now passes the example name only when multiple examples with the same response status code are present.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-28"
+  version: 0.65.35
+
+- changelogEntry:
+    - summary: |
+        Patch support for RBAC roles across products.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-27"
+  version: 0.65.34
+
+- changelogEntry:
+    - summary: |
+        Support for `HEAD` operations in OpenAPI spec.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-26"
+  version: 0.65.33
+
+- changelogEntry:
+    - summary: |
+        Fallback to `https` if no schemes are specified in a Swagger 2.0 spec.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-25"
+  version: 0.65.32
+
+- changelogEntry:
+    - summary: |
+        Fix openapi importer for query parameters that are inline union types.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-25"
+  version: 0.65.31
+
+- changelogEntry:
+    - summary: |
         Support example generation for multiple examples.
       type: feat
   irVersion: 58

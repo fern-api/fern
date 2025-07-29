@@ -3,7 +3,9 @@
 package api
 
 import (
+	json "encoding/json"
 	fmt "fmt"
+	internal "github.com/circular-references-advanced/fern/internal"
 )
 
 type Animal struct {
@@ -23,32 +25,401 @@ type Node struct {
 
 type Cat struct {
 	Fruit *Fruit `json:"fruit" url:"fruit"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (c *Cat) GetFruit() *Fruit {
+	if c == nil {
+		return nil
+	}
+	return c.Fruit
+}
+
+func (c *Cat) GetExtraProperties() map[string]any {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *Cat) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Cat
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = Cat(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *Cat) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
 }
 
 type Dog struct {
 	Fruit *Fruit `json:"fruit" url:"fruit"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (d *Dog) GetFruit() *Fruit {
+	if d == nil {
+		return nil
+	}
+	return d.Fruit
+}
+
+func (d *Dog) GetExtraProperties() map[string]any {
+	if d == nil {
+		return nil
+	}
+	return d.extraProperties
+}
+
+func (d *Dog) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Dog
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*d = Dog(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
+	if err != nil {
+		return err
+	}
+	d.extraProperties = extraProperties
+	d.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (d *Dog) String() string {
+	if len(d.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(d); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", d)
 }
 
 type Acai struct {
 	Animal *Animal `json:"animal" url:"animal"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (a *Acai) GetAnimal() *Animal {
+	if a == nil {
+		return nil
+	}
+	return a.Animal
+}
+
+func (a *Acai) GetExtraProperties() map[string]any {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *Acai) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Acai
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = Acai(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *Acai) String() string {
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
 }
 
 type Fig struct {
 	Animal *Animal `json:"animal" url:"animal"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (f *Fig) GetAnimal() *Animal {
+	if f == nil {
+		return nil
+	}
+	return f.Animal
+}
+
+func (f *Fig) GetExtraProperties() map[string]any {
+	if f == nil {
+		return nil
+	}
+	return f.extraProperties
+}
+
+func (f *Fig) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Fig
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = Fig(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *Fig) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
 }
 
 type Berry struct {
 	Animal *Animal `json:"animal" url:"animal"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (b *Berry) GetAnimal() *Animal {
+	if b == nil {
+		return nil
+	}
+	return b.Animal
+}
+
+func (b *Berry) GetExtraProperties() map[string]any {
+	if b == nil {
+		return nil
+	}
+	return b.extraProperties
+}
+
+func (b *Berry) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Berry
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = Berry(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+	b.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (b *Berry) String() string {
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
 }
 
 type BranchNode struct {
 	Children []*Node `json:"children" url:"children"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
-type LeafNode struct{}
+func (b *BranchNode) GetChildren() []*Node {
+	if b == nil {
+		return nil
+	}
+	return b.Children
+}
+
+func (b *BranchNode) GetExtraProperties() map[string]any {
+	if b == nil {
+		return nil
+	}
+	return b.extraProperties
+}
+
+func (b *BranchNode) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler BranchNode
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = BranchNode(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+	b.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (b *BranchNode) String() string {
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
+}
+
+type LeafNode struct {
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (l *LeafNode) GetExtraProperties() map[string]any {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *LeafNode) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler LeafNode
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = LeafNode(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *LeafNode) String() string {
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
 
 type NodesWrapper struct {
 	Nodes [][]*Node `json:"nodes" url:"nodes"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (n *NodesWrapper) GetNodes() [][]*Node {
+	if n == nil {
+		return nil
+	}
+	return n.Nodes
+}
+
+func (n *NodesWrapper) GetExtraProperties() map[string]any {
+	if n == nil {
+		return nil
+	}
+	return n.extraProperties
+}
+
+func (n *NodesWrapper) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler NodesWrapper
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = NodesWrapper(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+	n.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (n *NodesWrapper) String() string {
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(n); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", n)
 }
 
 type ContainerValue struct {
@@ -79,7 +450,47 @@ func (p PrimitiveValue) Ptr() *PrimitiveValue {
 	return &p
 }
 
-type ObjectValue struct{}
+type ObjectValue struct {
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (o *ObjectValue) GetExtraProperties() map[string]any {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *ObjectValue) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ObjectValue
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = ObjectValue(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *ObjectValue) String() string {
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
 
 type FieldName = string
 
@@ -94,4 +505,58 @@ type FieldValue struct {
 type ObjectFieldValue struct {
 	Name  FieldName   `json:"name" url:"name"`
 	Value *FieldValue `json:"value" url:"value"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (o *ObjectFieldValue) GetName() FieldName {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *ObjectFieldValue) GetValue() *FieldValue {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
+func (o *ObjectFieldValue) GetExtraProperties() map[string]any {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *ObjectFieldValue) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ObjectFieldValue
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = ObjectFieldValue(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *ObjectFieldValue) String() string {
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
 }

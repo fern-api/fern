@@ -1,9 +1,13 @@
-public struct NonVoidFunctionSignature: Codable, Hashable {
+public struct NonVoidFunctionSignature: Codable, Hashable, Sendable {
     public let parameters: [Parameter]
     public let returnType: VariableType
     public let additionalProperties: [String: JSONValue]
 
-    public init(parameters: [Parameter], returnType: VariableType, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        parameters: [Parameter],
+        returnType: VariableType,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.parameters = parameters
         self.returnType = returnType
         self.additionalProperties = additionalProperties
@@ -17,7 +21,7 @@ public struct NonVoidFunctionSignature: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.parameters, forKey: .parameters)
         try container.encode(self.returnType, forKey: .returnType)

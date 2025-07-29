@@ -3,15 +3,126 @@
 package objectswithimports
 
 import (
+	json "encoding/json"
+	fmt "fmt"
 	commons "github.com/objects-with-imports/fern/commons"
+	internal "github.com/objects-with-imports/fern/internal"
 )
 
 type Node struct {
 	Id       string            `json:"id" url:"id"`
 	Label    *string           `json:"label,omitempty" url:"label,omitempty"`
 	Metadata *commons.Metadata `json:"metadata,omitempty" url:"metadata,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (n *Node) GetId() string {
+	if n == nil {
+		return ""
+	}
+	return n.Id
+}
+
+func (n *Node) GetLabel() *string {
+	if n == nil {
+		return nil
+	}
+	return n.Label
+}
+
+func (n *Node) GetMetadata() *commons.Metadata {
+	if n == nil {
+		return nil
+	}
+	return n.Metadata
+}
+
+func (n *Node) GetExtraProperties() map[string]any {
+	if n == nil {
+		return nil
+	}
+	return n.extraProperties
+}
+
+func (n *Node) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Node
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = Node(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+	n.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (n *Node) String() string {
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(n); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", n)
 }
 
 type Tree struct {
 	Nodes []*Node `json:"nodes,omitempty" url:"nodes,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (t *Tree) GetNodes() []*Node {
+	if t == nil {
+		return nil
+	}
+	return t.Nodes
+}
+
+func (t *Tree) GetExtraProperties() map[string]any {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *Tree) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Tree
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = Tree(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (t *Tree) String() string {
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
 }

@@ -2,6 +2,59 @@
 
 package exhaustive
 
+import (
+	json "encoding/json"
+	fmt "fmt"
+	internal "github.com/exhaustive/fern/internal"
+)
+
 type BadObjectRequestInfo struct {
 	Message string `json:"message" url:"message"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (b *BadObjectRequestInfo) GetMessage() string {
+	if b == nil {
+		return ""
+	}
+	return b.Message
+}
+
+func (b *BadObjectRequestInfo) GetExtraProperties() map[string]any {
+	if b == nil {
+		return nil
+	}
+	return b.extraProperties
+}
+
+func (b *BadObjectRequestInfo) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler BadObjectRequestInfo
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = BadObjectRequestInfo(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+	b.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (b *BadObjectRequestInfo) String() string {
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
 }

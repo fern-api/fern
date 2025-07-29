@@ -1,21 +1,26 @@
-import { mkdir } from "fs/promises";
+import { mkdir, readFile } from "fs/promises";
 
-import { AbstractProject, File } from "@fern-api/base-generator";
+import { AbstractProject, FernGeneratorExec, File } from "@fern-api/base-generator";
 import { GoFile } from "./GoFile";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { BaseGoCustomConfigSchema } from "@fern-api/go-ast";
+import { BaseGoCustomConfigSchema, resolveRootImportPath } from "@fern-api/go-ast";
 import { AbstractGoGeneratorContext } from "../context/AbstractGoGeneratorContext";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { ModuleConfigWriter } from "../module/ModuleConfigWriter";
 import { ModuleConfig } from "../module/ModuleConfig";
 import { GithubOutputMode, OutputMode } from "@fern-fern/generator-exec-sdk/api";
 import { assertNever } from "@fern-api/core-utils";
+import path from "path";
+
+const AS_IS_DIRECTORY = path.join(__dirname, "asIs");
+const INTERNAL_DIRECTORY = "internal";
 
 /**
  * In memory representation of a Go project.
  */
 export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGoCustomConfigSchema>> {
     private goFiles: Record<string, GoFile> = {};
+    private internalFiles: File[] = [];
 
     public constructor({ context }: { context: AbstractGoGeneratorContext<BaseGoCustomConfigSchema> }) {
         super(context);
@@ -30,9 +35,14 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         this.goFiles[key] = file;
     }
 
+    public async writeRawFile(file: File): Promise<void> {
+        await file.write(this.absolutePathToOutputDirectory);
+    }
+
     public async persist({ tidy }: { tidy?: boolean } = {}): Promise<void> {
         this.context.logger.debug(`Writing go files to ${this.absolutePathToOutputDirectory}`);
         await this.writeGoMod();
+        await this.writeInternalFiles();
         await this.writeGoFiles({
             files: Object.values(this.goFiles).flat()
         });
@@ -43,8 +53,14 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         this.context.logger.debug(`Successfully wrote go files to ${this.absolutePathToOutputDirectory}`);
     }
 
-    public async writeRawFile(file: File): Promise<void> {
-        await file.write(this.absolutePathToOutputDirectory);
+    public async writeGoMod(): Promise<void> {
+        const moduleConfig = this.getModuleConfig({ config: this.context.config });
+        if (moduleConfig == null) {
+            return;
+        }
+        // We write the go.mod file to disk upfront so that 'go fmt' can be run on the project.
+        const moduleConfigWriter = new ModuleConfigWriter({ context: this.context, moduleConfig });
+        await this.writeRawFile(moduleConfigWriter.generate());
     }
 
     private async writeGoFiles({ files }: { files: GoFile[] }): Promise<AbsoluteFilePath> {
@@ -59,14 +75,39 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         return this.absolutePathToOutputDirectory;
     }
 
-    public async writeGoMod(): Promise<void> {
-        const moduleConfig = this.getModuleConfig({ outputMode: this.context.config.output.mode });
-        if (moduleConfig == null) {
-            return;
+    private async writeInternalFiles(): Promise<AbsoluteFilePath> {
+        for (const filename of this.context.getInternalAsIsFiles()) {
+            this.internalFiles.push(
+                await this.createAsIsFile({
+                    filename
+                })
+            );
         }
-        // We write the go.mod file to disk upfront so that 'go fmt' can be run on the project.
-        const moduleConfigWriter = new ModuleConfigWriter({ context: this.context, moduleConfig });
-        await this.writeRawFile(moduleConfigWriter.generate());
+        return await this.createGoDirectory({
+            absolutePathToDirectory: join(this.absolutePathToOutputDirectory),
+            files: this.internalFiles
+        });
+    }
+
+    private async createGoDirectory({
+        absolutePathToDirectory,
+        files
+    }: {
+        absolutePathToDirectory: AbsoluteFilePath;
+        files: File[];
+    }): Promise<AbsoluteFilePath> {
+        await this.mkdir(absolutePathToDirectory);
+        await Promise.all(files.map(async (file) => await file.write(absolutePathToDirectory)));
+        return absolutePathToDirectory;
+    }
+
+    private async createAsIsFile({ filename }: { filename: string }): Promise<File> {
+        const contents = (await readFile(this.getAsIsFilepath(filename))).toString();
+        return new File(filename.replace(".go_", ".go"), RelativeFilePath.of(""), contents);
+    }
+
+    private getAsIsFilepath(filename: string): string {
+        return AbsoluteFilePath.of(path.join(AS_IS_DIRECTORY, filename));
     }
 
     private async runGoModTidy(): Promise<void> {
@@ -76,25 +117,27 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         });
     }
 
-    private getModuleConfig({ outputMode }: { outputMode: OutputMode }): ModuleConfig | undefined {
-        const githubConfig = this.getGithubOutputMode({ outputMode });
+    private getModuleConfig({
+        config
+    }: {
+        config: FernGeneratorExec.config.GeneratorConfig;
+    }): ModuleConfig | undefined {
+        const githubConfig = this.getGithubOutputMode({ outputMode: config.output.mode });
         if (githubConfig == null && this.context.customConfig.module == null) {
             return undefined;
         }
         if (githubConfig == null) {
             return this.context.customConfig.module;
         }
+        const modulePath = resolveRootImportPath({ config, customConfig: this.context.customConfig });
         if (this.context.customConfig.module == null) {
-            // A GitHub configuration was provided, so the module config should use
-            // the GitHub configuration's repository url.
-            const modulePath = githubConfig.repoUrl.replace("https://", "");
             return {
                 ...ModuleConfig.DEFAULT,
                 path: modulePath
             };
         }
         return {
-            path: this.context.customConfig.module.path,
+            path: modulePath,
             version: this.context.customConfig.module.version,
             imports: this.context.customConfig.module.imports ?? ModuleConfig.DEFAULT.imports
         };

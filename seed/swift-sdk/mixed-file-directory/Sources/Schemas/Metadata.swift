@@ -1,9 +1,13 @@
-public struct Metadata: Codable, Hashable {
+public struct Metadata: Codable, Hashable, Sendable {
     public let id: Id
     public let value: Any
     public let additionalProperties: [String: JSONValue]
 
-    public init(id: Id, value: Any, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        id: Id,
+        value: Any,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.id = id
         self.value = value
         self.additionalProperties = additionalProperties
@@ -17,7 +21,7 @@ public struct Metadata: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.id, forKey: .id)
         try container.encode(self.value, forKey: .value)

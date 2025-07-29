@@ -1,4 +1,4 @@
-public enum ExecutionSessionStatus: String, Codable, Hashable, Sendable, CaseIterable {
+public enum ExecutionSessionStatus: String, Codable, Hashable, CaseIterable, Sendable {
     case creatingContainer = "CREATING_CONTAINER"
     case provisioningContainer = "PROVISIONING_CONTAINER"
     case pendingContainer = "PENDING_CONTAINER"

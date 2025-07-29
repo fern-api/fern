@@ -3,10 +3,67 @@
 package user
 
 import (
+	json "encoding/json"
+	fmt "fmt"
 	fern "github.com/mixed-file-directory/fern"
+	internal "github.com/mixed-file-directory/fern/internal"
 )
 
 type Event struct {
 	Id   fern.Id `json:"id" url:"id"`
 	Name string  `json:"name" url:"name"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (e *Event) GetId() fern.Id {
+	if e == nil {
+		return ""
+	}
+	return e.Id
+}
+
+func (e *Event) GetName() string {
+	if e == nil {
+		return ""
+	}
+	return e.Name
+}
+
+func (e *Event) GetExtraProperties() map[string]any {
+	if e == nil {
+		return nil
+	}
+	return e.extraProperties
+}
+
+func (e *Event) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Event
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*e = Event(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	if err != nil {
+		return err
+	}
+	e.extraProperties = extraProperties
+	e.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (e *Event) String() string {
+	if len(e.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
 }

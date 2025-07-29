@@ -11,14 +11,25 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
+  "exports":{
+    ".": {
+      "development": "./src/index.ts",
+      "source": "./src/index.ts",
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "default": "./lib/index.js"
+    }
+  },
   "files": [
     "lib"
   ],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
+    "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
     "test": "vitest --passWithNoTests --run",
+    "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {
@@ -29,11 +40,5 @@
     "depcheck": "^1.4.6",
     "typescript": "5.7.2",
     "vitest": "^2.0.5"
-  },
-  "exports": {
-    ".": {
-      "types": "./lib/index.d.ts",
-      "default": "./lib/index.js"
-    }
   }
 } 

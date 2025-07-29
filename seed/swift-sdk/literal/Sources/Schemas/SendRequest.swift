@@ -1,4 +1,4 @@
-public struct SendRequest: Codable, Hashable {
+public struct SendRequest: Codable, Hashable, Sendable {
     public let prompt: Any
     public let query: String
     public let stream: Any
@@ -8,7 +8,16 @@ public struct SendRequest: Codable, Hashable {
     public let containerObject: ContainerObject
     public let additionalProperties: [String: JSONValue]
 
-    public init(prompt: Any, query: String, stream: Any, ending: Any, context: SomeLiteral, maybeContext: SomeLiteral? = nil, containerObject: ContainerObject, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        prompt: Any,
+        query: String,
+        stream: Any,
+        ending: Any,
+        context: SomeLiteral,
+        maybeContext: SomeLiteral? = nil,
+        containerObject: ContainerObject,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.prompt = prompt
         self.query = query
         self.stream = stream
@@ -32,7 +41,7 @@ public struct SendRequest: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.prompt, forKey: .prompt)
         try container.encode(self.query, forKey: .query)

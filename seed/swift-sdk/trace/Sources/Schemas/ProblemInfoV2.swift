@@ -1,4 +1,4 @@
-public struct ProblemInfoV2: Codable, Hashable {
+public struct ProblemInfoV2: Codable, Hashable, Sendable {
     public let problemId: ProblemId
     public let problemDescription: ProblemDescription
     public let problemName: String
@@ -11,7 +11,19 @@ public struct ProblemInfoV2: Codable, Hashable {
     public let isPublic: Bool
     public let additionalProperties: [String: JSONValue]
 
-    public init(problemId: ProblemId, problemDescription: ProblemDescription, problemName: String, problemVersion: Int, supportedLanguages: Any, customFiles: CustomFiles, generatedFiles: GeneratedFiles, customTestCaseTemplates: [TestCaseTemplate], testcases: [TestCaseV2], isPublic: Bool, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        problemId: ProblemId,
+        problemDescription: ProblemDescription,
+        problemName: String,
+        problemVersion: Int,
+        supportedLanguages: Any,
+        customFiles: CustomFiles,
+        generatedFiles: GeneratedFiles,
+        customTestCaseTemplates: [TestCaseTemplate],
+        testcases: [TestCaseV2],
+        isPublic: Bool,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.problemId = problemId
         self.problemDescription = problemDescription
         self.problemName = problemName
@@ -41,7 +53,7 @@ public struct ProblemInfoV2: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.problemId, forKey: .problemId)
         try container.encode(self.problemDescription, forKey: .problemDescription)
