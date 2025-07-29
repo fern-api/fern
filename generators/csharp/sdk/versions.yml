@@ -21,7 +21,7 @@
       
     - type: feat
       summary: |
-        Generate streaming/SSE JSON responses (returns an `IAsyncEnumberable<...>`).
+        Generate streaming/SSE JSON responses (returns an `IAsyncEnumerable<...>`).
         Example:
 
         ```csharp
