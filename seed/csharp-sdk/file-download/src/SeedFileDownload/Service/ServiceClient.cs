@@ -49,7 +49,7 @@ public partial class ServiceClient
         }
     }
 
-    public async Task<Stream> DownloadFileAsync(
+    public async Task<System.IO.Stream> DownloadFileAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
