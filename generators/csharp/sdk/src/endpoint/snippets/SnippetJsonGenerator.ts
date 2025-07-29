@@ -37,13 +37,13 @@ export class SnippetJsonGenerator {
             snippet += `${uniqueOrderedImports.join("\n")}\n\nvar client = ${rootClientSnippet.body}`;
 
             if (isPager) {
-                snippet += "var pager = ";
+                snippet += "var items = ";
             }
 
             snippet += endpointSnippet.endpointCall;
 
             if (isPager) {
-                snippet += `\nawait foreach (var item in pager)
+                snippet += `\nawait foreach (var item in items)
 {
     // do something with item
 }\n`;
