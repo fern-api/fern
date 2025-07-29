@@ -1,3 +1,5 @@
+use crate::{ClientConfig, ClientError};
+
 pub mod v_2;
 pub mod admin;
 pub mod homepage;
@@ -6,8 +8,8 @@ pub mod playlist;
 pub mod problem;
 pub mod submission;
 pub mod sysprop;
-
 pub struct TraceClient {
+    pub config: ClientConfig,
     pub v_2: V2Client,
     pub admin: AdminClient,
     pub homepage: HomepageClient,
@@ -19,21 +21,21 @@ pub struct TraceClient {
 }
 
 impl TraceClient {
-    pub fn new() -> Self {
-        Self {
-    v_2: V2Client::new("".to_string()),
-    admin: AdminClient::new("".to_string()),
-    homepage: HomepageClient::new("".to_string()),
-    migration: MigrationClient::new("".to_string()),
-    playlist: PlaylistClient::new("".to_string()),
-    problem: ProblemClient::new("".to_string()),
-    submission: SubmissionClient::new("".to_string()),
-    sysprop: SyspropClient::new("".to_string())
-}
+    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+        Ok(Self {
+            config: config.clone(),
+            v_2: V2Client::new(config.clone())?,
+            admin: AdminClient::new(config.clone())?,
+            homepage: HomepageClient::new(config.clone())?,
+            migration: MigrationClient::new(config.clone())?,
+            playlist: PlaylistClient::new(config.clone())?,
+            problem: ProblemClient::new(config.clone())?,
+            submission: SubmissionClient::new(config.clone())?,
+            sysprop: SyspropClient::new(config.clone())?
+        })
     }
 
 }
-
 
 pub use v_2::V2Client;
 pub use admin::AdminClient;

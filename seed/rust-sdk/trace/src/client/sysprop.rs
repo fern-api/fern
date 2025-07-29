@@ -1,26 +1,34 @@
-use crate::error::ApiError;
-use crate::types::*;
-use reqwest::Client;
+use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use reqwest::{Method};
+use crate::{types::*};
 
 pub struct SyspropClient {
-    pub client: Client,
-    pub base_url: String,
+    pub http_client: HttpClient,
 }
 
 impl SyspropClient {
-    pub fn new(base_url: String) -> Self {
-        Self {
-            client: Client::new(),
-            base_url,
-        }
+    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+        let http_client = HttpClient::new(config)?;
+        Ok(Self { http_client })
     }
 
-    pub async fn set_num_warm_instances(&self, language: &String, num_warm_instances: &String) -> Result<serde_json::Value, ApiError> {
-        todo!()
+    pub async fn set_num_warm_instances(&self, language: &Language, num_warm_instances: i32, options: Option<RequestOptions>) -> Result<(), ClientError> {
+        self.http_client.execute_request(
+            Method::PUT,
+            &format!("/sysprop/num-warm-instances/{}{}", language, num_warm_instances),
+            None,
+            options,
+        ).await
     }
 
-    pub async fn get_num_warm_instances(&self) -> Result<serde_json::Value, ApiError> {
-        todo!()
+    pub async fn get_num_warm_instances(&self, options: Option<RequestOptions>) -> Result<HashMap<Language, i32>, ClientError> {
+        self.http_client.execute_request(
+            Method::GET,
+            "/sysprop/num-warm-instances",
+            None,
+            options,
+        ).await
     }
 
 }
+

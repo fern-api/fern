@@ -1,30 +1,43 @@
-use crate::error::ApiError;
-use crate::types::*;
-use reqwest::Client;
+use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use reqwest::{Method};
+use crate::{types::*};
 
 pub struct BigunionClient {
-    pub client: Client,
-    pub base_url: String,
+    pub http_client: HttpClient,
 }
 
 impl BigunionClient {
-    pub fn new(base_url: String) -> Self {
-        Self {
-            client: Client::new(),
-            base_url,
-        }
+    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+        let http_client = HttpClient::new(config)?;
+        Ok(Self { http_client })
     }
 
-    pub async fn get(&self, id: &String) -> Result<serde_json::Value, ApiError> {
-        todo!()
+    pub async fn get(&self, id: &String, options: Option<RequestOptions>) -> Result<BigUnion, ClientError> {
+        self.http_client.execute_request(
+            Method::GET,
+            &format!("/{}", id),
+            None,
+            options,
+        ).await
     }
 
-    pub async fn update(&self, request: &serde_json::Value) -> Result<serde_json::Value, ApiError> {
-        todo!()
+    pub async fn update(&self, request: &BigUnion, options: Option<RequestOptions>) -> Result<bool, ClientError> {
+        self.http_client.execute_request(
+            Method::PATCH,
+            "",
+            Some(serde_json::to_value(request).unwrap_or_default()),
+            options,
+        ).await
     }
 
-    pub async fn update_many(&self, request: &serde_json::Value) -> Result<serde_json::Value, ApiError> {
-        todo!()
+    pub async fn update_many(&self, request: &Vec<BigUnion>, options: Option<RequestOptions>) -> Result<HashMap<String, bool>, ClientError> {
+        self.http_client.execute_request(
+            Method::PATCH,
+            "/many",
+            Some(serde_json::to_value(request).unwrap_or_default()),
+            options,
+        ).await
     }
 
 }
+
