@@ -2,7 +2,7 @@ import { camelCase } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { FernIr, HttpEndpoint, HttpEndpointSource, HttpPath, HttpResponse } from "@fern-api/ir-sdk";
+import { FernIr, HttpEndpoint, HttpEndpointSource, HttpPath, HttpResponse, V2HttpRequestBodies } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
 import { AbstractConverter, ServersConverter } from "@fern-api/v2-importer-commons";
 
@@ -38,7 +38,7 @@ export declare namespace OperationConverter {
 
     type BaseEndpoint = Omit<
         HttpEndpoint,
-        "requestBody" | "response" | "v2Responses" | "name" | "docs" | "id" | "v2Examples"
+        "requestBody" | "v2RequestBodies" | "response" | "v2Responses" | "name" | "docs" | "id" | "v2Examples"
     >;
 }
 
@@ -82,14 +82,18 @@ export class OperationConverter extends AbstractOperationConverter {
             breadcrumbs: [...this.breadcrumbs, "parameters"]
         });
 
-        const convertedRequestBody = this.convertRequestBody({
+        const convertedRequestBodies = this.convertRequestBody({
             breadcrumbs: [...this.breadcrumbs, "requestBody"],
             group,
             method,
             streamingExtension: this.streamingExtension
         });
-        const requestBody = convertedRequestBody != null ? convertedRequestBody.requestBody : undefined;
-        const streamRequestBody = convertedRequestBody != null ? convertedRequestBody.streamRequestBody : undefined;
+        const requestBody = convertedRequestBodies != null ? convertedRequestBodies[0]?.requestBody : undefined;
+        const streamRequestBody = convertedRequestBodies != null ? convertedRequestBodies[0]?.streamRequestBody : undefined;
+
+        const v2RequestBodies: V2HttpRequestBodies = {
+            requestBodies: convertedRequestBodies?.map((body) => body.requestBody)
+        };
 
         const convertedResponseBody = this.convertResponseBody({
             breadcrumbs: [...this.breadcrumbs, "responses"],
@@ -196,6 +200,7 @@ export class OperationConverter extends AbstractOperationConverter {
                 id: `endpoint_${endpointGroupParts.join("/")}.${method}`,
                 name: this.context.casingsGenerator.generateName(method),
                 requestBody,
+                v2RequestBodies,
                 response,
                 docs: this.operation.description,
                 v2Examples: {
@@ -213,6 +218,7 @@ export class OperationConverter extends AbstractOperationConverter {
                           id: `endpoint_${endpointGroupParts.join("/")}.${method}_stream`,
                           name: this.context.casingsGenerator.generateName(`${method}_stream`),
                           requestBody: streamRequestBody,
+                          v2RequestBodies: undefined,
                           response: streamResponse,
                           docs:
                               this.streamingExtension?.type === "streamCondition"
