@@ -13,4 +13,4 @@ COPY generators/typescript/asIs/ /assets/asIs
 COPY generators/typescript/utils/core-utilities/ /assets/core-utilities
 COPY generators/typescript/express/cli/docker/dist/cli.cjs /cli.cjs
 
-ENTRYPOINT ["node", "/cli.cjs"]
+ENTRYPOINT ["node", "--enable-source-maps", "/cli.cjs"]

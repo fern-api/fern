@@ -12,6 +12,7 @@ async function main() {
         clean: true,
         minify: true,
         dts: true,
+        sourcemap: true,
         outDir: 'dist',
         target: "es2017",
         tsconfig: "./build.tsconfig.json"
