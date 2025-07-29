@@ -16,7 +16,7 @@
   "sideEffects": false,
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
-    "compile": "tsc --build && cp -r ../base/src/asIs lib/asIs",
+    "compile": "tsc --build",
     "test": "vitest --passWithNoTests --run",
     "test:update": "vitest --passWithNoTests --run -u",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",

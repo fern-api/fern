@@ -24,7 +24,7 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
     }
 
     public getClientName(): string {
-        return this.customConfig.clientName ?? `${this.ir.apiName.pascalCase.safeName}Client`;
+        return this.configManager.get("clientName", `${this.ir.apiName.pascalCase.safeName}Client`);
     }
 
     public getApiClientBuilderClientName(): string {
@@ -67,11 +67,11 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
             this.ir,
             this.config,
             {
-                // Convert SDK config to model config - use base properties and add model-specific defaults
-                packageName: this.customConfig.packageName,
-                packageVersion: this.customConfig.packageVersion,
-                extraDependencies: this.customConfig.extraDependencies,
-                extraDevDependencies: this.customConfig.extraDevDependencies,
+                // Convert SDK config to model config - use centralized configuration manager
+                packageName: this.configManager.get("packageName"),
+                packageVersion: this.configManager.get("packageVersion"),
+                extraDependencies: this.configManager.get("extraDependencies"),
+                extraDevDependencies: this.configManager.get("extraDevDependencies"),
                 generateBuilders: false,
                 deriveDebug: true,
                 deriveClone: true

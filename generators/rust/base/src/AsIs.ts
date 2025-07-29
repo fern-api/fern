@@ -10,7 +10,11 @@ export const AsIsFileNames = {
     ApiClientBuilder: "api_client_builder.rs",
     HttpClient: "http_client.rs",
     RequestOptions: "request_options.rs",
-    ClientError: "client_error.rs"
+    ClientError: "client_error.rs",
+    // Project-level configuration files
+    CargoToml: "Cargo.toml",
+    Gitignore: ".gitignore",
+    RustfmtToml: "rustfmt.toml"
 };
 
 export interface AsIsFileDefinition {
@@ -31,9 +35,13 @@ function createAsIsFiles(): AsIsFileDefinitionsById {
     const result = {} as AsIsFileDefinitionsById;
 
     for (const [key, filename] of entries(AsIsFileNames)) {
+        // Project-level files go in root, source files go in src/
+        const isProjectFile = key === "CargoToml" || key === "Gitignore" || key === "RustfmtToml";
+        const directory = isProjectFile ? RelativeFilePath.of("") : RelativeFilePath.of("src");
+
         result[key as AsIsFileId] = {
             filename,
-            directory: RelativeFilePath.of("src"), // All in src/ directory
+            directory,
             loadContents: () => {
                 const absolutePath = path.join(__dirname, "asIs", filename);
                 return readFile(absolutePath, "utf-8");
