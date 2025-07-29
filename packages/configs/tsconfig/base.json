@@ -20,10 +20,12 @@
     "strict": true,
     "isolatedModules": true,
     "baseUrl": ".",
-    "declaration": true,
     "noUncheckedIndexedAccess": true,
     "noImplicitReturns": true,
-    "composite": true
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true
   },
   "exclude": ["node_modules", "dist", ".turbo", ".github", ".husky", "__snapshots__"]
 }

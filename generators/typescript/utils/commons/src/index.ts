@@ -32,3 +32,6 @@ export { getWriterForMultiLineUnionType } from "./writers/getWriterForMultiLineU
 export * from "@fern-api/typescript-base";
 export { fixImportsForEsm } from "./typescript-project/fixImportsForEsm";
 export { writeTemplateFiles } from "./writeTemplateFiles";
+export { InlineConsts } from "./codegen-utils/inlineConsts";
+export { type CoreUtilities } from "./core-utilities/CoreUtilities";
+export { AsIsManager } from "./asIs/AsIsManager";

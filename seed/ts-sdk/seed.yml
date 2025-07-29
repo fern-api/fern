@@ -19,7 +19,7 @@ test:
     workingDirectory: generators/typescript
     buildCommand:
       - pnpm --filter @fern-typescript/sdk-generator-cli dist:cli
-    runCommand: node sdk/cli/dist/nodeCli.cjs
+    runCommand: node --enable-source-maps sdk/cli/dist/nodeCli.cjs
     env:
       NODE_ENV: test
 

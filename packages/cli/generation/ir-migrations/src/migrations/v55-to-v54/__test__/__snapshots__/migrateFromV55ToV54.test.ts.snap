@@ -612,7 +612,7 @@ exports[`migrateFromV55ToV54 > simple 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "4f1ea652",
+                "id": "96dc187c",
                 "name": null,
                 "queryParameters": [],
                 "request": {

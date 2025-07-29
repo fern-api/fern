@@ -33,4 +33,4 @@ COPY generators/typescript/utils/core-utilities/ /assets/core-utilities/
 COPY generators/typescript/sdk/features.yml /assets/features.yml
 COPY generators/typescript-mcp/server/dist /dist
 
-ENTRYPOINT ["node", "/dist/cli.cjs"]
+ENTRYPOINT ["node", "--enable-source-maps", "/dist/cli.cjs"]
