@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
-import { rust } from "@fern-api/rust-codegen";
+import { rust, UseStatement } from "@fern-api/rust-codegen";
 
 import { Package, Subpackage } from "@fern-fern/ir-sdk/api";
 
@@ -29,12 +29,12 @@ export class RootClientGenerator {
             .map((subpackage) => `pub use ${subpackage.name.snakeCase.safeName}::${this.getSubClientName(subpackage)};`)
             .join("\n");
 
-        let fileContents = "";
+        let rawDeclarations: string[] = [];
 
-        // Add imports for config types
-        const imports = `use crate::{ClientConfig, ClientError};
-
-`;
+        // Add module declarations
+        if (moduleDeclarations) {
+            rawDeclarations.push(moduleDeclarations);
+        }
 
         // Only generate root client if there are multiple services
         if (subpackages.length > 1) {
@@ -44,17 +44,23 @@ export class RootClientGenerator {
                 fields: this.generateFields(subpackages),
                 constructors: [this.generateConstructor(subpackages)]
             });
-
-            fileContents = [imports, moduleDeclarations, "", rustRootClient.toString(), "", reExports].join("\n");
-        } else {
-            // For single service, just export the module and re-export the client
-            fileContents = [imports, moduleDeclarations, "", reExports].join("\n");
+            rawDeclarations.push(rustRootClient.toString());
         }
+
+        // Add re-exports
+        if (reExports) {
+            rawDeclarations.push(reExports);
+        }
+
+        const module = rust.module({
+            useStatements: this.generateImports(),
+            rawDeclarations
+        });
 
         return new RustFile({
             filename: "mod.rs",
             directory: RelativeFilePath.of("src/client"),
-            fileContents
+            fileContents: module.toString()
         });
     }
 
@@ -62,13 +68,13 @@ export class RootClientGenerator {
         return [
             {
                 name: "config",
-                type: "ClientConfig",
+                type: rust.Type.reference(rust.reference({ name: "ClientConfig" })).toString(),
                 visibility: "pub" as const
             },
             // Generate fields for each sub-client from IR subpackages
             ...subpackages.map((subpackage) => ({
                 name: subpackage.name.snakeCase.safeName, // Use proper snake_case from IR
-                type: this.getSubClientName(subpackage), // Use proper PascalCase client name
+                type: rust.Type.reference(rust.reference({ name: this.getSubClientName(subpackage) })).toString(), // Use proper PascalCase client name
                 visibility: "pub" as const // Public for direct access to sub-clients
             }))
         ];
@@ -82,10 +88,15 @@ export class RootClientGenerator {
             )
             .join(",\n            ");
 
+        const configType = rust.Type.reference(rust.reference({ name: "ClientConfig" }));
+        const selfType = rust.Type.reference(rust.reference({ name: "Self" }));
+        const errorType = rust.Type.reference(rust.reference({ name: "ClientError" }));
+        const returnType = rust.Type.result(selfType, errorType);
+
         return {
             name: "new",
-            parameters: ["config: ClientConfig"],
-            returnType: "Result<Self, ClientError>",
+            parameters: [`config: ${configType.toString()}`],
+            returnType: returnType.toString(),
             isAsync: false,
             body: `Ok(Self {
             config: config.clone(),
@@ -105,6 +116,15 @@ export class RootClientGenerator {
 
     private getSubClientName(subpackage: Subpackage): string {
         return `${subpackage.name.pascalCase.safeName}Client`;
+    }
+
+    private generateImports(): UseStatement[] {
+        return [
+            new UseStatement({
+                path: "crate",
+                items: ["ClientConfig", "ClientError"]
+            })
+        ];
     }
 
     private getSubpackages(): Subpackage[] {
