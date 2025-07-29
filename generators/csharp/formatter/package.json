@@ -33,13 +33,9 @@
   "devDependencies": {
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/csharp-base": "workspace:*",
-    "@types/jest": "^29.5.14",
     "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
-    "eslint": "^8.56.0",
-    "prettier": "^3.4.2",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "typescript": "5.7.2",
     "vitest": "^2.1.9",
     "execa": "^5.1.1"

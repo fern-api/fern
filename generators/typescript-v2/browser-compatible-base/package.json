@@ -33,14 +33,10 @@
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
     "@fern-fern/generator-exec-sdk": "^0.0.1045",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "@types/lodash-es": "^4.17.12",
-    "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
     "depcheck": "^1.4.7",
-    "esbuild": "^0.25.0",
     "eslint": "^9.16.0",
     "lodash-es": "^4.17.21",
-    "prettier": "^3.4.2",
     "tsup": "^8.0.2",
     "typescript": "5.7.2",
     "vitest": "^2.1.9"

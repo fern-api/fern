@@ -31,11 +31,8 @@
     "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
-    "eslint": "^8.56.0",
-    "prettier": "^3.4.2",
     "typescript": "5.7.2",
     "vitest": "^2.1.9"
   }
