@@ -1,6 +1,6 @@
+using System.IO;
 using System.Net.Http;
 using System.Threading;
-using global::System.Threading.Tasks;
 using SeedPublicObject.Core;
 
 namespace SeedPublicObject;
@@ -14,7 +14,7 @@ public partial class ServiceClient
         _client = client;
     }
 
-    public async global::System.Threading.Tasks.Task GetAsync(
+    public async Task<Stream> GetAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -31,6 +31,10 @@ public partial class ServiceClient
                 cancellationToken
             )
             .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return await response.Raw.Content.ReadAsStreamAsync();
+        }
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedPublicObjectApiException(
