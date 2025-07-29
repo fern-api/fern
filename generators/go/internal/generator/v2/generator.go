@@ -49,7 +49,7 @@ func (g *Generator) Run() error {
 
 	stdout := bytes.NewBuffer(nil)
 	stderr := bytes.NewBuffer(nil)
-	cmd := exec.Command("node", v2BinPath, configFilepath)
+	cmd := exec.Command("node", "--enable-source-maps", v2BinPath, configFilepath)
 	cmd.Stdout = stdout
 	cmd.Stderr = stderr
 	if err := cmd.Run(); err != nil {
