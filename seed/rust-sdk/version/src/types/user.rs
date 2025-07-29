@@ -1,3 +1,4 @@
+use crate::user_id::UserId;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

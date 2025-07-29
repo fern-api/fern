@@ -4,4 +4,4 @@ RUN apk --no-cache add git
 
 COPY generators/rust/sdk/dist/cli.cjs /dist/cli.cjs
 
-ENTRYPOINT ["node", "/dist/cli.cjs"] 
+ENTRYPOINT ["node", "--enable-source-maps", "/dist/cli.cjs"] 

@@ -1,3 +1,4 @@
+use crate::trace_response_v_2::TraceResponseV2;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

@@ -13,6 +13,15 @@
   "source": "src/index.ts",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "exports":{
+    ".": {
+      "development": "./src/index.ts",
+      "source": "./src/index.ts",
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "default": "./lib/index.js"
+    }
+  },
   "sideEffects": false,
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
@@ -26,7 +35,7 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck",
-    "dist:cli": "pnpm compile && tsup ./src/cli.ts --format cjs",
+    "dist:cli": "pnpm compile && tsup ./src/cli.ts --format cjs --sourcemap",
     "publish:cli": "pnpm dist:cli && cd dist && yarn npm publish",
     "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-java-sdk:latest ../../.."
   },
@@ -45,7 +54,7 @@
     "@fern-fern/generator-exec-sdk": "^0.0.1045",
     "@fern-fern/ir-sdk": "^58.2.0",
     "@types/node": "18.15.3",
-    "tsup": "^8.0.2",
+    "tsup": "^8.5.0",
     "depcheck": "^1.4.7",
     "eslint": "^8.56.0",
     "lodash-es": "^4.17.21",

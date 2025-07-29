@@ -8,4 +8,4 @@ RUN git config --global user.name "fern" && git config --global user.email "hey@
 
 COPY generators/go-v2/model/dist /dist
 
-ENTRYPOINT ["node", "/dist/cli.cjs"]
+ENTRYPOINT ["node", "--enable-source-maps", "/dist/cli.cjs"]

@@ -20,4 +20,4 @@ RUN npm install -f -g @fern-api/generator-cli
 
 COPY generators/ruby-v2/sdk/dist /dist
 
-ENTRYPOINT ["node", "/dist/cli.cjs"]
+ENTRYPOINT ["node", "--enable-source-maps", "/dist/cli.cjs"]

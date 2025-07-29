@@ -1,3 +1,5 @@
+use crate::test_submission_status_v_2::TestSubmissionStatusV2;
+use crate::workspace_submission_status_v_2::WorkspaceSubmissionStatusV2;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

@@ -13,6 +13,15 @@
   "source": "src/index.ts",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "exports":{
+    ".": {
+      "development": "./src/index.ts",
+      "source": "./src/index.ts",
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "default": "./lib/index.js"
+    }
+  },
   "sideEffects": false,
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
@@ -46,7 +55,7 @@
     "esbuild": "^0.25.0",
     "eslint": "^8.56.0",
     "prettier": "^3.4.2",
-    "tsup": "^8.3.5",
+    "tsup": "^8.5.0",
     "typescript": "5.7.2",
     "vitest": "^2.1.9",
     "zod": "^3.22.4"

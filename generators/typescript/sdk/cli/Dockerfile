@@ -32,4 +32,4 @@ COPY generators/typescript/sdk/cli/dist/nodeCli.cjs /nodeCli.cjs
 
 RUN npm install -f -g @fern-api/generator-cli
 
-ENTRYPOINT ["node", "/nodeCli.cjs"]
+ENTRYPOINT ["node", "--enable-source-maps", "/nodeCli.cjs"]

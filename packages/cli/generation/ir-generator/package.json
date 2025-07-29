@@ -14,6 +14,15 @@
   "source": "src/index.ts",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "exports":{
+    ".": {
+      "development": "./src/index.ts",
+      "source": "./src/index.ts",
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "default": "./lib/index.js"
+    }
+  },
   "sideEffects": false,
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
@@ -26,8 +35,7 @@
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
-    "depcheck": "depcheck",
-    "dist": "pnpm compile && node build.cjs"
+    "depcheck": "depcheck"
   },
   "devDependencies": {
     "@fern-api/casings-generator": "workspace:*",
@@ -52,7 +60,6 @@
     "@types/uuid": "^9.0.8",
     "lodash-es": "^4.17.21",
     "string.prototype.replaceall": "^1.0.10",
-    "tsup": "^8.3.5",
     "url-join": "^5.0.0",
     "uuid": "^9.0.1",
     "vitest": "^2.1.9"

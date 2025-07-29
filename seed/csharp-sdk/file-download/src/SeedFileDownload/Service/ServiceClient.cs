@@ -1,3 +1,4 @@
+using System.IO;
 using System.Net.Http;
 using System.Threading;
 using global::System.Threading.Tasks;
@@ -48,7 +49,7 @@ public partial class ServiceClient
         }
     }
 
-    public async global::System.Threading.Tasks.Task DownloadFileAsync(
+    public async Task<System.IO.Stream> DownloadFileAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -65,6 +66,10 @@ public partial class ServiceClient
                 cancellationToken
             )
             .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return await response.Raw.Content.ReadAsStreamAsync();
+        }
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             throw new SeedFileDownloadApiException(

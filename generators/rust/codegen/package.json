@@ -11,6 +11,15 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
+  "exports":{
+    ".": {
+      "development": "./src/index.ts",
+      "source": "./src/index.ts",
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "default": "./lib/index.js"
+    }
+  },
   "files": [
     "lib"
   ],
@@ -31,11 +40,5 @@
     "depcheck": "^1.4.6",
     "typescript": "5.7.2",
     "vitest": "^2.0.5"
-  },
-  "exports": {
-    ".": {
-      "types": "./lib/index.d.ts",
-      "default": "./lib/index.js"
-    }
   }
 } 

@@ -13,6 +13,7 @@ async function main() {
         target: "es2017",
         minify: true,
         dts: true,
+        sourcemap: true,
         external: [
             '@fern-api/go-formatter',
         ],

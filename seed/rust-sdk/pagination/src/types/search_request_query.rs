@@ -1,3 +1,5 @@
+use crate::single_filter_search_request::SingleFilterSearchRequest;
+use crate::multiple_filter_search_request::MultipleFilterSearchRequest;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

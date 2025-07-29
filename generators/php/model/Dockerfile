@@ -17,4 +17,4 @@ RUN curl -L https://cs.symfony.com/download/php-cs-fixer-v3.phar -o /usr/local/b
 
 COPY generators/php/model/dist /dist
 
-ENTRYPOINT ["node", "/dist/cli.cjs"]
+ENTRYPOINT ["node", "--enable-source-maps", "/dist/cli.cjs"]

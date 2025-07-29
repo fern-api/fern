@@ -544,7 +544,7 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.v
                                 key: FdrCjsSdk.PropertyKey(property.name.wireValue),
                                 valueType: convertTypeReference(property.valueType),
                                 availability: convertIrAvailability(property.availability),
-                                propertyAccess: undefined
+                                propertyAccess: property.propertyAccess
                             })
                         ),
                         extraProperties: inlinedRequestBody.extraProperties ? { type: "unknown" } : undefined
