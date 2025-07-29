@@ -33,15 +33,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     }
 
     protected parseCustomConfigOrThrow(customConfig: unknown): SdkCustomConfigSchema {
-        const parsed = customConfig != null ? SdkCustomConfigSchema.parse(customConfig) : undefined;
-        if (parsed != null) {
-            return this.validateCustomConfig(parsed);
-        }
-        return SdkCustomConfigSchema.parse({});
-    }
-
-    private validateCustomConfig(customConfig: SdkCustomConfigSchema): SdkCustomConfigSchema {
-        return customConfig;
+        return customConfig != null ? SdkCustomConfigSchema.parse(customConfig) : SdkCustomConfigSchema.parse({});
     }
 
     protected async publishPackage(_context: SdkGeneratorContext): Promise<void> {
@@ -142,9 +134,8 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     }
 
     private generateModelFiles(context: SdkGeneratorContext): RustFile[] {
-        const modelFiles = generateModels({ context: context.toModelGeneratorContext() });
-        return modelFiles.map(
-            (file: RustFile) =>
+        return generateModels({ context: context.toModelGeneratorContext() }).map(
+            (file) =>
                 new RustFile({
                     filename: file.filename,
                     directory: RelativeFilePath.of("src/types"),

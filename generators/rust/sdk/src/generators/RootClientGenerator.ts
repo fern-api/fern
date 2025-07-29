@@ -17,40 +17,13 @@ export class RootClientGenerator {
         this.projectName = context.ir.apiName.pascalCase.safeName;
     }
 
+    // =============================================================================
+    // PUBLIC API
+    // =============================================================================
+
     public generate(): RustFile {
         const subpackages = this.getSubpackages();
-
-        // Add module declarations for sub-clients
-        const moduleDeclarations = subpackages
-            .map((subpackage) => `pub mod ${subpackage.name.snakeCase.safeName};`)
-            .join("\n");
-
-        const reExports = subpackages
-            .map((subpackage) => `pub use ${subpackage.name.snakeCase.safeName}::${this.getSubClientName(subpackage)};`)
-            .join("\n");
-
-        let rawDeclarations: string[] = [];
-
-        // Add module declarations
-        if (moduleDeclarations) {
-            rawDeclarations.push(moduleDeclarations);
-        }
-
-        // Only generate root client if there are multiple services
-        if (subpackages.length > 1) {
-            const clientName = this.getRootClientName();
-            const rustRootClient = rust.client({
-                name: clientName,
-                fields: this.generateFields(subpackages),
-                constructors: [this.generateConstructor(subpackages)]
-            });
-            rawDeclarations.push(rustRootClient.toString());
-        }
-
-        // Add re-exports
-        if (reExports) {
-            rawDeclarations.push(reExports);
-        }
+        const rawDeclarations = this.buildRawDeclarations(subpackages);
 
         const module = rust.module({
             useStatements: this.generateImports(),
@@ -64,6 +37,67 @@ export class RootClientGenerator {
         });
     }
 
+    // =============================================================================
+    // FILE STRUCTURE GENERATION
+    // =============================================================================
+
+    private buildRawDeclarations(subpackages: Subpackage[]): string[] {
+        const rawDeclarations: string[] = [];
+
+        // Add module declarations for sub-clients
+        const moduleDeclarations = this.generateModuleDeclarations(subpackages);
+        if (moduleDeclarations) {
+            rawDeclarations.push(moduleDeclarations);
+        }
+
+        // Only generate root client if there are multiple services
+        if (subpackages.length > 1) {
+            const rootClient = this.generateRootClient(subpackages);
+            rawDeclarations.push(rootClient);
+        }
+
+        // Add re-exports for direct access to sub-clients
+        const reExports = this.generateReExports(subpackages);
+        if (reExports) {
+            rawDeclarations.push(reExports);
+        }
+
+        return rawDeclarations;
+    }
+
+    private generateModuleDeclarations(subpackages: Subpackage[]): string {
+        return subpackages.map((subpackage) => `pub mod ${subpackage.name.snakeCase.safeName};`).join("\n");
+    }
+
+    private generateReExports(subpackages: Subpackage[]): string {
+        return subpackages
+            .map((subpackage) => `pub use ${subpackage.name.snakeCase.safeName}::${this.getSubClientName(subpackage)};`)
+            .join("\n");
+    }
+
+    private generateImports(): UseStatement[] {
+        return [
+            new UseStatement({
+                path: "crate",
+                items: ["ClientConfig", "ClientError"]
+            })
+        ];
+    }
+
+    // =============================================================================
+    // ROOT CLIENT GENERATION
+    // =============================================================================
+
+    private generateRootClient(subpackages: Subpackage[]): string {
+        const clientName = this.getRootClientName();
+        const rustRootClient = rust.client({
+            name: clientName,
+            fields: this.generateFields(subpackages),
+            constructors: [this.generateConstructor(subpackages)]
+        });
+        return rustRootClient.toString();
+    }
+
     private generateFields(subpackages: Subpackage[]): rust.Client.Field[] {
         return [
             {
@@ -71,11 +105,10 @@ export class RootClientGenerator {
                 type: rust.Type.reference(rust.reference({ name: "ClientConfig" })).toString(),
                 visibility: "pub" as const
             },
-            // Generate fields for each sub-client from IR subpackages
             ...subpackages.map((subpackage) => ({
-                name: subpackage.name.snakeCase.safeName, // Use proper snake_case from IR
-                type: rust.Type.reference(rust.reference({ name: this.getSubClientName(subpackage) })).toString(), // Use proper PascalCase client name
-                visibility: "pub" as const // Public for direct access to sub-clients
+                name: subpackage.name.snakeCase.safeName,
+                type: rust.Type.reference(rust.reference({ name: this.getSubClientName(subpackage) })).toString(),
+                visibility: "pub" as const
             }))
         ];
     }
@@ -105,9 +138,14 @@ export class RootClientGenerator {
         };
     }
 
-    private getDefaultBaseUrl(): string {
-        // Simple: just use a placeholder URL since methods are todo!()
-        return "";
+    // =============================================================================
+    // UTILITY METHODS
+    // =============================================================================
+
+    private getSubpackages(): Subpackage[] {
+        return this.package.subpackages
+            .map((subpackageId) => this.context.getSubpackageOrThrow(subpackageId))
+            .filter((subpackage) => subpackage.service != null || subpackage.hasEndpointsInTree);
     }
 
     private getRootClientName(): string {
@@ -116,20 +154,5 @@ export class RootClientGenerator {
 
     private getSubClientName(subpackage: Subpackage): string {
         return `${subpackage.name.pascalCase.safeName}Client`;
-    }
-
-    private generateImports(): UseStatement[] {
-        return [
-            new UseStatement({
-                path: "crate",
-                items: ["ClientConfig", "ClientError"]
-            })
-        ];
-    }
-
-    private getSubpackages(): Subpackage[] {
-        return this.package.subpackages
-            .map((subpackageId) => this.context.getSubpackageOrThrow(subpackageId))
-            .filter((subpackage) => subpackage.service != null || subpackage.hasEndpointsInTree);
     }
 }

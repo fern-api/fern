@@ -25,9 +25,9 @@ export class SubClientGenerator {
         this.service = subpackage.service ? this.context.getHttpServiceOrThrow(subpackage.service) : undefined;
     }
 
-    private get subClientName(): string {
-        return this.subpackage.name.pascalCase.safeName + "Client";
-    }
+    // =============================================================================
+    // PUBLIC API
+    // =============================================================================
 
     public generate(): RustFile {
         const filename = `${this.subpackage.name.snakeCase.safeName}.rs`;
@@ -50,6 +50,14 @@ export class SubClientGenerator {
             directory: RelativeFilePath.of("src/client"),
             fileContents: module.toString()
         });
+    }
+
+    // =============================================================================
+    // CLIENT STRUCTURE GENERATION
+    // =============================================================================
+
+    private get subClientName(): string {
+        return this.subpackage.name.pascalCase.safeName + "Client";
     }
 
     private generateImports(): UseStatement[] {
@@ -101,31 +109,17 @@ export class SubClientGenerator {
         };
     }
 
+    // =============================================================================
+    // HTTP METHOD GENERATION
+    // =============================================================================
+
     private convertEndpointsToHttpMethods(endpoints: HttpEndpoint[]): rust.Client.SimpleMethod[] {
         return endpoints.map((endpoint) => this.generateHttpMethod(endpoint));
     }
 
     private generateHttpMethod(endpoint: HttpEndpoint): rust.Client.SimpleMethod {
         const params = this.extractParametersFromEndpoint(endpoint);
-
-        // Generate method signature with RequestOptions parameter
-        const parameters = [
-            ...params.map((param) => {
-                let paramType = param.type.toString();
-
-                if (param.isRef) {
-                    paramType = `&${paramType}`;
-                }
-
-                if (param.optional) {
-                    paramType = `Option<${paramType}>`;
-                }
-
-                return `${param.name}: ${paramType}`;
-            }),
-            "options: Option<RequestOptions>"
-        ];
-
+        const parameters = this.buildMethodParameters(params);
         const httpMethod = this.getHttpMethod(endpoint);
         const pathExpression = this.getPathExpression(endpoint);
         const requestBody = this.getRequestBody(endpoint, params);
@@ -149,10 +143,40 @@ export class SubClientGenerator {
         };
     }
 
+    private buildMethodParameters(params: EndpointParameter[]): string[] {
+        return [
+            ...params.map((param) => {
+                let paramType = param.type.toString();
+
+                if (param.isRef) {
+                    paramType = `&${paramType}`;
+                }
+
+                if (param.optional) {
+                    paramType = `Option<${paramType}>`;
+                }
+
+                return `${param.name}: ${paramType}`;
+            }),
+            "options: Option<RequestOptions>"
+        ];
+    }
+
+    // =============================================================================
+    // PARAMETER EXTRACTION
+    // =============================================================================
+
     private extractParametersFromEndpoint(endpoint: HttpEndpoint): EndpointParameter[] {
         const params: EndpointParameter[] = [];
 
-        // Add path parameters
+        this.addPathParameters(endpoint, params);
+        this.addQueryParameters(endpoint, params);
+        this.addRequestBodyParameter(endpoint, params);
+
+        return params;
+    }
+
+    private addPathParameters(endpoint: HttpEndpoint, params: EndpointParameter[]): void {
         endpoint.fullPath.parts.forEach((part) => {
             if (part.pathParameter) {
                 const pathParam = endpoint.allPathParameters.find((p) => p.name.originalName === part.pathParameter);
@@ -166,8 +190,9 @@ export class SubClientGenerator {
                 }
             }
         });
+    }
 
-        // Add query parameters
+    private addQueryParameters(endpoint: HttpEndpoint, params: EndpointParameter[]): void {
         endpoint.queryParameters.forEach((queryParam) => {
             params.push({
                 name: queryParam.name.name.snakeCase.safeName,
@@ -176,22 +201,20 @@ export class SubClientGenerator {
                 isRef: this.shouldPassByReference(queryParam.valueType)
             });
         });
+    }
 
-        // Add request body if present
+    private addRequestBodyParameter(endpoint: HttpEndpoint, params: EndpointParameter[]): void {
         if (endpoint.requestBody) {
             const requestBodyType = endpoint.requestBody._visit({
                 inlinedRequestBody: () => {
-                    // For inlined request bodies, use serde_json::Value as fallback
                     return rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" }));
                 },
                 reference: (reference) => generateRustTypeForTypeReference(reference.requestBodyType),
                 fileUpload: () => {
-                    // File upload typically uses multipart forms
                     return rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" }));
                 },
                 bytes: () => rust.Type.vec(rust.Type.primitive(rust.PrimitiveType.U8)),
                 _other: () => {
-                    // Fallback for unknown request body types
                     return rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" }));
                 }
             });
@@ -203,14 +226,15 @@ export class SubClientGenerator {
                 optional: false
             });
         }
-
-        return params;
     }
+
+    // =============================================================================
+    // TYPE AND REFERENCE UTILITIES
+    // =============================================================================
 
     private shouldPassByReference(typeRef: TypeReference): boolean {
         return TypeReference._visit(typeRef, {
             primitive: (primitiveType) => {
-                // Most primitives should be passed by value, strings by reference
                 return PrimitiveTypeV1._visit(primitiveType.v1, {
                     string: () => true,
                     boolean: () => false,
@@ -248,8 +272,6 @@ export class SubClientGenerator {
                 text: () => rust.Type.primitive(rust.PrimitiveType.String),
                 bytes: () => rust.Type.vec(rust.Type.primitive(rust.PrimitiveType.U8)),
                 streaming: () => {
-                    // For streaming responses, we could return a stream type
-                    // For now, fall back to serde_json::Value
                     return rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" }));
                 },
                 streamParameter: () => rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" })),
@@ -257,9 +279,12 @@ export class SubClientGenerator {
             });
         }
 
-        // If no response body is defined, return empty tuple or unit type
         return rust.Type.tuple([]);
     }
+
+    // =============================================================================
+    // HTTP REQUEST BUILDING
+    // =============================================================================
 
     private getHttpMethod(endpoint: HttpEndpoint): string {
         return endpoint.method.toUpperCase();
@@ -274,7 +299,6 @@ export class SubClientGenerator {
                 const pathParam = endpoint.allPathParameters.find((p) => p.name.originalName === part.pathParameter);
                 if (pathParam) {
                     path += "{}";
-                    // Check if we need to access inner value for newtype wrappers
                     const paramName = this.getPathParameterExpression(
                         pathParam.valueType,
                         pathParam.name.snakeCase.safeName
@@ -296,10 +320,8 @@ export class SubClientGenerator {
         return TypeReference._visit(typeRef, {
             primitive: () => paramName,
             named: (namedType) => {
-                // For named types, check if they're newtype wrappers that need .0 access
                 const typeDeclaration = this.context.ir.types[namedType.typeId];
                 if (typeDeclaration?.shape.type === "alias") {
-                    // If it's an alias to a primitive, it's likely a newtype wrapper
                     const aliasedType = typeDeclaration.shape.aliasOf;
                     if (
                         TypeReference._visit(aliasedType, {
@@ -322,13 +344,16 @@ export class SubClientGenerator {
     }
 
     private getRequestBody(endpoint: HttpEndpoint, params: EndpointParameter[]): string {
-        // Check if there's a request body parameter
         const requestBodyParam = params.find((param) => param.name === "request");
         if (requestBodyParam && endpoint.requestBody) {
             return "Some(serde_json::to_value(request).unwrap_or_default())";
         }
         return "None";
     }
+
+    // =============================================================================
+    // UTILITY METHODS
+    // =============================================================================
 
     private hasTypes(context: SdkGeneratorContext): boolean {
         return Object.keys(context.ir.types).length > 0;
