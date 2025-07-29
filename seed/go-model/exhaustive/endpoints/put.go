@@ -53,6 +53,24 @@ func (e *Error) GetExtraProperties() map[string]any {
 	return e.extraProperties
 }
 
+func (e *Error) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Error
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*e = Error(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	if err != nil {
+		return err
+	}
+	e.extraProperties = extraProperties
+	e.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (e *Error) String() string {
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
@@ -158,6 +176,24 @@ func (p *PutResponse) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return p.extraProperties
+}
+
+func (p *PutResponse) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler PutResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*p = PutResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (p *PutResponse) String() string {

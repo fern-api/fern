@@ -12,17 +12,20 @@ import {
     SimpleTypescriptProject,
     TypescriptProject,
     getFullPathForEndpoint,
-    getTextOfTsNode
+    getTextOfTsNode,
+    AsIsManager
 } from "@fern-typescript/commons";
-import { AsIsManager } from "@fern-typescript/commons/src/asIs/AsIsManager";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-union-generator";
 import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
 import { GenericAPISdkErrorGenerator, TimeoutSdkErrorGenerator } from "@fern-typescript/generic-sdk-error-generators";
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
 import { ErrorResolver, PackageResolver, TypeResolver } from "@fern-typescript/resolvers";
-import { SdkClientClassGenerator, WebsocketClassGenerator } from "@fern-typescript/sdk-client-class-generator";
-import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator/src/oauth-generator/OAuthTokenProviderGenerator";
+import {
+    SdkClientClassGenerator,
+    WebsocketClassGenerator,
+    OAuthTokenProviderGenerator
+} from "@fern-typescript/sdk-client-class-generator";
 import { SdkEndpointTypeSchemasGenerator } from "@fern-typescript/sdk-endpoint-type-schemas-generator";
 import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator";
 import { SdkErrorSchemaGenerator } from "@fern-typescript/sdk-error-schema-generator";

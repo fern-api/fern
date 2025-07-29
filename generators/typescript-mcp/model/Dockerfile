@@ -10,4 +10,4 @@ RUN yarn add \
 
 COPY generators/typescript-mcp/model/dist /dist
 
-ENTRYPOINT ["node", "/dist/cli.cjs"]
+ENTRYPOINT ["node", "--enable-source-maps", "/dist/cli.cjs"]

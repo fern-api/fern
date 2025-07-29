@@ -20,4 +20,4 @@ RUN dotnet tool install -g csharpier --version "1.*"
 
 COPY generators/csharp/model/dist /dist
 
-ENTRYPOINT ["node", "/dist/cli.cjs"]
+ENTRYPOINT ["node", "--enable-source-maps", "/dist/cli.cjs"]

@@ -3,5 +3,4 @@
 # isort: skip_file
 
 from .bad_object_request_info import BadObjectRequestInfo
-
 __all__ = ["BadObjectRequestInfo"]

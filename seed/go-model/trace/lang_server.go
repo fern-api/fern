@@ -30,6 +30,24 @@ func (l *LangServerRequest) GetExtraProperties() map[string]any{
     return l.extraProperties
 }
 
+func (l *LangServerRequest) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler LangServerRequest
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *l = LangServerRequest(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *l)
+    if err != nil {
+        return err
+    }
+    l.extraProperties = extraProperties
+    l.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (l *LangServerRequest) String() string{
     if len(l.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
@@ -62,6 +80,24 @@ func (l *LangServerResponse) GetExtraProperties() map[string]any{
         return nil
     }
     return l.extraProperties
+}
+
+func (l *LangServerResponse) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler LangServerResponse
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *l = LangServerResponse(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *l)
+    if err != nil {
+        return err
+    }
+    l.extraProperties = extraProperties
+    l.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (l *LangServerResponse) String() string{

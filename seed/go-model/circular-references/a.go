@@ -29,6 +29,24 @@ func (a *A) GetExtraProperties() map[string]any {
 	return a.extraProperties
 }
 
+func (a *A) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler A
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = A(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (a *A) String() string {
 	if len(a.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {

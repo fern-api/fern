@@ -4,17 +4,31 @@
     "composite": true,
     "outDir": "lib",
     "rootDir": "src",
-    "types": ["vitest/globals"]
+    "types": [
+      "vitest/globals"
+    ]
   },
-  "include": ["./src/**/*"],
+  "include": [
+    "./src/**/*"
+  ],
   "references": [
-    { "path": "../core-utils" },
-    { "path": "../fs-utils" },
-    { "path": "../path-utils" },
-    { "path": "../../cli/cli-source-resolver" },
-    { "path": "../../cli/generation/ir-generator" },
-    { "path": "../../cli/task-context" },
-    { "path": "../../cli/workspace/loader" },
-    { "path": "../../cli/configuration" }
+    {
+      "path": "../../cli/cli-source-resolver"
+    },
+    {
+      "path": "../../cli/configuration"
+    },
+    {
+      "path": "../../cli/generation/ir-generator"
+    },
+    {
+      "path": "../../cli/task-context"
+    },
+    {
+      "path": "../../cli/workspace/loader"
+    },
+    {
+      "path": "../fs-utils"
+    }
   ]
 }

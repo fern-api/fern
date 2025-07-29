@@ -5,75 +5,73 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": [
-    "./src/**/*"
-  ],
+  "include": ["./src/**/*"],
   "references": [
     {
-      "path": "../../../../../generators/browser-compatible-base"
-    },
-    {
-      "path": "../../../../../generators/csharp/dynamic-snippets"
-    },
-    {
-      "path": "../../../../../generators/go-v2/dynamic-snippets"
-    },
-    {
-      "path": "../../../../../generators/java-v2/dynamic-snippets"
-    },
-    {
-      "path": "../../../../../generators/php/dynamic-snippets"
-    },
-    {
-      "path": "../../../../../generators/python-v2/dynamic-snippets"
+      "path": "../../../workspace/loader"
     },
     {
       "path": "../../../../../generators/typescript-v2/dynamic-snippets"
     },
     {
-      "path": "../../../../commons/core-utils"
+      "path": "../../../task-context"
     },
     {
-      "path": "../../../../commons/fs-utils"
+      "path": "../../../../../generators/python-v2/dynamic-snippets"
+    },
+    {
+      "path": "../../../../../generators/php/dynamic-snippets"
     },
     {
       "path": "../../../../commons/logging-execa"
     },
     {
+      "path": "../../../../../generators/java-v2/dynamic-snippets"
+    },
+    {
       "path": "../../../../ir-sdk"
-    },
-    {
-      "path": "../../../cli-source-resolver"
-    },
-    {
-      "path": "../../../configuration"
-    },
-    {
-      "path": "../../../task-context"
-    },
-    {
-      "path": "../../../workspace/loader"
-    },
-    {
-      "path": "../../../workspace/commons"
-    },
-    {
-      "path": "../../ir-generator"
     },
     {
       "path": "../../ir-migrations"
     },
     {
+      "path": "../../ir-generator"
+    },
+    {
+      "path": "../../../../../generators/go-v2/dynamic-snippets"
+    },
+    {
+      "path": "../../../../commons/fs-utils"
+    },
+    {
       "path": "../docker-utils"
+    },
+    {
+      "path": "../../../../../generators/csharp/dynamic-snippets"
+    },
+    {
+      "path": "../../../../commons/core-utils"
+    },
+    {
+      "path": "../../../configuration"
+    },
+    {
+      "path": "../../../cli-source-resolver"
+    },
+    {
+      "path": "../../../../../generators/browser-compatible-base"
+    },
+    {
+      "path": "../../../workspace/commons"
+    },
+    {
+      "path": "../../../configuration-loader"
     },
     {
       "path": "../../../auth"
     },
     {
-      "path": "../../../../../packages/core"
-    },
-    {
-      "path": "../../../configuration-loader"
+      "path": "../../../../core"
     }
   ]
 }

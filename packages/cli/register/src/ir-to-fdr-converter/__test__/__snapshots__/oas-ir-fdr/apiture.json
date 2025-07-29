@@ -4065,7 +4065,6 @@
           ],
           "examples": [
             {
-              "name": "listAccountBalancesExample",
               "description": "",
               "path": "/accountBalances",
               "pathParameters": {},
@@ -4117,7 +4116,6 @@
               }
             },
             {
-              "name": "listAccountBalancesExample",
               "description": "",
               "path": "/accountBalances",
               "pathParameters": {},
@@ -6947,7 +6945,6 @@
           ],
           "examples": [
             {
-              "name": "listTransactionsExample",
               "description": "",
               "path": "/accounts/accountId/transactions",
               "pathParameters": {
@@ -7043,7 +7040,6 @@
               }
             },
             {
-              "name": "listTransactionsExample",
               "description": "",
               "path": "/accounts/accountId/transactions",
               "pathParameters": {

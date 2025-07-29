@@ -19,10 +19,10 @@
       "path": "../task-context"
     },
     {
-      "path": "../workspace/loader"
+      "path": "../workspace/commons"
     },
     {
-      "path": "../workspace/commons"
+      "path": "../workspace/loader"
     }
   ]
 }

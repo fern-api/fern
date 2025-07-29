@@ -139,6 +139,28 @@ export abstract class AbstractGoGeneratorContext<
         return name.camelCase.safeName;
     }
 
+    public getDateTypeReference(): go.TypeReference {
+        return go.typeReference({
+            name: "Date",
+            importPath: this.getInternalImportPath()
+        });
+    }
+
+    public getDateTimeTypeReference(): go.TypeReference {
+        return go.typeReference({
+            name: "DateTime",
+            importPath: this.getInternalImportPath()
+        });
+    }
+
+    public newJsonRawMessage(arg: go.AstNode): go.FuncInvocation {
+        return go.invokeFunc({
+            func: go.typeReference({ name: "RawMessage", importPath: "encoding/json" }),
+            arguments_: [arg],
+            multiline: false
+        });
+    }
+
     public callFmtErrorf(format: string, args: go.AstNode[]): go.FuncInvocation {
         return go.invokeFunc({
             func: go.typeReference({ name: "Errorf", importPath: "fmt" }),
@@ -155,7 +177,71 @@ export abstract class AbstractGoGeneratorContext<
         });
     }
 
-    public callInternalStringifyJSON(arg: go.TypeInstantiation): go.FuncInvocation {
+    public callJsonMarshal(arg: go.AstNode): go.FuncInvocation {
+        return go.invokeFunc({
+            func: go.typeReference({ name: "Marshal", importPath: "encoding/json" }),
+            arguments_: [arg],
+            multiline: false
+        });
+    }
+
+    public callJsonUnmarshal({ data, value }: { data: go.AstNode; value: go.AstNode }): go.FuncInvocation {
+        return go.invokeFunc({
+            func: go.typeReference({ name: "Unmarshal", importPath: "encoding/json" }),
+            arguments_: [data, value],
+            multiline: false
+        });
+    }
+
+    public callExtractExtraProperties(args: go.AstNode[]): go.FuncInvocation {
+        return this.callInternalFunc({
+            name: "ExtractExtraProperties",
+            arguments_: args,
+            multiline: false
+        });
+    }
+
+    public callMarshalJsonWithExtraProperties(args: go.AstNode[]): go.FuncInvocation {
+        return this.callInternalFunc({
+            name: "MarshalJSONWithExtraProperties",
+            arguments_: args,
+            multiline: false
+        });
+    }
+
+    public callNewDate(arg: go.AstNode): go.FuncInvocation {
+        return this.callInternalFunc({
+            name: "NewDate",
+            arguments_: [arg],
+            multiline: false
+        });
+    }
+
+    public callNewOptionalDate(arg: go.AstNode): go.FuncInvocation {
+        return this.callInternalFunc({
+            name: "NewOptionalDate",
+            arguments_: [arg],
+            multiline: false
+        });
+    }
+
+    public callNewDateTime(arg: go.AstNode): go.FuncInvocation {
+        return this.callInternalFunc({
+            name: "NewDateTime",
+            arguments_: [arg],
+            multiline: false
+        });
+    }
+
+    public callNewOptionalDateTime(arg: go.AstNode): go.FuncInvocation {
+        return this.callInternalFunc({
+            name: "NewOptionalDateTime",
+            arguments_: [arg],
+            multiline: false
+        });
+    }
+
+    public callStringifyJson(arg: go.TypeInstantiation): go.FuncInvocation {
         return this.callInternalFunc({
             name: "StringifyJSON",
             arguments_: [arg],
@@ -316,6 +402,12 @@ export abstract class AbstractGoGeneratorContext<
 
     public getLiteralAsString(literal: Literal): string {
         return literal.type === "string" ? `"${literal.string}"` : literal.boolean ? '"true"' : '"false"';
+    }
+
+    public getLiteralValue(literal: Literal): go.AstNode {
+        return literal.type === "string"
+            ? go.TypeInstantiation.string(literal.string)
+            : go.TypeInstantiation.bool(literal.boolean);
     }
 
     public getContextTypeReference(): go.TypeReference {

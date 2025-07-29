@@ -1,14 +1,22 @@
 {
-    "extends": "@fern-api/configs/tsconfig/main.json",
-    "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
-    "include": ["./src/**/*"],
-    "references": [
-      { "path": "../../../../packages/commons/core-utils" },
-      { "path": "../../model/union-schema-generator" },
-      { "path": "../../utils/abstract-schema-generator" },
-      { "path": "../../utils/commons" },
-      { "path": "../../utils/contexts" },
-      { "path": "../../utils/resolvers" }
-    ]
-  }
-  
+  "extends": "@fern-api/configs/tsconfig/main.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src"
+  },
+  "include": [
+    "./src/**/*"
+  ],
+  "references": [
+    {
+      "path": "../../utils/abstract-schema-generator"
+    },
+    {
+      "path": "../../utils/commons"
+    },
+    {
+      "path": "../../utils/contexts"
+    }
+  ]
+}

@@ -29,6 +29,24 @@ func (p *PropertyBasedErrorTestBody) GetExtraProperties() map[string]any {
 	return p.extraProperties
 }
 
+func (p *PropertyBasedErrorTestBody) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler PropertyBasedErrorTestBody
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*p = PropertyBasedErrorTestBody(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (p *PropertyBasedErrorTestBody) String() string {
 	if len(p.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {

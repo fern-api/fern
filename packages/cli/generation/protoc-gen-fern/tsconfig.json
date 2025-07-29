@@ -5,6 +5,27 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": ["./src/**/*"],
-  "references": []
+  "include": [
+    "./src/**/*"
+  ],
+  "references": [
+    {
+      "path": "../../../commons/casings-generator"
+    },
+    {
+      "path": "../../../commons/core-utils"
+    },
+    {
+      "path": "../../../commons/ir-utils"
+    },
+    {
+      "path": "../../../ir-sdk"
+    },
+    {
+      "path": "../../api-importers/v2-importer-commons"
+    },
+    {
+      "path": "../../logger"
+    }
+  ]
 }
