@@ -5,35 +5,18 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": ["./src/**/*"],
-  "exclude": ["./src/**/__test__/**/generated"],
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "./src/**/__test__/**/generated"
+  ],
   "references": [
-    {
-      "path": "../../../commons/core-utils"
-    },
-    {
-      "path": "../../fern-definition/schema"
-    },
-    {
-      "path": "../../configuration"
-    },
-    {
-      "path": "../../logger"
-    },
-    {
-      "path": "../../task-context"
-    },
-    {
-      "path": "../../../ir-sdk"
-    },
-    {
-      "path": "../../workspace/commons"
-    },
     {
       "path": "../../../commons/ir-utils"
     },
     {
-      "path": "../../../commons/casings-generator"
+      "path": "../../../ir-sdk"
     },
     {
       "path": "../v2-importer-commons"

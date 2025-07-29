@@ -934,7 +934,7 @@ exports[`migrateFromV47ToV46 > snapshot 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [],
               "exampleType": "generated",
-              "id": "46cc2a74",
+              "id": "a6175ce4",
               "name": null,
               "queryParameters": [
                 {
@@ -2080,7 +2080,7 @@ const user = client.users.get(1234);
                 },
               ],
               "exampleType": "generated",
-              "id": "7f2b6126",
+              "id": "9c17afd8",
               "name": null,
               "queryParameters": [],
               "request": null,

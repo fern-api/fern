@@ -16,10 +16,10 @@
       "path": "../../../../commons/core-utils"
     },
     {
-      "path": "../../../fern-definition/schema"
+      "path": "../../../configuration"
     },
     {
-      "path": "../../../configuration"
+      "path": "../../../fern-definition/schema"
     },
     {
       "path": "../../../logger"

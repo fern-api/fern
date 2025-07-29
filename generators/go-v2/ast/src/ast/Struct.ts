@@ -1,5 +1,6 @@
 import { Comment } from "./Comment";
 import { Field } from "./Field";
+import { GoTypeReference } from "./GoTypeReference";
 import { Method } from "./Method";
 import { Parameter } from "./Parameter";
 import { AstNode } from "./core/AstNode";
@@ -7,9 +8,13 @@ import { Writer } from "./core/Writer";
 
 export declare namespace Struct {
     interface Args {
-        /* The name of the Go struct */
-        name: string;
-        /* Docs associated with the class */
+        /* The name of the Go struct. If not provided, the struct is anonymous. */
+        name?: string;
+        /* Embedded types defined within the struct. */
+        embeds?: GoTypeReference[];
+        /* Fields defined within the struct. */
+        fields?: Field[];
+        /* Docs associated with the struct. */
         docs?: string;
     }
 
@@ -22,17 +27,19 @@ export declare namespace Struct {
 }
 
 export class Struct extends AstNode {
-    public readonly name: string;
-    public readonly docs: string | undefined;
-
-    public constructor_: Struct.Constructor | undefined;
+    public readonly name: string | undefined;
+    public readonly embeds: GoTypeReference[] = [];
     public readonly fields: Field[] = [];
+    public readonly docs: string | undefined;
     public readonly methods: Method[] = [];
+    public constructor_: Struct.Constructor | undefined;
 
-    constructor({ name, docs }: Struct.Args) {
+    constructor({ name, embeds, fields, docs }: Struct.Args) {
         super();
         this.name = name;
         this.docs = docs;
+        this.embeds = embeds ?? [];
+        this.fields = fields ?? [];
     }
 
     public addConstructor(constructor: Struct.Constructor): void {
@@ -51,6 +58,7 @@ export class Struct extends AstNode {
         this.writeType({ writer });
         if (this.constructor_ != null) {
             writer.newLine();
+            writer.newLine();
             this.writeConstructor({ writer, constructor: this.constructor_ });
         }
         this.writeMethods({ writer });
@@ -58,13 +66,21 @@ export class Struct extends AstNode {
 
     private writeType({ writer }: { writer: Writer }): void {
         writer.writeNode(new Comment({ docs: this.docs }));
-        writer.write(`type ${this.name} struct {`);
-        if (this.fields.length === 0) {
+        if (this.name != null) {
+            writer.write(`type ${this.name} struct {`);
+        } else {
+            writer.write(`struct{`);
+        }
+        if (this.embeds.length === 0 && this.fields.length === 0) {
             writer.writeLine("}");
             return;
         }
         writer.newLine();
         writer.indent();
+        for (const embed of this.embeds) {
+            writer.writeNode(embed);
+            writer.newLine();
+        }
         const exportedFields = this.fields.filter((field) => this.isExported(field));
         for (const field of exportedFields) {
             writer.writeNode(field);
@@ -80,7 +96,7 @@ export class Struct extends AstNode {
             writer.newLine();
         }
         writer.dedent();
-        writer.writeLine("}");
+        writer.write("}");
     }
 
     private writeConstructor({ writer, constructor }: { writer: Writer; constructor: Struct.Constructor }): void {
@@ -105,6 +121,10 @@ export class Struct extends AstNode {
     }
 
     private writeMethods({ writer }: { writer: Writer }): void {
+        if (this.methods.length === 0) {
+            return;
+        }
+        writer.writeNewLineIfLastLineNot();
         for (const method of this.methods) {
             writer.newLine();
             writer.writeNode(method);

@@ -4,8 +4,22 @@
     "composite": true,
     "outDir": "lib",
     "rootDir": "src",
-    "types": ["vitest/globals"]
+    "types": [
+      "vitest/globals"
+    ]
   },
-  "include": ["./src/**/*"],
-  "references": [{ "path": "../../../packages/commons/core-utils" }, { "path": "../../base" }]
+  "include": [
+    "./src/**/*"
+  ],
+  "references": [
+    {
+      "path": "../../../packages/commons/core-utils"
+    },
+    {
+      "path": "../../base"
+    },
+    {
+      "path": "../../browser-compatible-base"
+    }
+  ]
 }

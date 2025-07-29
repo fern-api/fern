@@ -40731,7 +40731,6 @@
           ],
           "examples": [
             {
-              "name": "BalancesExamplePaginated",
               "description": "",
               "path": "/api/balances/",
               "pathParameters": {},
@@ -40830,7 +40829,6 @@
               }
             },
             {
-              "name": "BalancesExamplePaginated",
               "description": "",
               "path": "/api/balances/",
               "pathParameters": {},
@@ -41140,7 +41138,6 @@
           ],
           "examples": [
             {
-              "name": "BalancesExamplePaginated",
               "description": "",
               "path": "/api/balances/",
               "pathParameters": {},
@@ -41237,7 +41234,6 @@
               }
             },
             {
-              "name": "BalancesExamplePaginated",
               "description": "",
               "path": "/api/balances/",
               "pathParameters": {},
@@ -42954,7 +42950,6 @@
           ],
           "examples": [
             {
-              "name": "OwnerBankingAccount",
               "description": "",
               "path": "/api/owners/",
               "pathParameters": {},
@@ -43015,7 +43010,6 @@
               }
             },
             {
-              "name": "OwnerBankingAccount",
               "description": "",
               "path": "/api/owners/",
               "pathParameters": {},
@@ -43287,7 +43281,6 @@
           ],
           "examples": [
             {
-              "name": "OwnerBankingAccount",
               "description": "",
               "path": "/api/owners/",
               "pathParameters": {},
@@ -43350,7 +43343,6 @@
               }
             },
             {
-              "name": "OwnerBankingAccount",
               "description": "",
               "path": "/api/owners/",
               "pathParameters": {},
@@ -47009,7 +47001,6 @@
           ],
           "examples": [
             {
-              "name": "invoicesPatchInvoicesExample",
               "description": "",
               "path": "/api/invoices/",
               "pathParameters": {},
@@ -47242,7 +47233,6 @@
               }
             },
             {
-              "name": "invoicesPatchInvoicesExample",
               "description": "",
               "path": "/api/invoices/",
               "pathParameters": {},
@@ -60714,7 +60704,6 @@
           ],
           "examples": [
             {
-              "name": "taxComplianceStatusRetrieveTaxComplianceStatusExample",
               "description": "",
               "path": "/api/tax-compliance-status/",
               "pathParameters": {},
@@ -60753,7 +60742,6 @@
               }
             },
             {
-              "name": "taxComplianceStatusRetrieveTaxComplianceStatusExample",
               "description": "",
               "path": "/api/tax-compliance-status/",
               "pathParameters": {},
@@ -61628,7 +61616,6 @@
           ],
           "examples": [
             {
-              "name": "incomesRetrieveIncomeExample",
               "description": "",
               "path": "/api/incomes/",
               "pathParameters": {},
@@ -61733,7 +61720,6 @@
               }
             },
             {
-              "name": "incomesRetrieveIncomeExample",
               "description": "",
               "path": "/api/incomes/",
               "pathParameters": {},
@@ -62049,7 +62035,6 @@
           ],
           "examples": [
             {
-              "name": "incomesPatchIncomesExample",
               "description": "",
               "path": "/api/incomes/",
               "pathParameters": {},
@@ -62160,7 +62145,6 @@
               }
             },
             {
-              "name": "incomesPatchIncomesExample",
               "description": "",
               "path": "/api/incomes/",
               "pathParameters": {},
@@ -63357,7 +63341,6 @@
           ],
           "examples": [
             {
-              "name": "recurringExpensesRetrieveRecurringExpensesExample",
               "description": "",
               "path": "/api/recurring-expenses/",
               "pathParameters": {},
@@ -63604,7 +63587,6 @@
               }
             },
             {
-              "name": "recurringExpensesRetrieveRecurringExpensesExample",
               "description": "",
               "path": "/api/recurring-expenses/",
               "pathParameters": {},
@@ -64062,7 +64044,6 @@
           ],
           "examples": [
             {
-              "name": "recurringExpensesPatchRecurringExpensesExample",
               "description": "",
               "path": "/api/recurring-expenses/",
               "pathParameters": {},
@@ -64311,7 +64292,6 @@
               }
             },
             {
-              "name": "recurringExpensesPatchRecurringExpensesExample",
               "description": "",
               "path": "/api/recurring-expenses/",
               "pathParameters": {},
@@ -65641,7 +65621,6 @@
           ],
           "examples": [
             {
-              "name": "investmentPortfoliosRetrievePortfolioExample",
               "description": "",
               "path": "/investments/portfolios/",
               "pathParameters": {},
@@ -65762,7 +65741,6 @@
               }
             },
             {
-              "name": "investmentPortfoliosRetrievePortfolioExample",
               "description": "",
               "path": "/investments/portfolios/",
               "pathParameters": {},
@@ -66069,7 +66047,6 @@
           ],
           "examples": [
             {
-              "name": "investmentPortfoliosPatchPortfolioExample",
               "description": "",
               "path": "/investments/portfolios/",
               "pathParameters": {},
@@ -66192,7 +66169,6 @@
               }
             },
             {
-              "name": "investmentPortfoliosPatchPortfolioExample",
               "description": "",
               "path": "/investments/portfolios/",
               "pathParameters": {},
@@ -67337,7 +67313,6 @@
           ],
           "examples": [
             {
-              "name": "receivableTransactionsRetrieveReceivableTransactionsExample",
               "description": "",
               "path": "/receivables/transactions/",
               "pathParameters": {},
@@ -67422,7 +67397,6 @@
               }
             },
             {
-              "name": "receivableTransactionsRetrieveReceivableTransactionsExample",
               "description": "",
               "path": "/receivables/transactions/",
               "pathParameters": {},
@@ -68464,7 +68438,6 @@
           ],
           "examples": [
             {
-              "name": "riskInsightsRetrieveRiskInsightsExample",
               "description": "",
               "path": "/api/risk-insights/",
               "pathParameters": {},
@@ -68643,7 +68616,6 @@
               }
             },
             {
-              "name": "riskInsightsRetrieveRiskInsightsExample",
               "description": "",
               "path": "/api/risk-insights/",
               "pathParameters": {},
@@ -69033,7 +69005,6 @@
           ],
           "examples": [
             {
-              "name": "riskInsightsPatchRiskInsightsExample",
               "description": "",
               "path": "/api/risk-insights/",
               "pathParameters": {},
@@ -69214,7 +69185,6 @@
               }
             },
             {
-              "name": "riskInsightsPatchRiskInsightsExample",
               "description": "",
               "path": "/api/risk-insights/",
               "pathParameters": {},
@@ -70385,7 +70355,6 @@
           ],
           "examples": [
             {
-              "name": "taxRetentionsRetrieveTaxRetentionsExample",
               "description": "",
               "path": "/api/tax-retentions/",
               "pathParameters": {},
@@ -70476,7 +70445,6 @@
               }
             },
             {
-              "name": "taxRetentionsRetrieveTaxRetentionsExample",
               "description": "",
               "path": "/api/tax-retentions/",
               "pathParameters": {},
@@ -71647,7 +71615,6 @@
           ],
           "examples": [
             {
-              "name": "taxDeclarationsRetrieveTaxDeclarationsExample",
               "description": "",
               "path": "/api/tax-declarations/",
               "pathParameters": {},
@@ -71808,7 +71775,6 @@
               }
             },
             {
-              "name": "taxDeclarationsRetrieveTaxDeclarationsExample",
               "description": "",
               "path": "/api/tax-declarations/",
               "pathParameters": {},
@@ -72927,7 +72893,6 @@
           ],
           "examples": [
             {
-              "name": "employmentRecordsRetrieveEmploymentRecordDetailsExample",
               "description": "",
               "path": "/api/employment-records/",
               "pathParameters": {},
@@ -73070,7 +73035,6 @@
               }
             },
             {
-              "name": "employmentRecordsRetrieveEmploymentRecordDetailsExample",
               "description": "",
               "path": "/api/employment-records/",
               "pathParameters": {},

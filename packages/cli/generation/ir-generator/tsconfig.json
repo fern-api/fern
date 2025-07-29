@@ -10,7 +10,13 @@
   ],
   "references": [
     {
+      "path": "../../../commons/casings-generator"
+    },
+    {
       "path": "../../../commons/core-utils"
+    },
+    {
+      "path": "../../../commons/ir-utils"
     },
     {
       "path": "../../../commons/path-utils"
@@ -22,22 +28,16 @@
       "path": "../../configuration"
     },
     {
-      "path": "../../task-context"
-    },
-    {
       "path": "../../fern-definition/schema"
     },
     {
-      "path": "../source-resolver"
+      "path": "../../task-context"
     },
     {
       "path": "../../workspace/commons"
     },
     {
-      "path": "../../../commons/casings-generator"
-    },
-    {
-      "path": "../../../commons/ir-utils"
+      "path": "../source-resolver"
     }
   ]
 }

@@ -679,9 +679,9 @@ export class DocsDefinitionResolver {
             icon: product.icon,
             image: product.image != null ? this.getFileId(product.image) : undefined,
             pointsTo: undefined,
-            viewers: undefined,
-            orphaned: undefined,
-            featureFlags: undefined
+            viewers: product.viewers,
+            orphaned: product.orphaned,
+            featureFlags: product.featureFlags
         };
     }
 

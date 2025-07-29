@@ -1,6 +1,6 @@
 import { GetReferenceOpts, NpmPackage, PackageId, getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedEnumType, SdkContext } from "@fern-typescript/contexts";
-import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator/src/oauth-generator/OAuthTokenProviderGenerator";
+import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator";
 import { Project } from "ts-morph";
 
 import {

@@ -111,7 +111,7 @@ interface Slice {
 
 interface Struct {
     type: "struct";
-    typeReference: GoTypeReference;
+    typeReference: AstNode;
     fields: StructField[];
     generics?: Type[];
 }
@@ -329,7 +329,7 @@ export class TypeInstantiation extends AstNode {
         typeReference,
         fields
     }: {
-        typeReference: GoTypeReference;
+        typeReference: AstNode;
         fields: StructField[];
     }): TypeInstantiation {
         return new this({
@@ -344,7 +344,7 @@ export class TypeInstantiation extends AstNode {
         fields,
         generics
     }: {
-        typeReference: GoTypeReference;
+        typeReference: AstNode;
         fields: StructField[];
         generics?: Type[];
     }): TypeInstantiation {

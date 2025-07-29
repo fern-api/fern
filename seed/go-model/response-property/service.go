@@ -29,6 +29,24 @@ func (w *WithDocs) GetExtraProperties() map[string]any {
 	return w.extraProperties
 }
 
+func (w *WithDocs) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler WithDocs
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*w = WithDocs(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *w)
+	if err != nil {
+		return err
+	}
+	w.extraProperties = extraProperties
+	w.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (w *WithDocs) String() string {
 	if len(w.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
@@ -70,6 +88,24 @@ func (m *Movie) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return m.extraProperties
+}
+
+func (m *Movie) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Movie
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*m = Movie(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+	m.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (m *Movie) String() string {
@@ -119,6 +155,24 @@ func (r *Response) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return r.extraProperties
+}
+
+func (r *Response) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Response
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = Response(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (r *Response) String() string {

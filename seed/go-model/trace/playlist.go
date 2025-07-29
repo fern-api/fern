@@ -56,6 +56,24 @@ func (p *Playlist) GetExtraProperties() map[string]any{
     return p.extraProperties
 }
 
+func (p *Playlist) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler Playlist
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *p = Playlist(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *p)
+    if err != nil {
+        return err
+    }
+    p.extraProperties = extraProperties
+    p.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (p *Playlist) String() string{
     if len(p.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
@@ -96,6 +114,24 @@ func (p *PlaylistCreateRequest) GetExtraProperties() map[string]any{
         return nil
     }
     return p.extraProperties
+}
+
+func (p *PlaylistCreateRequest) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler PlaylistCreateRequest
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *p = PlaylistCreateRequest(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *p)
+    if err != nil {
+        return err
+    }
+    p.extraProperties = extraProperties
+    p.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (p *PlaylistCreateRequest) String() string{
@@ -141,6 +177,24 @@ func (u *UpdatePlaylistRequest) GetExtraProperties() map[string]any{
     return u.extraProperties
 }
 
+func (u *UpdatePlaylistRequest) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler UpdatePlaylistRequest
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *u = UpdatePlaylistRequest(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *u)
+    if err != nil {
+        return err
+    }
+    u.extraProperties = extraProperties
+    u.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (u *UpdatePlaylistRequest) String() string{
     if len(u.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
@@ -158,7 +212,6 @@ type PlaylistIdNotFoundErrorBody struct {
     Type string
     PlaylistId PlaylistId
 }
-
 
 type ReservedKeywordEnum string
 

@@ -42,6 +42,24 @@ func (m *MultipleFilterSearchRequest) GetExtraProperties() map[string]any {
 	return m.extraProperties
 }
 
+func (m *MultipleFilterSearchRequest) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler MultipleFilterSearchRequest
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*m = MultipleFilterSearchRequest(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+	m.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (m *MultipleFilterSearchRequest) String() string {
 	if len(m.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
@@ -116,6 +134,24 @@ func (s *SingleFilterSearchRequest) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return s.extraProperties
+}
+
+func (s *SingleFilterSearchRequest) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler SingleFilterSearchRequest
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SingleFilterSearchRequest(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (s *SingleFilterSearchRequest) String() string {
@@ -205,6 +241,24 @@ func (s *SearchRequest) GetExtraProperties() map[string]any {
 	return s.extraProperties
 }
 
+func (s *SearchRequest) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler SearchRequest
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SearchRequest(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (s *SearchRequest) String() string {
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
@@ -260,6 +314,45 @@ func (p *PaginatedConversationResponse) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return p.extraProperties
+}
+
+func (p *PaginatedConversationResponse) UnmarshalJSON(
+	data []byte,
+) error {
+	type embed PaginatedConversationResponse
+	var unmarshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*p),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*p = PaginatedConversationResponse(unmarshaler.embed)
+	if unmarshaler.Type != "conversation.list" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", p, "conversation.list", unmarshaler.Type)
+	}
+	p.type_ = unmarshaler.Type
+	extraProperties, err := internal.ExtractExtraProperties(data, *p, "type_")
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (p *PaginatedConversationResponse) MarshalJSON() ([]byte, error) {
+	type embed PaginatedConversationResponse
+	var marshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*p),
+		Type:  "conversation.list",
+	}
+	return json.Marshal(marshaler)
 }
 
 func (p *PaginatedConversationResponse) String() string {
@@ -327,6 +420,45 @@ func (c *CursorPages) GetExtraProperties() map[string]any {
 	return c.extraProperties
 }
 
+func (c *CursorPages) UnmarshalJSON(
+	data []byte,
+) error {
+	type embed CursorPages
+	var unmarshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CursorPages(unmarshaler.embed)
+	if unmarshaler.Type != "pages" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "pages", unmarshaler.Type)
+	}
+	c.type_ = unmarshaler.Type
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "type_")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CursorPages) MarshalJSON() ([]byte, error) {
+	type embed CursorPages
+	var marshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*c),
+		Type:  "pages",
+	}
+	return json.Marshal(marshaler)
+}
+
 func (c *CursorPages) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -368,6 +500,24 @@ func (s *StartingAfterPaging) GetExtraProperties() map[string]any {
 	return s.extraProperties
 }
 
+func (s *StartingAfterPaging) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler StartingAfterPaging
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = StartingAfterPaging(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (s *StartingAfterPaging) String() string {
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
@@ -399,6 +549,24 @@ func (c *Conversation) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return c.extraProperties
+}
+
+func (c *Conversation) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Conversation
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = Conversation(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (c *Conversation) String() string {

@@ -29,6 +29,45 @@ func (f *Failure) GetExtraProperties() map[string]any {
 	return f.ExtraProperties
 }
 
+func (f *Failure) UnmarshalJSON(
+	data []byte,
+) error {
+	type embed Failure
+	var unmarshaler = struct {
+		embed
+		Status string `json:"status"`
+	}{
+		embed: embed(*f),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*f = Failure(unmarshaler.embed)
+	if unmarshaler.Status != "failure" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", f, "failure", unmarshaler.Status)
+	}
+	f.status = unmarshaler.Status
+	extraProperties, err := internal.ExtractExtraProperties(data, *f, "status")
+	if err != nil {
+		return err
+	}
+	f.ExtraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *Failure) MarshalJSON() ([]byte, error) {
+	type embed Failure
+	var marshaler = struct {
+		embed
+		Status string `json:"status"`
+	}{
+		embed:  embed(*f),
+		Status: "failure",
+	}
+	return internal.MarshalJSONWithExtraProperties(marshaler, f.ExtraProperties)
+}
+
 func (f *Failure) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
