@@ -110,7 +110,7 @@
     "turbo": "^2.5.4",
     "typescript": "5.7.2",
     "vitest": "^2.1.9",
-    "tsdown": "^0.13.0"
+    "tsup": "^8.5.0"
   },
   "resolutions": {
     "@babel/traverse": "7.23.2",

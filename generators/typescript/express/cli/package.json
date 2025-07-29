@@ -26,7 +26,7 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck",
-    "build": "pnpm compile && tsdown ./src/cli.ts --format cjs",
+    "build": "pnpm compile && tsup ./src/cli.ts --format cjs",
     "dockerTagLocal": "./docker/create_docker.sh local",
     "dockerTagVersion": "./docker/create_docker.sh"
   },
@@ -43,7 +43,7 @@
     "@types/tmp": "^0.2.4",
     "lodash-es": "^4.17.21",
     "ts-loader": "^9.3.1",
-    "tsdown": "^0.13.0",
+    "tsup": "^8.5.0",
     "zod": "^3.22.3",
     "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",

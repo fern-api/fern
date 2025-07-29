@@ -1,12 +1,12 @@
 const packageJson = require("./package.json");
-const tsdown = require('tsdown');
+const tsup = require('tsup');
 const { writeFile } = require("fs/promises");
 const path = require("path");
 
 main();
 
 async function main() {
-    await tsdown.build({
+    await tsup.build({
         entry: ['src/cli.ts'],
         format: ['cjs'],
         outDir: 'dist/dev',

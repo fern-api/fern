@@ -39,7 +39,7 @@
     "@fern-api/typescript-browser-compatible-base": "workspace:*",
     "@types/jest": "^29.5.12",
     "string.prototype.replaceall": "^1.0.10",
-    "tsdown": "^0.13.0",
+    "tsup": "^8.5.0",
     "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
