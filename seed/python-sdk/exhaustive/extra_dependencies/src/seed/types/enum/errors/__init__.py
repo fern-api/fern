@@ -3,5 +3,4 @@
 # isort: skip_file
 
 from .error_with_enum_body import ErrorWithEnumBody
-
 __all__ = ["ErrorWithEnumBody"]
