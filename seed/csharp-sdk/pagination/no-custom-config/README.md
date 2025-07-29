@@ -23,7 +23,7 @@ Instantiate and use the client with the following:
 using SeedPagination;
 
 var client = new SeedPaginationClient("TOKEN");
-var pager = await client.Complex.SearchAsync(
+var items = await client.Complex.SearchAsync(
     "index",
     new SearchRequest
     {
@@ -37,7 +37,7 @@ var pager = await client.Complex.SearchAsync(
     }
 );
 
-await foreach (var item in pager)
+await foreach (var item in items)
 {
     // do something with item
 }
@@ -67,7 +67,7 @@ List endpoints are paginated. The SDK provides an async enumerable so that you c
 using SeedPagination;
 
 var client = new SeedPaginationClient("TOKEN");
-var pager = await client.Complex.SearchAsync(
+var items = await client.Complex.SearchAsync(
     "index",
     new SearchRequest
     {
@@ -81,7 +81,7 @@ var pager = await client.Complex.SearchAsync(
     }
 );
 
-await foreach (var item in pager)
+await foreach (var item in items)
 {
     // do something with item
 }
