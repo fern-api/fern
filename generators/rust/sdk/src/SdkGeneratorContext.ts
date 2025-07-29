@@ -1,6 +1,6 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractRustGeneratorContext, AsIsFileDefinition, AsIsFiles } from "@fern-api/rust-base";
-import { ModelGeneratorContext } from "@fern-api/rust-model";
+import { ModelGeneratorContext, ModelCustomConfigSchema } from "@fern-api/rust-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation, Subpackage, SubpackageId, HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
 import { RustGeneratorAgent } from "./RustGeneratorAgent";
@@ -66,7 +66,7 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
         return new ModelGeneratorContext(
             this.ir,
             this.config,
-            {
+            ModelCustomConfigSchema.parse({
                 // Convert SDK config to model config - use centralized configuration manager
                 packageName: this.configManager.get("packageName"),
                 packageVersion: this.configManager.get("packageVersion"),
@@ -75,7 +75,7 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
                 generateBuilders: false,
                 deriveDebug: true,
                 deriveClone: true
-            },
+            }),
             this.generatorNotificationService
         );
     }

@@ -37,7 +37,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         if (parsed != null) {
             return this.validateCustomConfig(parsed);
         }
-        return { generateExamples: true };
+        return SdkCustomConfigSchema.parse({});
     }
 
     private validateCustomConfig(customConfig: SdkCustomConfigSchema): SdkCustomConfigSchema {
@@ -229,7 +229,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
         for (const [_typeId, typeDeclaration] of Object.entries(context.ir.types)) {
             const rawModuleName = typeDeclaration.name.name.snakeCase.unsafeName;
-            const escapedModuleName = context.escapeRustKeyword(rawModuleName);
+            const escapedModuleName = context.configManager.escapeRustKeyword(rawModuleName);
             moduleDeclarations.push(new ModuleDeclaration({ name: escapedModuleName, isPublic: true }));
             useStatements.push(new UseStatement({ path: escapedModuleName, items: ["*"], isPublic: true }));
         }

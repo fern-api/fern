@@ -9,7 +9,9 @@ export const BaseRustCustomConfigSchema = z.object({
     generateTests: z.boolean().optional().default(true),
     useSerde: z.boolean().optional().default(true),
     useReqwest: z.boolean().optional().default(true),
-    useTokio: z.boolean().optional().default(true)
+    useTokio: z.boolean().optional().default(true),
+    extraDependencies: z.record(z.string()).optional(),
+    extraDevDependencies: z.record(z.string()).optional()
 });
 
 export type BaseRustCustomConfigSchema = z.infer<typeof BaseRustCustomConfigSchema>;

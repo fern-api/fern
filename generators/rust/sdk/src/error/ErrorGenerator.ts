@@ -15,9 +15,7 @@ import {
     Statement,
     Type
 } from "@fern-api/rust-codegen";
-
 import { ErrorDeclaration } from "@fern-fern/ir-sdk/api";
-
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { RustFileBuilder } from "../utils/RustFileBuilder";
 

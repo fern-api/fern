@@ -3,7 +3,8 @@ import { mkdir } from "fs/promises";
 import { AbstractProject } from "@fern-api/base-generator";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { AbstractRustGeneratorContext, BaseRustCustomConfigSchema } from "../context/AbstractRustGeneratorContext";
+import { AbstractRustGeneratorContext } from "../context/AbstractRustGeneratorContext";
+import { BaseRustCustomConfigSchema } from "../config";
 import { RustFile } from "./RustFile";
 
 const SRC_DIRECTORY_NAME = "src";

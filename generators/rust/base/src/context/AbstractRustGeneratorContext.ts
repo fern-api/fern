@@ -1,21 +1,9 @@
-import { z } from "zod";
-
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
-
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-
 import { RustProject } from "../project";
 import { AsIsFileDefinition } from "../AsIs";
 import { RustConfigurationManager } from "../config";
-
-export const BaseRustCustomConfigSchema = z.object({
-    packageName: z.string().optional(),
-    packageVersion: z.string().optional(),
-    extraDependencies: z.record(z.string()).optional(),
-    extraDevDependencies: z.record(z.string()).optional()
-});
-
-export type BaseRustCustomConfigSchema = z.infer<typeof BaseRustCustomConfigSchema>;
+import { BaseRustCustomConfigSchema } from "../config";
 
 export abstract class AbstractRustGeneratorContext<
     CustomConfig extends BaseRustCustomConfigSchema
