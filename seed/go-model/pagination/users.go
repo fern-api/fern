@@ -52,6 +52,24 @@ func (w *WithPage) GetExtraProperties() map[string]any {
 	return w.extraProperties
 }
 
+func (w *WithPage) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler WithPage
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*w = WithPage(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *w)
+	if err != nil {
+		return err
+	}
+	w.extraProperties = extraProperties
+	w.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (w *WithPage) String() string {
 	if len(w.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
@@ -85,6 +103,24 @@ func (w *WithCursor) GetExtraProperties() map[string]any {
 	return w.extraProperties
 }
 
+func (w *WithCursor) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler WithCursor
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*w = WithCursor(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *w)
+	if err != nil {
+		return err
+	}
+	w.extraProperties = extraProperties
+	w.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (w *WithCursor) String() string {
 	if len(w.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
@@ -116,6 +152,24 @@ func (u *UserListContainer) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return u.extraProperties
+}
+
+func (u *UserListContainer) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler UserListContainer
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UserListContainer(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (u *UserListContainer) String() string {
@@ -159,6 +213,24 @@ func (u *UserPage) GetExtraProperties() map[string]any {
 	return u.extraProperties
 }
 
+func (u *UserPage) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler UserPage
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UserPage(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (u *UserPage) String() string {
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
@@ -190,6 +262,24 @@ func (u *UserOptionalListContainer) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return u.extraProperties
+}
+
+func (u *UserOptionalListContainer) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler UserOptionalListContainer
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UserOptionalListContainer(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (u *UserOptionalListContainer) String() string {
@@ -233,6 +323,24 @@ func (u *UserOptionalListPage) GetExtraProperties() map[string]any {
 	return u.extraProperties
 }
 
+func (u *UserOptionalListPage) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler UserOptionalListPage
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UserOptionalListPage(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (u *UserOptionalListPage) String() string {
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
@@ -264,6 +372,24 @@ func (u *UsernameContainer) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return u.extraProperties
+}
+
+func (u *UsernameContainer) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler UsernameContainer
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UsernameContainer(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (u *UsernameContainer) String() string {
@@ -316,6 +442,24 @@ func (l *ListUsersExtendedResponse) GetExtraProperties() map[string]any {
 	return l.extraProperties
 }
 
+func (l *ListUsersExtendedResponse) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ListUsersExtendedResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListUsersExtendedResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (l *ListUsersExtendedResponse) String() string {
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
@@ -364,6 +508,24 @@ func (l *ListUsersExtendedOptionalListResponse) GetExtraProperties() map[string]
 		return nil
 	}
 	return l.extraProperties
+}
+
+func (l *ListUsersExtendedOptionalListResponse) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ListUsersExtendedOptionalListResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListUsersExtendedOptionalListResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (l *ListUsersExtendedOptionalListResponse) String() string {
@@ -424,6 +586,24 @@ func (l *ListUsersPaginationResponse) GetExtraProperties() map[string]any {
 	return l.extraProperties
 }
 
+func (l *ListUsersPaginationResponse) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ListUsersPaginationResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListUsersPaginationResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (l *ListUsersPaginationResponse) String() string {
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
@@ -463,6 +643,24 @@ func (l *ListUsersMixedTypePaginationResponse) GetExtraProperties() map[string]a
 		return nil
 	}
 	return l.extraProperties
+}
+
+func (l *ListUsersMixedTypePaginationResponse) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ListUsersMixedTypePaginationResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListUsersMixedTypePaginationResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (l *ListUsersMixedTypePaginationResponse) String() string {
@@ -523,6 +721,24 @@ func (p *Page) GetExtraProperties() map[string]any {
 	return p.extraProperties
 }
 
+func (p *Page) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Page
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*p = Page(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (p *Page) String() string {
 	if len(p.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
@@ -564,6 +780,24 @@ func (n *NextPage) GetExtraProperties() map[string]any {
 	return n.extraProperties
 }
 
+func (n *NextPage) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler NextPage
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = NextPage(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+	n.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (n *NextPage) String() string {
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
@@ -603,6 +837,24 @@ func (u *User) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return u.extraProperties
+}
+
+func (u *User) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler User
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = User(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (u *User) String() string {

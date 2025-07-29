@@ -1,0 +1,351 @@
+{
+  "info": {
+    "name": "Mixed File Directory",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": null,
+  "item": [
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Organization",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Create",
+          "request": {
+            "description": "Create a new organization.",
+            "url": {
+              "raw": "{{baseUrl}}/organizations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "organizations"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"name\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "Create a new organization.",
+                "url": {
+                  "raw": "{{baseUrl}}/organizations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "organizations"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"name\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"id\": \"id\",\n    \"name\": \"name\",\n    \"users\": [\n        {\n            \"id\": \"id\",\n            \"name\": \"name\",\n            \"age\": 1\n        },\n        {\n            \"id\": \"id\",\n            \"name\": \"name\",\n            \"age\": 1\n        }\n    ]\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_type": "container",
+      "description": null,
+      "name": "User",
+      "item": [
+        {
+          "_type": "container",
+          "description": null,
+          "name": "Events",
+          "item": [
+            {
+              "_type": "container",
+              "description": null,
+              "name": "Metadata",
+              "item": [
+                {
+                  "_type": "endpoint",
+                  "name": "Get Metadata",
+                  "request": {
+                    "description": "Get event metadata.",
+                    "url": {
+                      "raw": "{{baseUrl}}/users/events/metadata?id=id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "users",
+                        "events",
+                        "metadata"
+                      ],
+                      "query": [
+                        {
+                          "key": "id",
+                          "description": null,
+                          "value": "id"
+                        }
+                      ],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "GET",
+                    "auth": null,
+                    "body": null
+                  },
+                  "response": [
+                    {
+                      "name": "Success",
+                      "status": "OK",
+                      "code": 200,
+                      "originalRequest": {
+                        "description": "Get event metadata.",
+                        "url": {
+                          "raw": "{{baseUrl}}/users/events/metadata?id=id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "users",
+                            "events",
+                            "metadata"
+                          ],
+                          "query": [
+                            {
+                              "key": "id",
+                              "description": null,
+                              "value": "id"
+                            }
+                          ],
+                          "variable": []
+                        },
+                        "header": [
+                          {
+                            "type": "text",
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          }
+                        ],
+                        "method": "GET",
+                        "auth": null,
+                        "body": null
+                      },
+                      "description": null,
+                      "body": "{\n    \"id\": \"id\",\n    \"value\": {\n        \"key\": \"value\"\n    }\n}",
+                      "_postman_previewlanguage": "json"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "endpoint",
+              "name": "List Events",
+              "request": {
+                "description": "List all user events.",
+                "url": {
+                  "raw": "{{baseUrl}}/users/events?limit=1",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users",
+                    "events"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "description": "The maximum number of results to return.",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": "List all user events.",
+                    "url": {
+                      "raw": "{{baseUrl}}/users/events?limit=1",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "users",
+                        "events"
+                      ],
+                      "query": [
+                        {
+                          "key": "limit",
+                          "description": "The maximum number of results to return.",
+                          "value": "1"
+                        }
+                      ],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "GET",
+                    "auth": null,
+                    "body": null
+                  },
+                  "description": null,
+                  "body": "[\n    {\n        \"id\": \"id\",\n        \"name\": \"name\"\n    },\n    {\n        \"id\": \"id\",\n        \"name\": \"name\"\n    }\n]",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "List",
+          "request": {
+            "description": "List all users.",
+            "url": {
+              "raw": "{{baseUrl}}/users?limit=1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "description": "The maximum number of results to return.",
+                  "value": "1"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "List all users.",
+                "url": {
+                  "raw": "{{baseUrl}}/users?limit=1",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "description": "The maximum number of results to return.",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "[\n    {\n        \"id\": \"id\",\n        \"name\": \"name\",\n        \"age\": 1\n    },\n    {\n        \"id\": \"id\",\n        \"name\": \"name\",\n        \"age\": 1\n    }\n]",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

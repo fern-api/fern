@@ -37,6 +37,24 @@ func (p *Person) GetExtraProperties() map[string]any {
 	return p.extraProperties
 }
 
+func (p *Person) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Person
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*p = Person(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (p *Person) String() string {
 	if len(p.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
@@ -108,6 +126,33 @@ func (a *Address) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return a.extraProperties
+}
+
+func (a *Address) UnmarshalJSON(
+	data []byte,
+) error {
+	type embed Address
+	var unmarshaler = struct {
+		embed
+		Country string `json:"country"`
+	}{
+		embed: embed(*a),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*a = Address(unmarshaler.embed)
+	if unmarshaler.Country != "USA" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", a, "USA", unmarshaler.Country)
+	}
+	a.country = unmarshaler.Country
+	extraProperties, err := internal.ExtractExtraProperties(data, *a, "country")
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (a *Address) MarshalJSON() ([]byte, error) {

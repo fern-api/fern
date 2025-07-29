@@ -5,24 +5,19 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": [
-    "./src/**/*"
-  ],
+  "include": ["./src/**/*"],
   "references": [
-    {
-      "path": "../../../packages/commons/core-utils"
-    },
     {
       "path": "../../../packages/commons/path-utils"
     },
     {
-      "path": "../../../packages/ir-sdk"
+      "path": "../codegen"
+    },
+    {
+      "path": "../../../packages/commons/core-utils"
     },
     {
       "path": "../../browser-compatible-base"
-    },
-    {
-      "path": "../codegen"
-    },
+    }
   ]
 }

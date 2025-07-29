@@ -16,9 +16,6 @@
       "path": "../../commons/path-utils"
     },
     {
-      "path": "../task-context"
-    },
-    {
       "path": "../fern-definition/schema"
     }
   ]

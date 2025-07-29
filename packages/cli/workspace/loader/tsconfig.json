@@ -17,28 +17,19 @@
       "path": "../../../commons/fs-utils"
     },
     {
-      "path": "../../../commons/logging-execa"
-    },
-    {
-      "path": "../../../core"
+      "path": "../../cli-logger"
     },
     {
       "path": "../../configuration-loader"
     },
     {
-      "path": "../../cli-logger"
+      "path": "../../fern-definition/schema"
     },
     {
       "path": "../../logger"
     },
     {
-      "path": "../../semver-utils"
-    },
-    {
       "path": "../../task-context"
-    },
-    {
-      "path": "../../fern-definition/schema"
     },
     {
       "path": "../commons"

@@ -16,9 +16,6 @@
       "path": "../../../packages/commons/path-utils"
     },
     {
-      "path": "../../../packages/ir-sdk"
-    },
-    {
       "path": "../../browser-compatible-base"
     },
     {
