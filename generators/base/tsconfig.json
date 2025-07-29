@@ -10,9 +10,6 @@
   ],
   "references": [
     {
-      "path": "../browser-compatible-base"
-    },
-    {
       "path": "../../packages/cli/logger"
     },
     {
@@ -23,6 +20,9 @@
     },
     {
       "path": "../../packages/commons/logging-execa"
+    },
+    {
+      "path": "../browser-compatible-base"
     }
   ]
 }

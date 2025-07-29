@@ -10,6 +10,9 @@
   ],
   "references": [
     {
+      "path": "../../commons/core-utils"
+    },
+    {
       "path": "../../commons/fs-utils"
     },
     {
@@ -22,10 +25,10 @@
       "path": "../configuration-loader"
     },
     {
-      "path": "../login"
+      "path": "../docs-importers/mintlify"
     },
     {
-      "path": "../task-context"
+      "path": "../docs-importers/readme"
     },
     {
       "path": "../fern-definition/formatter"
@@ -34,10 +37,13 @@
       "path": "../fern-definition/schema"
     },
     {
-      "path": "../docs-importers/mintlify"
+      "path": "../logger"
     },
     {
-      "path": "../docs-importers/readme"
+      "path": "../login"
+    },
+    {
+      "path": "../task-context"
     }
   ]
 }

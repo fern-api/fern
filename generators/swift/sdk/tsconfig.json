@@ -4,14 +4,37 @@
     "composite": true,
     "outDir": "lib",
     "rootDir": "src",
-    "types": ["vitest/globals"]
+    "types": [
+      "vitest/globals"
+    ]
   },
-  "include": ["./src/**/*"],
+  "include": [
+    "./src/**/*"
+  ],
   "references": [
-    { "path": "../../../packages/commons/core-utils" },
-    { "path": "../../../packages/commons/fs-utils" },
-    { "path": "../../base" },
-    { "path": "../codegen" },
-    { "path": "../model" }
+    {
+      "path": "../../../packages/cli/logger"
+    },
+    {
+      "path": "../../../packages/commons/core-utils"
+    },
+    {
+      "path": "../../../packages/commons/fs-utils"
+    },
+    {
+      "path": "../../../packages/commons/test-utils"
+    },
+    {
+      "path": "../../base"
+    },
+    {
+      "path": "../base"
+    },
+    {
+      "path": "../codegen"
+    },
+    {
+      "path": "../model"
+    }
   ]
 }

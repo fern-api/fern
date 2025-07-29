@@ -1,5 +1,37 @@
 {
     "extends": "@fern-api/configs/tsconfig/main.json",
     "include": ["src/**/*.ts"],
-    "exclude": ["src/**/__test__"]
+    "exclude": ["src/**/__test__"],
+  "references": [
+    {
+      "path": "../../../commons/casings-generator"
+    },
+    {
+      "path": "../../../commons/core-utils"
+    },
+    {
+      "path": "../../../commons/ir-utils"
+    },
+    {
+      "path": "../../../commons/path-utils"
+    },
+    {
+      "path": "../../../ir-sdk"
+    },
+    {
+      "path": "../../configuration"
+    },
+    {
+      "path": "../../fern-definition/schema"
+    },
+    {
+      "path": "../../task-context"
+    },
+    {
+      "path": "../../workspace/commons"
+    },
+    {
+      "path": "../source-resolver"
+    }
+  ]
 }

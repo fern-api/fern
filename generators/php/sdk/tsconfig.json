@@ -3,11 +3,29 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src/**/*"],
   "references": [
-    { "path": "../../../packages/commons/core-utils" },
-    { "path": "../../../packages/commons/fs-utils" },
-    { "path": "../../base" },
-    { "path": "../codegen" },
-    { "path": "../model" },
-    { "path": "../dynamic-snippets" },
+    {
+      "path": "../model"
+    },
+    {
+      "path": "../codegen"
+    },
+    {
+      "path": "../base"
+    },
+    {
+      "path": "../../../packages/commons/fs-utils"
+    },
+    {
+      "path": "../../../packages/commons/core-utils"
+    },
+    {
+      "path": "../dynamic-snippets"
+    },
+    {
+      "path": "../../../packages/cli/logger"
+    },
+    {
+      "path": "../../base"
+    }
   ]
 }

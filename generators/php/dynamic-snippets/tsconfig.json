@@ -16,12 +16,6 @@
       "path": "../../../packages/commons/path-utils"
     },
     {
-      "path": "../../../packages/cli/fern-definition/schema"
-    },
-    {
-      "path": "../../../packages/ir-sdk"
-    },
-    {
       "path": "../../browser-compatible-base"
     },
     {

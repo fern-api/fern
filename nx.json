@@ -1,0 +1,14 @@
+{
+  "plugins": ["@nx/js"],
+  "sync": {
+    "generators": [
+      {
+        "generator": "@nx/js:typescript-sync",
+        "options": {
+          "updateReferences": true,
+          "updatePaths": false
+        }
+      }
+    ]
+  }
+}
