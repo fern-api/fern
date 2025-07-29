@@ -1,3 +1,5 @@
+use crate::exception_v_2::ExceptionV2;
+use crate::exception_info::ExceptionInfo;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

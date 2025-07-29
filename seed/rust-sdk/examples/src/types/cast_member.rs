@@ -1,3 +1,6 @@
+use crate::actor::Actor;
+use crate::actress::Actress;
+use crate::stunt_double::StuntDouble;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

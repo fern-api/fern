@@ -1,3 +1,5 @@
+use crate::resource_list::ResourceList;
+use crate::memo::Memo;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

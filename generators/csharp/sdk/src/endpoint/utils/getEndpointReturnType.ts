@@ -24,7 +24,8 @@ export function getEndpointReturnType({
             csharp.Type.reference(
                 csharp.classReference({
                     name: "Stream",
-                    namespace: "System.IO"
+                    namespace: "System.IO",
+                    fullyQualified: true
                 })
             ),
         json: (reference) => {

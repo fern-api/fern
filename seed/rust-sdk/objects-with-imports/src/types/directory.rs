@@ -1,3 +1,5 @@
+use crate::file::File;
+use crate::directory::Directory;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

@@ -26,9 +26,7 @@
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
-    "compile:debug": "tsc --build --sourceMap",
     "test": "vitest --passWithNoTests --run",
-    "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
@@ -44,6 +42,7 @@
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
     "@fern-api/rust-base": "workspace:*",
+    "@fern-api/rust-codegen": "workspace:*",
     "@fern-api/rust-model": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-fern/generator-exec-sdk": "^0.0.1045",

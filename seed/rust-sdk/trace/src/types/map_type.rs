@@ -1,3 +1,4 @@
+use crate::variable_type::VariableType;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
