@@ -6,4 +6,5 @@
 "/with-form-encoding"
 "/"
 "/optional-args"
+"/inline-type"
 "/snippet"
