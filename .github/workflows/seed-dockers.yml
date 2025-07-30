@@ -19,7 +19,7 @@ env:
 
 jobs:
   changes:
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ubuntu-latest
     outputs:
       packages: ${{ steps.filter.outputs.changes }}
     steps:
@@ -41,7 +41,7 @@ jobs:
               - 'docker/seed/Dockerfile.csharp'
               - '.github/workflows/seed-dockers.yml'
   generate-sha:
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ubuntu-latest
     outputs:
       sha: ${{ steps.sha.outputs.sha }}
     steps:
@@ -56,11 +56,11 @@ jobs:
         # Parse JSON array containing names of all filters matching any of changed files
         # e.g. ['package1', 'package2'] if both package folders contains changes
         package: ${{ fromJSON(needs.changes.outputs.packages) }}
-        runner: [blacksmith-4vcpu-ubuntu-2404, blacksmith-4vcpu-ubuntu-2404-arm]
+        runner: [ubuntu-latest, blacksmith-4vcpu-ubuntu-2404-arm]
         arch: [amd64, arm64]
         exclude:
           # Avoid building arm64 on amd64 runner and vice versa
-          - runner: blacksmith-4vcpu-ubuntu-2404
+          - runner: ubuntu-latest
             arch: arm64
           - runner: blacksmith-4vcpu-ubuntu-2404-arm
             arch: amd64
@@ -91,22 +91,23 @@ jobs:
           password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
 
       - name: Build and push Docker image
-        uses: useblacksmith/build-push-action@v1
+        uses: docker/build-push-action@v6
         with:
           context: .
           file: ./docker/seed/Dockerfile.${{ matrix.package }}
           platforms: linux/${{ matrix.arch }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
           push: true
           # use short SHA if modded, or just use latest if nothing changed
           tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
     outputs:
       image_sha: ${{ steps.meta.outputs.version }}  # This gets the SHA tag
 
   merge-manifests:
     if: ${{ needs.changes.outputs.packages != '' && toJSON(fromJSON(needs.changes.outputs.packages)) != '[]' }}
     needs: [changes, build-container, generate-sha]
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ubuntu-latest
     steps:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3

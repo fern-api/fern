@@ -34,7 +34,7 @@ concurrency:
 
 jobs:
   changes:
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ubuntu-latest
     outputs:
       seed: ${{ steps.filter.outputs.seed }}
       ruby: ${{ steps.filter.outputs.ruby }}
@@ -109,7 +109,7 @@ jobs:
         run: gh workflow run rerun.yml -F run_id=${{ github.run_id }}
         
   ruby-model:
-    runs-on: Seed
+    runs-on: blacksmith-16vcpu-ubuntu-2404
     needs: changes
     if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
@@ -123,7 +123,7 @@ jobs:
           generator-path: generators/ruby
 
   ruby-sdk:
-    runs-on: Seed
+    runs-on: blacksmith-16vcpu-ubuntu-2404
     needs: changes
     if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
@@ -137,7 +137,7 @@ jobs:
           generator-path: generators/ruby
 
   ruby-sdk-v2:
-    runs-on: Seed
+    runs-on: blacksmith-16vcpu-ubuntu-2404
     needs: changes
     if: ${{ needs.changes.outputs.ruby-v2 == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
@@ -151,7 +151,7 @@ jobs:
           generator-path: generators/ruby-v2
 
   pydantic-model:
-    runs-on: Seed
+    runs-on: blacksmith-16vcpu-ubuntu-2404
     needs: changes
     if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
@@ -165,7 +165,7 @@ jobs:
           generator-path: generators/python
 
   python-sdk:
-    runs-on: Seed
+    runs-on: blacksmith-16vcpu-ubuntu-2404
     needs: changes
     if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
@@ -179,7 +179,7 @@ jobs:
           generator-path: generators/python
 
   fastapi:
-    runs-on: Seed
+    runs-on: blacksmith-16vcpu-ubuntu-2404
     needs: changes
     if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
@@ -193,7 +193,7 @@ jobs:
           generator-path: generators/python
 
   openapi:
-    runs-on: Seed
+    runs-on: blacksmith-16vcpu-ubuntu-2404
     needs: changes
     if: ${{ needs.changes.outputs.openapi == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
@@ -207,7 +207,7 @@ jobs:
           generator-path: generators/openapi
 
   postman:
-    runs-on: Seed
+    runs-on: blacksmith-16vcpu-ubuntu-2404
     needs: changes
     if: ${{ needs.changes.outputs.postman == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
@@ -221,7 +221,7 @@ jobs:
           generator-path: generators/postman
 
   java-sdk:
-    runs-on: Seed
+    runs-on: blacksmith-16vcpu-ubuntu-2404
     needs: changes
     if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
@@ -235,7 +235,7 @@ jobs:
           generator-path: generators/java generators/java-v2
 
   java-model:
-    runs-on: Seed
+    runs-on: blacksmith-16vcpu-ubuntu-2404
     needs: changes
     if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
@@ -249,7 +249,7 @@ jobs:
           generator-path: generators/java
 
   java-spring:
-    runs-on: Seed
+    runs-on: blacksmith-16vcpu-ubuntu-2404
     needs: changes
     if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
@@ -263,7 +263,7 @@ jobs:
           generator-path: generators/java
 
   typescript-sdk:
-    runs-on: Seed
+    runs-on: blacksmith-16vcpu-ubuntu-2404
     needs: changes
     if: ${{ (needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true') && github.repository == 'fern-api/fern' }}
     steps:
@@ -277,7 +277,7 @@ jobs:
           generator-path: generators/typescript
 
   typescript-express:
-    runs-on: Seed
+    runs-on: blacksmith-16vcpu-ubuntu-2404
     needs: changes
     if: ${{ needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
@@ -291,7 +291,7 @@ jobs:
           generator-path: generators/typescript
 
   go-fiber:
-    runs-on: Seed
+    runs-on: blacksmith-16vcpu-ubuntu-2404
     needs: changes
     if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
@@ -305,7 +305,7 @@ jobs:
           generator-path: generators/go generators/go-v2
 
   go-model:
-    runs-on: Seed
+    runs-on: blacksmith-16vcpu-ubuntu-2404
     needs: changes
     if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
@@ -319,7 +319,7 @@ jobs:
           generator-path: generators/go generators/go-v2
 
   go-sdk:
-    runs-on: Seed
+    runs-on: blacksmith-16vcpu-ubuntu-2404
     needs: changes
     if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
@@ -333,7 +333,7 @@ jobs:
           generator-path: generators/go generators/go-v2
 
   csharp-model:
-    runs-on: Seed
+    runs-on: blacksmith-16vcpu-ubuntu-2404
     needs: changes
     if: ${{ needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
@@ -347,7 +347,7 @@ jobs:
           generator-path: generators/csharp
 
   csharp-sdk:
-    runs-on: Seed
+    runs-on: blacksmith-16vcpu-ubuntu-2404
     needs: changes
     if: ${{ needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
@@ -361,7 +361,7 @@ jobs:
           generator-path: generators/csharp
 
   php-model:
-    runs-on: Seed
+    runs-on: blacksmith-16vcpu-ubuntu-2404
     needs: changes
     if: ${{ needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
@@ -375,7 +375,7 @@ jobs:
           generator-path: generators/php
 
   php-sdk:
-    runs-on: Seed
+    runs-on: blacksmith-16vcpu-ubuntu-2404
     needs: changes
     if: ${{ needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:

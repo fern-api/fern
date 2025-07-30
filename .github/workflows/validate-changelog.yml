@@ -23,7 +23,7 @@ concurrency:
 jobs:
   validate-fern-cli:
     name: Fern CLI
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repo at current ref
         uses: actions/checkout@v4
@@ -39,7 +39,7 @@ jobs:
 
   validate-generators:
     name: Validate Generators
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repo at current ref
         uses: actions/checkout@v4

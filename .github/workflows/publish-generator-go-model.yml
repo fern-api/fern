@@ -16,7 +16,7 @@ on:
 
 jobs:
   publish:
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repo at current ref
         uses: actions/checkout@v4

@@ -10,7 +10,7 @@ on:
 
 jobs:
   compile:
-    runs-on: blacksmith-4vcpu-ubuntu-2204
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -33,15 +33,10 @@ jobs:
         run: poetry run pre-commit run --all-files
 
   test:
-    runs-on: blacksmith-4vcpu-ubuntu-2204
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-
-      - name: Setup Blacksmith Docker
-        uses: useblacksmith/build-push-action@v1
-        with:
-          setup-only: true
 
       - name: Install Poetry
         uses: snok/install-poetry@v1
