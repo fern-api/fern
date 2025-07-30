@@ -111,14 +111,15 @@ export async function runLocalGenerationForWorkspace({
                         RelativeFilePath.of(generatorInvocation.language ?? generatorInvocation.name)
                     );
 
-                const absolutePathToLocalSnippetJSON = generatorInvocation.raw?.snippets?.path != null
-                    ? AbsoluteFilePath.of(
-                        join(
-                            workspace.absoluteFilePath,
-                            RelativeFilePath.of(generatorInvocation.raw.snippets.path)
-                        )
-                    )
-                    : undefined;
+                const absolutePathToLocalSnippetJSON =
+                    generatorInvocation.raw?.snippets?.path != null
+                        ? AbsoluteFilePath.of(
+                              join(
+                                  workspace.absoluteFilePath,
+                                  RelativeFilePath.of(generatorInvocation.raw.snippets.path)
+                              )
+                          )
+                        : undefined;
 
                 await writeFilesToDiskAndRunGenerator({
                     organization: projectConfig.organization,
