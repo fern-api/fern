@@ -13,7 +13,7 @@
   "source": "src/index.ts",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "exports":{
+  "exports": {
     ".": {
       "development": "./src/index.ts",
       "source": "./src/index.ts",
@@ -38,18 +38,19 @@
     "dist": "pnpm compile && node build.cjs"
   },
   "devDependencies": {
-    "@fern-api/core-utils": "workspace:*",
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
     "@fern-api/browser-compatible-base-generator": "workspace:*",
-    "@fern-api/ruby-ast": "workspace:*",
-    "@fern-api/path-utils": "workspace:*",
-    "@fern-api/dynamic-ir-sdk": "^58.2.0",
-    "string.prototype.replaceall": "^1.0.10",
-    "tsup": "^8.5.0",
     "@fern-api/configs": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
+    "@fern-api/dynamic-ir-sdk": "^58.2.0",
+    "@fern-api/path-utils": "workspace:*",
+    "@fern-api/ruby-ast": "workspace:*",
+    "@types/jest": "^30.0.0",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
+    "string.prototype.replaceall": "^1.0.10",
+    "tsup": "^8.5.0",
     "typescript": "5.7.2",
     "vitest": "^2.1.9"
   }
