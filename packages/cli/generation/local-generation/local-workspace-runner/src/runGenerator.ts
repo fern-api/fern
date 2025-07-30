@@ -50,7 +50,8 @@ export async function writeFilesToDiskAndRunGenerator({
     generatePaginatedClients,
     includeOptionalRequestPropertyExamples,
     ir,
-    runner
+    runner,
+    inspect
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -71,6 +72,7 @@ export async function writeFilesToDiskAndRunGenerator({
     includeOptionalRequestPropertyExamples?: boolean;
     ir?: IntermediateRepresentation;
     runner?: ContainerRunner;
+    inspect: boolean;
 }): Promise<GeneratorRunResponse> {
     const { latest, migrated } = await getIntermediateRepresentation({
         workspace,
@@ -138,7 +140,8 @@ export async function writeFilesToDiskAndRunGenerator({
             generateOauthClients,
             generatePaginatedClients,
             sources: workspace.getSources(),
-            runner
+            runner,
+            inspect
         });
 
         return {
@@ -202,6 +205,7 @@ export declare namespace runGenerator {
         generateOauthClients: boolean;
         generatePaginatedClients: boolean;
         sources: IdentifiableSource[];
+        inspect: boolean;
 
         runner?: ContainerRunner;
     }
@@ -227,7 +231,8 @@ export async function runGenerator({
     generateOauthClients,
     generatePaginatedClients,
     sources,
-    runner
+    runner,
+    inspect
 }: runGenerator.Args): Promise<runGenerator.Return> {
     const { name, version, config: customConfig } = generatorInvocation;
     const imageName = `${name}:${version}`;
@@ -266,12 +271,20 @@ export async function runGenerator({
     if (!doesConfigJsonExist) {
         throw new Error(`Failed to create ${absolutePathToWriteConfigJson}`);
     }
+    const envVars: Record<string, string> = {};
+    const ports: Record<string, string> = {};
+    if (inspect) {
+        envVars["NODE_OPTIONS"] = "--inspect-brk=0.0.0.0:9229";
+        ports["9229"] = "9229";
+    }
 
     await runDocker({
         logger: context.logger,
         imageName,
         args: [DOCKER_GENERATOR_CONFIG_PATH],
         binds,
+        envVars,
+        ports,
         removeAfterCompletion: !keepDocker,
         runner
     });

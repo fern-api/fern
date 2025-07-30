@@ -107,6 +107,12 @@ function addTestCommand(cli: Argv) {
                     demandOption: false,
                     default: false,
                     description: "Allow unexpected test failures without failing the command"
+                })
+                .option("inspect", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false,
+                    description: "Execute Node with --inspect flag for debugging"
                 }),
         async (argv) => {
             const generators = await loadGeneratorWorkspaces();
@@ -136,7 +142,8 @@ function addTestCommand(cli: Argv) {
                         taskContextFactory,
                         skipScripts: argv.skipScripts,
                         scriptRunner,
-                        keepDocker: false // dummy
+                        keepDocker: false, // dummy,
+                        inspect: argv.inspect
                     });
                 } else {
                     testRunner = new DockerTestRunner({
@@ -145,7 +152,8 @@ function addTestCommand(cli: Argv) {
                         taskContextFactory,
                         skipScripts: argv.skipScripts,
                         keepDocker: argv.keepDocker,
-                        scriptRunner
+                        scriptRunner,
+                        inspect: argv.inspect
                     });
                 }
 
@@ -154,7 +162,8 @@ function addTestCommand(cli: Argv) {
                         generator,
                         runner: testRunner,
                         fixtures: argv.fixture,
-                        outputFolder: argv.outputFolder
+                        outputFolder: argv.outputFolder,
+                        inspect: argv.inspect
                     })
                 );
             }
@@ -208,6 +217,11 @@ function addRunCommand(cli: Argv) {
                 .option("audience", {
                     string: true,
                     demandOption: false
+                })
+                .option("inspect", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false
                 }),
         async (argv) => {
             const generators = await loadGeneratorWorkspaces();
@@ -232,7 +246,8 @@ function addRunCommand(cli: Argv) {
                     ? argv["output-path"].startsWith("/")
                         ? AbsoluteFilePath.of(argv["output-path"])
                         : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(argv["output-path"]))
-                    : undefined
+                    : undefined,
+                inspect: argv.inspect
             });
         }
     );

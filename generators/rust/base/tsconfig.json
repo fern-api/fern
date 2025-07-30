@@ -13,6 +13,9 @@
       "path": "../../../packages/commons/fs-utils"
     },
     {
+      "path": "../../../packages/commons/core-utils"
+    },
+    {
       "path": "../../base"
     }
   ]

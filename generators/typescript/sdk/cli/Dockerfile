@@ -28,8 +28,8 @@ COPY generators/typescript/sdk/features.yml /assets/features.yml
 COPY generators/typescript/asIs/readme/binary-response-addendum.md /assets/readme/binary-response-addendum.md
 COPY generators/typescript/asIs/ /assets/asIs
 COPY generators/typescript/utils/core-utilities/ /assets/core-utilities
-COPY generators/typescript/sdk/cli/dist/nodeCli.cjs /nodeCli.cjs
+COPY generators/typescript/sdk/cli/dist/ /dist
 
 RUN npm install -f -g @fern-api/generator-cli
 
-ENTRYPOINT ["node", "--enable-source-maps", "/nodeCli.cjs"]
+ENTRYPOINT ["node", "--enable-source-maps", "/dist/cli.js"]

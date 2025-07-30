@@ -2,4 +2,4 @@
 !generators/typescript/asIs/
 !generators/typescript/utils/core-utilities/
 !generators/typescript/sdk/features.yml
-!generators/typescript/sdk/cli/dist/nodeCli.cjs
+!generators/typescript/sdk/cli/dist/

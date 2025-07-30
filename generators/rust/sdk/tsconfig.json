@@ -10,6 +10,15 @@
   ],
   "references": [
     {
+      "path": "../model"
+    },
+    {
+      "path": "../codegen"
+    },
+    {
+      "path": "../base"
+    },
+    {
       "path": "../../../packages/cli/logger"
     },
     {
@@ -17,12 +26,6 @@
     },
     {
       "path": "../../base"
-    },
-    {
-      "path": "../base"
-    },
-    {
-      "path": "../model"
     }
   ]
 }

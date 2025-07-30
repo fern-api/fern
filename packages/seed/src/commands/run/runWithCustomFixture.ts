@@ -23,7 +23,8 @@ export async function runWithCustomFixture({
     logLevel,
     audience,
     skipScripts,
-    outputPath
+    outputPath,
+    inspect
 }: {
     pathToFixture: AbsoluteFilePath;
     workspace: GeneratorWorkspace;
@@ -31,6 +32,7 @@ export async function runWithCustomFixture({
     audience: string | undefined;
     skipScripts: boolean | undefined;
     outputPath?: AbsoluteFilePath;
+    inspect: boolean
 }): Promise<void> {
     const lock = new Semaphore(1);
     const absolutePathToOutput = outputPath ?? AbsoluteFilePath.of((await tmp.dir()).path);
@@ -48,7 +50,8 @@ export async function runWithCustomFixture({
         taskContextFactory,
         skipScripts: true,
         keepDocker: true,
-        scriptRunner: new ScriptRunner(workspace, skipScripts ?? false, taskContext)
+        scriptRunner: new ScriptRunner(workspace, skipScripts ?? false, taskContext),
+        inspect
     });
 
     const apiWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
@@ -84,7 +87,8 @@ export async function runWithCustomFixture({
             taskContext,
             irVersion: workspace.workspaceConfig.irVersion,
             group: generatorGroup.group,
-            shouldGenerateDynamicSnippetTests: workspaceShouldGenerateDynamicSnippetTests(workspace)
+            shouldGenerateDynamicSnippetTests: workspaceShouldGenerateDynamicSnippetTests(workspace),
+            inspect
         });
         taskContext.logger.info(`Wrote files to ${absolutePathToOutput}`);
     } catch (error) {

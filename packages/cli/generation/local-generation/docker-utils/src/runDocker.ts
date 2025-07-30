@@ -11,6 +11,8 @@ export declare namespace runDocker {
         imageName: string;
         args?: string[];
         binds?: string[];
+        envVars?: Record<string, string>;
+        ports?: Record<string, string>;
         writeLogsToFile?: boolean;
         removeAfterCompletion?: boolean;
         runner?: ContainerRunner;
@@ -26,12 +28,14 @@ export async function runDocker({
     imageName,
     args = [],
     binds = [],
+    envVars = {},
+    ports = {},
     writeLogsToFile = true,
     removeAfterCompletion = false,
     runner
 }: runDocker.Args): Promise<void> {
     const tryRun = () =>
-        tryRunDocker({ logger, imageName, args, binds, removeAfterCompletion, writeLogsToFile, runner });
+        tryRunDocker({ logger, imageName, args, binds, envVars, ports, removeAfterCompletion, writeLogsToFile, runner });
     try {
         await tryRun();
     } catch (e) {
@@ -49,6 +53,8 @@ async function tryRunDocker({
     imageName,
     args,
     binds,
+    envVars = {},
+    ports = {},
     removeAfterCompletion,
     writeLogsToFile,
     runner
@@ -57,6 +63,8 @@ async function tryRunDocker({
     imageName: string;
     args: string[];
     binds: string[];
+    envVars?: Record<string, string>;
+    ports?: Record<string, string>;
     removeAfterCompletion: boolean;
     writeLogsToFile: boolean;
     runner?: ContainerRunner;
@@ -66,6 +74,8 @@ async function tryRunDocker({
         "--user",
         "root",
         ...binds.flatMap((bind) => ["-v", bind]),
+        ...Object.entries(envVars).flatMap(([key, value]) => ["-e", `${key}=\"${value}\"`]),
+        ...Object.entries(ports).flatMap(([hostPort, containerPort]) => ["-p", `${hostPort}:${containerPort}`]),
         removeAfterCompletion ? "--rm" : "",
         imageName,
         ...args

@@ -51,7 +51,8 @@ export class LocalTestRunner extends TestRunner {
         irVersion,
         publishMetadata,
         readme,
-        shouldGenerateDynamicSnippetTests
+        shouldGenerateDynamicSnippetTests,
+        inspect
     }: TestRunner.DoRunArgs): Promise<void> {
         const generatorConfigFile = await tmp.file();
         const absolutePathToGeneratorConfig = AbsoluteFilePath.of(generatorConfigFile.path);
@@ -130,8 +131,20 @@ export class LocalTestRunner extends TestRunner {
         const workingDir = AbsoluteFilePath.of(
             path.join(__dirname, RelativeFilePath.of("../../.."), RelativeFilePath.of(localConfig.workingDirectory))
         );
+        const commands = [];
+        if(inspect){
+            if(localConfig.runCommand.indexOf("--inspect-brk") === -1){
+                commands.push(`${localConfig.runCommand.replace("node", "node --inspect-brk")} ${absolutePathToGeneratorConfig}`);
+            }
+            else {
+                commands.push(`${localConfig.runCommand} ${absolutePathToGeneratorConfig}`);
+            }
+        }
+        else {
+            commands.push(`${localConfig.runCommand} ${absolutePathToGeneratorConfig}`);
+        }
         const result = await runScript({
-            commands: [`${localConfig.runCommand} ${absolutePathToGeneratorConfig}`],
+            commands,
             doNotPipeOutput: false,
             logger: taskContext.logger,
             workingDir,

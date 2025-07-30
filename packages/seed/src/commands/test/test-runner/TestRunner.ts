@@ -24,6 +24,7 @@ export declare namespace TestRunner {
         skipScripts: boolean;
         scriptRunner: ScriptRunner;
         keepDocker: boolean;
+        inspect: boolean;
     }
 
     interface RunArgs {
@@ -31,6 +32,7 @@ export declare namespace TestRunner {
         fixture: string;
         /** Configuration specific to the fixture **/
         configuration: FixtureConfigurations | undefined;
+        inspect: boolean;
     }
 
     interface DoRunArgs {
@@ -53,6 +55,7 @@ export declare namespace TestRunner {
         publishMetadata: unknown;
         readme: generatorsYml.ReadmeSchema | undefined;
         shouldGenerateDynamicSnippetTests: boolean | undefined;
+        inspect: boolean | undefined;
     }
 
     type TestResult = TestSuccess | TestFailure;
@@ -107,7 +110,7 @@ export abstract class TestRunner {
     /**
      * Runs the generator.
      */
-    public async run({ fixture, configuration }: TestRunner.RunArgs): Promise<TestRunner.TestResult> {
+    public async run({ fixture, configuration, inspect }: TestRunner.RunArgs): Promise<TestRunner.TestResult> {
         try {
             if (this.buildInvocation == null) {
                 this.buildInvocation = this.build();
@@ -187,7 +190,8 @@ export abstract class TestRunner {
                     keepDocker: this.keepDocker,
                     publishMetadata,
                     readme,
-                    shouldGenerateDynamicSnippetTests: workspaceShouldGenerateDynamicSnippetTests(this.generator)
+                    shouldGenerateDynamicSnippetTests: workspaceShouldGenerateDynamicSnippetTests(this.generator),
+                    inspect
                 });
                 generationStopwatch.stop();
                 metrics.generationTime = generationStopwatch.duration();

@@ -30,7 +30,8 @@ export async function runLocalGenerationForSeed({
     irVersionOverride,
     outputVersionOverride,
     shouldGenerateDynamicSnippetTests,
-    skipUnstableDynamicSnippetTests
+    skipUnstableDynamicSnippetTests,
+    inspect
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -42,6 +43,7 @@ export async function runLocalGenerationForSeed({
     outputVersionOverride: string | undefined;
     shouldGenerateDynamicSnippetTests: boolean | undefined;
     skipUnstableDynamicSnippetTests?: boolean;
+    inspect: boolean;
 }): Promise<void> {
     const workspaceTempDir = await getWorkspaceTempDir();
 
@@ -93,7 +95,8 @@ export async function runLocalGenerationForSeed({
                         writeUnitTests: true,
                         generateOauthClients: true,
                         generatePaginatedClients: true,
-                        includeOptionalRequestPropertyExamples: true
+                        includeOptionalRequestPropertyExamples: true,
+                        inspect
                     });
                     if (
                         absolutePathToLocalSnippetTemplateJSON != null &&
@@ -244,7 +247,8 @@ export async function writeIrAndConfigJson({
     keepDocker,
     context,
     irVersionOverride,
-    outputVersionOverride
+    outputVersionOverride,
+    inspect
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -254,6 +258,7 @@ export async function writeIrAndConfigJson({
     context: TaskContext;
     irVersionOverride: string | undefined;
     outputVersionOverride: string | undefined;
+    inspect: boolean
 }): Promise<void> {
     const workspaceTempDir = await getWorkspaceTempDir();
 
@@ -291,7 +296,8 @@ export async function writeIrAndConfigJson({
                         outputVersionOverride,
                         writeUnitTests: true,
                         generateOauthClients: true,
-                        generatePaginatedClients: true
+                        generatePaginatedClients: true,
+                        inspect
                     });
                     interactiveTaskContext.logger.info(
                         chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)
