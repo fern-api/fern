@@ -96,6 +96,24 @@
           }
         ]
       }
+    },
+    "type_service:MyInlineType": {
+      "name": "MyInlineType",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "bar",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
     }
   },
   "subpackages": {
@@ -877,6 +895,72 @@
         {
           "auth": false,
           "method": "POST",
+          "id": "withInlineType",
+          "originalEndpointId": "endpoint_service.withInlineType",
+          "name": "With Inline Type",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/"
+              },
+              {
+                "type": "literal",
+                "value": "/inline-type"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "fileUpload",
+              "value": {
+                "name": "InlineTypeRequest",
+                "properties": [
+                  {
+                    "type": "file",
+                    "value": {
+                      "type": "file",
+                      "key": "file",
+                      "isOptional": false
+                    }
+                  },
+                  {
+                    "type": "bodyProperty",
+                    "key": "request",
+                    "valueType": {
+                      "type": "id",
+                      "value": "type_service:MyInlineType"
+                    },
+                    "exploded": false
+                  }
+                ]
+              },
+              "contentType": "multipart/form-data"
+            }
+          },
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "statusCode": 200
+          },
+          "responsesV2": {},
+          "errorsV2": [],
+          "examples": []
+        },
+        {
+          "auth": false,
+          "method": "POST",
           "id": "simple",
           "originalEndpointId": "endpoint_service.simple",
           "name": "Simple",
@@ -918,7 +1002,8 @@
         "type_service:MyAliasObject",
         "type_service:MyCollectionAliasObject",
         "type_service:MyObject",
-        "type_service:ObjectType"
+        "type_service:ObjectType",
+        "type_service:MyInlineType"
       ],
       "subpackages": []
     }

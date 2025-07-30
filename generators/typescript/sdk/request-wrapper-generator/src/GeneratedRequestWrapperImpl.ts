@@ -38,6 +38,7 @@ import {
 } from "@fern-fern/ir-sdk/api";
 
 import { RequestWrapperExampleGenerator } from "./RequestWrapperExampleGenerator";
+import { FernIr } from "@fern-fern/ir-sdk";
 
 export declare namespace GeneratedRequestWrapperImpl {
     export interface Init {
@@ -159,18 +160,15 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             });
             maybeAddDocsNode(property, header.docs);
         }
-        if (this.endpoint.requestBody != null) {
-            HttpRequestBody._visit(this.endpoint.requestBody, {
+        const requestBody = this.endpoint.requestBody;
+        if (requestBody != null) {
+            HttpRequestBody._visit(requestBody, {
                 inlinedRequestBody: (inlinedRequestBody) => {
                     for (const property of this.getAllNonLiteralPropertiesFromInlinedRequest({
                         inlinedRequestBody,
                         context
                     })) {
                         requestInterface.addProperty(this.getInlineProperty(inlinedRequestBody, property, context));
-                    }
-                    const iModule = this.generateModule(inlinedRequestBody, context);
-                    if (iModule) {
-                        context.sourceFile.addModule(iModule);
                     }
                     for (const extension of inlinedRequestBody.extends) {
                         requestInterface.addExtends(
@@ -218,6 +216,11 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                     throw new Error("Unknown HttpRequestBody: " + this.endpoint.requestBody?.type);
                 }
             });
+
+            const iModule = this.generateModule(requestBody, context);
+            if (iModule) {
+                context.sourceFile.addModule(iModule);
+            }
         }
     }
 
@@ -271,23 +274,41 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return context.type.getReferenceToInlinePropertyType(property.valueType, propParentTypeName, propName);
     }
 
-    private generateModule(
-        inlinedRequestBody: InlinedRequestBody,
-        context: SdkContext
-    ): ModuleDeclarationStructure | undefined {
+    private generateModule(requestBody: HttpRequestBody, context: SdkContext): ModuleDeclarationStructure | undefined {
         if (!this.enableInlineTypes) {
             return undefined;
         }
 
-        return generateInlinePropertiesModule({
-            parentTypeName: this.wrapperName,
-            properties: inlinedRequestBody.properties.map((prop) => ({
-                propertyName: prop.name.name.pascalCase.safeName,
-                typeReference: prop.valueType
-            })),
-            generateStatements: (typeName, typeNameOverride) =>
-                context.type.getGeneratedType(typeName, typeNameOverride).generateStatements(context),
-            getTypeDeclaration: (namedType) => context.type.getTypeDeclaration(namedType)
+        return requestBody._visit({
+            inlinedRequestBody: (inlinedRequestBody: FernIr.InlinedRequestBody) => {
+                return generateInlinePropertiesModule({
+                    parentTypeName: this.wrapperName,
+                    properties: inlinedRequestBody.properties.map((prop) => ({
+                        propertyName: prop.name.name.pascalCase.safeName,
+                        typeReference: prop.valueType
+                    })),
+                    generateStatements: (typeName, typeNameOverride) =>
+                        context.type.getGeneratedType(typeName, typeNameOverride).generateStatements(context),
+                    getTypeDeclaration: (namedType) => context.type.getTypeDeclaration(namedType)
+                });
+            },
+            reference: () => undefined,
+            fileUpload: (fileUploadBody: FernIr.FileUploadRequest) => {
+                return generateInlinePropertiesModule({
+                    parentTypeName: this.wrapperName,
+                    properties: fileUploadBody.properties
+                        .filter((prop) => prop.type === "bodyProperty")
+                        .map((prop) => ({
+                            propertyName: prop.name.name.pascalCase.safeName,
+                            typeReference: prop.valueType
+                        })),
+                    generateStatements: (typeName, typeNameOverride) =>
+                        context.type.getGeneratedType(typeName, typeNameOverride).generateStatements(context),
+                    getTypeDeclaration: (namedType) => context.type.getTypeDeclaration(namedType)
+                });
+            },
+            bytes: () => undefined,
+            _other: () => undefined
         });
     }
 
