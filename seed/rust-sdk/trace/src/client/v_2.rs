@@ -1,22 +1,25 @@
-use crate::error::ApiError;
-use crate::types::*;
-use reqwest::Client;
+use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use reqwest::{Method};
+use crate::{types::*};
 
 pub struct V2Client {
-    pub client: Client,
-    pub base_url: String,
+    pub http_client: HttpClient,
 }
 
 impl V2Client {
-    pub fn new(base_url: String) -> Self {
-        Self {
-            client: Client::new(),
-            base_url,
-        }
+    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+        let http_client = HttpClient::new(config)?;
+        Ok(Self { http_client })
     }
 
-    pub async fn test(&self) -> Result<serde_json::Value, ApiError> {
-        todo!()
+    pub async fn test(&self, options: Option<RequestOptions>) -> Result<(), ClientError> {
+        self.http_client.execute_request(
+            Method::GET,
+            "",
+            None,
+            options,
+        ).await
     }
 
 }
+

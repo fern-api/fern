@@ -1817,6 +1817,9 @@ importers:
       '@fern-api/base-generator':
         specifier: workspace:*
         version: link:../../base
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/core-utils
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils

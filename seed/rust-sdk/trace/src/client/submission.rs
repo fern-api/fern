@@ -1,34 +1,52 @@
-use crate::error::ApiError;
-use crate::types::*;
-use reqwest::Client;
+use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use reqwest::{Method};
+use crate::{types::*};
 
 pub struct SubmissionClient {
-    pub client: Client,
-    pub base_url: String,
+    pub http_client: HttpClient,
 }
 
 impl SubmissionClient {
-    pub fn new(base_url: String) -> Self {
-        Self {
-            client: Client::new(),
-            base_url,
-        }
+    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+        let http_client = HttpClient::new(config)?;
+        Ok(Self { http_client })
     }
 
-    pub async fn create_execution_session(&self, language: &String) -> Result<serde_json::Value, ApiError> {
-        todo!()
+    pub async fn create_execution_session(&self, language: &Language, options: Option<RequestOptions>) -> Result<ExecutionSessionResponse, ClientError> {
+        self.http_client.execute_request(
+            Method::POST,
+            &format!("/sessions/create-session/{}", language),
+            None,
+            options,
+        ).await
     }
 
-    pub async fn get_execution_session(&self, session_id: &String) -> Result<serde_json::Value, ApiError> {
-        todo!()
+    pub async fn get_execution_session(&self, session_id: &String, options: Option<RequestOptions>) -> Result<Option<ExecutionSessionResponse>, ClientError> {
+        self.http_client.execute_request(
+            Method::GET,
+            &format!("/sessions/{}", session_id),
+            None,
+            options,
+        ).await
     }
 
-    pub async fn stop_execution_session(&self, session_id: &String) -> Result<serde_json::Value, ApiError> {
-        todo!()
+    pub async fn stop_execution_session(&self, session_id: &String, options: Option<RequestOptions>) -> Result<(), ClientError> {
+        self.http_client.execute_request(
+            Method::DELETE,
+            &format!("/sessions/stop/{}", session_id),
+            None,
+            options,
+        ).await
     }
 
-    pub async fn get_execution_sessions_state(&self) -> Result<serde_json::Value, ApiError> {
-        todo!()
+    pub async fn get_execution_sessions_state(&self, options: Option<RequestOptions>) -> Result<GetExecutionSessionStateResponse, ClientError> {
+        self.http_client.execute_request(
+            Method::GET,
+            "/sessions/execution-sessions-state",
+            None,
+            options,
+        ).await
     }
 
 }
+

@@ -1,10 +1,12 @@
+use crate::{ClientConfig, ClientError};
+
 pub mod headers;
 pub mod inlined;
 pub mod path;
 pub mod query;
 pub mod reference;
-
 pub struct LiteralClient {
+    pub config: ClientConfig,
     pub headers: HeadersClient,
     pub inlined: InlinedClient,
     pub path: PathClient,
@@ -13,18 +15,18 @@ pub struct LiteralClient {
 }
 
 impl LiteralClient {
-    pub fn new() -> Self {
-        Self {
-    headers: HeadersClient::new("".to_string()),
-    inlined: InlinedClient::new("".to_string()),
-    path: PathClient::new("".to_string()),
-    query: QueryClient::new("".to_string()),
-    reference: ReferenceClient::new("".to_string())
-}
+    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+        Ok(Self {
+            config: config.clone(),
+            headers: HeadersClient::new(config.clone())?,
+            inlined: InlinedClient::new(config.clone())?,
+            path: PathClient::new(config.clone())?,
+            query: QueryClient::new(config.clone())?,
+            reference: ReferenceClient::new(config.clone())?
+        })
     }
 
 }
-
 
 pub use headers::HeadersClient;
 pub use inlined::InlinedClient;

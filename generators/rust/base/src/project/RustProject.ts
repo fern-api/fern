@@ -3,7 +3,8 @@ import { mkdir } from "fs/promises";
 import { AbstractProject } from "@fern-api/base-generator";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { AbstractRustGeneratorContext, BaseRustCustomConfigSchema } from "../context/AbstractRustGeneratorContext";
+import { AbstractRustGeneratorContext } from "../context/AbstractRustGeneratorContext";
+import { BaseRustCustomConfigSchema } from "../config";
 import { RustFile } from "./RustFile";
 
 const SRC_DIRECTORY_NAME = "src";
@@ -39,71 +40,87 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
         this.context.logger.debug(`mkdir ${absolutePathToSrcDirectory}`);
         await mkdir(absolutePathToSrcDirectory, { recursive: true });
 
-        // Write all source files
+        // Write all template files (both source and project-level)
+        await this.persistStaticSourceFiles();
+
+        // Write all dynamic source files
         await Promise.all(this.sourceFiles.map((file) => file.write(this.absolutePathToOutputDirectory)));
-
-        // Generate basic project files
-        await this.writeCargoToml();
-        await this.writeGitignore();
-        await this.writeRustfmtConfig();
     }
 
-    private async writeCargoToml(): Promise<void> {
-        const cargoToml = this.generateCargoToml();
-        const cargoFile = new RustFile({
-            filename: "Cargo.toml",
-            directory: RelativeFilePath.of(""),
-            fileContents: cargoToml
-        });
-        await cargoFile.write(this.absolutePathToOutputDirectory);
+    private async persistStaticSourceFiles(): Promise<void> {
+        const { context, absolutePathToOutputDirectory } = this;
+        await Promise.all(
+            context.getCoreAsIsFiles().map(async (def) => {
+                let fileContents = await def.loadContents();
+
+                // Replace template variables
+                fileContents = this.replaceTemplateVariables(fileContents);
+
+                const rustFile = new RustFile({
+                    filename: def.filename,
+                    directory: def.directory,
+                    fileContents
+                });
+                await rustFile.write(absolutePathToOutputDirectory);
+            })
+        );
     }
 
-    private generateCargoToml(): string {
-        const baseDependencies = {
-            serde: { version: "1.0", features: ["derive"] },
-            serde_json: "1.0",
-            reqwest: { version: "0.11", features: ["json"] },
-            tokio: { version: "1.0", features: ["full"] },
-            thiserror: "1.0"
-        };
+    private replaceTemplateVariables(content: string): string {
+        // Replace CLIENT_NAME template variable if context supports it
+        if (
+            "getApiClientBuilderClientName" in this.context &&
+            typeof this.context.getApiClientBuilderClientName === "function"
+        ) {
+            const clientName = (
+                this.context as { getApiClientBuilderClientName(): string }
+            ).getApiClientBuilderClientName();
+            content = content.replace(/\{\{CLIENT_NAME\}\}/g, clientName);
+        } else if ("getClientName" in this.context && typeof this.context.getClientName === "function") {
+            // Fallback to original method for backward compatibility
+            const clientName = (this.context as { getClientName(): string }).getClientName();
+            content = content.replace(/\{\{CLIENT_NAME\}\}/g, clientName);
+        }
 
-        const baseDevDependencies = {
-            "tokio-test": "0.4"
-        };
+        // Replace project-level template variables
+        content = content.replace(/\{\{PACKAGE_NAME\}\}/g, this.packageName);
+        content = content.replace(/\{\{PACKAGE_VERSION\}\}/g, this.packageVersion);
 
-        // Merge with custom dependencies from config
-        const dependencies = {
-            ...baseDependencies,
-            ...this.context.customConfig.extraDependencies
-        };
+        // Replace dependency template variables
+        content = content.replace(/\{\{EXTRA_DEPENDENCIES\}\}/g, this.generateExtraDependencies());
+        content = content.replace(/\{\{EXTRA_DEV_DEPENDENCIES\}\}/g, this.generateExtraDevDependencies());
 
-        const devDependencies = {
-            ...baseDevDependencies,
-            ...this.context.customConfig.extraDevDependencies
-        };
+        return content;
+    }
 
-        let cargo = "[package]\n";
-        cargo += `name = "${this.packageName}"\n`;
-        cargo += `version = "${this.packageVersion}"\n`;
-        cargo += 'edition = "2021"\n\n';
+    private generateExtraDependencies(): string {
+        const extraDeps = this.context.customConfig.extraDependencies || {};
+        if (Object.keys(extraDeps).length === 0) {
+            return "";
+        }
 
-        cargo += "[dependencies]\n";
-        for (const [name, config] of Object.entries(dependencies)) {
+        let result = "";
+        for (const [name, config] of Object.entries(extraDeps)) {
             if (typeof config === "string") {
-                cargo += `${name} = "${config}"\n`;
+                result += `${name} = "${config}"\n`;
             } else {
-                cargo += `${name} = ${this.objectToToml(config)}\n`;
+                result += `${name} = ${this.objectToToml(config)}\n`;
             }
         }
+        return result;
+    }
 
-        if (Object.keys(devDependencies).length > 0) {
-            cargo += "\n[dev-dependencies]\n";
-            for (const [name, version] of Object.entries(devDependencies)) {
-                cargo += `${name} = "${version}"\n`;
-            }
+    private generateExtraDevDependencies(): string {
+        const extraDevDeps = this.context.customConfig.extraDevDependencies || {};
+        if (Object.keys(extraDevDeps).length === 0) {
+            return "";
         }
 
-        return cargo + "\n";
+        let result = "";
+        for (const [name, version] of Object.entries(extraDevDeps)) {
+            result += `${name} = "${version}"\n`;
+        }
+        return result;
     }
 
     private objectToToml(obj: unknown): string {
@@ -126,34 +143,5 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
             return `{ ${pairs.join(", ")} }`;
         }
         return String(obj);
-    }
-
-    private async writeGitignore(): Promise<void> {
-        const gitignore = ["/target", "**/*.rs.bk", "Cargo.lock", ".DS_Store", "*.swp"].join("\n") + "\n";
-
-        const gitignoreFile = new RustFile({
-            filename: ".gitignore",
-            directory: RelativeFilePath.of(""),
-            fileContents: gitignore
-        });
-        await gitignoreFile.write(this.absolutePathToOutputDirectory);
-    }
-
-    private async writeRustfmtConfig(): Promise<void> {
-        const rustfmtConfig = `# Generated by Fern
-edition = "2021"
-max_width = 100
-use_small_heuristics = "Default"
-imports_granularity = "Crate"
-group_imports = "StdExternalCrate"
-format_code_in_doc_comments = true
-`;
-
-        const rustfmtFile = new RustFile({
-            filename: "rustfmt.toml",
-            directory: RelativeFilePath.of(""),
-            fileContents: rustfmtConfig
-        });
-        await rustfmtFile.write(this.absolutePathToOutputDirectory);
     }
 }

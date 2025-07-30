@@ -1,18 +1,16 @@
-use crate::error::ApiError;
-use crate::types::*;
-use reqwest::Client;
+use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use reqwest::{Method};
+use crate::{types::*};
 
 pub struct FolderDClient {
-    pub client: Client,
-    pub base_url: String,
+    pub http_client: HttpClient,
 }
 
 impl FolderDClient {
-    pub fn new(base_url: String) -> Self {
-        Self {
-            client: Client::new(),
-            base_url,
-        }
+    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+        let http_client = HttpClient::new(config)?;
+        Ok(Self { http_client })
     }
 
 }
+
