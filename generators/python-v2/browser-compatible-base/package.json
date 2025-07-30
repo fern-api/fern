@@ -34,18 +34,12 @@
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "depcheck": "depcheck",
-    "dist:cli": "pnpm compile && tsup ./src/cli.ts --format cjs --sourcemap",
-    "publish:cli": "pnpm dist:cli && cd dist && yarn npm publish",
-    "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-go-model:latest ../../.."
+    "depcheck": "depcheck"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
-    "eslint": "^8.56.0",
-    "prettier": "^3.4.2",
     "typescript": "5.7.2",
     "vitest": "^2.1.9",
     "zod": "^3.22.3"

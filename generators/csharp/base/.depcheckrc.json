@@ -1,12 +1,5 @@
 {
   "ignores": [
-    "@fern-fern/ir-sdk",
-    "@trivago/prettier-plugin-sort-imports",
-    "@types/jest",
-    "@types/node",
-    "@yarnpkg/esbuild-plugin-pnp",
-    "esbuild",
-    "globals"
   ],
   "ignore-patterns": [
     "lib",

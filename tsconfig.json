@@ -1,10 +1,5 @@
 {
   "extends": "@fern-api/configs/tsconfig/main.json",
-  "ts-node": {
-    "compilerOptions": {
-      "module": "CommonJS"
-    }
-  },
   "references": [
     {
       "path": "./generators/typescript/express/express-inlined-request-body-schema-generator"

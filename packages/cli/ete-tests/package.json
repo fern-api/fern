@@ -55,16 +55,10 @@
     "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
-    "eslint": "^8.56.0",
-    "prettier": "^3.4.2",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "typescript": "5.7.2",
     "@types/express": "^4.17.21",
-    "@types/jest": "^29.5.14",
     "@types/js-yaml": "^4.0.8",
     "@types/node-fetch": "2.6.9",
-    "form-data": "4.0.1",
-    "jest-environment-jsdom": "^29.7.0",
     "vitest": "^2.1.9"
   }
 }

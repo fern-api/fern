@@ -66,21 +66,13 @@
     "@types/uuid": "^9.0.8",
     "ts-morph": "^15.1.0",
     "ts-poet": "^6.7.0",
-    "url-join": "^5.0.0",
     "uuid": "^9.0.1",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.14",
-    "@types/jest-specific-snapshot": "^0.5.9",
-    "@types/url-join": "4.0.1",
-    "jest-specific-snapshot": "^8.0.0",
     "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
-    "eslint": "^8.56.0",
-    "prettier": "^3.4.2",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "typescript": "5.7.2",
     "vitest": "^2.1.9",
     "@types/lodash-es": "^4.17.12"

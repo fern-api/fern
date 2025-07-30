@@ -53,13 +53,9 @@
     "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
-    "eslint": "^8.56.0",
-    "prettier": "^3.4.2",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "typescript": "5.7.2",
     "@types/boxen": "^3.0.1",
     "@types/inquirer": "^9.0.7",
-    "@types/jest": "^29.5.14",
     "@types/qs": "6.9.15",
     "vitest": "^2.1.9"
   }

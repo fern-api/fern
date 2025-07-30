@@ -2,5 +2,8 @@
   "name": "@fern-api/configs",
   "version": "0.0.0",
   "private": true,
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "vitest": "^2.1.9"
+  }
 }
