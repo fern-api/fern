@@ -1,4 +1,8 @@
-import { isRawObjectDefinition } from "@fern-api/fern-definition-schema";
+import {
+    isRawObjectDefinition,
+    isRawUndiscriminatedUnionDefinition,
+    isRawDiscriminatedUnionDefinition
+} from "@fern-api/fern-definition-schema";
 import { TypeResolverImpl, constructFernFileContext } from "@fern-api/ir-generator";
 
 import { Rule } from "../../Rule";
@@ -26,8 +30,13 @@ export const OnlyObjectExtensionsRule: Rule = {
                         return [];
                     }
 
-                    if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
-                        return [];
+                    if (resolvedType._type === "named") {
+                        const isUnion = isRawUndiscriminatedUnionDefinition(resolvedType.declaration) || isRawDiscriminatedUnionDefinition(resolvedType.declaration);
+                        const isObject = isRawObjectDefinition(resolvedType.declaration);
+
+                        if (isObject || isUnion) {
+                            return [];
+                        }
                     }
 
                     return [
