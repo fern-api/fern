@@ -4917,6 +4917,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "fileDownload"
@@ -5000,6 +5001,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -5420,6 +5422,7 @@
           }
         ],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -5647,6 +5650,57 @@
             "contentType": "multipart/form-data"
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "fileUpload",
+                "value": {
+                  "name": "Start Job_Request",
+                  "properties": [
+                    {
+                      "type": "bodyProperty",
+                      "key": "json",
+                      "valueType": {
+                        "type": "optional",
+                        "itemType": {
+                          "type": "id",
+                          "value": "V0BatchJobsPostRequestBodyContentMultipartFormDataSchemaJson"
+                        }
+                      },
+                      "contentType": "multipart/form-data",
+                      "exploded": false
+                    },
+                    {
+                      "type": "file",
+                      "value": {
+                        "type": "fileArray",
+                        "key": "file",
+                        "isOptional": false,
+                        "contentType": "multipart/form-data",
+                        "description": "Local media files (see recommended input filetypes) to be processed.\n\nIf you wish to supply more than 100 files, consider providing them as an archive (`.zip`, `.tar.gz`, `.tar.bz2`, `.tar.xz`)."
+                      }
+                    }
+                  ]
+                },
+                "contentType": "multipart/form-data"
+              }
+            },
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json; charset=utf-8",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BaseRequest"
+                  }
+                }
+              }
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -5764,6 +5818,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",

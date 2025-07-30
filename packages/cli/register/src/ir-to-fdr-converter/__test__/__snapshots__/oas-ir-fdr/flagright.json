@@ -7459,6 +7459,25 @@
           },
           "description": ""
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Transaction"
+                  }
+                },
+                "description": ""
+              },
+              "description": ""
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -7696,6 +7715,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -7925,6 +7945,25 @@
             "description": ""
           },
           "description": ""
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TransactionEvent"
+                  }
+                },
+                "description": ""
+              },
+              "description": ""
+            }
+          ]
         },
         "response": {
           "type": {
@@ -8353,6 +8392,25 @@
           },
           "description": ""
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "User"
+                  }
+                },
+                "description": ""
+              },
+              "description": ""
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -8631,6 +8689,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -8847,6 +8906,25 @@
           },
           "description": ""
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Business"
+                  }
+                },
+                "description": ""
+              },
+              "description": ""
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -9007,6 +9085,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -9462,6 +9541,25 @@
             "description": ""
           },
           "description": ""
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ConsumerUserEvent"
+                  }
+                },
+                "description": ""
+              },
+              "description": ""
+            }
+          ]
         },
         "response": {
           "type": {
@@ -10726,6 +10824,25 @@
             "description": ""
           },
           "description": ""
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BusinessUserEvent"
+                  }
+                },
+                "description": ""
+              },
+              "description": ""
+            }
+          ]
         },
         "response": {
           "type": {

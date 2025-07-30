@@ -116,6 +116,35 @@
             }
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "map",
+                    "keyType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "valueType": {
+                      "type": "list",
+                      "itemType": {
+                        "type": "id",
+                        "value": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -216,6 +245,35 @@
               }
             }
           }
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "map",
+                    "keyType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "valueType": {
+                      "type": "list",
+                      "itemType": {
+                        "type": "id",
+                        "value": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
         },
         "response": {
           "type": {

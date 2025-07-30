@@ -4296,6 +4296,17 @@
               "contentType": "application/octet-stream"
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "bytes",
+                  "isOptional": false,
+                  "contentType": "application/octet-stream"
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -4543,6 +4554,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4758,6 +4770,25 @@
               "description": "Parameters to create a transcript."
             },
             "description": "Parameters to create a transcript."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "CreateTranscriptParameters"
+                    }
+                  },
+                  "description": "Parameters to create a transcript."
+                },
+                "description": "Parameters to create a transcript."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -5296,6 +5327,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -5826,6 +5858,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -6386,6 +6419,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "statusCode": 200,
             "type": {
@@ -6567,6 +6601,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -6795,6 +6830,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -7037,6 +7073,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -7261,6 +7298,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -7459,6 +7497,25 @@
               "description": "Parameters to create a temporary authentication token."
             },
             "description": "Parameters to create a temporary authentication token."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "CreateRealtimeTemporaryTokenParameters"
+                    }
+                  },
+                  "description": "Parameters to create a temporary authentication token."
+                },
+                "description": "Parameters to create a temporary authentication token."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -7664,6 +7721,25 @@
             },
             "description": "Parameters to generate the summary."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "LemurSummaryParameters"
+                    }
+                  },
+                  "description": "Parameters to generate the summary."
+                },
+                "description": "Parameters to generate the summary."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -7862,6 +7938,25 @@
               "description": "Parameters to ask questions about the transcripts."
             },
             "description": "Parameters to ask questions about the transcripts."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "LemurQuestionAnswerParameters"
+                    }
+                  },
+                  "description": "Parameters to ask questions about the transcripts."
+                },
+                "description": "Parameters to ask questions about the transcripts."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -8082,6 +8177,25 @@
             },
             "description": "Parameters to generate action items from transcripts."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "LemurActionItemsParameters"
+                    }
+                  },
+                  "description": "Parameters to generate action items from transcripts."
+                },
+                "description": "Parameters to generate action items from transcripts."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -8280,6 +8394,25 @@
               "description": "Parameters to run the custom task."
             },
             "description": "Parameters to run the custom task."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "LemurTaskParameters"
+                    }
+                  },
+                  "description": "Parameters to run the custom task."
+                },
+                "description": "Parameters to run the custom task."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -8486,6 +8619,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",

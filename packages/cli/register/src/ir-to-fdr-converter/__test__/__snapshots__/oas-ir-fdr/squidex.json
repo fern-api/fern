@@ -11976,6 +11976,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -12108,6 +12109,25 @@
               "description": "The user object that needs to be added."
             },
             "description": "The user object that needs to be added."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "CreateUserDto"
+                    }
+                  },
+                  "description": "The user object that needs to be added."
+                },
+                "description": "The user object that needs to be added."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -12266,6 +12286,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -12419,6 +12440,25 @@
               "description": "The user object that needs to be updated."
             },
             "description": "The user object that needs to be updated."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UpdateUserDto"
+                    }
+                  },
+                  "description": "The user object that needs to be updated."
+                },
+                "description": "The user object that needs to be updated."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -12589,6 +12629,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -12736,6 +12777,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -12901,6 +12943,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -13058,6 +13101,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -13165,6 +13209,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -13300,6 +13345,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -13439,6 +13485,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "fileDownload"
@@ -13573,6 +13620,25 @@
             },
             "description": "The translation request."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "TranslateDto"
+                    }
+                  },
+                  "description": "The translation request."
+                },
+                "description": "The translation request."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -13704,6 +13770,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -13833,6 +13900,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -13971,6 +14039,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -14136,6 +14205,25 @@
               "description": "Contributor object that needs to be added to the team."
             },
             "description": "Contributor object that needs to be added to the team."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "AssignContributorDto"
+                    }
+                  },
+                  "description": "Contributor object that needs to be added to the team."
+                },
+                "description": "Contributor object that needs to be added to the team."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -14310,6 +14398,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -14492,6 +14581,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -14639,6 +14729,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -14768,6 +14859,25 @@
               "description": "The team object that needs to be added to Squidex."
             },
             "description": "The team object that needs to be added to Squidex."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "CreateTeamDto"
+                    }
+                  },
+                  "description": "The team object that needs to be added to Squidex."
+                },
+                "description": "The team object that needs to be added to Squidex."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -14927,6 +15037,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -15078,6 +15189,25 @@
               "description": "The values to update."
             },
             "description": "The values to update."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UpdateTeamDto"
+                    }
+                  },
+                  "description": "The values to update."
+                },
+                "description": "The values to update."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -15249,6 +15379,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -15412,6 +15543,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -15593,6 +15725,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -15736,6 +15869,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -15863,6 +15997,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -16028,6 +16163,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -16207,6 +16343,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -16373,6 +16510,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -16557,6 +16695,25 @@
               "description": "The field object that needs to be added to the schema."
             },
             "description": "The field object that needs to be added to the schema."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "AddFieldDto"
+                    }
+                  },
+                  "description": "The field object that needs to be added to the schema."
+                },
+                "description": "The field object that needs to be added to the schema."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -16964,6 +17121,25 @@
             },
             "description": "The field object that needs to be added to the schema."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "AddFieldDto"
+                    }
+                  },
+                  "description": "The field object that needs to be added to the schema."
+                },
+                "description": "The field object that needs to be added to the schema."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -17353,6 +17529,25 @@
             },
             "description": "The request that contains the field names."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ConfigureUIFieldsDto"
+                    }
+                  },
+                  "description": "The request that contains the field names."
+                },
+                "description": "The request that contains the field names."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -17711,6 +17906,25 @@
               "description": "The request that contains the field ids."
             },
             "description": "The request that contains the field ids."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ReorderFieldsDto"
+                    }
+                  },
+                  "description": "The request that contains the field ids."
+                },
+                "description": "The request that contains the field ids."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -18096,6 +18310,25 @@
               "description": "The request that contains the field ids."
             },
             "description": "The request that contains the field ids."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ReorderFieldsDto"
+                    }
+                  },
+                  "description": "The request that contains the field ids."
+                },
+                "description": "The request that contains the field ids."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -18483,6 +18716,25 @@
             },
             "description": "The field object that needs to be added to the schema."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UpdateFieldDto"
+                    }
+                  },
+                  "description": "The field object that needs to be added to the schema."
+                },
+                "description": "The field object that needs to be added to the schema."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -18860,6 +19112,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -19250,6 +19503,25 @@
               "description": "The field object that needs to be added to the schema."
             },
             "description": "The field object that needs to be added to the schema."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UpdateFieldDto"
+                    }
+                  },
+                  "description": "The field object that needs to be added to the schema."
+                },
+                "description": "The field object that needs to be added to the schema."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -19647,6 +19919,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -20007,6 +20280,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -20384,6 +20658,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -20744,6 +21019,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -21121,6 +21397,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -21481,6 +21758,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -21858,6 +22136,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -22218,6 +22497,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -22595,6 +22875,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -22955,6 +23236,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -23332,6 +23614,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -23655,6 +23938,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -23986,6 +24270,25 @@
               "description": "The schema object that needs to be added to the app."
             },
             "description": "The schema object that needs to be added to the app."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "CreateSchemaDto"
+                    }
+                  },
+                  "description": "The schema object that needs to be added to the app."
+                },
+                "description": "The schema object that needs to be added to the app."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -24341,6 +24644,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -24681,6 +24985,25 @@
               "description": "The schema object that needs to updated."
             },
             "description": "The schema object that needs to updated."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UpdateSchemaDto"
+                    }
+                  },
+                  "description": "The schema object that needs to updated."
+                },
+                "description": "The schema object that needs to updated."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -25030,6 +25353,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -25197,6 +25521,25 @@
               "description": "The schema object that needs to updated."
             },
             "description": "The schema object that needs to updated."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "SynchronizeSchemaDto"
+                    }
+                  },
+                  "description": "The schema object that needs to updated."
+                },
+                "description": "The schema object that needs to updated."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -25565,6 +25908,25 @@
             },
             "description": "The schema object that needs to updated."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ChangeCategoryDto"
+                    }
+                  },
+                  "description": "The schema object that needs to updated."
+                },
+                "description": "The schema object that needs to updated."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -25923,6 +26285,25 @@
               "description": "The preview urls for the schema."
             },
             "description": "The preview urls for the schema."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ConfigurePreviewUrlsDto"
+                    }
+                  },
+                  "description": "The preview urls for the schema."
+                },
+                "description": "The preview urls for the schema."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -26283,6 +26664,25 @@
             },
             "description": "The schema scripts object that needs to updated."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "SchemaScriptsDto"
+                    }
+                  },
+                  "description": "The schema scripts object that needs to updated."
+                },
+                "description": "The schema scripts object that needs to updated."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -26642,6 +27042,25 @@
             },
             "description": "The schema rules object that needs to updated."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ConfigureFieldRulesDto"
+                    }
+                  },
+                  "description": "The schema rules object that needs to updated."
+                },
+                "description": "The schema rules object that needs to updated."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -26986,6 +27405,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -27325,6 +27745,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -27638,6 +28059,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -27763,6 +28185,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -27948,6 +28371,25 @@
               "description": "The rule object that needs to be added to the app."
             },
             "description": "The rule object that needs to be added to the app."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "CreateRuleDto"
+                    }
+                  },
+                  "description": "The rule object that needs to be added to the app."
+                },
+                "description": "The rule object that needs to be added to the app."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -28140,6 +28582,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -28294,6 +28737,25 @@
               "description": "The rule object that needs to be added to the app."
             },
             "description": "The rule object that needs to be added to the app."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UpdateRuleDto"
+                    }
+                  },
+                  "description": "The rule object that needs to be added to the app."
+                },
+                "description": "The rule object that needs to be added to the app."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -28491,6 +28953,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -28644,6 +29107,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -28835,6 +29299,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -29026,6 +29491,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -29194,6 +29660,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -29335,6 +29802,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -29472,6 +29940,25 @@
               "description": "The rule to simulate."
             },
             "description": "The rule to simulate."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "CreateRuleDto"
+                    }
+                  },
+                  "description": "The rule to simulate."
+                },
+                "description": "The rule to simulate."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -29680,6 +30167,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -29880,6 +30368,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -30035,6 +30524,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -30175,6 +30665,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -30328,6 +30819,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -30444,6 +30936,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -30565,6 +31058,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -30690,6 +31184,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -30876,6 +31371,25 @@
             },
             "description": "Plan object that needs to be changed."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ChangePlanDto"
+                    }
+                  },
+                  "description": "Plan object that needs to be changed."
+                },
+                "description": "Plan object that needs to be changed."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -31023,6 +31537,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -31209,6 +31724,25 @@
             },
             "description": "Plan object that needs to be changed."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ChangePlanDto"
+                    }
+                  },
+                  "description": "Plan object that needs to be changed."
+                },
+                "description": "Plan object that needs to be changed."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -31348,6 +31882,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -31437,6 +31972,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -31545,6 +32081,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -31661,6 +32198,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -31777,6 +32315,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -31927,6 +32466,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -32086,6 +32626,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -32222,6 +32763,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -32355,6 +32897,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -32505,6 +33048,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -32655,6 +33199,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -32797,6 +33342,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -32898,6 +33444,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -33075,6 +33622,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -33441,6 +33989,25 @@
             },
             "description": "The full data for the content item."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ContentData"
+                    }
+                  },
+                  "description": "The full data for the content item."
+                },
+                "description": "The full data for the content item."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -33784,6 +34351,25 @@
               "description": "The required query object."
             },
             "description": "The required query object."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "QueryDto"
+                    }
+                  },
+                  "description": "The required query object."
+                },
+                "description": "The required query object."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -34147,6 +34733,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -34507,6 +35094,25 @@
               "description": "The full data for the content item."
             },
             "description": "The full data for the content item."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ContentData"
+                    }
+                  },
+                  "description": "The full data for the content item."
+                },
+                "description": "The full data for the content item."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -34870,6 +35476,25 @@
               "description": "The full data for the content item."
             },
             "description": "The full data for the content item."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ContentData"
+                    }
+                  },
+                  "description": "The full data for the content item."
+                },
+                "description": "The full data for the content item."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -35246,6 +35871,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -35433,6 +36059,25 @@
               "description": "The patch for the content item."
             },
             "description": "The patch for the content item."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ContentData"
+                    }
+                  },
+                  "description": "The patch for the content item."
+                },
+                "description": "The patch for the content item."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -35782,6 +36427,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -35969,6 +36615,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -36313,6 +36960,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -36662,6 +37310,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "fileDownload"
@@ -36807,6 +37456,25 @@
               "description": "The import request."
             },
             "description": "The import request."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ImportContentsDto"
+                    }
+                  },
+                  "description": "The import request."
+                },
+                "description": "The import request."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -37027,6 +37695,25 @@
               "description": "The bulk update request."
             },
             "description": "The bulk update request."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "BulkUpdateContentsDto"
+                    }
+                  },
+                  "description": "The bulk update request."
+                },
+                "description": "The bulk update request."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -37265,6 +37952,25 @@
               "description": "The status request."
             },
             "description": "The status request."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ChangeStatusDto"
+                    }
+                  },
+                  "description": "The status request."
+                },
+                "description": "The status request."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -37618,6 +38324,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -37961,6 +38668,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -38304,6 +39012,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -38639,6 +39348,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -38809,6 +39519,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -39009,6 +39720,25 @@
               "description": "The comment object that needs to created."
             },
             "description": "The comment object that needs to created."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UpsertCommentDto"
+                    }
+                  },
+                  "description": "The comment object that needs to created."
+                },
+                "description": "The comment object that needs to created."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -39217,6 +39947,25 @@
             },
             "description": "The comment object that needs to updated."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UpsertCommentDto"
+                    }
+                  },
+                  "description": "The comment object that needs to updated."
+                },
+                "description": "The comment object that needs to updated."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -39398,6 +40147,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -39561,6 +40311,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -39734,6 +40485,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -39898,6 +40650,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "fileDownload"
@@ -40025,6 +40778,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -40188,6 +40942,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "fileDownload"
@@ -40296,6 +41051,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -40443,6 +41199,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -40558,6 +41315,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -40676,6 +41434,25 @@
               "description": "The backup to restore."
             },
             "description": "The backup to restore."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "RestoreRequestDto"
+                    }
+                  },
+                  "description": "The backup to restore."
+                },
+                "description": "The backup to restore."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -41032,6 +41809,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "fileDownload"
@@ -41322,6 +42100,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "fileDownload"
@@ -41456,6 +42235,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -41633,6 +42413,25 @@
               "description": "The asset folder object that needs to be added to the App."
             },
             "description": "The asset folder object that needs to be added to the App."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "CreateAssetFolderDto"
+                    }
+                  },
+                  "description": "The asset folder object that needs to be added to the App."
+                },
+                "description": "The asset folder object that needs to be added to the App."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -41822,6 +42621,25 @@
             },
             "description": "The asset folder object that needs to updated."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "RenameAssetFolderDto"
+                    }
+                  },
+                  "description": "The asset folder object that needs to updated."
+                },
+                "description": "The asset folder object that needs to updated."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -41996,6 +42814,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -42164,6 +42983,25 @@
             },
             "description": "The asset folder object that needs to updated."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "MoveAssetFolderDto"
+                    }
+                  },
+                  "description": "The asset folder object that needs to updated."
+                },
+                "description": "The asset folder object that needs to updated."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -42317,6 +43155,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -42492,6 +43331,25 @@
               "description": "The required request object."
             },
             "description": "The required request object."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "RenameTagDto"
+                    }
+                  },
+                  "description": "The required request object."
+                },
+                "description": "The required request object."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -42752,6 +43610,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -43006,6 +43865,30 @@
               "contentType": "multipart/form-data"
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "fileUpload",
+                  "value": {
+                    "name": "assets_postAsset_Request",
+                    "properties": [
+                      {
+                        "type": "file",
+                        "value": {
+                          "type": "file",
+                          "key": "file",
+                          "isOptional": true,
+                          "contentType": "multipart/form-data"
+                        }
+                      }
+                    ]
+                  },
+                  "contentType": "multipart/form-data"
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -43239,6 +44122,25 @@
             },
             "description": "The required query object."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "QueryDto"
+                    }
+                  },
+                  "description": "The required query object."
+                },
+                "description": "The required query object."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -43468,6 +44370,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -43715,6 +44618,30 @@
               },
               "contentType": "multipart/form-data"
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "fileUpload",
+                  "value": {
+                    "name": "assets_postUpsertAsset_Request",
+                    "properties": [
+                      {
+                        "type": "file",
+                        "value": {
+                          "type": "file",
+                          "key": "file",
+                          "isOptional": true,
+                          "contentType": "multipart/form-data"
+                        }
+                      }
+                    ]
+                  },
+                  "contentType": "multipart/form-data"
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -43967,6 +44894,25 @@
             },
             "description": "The asset object that needs to updated."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "AnnotateAssetDto"
+                    }
+                  },
+                  "description": "The asset object that needs to updated."
+                },
+                "description": "The asset object that needs to updated."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -44212,6 +45158,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -44361,6 +45308,25 @@
               "description": "The bulk update request."
             },
             "description": "The bulk update request."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "BulkUpdateAssetsDto"
+                    }
+                  },
+                  "description": "The bulk update request."
+                },
+                "description": "The bulk update request."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -44577,6 +45543,30 @@
               },
               "contentType": "multipart/form-data"
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "fileUpload",
+                  "value": {
+                    "name": "assets_putAssetContent_Request",
+                    "properties": [
+                      {
+                        "type": "file",
+                        "value": {
+                          "type": "file",
+                          "key": "file",
+                          "isOptional": true,
+                          "contentType": "multipart/form-data"
+                        }
+                      }
+                    ]
+                  },
+                  "contentType": "multipart/form-data"
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -44829,6 +45819,25 @@
             },
             "description": "The asset object that needs to updated."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "MoveAssetDto"
+                    }
+                  },
+                  "description": "The asset object that needs to updated."
+                },
+                "description": "The asset object that needs to updated."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -45040,6 +46049,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -45195,6 +46205,25 @@
               "description": "The values to update."
             },
             "description": "The values to update."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UpdateAssetScriptsDto"
+                    }
+                  },
+                  "description": "The values to update."
+                },
+                "description": "The values to update."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -45356,6 +46385,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -45520,6 +46550,25 @@
               "description": "Client object that needs to be added to the app."
             },
             "description": "Client object that needs to be added to the app."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "CreateClientDto"
+                    }
+                  },
+                  "description": "Client object that needs to be added to the app."
+                },
+                "description": "Client object that needs to be added to the app."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -45726,6 +46775,25 @@
             },
             "description": "Client object that needs to be updated."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UpdateClientDto"
+                    }
+                  },
+                  "description": "Client object that needs to be updated."
+                },
+                "description": "Client object that needs to be updated."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -45913,6 +46981,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -46076,6 +47145,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -46241,6 +47311,25 @@
               "description": "Contributor object that needs to be added to the app."
             },
             "description": "Contributor object that needs to be added to the app."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "AssignContributorDto"
+                    }
+                  },
+                  "description": "Contributor object that needs to be added to the app."
+                },
+                "description": "Contributor object that needs to be added to the app."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -46415,6 +47504,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -46597,6 +47687,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -46762,6 +47853,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "fileDownload"
@@ -46889,6 +47981,30 @@
               },
               "contentType": "multipart/form-data"
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "fileUpload",
+                  "value": {
+                    "name": "apps_uploadImage_Request",
+                    "properties": [
+                      {
+                        "type": "file",
+                        "value": {
+                          "type": "file",
+                          "key": "file",
+                          "isOptional": true,
+                          "contentType": "multipart/form-data"
+                        }
+                      }
+                    ]
+                  },
+                  "contentType": "multipart/form-data"
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -47068,6 +48184,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -47236,6 +48353,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -47399,6 +48517,25 @@
               "description": "The language to add to the app."
             },
             "description": "The language to add to the app."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "AddLanguageDto"
+                    }
+                  },
+                  "description": "The language to add to the app."
+                },
+                "description": "The language to add to the app."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -47604,6 +48741,25 @@
             },
             "description": "The language object."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UpdateLanguageDto"
+                    }
+                  },
+                  "description": "The language object."
+                },
+                "description": "The language object."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -47790,6 +48946,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -47953,6 +49110,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -48118,6 +49276,25 @@
               "description": "Role object that needs to be added to the app."
             },
             "description": "Role object that needs to be added to the app."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "AddRoleDto"
+                    }
+                  },
+                  "description": "Role object that needs to be added to the app."
+                },
+                "description": "Role object that needs to be added to the app."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -48292,6 +49469,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -48459,6 +49637,25 @@
               "description": "Role to be updated for the app."
             },
             "description": "Role to be updated for the app."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UpdateRoleDto"
+                    }
+                  },
+                  "description": "Role to be updated for the app."
+                },
+                "description": "Role to be updated for the app."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -48656,6 +49853,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -48803,6 +50001,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -48950,6 +50149,25 @@
               "description": "The app object that needs to be added to Squidex."
             },
             "description": "The app object that needs to be added to Squidex."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "CreateAppDto"
+                    }
+                  },
+                  "description": "The app object that needs to be added to Squidex."
+                },
+                "description": "The app object that needs to be added to Squidex."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -49128,6 +50346,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -49281,6 +50500,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -49450,6 +50670,25 @@
               "description": "The values to update."
             },
             "description": "The values to update."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UpdateAppDto"
+                    }
+                  },
+                  "description": "The values to update."
+                },
+                "description": "The values to update."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -49624,6 +50863,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -49772,6 +51012,25 @@
               "description": "The team information."
             },
             "description": "The team information."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "TransferToTeamDto"
+                    }
+                  },
+                  "description": "The team information."
+                },
+                "description": "The team information."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -49946,6 +51205,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -50117,6 +51377,25 @@
               "description": "The values to update."
             },
             "description": "The values to update."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UpdateAppSettingsDto"
+                    }
+                  },
+                  "description": "The values to update."
+                },
+                "description": "The values to update."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -50319,6 +51598,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -50488,6 +51768,25 @@
               "description": "The new workflow."
             },
             "description": "The new workflow."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "AddWorkflowDto"
+                    }
+                  },
+                  "description": "The new workflow."
+                },
+                "description": "The new workflow."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -50699,6 +51998,25 @@
             },
             "description": "The new workflow."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UpdateWorkflowDto"
+                    }
+                  },
+                  "description": "The new workflow."
+                },
+                "description": "The new workflow."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -50897,6 +52215,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",

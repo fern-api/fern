@@ -241,6 +241,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "stream",
@@ -306,6 +307,9 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {
+          "requests": []
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -368,6 +372,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "stream",
@@ -433,6 +438,9 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {
+          "requests": []
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -495,6 +503,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "stream",
@@ -565,6 +574,9 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {
+          "requests": []
+        },
         "response": {
           "type": {
             "type": "reference",
