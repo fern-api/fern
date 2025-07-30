@@ -28,12 +28,6 @@
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
-    "format": "pnpm format:src && pnpm format:package-json",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "format:package-json": "sort-package-json \"package.json\"",
-    "format:src": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",
-    "lint:eslint:fix": "pnpm lint:eslint --fix",
     "test": "vitest --passWithNoTests --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
@@ -47,7 +41,6 @@
     "@fern-fern/ir-sdk": "^58.2.0",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
-    "sort-package-json": "3.3.1",
     "typescript": "5.7.2",
     "vitest": "^2.1.9"
   }
