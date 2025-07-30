@@ -40,7 +40,6 @@
     "@fern-api/configs": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/dynamic-ir-sdk": "^58.2.0",
-    "@types/jest": "^29.5.14",
     "@fern-api/path-utils": "workspace:*",
     "@fern-api/ruby-ast": "workspace:*",
     "@types/node": "18.15.3",
