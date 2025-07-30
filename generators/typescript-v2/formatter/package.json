@@ -6,14 +6,9 @@
     "url": "https://github.com/fern-api/fern.git",
     "directory": "generators/typescript-v2/formatter"
   },
-  "files": [
-    "lib"
-  ],
+  "sideEffects": false,
   "type": "module",
-  "source": "src/index.ts",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
-  "exports":{
+  "exports": {
     ".": {
       "development": "./src/index.ts",
       "source": "./src/index.ts",
@@ -22,15 +17,20 @@
       "default": "./lib/index.js"
     }
   },
-  "sideEffects": false,
+  "main": "lib/index.js",
+  "source": "src/index.ts",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
+    "depcheck": "depcheck",
     "test": "vitest --passWithNoTests --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
-    "test:update": "vitest --passWithNoTests --run -u",
-    "depcheck": "depcheck"
+    "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {
     "@fern-api/base-generator": "workspace:*",
@@ -39,8 +39,8 @@
   "devDependencies": {
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
-    "@types/prettier2": "npm:@types/prettier@^2.7.3",
     "@types/node": "18.15.3",
+    "@types/prettier2": "npm:@types/prettier@^2.7.3",
     "depcheck": "^1.4.7",
     "typescript": "5.7.2",
     "vitest": "^2.1.9"

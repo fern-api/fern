@@ -1,20 +1,15 @@
 {
   "name": "@fern-api/cli-migrations",
   "version": "0.0.0",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern.git",
     "directory": "packages/cli/yaml/yaml-migrations"
   },
-  "private": true,
-  "files": [
-    "lib"
-  ],
+  "sideEffects": false,
   "type": "module",
-  "source": "src/index.ts",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
-  "exports":{
+  "exports": {
     ".": {
       "development": "./src/index.ts",
       "source": "./src/index.ts",
@@ -23,15 +18,20 @@
       "default": "./lib/index.js"
     }
   },
-  "sideEffects": false,
+  "main": "lib/index.js",
+  "source": "src/index.ts",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
+    "depcheck": "depcheck",
     "test": "vitest --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
-    "test:update": "vitest --run -u",
-    "depcheck": "depcheck"
+    "test:update": "vitest --run -u"
   },
   "dependencies": {
     "@fern-api/configuration-loader": "workspace:*",
@@ -50,12 +50,12 @@
     "zod": "^3.22.3"
   },
   "devDependencies": {
+    "@fern-api/configs": "workspace:*",
     "@types/inquirer": "^9.0.7",
     "@types/js-yaml": "^4.0.8",
-    "tmp-promise": "^3.0.3",
-    "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
+    "tmp-promise": "^3.0.3",
     "typescript": "5.7.2",
     "vitest": "^2.1.9"
   }
