@@ -36,7 +36,7 @@
     "@fern-api/configs": "workspace:*",
     "@fern-api/typescript-browser-compatible-base": "workspace:*",
     "depcheck": "^1.4.7",
-    "typescript": "5.7.2",
+    "typescript": "5.8.3",
     "vitest": "^2.1.9"
   }
 }

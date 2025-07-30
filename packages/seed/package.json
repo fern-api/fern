@@ -50,7 +50,7 @@
     "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
-    "typescript": "5.7.2",
+    "typescript": "5.8.3",
     "vitest": "^2.1.9",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/fiddle-sdk": "0.0.584",

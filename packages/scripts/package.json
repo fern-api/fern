@@ -44,7 +44,7 @@
     "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
-    "typescript": "5.7.2",
+    "typescript": "5.8.3",
     "@types/yargs": "^17.0.32",
     "tsup": "^8.5.0",
     "yaml": "^2.4.5",

@@ -51,7 +51,7 @@
     "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
-    "typescript": "5.7.2",
+    "typescript": "5.8.3",
     "@types/express": "^4.17.21",
     "@types/js-yaml": "^4.0.8",
     "@types/node-fetch": "2.6.9",

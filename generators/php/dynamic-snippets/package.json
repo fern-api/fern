@@ -48,7 +48,7 @@
     "lodash-es": "^4.17.21",
     "tsup": "^8.5.0",
     "string.prototype.replaceall": "^1.0.10",
-    "typescript": "5.7.2",
+    "typescript": "5.8.3",
     "vitest": "^2.1.8"
   }
 }

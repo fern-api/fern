@@ -87,7 +87,7 @@
     "stylelint-config-standard-scss": "^5.0.0",
     "tsx": "^4.20.3",
     "turbo": "^2.5.4",
-    "typescript": "5.7.2",
+    "typescript": "5.8.3",
     "vitest": "^2.1.9",
     "tsup": "^8.5.0"
   },
