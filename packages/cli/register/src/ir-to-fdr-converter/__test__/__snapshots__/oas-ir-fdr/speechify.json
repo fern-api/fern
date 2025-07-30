@@ -1928,7 +1928,7 @@
           "request": {
             "type": {
               "type": "json",
-              "contentType": "application/json",
+              "contentType": "application/x-www-form-urlencoded",
               "shape": {
                 "type": "reference",
                 "value": {

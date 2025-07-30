@@ -741,6 +741,7 @@
               "safeName": "ListPets"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -956,6 +957,7 @@
               "safeName": "ListPets"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {

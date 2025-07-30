@@ -188,6 +188,7 @@
               "safeName": "ExampleEndpoint"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {

@@ -397,6 +397,7 @@
               "safeName": "GetAlpha"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -609,6 +610,7 @@
               "safeName": "GetBeta"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -821,6 +823,7 @@
               "safeName": "GetGamma"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -1033,6 +1036,7 @@
               "safeName": "GetDelta"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -1245,6 +1249,7 @@
               "safeName": "GetMu"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -1457,6 +1462,7 @@
               "safeName": "GetOmega"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -1669,6 +1675,7 @@
               "safeName": "GetZeta"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -1881,6 +1888,7 @@
               "safeName": "GetEta"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
