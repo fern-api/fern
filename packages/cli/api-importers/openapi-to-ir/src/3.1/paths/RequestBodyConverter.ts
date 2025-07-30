@@ -214,11 +214,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         return undefined;
     }
 
-    private handleBinaryContent({
-        contentType
-    }: {
-        contentType: string;
-    }): RequestBodyConverter.Output | undefined {
+    private handleBinaryContent({ contentType }: { contentType: string }): RequestBodyConverter.Output | undefined {
         const mediaTypeObject = this.mediaType;
         if (mediaTypeObject == null) {
             return undefined;

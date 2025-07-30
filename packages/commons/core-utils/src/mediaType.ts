@@ -24,10 +24,10 @@ export class MediaType {
         if (input == null || input.trim() === "") {
             return null;
         }
-        
+
         // Normalize input by trimming whitespace
         const normalizedInput = input.trim();
-        
+
         const parsed = WhatwgMIMEType.parse(normalizedInput);
         if (parsed == null) {
             return null;
@@ -176,23 +176,26 @@ export class MediaType {
     }
 
     public isExcel(): boolean {
-        return this.isApplication() && (
-            this.subtype === "vnd.ms-excel" ||
-            this.subtype === "vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        return (
+            this.isApplication() &&
+            (this.subtype === "vnd.ms-excel" ||
+                this.subtype === "vnd.openxmlformats-officedocument.spreadsheetml.sheet")
         );
     }
 
     public isWord(): boolean {
-        return this.isApplication() && (
-            this.subtype === "msword" ||
-            this.subtype === "vnd.openxmlformats-officedocument.wordprocessingml.document"
+        return (
+            this.isApplication() &&
+            (this.subtype === "msword" ||
+                this.subtype === "vnd.openxmlformats-officedocument.wordprocessingml.document")
         );
     }
 
     public isPowerPoint(): boolean {
-        return this.isApplication() && (
-            this.subtype === "vnd.ms-powerpoint" ||
-            this.subtype === "vnd.openxmlformats-officedocument.presentationml.presentation"
+        return (
+            this.isApplication() &&
+            (this.subtype === "vnd.ms-powerpoint" ||
+                this.subtype === "vnd.openxmlformats-officedocument.presentationml.presentation")
         );
     }
 
@@ -281,7 +284,7 @@ export class MediaType {
     }
 
     public isXML(): boolean {
-        return this.mimeType.isXML() || this.isApplication() && this.subtype.endsWith("+xml");
+        return this.mimeType.isXML() || (this.isApplication() && this.subtype.endsWith("+xml"));
     }
 
     public isJavaScript(): boolean {
@@ -291,37 +294,38 @@ export class MediaType {
     /** Utility Methods */
 
     public isBinary(): boolean {
-        return this.isImage() ||
-               this.isAudio() ||
-               this.isVideo() ||
-               this.isFont() ||
-               this.isOctetStream() ||
-               this.isPDF() ||
-               this.isZip() ||
-               this.isGzip() ||
-               this.isTar() ||
-               this.isBrotli()
+        return (
+            this.isImage() ||
+            this.isAudio() ||
+            this.isVideo() ||
+            this.isFont() ||
+            this.isOctetStream() ||
+            this.isPDF() ||
+            this.isZip() ||
+            this.isGzip() ||
+            this.isTar() ||
+            this.isBrotli()
+        );
     }
 
     public isTextBased(): boolean {
-        return this.isText() ||
-               this.isJSON() ||
-               this.isXML() ||
-               this.isHTML() ||
-               this.isJavaScript() ||
-               this.isCSS() ||
-               this.isCSV() ||
-               this.isMarkdown() ||
-               this.isSVG() ||
-               this.isDNS() ||
-               this.isApplicationText();
+        return (
+            this.isText() ||
+            this.isJSON() ||
+            this.isXML() ||
+            this.isHTML() ||
+            this.isJavaScript() ||
+            this.isCSS() ||
+            this.isCSV() ||
+            this.isMarkdown() ||
+            this.isSVG() ||
+            this.isDNS() ||
+            this.isApplicationText()
+        );
     }
 
     public isStructuredData(): boolean {
-        return this.isJSON() ||
-               this.isXML() ||
-               this.isCSV() ||
-               this.isHTML();
+        return this.isJSON() || this.isXML() || this.isCSV() || this.isHTML();
     }
 
     public isFormData(): boolean {
@@ -329,10 +333,6 @@ export class MediaType {
     }
 
     public isCompressed(): boolean {
-        return this.isGzip() ||
-               this.isBrotli() ||
-               this.isDeflate() ||
-               this.isZip() ||
-               this.isTar();
+        return this.isGzip() || this.isBrotli() || this.isDeflate() || this.isZip() || this.isTar();
     }
 }
