@@ -141,6 +141,7 @@ export function convertHttpService({
                           )
                         : [],
                 requestBody: convertHttpRequestBody({ request: endpoint.request, file }),
+                v2RequestBodies: undefined,
                 sdkRequest: convertHttpSdkRequest({
                     service: serviceDefinition,
                     request: endpoint.request,

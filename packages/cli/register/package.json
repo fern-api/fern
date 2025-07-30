@@ -1,20 +1,15 @@
 {
   "name": "@fern-api/register",
   "version": "0.0.0",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern.git",
     "directory": "packages/cli/register"
   },
-  "private": true,
-  "files": [
-    "lib"
-  ],
+  "sideEffects": false,
   "type": "module",
-  "source": "src/index.ts",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
-  "exports":{
+  "exports": {
     ".": {
       "development": "./src/index.ts",
       "source": "./src/index.ts",
@@ -23,19 +18,20 @@
       "default": "./lib/index.js"
     }
   },
-  "sideEffects": false,
+  "main": "lib/index.js",
+  "source": "src/index.ts",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
+    "depcheck": "depcheck",
     "test": "vitest --run --passWithNoTests",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
-    "test:update": "vitest --run --passWithNoTests -u",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",
-    "lint:eslint:fix": "yarn lint:eslint --fix",
-    "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "depcheck": "depcheck"
+    "test:update": "vitest --run --passWithNoTests -u"
   },
   "dependencies": {
     "@fern-api/api-workspace-commons": "workspace:*",
@@ -44,7 +40,6 @@
     "@fern-api/configuration": "workspace:*",
     "@fern-api/core": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-fern/fdr-cjs-sdk": "0.138.11-2322dc4c6",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
@@ -52,14 +47,15 @@
     "@fern-api/lazy-fern-workspace": "workspace:*",
     "@fern-api/project-loader": "workspace:*",
     "@fern-api/task-context": "workspace:*",
+    "@fern-fern/fdr-cjs-sdk": "0.139.5-0b0fae69f",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
+    "@types/lodash-es": "^4.17.12",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "typescript": "5.7.2",
-    "@types/lodash-es": "^4.17.12",
     "vitest": "^2.1.9"
   }
 }

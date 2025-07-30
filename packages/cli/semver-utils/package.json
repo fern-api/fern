@@ -1,20 +1,15 @@
 {
   "name": "@fern-api/semver-utils",
   "version": "0.0.0",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern.git",
     "directory": "packages/cli/semver-utils"
   },
-  "private": true,
-  "files": [
-    "lib"
-  ],
+  "sideEffects": false,
   "type": "module",
-  "source": "src/index.ts",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
-  "exports":{
+  "exports": {
     ".": {
       "development": "./src/index.ts",
       "source": "./src/index.ts",
@@ -23,19 +18,20 @@
       "default": "./lib/index.js"
     }
   },
-  "sideEffects": false,
+  "main": "lib/index.js",
+  "source": "src/index.ts",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
+    "depcheck": "depcheck",
     "test": "vitest --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
-    "test:update": "vitest --run -u",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",
-    "lint:eslint:fix": "yarn lint:eslint --fix",
-    "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "depcheck": "depcheck"
+    "test:update": "vitest --run -u"
   },
   "dependencies": {
     "semver-diff": "^4.0.0"

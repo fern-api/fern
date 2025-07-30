@@ -2022,6 +2022,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                         "v2Examples": null,
                         "contentType": null
                     },
+                    "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
@@ -9111,6 +9112,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "queryParameters": [],
                     "headers": [],
                     "requestBody": null,
+                    "v2RequestBodies": null,
                     "sdkRequest": null,
                     "response": {
                         "body": null,
@@ -9192,6 +9194,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "queryParameters": [],
                     "headers": [],
                     "requestBody": null,
+                    "v2RequestBodies": null,
                     "sdkRequest": null,
                     "response": {
                         "body": null,
@@ -9338,6 +9341,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "queryParameters": [],
                     "headers": [],
                     "requestBody": null,
+                    "v2RequestBodies": null,
                     "sdkRequest": null,
                     "response": {
                         "body": null,
@@ -11055,6 +11059,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                     "queryParameters": [],
                     "headers": [],
                     "requestBody": null,
+                    "v2RequestBodies": null,
                     "sdkRequest": null,
                     "response": {
                         "body": {
@@ -13630,6 +13635,7 @@ exports[`ir > {"name":"packages"} 1`] = `
                     "queryParameters": [],
                     "headers": [],
                     "requestBody": null,
+                    "v2RequestBodies": null,
                     "sdkRequest": null,
                     "response": {
                         "body": null,
@@ -15321,6 +15327,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                         "contentType": null,
                         "v2Examples": null
                     },
+                    "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "justRequestBody",
@@ -16101,6 +16108,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                         "contentType": null,
                         "v2Examples": null
                     },
+                    "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "justRequestBody",
@@ -18091,6 +18099,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                         "contentType": null,
                         "v2Examples": null
                     },
+                    "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "justRequestBody",
@@ -20377,6 +20386,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                         "contentType": null,
                         "v2Examples": null
                     },
+                    "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "justRequestBody",
@@ -30342,6 +30352,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "contentType": null,
                         "v2Examples": null
                     },
+                    "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "justRequestBody",
@@ -30957,6 +30968,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "contentType": null,
                         "v2Examples": null
                     },
+                    "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "justRequestBody",
@@ -32979,6 +32991,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     ],
                     "headers": [],
                     "requestBody": null,
+                    "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
@@ -35173,6 +35186,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "queryParameters": [],
                     "headers": [],
                     "requestBody": null,
+                    "v2RequestBodies": null,
                     "sdkRequest": null,
                     "response": {
                         "body": null,
@@ -38329,6 +38343,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
                     "queryParameters": [],
                     "headers": [],
                     "requestBody": null,
+                    "v2RequestBodies": null,
                     "sdkRequest": null,
                     "response": {
                         "body": {
@@ -38512,6 +38527,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
                         "v2Examples": null,
                         "contentType": null
                     },
+                    "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
@@ -39668,6 +39684,7 @@ exports[`ir > {"name":"variables"} 1`] = `
                     "queryParameters": [],
                     "headers": [],
                     "requestBody": null,
+                    "v2RequestBodies": null,
                     "sdkRequest": null,
                     "response": {
                         "body": null,

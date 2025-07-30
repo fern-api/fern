@@ -260,6 +260,7 @@
                         "v2Examples": null,
                         "contentType": "application/merge-patch+json"
                     },
+                    "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",

@@ -91,6 +91,28 @@
             }
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "nullable",
+                    "itemType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -179,6 +201,23 @@
               }
             }
           }
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "getSearchWithUnion_Request"
+                  }
+                }
+              }
+            }
+          ]
         },
         "response": {
           "type": {
@@ -271,6 +310,26 @@
               }
             }
           }
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "nullable",
+                    "itemType": {
+                      "type": "id",
+                      "value": "SearchWithUnionAndNullGetRequestBodyContentApplicationJsonSchema"
+                    }
+                  }
+                }
+              }
+            }
+          ]
         },
         "response": {
           "type": {

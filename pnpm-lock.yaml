@@ -60,6 +60,9 @@ importers:
       nx:
         specifier: ^21.3.8
         version: 21.3.8
+      sort-package-json:
+        specifier: 3.3.1
+        version: 3.3.1
       stylelint:
         specifier: ^14.11.0
         version: 14.16.1
@@ -76,8 +79,8 @@ importers:
         specifier: ^4.20.3
         version: 4.20.3
       turbo:
-        specifier: ^2.5.4
-        version: 2.5.4
+        specifier: ^2.5.5
+        version: 2.5.5
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -1987,9 +1990,6 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      sort-package-json:
-        specifier: 3.3.1
-        version: 3.3.1
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2021,9 +2021,6 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      sort-package-json:
-        specifier: 3.3.1
-        version: 3.3.1
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2064,9 +2061,6 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      sort-package-json:
-        specifier: 3.3.1
-        version: 3.3.1
       tsup:
         specifier: ^8.5.0
         version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
@@ -2118,9 +2112,6 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      sort-package-json:
-        specifier: 3.3.1
-        version: 3.3.1
       tsup:
         specifier: ^8.5.0
         version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
@@ -2296,9 +2287,6 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      eslint:
-        specifier: ^9.16.0
-        version: 9.29.0(jiti@2.5.1)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2320,9 +2308,6 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      eslint:
-        specifier: ^9.16.0
-        version: 9.29.0(jiti@2.5.1)
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -3072,12 +3057,6 @@ importers:
       sass:
         specifier: ^1.72.0
         version: 1.89.2
-      stylelint:
-        specifier: ^16.2.1
-        version: 16.21.0(typescript@5.7.2)
-      typescript:
-        specifier: 5.7.2
-        version: 5.7.2
       vite:
         specifier: ^5.4.12
         version: 5.4.19(@types/node@18.15.3)(sass@1.89.2)(terser@5.43.1)
@@ -4825,8 +4804,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons/path-utils
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.11-2322dc4c6
-        version: 0.138.11-2322dc4c6
+        specifier: 0.139.5-0b0fae69f
+        version: 0.139.5-0b0fae69f
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
@@ -4868,8 +4847,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.11-2322dc4c6
-        version: 0.138.11-2322dc4c6
+        specifier: 0.139.5-0b0fae69f
+        version: 0.139.5-0b0fae69f
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
@@ -4941,8 +4920,8 @@ importers:
         specifier: workspace:*
         version: link:../../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.11-2322dc4c6
-        version: 0.138.11-2322dc4c6
+        specifier: 0.139.5-0b0fae69f
+        version: 0.139.5-0b0fae69f
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
@@ -4987,8 +4966,8 @@ importers:
         specifier: workspace:*
         version: link:../../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.11-2322dc4c6
-        version: 0.138.11-2322dc4c6
+        specifier: 0.139.5-0b0fae69f
+        version: 0.139.5-0b0fae69f
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -5030,8 +5009,8 @@ importers:
         specifier: workspace:*
         version: link:../../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.11-2322dc4c6
-        version: 0.138.11-2322dc4c6
+        specifier: 0.139.5-0b0fae69f
+        version: 0.139.5-0b0fae69f
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -5097,8 +5076,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.11-2322dc4c6
-        version: 0.138.11-2322dc4c6
+        specifier: 0.139.5-0b0fae69f
+        version: 0.139.5-0b0fae69f
       estree-walker:
         specifier: ^3.0.3
         version: 3.0.3
@@ -5179,8 +5158,8 @@ importers:
         specifier: workspace:*
         version: link:../docs-resolver
       '@fern-api/fdr-sdk':
-        specifier: 0.138.11-2322dc4c6
-        version: 0.138.11-2322dc4c6(typescript@5.7.2)
+        specifier: 0.139.5-0b0fae69f
+        version: 0.139.5-0b0fae69f(typescript@5.7.2)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -5288,8 +5267,8 @@ importers:
         specifier: 0.0.65
         version: 0.0.65(typescript@5.7.2)
       '@fern-api/fdr-sdk':
-        specifier: 0.138.11-2322dc4c6
-        version: 0.138.11-2322dc4c6(typescript@5.7.2)
+        specifier: 0.139.5-0b0fae69f
+        version: 0.139.5-0b0fae69f(typescript@5.7.2)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -5315,8 +5294,8 @@ importers:
         specifier: 0.129.4-b6c699ad2
         version: 0.129.4-b6c699ad2
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.11-2322dc4c6
-        version: 0.138.11-2322dc4c6
+        specifier: 0.139.5-0b0fae69f
+        version: 0.139.5-0b0fae69f
       '@open-rpc/meta-schema':
         specifier: ^1.14.9
         version: 1.14.9
@@ -5382,8 +5361,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons/logging-execa
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.11-2322dc4c6
-        version: 0.138.11-2322dc4c6
+        specifier: 0.139.5-0b0fae69f
+        version: 0.139.5-0b0fae69f
       execa:
         specifier: ^5.1.1
         version: 5.1.1
@@ -5728,9 +5707,6 @@ importers:
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../../workspace/loader
-      prettier:
-        specifier: ^3.4.2
-        version: 3.5.3
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -6222,8 +6198,8 @@ importers:
         specifier: workspace:*
         version: link:../../../workspace/loader
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.11-2322dc4c6
-        version: 0.138.11-2322dc4c6
+        specifier: 0.139.5-0b0fae69f
+        version: 0.139.5-0b0fae69f
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
@@ -6644,8 +6620,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.11-2322dc4c6
-        version: 0.138.11-2322dc4c6
+        specifier: 0.139.5-0b0fae69f
+        version: 0.139.5-0b0fae69f
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -7053,9 +7029,6 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      eslint:
-        specifier: ^9.16.0
-        version: 9.29.0(jiti@2.5.1)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -7078,8 +7051,8 @@ importers:
         specifier: workspace:*
         version: link:../../docs-resolver
       '@fern-api/fdr-sdk':
-        specifier: 0.138.11-2322dc4c6
-        version: 0.138.11-2322dc4c6(typescript@5.7.2)
+        specifier: 0.139.5-0b0fae69f
+        version: 0.139.5-0b0fae69f(typescript@5.7.2)
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../../fern-definition/schema
@@ -7517,9 +7490,6 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      sort-package-json:
-        specifier: 3.3.1
-        version: 3.3.1
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -7539,8 +7509,8 @@ importers:
         specifier: 0.14.3-1-g14981f0
         version: 0.14.3-1-g14981f0
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.11-2322dc4c6
-        version: 0.138.11-2322dc4c6
+        specifier: 0.139.5-0b0fae69f
+        version: 0.139.5-0b0fae69f
       '@fern-fern/fdr-test-sdk':
         specifier: ^0.0.5297
         version: 0.0.5297
@@ -7605,9 +7575,6 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      tsup:
-        specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -9050,8 +9017,8 @@ packages:
   '@fern-api/dynamic-ir-sdk@58.2.0':
     resolution: {integrity: sha512-b5uJwu4nbQ+Jj8DoRMJNyI7A8oureAj0I7n55DS78HPadK0AxQnINboGBfhvwE365mkvwu6KM2FrQIZ3RQdI7A==}
 
-  '@fern-api/fdr-sdk@0.138.11-2322dc4c6':
-    resolution: {integrity: sha512-zvpIr+xw/HwCY84C8Jo1ccnHX9Tnx5EFlqCARWzIxSzk1J3MwRuh6xr+yhmAgpA8bROObFgnMkmzk2xGx8RD7A==}
+  '@fern-api/fdr-sdk@0.139.5-0b0fae69f':
+    resolution: {integrity: sha512-G3IzsuhnKGJqRSP2PEsrMKnObNnhBwlx/lJgD/dxnCikBKjerZgCb5+tRVTvMDzRi3v9juZ76Hea+lZn22DOrg==}
 
   '@fern-api/logger@0.4.24-rc1':
     resolution: {integrity: sha512-yh0E2F3K3IPnJZcE4dv+u8I51iKgTgv/reinKo4K5YmYEG1iLtw5vBEYMOPkQmsYFPAKIh++OMB/6TrsahMWew==}
@@ -9068,8 +9035,8 @@ packages:
   '@fern-api/ui-core-utils@0.129.4-b6c699ad2':
     resolution: {integrity: sha512-V1jfV4u5fhpWEoLqCIA1QtRGpRR0NXyk68VGEHmEsezwA/gNF4587MJp5FWN59YsZmRt2hozODnp/umJ/iwkPg==}
 
-  '@fern-api/ui-core-utils@0.138.11-2322dc4c6':
-    resolution: {integrity: sha512-lGeY+wnEum5w/YTYuKqoch5MI6fYu78XXKmPxhKVYzWAyJpD4Xc2IJGddWvp7dKF5IL+ZSQpgdGfPauoLp2hXA==}
+  '@fern-api/ui-core-utils@0.139.5-0b0fae69f':
+    resolution: {integrity: sha512-Wqs1zRAqZ8NU89lYhdb1dx0AVaWBPQOR6kc+zwOAScOlGhRVO2UUKJtpHulAW9gSSggxalZo8JaR/5t33NIdMQ==}
 
   '@fern-api/venus-api-sdk@0.14.3-1-g14981f0':
     resolution: {integrity: sha512-sOQH36HUDznonYxtdPvXiGrURqLcSBE4DvY5CMfbLd+qCxgkuGQnx88VUB8AXKdr5g04NqJsh4OWs48fgt4Lag==}
@@ -9077,8 +9044,8 @@ packages:
   '@fern-fern/docs-config@0.0.80':
     resolution: {integrity: sha512-wAZCNxwM4qIPn3idoIihPP65KWPjNuoTSfdP4+5f8K2jJLgs5cdkY0pm4cQlGWvi5K6b+lfbUWDaslnXscJ2gQ==}
 
-  '@fern-fern/fdr-cjs-sdk@0.138.11-2322dc4c6':
-    resolution: {integrity: sha512-bXVtTU7Y9b9SFupbXD/8uRrZsaOoiaWkxOL8yszt5PInycADgJ7NtsmVU72wingRa7CJnNJClksU3ddfPMaRow==}
+  '@fern-fern/fdr-cjs-sdk@0.139.5-0b0fae69f':
+    resolution: {integrity: sha512-2snYzuQTLBxTYXxXP1Wwl4yctsdyRSN/16vzGuTKwgeB3xVxVhivvrzjEpg1bXWJnF1mq29C+akx5WaL+Y1JKw==}
 
   '@fern-fern/fdr-test-sdk@0.0.5297':
     resolution: {integrity: sha512-jrZUZ6oIA64LHtrv77xEq0X7qJhT9xRMGWhKcLjIUArMsD7h6KMWUHVdoB/1MP0Mz/uL/E2xmM31SOgJicpIcA==}
@@ -13725,6 +13692,7 @@ packages:
   source-map@0.8.0-beta.0:
     resolution: {integrity: sha512-2ymg6oRBpebeZi9UUNsgQ89bhx01TcTkmNTGnNO88imTmbSgy4nfujrgVEFKWpMTEGA11EDkTt7mqObTPdigIA==}
     engines: {node: '>= 8'}
+    deprecated: The work that was done in this beta branch won't be included in future versions
 
   sourcemap-codec@1.4.8:
     resolution: {integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==}
@@ -14163,38 +14131,38 @@ packages:
     engines: {node: '>=18.0.0'}
     hasBin: true
 
-  turbo-darwin-64@2.5.4:
-    resolution: {integrity: sha512-ah6YnH2dErojhFooxEzmvsoZQTMImaruZhFPfMKPBq8sb+hALRdvBNLqfc8NWlZq576FkfRZ/MSi4SHvVFT9PQ==}
+  turbo-darwin-64@2.5.5:
+    resolution: {integrity: sha512-RYnTz49u4F5tDD2SUwwtlynABNBAfbyT2uU/brJcyh5k6lDLyNfYKdKmqd3K2ls4AaiALWrFKVSBsiVwhdFNzQ==}
     cpu: [x64]
     os: [darwin]
 
-  turbo-darwin-arm64@2.5.4:
-    resolution: {integrity: sha512-2+Nx6LAyuXw2MdXb7pxqle3MYignLvS7OwtsP9SgtSBaMlnNlxl9BovzqdYAgkUW3AsYiQMJ/wBRb7d+xemM5A==}
+  turbo-darwin-arm64@2.5.5:
+    resolution: {integrity: sha512-Tk+ZeSNdBobZiMw9aFypQt0DlLsWSFWu1ymqsAdJLuPoAH05qCfYtRxE1pJuYHcJB5pqI+/HOxtJoQ40726Btw==}
     cpu: [arm64]
     os: [darwin]
 
-  turbo-linux-64@2.5.4:
-    resolution: {integrity: sha512-5May2kjWbc8w4XxswGAl74GZ5eM4Gr6IiroqdLhXeXyfvWEdm2mFYCSWOzz0/z5cAgqyGidF1jt1qzUR8hTmOA==}
+  turbo-linux-64@2.5.5:
+    resolution: {integrity: sha512-2/XvMGykD7VgsvWesZZYIIVXMlgBcQy+ZAryjugoTcvJv8TZzSU/B1nShcA7IAjZ0q7OsZ45uP2cOb8EgKT30w==}
     cpu: [x64]
     os: [linux]
 
-  turbo-linux-arm64@2.5.4:
-    resolution: {integrity: sha512-/2yqFaS3TbfxV3P5yG2JUI79P7OUQKOUvAnx4MV9Bdz6jqHsHwc9WZPpO4QseQm+NvmgY6ICORnoVPODxGUiJg==}
+  turbo-linux-arm64@2.5.5:
+    resolution: {integrity: sha512-DW+8CjCjybu0d7TFm9dovTTVg1VRnlkZ1rceO4zqsaLrit3DgHnN4to4uwyuf9s2V/BwS3IYcRy+HG9BL596Iw==}
     cpu: [arm64]
     os: [linux]
 
-  turbo-windows-64@2.5.4:
-    resolution: {integrity: sha512-EQUO4SmaCDhO6zYohxIjJpOKRN3wlfU7jMAj3CgcyTPvQR/UFLEKAYHqJOnJtymbQmiiM/ihX6c6W6Uq0yC7mA==}
+  turbo-windows-64@2.5.5:
+    resolution: {integrity: sha512-q5p1BOy8ChtSZfULuF1BhFMYIx6bevXu4fJ+TE/hyNfyHJIfjl90Z6jWdqAlyaFLmn99X/uw+7d6T/Y/dr5JwQ==}
     cpu: [x64]
     os: [win32]
 
-  turbo-windows-arm64@2.5.4:
-    resolution: {integrity: sha512-oQ8RrK1VS8lrxkLriotFq+PiF7iiGgkZtfLKF4DDKsmdbPo0O9R2mQxm7jHLuXraRCuIQDWMIw6dpcr7Iykf4A==}
+  turbo-windows-arm64@2.5.5:
+    resolution: {integrity: sha512-AXbF1KmpHUq3PKQwddMGoKMYhHsy5t1YBQO8HZ04HLMR0rWv9adYlQ8kaeQJTko1Ay1anOBFTqaxfVOOsu7+1Q==}
     cpu: [arm64]
     os: [win32]
 
-  turbo@2.5.4:
-    resolution: {integrity: sha512-kc8ZibdRcuWUG1pbYSBFWqmIjynlD8Lp7IB6U3vIzvOv9VG+6Sp8bzyeBWE3Oi8XV5KsQrznyRTBPvrf99E4mA==}
+  turbo@2.5.5:
+    resolution: {integrity: sha512-eZ7wI6KjtT1eBqCnh2JPXWNUAxtoxxfi6VdBdZFvil0ychCOTxbm7YLRBi1JSt7U3c+u3CLxpoPxLdvr/Npr3A==}
     hasBin: true
 
   type-check@0.4.0:
@@ -15770,13 +15738,16 @@ snapshots:
   '@csstools/css-parser-algorithms@3.0.5(@csstools/css-tokenizer@3.0.4)':
     dependencies:
       '@csstools/css-tokenizer': 3.0.4
+    optional: true
 
-  '@csstools/css-tokenizer@3.0.4': {}
+  '@csstools/css-tokenizer@3.0.4':
+    optional: true
 
   '@csstools/media-query-list-parser@4.0.3(@csstools/css-parser-algorithms@3.0.5(@csstools/css-tokenizer@3.0.4))(@csstools/css-tokenizer@3.0.4)':
     dependencies:
       '@csstools/css-parser-algorithms': 3.0.5(@csstools/css-tokenizer@3.0.4)
       '@csstools/css-tokenizer': 3.0.4
+    optional: true
 
   '@csstools/selector-specificity@2.2.0(postcss-selector-parser@6.1.2)':
     dependencies:
@@ -15785,8 +15756,10 @@ snapshots:
   '@csstools/selector-specificity@5.0.0(postcss-selector-parser@7.1.0)':
     dependencies:
       postcss-selector-parser: 7.1.0
+    optional: true
 
-  '@dual-bundle/import-meta-resolve@4.1.0': {}
+  '@dual-bundle/import-meta-resolve@4.1.0':
+    optional: true
 
   '@emnapi/core@1.4.5':
     dependencies:
@@ -16025,9 +15998,9 @@ snapshots:
 
   '@fern-api/dynamic-ir-sdk@58.2.0': {}
 
-  '@fern-api/fdr-sdk@0.138.11-2322dc4c6(typescript@5.7.2)':
+  '@fern-api/fdr-sdk@0.139.5-0b0fae69f(typescript@5.7.2)':
     dependencies:
-      '@fern-api/ui-core-utils': 0.138.11-2322dc4c6
+      '@fern-api/ui-core-utils': 0.139.5-0b0fae69f
       '@ungap/structured-clone': 1.3.0
       dayjs: 1.11.13
       es-toolkit: 1.39.3
@@ -16080,7 +16053,7 @@ snapshots:
       title: 3.5.3
       ua-parser-js: 1.0.40
 
-  '@fern-api/ui-core-utils@0.138.11-2322dc4c6':
+  '@fern-api/ui-core-utils@0.139.5-0b0fae69f':
     dependencies:
       date-fns: 4.1.0
       date-fns-tz: 3.2.0(date-fns@4.1.0)
@@ -16102,7 +16075,7 @@ snapshots:
 
   '@fern-fern/docs-config@0.0.80': {}
 
-  '@fern-fern/fdr-cjs-sdk@0.138.11-2322dc4c6':
+  '@fern-fern/fdr-cjs-sdk@0.139.5-0b0fae69f':
     dependencies:
       form-data: 4.0.1
       formdata-node: 6.0.3
@@ -16550,6 +16523,7 @@ snapshots:
   '@keyv/serialize@1.0.3':
     dependencies:
       buffer: 6.0.3
+    optional: true
 
   '@mdx-js/mdx@3.1.0(acorn@8.15.0)':
     dependencies:
@@ -17705,6 +17679,7 @@ snapshots:
     dependencies:
       hookified: 1.9.1
       keyv: 5.3.4
+    optional: true
 
   call-bind-apply-helpers@1.0.2:
     dependencies:
@@ -17961,6 +17936,7 @@ snapshots:
       parse-json: 5.2.0
     optionalDependencies:
       typescript: 5.7.2
+    optional: true
 
   create-require@1.1.1:
     optional: true
@@ -18074,6 +18050,7 @@ snapshots:
     dependencies:
       mdn-data: 2.12.2
       source-map-js: 1.2.1
+    optional: true
 
   cssesc@3.0.0: {}
 
@@ -18350,7 +18327,8 @@ snapshots:
 
   entities@6.0.1: {}
 
-  env-paths@2.2.1: {}
+  env-paths@2.2.1:
+    optional: true
 
   env-paths@3.0.0: {}
 
@@ -18793,6 +18771,7 @@ snapshots:
   file-entry-cache@10.1.1:
     dependencies:
       flat-cache: 6.1.10
+    optional: true
 
   file-entry-cache@6.0.1:
     dependencies:
@@ -18888,6 +18867,7 @@ snapshots:
       cacheable: 1.10.0
       flatted: 3.3.3
       hookified: 1.9.1
+    optional: true
 
   flat@5.0.2: {}
 
@@ -19320,7 +19300,8 @@ snapshots:
     dependencies:
       parse-passwd: 1.0.0
 
-  hookified@1.9.1: {}
+  hookified@1.9.1:
+    optional: true
 
   hosted-git-info@2.8.9: {}
 
@@ -19397,7 +19378,8 @@ snapshots:
 
   ignore@5.3.2: {}
 
-  ignore@7.0.5: {}
+  ignore@7.0.5:
+    optional: true
 
   image-size@1.2.1:
     dependencies:
@@ -19838,12 +19820,14 @@ snapshots:
   keyv@5.3.4:
     dependencies:
       '@keyv/serialize': 1.0.3
+    optional: true
 
   kind-of@6.0.3: {}
 
   known-css-properties@0.26.0: {}
 
-  known-css-properties@0.37.0: {}
+  known-css-properties@0.37.0:
+    optional: true
 
   ky@1.8.1: {}
 
@@ -20143,7 +20127,8 @@ snapshots:
     dependencies:
       '@types/mdast': 4.0.4
 
-  mdn-data@2.12.2: {}
+  mdn-data@2.12.2:
+    optional: true
 
   media-typer@0.3.0: {}
 
@@ -20151,7 +20136,8 @@ snapshots:
     dependencies:
       fs-monkey: 1.0.6
 
-  meow@13.2.0: {}
+  meow@13.2.0:
+    optional: true
 
   meow@9.0.0:
     dependencies:
@@ -20979,6 +20965,7 @@ snapshots:
   postcss-safe-parser@7.0.1(postcss@8.5.6):
     dependencies:
       postcss: 8.5.6
+    optional: true
 
   postcss-scss@4.0.9(postcss@8.5.6):
     dependencies:
@@ -21983,6 +21970,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
       - typescript
+    optional: true
 
   sucrase@3.35.0:
     dependencies:
@@ -22011,6 +21999,7 @@ snapshots:
     dependencies:
       has-flag: 4.0.0
       supports-color: 7.2.0
+    optional: true
 
   supports-preserve-symlinks-flag@1.0.0: {}
 
@@ -22272,32 +22261,32 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
-  turbo-darwin-64@2.5.4:
+  turbo-darwin-64@2.5.5:
     optional: true
 
-  turbo-darwin-arm64@2.5.4:
+  turbo-darwin-arm64@2.5.5:
     optional: true
 
-  turbo-linux-64@2.5.4:
+  turbo-linux-64@2.5.5:
     optional: true
 
-  turbo-linux-arm64@2.5.4:
+  turbo-linux-arm64@2.5.5:
     optional: true
 
-  turbo-windows-64@2.5.4:
+  turbo-windows-64@2.5.5:
     optional: true
 
-  turbo-windows-arm64@2.5.4:
+  turbo-windows-arm64@2.5.5:
     optional: true
 
-  turbo@2.5.4:
+  turbo@2.5.5:
     optionalDependencies:
-      turbo-darwin-64: 2.5.4
-      turbo-darwin-arm64: 2.5.4
-      turbo-linux-64: 2.5.4
-      turbo-linux-arm64: 2.5.4
-      turbo-windows-64: 2.5.4
-      turbo-windows-arm64: 2.5.4
+      turbo-darwin-64: 2.5.5
+      turbo-darwin-arm64: 2.5.5
+      turbo-linux-64: 2.5.5
+      turbo-linux-arm64: 2.5.5
+      turbo-windows-64: 2.5.5
+      turbo-windows-arm64: 2.5.5
 
   type-check@0.4.0:
     dependencies:
@@ -22771,6 +22760,7 @@ snapshots:
     dependencies:
       imurmurhash: 0.1.4
       signal-exit: 4.1.0
+    optional: true
 
   ws@8.13.0: {}
 

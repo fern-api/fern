@@ -137,6 +137,7 @@
               }
             }
           },
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "stream",
@@ -252,6 +253,32 @@
                 ]
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "key": "stream",
+                        "valueType": {
+                          "type": "literal",
+                          "value": {
+                            "type": "booleanLiteral",
+                            "value": false
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {

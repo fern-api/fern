@@ -554,6 +554,55 @@
             },
             "description": "Create a new pet in the store"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  },
+                  "description": "Create a new pet in the store"
+                },
+                "description": "Create a new pet in the store"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/xml",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  },
+                  "description": "Create a new pet in the store"
+                },
+                "description": "Create a new pet in the store"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/x-www-form-urlencoded",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  },
+                  "description": "Create a new pet in the store"
+                },
+                "description": "Create a new pet in the store"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -717,6 +766,55 @@
               "description": "Update an existent pet in the store"
             },
             "description": "Update an existent pet in the store"
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  },
+                  "description": "Update an existent pet in the store"
+                },
+                "description": "Update an existent pet in the store"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/xml",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  },
+                  "description": "Update an existent pet in the store"
+                },
+                "description": "Update an existent pet in the store"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/x-www-form-urlencoded",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  },
+                  "description": "Update an existent pet in the store"
+                },
+                "description": "Update an existent pet in the store"
+              }
+            ]
           },
           "response": {
             "type": {
@@ -891,6 +989,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1040,6 +1139,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1191,6 +1291,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1373,6 +1474,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1530,6 +1632,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1660,6 +1763,17 @@
               "contentType": "application/octet-stream"
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "bytes",
+                  "isOptional": false,
+                  "contentType": "application/octet-stream"
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -1781,6 +1895,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1890,6 +2005,49 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Order"
+                    }
+                  }
+                }
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/xml",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Order"
+                    }
+                  }
+                }
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/x-www-form-urlencoded",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Order"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -2029,6 +2187,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -2164,6 +2323,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -2292,6 +2452,55 @@
             },
             "description": "Created user object"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "User"
+                    }
+                  },
+                  "description": "Created user object"
+                },
+                "description": "Created user object"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/xml",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "User"
+                    }
+                  },
+                  "description": "Created user object"
+                },
+                "description": "Created user object"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/x-www-form-urlencoded",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "User"
+                    }
+                  },
+                  "description": "Created user object"
+                },
+                "description": "Created user object"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -2405,6 +2614,26 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "list",
+                      "itemType": {
+                        "type": "id",
+                        "value": "User"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -2535,6 +2764,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -2627,6 +2857,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -2721,6 +2952,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -2875,6 +3107,55 @@
             },
             "description": "Update an existent user in the store"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "User"
+                    }
+                  },
+                  "description": "Update an existent user in the store"
+                },
+                "description": "Update an existent user in the store"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/xml",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "User"
+                    }
+                  },
+                  "description": "Update an existent user in the store"
+                },
+                "description": "Update an existent user in the store"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/x-www-form-urlencoded",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "User"
+                    }
+                  },
+                  "description": "Update an existent user in the store"
+                },
+                "description": "Update an existent user in the store"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -3001,6 +3282,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -3158,6 +3440,55 @@
               "description": "Create a new pet in the store"
             },
             "description": "Create a new pet in the store"
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  },
+                  "description": "Create a new pet in the store"
+                },
+                "description": "Create a new pet in the store"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/xml",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  },
+                  "description": "Create a new pet in the store"
+                },
+                "description": "Create a new pet in the store"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/x-www-form-urlencoded",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  },
+                  "description": "Create a new pet in the store"
+                },
+                "description": "Create a new pet in the store"
+              }
+            ]
           },
           "response": {
             "type": {
@@ -3322,6 +3653,55 @@
               "description": "Update an existent pet in the store"
             },
             "description": "Update an existent pet in the store"
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  },
+                  "description": "Update an existent pet in the store"
+                },
+                "description": "Update an existent pet in the store"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/xml",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  },
+                  "description": "Update an existent pet in the store"
+                },
+                "description": "Update an existent pet in the store"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/x-www-form-urlencoded",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  },
+                  "description": "Update an existent pet in the store"
+                },
+                "description": "Update an existent pet in the store"
+              }
+            ]
           },
           "response": {
             "type": {
@@ -3496,6 +3876,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -3645,6 +4026,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -3796,6 +4178,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -3978,6 +4361,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4135,6 +4519,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4265,6 +4650,17 @@
               "contentType": "application/octet-stream"
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "bytes",
+                  "isOptional": false,
+                  "contentType": "application/octet-stream"
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -4386,6 +4782,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4495,6 +4892,49 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Order"
+                    }
+                  }
+                }
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/xml",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Order"
+                    }
+                  }
+                }
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/x-www-form-urlencoded",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Order"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -4634,6 +5074,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4769,6 +5210,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4897,6 +5339,55 @@
             },
             "description": "Created user object"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "User"
+                    }
+                  },
+                  "description": "Created user object"
+                },
+                "description": "Created user object"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/xml",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "User"
+                    }
+                  },
+                  "description": "Created user object"
+                },
+                "description": "Created user object"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/x-www-form-urlencoded",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "User"
+                    }
+                  },
+                  "description": "Created user object"
+                },
+                "description": "Created user object"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -5010,6 +5501,26 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "list",
+                      "itemType": {
+                        "type": "id",
+                        "value": "User"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -5140,6 +5651,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -5232,6 +5744,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -5326,6 +5839,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -5480,6 +5994,55 @@
             },
             "description": "Update an existent user in the store"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "User"
+                    }
+                  },
+                  "description": "Update an existent user in the store"
+                },
+                "description": "Update an existent user in the store"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/xml",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "User"
+                    }
+                  },
+                  "description": "Update an existent user in the store"
+                },
+                "description": "Update an existent user in the store"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/x-www-form-urlencoded",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "User"
+                    }
+                  },
+                  "description": "Update an existent user in the store"
+                },
+                "description": "Update an existent user in the store"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -5606,6 +6169,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",

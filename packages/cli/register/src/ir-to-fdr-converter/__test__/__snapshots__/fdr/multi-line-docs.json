@@ -108,6 +108,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "responsesV2": {},
           "errorsV2": [],
           "examples": [
@@ -180,6 +181,7 @@
               }
             }
           },
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",

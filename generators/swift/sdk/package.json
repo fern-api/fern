@@ -8,10 +8,7 @@
   },
   "sideEffects": false,
   "type": "module",
-  "main": "lib/cli.js",
-  "source": "src/cli.ts",
-  "types": "lib/cli.d.ts",
-  "exports":{
+  "exports": {
     ".": {
       "development": "./src/index.ts",
       "source": "./src/index.ts",
@@ -20,6 +17,9 @@
       "default": "./lib/index.js"
     }
   },
+  "main": "lib/cli.js",
+  "source": "src/cli.ts",
+  "types": "lib/cli.d.ts",
   "files": [
     "lib"
   ],
@@ -30,12 +30,6 @@
     "depcheck": "depcheck",
     "dist:cli": "rm -rf ./lib && rm -rf ./dist && pnpm compile && tsup ./src/cli.ts --format cjs --sourcemap && cp -R ../base/src/asIs dist",
     "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-swift-sdk:latest ../../..",
-    "format": "pnpm format:src && pnpm format:package-json",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "format:package-json": "sort-package-json \"package.json\"",
-    "format:src": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",
-    "lint:eslint:fix": "pnpm lint:eslint --fix",
     "publish:cli": "pnpm dist:cli && cd dist && yarn npm publish",
     "test": "vitest --passWithNoTests --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
@@ -54,7 +48,6 @@
     "@fern-fern/ir-sdk": "^58.2.0",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
-    "sort-package-json": "3.3.1",
     "tsup": "^8.5.0",
     "typescript": "5.7.2",
     "vitest": "^2.1.9",

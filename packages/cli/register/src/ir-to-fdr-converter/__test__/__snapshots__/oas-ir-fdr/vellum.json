@@ -6382,6 +6382,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -6506,6 +6507,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "DocumentIndexCreateRequest"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -6852,6 +6870,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -6979,16 +6998,222 @@
           "headers": [],
           "request": {
             "type": {
-              "type": "json",
-              "contentType": "application/json",
-              "shape": {
-                "type": "reference",
-                "value": {
-                  "type": "id",
-                  "value": "UploadDocumentBodyRequest"
+              "type": "fileUpload",
+              "value": {
+                "name": "documents_upload_Request",
+                "properties": [
+                  {
+                    "type": "bodyProperty",
+                    "key": "add_to_index_names",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "nullable",
+                        "itemType": {
+                          "type": "list",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "contentType": "multipart/form-data",
+                    "description": "Optionally include the names of all indexes that you'd like this document to be included in",
+                    "exploded": false
+                  },
+                  {
+                    "type": "bodyProperty",
+                    "key": "external_id",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "nullable",
+                        "itemType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        }
+                      }
+                    },
+                    "contentType": "multipart/form-data",
+                    "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
+                    "exploded": false
+                  },
+                  {
+                    "type": "bodyProperty",
+                    "key": "label",
+                    "valueType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "contentType": "multipart/form-data",
+                    "description": "A human-friendly name for this document. Typically the filename.",
+                    "exploded": false
+                  },
+                  {
+                    "type": "file",
+                    "value": {
+                      "type": "file",
+                      "key": "contents",
+                      "isOptional": false,
+                      "contentType": "multipart/form-data",
+                      "description": "The file contents of the document."
+                    }
+                  },
+                  {
+                    "type": "bodyProperty",
+                    "key": "keywords",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "nullable",
+                        "itemType": {
+                          "type": "list",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "contentType": "multipart/form-data",
+                    "description": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
+                    "exploded": false
+                  }
+                ]
+              },
+              "contentType": "multipart/form-data"
+            }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "fileUpload",
+                  "value": {
+                    "name": "documents_upload_Request",
+                    "properties": [
+                      {
+                        "type": "bodyProperty",
+                        "key": "add_to_index_names",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "list",
+                              "itemType": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "description": "Optionally include the names of all indexes that you'd like this document to be included in",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "external_id",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            }
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "label",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "description": "A human-friendly name for this document. Typically the filename.",
+                        "exploded": false
+                      },
+                      {
+                        "type": "file",
+                        "value": {
+                          "type": "file",
+                          "key": "contents",
+                          "isOptional": false,
+                          "contentType": "multipart/form-data",
+                          "description": "The file contents of the document."
+                        }
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "keywords",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "list",
+                              "itemType": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "description": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
+                        "exploded": false
+                      }
+                    ]
+                  },
+                  "contentType": "multipart/form-data"
+                }
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UploadDocumentBodyRequest"
+                    }
+                  }
                 }
               }
-            }
+            ]
           },
           "response": {
             "type": {
@@ -7069,10 +7294,25 @@
                 "contents": "string"
               },
               "requestBodyV3": {
-                "type": "json",
+                "type": "form",
                 "value": {
-                  "label": "string",
-                  "contents": "string"
+                  "add_to_index_names": {
+                    "type": "json"
+                  },
+                  "external_id": {
+                    "type": "json"
+                  },
+                  "label": {
+                    "type": "json",
+                    "value": "string"
+                  },
+                  "contents": {
+                    "type": "filename",
+                    "value": "string"
+                  },
+                  "keywords": {
+                    "type": "json"
+                  }
                 }
               },
               "responseStatusCode": 201,
@@ -7151,6 +7391,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -7379,6 +7620,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ModelVersionCompilePromptRequestRequest"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -7498,6 +7756,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "RegisterPromptRequestRequest"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -7742,6 +8017,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UpsertSandboxScenarioRequestRequest"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -8047,6 +8339,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -8168,6 +8461,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "TestSuiteTestCaseRequest"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -8309,6 +8619,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -8409,6 +8720,23 @@
               }
             }
           }
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ExecutePromptStreamRequest"
+                  }
+                }
+              }
+            }
+          ]
         },
         "response": {
           "type": {
@@ -8595,6 +8923,23 @@
             }
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ExecuteWorkflowStreamRequest"
+                  }
+                }
+              }
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "stream",
@@ -8756,6 +9101,23 @@
               }
             }
           }
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenerateBodyRequest"
+                  }
+                }
+              }
+            }
+          ]
         },
         "response": {
           "type": {
@@ -8976,6 +9338,23 @@
               }
             }
           }
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenerateStreamBodyRequest"
+                  }
+                }
+              }
+            }
+          ]
         },
         "response": {
           "type": {
@@ -9206,6 +9585,23 @@
             }
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SearchRequestBodyRequest"
+                  }
+                }
+              }
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -9372,6 +9768,23 @@
               }
             }
           }
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SubmitCompletionActualsRequest"
+                  }
+                }
+              }
+            }
+          ]
         },
         "response": {
           "type": {

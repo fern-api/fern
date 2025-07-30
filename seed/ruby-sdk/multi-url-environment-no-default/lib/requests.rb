@@ -47,7 +47,7 @@ module SeedMultiUrlEnvironmentNoDefaultClient
         "X-Fern-SDK-Name": "fern_multi_url_environment_no_default",
         "X-Fern-SDK-Version": "0.0.1"
       }
-      headers["Authorization"] = (@token.is_a?(Method) ? @token.call : @token) unless @token.nil?
+      headers["Authorization"] = ((@token.is_a? Method) ? @token.call : @token) unless @token.nil?
       headers
     end
   end
@@ -94,7 +94,7 @@ module SeedMultiUrlEnvironmentNoDefaultClient
         "X-Fern-SDK-Name": "fern_multi_url_environment_no_default",
         "X-Fern-SDK-Version": "0.0.1"
       }
-      headers["Authorization"] = (@token.is_a?(Method) ? @token.call : @token) unless @token.nil?
+      headers["Authorization"] = ((@token.is_a? Method) ? @token.call : @token) unless @token.nil?
       headers
     end
   end
