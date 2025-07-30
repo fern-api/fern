@@ -2293,9 +2293,6 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      eslint:
-        specifier: ^9.16.0
-        version: 9.29.0(jiti@2.5.1)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2317,9 +2314,6 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      eslint:
-        specifier: ^9.16.0
-        version: 9.29.0(jiti@2.5.1)
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -7050,9 +7044,6 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      eslint:
-        specifier: ^9.16.0
-        version: 9.29.0(jiti@2.5.1)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
