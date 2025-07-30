@@ -2,7 +2,7 @@ import { OpenAPIV3_1 } from "openapi-types";
 
 import { MediaType } from "@fern-api/core-utils";
 import { FernIr, HttpResponseBody, JsonResponse, StreamingResponse } from "@fern-api/ir-sdk";
-import { Converters, SchemaOrReferenceConverter } from "@fern-api/v2-importer-commons";
+import { Converters, SchemaOrReferenceConverter } from "@fern-api/v3-importer-commons";
 
 import { FernStreamingExtension } from "../../extensions/x-fern-streaming";
 

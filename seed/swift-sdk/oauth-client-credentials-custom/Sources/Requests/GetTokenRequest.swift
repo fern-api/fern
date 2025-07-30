@@ -3,8 +3,8 @@ public struct GetTokenRequest: Codable, Hashable, Sendable {
     public let csr: String
     public let scp: String
     public let entityId: String
-    public let audience: Any
-    public let grantType: Any
+    public let audience: JSONValue
+    public let grantType: JSONValue
     public let scope: String?
     public let additionalProperties: [String: JSONValue]
 
@@ -13,8 +13,8 @@ public struct GetTokenRequest: Codable, Hashable, Sendable {
         csr: String,
         scp: String,
         entityId: String,
-        audience: Any,
-        grantType: Any,
+        audience: JSONValue,
+        grantType: JSONValue,
         scope: String? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
@@ -34,8 +34,8 @@ public struct GetTokenRequest: Codable, Hashable, Sendable {
         self.csr = try container.decode(String.self, forKey: .csr)
         self.scp = try container.decode(String.self, forKey: .scp)
         self.entityId = try container.decode(String.self, forKey: .entityId)
-        self.audience = try container.decode(Any.self, forKey: .audience)
-        self.grantType = try container.decode(Any.self, forKey: .grantType)
+        self.audience = try container.decode(JSONValue.self, forKey: .audience)
+        self.grantType = try container.decode(JSONValue.self, forKey: .grantType)
         self.scope = try container.decodeIfPresent(String.self, forKey: .scope)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }

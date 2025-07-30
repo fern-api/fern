@@ -1,5 +1,5 @@
 public final class ExtendsClient: Sendable {
-    private let config: ClientConfig
+    private let httpClient: HTTPClient
 
     public init(
         baseURL: String,
@@ -10,13 +10,23 @@ public final class ExtendsClient: Sendable {
         maxRetries: Int? = nil,
         urlSession: URLSession? = nil
     ) {
-        self.config = ClientConfig(
+        let config = ClientConfig(
             baseURL: baseURL,
             apiKey: apiKey,
             token: token,
             headers: headers,
             timeout: timeout,
             urlSession: urlSession
+        )
+        self.httpClient = HTTPClient(config: config)
+    }
+
+    public func extendedInlineRequestBody(request: Inlined, requestOptions: RequestOptions? = nil) async throws -> Void {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/extends/extended-inline-request-body",
+            body: request,
+            requestOptions: requestOptions
         )
     }
 }

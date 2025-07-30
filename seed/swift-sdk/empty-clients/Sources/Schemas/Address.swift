@@ -4,7 +4,7 @@ public struct Address: Codable, Hashable, Sendable {
     public let city: String
     public let state: String
     public let zip: String
-    public let country: Any
+    public let country: JSONValue
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -13,7 +13,7 @@ public struct Address: Codable, Hashable, Sendable {
         city: String,
         state: String,
         zip: String,
-        country: Any,
+        country: JSONValue,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.line1 = line1
@@ -32,7 +32,7 @@ public struct Address: Codable, Hashable, Sendable {
         self.city = try container.decode(String.self, forKey: .city)
         self.state = try container.decode(String.self, forKey: .state)
         self.zip = try container.decode(String.self, forKey: .zip)
-        self.country = try container.decode(Any.self, forKey: .country)
+        self.country = try container.decode(JSONValue.self, forKey: .country)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

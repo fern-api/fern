@@ -1,24 +1,26 @@
+use crate::{ClientConfig, ClientError};
+
 pub mod folder_a;
 pub mod folder_d;
 pub mod foo;
-
 pub struct CrossPackageTypeNamesClient {
+    pub config: ClientConfig,
     pub folder_a: FolderAClient,
     pub folder_d: FolderDClient,
     pub foo: FooClient,
 }
 
 impl CrossPackageTypeNamesClient {
-    pub fn new() -> Self {
-        Self {
-    folder_a: FolderAClient::new("".to_string()),
-    folder_d: FolderDClient::new("".to_string()),
-    foo: FooClient::new("".to_string())
-}
+    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+        Ok(Self {
+            config: config.clone(),
+            folder_a: FolderAClient::new(config.clone())?,
+            folder_d: FolderDClient::new(config.clone())?,
+            foo: FooClient::new(config.clone())?
+        })
     }
 
 }
-
 
 pub use folder_a::FolderAClient;
 pub use folder_d::FolderDClient;

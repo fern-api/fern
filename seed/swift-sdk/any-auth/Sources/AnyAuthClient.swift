@@ -1,7 +1,7 @@
 public final class AnyAuthClient: Sendable {
     public let auth: AuthClient
     public let user: UserClient
-    private let config: ClientConfig
+    private let httpClient: HTTPClient
 
     public init(
         baseURL: String,
@@ -12,7 +12,7 @@ public final class AnyAuthClient: Sendable {
         maxRetries: Int? = nil,
         urlSession: URLSession? = nil
     ) {
-        self.config = ClientConfig(
+        let config = ClientConfig(
             baseURL: baseURL,
             apiKey: apiKey,
             token: token,
@@ -22,5 +22,6 @@ public final class AnyAuthClient: Sendable {
         )
         self.auth = AuthClient(config: config)
         self.user = UserClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 }

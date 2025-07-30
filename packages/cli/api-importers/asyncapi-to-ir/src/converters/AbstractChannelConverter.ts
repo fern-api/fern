@@ -1,5 +1,5 @@
 import { FernIr, WebSocketChannel } from "@fern-api/ir-sdk";
-import { AbstractConverter, Converters } from "@fern-api/v2-importer-commons";
+import { AbstractConverter, Converters } from "@fern-api/v3-importer-commons";
 
 import { AsyncAPIConverter } from "../AsyncAPIConverter";
 import { AsyncAPIConverterContext } from "../AsyncAPIConverterContext";

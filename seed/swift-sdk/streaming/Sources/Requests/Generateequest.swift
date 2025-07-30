@@ -1,10 +1,10 @@
 public struct Generateequest: Codable, Hashable, Sendable {
-    public let stream: Any
+    public let stream: JSONValue
     public let numEvents: Int
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        stream: Any,
+        stream: JSONValue,
         numEvents: Int,
         additionalProperties: [String: JSONValue] = .init()
     ) {
@@ -15,7 +15,7 @@ public struct Generateequest: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.stream = try container.decode(Any.self, forKey: .stream)
+        self.stream = try container.decode(JSONValue.self, forKey: .stream)
         self.numEvents = try container.decode(Int.self, forKey: .numEvents)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }

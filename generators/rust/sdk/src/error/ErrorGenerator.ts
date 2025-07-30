@@ -8,31 +8,37 @@ import {
     ImplBlock,
     MatchArm,
     Method,
+    Module,
     PUBLIC,
     Pattern,
     PrimitiveType,
     Reference,
     Statement,
-    Type
+    Type,
+    UseStatement
 } from "@fern-api/rust-codegen";
-
 import { ErrorDeclaration } from "@fern-fern/ir-sdk/api";
-
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { RustFileBuilder } from "../utils/RustFileBuilder";
 
 export class ErrorGenerator {
     constructor(private readonly context: SdkGeneratorContext) {}
 
     public generateErrorRs(): string {
-        const fileBuilder = new RustFileBuilder().addUse("thiserror", ["Error"]);
-
         const errorEnum = this.buildErrorEnum();
         const errorImpl = this.buildErrorImpl();
 
-        fileBuilder.addItem(errorEnum).addItem(errorImpl);
+        const errorModule = new Module({
+            useStatements: [
+                new UseStatement({
+                    path: "thiserror",
+                    items: ["Error"]
+                })
+            ],
+            enums: [errorEnum],
+            implBlocks: [errorImpl]
+        });
 
-        return fileBuilder.build();
+        return errorModule.toString();
     }
 
     private buildErrorEnum(): Enum {

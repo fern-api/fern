@@ -4,7 +4,7 @@ public struct CreateProblemRequestV2: Codable, Hashable, Sendable {
     public let customFiles: CustomFiles
     public let customTestCaseTemplates: [TestCaseTemplate]
     public let testcases: [TestCaseV2]
-    public let supportedLanguages: Any
+    public let supportedLanguages: JSONValue
     public let isPublic: Bool
     public let additionalProperties: [String: JSONValue]
 
@@ -14,7 +14,7 @@ public struct CreateProblemRequestV2: Codable, Hashable, Sendable {
         customFiles: CustomFiles,
         customTestCaseTemplates: [TestCaseTemplate],
         testcases: [TestCaseV2],
-        supportedLanguages: Any,
+        supportedLanguages: JSONValue,
         isPublic: Bool,
         additionalProperties: [String: JSONValue] = .init()
     ) {
@@ -35,7 +35,7 @@ public struct CreateProblemRequestV2: Codable, Hashable, Sendable {
         self.customFiles = try container.decode(CustomFiles.self, forKey: .customFiles)
         self.customTestCaseTemplates = try container.decode([TestCaseTemplate].self, forKey: .customTestCaseTemplates)
         self.testcases = try container.decode([TestCaseV2].self, forKey: .testcases)
-        self.supportedLanguages = try container.decode(Any.self, forKey: .supportedLanguages)
+        self.supportedLanguages = try container.decode(JSONValue.self, forKey: .supportedLanguages)
         self.isPublic = try container.decode(Bool.self, forKey: .isPublic)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }

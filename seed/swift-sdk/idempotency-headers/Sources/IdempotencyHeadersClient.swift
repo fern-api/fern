@@ -1,6 +1,6 @@
 public final class IdempotencyHeadersClient: Sendable {
     public let payment: PaymentClient
-    private let config: ClientConfig
+    private let httpClient: HTTPClient
 
     public init(
         baseURL: String,
@@ -11,7 +11,7 @@ public final class IdempotencyHeadersClient: Sendable {
         maxRetries: Int? = nil,
         urlSession: URLSession? = nil
     ) {
-        self.config = ClientConfig(
+        let config = ClientConfig(
             baseURL: baseURL,
             apiKey: apiKey,
             token: token,
@@ -20,5 +20,6 @@ public final class IdempotencyHeadersClient: Sendable {
             urlSession: urlSession
         )
         self.payment = PaymentClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 }

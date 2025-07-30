@@ -13,6 +13,7 @@ pub enum ApiError {
     #[error("Serialization error: {0}")]
     Serialization(serde_json::Error),
 }
+
 impl ApiError {
     pub fn from_response(status_code: u16, body: Option<&str>) -> Self {
     match status_code {
@@ -55,3 +56,4 @@ impl ApiError {
     }
 }
 }
+

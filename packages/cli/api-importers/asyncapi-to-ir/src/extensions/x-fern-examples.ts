@@ -1,4 +1,4 @@
-import { AbstractConverter, AbstractExtension } from "@fern-api/v2-importer-commons";
+import { AbstractConverter, AbstractExtension } from "@fern-api/v3-importer-commons";
 
 import { WebsocketSessionExtensionExamplesSchema } from "../schemas/ExampleSchema";
 

@@ -4,7 +4,7 @@ public final class LiteralClient: Sendable {
     public let path: PathClient
     public let query: QueryClient
     public let reference: ReferenceClient
-    private let config: ClientConfig
+    private let httpClient: HTTPClient
 
     public init(
         baseURL: String,
@@ -15,7 +15,7 @@ public final class LiteralClient: Sendable {
         maxRetries: Int? = nil,
         urlSession: URLSession? = nil
     ) {
-        self.config = ClientConfig(
+        let config = ClientConfig(
             baseURL: baseURL,
             apiKey: apiKey,
             token: token,
@@ -28,5 +28,6 @@ public final class LiteralClient: Sendable {
         self.path = PathClient(config: config)
         self.query = QueryClient(config: config)
         self.reference = ReferenceClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 }

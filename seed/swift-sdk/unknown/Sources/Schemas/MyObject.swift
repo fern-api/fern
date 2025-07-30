@@ -1,9 +1,9 @@
 public struct MyObject: Codable, Hashable, Sendable {
-    public let unknown: Any
+    public let unknown: JSONValue
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        unknown: Any,
+        unknown: JSONValue,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.unknown = unknown
@@ -12,7 +12,7 @@ public struct MyObject: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.unknown = try container.decode(Any.self, forKey: .unknown)
+        self.unknown = try container.decode(JSONValue.self, forKey: .unknown)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

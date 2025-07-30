@@ -10,7 +10,7 @@ import {
     WebSocketMessageBody
 } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
-import { Converters } from "@fern-api/v2-importer-commons";
+import { Converters } from "@fern-api/v3-importer-commons";
 
 import { AsyncAPIV2 } from "..";
 import { AsyncAPIConverterContext } from "../../AsyncAPIConverterContext";

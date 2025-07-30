@@ -1,7 +1,7 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { TypeId, TypeReference } from "@fern-api/ir-sdk";
-import { Converters } from "@fern-api/v2-importer-commons";
+import { Converters } from "@fern-api/v3-importer-commons";
 
 export class ParameterConverter extends Converters.AbstractConverters
     .AbstractParameterConverter<OpenAPIV3_1.ParameterObject> {

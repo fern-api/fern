@@ -1,3 +1,4 @@
-pub mod imdb;
+use crate::{ClientConfig, ClientError};
 
+pub mod imdb;
 pub use imdb::ImdbClient;

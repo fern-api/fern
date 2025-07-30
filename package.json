@@ -32,7 +32,6 @@
     "format:fix": "biome format --fix",
     "format:check": "biome format",
     "format:package-json": "sort-package-json \"generators/**/package.json\" \"packages/**/package.json\" --ignore \"**/dist\" --ignore \"**lib\" --ignore \"**/node_modules\"",
-    "add-workspace": "yarn mrlint add-workspace",
     "depcheck": "turbo depcheck",
     "codegen:local": "pnpm fern:local generate",
     "fern": "FERN_NO_VERSION_REDIRECTION=true node --enable-source-maps ./packages/cli/cli/dist/prod/cli.cjs",
@@ -90,7 +89,7 @@
     "tsup": "^8.5.0",
     "tsx": "^4.20.3",
     "turbo": "^2.5.5",
-    "typescript": "5.7.2",
+    "typescript": "5.8.3",
     "vitest": "^2.1.9"
   },
   "resolutions": {

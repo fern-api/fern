@@ -1,25 +1,15 @@
-import { z } from "zod";
-
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
-
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-
 import { RustProject } from "../project";
-import { RUST_KEYWORDS, RUST_RESERVED_TYPES } from "../constants";
-
-export const BaseRustCustomConfigSchema = z.object({
-    packageName: z.string().optional(),
-    packageVersion: z.string().optional(),
-    extraDependencies: z.record(z.string()).optional(),
-    extraDevDependencies: z.record(z.string()).optional()
-});
-
-export type BaseRustCustomConfigSchema = z.infer<typeof BaseRustCustomConfigSchema>;
+import { AsIsFileDefinition } from "../AsIs";
+import { RustConfigurationManager } from "../config";
+import { BaseRustCustomConfigSchema } from "../config";
 
 export abstract class AbstractRustGeneratorContext<
     CustomConfig extends BaseRustCustomConfigSchema
 > extends AbstractGeneratorContext {
     public readonly project: RustProject;
+    public readonly configManager: RustConfigurationManager<CustomConfig>;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -28,28 +18,32 @@ export abstract class AbstractRustGeneratorContext<
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(config, generatorNotificationService);
+        this.configManager = new RustConfigurationManager(customConfig, this);
         this.project = new RustProject({
             context: this,
-            packageName: customConfig.packageName ?? this.getDefaultPackageName(),
-            packageVersion: customConfig.packageVersion ?? "0.1.0"
+            packageName: this.configManager.getPackageName(),
+            packageVersion: this.configManager.getPackageVersion()
         });
-    }
-
-    private getDefaultPackageName(): string {
-        return `${this.config.organization}_${this.ir.apiName.snakeCase.unsafeName}`.toLowerCase();
     }
 
     /**
      * Escapes Rust keywords by prefixing them with 'r#'
+     * @deprecated Use configManager.escapeRustKeyword() instead
      */
     public escapeRustKeyword(name: string): string {
-        return RUST_KEYWORDS.has(name) ? `r#${name}` : name;
+        return this.configManager.escapeRustKeyword(name);
     }
 
     /**
      * Escapes Rust reserved types by prefixing them with 'r#'
+     * @deprecated Use configManager.escapeRustReservedType() instead
      */
     public escapeRustReservedType(name: string): string {
-        return RUST_RESERVED_TYPES.has(name) ? `r#${name}` : name;
+        return this.configManager.escapeRustReservedType(name);
     }
+
+    /**
+     * Get the core AsIs template files for this generator type
+     */
+    public abstract getCoreAsIsFiles(): AsIsFileDefinition[];
 }

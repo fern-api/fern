@@ -66,8 +66,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     private async generateRootFiles(context: SdkGeneratorContext): Promise<SwiftFile[]> {
         const files: SwiftFile[] = [];
         const packageSwiftGenerator = new PackageSwiftGenerator({
-            projectNamePascalCase: context.ir.apiName.pascalCase.unsafeName,
-            context
+            sdkGeneratorContext: context
         });
         files.push(packageSwiftGenerator.generate());
         return files;
@@ -78,12 +77,9 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
 
         // Resources/**/*.swift
         Object.entries(context.ir.subpackages).forEach(([_, subpackage]) => {
-            const service = subpackage.service != null ? context.getHttpServiceOrThrow(subpackage.service) : undefined;
             const subclientGenerator = new SubClientGenerator({
-                context,
                 subpackage,
-                serviceId: subpackage.service,
-                service
+                sdkGeneratorContext: context
             });
             files.push(subclientGenerator.generate());
         });
@@ -98,17 +94,16 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
 
         // {ProjectName}Client.swift
         const rootClientGenerator = new RootClientGenerator({
-            projectNamePascalCase: context.ir.apiName.pascalCase.unsafeName,
             package_: context.ir.rootPackage,
-            context
+            sdkGeneratorContext: context
         });
         files.push(rootClientGenerator.generate());
 
         // {ProjectName}Environment.swift
         if (context.ir.environments && context.ir.environments.environments.type === "singleBaseUrl") {
             const environmentGenerator = new SingleUrlEnvironmentGenerator({
-                projectNamePascalCase: context.ir.apiName.pascalCase.unsafeName,
-                environments: context.ir.environments.environments
+                environments: context.ir.environments.environments,
+                sdkGeneratorContext: context
             });
             files.push(environmentGenerator.generate());
         } else {

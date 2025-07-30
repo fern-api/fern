@@ -1,8 +1,8 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { AbstractRustGeneratorContext } from "@fern-api/rust-base";
-import { ModelGeneratorContext } from "@fern-api/rust-model";
+import { AbstractRustGeneratorContext, AsIsFileDefinition, AsIsFiles } from "@fern-api/rust-base";
+import { ModelCustomConfigSchema, ModelGeneratorContext } from "@fern-api/rust-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation, Subpackage, SubpackageId, HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
+import { HttpService, IntermediateRepresentation, ServiceId, Subpackage, SubpackageId } from "@fern-fern/ir-sdk/api";
 import { RustGeneratorAgent } from "./RustGeneratorAgent";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 
@@ -24,7 +24,26 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
     }
 
     public getClientName(): string {
-        return this.customConfig.clientName ?? `${this.ir.apiName.pascalCase.safeName}Client`;
+        return this.configManager.get("clientName", `${this.ir.apiName.pascalCase.safeName}Client`);
+    }
+
+    public getApiClientBuilderClientName(): string {
+        // For api_client_builder.rs template, we need to reference the actual client that exists
+        const subpackages = this.ir.rootPackage.subpackages
+            .map((subpackageId) => this.getSubpackageOrThrow(subpackageId))
+            .filter((subpackage) => subpackage.service != null || subpackage.hasEndpointsInTree);
+
+        if (subpackages.length === 1 && subpackages[0] != null) {
+            // Single service - use the sub-client name
+            return `${subpackages[0].name.pascalCase.safeName}Client`;
+        } else {
+            // Multiple services or no subpackages - use the root client name
+            return this.getClientName();
+        }
+    }
+
+    public getCoreAsIsFiles(): AsIsFileDefinition[] {
+        return Object.values(AsIsFiles);
     }
 
     public getSubpackageOrThrow(subpackageId: SubpackageId): Subpackage {
@@ -47,16 +66,16 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
         return new ModelGeneratorContext(
             this.ir,
             this.config,
-            {
-                // Convert SDK config to model config - use base properties and add model-specific defaults
-                packageName: this.customConfig.packageName,
-                packageVersion: this.customConfig.packageVersion,
-                extraDependencies: this.customConfig.extraDependencies,
-                extraDevDependencies: this.customConfig.extraDevDependencies,
+            ModelCustomConfigSchema.parse({
+                // Convert SDK config to model config - use centralized configuration manager
+                packageName: this.configManager.get("packageName"),
+                packageVersion: this.configManager.get("packageVersion"),
+                extraDependencies: this.configManager.get("extraDependencies"),
+                extraDevDependencies: this.configManager.get("extraDevDependencies"),
                 generateBuilders: false,
                 deriveDebug: true,
                 deriveClone: true
-            },
+            }),
             this.generatorNotificationService
         );
     }

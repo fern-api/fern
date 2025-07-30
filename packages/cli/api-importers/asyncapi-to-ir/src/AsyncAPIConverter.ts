@@ -1,7 +1,7 @@
 import { OpenAPIV3 } from "openapi-types";
 
 import { FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
-import { AbstractConverter, AbstractSpecConverter, Converters, Extensions } from "@fern-api/v2-importer-commons";
+import { AbstractConverter, AbstractSpecConverter, Converters, Extensions } from "@fern-api/v3-importer-commons";
 
 import { AsyncAPIV2 } from "./2.x";
 import { ChannelConverter2_X } from "./2.x/channel/ChannelConverter2_X";

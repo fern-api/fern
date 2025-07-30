@@ -54,7 +54,7 @@
     "endent": "^2.1.0",
     "lodash": "^4.17.21",
     "tsup": "^8.5.0",
-    "typescript": "5.7.2",
+    "typescript": "5.8.3",
     "vitest": "^2.1.9",
     "zod": "^3.22.3"
   }

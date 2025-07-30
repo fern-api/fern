@@ -84,6 +84,22 @@ type Any = {
     type: "any";
 };
 
+/**
+ * An existential type that represents any type conforming to a protocol.
+ * Maps to Swift's `any Protocol` syntax.
+ */
+type ExistentialAny = {
+    type: "existential-any";
+    protocolName: string;
+};
+
+/**
+ * Represents our custom `JSONValue` type.
+ */
+type JsonValue = {
+    type: "json-value";
+};
+
 type InternalType =
     | String_
     | Bool
@@ -102,7 +118,9 @@ type InternalType =
     | Optional
     | Custom
     | Void
-    | Any;
+    | Any
+    | ExistentialAny
+    | JsonValue;
 
 export class Type extends AstNode {
     private internalType: InternalType;
@@ -200,6 +218,13 @@ export class Type extends AstNode {
             case "any":
                 writer.write("Any");
                 break;
+            case "existential-any":
+                writer.write("any ");
+                writer.write(this.internalType.protocolName);
+                break;
+            case "json-value":
+                writer.write("JSONValue");
+                break;
             default:
                 assertNever(this.internalType);
         }
@@ -280,5 +305,16 @@ export class Type extends AstNode {
 
     public static any(): Type {
         return new this({ type: "any" });
+    }
+
+    public static existentialAny(protocolName: string): Type {
+        return new this({ type: "existential-any", protocolName });
+    }
+
+    /**
+     * Represents our custom `JSONValue` type.
+     */
+    public static jsonValue(): Type {
+        return new this({ type: "json-value" });
     }
 }

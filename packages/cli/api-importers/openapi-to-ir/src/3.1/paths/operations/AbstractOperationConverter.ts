@@ -3,7 +3,7 @@ import { OpenAPIV3_1 } from "openapi-types";
 
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { HttpHeader, HttpMethod, HttpRequestBody, PathParameter, QueryParameter } from "@fern-api/ir-sdk";
-import { AbstractConverter, Converters, Extensions } from "@fern-api/v2-importer-commons";
+import { AbstractConverter, Converters, Extensions } from "@fern-api/v3-importer-commons";
 
 import { FernStreamingExtension } from "../../../extensions/x-fern-streaming";
 import { GroupNameAndLocation } from "../../../types/GroupNameAndLocation";

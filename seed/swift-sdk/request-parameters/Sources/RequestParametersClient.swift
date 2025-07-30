@@ -1,6 +1,6 @@
 public final class RequestParametersClient: Sendable {
     public let user: UserClient
-    private let config: ClientConfig
+    private let httpClient: HTTPClient
 
     public init(
         baseURL: String,
@@ -11,7 +11,7 @@ public final class RequestParametersClient: Sendable {
         maxRetries: Int? = nil,
         urlSession: URLSession? = nil
     ) {
-        self.config = ClientConfig(
+        let config = ClientConfig(
             baseURL: baseURL,
             apiKey: apiKey,
             token: token,
@@ -20,5 +20,6 @@ public final class RequestParametersClient: Sendable {
             urlSession: urlSession
         )
         self.user = UserClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 }

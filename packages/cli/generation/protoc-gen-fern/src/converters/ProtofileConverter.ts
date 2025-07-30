@@ -7,7 +7,7 @@ import {
     Package,
     V2HttpEndpointResponseBody
 } from "@fern-api/ir-sdk";
-import { AbstractSpecConverter } from "@fern-api/v2-importer-commons";
+import { AbstractSpecConverter } from "@fern-api/v3-importer-commons";
 
 import { ProtofileConverterContext } from "./ProtofileConverterContext";
 import { EnumOrMessageConverter } from "./message/EnumOrMessageConverter";

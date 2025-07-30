@@ -1,7 +1,7 @@
 public final class BasicAuthEnvironmentVariablesClient: Sendable {
     public let basicAuth: BasicAuthClient
     public let errors: ErrorsClient
-    private let config: ClientConfig
+    private let httpClient: HTTPClient
 
     public init(
         baseURL: String,
@@ -12,7 +12,7 @@ public final class BasicAuthEnvironmentVariablesClient: Sendable {
         maxRetries: Int? = nil,
         urlSession: URLSession? = nil
     ) {
-        self.config = ClientConfig(
+        let config = ClientConfig(
             baseURL: baseURL,
             apiKey: apiKey,
             token: token,
@@ -22,5 +22,6 @@ public final class BasicAuthEnvironmentVariablesClient: Sendable {
         )
         self.basicAuth = BasicAuthClient(config: config)
         self.errors = ErrorsClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 }

@@ -22,7 +22,7 @@ export class Method extends AstNode {
     public readonly unsafeName: string;
     public readonly accessLevel?: AccessLevel;
     public readonly static_?: boolean;
-    public readonly parameters?: FunctionParameter[];
+    public readonly parameters: FunctionParameter[];
     public readonly async?: true;
     public readonly throws?: true;
     public readonly returnType: Type;
@@ -33,7 +33,7 @@ export class Method extends AstNode {
         this.unsafeName = unsafeName;
         this.accessLevel = accessLevel;
         this.static_ = static_;
-        this.parameters = parameters;
+        this.parameters = parameters ?? [];
         this.async = async;
         this.throws = throws;
         this.returnType = returnType;
@@ -51,7 +51,7 @@ export class Method extends AstNode {
         writer.write("func ");
         writer.write(escapeReservedKeyword(this.unsafeName));
         writer.write("(");
-        this.parameters?.forEach((parameter, parameterIdx) => {
+        this.parameters.forEach((parameter, parameterIdx) => {
             if (parameterIdx > 0) {
                 writer.write(", ");
             }

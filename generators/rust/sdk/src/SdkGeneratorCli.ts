@@ -33,15 +33,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     }
 
     protected parseCustomConfigOrThrow(customConfig: unknown): SdkCustomConfigSchema {
-        const parsed = customConfig != null ? SdkCustomConfigSchema.parse(customConfig) : undefined;
-        if (parsed != null) {
-            return this.validateCustomConfig(parsed);
-        }
-        return { generateExamples: true };
-    }
-
-    private validateCustomConfig(customConfig: SdkCustomConfigSchema): SdkCustomConfigSchema {
-        return customConfig;
+        return customConfig != null ? SdkCustomConfigSchema.parse(customConfig) : SdkCustomConfigSchema.parse({});
     }
 
     protected async publishPackage(_context: SdkGeneratorContext): Promise<void> {
@@ -142,9 +134,8 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     }
 
     private generateModelFiles(context: SdkGeneratorContext): RustFile[] {
-        const modelFiles = generateModels({ context: context.toModelGeneratorContext() });
-        return modelFiles.map(
-            (file: RustFile) =>
+        return generateModels({ context: context.toModelGeneratorContext() }).map(
+            (file) =>
                 new RustFile({
                     filename: file.filename,
                     directory: RelativeFilePath.of("src/types"),
@@ -174,6 +165,11 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         // Add module declarations
         moduleDeclarations.push(new ModuleDeclaration({ name: "client", isPublic: true }));
         moduleDeclarations.push(new ModuleDeclaration({ name: "error", isPublic: true }));
+        moduleDeclarations.push(new ModuleDeclaration({ name: "client_config", isPublic: true }));
+        moduleDeclarations.push(new ModuleDeclaration({ name: "api_client_builder", isPublic: true }));
+        moduleDeclarations.push(new ModuleDeclaration({ name: "http_client", isPublic: true }));
+        moduleDeclarations.push(new ModuleDeclaration({ name: "request_options", isPublic: true }));
+        moduleDeclarations.push(new ModuleDeclaration({ name: "client_error", isPublic: true }));
 
         if (hasTypes) {
             moduleDeclarations.push(new ModuleDeclaration({ name: "types", isPublic: true }));
@@ -203,6 +199,13 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             useStatements.push(new UseStatement({ path: "types", items: ["*"], isPublic: true }));
         }
 
+        // Add re-exports
+        useStatements.push(new UseStatement({ path: "client_config", items: ["*"], isPublic: true }));
+        useStatements.push(new UseStatement({ path: "api_client_builder", items: ["*"], isPublic: true }));
+        useStatements.push(new UseStatement({ path: "http_client", items: ["*"], isPublic: true }));
+        useStatements.push(new UseStatement({ path: "request_options", items: ["*"], isPublic: true }));
+        useStatements.push(new UseStatement({ path: "client_error", items: ["*"], isPublic: true }));
+
         return new Module({
             moduleDeclarations,
             useStatements,
@@ -217,7 +220,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
         for (const [_typeId, typeDeclaration] of Object.entries(context.ir.types)) {
             const rawModuleName = typeDeclaration.name.name.snakeCase.unsafeName;
-            const escapedModuleName = context.escapeRustKeyword(rawModuleName);
+            const escapedModuleName = context.configManager.escapeRustKeyword(rawModuleName);
             moduleDeclarations.push(new ModuleDeclaration({ name: escapedModuleName, isPublic: true }));
             useStatements.push(new UseStatement({ path: escapedModuleName, items: ["*"], isPublic: true }));
         }

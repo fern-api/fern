@@ -1,12 +1,12 @@
 public struct Account: Codable, Hashable, Sendable {
-    public let resourceType: Any
+    public let resourceType: JSONValue
     public let name: String
     public let patient: Patient?
     public let practitioner: Practitioner?
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        resourceType: Any,
+        resourceType: JSONValue,
         name: String,
         patient: Patient? = nil,
         practitioner: Practitioner? = nil,
@@ -21,7 +21,7 @@ public struct Account: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.resourceType = try container.decode(Any.self, forKey: .resourceType)
+        self.resourceType = try container.decode(JSONValue.self, forKey: .resourceType)
         self.name = try container.decode(String.self, forKey: .name)
         self.patient = try container.decodeIfPresent(Patient.self, forKey: .patient)
         self.practitioner = try container.decodeIfPresent(Practitioner.self, forKey: .practitioner)

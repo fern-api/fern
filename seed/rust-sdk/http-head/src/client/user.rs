@@ -1,26 +1,34 @@
-use crate::error::ApiError;
-use crate::types::*;
-use reqwest::Client;
+use crate::{ClientConfig, ClientError, HttpClient, RequestOptions};
+use reqwest::{Method};
+use crate::{types::*};
 
 pub struct UserClient {
-    pub client: Client,
-    pub base_url: String,
+    pub http_client: HttpClient,
 }
 
 impl UserClient {
-    pub fn new(base_url: String) -> Self {
-        Self {
-            client: Client::new(),
-            base_url,
-        }
+    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+        let http_client = HttpClient::new(config)?;
+        Ok(Self { http_client })
     }
 
-    pub async fn head(&self) -> Result<serde_json::Value, ApiError> {
-        todo!()
+    pub async fn head(&self, options: Option<RequestOptions>) -> Result<(), ClientError> {
+        self.http_client.execute_request(
+            Method::HEAD,
+            "/users",
+            None,
+            options,
+        ).await
     }
 
-    pub async fn list(&self, limit: Option<&String>) -> Result<serde_json::Value, ApiError> {
-        todo!()
+    pub async fn list(&self, limit: Option<i32>, options: Option<RequestOptions>) -> Result<Vec<User>, ClientError> {
+        self.http_client.execute_request(
+            Method::GET,
+            "/users",
+            None,
+            options,
+        ).await
     }
 
 }
+

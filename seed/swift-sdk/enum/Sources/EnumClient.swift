@@ -4,7 +4,7 @@ public final class EnumClient: Sendable {
     public let pathParam: PathParamClient
     public let queryParam: QueryParamClient
     public let unknown: UnknownClient
-    private let config: ClientConfig
+    private let httpClient: HTTPClient
 
     public init(
         baseURL: String,
@@ -15,7 +15,7 @@ public final class EnumClient: Sendable {
         maxRetries: Int? = nil,
         urlSession: URLSession? = nil
     ) {
-        self.config = ClientConfig(
+        let config = ClientConfig(
             baseURL: baseURL,
             apiKey: apiKey,
             token: token,
@@ -28,5 +28,6 @@ public final class EnumClient: Sendable {
         self.pathParam = PathParamClient(config: config)
         self.queryParam = QueryParamClient(config: config)
         self.unknown = UnknownClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 }

@@ -1,16 +1,16 @@
 public struct GetTokenRequest: Codable, Hashable, Sendable {
     public let clientId: String
     public let clientSecret: String
-    public let audience: Any
-    public let grantType: Any
+    public let audience: JSONValue
+    public let grantType: JSONValue
     public let scope: String?
     public let additionalProperties: [String: JSONValue]
 
     public init(
         clientId: String,
         clientSecret: String,
-        audience: Any,
-        grantType: Any,
+        audience: JSONValue,
+        grantType: JSONValue,
         scope: String? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
@@ -26,8 +26,8 @@ public struct GetTokenRequest: Codable, Hashable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.clientId = try container.decode(String.self, forKey: .clientId)
         self.clientSecret = try container.decode(String.self, forKey: .clientSecret)
-        self.audience = try container.decode(Any.self, forKey: .audience)
-        self.grantType = try container.decode(Any.self, forKey: .grantType)
+        self.audience = try container.decode(JSONValue.self, forKey: .audience)
+        self.grantType = try container.decode(JSONValue.self, forKey: .grantType)
         self.scope = try container.decodeIfPresent(String.self, forKey: .scope)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }

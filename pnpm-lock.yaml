@@ -32,7 +32,7 @@ importers:
         version: 2.1.1
       '@blueprintjs/eslint-plugin':
         specifier: ^6.1.6
-        version: 6.1.12(eslint@9.29.0(jiti@2.5.1))(typescript@5.7.2)
+        version: 6.1.12(eslint@9.29.0(jiti@2.5.1))(typescript@5.8.3)
       '@blueprintjs/stylelint-plugin':
         specifier: ^4.1.14
         version: 4.1.17(stylelint@14.16.1)
@@ -44,7 +44,7 @@ importers:
         version: 21.3.8(@babel/traverse@7.23.2)(nx@21.3.8)
       ajv-cli:
         specifier: ^5.0.0
-        version: 5.0.0(ts-node@10.9.2(@types/node@18.15.3)(typescript@5.7.2))
+        version: 5.0.0(ts-node@10.9.2(@types/node@18.15.3)(typescript@5.8.3))
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -74,7 +74,7 @@ importers:
         version: 5.0.0(postcss@8.5.6)(stylelint@14.16.1)
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       tsx:
         specifier: ^4.20.3
         version: 4.20.3
@@ -82,8 +82,8 @@ importers:
         specifier: ^2.5.5
         version: 2.5.5
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -134,8 +134,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -171,8 +171,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -213,8 +213,8 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -250,8 +250,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -299,10 +299,10 @@ importers:
         version: 1.0.10
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -329,8 +329,8 @@ importers:
         specifier: ^5.1.1
         version: 5.1.1
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -369,10 +369,10 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -432,10 +432,10 @@ importers:
         version: 4.17.21
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       url-join:
         specifier: ^5.0.0
         version: 5.0.0
@@ -467,8 +467,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -516,10 +516,10 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -564,10 +564,10 @@ importers:
         version: 1.0.10
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -591,8 +591,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -628,10 +628,10 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -685,10 +685,10 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -715,8 +715,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -745,8 +745,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -794,10 +794,10 @@ importers:
         version: 1.0.10
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -854,10 +854,10 @@ importers:
         version: 4.17.21
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -902,10 +902,10 @@ importers:
         version: 12.1.3
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       url-join:
         specifier: ^5.0.0
         version: 5.0.0
@@ -950,10 +950,10 @@ importers:
         version: 4.17.21
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -983,8 +983,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -1035,10 +1035,10 @@ importers:
         version: 1.0.10
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.8
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -1071,10 +1071,10 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -1134,10 +1134,10 @@ importers:
         version: 4.17.21
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -1182,10 +1182,10 @@ importers:
         version: 4.17.21
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -1211,8 +1211,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -1260,8 +1260,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -1278,8 +1278,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -1333,10 +1333,10 @@ importers:
         version: 1.0.10
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -1354,10 +1354,10 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -1380,8 +1380,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -1420,10 +1420,10 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -1462,10 +1462,10 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -1498,8 +1498,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -1531,8 +1531,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -1574,10 +1574,10 @@ importers:
         version: 1.0.10
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -1595,10 +1595,10 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -1631,10 +1631,10 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       url-join:
         specifier: ^5.0.0
         version: 5.0.0
@@ -1673,8 +1673,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -1713,8 +1713,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -1753,10 +1753,10 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -1801,10 +1801,10 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -1817,6 +1817,9 @@ importers:
       '@fern-api/base-generator':
         specifier: workspace:*
         version: link:../../base
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/core-utils
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
@@ -1837,8 +1840,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -1856,8 +1859,8 @@ importers:
         specifier: ^1.4.6
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.0.5
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -1899,10 +1902,10 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -1950,10 +1953,10 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -1988,8 +1991,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -2019,8 +2022,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -2060,10 +2063,10 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -2111,10 +2114,10 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -2158,8 +2161,8 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -2192,10 +2195,10 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -2237,10 +2240,10 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -2267,8 +2270,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -2285,8 +2288,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -2309,8 +2312,8 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -2355,10 +2358,10 @@ importers:
         version: 1.0.10
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -2385,8 +2388,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -2428,10 +2431,10 @@ importers:
         version: 4.17.21
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -2470,8 +2473,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -2504,8 +2507,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -2541,8 +2544,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -2569,8 +2572,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -2603,8 +2606,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -2643,8 +2646,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -2677,8 +2680,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -2756,8 +2759,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -2787,8 +2790,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -2821,8 +2824,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -2855,8 +2858,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -2889,8 +2892,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -2926,8 +2929,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -2960,8 +2963,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -2994,8 +2997,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -3059,7 +3062,7 @@ importers:
         version: 5.4.19(@types/node@18.15.3)(sass@1.89.2)(terser@5.43.1)
       vite-plugin-checker:
         specifier: ^0.6.4
-        version: 0.6.4(eslint@9.29.0(jiti@2.5.1))(meow@9.0.0)(optionator@0.9.4)(stylelint@16.21.0(typescript@5.7.2))(typescript@5.7.2)(vite@5.4.19(@types/node@18.15.3)(sass@1.89.2)(terser@5.43.1))
+        version: 0.6.4(eslint@9.29.0(jiti@2.5.1))(meow@9.0.0)(optionator@0.9.4)(stylelint@16.21.0(typescript@5.8.3))(typescript@5.8.3)(vite@5.4.19(@types/node@18.15.3)(sass@1.89.2)(terser@5.43.1))
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -3104,10 +3107,10 @@ importers:
         version: 1.4.7
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -3152,8 +3155,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -3189,8 +3192,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -3220,8 +3223,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -3335,8 +3338,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -3366,8 +3369,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -3400,8 +3403,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -3443,8 +3446,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -3477,8 +3480,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -3514,8 +3517,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -3548,8 +3551,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -3582,8 +3585,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -3610,8 +3613,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -3653,8 +3656,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -3681,8 +3684,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -3766,8 +3769,8 @@ importers:
         specifier: ^1.0.3
         version: 1.0.3
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -3803,8 +3806,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -3828,8 +3831,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -3842,9 +3845,9 @@ importers:
       '@fern-api/ir-utils':
         specifier: workspace:*
         version: link:../../../commons/ir-utils
-      '@fern-api/v2-importer-commons':
+      '@fern-api/v3-importer-commons':
         specifier: workspace:*
-        version: link:../v2-importer-commons
+        version: link:../v3-importer-commons
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -3868,8 +3871,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -3905,8 +3908,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -3923,8 +3926,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -3963,8 +3966,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -3991,8 +3994,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -4014,9 +4017,9 @@ importers:
       '@fern-api/ir-utils':
         specifier: workspace:*
         version: link:../../../commons/ir-utils
-      '@fern-api/v2-importer-commons':
+      '@fern-api/v3-importer-commons':
         specifier: workspace:*
-        version: link:../v2-importer-commons
+        version: link:../v3-importer-commons
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -4040,8 +4043,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -4065,8 +4068,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -4117,8 +4120,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -4166,8 +4169,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -4209,8 +4212,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -4223,9 +4226,9 @@ importers:
       '@fern-api/ir-utils':
         specifier: workspace:*
         version: link:../../../commons/ir-utils
-      '@fern-api/v2-importer-commons':
+      '@fern-api/v3-importer-commons':
         specifier: workspace:*
-        version: link:../v2-importer-commons
+        version: link:../v3-importer-commons
       '@open-rpc/meta-schema':
         specifier: ^1.14.9
         version: 1.14.9
@@ -4246,13 +4249,13 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
 
-  packages/cli/api-importers/v2-importer-commons:
+  packages/cli/api-importers/v3-importer-commons:
     dependencies:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
@@ -4301,7 +4304,7 @@ importers:
         version: 2.3.3
       zod:
         specifier: ^3.22.3
-        version: 3.25.67
+        version: 3.25.76
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -4319,13 +4322,13 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
 
-  packages/cli/api-importers/v2-importer-tests:
+  packages/cli/api-importers/v3-importer-tests:
     dependencies:
       '@fern-api/fs-utils':
         specifier: workspace:*
@@ -4356,8 +4359,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -4399,8 +4402,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -4640,10 +4643,10 @@ importers:
         version: 3.0.3
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       undici:
         specifier: ^6.21.1
         version: 6.21.3
@@ -4679,8 +4682,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -4749,8 +4752,8 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -4783,8 +4786,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -4820,8 +4823,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -4899,8 +4902,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -4936,8 +4939,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -4979,8 +4982,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -5019,7 +5022,7 @@ importers:
         version: 3.2.0
       puppeteer:
         specifier: ^19.7.2
-        version: 19.11.1(typescript@5.7.2)
+        version: 19.11.1(typescript@5.8.3)
       rehype-parse:
         specifier: ^9.0.0
         version: 9.0.1
@@ -5058,8 +5061,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -5140,8 +5143,8 @@ importers:
         specifier: ^5.2.0
         version: 5.2.0
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -5156,7 +5159,7 @@ importers:
         version: link:../docs-resolver
       '@fern-api/fdr-sdk':
         specifier: 0.139.5-0b0fae69f
-        version: 0.139.5-0b0fae69f(typescript@5.7.2)
+        version: 0.139.5-0b0fae69f(typescript@5.8.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -5234,8 +5237,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -5262,10 +5265,10 @@ importers:
         version: link:../docs-markdown-utils
       '@fern-api/docs-parsers':
         specifier: 0.0.65
-        version: 0.0.65(typescript@5.7.2)
+        version: 0.0.65(typescript@5.8.3)
       '@fern-api/fdr-sdk':
         specifier: 0.139.5-0b0fae69f
-        version: 0.139.5-0b0fae69f(typescript@5.7.2)
+        version: 0.139.5-0b0fae69f(typescript@5.8.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -5337,8 +5340,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -5401,8 +5404,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -5444,8 +5447,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -5499,8 +5502,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -5524,8 +5527,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -5597,8 +5600,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -5660,8 +5663,8 @@ importers:
         specifier: ^1.0.10
         version: 1.0.10
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       url-join:
         specifier: ^5.0.0
         version: 5.0.0
@@ -5715,8 +5718,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -5941,8 +5944,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -5975,8 +5978,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -6090,8 +6093,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -6119,9 +6122,9 @@ importers:
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../logger
-      '@fern-api/v2-importer-commons':
+      '@fern-api/v3-importer-commons':
         specifier: workspace:*
-        version: link:../../api-importers/v2-importer-commons
+        version: link:../../api-importers/v3-importer-commons
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -6139,8 +6142,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -6265,8 +6268,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -6290,8 +6293,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -6366,8 +6369,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -6388,8 +6391,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -6446,8 +6449,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -6495,8 +6498,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -6532,8 +6535,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -6569,8 +6572,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -6636,8 +6639,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -6658,8 +6661,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -6680,8 +6683,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -6723,8 +6726,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -6784,8 +6787,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -6852,9 +6855,9 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../task-context
-      '@fern-api/v2-importer-commons':
+      '@fern-api/v3-importer-commons':
         specifier: workspace:*
-        version: link:../../api-importers/v2-importer-commons
+        version: link:../../api-importers/v3-importer-commons
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
@@ -6926,8 +6929,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -6984,8 +6987,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -7027,8 +7030,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -7049,7 +7052,7 @@ importers:
         version: link:../../docs-resolver
       '@fern-api/fdr-sdk':
         specifier: 0.139.5-0b0fae69f
-        version: 0.139.5-0b0fae69f(typescript@5.7.2)
+        version: 0.139.5-0b0fae69f(typescript@5.8.3)
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../../fern-definition/schema
@@ -7151,8 +7154,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -7206,8 +7209,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -7240,8 +7243,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -7301,8 +7304,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -7341,8 +7344,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -7381,8 +7384,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -7403,8 +7406,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -7431,8 +7434,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -7449,8 +7452,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -7488,8 +7491,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -7528,8 +7531,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -7546,8 +7549,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -7573,8 +7576,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -7685,10 +7688,10 @@ importers:
         version: 3.0.3
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -7742,10 +7745,10 @@ importers:
         version: 1.0.10
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3)
       typescript:
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
@@ -14137,8 +14140,8 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  typescript@5.7.2:
-    resolution: {integrity: sha512-i5t66RHxDvVN40HfDd1PsEThGNnlMCMT3jMUuoh9/0TaqWevNontacunWyN02LA9/fIbEWlcHZcgTKb9QoaLfg==}
+  typescript@5.8.3:
+    resolution: {integrity: sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -15410,9 +15413,9 @@ snapshots:
     dependencies:
       tslib: 2.6.3
 
-  '@blueprintjs/eslint-plugin@6.1.12(eslint@9.29.0(jiti@2.5.1))(typescript@5.7.2)':
+  '@blueprintjs/eslint-plugin@6.1.12(eslint@9.29.0(jiti@2.5.1))(typescript@5.8.3)':
     dependencies:
-      '@typescript-eslint/utils': 8.34.1(eslint@9.29.0(jiti@2.5.1))(typescript@5.7.2)
+      '@typescript-eslint/utils': 8.34.1(eslint@9.29.0(jiti@2.5.1))(typescript@5.8.3)
       eslint: 9.29.0(jiti@2.5.1)
     transitivePeerDependencies:
       - supports-color
@@ -15902,14 +15905,14 @@ snapshots:
       lodash-es: 4.17.21
       strip-ansi: 7.1.0
 
-  '@fern-api/docs-parsers@0.0.65(typescript@5.7.2)':
+  '@fern-api/docs-parsers@0.0.65(typescript@5.8.3)':
     dependencies:
       '@fern-api/logger': 0.4.24-rc1
       '@fern-api/ui-core-utils': 0.0.0
       '@open-rpc/meta-schema': 1.14.9
       es-toolkit: 1.39.3
       openapi-types: 12.1.3
-      ts-essentials: 10.1.1(typescript@5.7.2)
+      ts-essentials: 10.1.1(typescript@5.8.3)
       uuid: 9.0.1
       whatwg-mimetype: 4.0.0
     transitivePeerDependencies:
@@ -15917,7 +15920,7 @@ snapshots:
 
   '@fern-api/dynamic-ir-sdk@58.2.0': {}
 
-  '@fern-api/fdr-sdk@0.139.5-0b0fae69f(typescript@5.7.2)':
+  '@fern-api/fdr-sdk@0.139.5-0b0fae69f(typescript@5.8.3)':
     dependencies:
       '@fern-api/ui-core-utils': 0.139.5-0b0fae69f
       '@ungap/structured-clone': 1.3.0
@@ -15931,7 +15934,7 @@ snapshots:
       node-fetch: 2.7.0
       qs: 6.12.0
       tinycolor2: 1.6.0
-      ts-essentials: 10.1.1(typescript@5.7.2)
+      ts-essentials: 10.1.1(typescript@5.8.3)
       url-join: 5.0.0
     transitivePeerDependencies:
       - encoding
@@ -16649,7 +16652,7 @@ snapshots:
       '@pnpm/network.ca-file': 1.0.2
       config-chain: 1.1.13
 
-  '@puppeteer/browsers@0.5.0(typescript@5.7.2)':
+  '@puppeteer/browsers@0.5.0(typescript@5.8.3)':
     dependencies:
       debug: 4.3.4
       extract-zip: 2.0.1
@@ -16660,7 +16663,7 @@ snapshots:
       unbzip2-stream: 1.4.3
       yargs: 17.7.1
     optionalDependencies:
-      typescript: 5.7.2
+      typescript: 5.8.3
     transitivePeerDependencies:
       - supports-color
 
@@ -17045,12 +17048,12 @@ snapshots:
       '@types/node': 18.15.3
     optional: true
 
-  '@typescript-eslint/project-service@8.34.1(typescript@5.7.2)':
+  '@typescript-eslint/project-service@8.34.1(typescript@5.8.3)':
     dependencies:
-      '@typescript-eslint/tsconfig-utils': 8.34.1(typescript@5.7.2)
+      '@typescript-eslint/tsconfig-utils': 8.34.1(typescript@5.8.3)
       '@typescript-eslint/types': 8.34.1
       debug: 4.4.1
-      typescript: 5.7.2
+      typescript: 5.8.3
     transitivePeerDependencies:
       - supports-color
 
@@ -17059,16 +17062,16 @@ snapshots:
       '@typescript-eslint/types': 8.34.1
       '@typescript-eslint/visitor-keys': 8.34.1
 
-  '@typescript-eslint/tsconfig-utils@8.34.1(typescript@5.7.2)':
+  '@typescript-eslint/tsconfig-utils@8.34.1(typescript@5.8.3)':
     dependencies:
-      typescript: 5.7.2
+      typescript: 5.8.3
 
   '@typescript-eslint/types@8.34.1': {}
 
-  '@typescript-eslint/typescript-estree@8.34.1(typescript@5.7.2)':
+  '@typescript-eslint/typescript-estree@8.34.1(typescript@5.8.3)':
     dependencies:
-      '@typescript-eslint/project-service': 8.34.1(typescript@5.7.2)
-      '@typescript-eslint/tsconfig-utils': 8.34.1(typescript@5.7.2)
+      '@typescript-eslint/project-service': 8.34.1(typescript@5.8.3)
+      '@typescript-eslint/tsconfig-utils': 8.34.1(typescript@5.8.3)
       '@typescript-eslint/types': 8.34.1
       '@typescript-eslint/visitor-keys': 8.34.1
       debug: 4.4.1
@@ -17076,19 +17079,19 @@ snapshots:
       is-glob: 4.0.3
       minimatch: 9.0.5
       semver: 7.7.2
-      ts-api-utils: 2.1.0(typescript@5.7.2)
-      typescript: 5.7.2
+      ts-api-utils: 2.1.0(typescript@5.8.3)
+      typescript: 5.8.3
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/utils@8.34.1(eslint@9.29.0(jiti@2.5.1))(typescript@5.7.2)':
+  '@typescript-eslint/utils@8.34.1(eslint@9.29.0(jiti@2.5.1))(typescript@5.8.3)':
     dependencies:
       '@eslint-community/eslint-utils': 4.7.0(eslint@9.29.0(jiti@2.5.1))
       '@typescript-eslint/scope-manager': 8.34.1
       '@typescript-eslint/types': 8.34.1
-      '@typescript-eslint/typescript-estree': 8.34.1(typescript@5.7.2)
+      '@typescript-eslint/typescript-estree': 8.34.1(typescript@5.8.3)
       eslint: 9.29.0(jiti@2.5.1)
-      typescript: 5.7.2
+      typescript: 5.8.3
     transitivePeerDependencies:
       - supports-color
 
@@ -17244,7 +17247,7 @@ snapshots:
 
   agent-base@7.1.3: {}
 
-  ajv-cli@5.0.0(ts-node@10.9.2(@types/node@18.15.3)(typescript@5.7.2)):
+  ajv-cli@5.0.0(ts-node@10.9.2(@types/node@18.15.3)(typescript@5.8.3)):
     dependencies:
       ajv: 8.17.1
       fast-json-patch: 2.2.1
@@ -17254,7 +17257,7 @@ snapshots:
       json5: 2.2.2
       minimist: 1.2.8
     optionalDependencies:
-      ts-node: 10.9.2(@types/node@18.15.3)(typescript@5.7.2)
+      ts-node: 10.9.2(@types/node@18.15.3)(typescript@5.8.3)
 
   ajv-formats@3.0.1(ajv@8.17.1):
     optionalDependencies:
@@ -17805,14 +17808,14 @@ snapshots:
       parse-json: 5.2.0
       path-type: 4.0.0
 
-  cosmiconfig@9.0.0(typescript@5.7.2):
+  cosmiconfig@9.0.0(typescript@5.8.3):
     dependencies:
       env-paths: 2.2.1
       import-fresh: 3.3.1
       js-yaml: 4.1.0
       parse-json: 5.2.0
     optionalDependencies:
-      typescript: 5.7.2
+      typescript: 5.8.3
     optional: true
 
   create-require@1.1.1:
@@ -20871,9 +20874,9 @@ snapshots:
 
   punycode@2.3.1: {}
 
-  puppeteer-core@19.11.1(typescript@5.7.2):
+  puppeteer-core@19.11.1(typescript@5.8.3):
     dependencies:
-      '@puppeteer/browsers': 0.5.0(typescript@5.7.2)
+      '@puppeteer/browsers': 0.5.0(typescript@5.8.3)
       chromium-bidi: 0.4.7(devtools-protocol@0.0.1107588)
       cross-fetch: 3.1.5
       debug: 4.3.4
@@ -20885,21 +20888,21 @@ snapshots:
       unbzip2-stream: 1.4.3
       ws: 8.13.0
     optionalDependencies:
-      typescript: 5.7.2
+      typescript: 5.8.3
     transitivePeerDependencies:
       - bufferutil
       - encoding
       - supports-color
       - utf-8-validate
 
-  puppeteer@19.11.1(typescript@5.7.2):
+  puppeteer@19.11.1(typescript@5.8.3):
     dependencies:
-      '@puppeteer/browsers': 0.5.0(typescript@5.7.2)
+      '@puppeteer/browsers': 0.5.0(typescript@5.8.3)
       cosmiconfig: 8.1.3
       https-proxy-agent: 5.0.1
       progress: 2.0.3
       proxy-from-env: 1.1.0
-      puppeteer-core: 19.11.1(typescript@5.7.2)
+      puppeteer-core: 19.11.1(typescript@5.8.3)
     transitivePeerDependencies:
       - bufferutil
       - encoding
@@ -21740,7 +21743,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  stylelint@16.21.0(typescript@5.7.2):
+  stylelint@16.21.0(typescript@5.8.3):
     dependencies:
       '@csstools/css-parser-algorithms': 3.0.5(@csstools/css-tokenizer@3.0.4)
       '@csstools/css-tokenizer': 3.0.4
@@ -21749,7 +21752,7 @@ snapshots:
       '@dual-bundle/import-meta-resolve': 4.1.0
       balanced-match: 2.0.0
       colord: 2.9.3
-      cosmiconfig: 9.0.0(typescript@5.7.2)
+      cosmiconfig: 9.0.0(typescript@5.8.3)
       css-functions-list: 3.2.3
       css-tree: 3.1.0
       debug: 4.4.1
@@ -21991,13 +21994,13 @@ snapshots:
 
   trough@2.2.0: {}
 
-  ts-api-utils@2.1.0(typescript@5.7.2):
+  ts-api-utils@2.1.0(typescript@5.8.3):
     dependencies:
-      typescript: 5.7.2
+      typescript: 5.8.3
 
-  ts-essentials@10.1.1(typescript@5.7.2):
+  ts-essentials@10.1.1(typescript@5.8.3):
     optionalDependencies:
-      typescript: 5.7.2
+      typescript: 5.8.3
 
   ts-interface-checker@0.1.13: {}
 
@@ -22006,7 +22009,7 @@ snapshots:
       '@ts-morph/common': 0.16.0
       code-block-writer: 11.0.3
 
-  ts-node@10.9.2(@types/node@18.15.3)(typescript@5.7.2):
+  ts-node@10.9.2(@types/node@18.15.3)(typescript@5.8.3):
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       '@tsconfig/node10': 1.0.11
@@ -22020,7 +22023,7 @@ snapshots:
       create-require: 1.1.1
       diff: 4.0.2
       make-error: 1.3.6
-      typescript: 5.7.2
+      typescript: 5.8.3
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
     optional: true
@@ -22039,7 +22042,7 @@ snapshots:
 
   tslib@2.8.1: {}
 
-  tsup@8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3):
+  tsup@8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.3.3):
     dependencies:
       bundle-require: 5.1.0(esbuild@0.25.5)
       cac: 6.7.14
@@ -22060,7 +22063,7 @@ snapshots:
       tree-kill: 1.2.2
     optionalDependencies:
       postcss: 8.5.6
-      typescript: 5.7.2
+      typescript: 5.8.3
     transitivePeerDependencies:
       - jiti
       - supports-color
@@ -22157,7 +22160,7 @@ snapshots:
 
   typescript@5.4.5: {}
 
-  typescript@5.7.2: {}
+  typescript@5.8.3: {}
 
   ua-parser-js@1.0.40: {}
 
@@ -22339,7 +22342,7 @@ snapshots:
       - supports-color
       - terser
 
-  vite-plugin-checker@0.6.4(eslint@9.29.0(jiti@2.5.1))(meow@9.0.0)(optionator@0.9.4)(stylelint@16.21.0(typescript@5.7.2))(typescript@5.7.2)(vite@5.4.19(@types/node@18.15.3)(sass@1.89.2)(terser@5.43.1)):
+  vite-plugin-checker@0.6.4(eslint@9.29.0(jiti@2.5.1))(meow@9.0.0)(optionator@0.9.4)(stylelint@16.21.0(typescript@5.8.3))(typescript@5.8.3)(vite@5.4.19(@types/node@18.15.3)(sass@1.89.2)(terser@5.43.1)):
     dependencies:
       '@babel/code-frame': 7.27.1
       ansi-escapes: 4.3.2
@@ -22361,8 +22364,8 @@ snapshots:
       eslint: 9.29.0(jiti@2.5.1)
       meow: 9.0.0
       optionator: 0.9.4
-      stylelint: 16.21.0(typescript@5.7.2)
-      typescript: 5.7.2
+      stylelint: 16.21.0(typescript@5.8.3)
+      typescript: 5.8.3
 
   vite@5.4.19(@types/node@18.15.3)(sass@1.89.2)(terser@5.43.1):
     dependencies:

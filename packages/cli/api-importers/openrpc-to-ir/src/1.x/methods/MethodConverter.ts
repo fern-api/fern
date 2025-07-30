@@ -21,7 +21,7 @@ import {
     TypeId
 } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
-import { AbstractConverter, Converters, ServersConverter } from "@fern-api/v2-importer-commons";
+import { AbstractConverter, Converters, ServersConverter } from "@fern-api/v3-importer-commons";
 
 import { OpenRPCConverterContext3_1 } from "../OpenRPCConverterContext3_1";
 
