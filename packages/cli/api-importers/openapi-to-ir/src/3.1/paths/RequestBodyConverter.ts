@@ -36,7 +36,17 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
     protected readonly schemaId: string;
     private readonly streamingExtension: FernStreamingExtension.Output | undefined;
 
-    constructor({ context, breadcrumbs, contentType, mediaType, description, required, group, method, streamingExtension }: RequestBodyConverter.Args) {
+    constructor({
+        context,
+        breadcrumbs,
+        contentType,
+        mediaType,
+        description,
+        required,
+        group,
+        method,
+        streamingExtension
+    }: RequestBodyConverter.Args) {
         super({ context, breadcrumbs, group, method });
         this.contentType = contentType;
         this.mediaType = mediaType;
@@ -85,7 +95,6 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         const contentType = MediaType.parse(this.contentType);
         return contentType?.isJSON() || contentType?.isURLEncoded() || contentType?.isPlainText() || false;
     }
-
 
     private handleJsonOrFormContent({ contentType }: { contentType: string }): RequestBodyConverter.Output | undefined {
         const mediaTypeObject = this.mediaType;

@@ -216,7 +216,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
             const requestBodyConverter = new RequestBodyConverter({
                 context: this.context,
                 breadcrumbs,
-                contentType, 
+                contentType,
                 mediaType,
                 description: resolvedRequestBody.description,
                 required: resolvedRequestBody.required,

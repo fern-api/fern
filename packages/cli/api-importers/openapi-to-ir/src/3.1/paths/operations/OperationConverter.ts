@@ -2,7 +2,14 @@ import { camelCase } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { FernIr, HttpEndpoint, HttpEndpointSource, HttpPath, HttpResponse, V2HttpRequestBodies } from "@fern-api/ir-sdk";
+import {
+    FernIr,
+    HttpEndpoint,
+    HttpEndpointSource,
+    HttpPath,
+    HttpResponse,
+    V2HttpRequestBodies
+} from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
 import { AbstractConverter, ServersConverter } from "@fern-api/v2-importer-commons";
 
@@ -89,7 +96,8 @@ export class OperationConverter extends AbstractOperationConverter {
             streamingExtension: this.streamingExtension
         });
         const requestBody = convertedRequestBodies != null ? convertedRequestBodies[0]?.requestBody : undefined;
-        const streamRequestBody = convertedRequestBodies != null ? convertedRequestBodies[0]?.streamRequestBody : undefined;
+        const streamRequestBody =
+            convertedRequestBodies != null ? convertedRequestBodies[0]?.streamRequestBody : undefined;
 
         const v2RequestBodies: V2HttpRequestBodies = {
             requestBodies: convertedRequestBodies?.map((body) => body.requestBody)
