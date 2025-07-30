@@ -523,6 +523,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 })
                 .option("lfs-override", {
                     type: "string",
+                    hidden: true,
                     description: "Override output mode to local-file-system with the specified path"
                 }),
         async (argv) => {
