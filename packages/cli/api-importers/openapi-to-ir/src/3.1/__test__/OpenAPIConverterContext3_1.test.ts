@@ -2,7 +2,7 @@ import { OpenAPIV3_1 } from "openapi-types";
 import { describe, expect, it } from "vitest";
 
 import { getOpenAPISettings } from "@fern-api/api-workspace-commons";
-import { ErrorCollector } from "@fern-api/v2-importer-commons";
+import { ErrorCollector } from "@fern-api/v3-importer-commons";
 
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 

@@ -2075,7 +2075,7 @@
 
 - changelogEntry:
     - summary: |
-        Refactor out schema converter nodes into the `v2-importer-commons` package.
+        Refactor out schema converter nodes into the `v3-importer-commons` package.
       type: fix
   irVersion: 57
   version: 0.56.33

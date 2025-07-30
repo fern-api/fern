@@ -9,7 +9,7 @@ import {
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { TypeReference } from "@fern-api/ir-sdk";
-import { AbstractConverterContext, DisplayNameOverrideSource } from "@fern-api/v2-importer-commons";
+import { AbstractConverterContext, DisplayNameOverrideSource } from "@fern-api/v3-importer-commons";
 
 /**
  * Context class for converting OpenAPI 3.1 specifications

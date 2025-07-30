@@ -1,7 +1,7 @@
 import { OpenAPIV3 } from "openapi-types";
 import { z } from "zod";
 
-import { AbstractConverterContext, AbstractExtension } from "@fern-api/v2-importer-commons";
+import { AbstractConverterContext, AbstractExtension } from "@fern-api/v3-importer-commons";
 
 const REQUEST_PREFIX = "$request.";
 

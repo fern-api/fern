@@ -1,7 +1,7 @@
 import { MethodObject, OpenrpcDocument, ServerObject } from "@open-rpc/meta-schema";
 
 import { HttpHeader, IntermediateRepresentation, PathParameter, QueryParameter } from "@fern-api/ir-sdk";
-import { AbstractSpecConverter, Converters, ServersConverter } from "@fern-api/v2-importer-commons";
+import { AbstractSpecConverter, Converters, ServersConverter } from "@fern-api/v3-importer-commons";
 
 import { OpenRPCConverterContext3_1 } from "./OpenRPCConverterContext3_1";
 import { ParameterConverter } from "./ParameterConverter";

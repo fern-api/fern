@@ -3842,9 +3842,9 @@ importers:
       '@fern-api/ir-utils':
         specifier: workspace:*
         version: link:../../../commons/ir-utils
-      '@fern-api/v2-importer-commons':
+      '@fern-api/v3-importer-commons':
         specifier: workspace:*
-        version: link:../v2-importer-commons
+        version: link:../v3-importer-commons
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -4014,9 +4014,9 @@ importers:
       '@fern-api/ir-utils':
         specifier: workspace:*
         version: link:../../../commons/ir-utils
-      '@fern-api/v2-importer-commons':
+      '@fern-api/v3-importer-commons':
         specifier: workspace:*
-        version: link:../v2-importer-commons
+        version: link:../v3-importer-commons
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -4223,9 +4223,9 @@ importers:
       '@fern-api/ir-utils':
         specifier: workspace:*
         version: link:../../../commons/ir-utils
-      '@fern-api/v2-importer-commons':
+      '@fern-api/v3-importer-commons':
         specifier: workspace:*
-        version: link:../v2-importer-commons
+        version: link:../v3-importer-commons
       '@open-rpc/meta-schema':
         specifier: ^1.14.9
         version: 1.14.9
@@ -4252,7 +4252,7 @@ importers:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
 
-  packages/cli/api-importers/v2-importer-commons:
+  packages/cli/api-importers/v3-importer-commons:
     dependencies:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
@@ -4301,7 +4301,7 @@ importers:
         version: 2.3.3
       zod:
         specifier: ^3.22.3
-        version: 3.25.67
+        version: 3.25.76
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -4325,7 +4325,7 @@ importers:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
 
-  packages/cli/api-importers/v2-importer-tests:
+  packages/cli/api-importers/v3-importer-tests:
     dependencies:
       '@fern-api/fs-utils':
         specifier: workspace:*
@@ -6119,9 +6119,9 @@ importers:
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../logger
-      '@fern-api/v2-importer-commons':
+      '@fern-api/v3-importer-commons':
         specifier: workspace:*
-        version: link:../../api-importers/v2-importer-commons
+        version: link:../../api-importers/v3-importer-commons
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -6852,9 +6852,9 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../task-context
-      '@fern-api/v2-importer-commons':
+      '@fern-api/v3-importer-commons':
         specifier: workspace:*
-        version: link:../../api-importers/v2-importer-commons
+        version: link:../../api-importers/v3-importer-commons
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584

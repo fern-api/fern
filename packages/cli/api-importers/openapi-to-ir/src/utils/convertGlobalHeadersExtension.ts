@@ -1,5 +1,5 @@
 import { FernIr } from "@fern-api/ir-sdk";
-import { AbstractConverter, AbstractConverterContext, ExampleConverter } from "@fern-api/v2-importer-commons";
+import { AbstractConverter, AbstractConverterContext, ExampleConverter } from "@fern-api/v3-importer-commons";
 
 import { FernGlobalHeadersExtension } from "../extensions/x-fern-global-headers";
 

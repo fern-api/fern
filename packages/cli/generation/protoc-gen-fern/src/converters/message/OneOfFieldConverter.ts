@@ -1,7 +1,7 @@
 import { FieldDescriptorProto } from "@bufbuild/protobuf/wkt";
 
 import { ObjectProperty, Type, TypeId, TypeReference, UndiscriminatedUnionMember } from "@fern-api/ir-sdk";
-import { AbstractConverter } from "@fern-api/v2-importer-commons";
+import { AbstractConverter } from "@fern-api/v3-importer-commons";
 
 import { ProtofileConverterContext } from "../ProtofileConverterContext";
 import { EnumOrMessageConverter } from "./EnumOrMessageConverter";

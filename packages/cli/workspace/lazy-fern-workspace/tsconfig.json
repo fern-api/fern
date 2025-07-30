@@ -12,7 +12,7 @@
       "path": "../../../commons/casings-generator"
     },
     {
-      "path": "../../api-importers/v2-importer-commons"
+      "path": "../../api-importers/v3-importer-commons"
     },
     {
       "path": "../../api-importers/openrpc-to-ir"

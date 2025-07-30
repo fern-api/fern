@@ -54,7 +54,7 @@
     "@fern-api/openrpc-to-ir": "workspace:*",
     "@fern-api/semver-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-api/v2-importer-commons": "workspace:*",
+    "@fern-api/v3-importer-commons": "workspace:*",
     "@fern-fern/fiddle-sdk": "0.0.584",
     "@open-rpc/meta-schema": "^1.14.9",
     "@redocly/openapi-core": "^1.4.1",

@@ -1,7 +1,7 @@
 import { DescriptorProto, EnumDescriptorProto } from "@bufbuild/protobuf/wkt";
 
 import { FernIr, TypeId } from "@fern-api/ir-sdk";
-import { AbstractConverter, AbstractConverterContext } from "@fern-api/v2-importer-commons";
+import { AbstractConverter, AbstractConverterContext } from "@fern-api/v3-importer-commons";
 
 import { ProtofileConverterContext } from "../ProtofileConverterContext";
 import { SOURCE_CODE_INFO_PATH_STARTERS } from "../utils/PathFieldNumbers";

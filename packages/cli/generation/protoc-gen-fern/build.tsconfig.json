@@ -19,7 +19,7 @@
       "path": "../../../ir-sdk"
     },
     {
-      "path": "../../api-importers/v2-importer-commons"
+      "path": "../../api-importers/v3-importer-commons"
     },
     {
       "path": "../../logger"

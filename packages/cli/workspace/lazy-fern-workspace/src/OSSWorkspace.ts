@@ -24,7 +24,7 @@ import { parse } from "@fern-api/openapi-ir-parser";
 import { OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/openapi-to-ir";
 import { OpenRPCConverter, OpenRPCConverterContext3_1 } from "@fern-api/openrpc-to-ir";
 import { TaskContext } from "@fern-api/task-context";
-import { ErrorCollector } from "@fern-api/v2-importer-commons";
+import { ErrorCollector } from "@fern-api/v3-importer-commons";
 
 import { constructCasingsGenerator } from "../../../../commons/casings-generator/src/CasingsGenerator";
 import { loadOpenRpc } from "./loaders";

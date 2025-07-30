@@ -145,7 +145,7 @@
 			"!packages/cli/api-importers/conjure/conjure-sdk/**",
 			"!packages/cli/api-importers/openapi/openapi-ir-to-fern-tests/src/__test__/fixtures/unions-v1/openapi.json",
 			"!packages/cli/api-importers/openapi/openapi-ir/src/sdk/**",
-			"!packages/cli/api-importers/v2-importer-tests/src/__test__/fixtures/unions-v1/openapi.json",
+			"!packages/cli/api-importers/v3-importer-tests/src/__test__/fixtures/unions-v1/openapi.json",
 			"!packages/cli/configuration/src/docs-yml/schemas/**",
 			"!packages/cli/configuration/src/generators-yml/schemas/**",
 			"!packages/cli/ete-tests/src/tests/generate/fixtures/basic/sdks/**",
