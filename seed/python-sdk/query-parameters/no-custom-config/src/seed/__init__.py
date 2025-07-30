@@ -6,5 +6,4 @@ from . import user
 from .client import AsyncSeedQueryParameters, SeedQueryParameters
 from .user import NestedUser, User
 from .version import __version__
-
 __all__ = ["AsyncSeedQueryParameters", "NestedUser", "SeedQueryParameters", "User", "__version__", "user"]
