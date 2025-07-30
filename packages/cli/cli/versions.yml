@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        IR parser: Extended the logic for flattening properties in oneOf schemas to anyOf schemas as well
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-30"
+  version: 0.65.38
+
+- changelogEntry:
+    - summary: |
         Add support for snippet.json output as part of self hosted SDK generation. The following config in 
         `generators.yml` will generate a `snippet.json` file in the relevant director: 
         ```
