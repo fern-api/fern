@@ -43,8 +43,7 @@
     "@fern-api/project-loader": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-api/casings-generator": "workspace:*",
-    "prettier": "^3.4.2"
+    "@fern-api/casings-generator": "workspace:*"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
