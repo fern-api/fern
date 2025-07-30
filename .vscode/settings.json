@@ -4,6 +4,7 @@
     "**/.next": true,
     "**/.pnp.*": true,
     "**/.turbo": true,
+    "**/.nx": true,
     "**/.yarn": true,
     "**/__snapshots__/**": true,
     "**/__test__/**/fixtures": true,
@@ -22,23 +23,16 @@
   "files.readonlyInclude": {
     ".husky/_": true,
     ".turbo": true,
-    "pnpm-lock.yaml": true,
+    ".nx": true,
+    "pnpm-lock.yaml": true
   },
-  "eslint.execArgv": [
-    "--max_old_space_size=16384"
-  ],
-  "eslint.workingDirectories": [
-    "./packages",
-    "./generators"
-  ],
-  "prettier.prettierPath": "node_modules/prettier/index.cjs",
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "editor.formatOnSave": false,
   "editor.codeActionsOnSave": [],
   "editor.defaultFormatter": null,
   "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "biomejs.biome"
   },
   "python.analysis.typeCheckingMode": "basic",
   "dotnet.automaticallyCreateSolutionInWorkspace": false,
