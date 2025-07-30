@@ -83,17 +83,39 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             return this.handleMultipartContent({ contentType: this.contentType });
         }
 
-        const isOctetStreamContentType = MediaType.parse(this.contentType)?.isOctetStream();
-        if (isOctetStreamContentType) {
-            return this.handleOctetStreamContent({ contentType: this.contentType });
+        const isBinaryContentType = this.isBinaryContentType();
+        if (isBinaryContentType) {
+            return this.handleBinaryContent({ contentType: this.contentType });
         }
 
         return undefined;
     }
 
     private isOrderedJsonOrFormContentType(): boolean {
-        const contentType = MediaType.parse(this.contentType);
-        return contentType?.isJSON() || contentType?.isURLEncoded() || contentType?.isPlainText() || false;
+        const mediaType = MediaType.parse(this.contentType);
+        if (!mediaType) {
+            return false;
+        }
+
+        return (
+            mediaType.isJSON() ||
+            mediaType.isURLEncoded() ||
+            mediaType.isPlainText() ||
+            mediaType.isCSV() ||
+            mediaType.isHTML() ||
+            mediaType.isXML() ||
+            mediaType.isDNS() ||
+            mediaType.isApplicationText()
+        );
+    }
+
+    private isBinaryContentType(): boolean {
+        const mediaType = MediaType.parse(this.contentType);
+        if (!mediaType) {
+            return false;
+        }
+
+        return mediaType.isBinary();
     }
 
     private handleJsonOrFormContent({ contentType }: { contentType: string }): RequestBodyConverter.Output | undefined {
@@ -192,7 +214,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         return undefined;
     }
 
-    private handleOctetStreamContent({
+    private handleBinaryContent({
         contentType
     }: {
         contentType: string;
