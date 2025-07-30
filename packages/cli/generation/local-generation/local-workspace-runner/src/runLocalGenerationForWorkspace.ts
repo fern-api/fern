@@ -3,13 +3,12 @@ import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
 
-import { FernToken } from "@fern-api/auth";
-import { getAccessToken } from "@fern-api/auth";
+import { FernToken, getAccessToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createVenusService } from "@fern-api/core";
 import { ContainerRunner, replaceEnvVariables } from "@fern-api/core-utils";
-import { RelativeFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
@@ -112,13 +111,22 @@ export async function runLocalGenerationForWorkspace({
                         RelativeFilePath.of(generatorInvocation.language ?? generatorInvocation.name)
                     );
 
+                const absolutePathToLocalSnippetJSON = generatorInvocation.raw?.snippets?.path != null
+                    ? AbsoluteFilePath.of(
+                        join(
+                            workspace.absoluteFilePath,
+                            RelativeFilePath.of(generatorInvocation.raw.snippets.path)
+                        )
+                    )
+                    : undefined;
+
                 await writeFilesToDiskAndRunGenerator({
                     organization: projectConfig.organization,
                     absolutePathToFernConfig: projectConfig._absolutePath,
                     workspace: fernWorkspace,
                     generatorInvocation,
                     absolutePathToLocalOutput,
-                    absolutePathToLocalSnippetJSON: undefined,
+                    absolutePathToLocalSnippetJSON,
                     absolutePathToLocalSnippetTemplateJSON: undefined,
                     audiences: generatorGroup.audiences,
                     workspaceTempDir,
