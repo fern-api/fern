@@ -134,6 +134,25 @@
           },
           "description": "A simple API request."
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RequestOne"
+                  }
+                },
+                "description": "A simple API request."
+              },
+              "description": "A simple API request."
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -224,6 +243,25 @@
             "description": "A simple API request."
           },
           "description": "A simple API request."
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SampleUnion"
+                  }
+                },
+                "description": "A simple API request."
+              },
+              "description": "A simple API request."
+            }
+          ]
         },
         "response": {
           "type": {

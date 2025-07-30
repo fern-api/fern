@@ -12660,6 +12660,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -12795,6 +12796,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -12912,6 +12914,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -13040,6 +13043,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -13198,6 +13202,25 @@
             },
             "description": "Margin Configuration"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "requests.AccountMarginRequest"
+                    }
+                  },
+                  "description": "Margin Configuration"
+                },
+                "description": "Margin Configuration"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -13310,6 +13333,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -13532,6 +13556,25 @@
             },
             "description": "Update market max slippage request"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "requests.UpdateAccountMaxSlippageRequest"
+                    }
+                  },
+                  "description": "Update market max slippage request"
+                },
+                "description": "Update market max slippage request"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -13731,6 +13774,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -13919,6 +13963,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -14107,6 +14152,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -14227,6 +14273,25 @@
               "description": "Update account trading value display request"
             },
             "description": "Update account trading value display request"
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "requests.UpdateTradingValueDisplayRequest"
+                    }
+                  },
+                  "description": "Update account trading value display request"
+                },
+                "description": "Update account trading value display request"
+              }
+            ]
           },
           "response": {
             "type": {
@@ -14425,6 +14490,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -14542,6 +14608,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -14729,6 +14796,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -14945,6 +15013,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -15077,6 +15146,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -15264,6 +15334,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -15429,6 +15500,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -15649,6 +15721,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -15788,6 +15861,25 @@
               "description": "Algo order content"
             },
             "description": "Algo order content"
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "requests.AlgoOrderRequest"
+                    }
+                  },
+                  "description": "Algo order content"
+                },
+                "description": "Algo order content"
+              }
+            ]
           },
           "response": {
             "type": {
@@ -16044,6 +16136,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -16195,6 +16288,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -16333,6 +16427,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -16491,6 +16586,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -16647,6 +16743,25 @@
             },
             "description": "Onboarding user public_key"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "requests.Onboarding"
+                    }
+                  },
+                  "description": "Onboarding user public_key"
+                },
+                "description": "Onboarding user public_key"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -16787,6 +16902,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -16960,6 +17076,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -17089,6 +17206,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -17366,6 +17484,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "responsesV2": {},
           "errorsV2": [
             {
@@ -17467,6 +17586,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -17654,6 +17774,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -17783,6 +17904,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -17905,6 +18027,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -18032,6 +18155,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -18205,6 +18329,25 @@
               "description": "Order content"
             },
             "description": "Order content"
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "requests.OrderRequest"
+                    }
+                  },
+                  "description": "Order content"
+                },
+                "description": "Order content"
+              }
+            ]
           },
           "response": {
             "type": {
@@ -18393,6 +18536,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -18597,6 +18741,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -18780,6 +18925,28 @@
               "description": "Order content"
             },
             "description": "Order content"
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "list",
+                      "itemType": {
+                        "type": "id",
+                        "value": "requests.OrderRequest"
+                      }
+                    }
+                  },
+                  "description": "Order content"
+                },
+                "description": "Order content"
+              }
+            ]
           },
           "response": {
             "type": {
@@ -18994,6 +19161,25 @@
             },
             "description": "Order IDs or Client Order IDs to cancel"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "requests.CancelOrderBatchRequest"
+                    }
+                  },
+                  "description": "Order IDs or Client Order IDs to cancel"
+                },
+                "description": "Order IDs or Client Order IDs to cancel"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -19127,6 +19313,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -19298,6 +19485,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -19408,6 +19596,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -19594,6 +19783,25 @@
               "description": "Modify Order Request"
             },
             "description": "Modify Order Request"
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "requests.ModifyOrderRequest"
+                    }
+                  },
+                  "description": "Modify Order Request"
+                },
+                "description": "Modify Order Request"
+              }
+            ]
           },
           "response": {
             "type": {
@@ -19790,6 +19998,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -20014,6 +20223,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -20089,6 +20299,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -20221,6 +20432,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -20358,6 +20570,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -20437,6 +20650,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -20591,6 +20805,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -20862,6 +21077,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -21055,6 +21271,25 @@
             },
             "description": "Vault parameters"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "requests.CreateVault"
+                    }
+                  },
+                  "description": "Vault parameters"
+                },
+                "description": "Vault parameters"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -21208,6 +21443,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -21343,6 +21579,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -21450,6 +21687,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -21593,6 +21831,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -21734,6 +21973,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -21895,6 +22135,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -22053,6 +22294,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -23634,6 +23876,7 @@
           }
         ],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",

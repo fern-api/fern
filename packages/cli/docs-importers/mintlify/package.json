@@ -29,10 +29,6 @@
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
-    "format": "prettier --write --ignore-unknown --ignore-path ../../../../../shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../../../shared/.prettierignore \"**\"",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../../../.eslintignore",
-    "lint:eslint:fix": "yarn lint:eslint --fix",
     "test": "vitest --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --run -u"
@@ -44,7 +40,7 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-fern/fdr-cjs-sdk": "0.138.11-2322dc4c6",
+    "@fern-fern/fdr-cjs-sdk": "0.139.5-0b0fae69f",
     "gray-matter": "^4.0.3"
   },
   "devDependencies": {

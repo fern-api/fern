@@ -31,11 +31,7 @@
     "depcheck": "depcheck",
     "dist:cli": "pnpm compile && node build.cjs",
     "env:prod": "env-cmd -r .env-cmdrc.cjs -e prod",
-    "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "generate": "fern generate --local",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../.eslintignore",
-    "lint:eslint:fix": "yarn lint:eslint --fix",
     "test": "vitest --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --run -u"

@@ -8705,6 +8705,7 @@
                         "v2Examples": null,
                         "contentType": "application/json"
                     },
+                    "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
@@ -11719,6 +11720,7 @@
                         "v2Examples": null,
                         "contentType": "application/json"
                     },
+                    "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
@@ -12720,6 +12722,7 @@
                         "v2Examples": null,
                         "contentType": "application/json"
                     },
+                    "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",

@@ -189,6 +189,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                           v2Examples: undefined
                       })
                     : undefined,
+            v2RequestBodies: undefined,
             sdkRequest: undefined,
             response:
                 jsonResponseBody != null

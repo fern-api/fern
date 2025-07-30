@@ -7969,6 +7969,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -8156,6 +8157,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "artifacts-prepare-request"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -8362,6 +8380,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "auth-tokens-create-request"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -8548,6 +8583,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "auth-tokens-delete-request"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -8731,6 +8783,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -9020,6 +9073,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -9286,6 +9340,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "auth-tokens-self-delete-request"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -9470,6 +9541,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "auth-tokens-update-request"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -9755,6 +9843,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "dev-org-auth-connections-create-request"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -9930,6 +10035,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "dev-org-auth-connections-delete-request"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -10118,6 +10240,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -10291,6 +10414,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -10465,6 +10589,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "dev-org-auth-connections-toggle-request"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -10654,6 +10795,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "dev-org-auth-connections-update-request"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -10926,6 +11084,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -11178,6 +11337,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -11445,6 +11605,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "parts-create-request"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -11744,6 +11921,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "parts-delete-request"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -11931,6 +12125,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -12326,6 +12521,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -12626,6 +12822,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "parts-update-request"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -12949,6 +13162,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "rev-orgs-create-request"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -13195,6 +13425,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "rev-orgs-delete-request"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -13382,6 +13629,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -13763,6 +14011,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -14020,6 +14269,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "rev-orgs-update-request"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -14291,6 +14557,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "tags-create-request"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -14539,6 +14822,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "tags-delete-request"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -14726,6 +15026,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -15005,6 +15306,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -15251,6 +15553,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "tags-update-request"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -15524,6 +15843,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "timeline-entries-create-request"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -15774,6 +16110,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -16071,6 +16408,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -16341,6 +16679,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "timeline-entries-update-request"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -16604,6 +16959,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "webhooks-create-request"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -16854,6 +17226,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "webhooks-delete-request"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -17041,6 +17430,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -17284,6 +17674,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -17528,6 +17919,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "webhooks-update-request"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -17802,6 +18210,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "works-create-request"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -18149,6 +18574,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "works-delete-request"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -18477,6 +18919,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -18820,6 +19263,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -19339,6 +19783,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -19687,6 +20132,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "works-update-request"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {

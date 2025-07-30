@@ -16429,6 +16429,25 @@
             },
             "description": "Hris direct employee object that will be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "HrisDirectEmployee"
+                    }
+                  },
+                  "description": "Hris direct employee object that will be created"
+                },
+                "description": "Hris direct employee object that will be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -16746,6 +16765,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -17047,6 +17067,25 @@
             },
             "description": "Employee (eor) contract object that needs to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "EorContractToCreateContainer"
+                    }
+                  },
+                  "description": "Employee (eor) contract object that needs to be created"
+                },
+                "description": "Employee (eor) contract object that needs to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -17313,6 +17352,25 @@
               "description": "Contract object that needs to be created"
             },
             "description": "Contract object that needs to be created"
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ContractToCreateContainer_pay_as_you_go_time_based"
+                    }
+                  },
+                  "description": "Contract object that needs to be created"
+                },
+                "description": "Contract object that needs to be created"
+              }
+            ]
           },
           "response": {
             "type": {
@@ -17756,6 +17814,25 @@
             },
             "description": "Contract object that needs to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ContractToCreateContainer_payg_tasks"
+                    }
+                  },
+                  "description": "Contract object that needs to be created"
+                },
+                "description": "Contract object that needs to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -18194,6 +18271,25 @@
             },
             "description": "Contract object that needs to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ContractToCreateContainer_payg_milestones"
+                    }
+                  },
+                  "description": "Contract object that needs to be created"
+                },
+                "description": "Contract object that needs to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -18631,6 +18727,25 @@
               "description": "Contract object that needs to be created"
             },
             "description": "Contract object that needs to be created"
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ContractToCreateContainer_ongoing_time_based"
+                    }
+                  },
+                  "description": "Contract object that needs to be created"
+                },
+                "description": "Contract object that needs to be created"
+              }
+            ]
           },
           "response": {
             "type": {
@@ -19074,6 +19189,25 @@
               "description": "Contract object that needs to be created"
             },
             "description": "Contract object that needs to be created"
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ContractToCreateContainer"
+                    }
+                  },
+                  "description": "Contract object that needs to be created"
+                },
+                "description": "Contract object that needs to be created"
+              }
+            ]
           },
           "response": {
             "type": {
@@ -19536,6 +19670,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "statusCode": 200,
             "type": {
@@ -19736,6 +19871,25 @@
               "description": "Contract object that needs to be amended"
             },
             "description": "Contract object that needs to be amended"
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ContractToAmendDetailsContainer"
+                    }
+                  },
+                  "description": "Contract object that needs to be amended"
+                },
+                "description": "Contract object that needs to be amended"
+              }
+            ]
           },
           "response": {
             "type": {
@@ -19960,6 +20114,25 @@
               "description": "Contract that needs to be terminated and when."
             },
             "description": "Contract that needs to be terminated and when."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ContractToTerminateContainer"
+                    }
+                  },
+                  "description": "Contract that needs to be terminated and when."
+                },
+                "description": "Contract that needs to be terminated and when."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -20187,6 +20360,25 @@
             },
             "description": "Answers for assessment in order to find eligibility for Deel Premium."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "PremiumToAddContainer"
+                    }
+                  },
+                  "description": "Answers for assessment in order to find eligibility for Deel Premium."
+                },
+                "description": "Answers for assessment in order to find eligibility for Deel Premium."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -20403,6 +20595,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -20728,6 +20921,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -21012,6 +21206,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -21417,6 +21612,25 @@
             },
             "description": "Contract object that needs to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "InputToPatchContractExternalId"
+                    }
+                  },
+                  "description": "Contract object that needs to be created"
+                },
+                "description": "Contract object that needs to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -21653,6 +21867,33 @@
             },
             "description": "A form to attach a file to contract document."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "fileUpload",
+                  "value": {
+                    "name": "Contracts_addContractDocument_Request",
+                    "properties": [
+                      {
+                        "type": "file",
+                        "value": {
+                          "type": "file",
+                          "key": "file",
+                          "isOptional": true,
+                          "contentType": "multipart/form-data",
+                          "description": "Upload the file you want to attach to this entry."
+                        }
+                      }
+                    ]
+                  },
+                  "contentType": "multipart/form-data",
+                  "description": "A form to attach a file to contract document."
+                },
+                "description": "A form to attach a file to contract document."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -21888,6 +22129,33 @@
             },
             "description": "A form to attach a file to contract document."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "fileUpload",
+                  "value": {
+                    "name": "Contracts_editContractDocument_Request",
+                    "properties": [
+                      {
+                        "type": "file",
+                        "value": {
+                          "type": "file",
+                          "key": "file",
+                          "isOptional": true,
+                          "contentType": "multipart/form-data",
+                          "description": "Upload the file you want to attach to this entry."
+                        }
+                      }
+                    ]
+                  },
+                  "contentType": "multipart/form-data",
+                  "description": "A form to attach a file to contract document."
+                },
+                "description": "A form to attach a file to contract document."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -22100,6 +22368,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -22290,6 +22559,25 @@
               "description": "Contract signature object that needs to be created"
             },
             "description": "Contract signature object that needs to be created"
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ContractSignatureToCreateContainer"
+                    }
+                  },
+                  "description": "Contract signature object that needs to be created"
+                },
+                "description": "Contract signature object that needs to be created"
+              }
+            ]
           },
           "response": {
             "type": {
@@ -22504,6 +22792,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -22692,6 +22981,25 @@
               "description": "Contract invitation object that needs to be created"
             },
             "description": "Contract invitation object that needs to be created"
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ContractInvitationToCreateContainer"
+                    }
+                  },
+                  "description": "Contract invitation object that needs to be created"
+                },
+                "description": "Contract invitation object that needs to be created"
+              }
+            ]
           },
           "response": {
             "type": {
@@ -22908,6 +23216,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -23157,6 +23466,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -23333,6 +23643,25 @@
               "description": "Pro-rata payment object that needs to estimated payment"
             },
             "description": "Pro-rata payment object that needs to estimated payment"
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "EstimateFirstPaymentContainer"
+                    }
+                  },
+                  "description": "Pro-rata payment object that needs to estimated payment"
+                },
+                "description": "Pro-rata payment object that needs to estimated payment"
+              }
+            ]
           },
           "response": {
             "type": {
@@ -23523,6 +23852,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -23724,6 +24054,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -23959,6 +24290,25 @@
             },
             "description": "Contract object that needs to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "InputToCreatePgoTask"
+                    }
+                  },
+                  "description": "Contract object that needs to be created"
+                },
+                "description": "Contract object that needs to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -24190,6 +24540,25 @@
               "description": "Timesheet review objects that need to be created"
             },
             "description": "Timesheet review objects that need to be created"
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "RequestBodyToCreatePgoTaskReviewsReviewsContainer"
+                    }
+                  },
+                  "description": "Timesheet review objects that need to be created"
+                },
+                "description": "Timesheet review objects that need to be created"
+              }
+            ]
           },
           "response": {
             "type": {
@@ -24465,6 +24834,25 @@
             },
             "description": "Timesheet review objects that need to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "RequestBodyToCreatePgoTaskReviewsByIdReviewsContainer"
+                    }
+                  },
+                  "description": "Timesheet review objects that need to be created"
+                },
+                "description": "Timesheet review objects that need to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -24731,6 +25119,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -25028,6 +25417,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -25407,6 +25797,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -25700,6 +26091,25 @@
             },
             "description": "Timesheet object that needs to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "TimesheetToCreateContainer"
+                    }
+                  },
+                  "description": "Timesheet object that needs to be created"
+                },
+                "description": "Timesheet object that needs to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -25931,6 +26341,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -26245,6 +26656,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -26459,6 +26871,25 @@
               "description": "Timesheet object that needs to be updated"
             },
             "description": "Timesheet object that needs to be updated"
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "TimesheetToUpdateContainer"
+                    }
+                  },
+                  "description": "Timesheet object that needs to be updated"
+                },
+                "description": "Timesheet object that needs to be updated"
+              }
+            ]
           },
           "response": {
             "type": {
@@ -26690,6 +27121,25 @@
             },
             "description": "Timesheet review object that need to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "TimesheetReviewToCreateContainer"
+                    }
+                  },
+                  "description": "Timesheet review object that need to be created"
+                },
+                "description": "Timesheet review object that need to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -26898,6 +27348,25 @@
               "description": "Timesheet review objects that need to be created"
             },
             "description": "Timesheet review objects that need to be created"
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "TimesheetReviewsToCreateContainer"
+                    }
+                  },
+                  "description": "Timesheet review objects that need to be created"
+                },
+                "description": "Timesheet review objects that need to be created"
+              }
+            ]
           },
           "response": {
             "type": {
@@ -27126,6 +27595,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -27373,6 +27843,37 @@
             },
             "description": "Milestone object that needs to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "MilestoneToCreateContainer"
+                    }
+                  },
+                  "description": "Milestone object that needs to be created"
+                },
+                "description": "Milestone object that needs to be created"
+              },
+              {
+                "type": {
+                  "type": "fileUpload",
+                  "value": {
+                    "name": "Milestones_createMilestone_Request",
+                    "properties": []
+                  },
+                  "contentType": "multipart/form-data",
+                  "description": "Milestone object that needs to be created"
+                },
+                "description": "Milestone object that needs to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -27608,6 +28109,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -27855,6 +28357,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -28089,6 +28592,25 @@
             },
             "description": "Milestone review object that need to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "MilestoneReviewToCreateContainer"
+                    }
+                  },
+                  "description": "Milestone review object that need to be created"
+                },
+                "description": "Milestone review object that need to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -28317,6 +28839,25 @@
               "description": "Milestone review objects that need to be created"
             },
             "description": "Milestone review objects that need to be created"
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "MilestoneReviewsToCreateContainer"
+                    }
+                  },
+                  "description": "Milestone review objects that need to be created"
+                },
+                "description": "Milestone review objects that need to be created"
+              }
+            ]
           },
           "response": {
             "type": {
@@ -28547,6 +29088,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -28806,6 +29348,25 @@
             },
             "description": "Off-cycle payment object that needs to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "OffCyclePaymentToCreateContainer"
+                    }
+                  },
+                  "description": "Off-cycle payment object that needs to be created"
+                },
+                "description": "Off-cycle payment object that needs to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -29039,6 +29600,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -29290,6 +29852,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -29711,6 +30274,25 @@
               "description": "Detail of the time off that will be registered to the contract."
             },
             "description": "Detail of the time off that will be registered to the contract."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "CreateTimeoffContainer"
+                    }
+                  },
+                  "description": "Detail of the time off that will be registered to the contract."
+                },
+                "description": "Detail of the time off that will be registered to the contract."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -30163,6 +30745,25 @@
             },
             "description": "Detail of the time off that will be registered to the contract."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "CreateTimeoffContainer"
+                    }
+                  },
+                  "description": "Detail of the time off that will be registered to the contract."
+                },
+                "description": "Detail of the time off that will be registered to the contract."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -30600,6 +31201,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -30762,6 +31364,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -30944,6 +31547,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -31952,6 +32556,25 @@
             },
             "description": "Timeoff acceptance approve or decline."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "TimeoffToReviewContainer"
+                    }
+                  },
+                  "description": "Timeoff acceptance approve or decline."
+                },
+                "description": "Timeoff acceptance approve or decline."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -32287,6 +32910,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -32693,6 +33317,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -32987,6 +33612,37 @@
             },
             "description": "InvoiceAdjustment object that needs to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "InvoiceAdjustmentToCreateContainer"
+                    }
+                  },
+                  "description": "InvoiceAdjustment object that needs to be created"
+                },
+                "description": "InvoiceAdjustment object that needs to be created"
+              },
+              {
+                "type": {
+                  "type": "fileUpload",
+                  "value": {
+                    "name": "Invoices_createInvoiceAdjustment_Request",
+                    "properties": []
+                  },
+                  "contentType": "multipart/form-data",
+                  "description": "InvoiceAdjustment object that needs to be created"
+                },
+                "description": "InvoiceAdjustment object that needs to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -33232,6 +33888,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -33446,6 +34103,25 @@
               "description": "InvoiceAdjustment object that needs to be updated"
             },
             "description": "InvoiceAdjustment object that needs to be updated"
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "InvoiceAdjustmentToUpdateContainer"
+                    }
+                  },
+                  "description": "InvoiceAdjustment object that needs to be updated"
+                },
+                "description": "InvoiceAdjustment object that needs to be updated"
+              }
+            ]
           },
           "response": {
             "type": {
@@ -33675,6 +34351,25 @@
             },
             "description": "InvoiceAdjustment review object that need to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "InvoiceAdjustmentReviewToCreateContainer"
+                    }
+                  },
+                  "description": "InvoiceAdjustment review object that need to be created"
+                },
+                "description": "InvoiceAdjustment review object that need to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -33884,6 +34579,25 @@
             },
             "description": "InvoiceAdjustment review objects that need to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "InvoiceAdjustmentReviewsToCreateContainer"
+                    }
+                  },
+                  "description": "InvoiceAdjustment review objects that need to be created"
+                },
+                "description": "InvoiceAdjustment review objects that need to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -34092,6 +34806,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -34281,6 +34996,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -34466,6 +35182,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -34687,6 +35404,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -34903,6 +35621,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -35106,6 +35825,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -35319,6 +36039,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -35525,6 +36246,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -35712,6 +36434,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -35919,6 +36642,25 @@
               "description": "File info object that needs to be created."
             },
             "description": "File info object that needs to be created."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "InputToCreateFileRef"
+                    }
+                  },
+                  "description": "File info object that needs to be created."
+                },
+                "description": "File info object that needs to be created."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -36160,6 +36902,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -36388,6 +37131,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -36592,6 +37336,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -36833,6 +37578,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -37049,6 +37795,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -37327,6 +38074,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -37697,6 +38445,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -37912,6 +38661,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -38131,6 +38881,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "CreateWebhookRequest"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -38378,6 +39145,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -38601,6 +39369,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -38804,6 +39573,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "PatchWebhookRequest"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {

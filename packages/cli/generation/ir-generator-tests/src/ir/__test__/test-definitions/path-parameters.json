@@ -626,6 +626,7 @@
                     "queryParameters": [],
                     "headers": [],
                     "requestBody": null,
+                    "v2RequestBodies": null,
                     "sdkRequest": null,
                     "response": {
                         "body": {
@@ -1350,6 +1351,7 @@
                     "queryParameters": [],
                     "headers": [],
                     "requestBody": null,
+                    "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
@@ -2133,6 +2135,7 @@
                     ],
                     "headers": [],
                     "requestBody": null,
+                    "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
@@ -3368,6 +3371,7 @@
                     "queryParameters": [],
                     "headers": [],
                     "requestBody": null,
+                    "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
@@ -4099,6 +4103,7 @@
                         "contentType": null,
                         "v2Examples": null
                     },
+                    "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "justRequestBody",
@@ -5243,6 +5248,7 @@
                         "contentType": null,
                         "v2Examples": null
                     },
+                    "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
@@ -6361,6 +6367,7 @@
                     ],
                     "headers": [],
                     "requestBody": null,
+                    "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",

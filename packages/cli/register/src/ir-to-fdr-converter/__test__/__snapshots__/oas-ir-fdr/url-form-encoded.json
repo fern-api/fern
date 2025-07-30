@@ -91,6 +91,43 @@
             }
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/x-www-form-urlencoded",
+                "shape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "description": "The user's username",
+                      "key": "username",
+                      "valueType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    {
+                      "description": "The user's email address",
+                      "key": "email",
+                      "valueType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "format": "email"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",

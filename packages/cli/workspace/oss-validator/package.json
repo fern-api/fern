@@ -29,10 +29,6 @@
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
-    "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",
-    "lint:eslint:fix": "yarn lint:eslint --fix",
     "test": "vitest --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --run -u"
@@ -51,7 +47,6 @@
     "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
-    "eslint": "^9.16.0",
     "typescript": "5.7.2",
     "vitest": "^2.1.9"
   }

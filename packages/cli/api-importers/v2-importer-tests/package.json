@@ -38,10 +38,7 @@
     "test:update": "vitest --run -u",
     "test:update:baseline": "vitest --passWithNoTests --run -u src/__test__/baseline-docs.test.ts src/__test__/baseline-sdks.test.ts",
     "test:update:baseline-docs": "vitest --passWithNoTests --run -u src/__test__/baseline-docs.test.ts",
-    "test:update:baseline-sdks": "vitest --passWithNoTests --run -u src/__test__/baseline-sdks.test.ts",
-    "test:update:v3": "vitest --passWithNoTests --run -u src/__test__/v3-docs.test.ts src/__test__/v3-sdks.test.ts",
-    "test:update:v3-docs": "vitest --passWithNoTests --run -u src/__test__/v3-docs.test.ts",
-    "test:update:v3-sdks": "vitest --passWithNoTests --run -u src/__test__/v3-sdks.test.ts"
+    "test:update:baseline-sdks": "vitest --passWithNoTests --run -u src/__test__/baseline-sdks.test.ts"
   },
   "dependencies": {
     "@fern-api/fs-utils": "workspace:*",

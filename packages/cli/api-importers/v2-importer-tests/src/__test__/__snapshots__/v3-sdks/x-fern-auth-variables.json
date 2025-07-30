@@ -435,6 +435,7 @@
               "safeName": "GetUser"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -910,6 +911,7 @@
               "safeName": "GetUsers"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {

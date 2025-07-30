@@ -1557,6 +1557,7 @@
                         "v2Examples": null,
                         "contentType": null
                     },
+                    "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",

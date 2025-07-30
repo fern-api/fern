@@ -274,6 +274,7 @@
                     ],
                     "headers": [],
                     "requestBody": null,
+                    "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",

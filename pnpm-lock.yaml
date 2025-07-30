@@ -1987,9 +1987,6 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      sort-package-json:
-        specifier: 3.3.1
-        version: 3.3.1
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2021,9 +2018,6 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      sort-package-json:
-        specifier: 3.3.1
-        version: 3.3.1
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2064,9 +2058,6 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      sort-package-json:
-        specifier: 3.3.1
-        version: 3.3.1
       tsup:
         specifier: ^8.5.0
         version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
@@ -2118,9 +2109,6 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      sort-package-json:
-        specifier: 3.3.1
-        version: 3.3.1
       tsup:
         specifier: ^8.5.0
         version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
@@ -2296,9 +2284,6 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      eslint:
-        specifier: ^9.16.0
-        version: 9.29.0(jiti@2.5.1)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2320,9 +2305,6 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      eslint:
-        specifier: ^9.16.0
-        version: 9.29.0(jiti@2.5.1)
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -3072,9 +3054,6 @@ importers:
       sass:
         specifier: ^1.72.0
         version: 1.89.2
-      stylelint:
-        specifier: ^16.2.1
-        version: 16.21.0(typescript@5.7.2)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -4825,8 +4804,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons/path-utils
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.11-2322dc4c6
-        version: 0.138.11-2322dc4c6
+        specifier: 0.139.5-0b0fae69f
+        version: 0.139.5-0b0fae69f
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
@@ -4868,8 +4847,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.11-2322dc4c6
-        version: 0.138.11-2322dc4c6
+        specifier: 0.139.5-0b0fae69f
+        version: 0.139.5-0b0fae69f
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
@@ -4941,8 +4920,8 @@ importers:
         specifier: workspace:*
         version: link:../../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.11-2322dc4c6
-        version: 0.138.11-2322dc4c6
+        specifier: 0.139.5-0b0fae69f
+        version: 0.139.5-0b0fae69f
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
@@ -4987,8 +4966,8 @@ importers:
         specifier: workspace:*
         version: link:../../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.11-2322dc4c6
-        version: 0.138.11-2322dc4c6
+        specifier: 0.139.5-0b0fae69f
+        version: 0.139.5-0b0fae69f
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -5030,8 +5009,8 @@ importers:
         specifier: workspace:*
         version: link:../../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.11-2322dc4c6
-        version: 0.138.11-2322dc4c6
+        specifier: 0.139.5-0b0fae69f
+        version: 0.139.5-0b0fae69f
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -5097,8 +5076,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.11-2322dc4c6
-        version: 0.138.11-2322dc4c6
+        specifier: 0.139.5-0b0fae69f
+        version: 0.139.5-0b0fae69f
       estree-walker:
         specifier: ^3.0.3
         version: 3.0.3
@@ -5179,8 +5158,8 @@ importers:
         specifier: workspace:*
         version: link:../docs-resolver
       '@fern-api/fdr-sdk':
-        specifier: 0.138.11-2322dc4c6
-        version: 0.138.11-2322dc4c6(typescript@5.7.2)
+        specifier: 0.139.5-0b0fae69f
+        version: 0.139.5-0b0fae69f(typescript@5.7.2)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -5288,8 +5267,8 @@ importers:
         specifier: 0.0.65
         version: 0.0.65(typescript@5.7.2)
       '@fern-api/fdr-sdk':
-        specifier: 0.138.11-2322dc4c6
-        version: 0.138.11-2322dc4c6(typescript@5.7.2)
+        specifier: 0.139.5-0b0fae69f
+        version: 0.139.5-0b0fae69f(typescript@5.7.2)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -5315,8 +5294,8 @@ importers:
         specifier: 0.129.4-b6c699ad2
         version: 0.129.4-b6c699ad2
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.11-2322dc4c6
-        version: 0.138.11-2322dc4c6
+        specifier: 0.139.5-0b0fae69f
+        version: 0.139.5-0b0fae69f
       '@open-rpc/meta-schema':
         specifier: ^1.14.9
         version: 1.14.9
@@ -5382,8 +5361,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons/logging-execa
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.11-2322dc4c6
-        version: 0.138.11-2322dc4c6
+        specifier: 0.139.5-0b0fae69f
+        version: 0.139.5-0b0fae69f
       execa:
         specifier: ^5.1.1
         version: 5.1.1
@@ -5728,9 +5707,6 @@ importers:
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../../workspace/loader
-      prettier:
-        specifier: ^3.4.2
-        version: 3.5.3
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -6222,8 +6198,8 @@ importers:
         specifier: workspace:*
         version: link:../../../workspace/loader
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.11-2322dc4c6
-        version: 0.138.11-2322dc4c6
+        specifier: 0.139.5-0b0fae69f
+        version: 0.139.5-0b0fae69f
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
@@ -6644,8 +6620,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.11-2322dc4c6
-        version: 0.138.11-2322dc4c6
+        specifier: 0.139.5-0b0fae69f
+        version: 0.139.5-0b0fae69f
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -7053,9 +7029,6 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      eslint:
-        specifier: ^9.16.0
-        version: 9.29.0(jiti@2.5.1)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -7078,8 +7051,8 @@ importers:
         specifier: workspace:*
         version: link:../../docs-resolver
       '@fern-api/fdr-sdk':
-        specifier: 0.138.11-2322dc4c6
-        version: 0.138.11-2322dc4c6(typescript@5.7.2)
+        specifier: 0.139.5-0b0fae69f
+        version: 0.139.5-0b0fae69f(typescript@5.7.2)
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../../fern-definition/schema
@@ -7517,9 +7490,6 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      sort-package-json:
-        specifier: 3.3.1
-        version: 3.3.1
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -7539,8 +7509,8 @@ importers:
         specifier: 0.14.3-1-g14981f0
         version: 0.14.3-1-g14981f0
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.138.11-2322dc4c6
-        version: 0.138.11-2322dc4c6
+        specifier: 0.139.5-0b0fae69f
+        version: 0.139.5-0b0fae69f
       '@fern-fern/fdr-test-sdk':
         specifier: ^0.0.5297
         version: 0.0.5297
@@ -9047,8 +9017,8 @@ packages:
   '@fern-api/dynamic-ir-sdk@58.2.0':
     resolution: {integrity: sha512-b5uJwu4nbQ+Jj8DoRMJNyI7A8oureAj0I7n55DS78HPadK0AxQnINboGBfhvwE365mkvwu6KM2FrQIZ3RQdI7A==}
 
-  '@fern-api/fdr-sdk@0.138.11-2322dc4c6':
-    resolution: {integrity: sha512-zvpIr+xw/HwCY84C8Jo1ccnHX9Tnx5EFlqCARWzIxSzk1J3MwRuh6xr+yhmAgpA8bROObFgnMkmzk2xGx8RD7A==}
+  '@fern-api/fdr-sdk@0.139.5-0b0fae69f':
+    resolution: {integrity: sha512-G3IzsuhnKGJqRSP2PEsrMKnObNnhBwlx/lJgD/dxnCikBKjerZgCb5+tRVTvMDzRi3v9juZ76Hea+lZn22DOrg==}
 
   '@fern-api/logger@0.4.24-rc1':
     resolution: {integrity: sha512-yh0E2F3K3IPnJZcE4dv+u8I51iKgTgv/reinKo4K5YmYEG1iLtw5vBEYMOPkQmsYFPAKIh++OMB/6TrsahMWew==}
@@ -9065,8 +9035,8 @@ packages:
   '@fern-api/ui-core-utils@0.129.4-b6c699ad2':
     resolution: {integrity: sha512-V1jfV4u5fhpWEoLqCIA1QtRGpRR0NXyk68VGEHmEsezwA/gNF4587MJp5FWN59YsZmRt2hozODnp/umJ/iwkPg==}
 
-  '@fern-api/ui-core-utils@0.138.11-2322dc4c6':
-    resolution: {integrity: sha512-lGeY+wnEum5w/YTYuKqoch5MI6fYu78XXKmPxhKVYzWAyJpD4Xc2IJGddWvp7dKF5IL+ZSQpgdGfPauoLp2hXA==}
+  '@fern-api/ui-core-utils@0.139.5-0b0fae69f':
+    resolution: {integrity: sha512-Wqs1zRAqZ8NU89lYhdb1dx0AVaWBPQOR6kc+zwOAScOlGhRVO2UUKJtpHulAW9gSSggxalZo8JaR/5t33NIdMQ==}
 
   '@fern-api/venus-api-sdk@0.14.3-1-g14981f0':
     resolution: {integrity: sha512-sOQH36HUDznonYxtdPvXiGrURqLcSBE4DvY5CMfbLd+qCxgkuGQnx88VUB8AXKdr5g04NqJsh4OWs48fgt4Lag==}
@@ -9074,8 +9044,8 @@ packages:
   '@fern-fern/docs-config@0.0.80':
     resolution: {integrity: sha512-wAZCNxwM4qIPn3idoIihPP65KWPjNuoTSfdP4+5f8K2jJLgs5cdkY0pm4cQlGWvi5K6b+lfbUWDaslnXscJ2gQ==}
 
-  '@fern-fern/fdr-cjs-sdk@0.138.11-2322dc4c6':
-    resolution: {integrity: sha512-bXVtTU7Y9b9SFupbXD/8uRrZsaOoiaWkxOL8yszt5PInycADgJ7NtsmVU72wingRa7CJnNJClksU3ddfPMaRow==}
+  '@fern-fern/fdr-cjs-sdk@0.139.5-0b0fae69f':
+    resolution: {integrity: sha512-2snYzuQTLBxTYXxXP1Wwl4yctsdyRSN/16vzGuTKwgeB3xVxVhivvrzjEpg1bXWJnF1mq29C+akx5WaL+Y1JKw==}
 
   '@fern-fern/fdr-test-sdk@0.0.5297':
     resolution: {integrity: sha512-jrZUZ6oIA64LHtrv77xEq0X7qJhT9xRMGWhKcLjIUArMsD7h6KMWUHVdoB/1MP0Mz/uL/E2xmM31SOgJicpIcA==}
@@ -11003,18 +10973,10 @@ packages:
     resolution: {integrity: sha512-DtCOLG98P007x7wiiOmfI0fi3eIKyWiLTGJ2MDnVi/E04lWGbf+JzrRHMm0rgIIZJGtHpKpbVgLWHrv8xXpc3Q==}
     engines: {node: '>=0.10.0'}
 
-  detect-indent@7.0.1:
-    resolution: {integrity: sha512-Mc7QhQ8s+cLrnUfU/Ji94vG/r8M26m8f++vyres4ZoojaRDpZ1eSIh/EpzLNwlWuvzSZ3UbDFspjFvTDXe6e/g==}
-    engines: {node: '>=12.20'}
-
   detect-libc@1.0.3:
     resolution: {integrity: sha512-pGjwhsmsp4kL2RTz08wcOlGN83otlqHeD/Z5T8GXZB+/YcpQ/dgo+lbU8ZsGxV0HIvqqxo9l7mqYwyYMD9bKDg==}
     engines: {node: '>=0.10'}
     hasBin: true
-
-  detect-newline@4.0.1:
-    resolution: {integrity: sha512-qE3Veg1YXzGHQhlA6jzebZN2qVf6NX+A7m7qlhCGG30dJixrAQhYOsJjsnBjJkCSmuOPpCk30145fr8FV0bzog==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
   detect-port@1.6.1:
     resolution: {integrity: sha512-CmnVc+Hek2egPx1PeTFVta2W78xy2K/9Rkf6cC4T59S50tVnzKj+tnx5mmx5lwvCkujZ4uRrpRSuV+IVs3f90Q==}
@@ -11594,9 +11556,6 @@ packages:
 
   get-tsconfig@4.10.1:
     resolution: {integrity: sha512-auHyJ4AgMz7vgS8Hp3N6HXSmlMdUyhSUrfBF16w153rxtLIEOE+HGqaBppczZvnHLqQJfiHotCYpNhl0lUROFQ==}
-
-  git-hooks-list@4.1.1:
-    resolution: {integrity: sha512-cmP497iLq54AZnv4YRAEMnEyQ1eIn4tGKbmswqwmFV4GBnAqE8NLtWxxdXa++AalfgL5EBH4IxTPyquEuGY/jA==}
 
   glob-parent@5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}
@@ -13621,14 +13580,6 @@ packages:
   slice-ansi@4.0.0:
     resolution: {integrity: sha512-qMCMfhY040cVHT43K9BFygqYbUPFZKHOg7K73mtTWJRb8pyP3fzf4Ixd5SzdEJQ6MRUg/WBnOLxghZtKKurENQ==}
     engines: {node: '>=10'}
-
-  sort-object-keys@1.1.3:
-    resolution: {integrity: sha512-855pvK+VkU7PaKYPc+Jjnmt4EzejQHyhhF33q31qG8x7maDzkeFhAAThdCYay11CISO+qAMwjOBP+fPZe0IPyg==}
-
-  sort-package-json@3.3.1:
-    resolution: {integrity: sha512-awjhQR2Iy5UN3NuguAK5+RezcEuUg9Ra4O8y2Aj+DlJa7MywyHaipAPf9bu4qqFj0hsYHHoT9sS3aV7Ucu728g==}
-    engines: {node: '>=20'}
-    hasBin: true
 
   source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
@@ -15693,13 +15644,16 @@ snapshots:
   '@csstools/css-parser-algorithms@3.0.5(@csstools/css-tokenizer@3.0.4)':
     dependencies:
       '@csstools/css-tokenizer': 3.0.4
+    optional: true
 
-  '@csstools/css-tokenizer@3.0.4': {}
+  '@csstools/css-tokenizer@3.0.4':
+    optional: true
 
   '@csstools/media-query-list-parser@4.0.3(@csstools/css-parser-algorithms@3.0.5(@csstools/css-tokenizer@3.0.4))(@csstools/css-tokenizer@3.0.4)':
     dependencies:
       '@csstools/css-parser-algorithms': 3.0.5(@csstools/css-tokenizer@3.0.4)
       '@csstools/css-tokenizer': 3.0.4
+    optional: true
 
   '@csstools/selector-specificity@2.2.0(postcss-selector-parser@6.1.2)':
     dependencies:
@@ -15708,8 +15662,10 @@ snapshots:
   '@csstools/selector-specificity@5.0.0(postcss-selector-parser@7.1.0)':
     dependencies:
       postcss-selector-parser: 7.1.0
+    optional: true
 
-  '@dual-bundle/import-meta-resolve@4.1.0': {}
+  '@dual-bundle/import-meta-resolve@4.1.0':
+    optional: true
 
   '@emnapi/core@1.4.5':
     dependencies:
@@ -15948,9 +15904,9 @@ snapshots:
 
   '@fern-api/dynamic-ir-sdk@58.2.0': {}
 
-  '@fern-api/fdr-sdk@0.138.11-2322dc4c6(typescript@5.7.2)':
+  '@fern-api/fdr-sdk@0.139.5-0b0fae69f(typescript@5.7.2)':
     dependencies:
-      '@fern-api/ui-core-utils': 0.138.11-2322dc4c6
+      '@fern-api/ui-core-utils': 0.139.5-0b0fae69f
       '@ungap/structured-clone': 1.3.0
       dayjs: 1.11.13
       es-toolkit: 1.39.3
@@ -16003,7 +15959,7 @@ snapshots:
       title: 3.5.3
       ua-parser-js: 1.0.40
 
-  '@fern-api/ui-core-utils@0.138.11-2322dc4c6':
+  '@fern-api/ui-core-utils@0.139.5-0b0fae69f':
     dependencies:
       date-fns: 4.1.0
       date-fns-tz: 3.2.0(date-fns@4.1.0)
@@ -16025,7 +15981,7 @@ snapshots:
 
   '@fern-fern/docs-config@0.0.80': {}
 
-  '@fern-fern/fdr-cjs-sdk@0.138.11-2322dc4c6':
+  '@fern-fern/fdr-cjs-sdk@0.139.5-0b0fae69f':
     dependencies:
       form-data: 4.0.1
       formdata-node: 6.0.3
@@ -16450,6 +16406,7 @@ snapshots:
   '@keyv/serialize@1.0.3':
     dependencies:
       buffer: 6.0.3
+    optional: true
 
   '@mdx-js/mdx@3.1.0(acorn@8.15.0)':
     dependencies:
@@ -17588,6 +17545,7 @@ snapshots:
     dependencies:
       hookified: 1.9.1
       keyv: 5.3.4
+    optional: true
 
   call-bind-apply-helpers@1.0.2:
     dependencies:
@@ -17842,6 +17800,7 @@ snapshots:
       parse-json: 5.2.0
     optionalDependencies:
       typescript: 5.7.2
+    optional: true
 
   create-require@1.1.1:
     optional: true
@@ -17955,6 +17914,7 @@ snapshots:
     dependencies:
       mdn-data: 2.12.2
       source-map-js: 1.2.1
+    optional: true
 
   cssesc@3.0.0: {}
 
@@ -18138,11 +18098,7 @@ snapshots:
 
   detect-file@1.0.0: {}
 
-  detect-indent@7.0.1: {}
-
   detect-libc@1.0.3: {}
-
-  detect-newline@4.0.1: {}
 
   detect-port@1.6.1:
     dependencies:
@@ -18231,7 +18187,8 @@ snapshots:
 
   entities@6.0.1: {}
 
-  env-paths@2.2.1: {}
+  env-paths@2.2.1:
+    optional: true
 
   env-paths@3.0.0: {}
 
@@ -18663,6 +18620,7 @@ snapshots:
   file-entry-cache@10.1.1:
     dependencies:
       flat-cache: 6.1.10
+    optional: true
 
   file-entry-cache@6.0.1:
     dependencies:
@@ -18758,6 +18716,7 @@ snapshots:
       cacheable: 1.10.0
       flatted: 3.3.3
       hookified: 1.9.1
+    optional: true
 
   flat@5.0.2: {}
 
@@ -18896,8 +18855,6 @@ snapshots:
   get-tsconfig@4.10.1:
     dependencies:
       resolve-pkg-maps: 1.0.0
-
-  git-hooks-list@4.1.1: {}
 
   glob-parent@5.1.2:
     dependencies:
@@ -19190,7 +19147,8 @@ snapshots:
     dependencies:
       parse-passwd: 1.0.0
 
-  hookified@1.9.1: {}
+  hookified@1.9.1:
+    optional: true
 
   hosted-git-info@2.8.9: {}
 
@@ -19267,7 +19225,8 @@ snapshots:
 
   ignore@5.3.2: {}
 
-  ignore@7.0.5: {}
+  ignore@7.0.5:
+    optional: true
 
   image-size@1.2.1:
     dependencies:
@@ -19665,12 +19624,14 @@ snapshots:
   keyv@5.3.4:
     dependencies:
       '@keyv/serialize': 1.0.3
+    optional: true
 
   kind-of@6.0.3: {}
 
   known-css-properties@0.26.0: {}
 
-  known-css-properties@0.37.0: {}
+  known-css-properties@0.37.0:
+    optional: true
 
   ky@1.8.1: {}
 
@@ -19970,7 +19931,8 @@ snapshots:
     dependencies:
       '@types/mdast': 4.0.4
 
-  mdn-data@2.12.2: {}
+  mdn-data@2.12.2:
+    optional: true
 
   media-typer@0.3.0: {}
 
@@ -19978,7 +19940,8 @@ snapshots:
     dependencies:
       fs-monkey: 1.0.6
 
-  meow@13.2.0: {}
+  meow@13.2.0:
+    optional: true
 
   meow@9.0.0:
     dependencies:
@@ -20806,6 +20769,7 @@ snapshots:
   postcss-safe-parser@7.0.1(postcss@8.5.6):
     dependencies:
       postcss: 8.5.6
+    optional: true
 
   postcss-scss@4.0.9(postcss@8.5.6):
     dependencies:
@@ -21481,18 +21445,6 @@ snapshots:
       astral-regex: 2.0.0
       is-fullwidth-code-point: 3.0.0
 
-  sort-object-keys@1.1.3: {}
-
-  sort-package-json@3.3.1:
-    dependencies:
-      detect-indent: 7.0.1
-      detect-newline: 4.0.1
-      git-hooks-list: 4.1.1
-      is-plain-obj: 4.1.0
-      semver: 7.7.2
-      sort-object-keys: 1.1.3
-      tinyglobby: 0.2.14
-
   source-map-js@1.2.1: {}
 
   source-map-support@0.5.19:
@@ -21800,6 +21752,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
       - typescript
+    optional: true
 
   sucrase@3.35.0:
     dependencies:
@@ -21828,6 +21781,7 @@ snapshots:
     dependencies:
       has-flag: 4.0.0
       supports-color: 7.2.0
+    optional: true
 
   supports-preserve-symlinks-flag@1.0.0: {}
 
@@ -22588,6 +22542,7 @@ snapshots:
     dependencies:
       imurmurhash: 0.1.4
       signal-exit: 4.1.0
+    optional: true
 
   ws@8.13.0: {}
 

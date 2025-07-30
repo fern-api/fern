@@ -1649,6 +1649,7 @@
                     "queryParameters": [],
                     "headers": [],
                     "requestBody": null,
+                    "v2RequestBodies": null,
                     "sdkRequest": null,
                     "response": {
                         "body": {
@@ -2947,6 +2948,7 @@
                     "queryParameters": [],
                     "headers": [],
                     "requestBody": null,
+                    "v2RequestBodies": null,
                     "sdkRequest": null,
                     "response": {
                         "body": {
@@ -3694,6 +3696,7 @@
                         "v2Examples": null,
                         "contentType": null
                     },
+                    "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",

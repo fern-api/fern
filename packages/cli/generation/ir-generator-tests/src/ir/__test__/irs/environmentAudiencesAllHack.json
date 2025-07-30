@@ -1056,6 +1056,7 @@
                         "contentType": null,
                         "v2Examples": null
                     },
+                    "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "justRequestBody",
@@ -1888,6 +1889,7 @@
                     "queryParameters": [],
                     "headers": [],
                     "requestBody": null,
+                    "v2RequestBodies": null,
                     "sdkRequest": null,
                     "response": {
                         "body": {

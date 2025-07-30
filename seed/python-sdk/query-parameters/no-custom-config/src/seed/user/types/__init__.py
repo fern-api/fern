@@ -4,4 +4,5 @@
 
 from .nested_user import NestedUser
 from .user import User
+
 __all__ = ["NestedUser", "User"]

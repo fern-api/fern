@@ -15,7 +15,10 @@ import { FernStreamingExtension } from "../../extensions/x-fern-streaming";
 
 export declare namespace RequestBodyConverter {
     export interface Args extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter.Args {
-        requestBody: OpenAPIV3_1.RequestBodyObject;
+        contentType: string;
+        mediaType: OpenAPIV3_1.MediaTypeObject;
+        description: string | undefined;
+        required: boolean | undefined;
         streamingExtension: FernStreamingExtension.Output | undefined;
     }
 
@@ -26,22 +29,34 @@ export declare namespace RequestBodyConverter {
 }
 
 export class RequestBodyConverter extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter {
-    private readonly requestBody: OpenAPIV3_1.RequestBodyObject;
+    private readonly contentType: string;
+    private readonly mediaType: OpenAPIV3_1.MediaTypeObject;
+    private readonly description: string | undefined;
+    private readonly required: boolean | undefined;
     protected readonly schemaId: string;
     private readonly streamingExtension: FernStreamingExtension.Output | undefined;
 
-    constructor({ context, breadcrumbs, requestBody, group, method, streamingExtension }: RequestBodyConverter.Args) {
+    constructor({
+        context,
+        breadcrumbs,
+        contentType,
+        mediaType,
+        description,
+        required,
+        group,
+        method,
+        streamingExtension
+    }: RequestBodyConverter.Args) {
         super({ context, breadcrumbs, group, method });
-        this.requestBody = requestBody;
+        this.contentType = contentType;
+        this.mediaType = mediaType;
+        this.description = description;
+        this.required = required;
         this.schemaId = [...this.group, this.method, "Request"].join("_");
         this.streamingExtension = streamingExtension;
     }
 
     public convert(): RequestBodyConverter.Output | undefined {
-        if (!this.requestBody.content) {
-            return undefined;
-        }
-
         if (this.streamingExtension?.type == "streamCondition") {
             return this.convertStreamConditionRequestBody();
         }
@@ -49,64 +64,62 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
     }
 
     private convertStreamConditionRequestBody(): RequestBodyConverter.Output | undefined {
-        const orderedJsonOrFormContentTypes = this.getOrderedJsonOrFormContentTypes();
-        for (const contentType of orderedJsonOrFormContentTypes) {
-            const result = this.handleStreamConditionJsonOrFormContent({ contentType });
-            if (result != null) {
-                return result;
-            }
+        const isOrderedJsonOrFormContentType = this.isOrderedJsonOrFormContentType();
+        if (isOrderedJsonOrFormContentType) {
+            return this.handleStreamConditionJsonOrFormContent({ contentType: this.contentType });
         }
 
         return undefined;
     }
 
     private convertNonStreamConditionRequestBody(): RequestBodyConverter.Output | undefined {
-        const orderedJsonOrFormContentTypes = this.getOrderedJsonOrFormContentTypes();
-        for (const contentType of orderedJsonOrFormContentTypes) {
-            const result = this.handleJsonOrFormContent({ contentType });
-            if (result != null) {
-                return result;
-            }
+        const isOrderedJsonOrFormContentType = this.isOrderedJsonOrFormContentType();
+        if (isOrderedJsonOrFormContentType) {
+            return this.handleJsonOrFormContent({ contentType: this.contentType });
         }
 
-        const multipartContentTypes = Object.keys(this.requestBody.content).filter((type) => {
-            return MediaType.parse(type)?.isMultipart();
-        });
-        for (const contentType of multipartContentTypes) {
-            const result = this.handleMultipartContent({ contentType });
-            if (result != null) {
-                return result;
-            }
+        const isMultipartContentType = MediaType.parse(this.contentType)?.isMultipart();
+        if (isMultipartContentType) {
+            return this.handleMultipartContent({ contentType: this.contentType });
         }
 
-        const octetStreamContentTypes = Object.keys(this.requestBody.content).filter((type) => {
-            return MediaType.parse(type)?.isOctetStream();
-        });
-        for (const contentType of octetStreamContentTypes) {
-            const result = this.handleOctetStreamContent({ contentType });
-            if (result != null) {
-                return result;
-            }
+        const isBinaryContentType = this.isBinaryContentType();
+        if (isBinaryContentType) {
+            return this.handleBinaryContent({ contentType: this.contentType });
         }
 
         return undefined;
     }
 
-    private getOrderedJsonOrFormContentTypes(): string[] {
-        const jsonContentTypes = Object.keys(this.requestBody.content).filter((type) => {
-            return MediaType.parse(type)?.isJSON();
-        });
-        const urlEncodedContentTypes = Object.keys(this.requestBody.content).filter((type) => {
-            return MediaType.parse(type)?.isURLEncoded();
-        });
-        const plainTextContentTypes = Object.keys(this.requestBody.content).filter((type) => {
-            return MediaType.parse(type)?.isPlainText();
-        });
-        return [...jsonContentTypes, ...urlEncodedContentTypes, ...plainTextContentTypes];
+    private isOrderedJsonOrFormContentType(): boolean {
+        const mediaType = MediaType.parse(this.contentType);
+        if (!mediaType) {
+            return false;
+        }
+
+        return (
+            mediaType.isJSON() ||
+            mediaType.isURLEncoded() ||
+            mediaType.isPlainText() ||
+            mediaType.isCSV() ||
+            mediaType.isHTML() ||
+            mediaType.isXML() ||
+            mediaType.isDNS() ||
+            mediaType.isApplicationText()
+        );
+    }
+
+    private isBinaryContentType(): boolean {
+        const mediaType = MediaType.parse(this.contentType);
+        if (!mediaType) {
+            return false;
+        }
+
+        return mediaType.isBinary();
     }
 
     private handleJsonOrFormContent({ contentType }: { contentType: string }): RequestBodyConverter.Output | undefined {
-        const mediaTypeObject = this.requestBody.content[contentType];
+        const mediaTypeObject = this.mediaType;
         if (mediaTypeObject == null) {
             return undefined;
         }
@@ -124,7 +137,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             return {
                 requestBody: HttpRequestBody.inlinedRequestBody({
                     contentType,
-                    docs: this.requestBody.description,
+                    docs: this.description,
                     name: this.context.casingsGenerator.generateName(this.schemaId),
                     extendedProperties: requestBodyTypeShape.extendedProperties,
                     extends: requestBodyTypeShape.extends,
@@ -145,7 +158,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             return {
                 requestBody: HttpRequestBody.reference({
                     contentType,
-                    docs: this.requestBody.description,
+                    docs: this.description,
                     requestBodyType: convertedSchema.type,
                     v2Examples: this.convertMediaTypeObjectExamples({
                         mediaTypeObject,
@@ -159,7 +172,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
     }
 
     private handleMultipartContent({ contentType }: { contentType: string }): RequestBodyConverter.Output | undefined {
-        const mediaTypeObject = this.requestBody.content[contentType];
+        const mediaTypeObject = this.mediaType;
         if (mediaTypeObject == null || mediaTypeObject.schema == null) {
             return undefined;
         }
@@ -178,7 +191,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             return {
                 requestBody: HttpRequestBody.fileUpload({
                     contentType,
-                    docs: this.requestBody.description,
+                    docs: this.description,
                     name: this.context.casingsGenerator.generateName(this.schemaId),
                     properties: requestBodyTypeShape.properties.map((property) => {
                         const encoding = mediaTypeObject.encoding?.[property.name.wireValue];
@@ -201,12 +214,8 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         return undefined;
     }
 
-    private handleOctetStreamContent({
-        contentType
-    }: {
-        contentType: string;
-    }): RequestBodyConverter.Output | undefined {
-        const mediaTypeObject = this.requestBody.content[contentType];
+    private handleBinaryContent({ contentType }: { contentType: string }): RequestBodyConverter.Output | undefined {
+        const mediaTypeObject = this.mediaType;
         if (mediaTypeObject == null) {
             return undefined;
         }
@@ -218,8 +227,8 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         return {
             requestBody: HttpRequestBody.bytes({
                 contentType,
-                isOptional: this.requestBody.required === false,
-                docs: this.requestBody.description,
+                isOptional: this.required === false,
+                docs: this.description,
                 v2Examples: this.convertMediaTypeObjectExamples({
                     mediaTypeObject,
                     exampleGenerationStrategy: "request"
@@ -280,7 +289,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         if (this.streamingExtension?.type !== "streamCondition") {
             return undefined;
         }
-        const mediaTypeObject = this.requestBody.content[contentType];
+        const mediaTypeObject = this.mediaType;
         if (mediaTypeObject == null || mediaTypeObject.schema == null) {
             return undefined;
         }

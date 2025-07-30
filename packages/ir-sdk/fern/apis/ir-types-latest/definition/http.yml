@@ -56,6 +56,7 @@ types:
       allPathParameters: list<PathParameter>
       queryParameters: list<QueryParameter>
       requestBody: optional<HttpRequestBody>
+      v2RequestBodies: optional<V2HttpRequestBodies>
       sdkRequest: optional<SdkRequest>
       response: optional<HttpResponse>
       v2Responses: optional<V2HttpResponses>
@@ -138,6 +139,10 @@ types:
       reference: HttpRequestBodyReference
       fileUpload: FileUploadRequest
       bytes: BytesRequest
+
+  V2HttpRequestBodies:
+    properties:
+      requestBodies: optional<list<HttpRequestBody>>
 
   InlinedRequestBody:
     extends: 
