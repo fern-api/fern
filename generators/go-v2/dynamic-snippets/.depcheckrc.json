@@ -1,12 +1,8 @@
 {
     "ignores": [
-        "@types/jest",
-        "globals",
-        "@trivago/prettier-plugin-sort-imports",
-        "@types/node",
-        "@fern-fern/ir-sdk"
     ],
     "ignore-patterns": [
-        "lib"
+        "lib",
+        "dist"
     ]
 }

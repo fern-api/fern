@@ -44,14 +44,10 @@
     "@fern-api/typescript-ast": "workspace:*",
     "@fern-api/typescript-formatter": "workspace:*",
     "@fern-fern/ir-sdk": "^58.2.0",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "18.15.3",
-    "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
     "depcheck": "^1.4.7",
-    "eslint": "^8.56.0",
     "lodash-es": "^4.17.21",
-    "prettier": "^3.4.2",
     "typescript": "5.7.2",
     "vitest": "^2.1.9"
   }

@@ -72,9 +72,6 @@
     "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
-    "eslint": "^8.56.0",
-    "prettier": "^3.4.2",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "typescript": "5.7.2",
     "@types/decompress": "^4.2.7",
     "@types/js-yaml": "^4.0.8",
@@ -82,7 +79,6 @@
     "@types/mime-types": "^2.1.4",
     "@types/tar": "^6.1.11",
     "@types/terminal-link": "^1.2.0",
-    "lodash-es": "^4.17.21",
     "vitest": "^2.1.9"
   }
 }
