@@ -46,7 +46,6 @@
     "@types/node": "18.15.3",
     "@types/yargs": "^17.0.32",
     "depcheck": "^1.4.7",
-    "tsup": "^8.5.0",
     "typescript": "5.7.2",
     "vitest": "^2.1.9",
     "yaml": "^2.4.5",

@@ -32,6 +32,9 @@
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --run --passWithNoTests -u"
   },
+  "dependencies": {
+    "lodash-es": "4.17.21"
+  },
   "devDependencies": {
     "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
