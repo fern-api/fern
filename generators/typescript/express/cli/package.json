@@ -6,14 +6,9 @@
     "url": "https://github.com/fern-api/fern.git",
     "directory": "generators/typescript/express/cli"
   },
-  "files": [
-    "lib"
-  ],
+  "sideEffects": false,
   "type": "module",
-  "source": "src/index.ts",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
-  "exports":{
+  "exports": {
     ".": {
       "development": "./src/index.ts",
       "source": "./src/index.ts",
@@ -22,24 +17,30 @@
       "default": "./lib/index.js"
     }
   },
-  "sideEffects": false,
+  "main": "lib/index.js",
+  "source": "src/index.ts",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "scripts": {
+    "build": "pnpm compile && tsup ./src/cli.ts --format cjs --sourcemap",
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
-    "test": "vitest --passWithNoTests --run",
-    "test:debug": "pnpm run test --inspect --no-file-parallelism",
-    "test:update": "vitest --passWithNoTests --run -u",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../../.eslintignore",
-    "lint:eslint:fix": "yarn lint:eslint --fix",
+    "depcheck": "depcheck",
+    "dockerTagLocal": "./docker/create_docker.sh local",
+    "dockerTagVersion": "./docker/create_docker.sh",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
-    "depcheck": "depcheck",
-    "build": "pnpm compile && tsup ./src/cli.ts --format cjs --sourcemap",
-    "dockerTagLocal": "./docker/create_docker.sh local",
-    "dockerTagVersion": "./docker/create_docker.sh"
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../../.eslintignore",
+    "lint:eslint:fix": "yarn lint:eslint --fix",
+    "test": "vitest --passWithNoTests --run",
+    "test:debug": "pnpm run test --inspect --no-file-parallelism",
+    "test:update": "vitest --passWithNoTests --run -u"
   },
   "devDependencies": {
+    "@fern-api/configs": "workspace:*",
     "@fern-fern/generator-exec-sdk": "^0.0.1045",
     "@fern-fern/ir-sdk": "58.2.0",
     "@fern-typescript/abstract-generator-cli": "workspace:*",
@@ -47,13 +48,12 @@
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/express-generator": "workspace:*",
     "@types/lodash-es": "^4.17.12",
-    "lodash-es": "^4.17.21",
-    "tsup": "^8.5.0",
-    "zod": "^3.22.3",
-    "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
+    "lodash-es": "^4.17.21",
+    "tsup": "^8.5.0",
     "typescript": "5.7.2",
-    "vitest": "^2.1.9"
+    "vitest": "^2.1.9",
+    "zod": "^3.22.3"
   }
 }

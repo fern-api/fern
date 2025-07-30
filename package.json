@@ -32,6 +32,7 @@
     "format:fix": "pnpm exec biome format --fix",
     "format:fix:diff": "git diff --name-only --diff-filter=ACMR | xargs pnpm exec biome format --fix",
     "format:check": "pnpm exec biome format",
+    "format:package-json": "sort-package-json \"generators/**/package.json\" \"packages/**/package.json\" --ignore \"**/dist\" --ignore \"**lib\" --ignore \"**/node_modules\"",
     "add-workspace": "yarn mrlint add-workspace",
     "depcheck": "turbo depcheck",
     "codegen:local": "pnpm fern:local generate",
@@ -83,14 +84,15 @@
     "depcheck": "^1.4.7",
     "husky": "^9.1.7",
     "nx": "^21.3.8",
+    "sort-package-json": "3.3.1",
     "stylelint": "^14.11.0",
     "stylelint-config-prettier-scss": "^0.0.1",
     "stylelint-config-standard-scss": "^5.0.0",
+    "tsup": "^8.5.0",
     "tsx": "^4.20.3",
     "turbo": "^2.5.4",
     "typescript": "5.7.2",
-    "vitest": "^2.1.9",
-    "tsup": "^8.5.0"
+    "vitest": "^2.1.9"
   },
   "resolutions": {
     "@babel/traverse": "7.23.2",
