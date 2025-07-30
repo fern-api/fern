@@ -85,11 +85,11 @@
     "stylelint": "^14.11.0",
     "stylelint-config-prettier-scss": "^0.0.1",
     "stylelint-config-standard-scss": "^5.0.0",
+    "tsup": "^8.5.0",
     "tsx": "^4.20.3",
-    "turbo": "^2.5.4",
+    "turbo": "^2.5.5",
     "typescript": "5.8.3",
-    "vitest": "^2.1.9",
-    "tsup": "^8.5.0"
+    "vitest": "^2.1.9"
   },
   "resolutions": {
     "@babel/traverse": "7.23.2",
