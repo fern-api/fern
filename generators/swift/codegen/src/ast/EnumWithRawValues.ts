@@ -20,14 +20,14 @@ export declare namespace EnumWithRawValues {
 export class EnumWithRawValues extends AstNode {
     public readonly name: string;
     public readonly accessLevel?: AccessLevel;
-    public readonly conformances?: (Protocol | "String")[];
+    public readonly conformances: (Protocol | "String")[];
     public readonly cases: EnumWithRawValues.Case[];
 
     public constructor({ accessLevel, name, conformances, cases }: EnumWithRawValues.Args) {
         super();
         this.name = name;
         this.accessLevel = accessLevel;
-        this.conformances = conformances;
+        this.conformances = conformances ?? [];
         this.cases = cases;
     }
 
@@ -37,7 +37,7 @@ export class EnumWithRawValues extends AstNode {
             writer.write(" ");
         }
         writer.write(`enum ${this.name}`);
-        this.conformances?.forEach((conformance, index) => {
+        this.conformances.forEach((conformance, index) => {
             if (index === 0) {
                 writer.write(": ");
             } else if (index > 0) {

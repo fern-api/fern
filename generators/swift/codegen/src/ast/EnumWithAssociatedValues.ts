@@ -21,14 +21,14 @@ export declare namespace EnumWithAssociatedValues {
 export class EnumWithAssociatedValues extends AstNode {
     public readonly name: string;
     public readonly accessLevel?: AccessLevel;
-    public readonly conformances?: Protocol[];
+    public readonly conformances: Protocol[];
     public readonly cases: EnumWithAssociatedValues.Case[];
 
     public constructor({ accessLevel, name, conformances, cases }: EnumWithAssociatedValues.Args) {
         super();
         this.name = name;
         this.accessLevel = accessLevel;
-        this.conformances = conformances;
+        this.conformances = conformances ?? [];
         this.cases = cases;
     }
 
@@ -38,7 +38,7 @@ export class EnumWithAssociatedValues extends AstNode {
             writer.write(" ");
         }
         writer.write(`enum ${this.name}`);
-        this.conformances?.forEach((conformance, index) => {
+        this.conformances.forEach((conformance, index) => {
             if (index === 0) {
                 writer.write(": ");
             } else if (index > 0) {
