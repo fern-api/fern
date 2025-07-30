@@ -53,7 +53,10 @@ export class WebhookConverter extends AbstractOperationConverter {
         if (convertedRequestBody == null) {
             return undefined;
         }
-        const { requestBody } = convertedRequestBody;
+        const requestBody = convertedRequestBody[0]?.requestBody;
+        if (requestBody == null) {
+            return undefined;
+        }
 
         let payload: WebhookPayload;
         if (requestBody.type === "inlinedRequestBody") {

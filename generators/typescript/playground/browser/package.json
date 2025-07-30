@@ -1,20 +1,15 @@
 {
   "name": "@fern-api/browser-playground",
   "version": "0.0.0",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern.git",
     "directory": "generators/typescript/playground/browser"
   },
-  "private": true,
-  "files": [
-    "lib"
-  ],
+  "sideEffects": false,
   "type": "module",
-  "source": "src/index.ts",
-  "module": "src/index.ts",
-  "main": "src/index.ts",
-  "exports":{
+  "exports": {
     ".": {
       "development": "./src/index.ts",
       "source": "./src/index.ts",
@@ -23,24 +18,22 @@
       "default": "./lib/index.js"
     }
   },
-  "sideEffects": false,
+  "main": "src/index.ts",
+  "module": "src/index.ts",
+  "source": "src/index.ts",
+  "files": [
+    "lib"
+  ],
   "scripts": {
+    "build": "pnpm compile && vite build",
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
-    "test": "vitest --passWithNoTests --run",
-    "test:debug": "pnpm run test --inspect --no-file-parallelism",
-    "test:update": "vitest --passWithNoTests --run -u",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../../.eslintignore",
-    "lint:eslint:fix": "yarn lint:eslint --fix",
-    "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
-    "lint:style:fix": "yarn lint:style --fix",
-    "format": "prettier --write --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck",
     "start": "pnpm compile && vite",
-    "build": "pnpm compile && vite build",
-    "preview": "pnpm compile && vite preview"
+    "test": "vitest --passWithNoTests --run",
+    "test:debug": "pnpm run test --inspect --no-file-parallelism",
+    "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {
     "form-data": "4.0.1",
@@ -52,23 +45,18 @@
     "url-join": "^5.0.0"
   },
   "devDependencies": {
+    "@fern-api/configs": "workspace:*",
+    "@types/node": "18.15.3",
     "@types/node-fetch": "2.6.9",
     "@types/qs": "6.9.15",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@types/url-join": "4.0.1",
     "@vitejs/plugin-react": "^4.2.1",
+    "depcheck": "^1.4.7",
     "sass": "^1.72.0",
-    "stylelint": "^16.2.1",
     "vite": "^5.4.12",
     "vite-plugin-checker": "^0.6.4",
-    "@fern-api/configs": "workspace:*",
-    "@types/node": "18.15.3",
-    "depcheck": "^1.4.7",
-    "eslint": "^8.56.0",
-    "prettier": "^3.4.2",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
-    "typescript": "5.7.2",
     "vitest": "^2.1.9"
   }
 }

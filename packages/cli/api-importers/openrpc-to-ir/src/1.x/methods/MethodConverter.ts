@@ -111,7 +111,8 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                         wireValue: resolvedParam.name
                     }),
                     valueType: schema.type,
-                    v2Examples: schema.schema?.typeDeclaration.v2Examples
+                    v2Examples: schema.schema?.typeDeclaration.v2Examples,
+                    propertyAccess: undefined
                 });
                 inlinedTypes = {
                     ...schema.inlinedTypes,
@@ -188,6 +189,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                           v2Examples: undefined
                       })
                     : undefined,
+            v2RequestBodies: undefined,
             sdkRequest: undefined,
             response:
                 jsonResponseBody != null

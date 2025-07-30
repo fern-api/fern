@@ -7,7 +7,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
           - name: Checkout repo
-            uses: actions/checkout@v4
+            uses: actions/checkout@v3
 
           - uses: ruby/setup-ruby@v1
             with:
@@ -16,7 +16,7 @@ jobs:
 
           - name: Test gem
             run: bundle install && bundle exec rake test
-
+              
           - name: Build and Push Gem
             env:
               GEM_HOST_API_KEY: ${{ secrets. }}

@@ -8,10 +8,7 @@
   },
   "sideEffects": false,
   "type": "module",
-  "main": "lib/index.js",
-  "source": "src/index.ts",
-  "types": "lib/index.d.ts",
-  "exports":{
+  "exports": {
     ".": {
       "development": "./src/index.ts",
       "source": "./src/index.ts",
@@ -20,6 +17,9 @@
       "default": "./lib/index.js"
     }
   },
+  "main": "lib/index.js",
+  "source": "src/index.ts",
+  "types": "lib/index.d.ts",
   "files": [
     "lib"
   ],
@@ -38,7 +38,7 @@
   "devDependencies": {
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.6",
-    "typescript": "5.7.2",
+    "typescript": "5.8.3",
     "vitest": "^2.0.5"
   }
-} 
+}

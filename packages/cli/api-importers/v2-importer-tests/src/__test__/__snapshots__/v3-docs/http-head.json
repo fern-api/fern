@@ -415,6 +415,7 @@
               "safeName": "ListUsers"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -597,6 +598,7 @@
               "safeName": "HeadMethodsShouldNotDefineAResponseBody"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {

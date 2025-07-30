@@ -1089,6 +1089,9 @@
               "safeName": "User"
             }
           },
+          "v2RequestBodies": {
+            "requestBodies": []
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -1376,6 +1379,9 @@
               "unsafeName": "UserV2",
               "safeName": "UserV2"
             }
+          },
+          "v2RequestBodies": {
+            "requestBodies": []
           },
           "response": {
             "statusCode": 200,
@@ -1680,6 +1686,9 @@
               "unsafeName": "UserV3",
               "safeName": "UserV3"
             }
+          },
+          "v2RequestBodies": {
+            "requestBodies": []
           },
           "response": {
             "statusCode": 200,

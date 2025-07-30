@@ -74676,6 +74676,7 @@
               "safeName": "GetNfTsForOwnerV3"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -75987,6 +75988,7 @@
               "safeName": "GetOwnersForNftV3"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -76401,6 +76403,7 @@
               "safeName": "GetOwnersForContractV3"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -76782,6 +76785,7 @@
               "safeName": "IsHolderOfContractV3"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -77516,6 +77520,7 @@
               "safeName": "GetContractsForOwnerV3"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -78335,6 +78340,7 @@
               "safeName": "GetCollectionsForOwnerV3"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -79072,6 +79078,7 @@
               "safeName": "GetNfTsForContractV3"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -79828,6 +79835,7 @@
               "safeName": "GetNfTsForCollectionV3"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -80489,6 +80497,7 @@
               "safeName": "GetNftMetadataV3"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -81139,6 +81148,209 @@
             },
             "type": "inlinedRequestBody"
           },
+          "v2RequestBodies": {
+            "requestBodies": [
+              {
+                "contentType": "application/json",
+                "name": {
+                  "originalName": "NFT Metadata Endpoints_getNFTMetadataBatch-v3_Request",
+                  "camelCase": {
+                    "unsafeName": "nftMetadataEndpointsGetNftMetadataBatchV3Request",
+                    "safeName": "nftMetadataEndpointsGetNftMetadataBatchV3Request"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "nft_metadata_endpoints_get_nft_metadata_batch_v_3_request",
+                    "safeName": "nft_metadata_endpoints_get_nft_metadata_batch_v_3_request"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "NFT_METADATA_ENDPOINTS_GET_NFT_METADATA_BATCH_V_3_REQUEST",
+                    "safeName": "NFT_METADATA_ENDPOINTS_GET_NFT_METADATA_BATCH_V_3_REQUEST"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "NftMetadataEndpointsGetNftMetadataBatchV3Request",
+                    "safeName": "NftMetadataEndpointsGetNftMetadataBatchV3Request"
+                  }
+                },
+                "extendedProperties": [],
+                "extends": [],
+                "properties": [
+                  {
+                    "name": {
+                      "name": {
+                        "originalName": "tokens",
+                        "camelCase": {
+                          "unsafeName": "tokens",
+                          "safeName": "tokens"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "tokens",
+                          "safeName": "tokens"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "TOKENS",
+                          "safeName": "TOKENS"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "Tokens",
+                          "safeName": "Tokens"
+                        }
+                      },
+                      "wireValue": "tokens"
+                    },
+                    "valueType": {
+                      "container": {
+                        "optional": {
+                          "container": {
+                            "list": {
+                              "fernFilepath": {
+                                "allParts": [],
+                                "packagePath": []
+                              },
+                              "name": {
+                                "originalName": "V3ApiKeyGetNftMetadataBatchPostRequestBodyContentApplicationJsonSchemaTokensItems",
+                                "camelCase": {
+                                  "unsafeName": "v3ApiKeyGetNftMetadataBatchPostRequestBodyContentApplicationJsonSchemaTokensItems",
+                                  "safeName": "v3ApiKeyGetNftMetadataBatchPostRequestBodyContentApplicationJsonSchemaTokensItems"
+                                },
+                                "snakeCase": {
+                                  "unsafeName": "v_3_api_key_get_nft_metadata_batch_post_request_body_content_application_json_schema_tokens_items",
+                                  "safeName": "v_3_api_key_get_nft_metadata_batch_post_request_body_content_application_json_schema_tokens_items"
+                                },
+                                "screamingSnakeCase": {
+                                  "unsafeName": "V_3_API_KEY_GET_NFT_METADATA_BATCH_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_TOKENS_ITEMS",
+                                  "safeName": "V_3_API_KEY_GET_NFT_METADATA_BATCH_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_TOKENS_ITEMS"
+                                },
+                                "pascalCase": {
+                                  "unsafeName": "V3ApiKeyGetNftMetadataBatchPostRequestBodyContentApplicationJsonSchemaTokensItems",
+                                  "safeName": "V3ApiKeyGetNftMetadataBatchPostRequestBodyContentApplicationJsonSchemaTokensItems"
+                                }
+                              },
+                              "typeId": "V3ApiKeyGetNftMetadataBatchPostRequestBodyContentApplicationJsonSchemaTokensItems",
+                              "inline": false,
+                              "type": "named"
+                            },
+                            "type": "list"
+                          },
+                          "type": "container"
+                        },
+                        "type": "optional"
+                      },
+                      "type": "container"
+                    },
+                    "docs": "List of token objects to batch request NFT metadata for. Maximum 100.",
+                    "v2Examples": {
+                      "userSpecifiedExamples": {},
+                      "autogeneratedExamples": {
+                        "V3ApiKeyGetNftMetadataBatchPostRequestBodyContentApplicationJsonSchemaTokens_example_autogenerated": [
+                          {}
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "name": {
+                      "name": {
+                        "originalName": "tokenUriTimeoutInMs",
+                        "camelCase": {
+                          "unsafeName": "tokenUriTimeoutInMs",
+                          "safeName": "tokenUriTimeoutInMs"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "token_uri_timeout_in_ms",
+                          "safeName": "token_uri_timeout_in_ms"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "TOKEN_URI_TIMEOUT_IN_MS",
+                          "safeName": "TOKEN_URI_TIMEOUT_IN_MS"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "TokenUriTimeoutInMs",
+                          "safeName": "TokenUriTimeoutInMs"
+                        }
+                      },
+                      "wireValue": "tokenUriTimeoutInMs"
+                    },
+                    "valueType": {
+                      "container": {
+                        "optional": {
+                          "primitive": {
+                            "v1": "INTEGER",
+                            "v2": {
+                              "validation": {},
+                              "type": "integer"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "optional"
+                      },
+                      "type": "container"
+                    },
+                    "v2Examples": {
+                      "userSpecifiedExamples": {},
+                      "autogeneratedExamples": {
+                        "V3ApiKeyGetNftMetadataBatchPostRequestBodyContentApplicationJsonSchemaTokenUriTimeoutInMs_example_autogenerated": 1
+                      }
+                    }
+                  },
+                  {
+                    "name": {
+                      "name": {
+                        "originalName": "refreshCache",
+                        "camelCase": {
+                          "unsafeName": "refreshCache",
+                          "safeName": "refreshCache"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "refresh_cache",
+                          "safeName": "refresh_cache"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "REFRESH_CACHE",
+                          "safeName": "REFRESH_CACHE"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "RefreshCache",
+                          "safeName": "RefreshCache"
+                        }
+                      },
+                      "wireValue": "refreshCache"
+                    },
+                    "valueType": {
+                      "container": {
+                        "optional": {
+                          "primitive": {
+                            "v1": "BOOLEAN",
+                            "v2": {
+                              "default": false,
+                              "type": "boolean"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "optional"
+                      },
+                      "type": "container"
+                    },
+                    "v2Examples": {
+                      "userSpecifiedExamples": {},
+                      "autogeneratedExamples": {
+                        "V3ApiKeyGetNftMetadataBatchPostRequestBodyContentApplicationJsonSchemaRefreshCache_example_autogenerated": false
+                      }
+                    }
+                  }
+                ],
+                "extraProperties": false,
+                "v2Examples": {
+                  "userSpecifiedExamples": {},
+                  "autogeneratedExamples": {
+                    "nftMetadataEndpointsGetNftMetadataBatchV3Example": {}
+                  }
+                },
+                "type": "inlinedRequestBody"
+              }
+            ]
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -81650,6 +81862,7 @@
               "safeName": "GetContractMetadataV3"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -82009,6 +82222,7 @@
               "safeName": "GetCollectionMetadataV3"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -82347,6 +82561,7 @@
               "safeName": "InvalidateContractV3"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -82703,6 +82918,100 @@
               }
             },
             "type": "inlinedRequestBody"
+          },
+          "v2RequestBodies": {
+            "requestBodies": [
+              {
+                "contentType": "application/json",
+                "name": {
+                  "originalName": "NFT Metadata Endpoints_getContractMetadataBatch-v3_Request",
+                  "camelCase": {
+                    "unsafeName": "nftMetadataEndpointsGetContractMetadataBatchV3Request",
+                    "safeName": "nftMetadataEndpointsGetContractMetadataBatchV3Request"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "nft_metadata_endpoints_get_contract_metadata_batch_v_3_request",
+                    "safeName": "nft_metadata_endpoints_get_contract_metadata_batch_v_3_request"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "NFT_METADATA_ENDPOINTS_GET_CONTRACT_METADATA_BATCH_V_3_REQUEST",
+                    "safeName": "NFT_METADATA_ENDPOINTS_GET_CONTRACT_METADATA_BATCH_V_3_REQUEST"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "NftMetadataEndpointsGetContractMetadataBatchV3Request",
+                    "safeName": "NftMetadataEndpointsGetContractMetadataBatchV3Request"
+                  }
+                },
+                "extendedProperties": [],
+                "extends": [],
+                "properties": [
+                  {
+                    "name": {
+                      "name": {
+                        "originalName": "contractAddresses",
+                        "camelCase": {
+                          "unsafeName": "contractAddresses",
+                          "safeName": "contractAddresses"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "contract_addresses",
+                          "safeName": "contract_addresses"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "CONTRACT_ADDRESSES",
+                          "safeName": "CONTRACT_ADDRESSES"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "ContractAddresses",
+                          "safeName": "ContractAddresses"
+                        }
+                      },
+                      "wireValue": "contractAddresses"
+                    },
+                    "valueType": {
+                      "container": {
+                        "optional": {
+                          "container": {
+                            "list": {
+                              "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                  "default": "0xe785E82358879F061BC3dcAC6f0444462D4b5330",
+                                  "validation": {},
+                                  "type": "string"
+                                }
+                              },
+                              "type": "primitive"
+                            },
+                            "type": "list"
+                          },
+                          "type": "container"
+                        },
+                        "type": "optional"
+                      },
+                      "type": "container"
+                    },
+                    "docs": "List of contract addresses to batch metadata requests for.",
+                    "v2Examples": {
+                      "userSpecifiedExamples": {},
+                      "autogeneratedExamples": {
+                        "V3ApiKeyGetContractMetadataBatchPostRequestBodyContentApplicationJsonSchemaContractAddresses_example_autogenerated": [
+                          "0xe785E82358879F061BC3dcAC6f0444462D4b5330"
+                        ]
+                      }
+                    }
+                  }
+                ],
+                "extraProperties": false,
+                "v2Examples": {
+                  "userSpecifiedExamples": {},
+                  "autogeneratedExamples": {
+                    "nftMetadataEndpointsGetContractMetadataBatchV3Example": {}
+                  }
+                },
+                "type": "inlinedRequestBody"
+              }
+            ]
           },
           "response": {
             "statusCode": 200,
@@ -83083,6 +83392,7 @@
               "safeName": "SummarizeNftAttributesV3"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -84033,6 +84343,7 @@
               "safeName": "SearchContractMetadataV3"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -84456,6 +84767,7 @@
               "safeName": "ComputeRarityV3"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -84869,6 +85181,140 @@
             },
             "type": "inlinedRequestBody"
           },
+          "v2RequestBodies": {
+            "requestBodies": [
+              {
+                "contentType": "application/json",
+                "name": {
+                  "originalName": "NFT Metadata Endpoints_refreshNftMetadata-v3_Request",
+                  "camelCase": {
+                    "unsafeName": "nftMetadataEndpointsRefreshNftMetadataV3Request",
+                    "safeName": "nftMetadataEndpointsRefreshNftMetadataV3Request"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "nft_metadata_endpoints_refresh_nft_metadata_v_3_request",
+                    "safeName": "nft_metadata_endpoints_refresh_nft_metadata_v_3_request"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "NFT_METADATA_ENDPOINTS_REFRESH_NFT_METADATA_V_3_REQUEST",
+                    "safeName": "NFT_METADATA_ENDPOINTS_REFRESH_NFT_METADATA_V_3_REQUEST"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "NftMetadataEndpointsRefreshNftMetadataV3Request",
+                    "safeName": "NftMetadataEndpointsRefreshNftMetadataV3Request"
+                  }
+                },
+                "extendedProperties": [],
+                "extends": [],
+                "properties": [
+                  {
+                    "name": {
+                      "name": {
+                        "originalName": "contractAddress",
+                        "camelCase": {
+                          "unsafeName": "contractAddress",
+                          "safeName": "contractAddress"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "contract_address",
+                          "safeName": "contract_address"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "CONTRACT_ADDRESS",
+                          "safeName": "CONTRACT_ADDRESS"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "ContractAddress",
+                          "safeName": "ContractAddress"
+                        }
+                      },
+                      "wireValue": "contractAddress"
+                    },
+                    "valueType": {
+                      "container": {
+                        "optional": {
+                          "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                              "default": "0xe785E82358879F061BC3dcAC6f0444462D4b5330",
+                              "validation": {},
+                              "type": "string"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "optional"
+                      },
+                      "type": "container"
+                    },
+                    "docs": "Contract address of the token you want to refresh.",
+                    "v2Examples": {
+                      "userSpecifiedExamples": {},
+                      "autogeneratedExamples": {
+                        "V3ApiKeyRefreshNftMetadataPostRequestBodyContentApplicationJsonSchemaContractAddress_example_autogenerated": "0xe785E82358879F061BC3dcAC6f0444462D4b5330"
+                      }
+                    }
+                  },
+                  {
+                    "name": {
+                      "name": {
+                        "originalName": "tokenId",
+                        "camelCase": {
+                          "unsafeName": "tokenId",
+                          "safeName": "tokenId"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "token_id",
+                          "safeName": "token_id"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "TOKEN_ID",
+                          "safeName": "TOKEN_ID"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "TokenId",
+                          "safeName": "TokenId"
+                        }
+                      },
+                      "wireValue": "tokenId"
+                    },
+                    "valueType": {
+                      "container": {
+                        "optional": {
+                          "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                              "default": "44",
+                              "validation": {},
+                              "type": "string"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "optional"
+                      },
+                      "type": "container"
+                    },
+                    "docs": "Token ID of the token you want to refresh. Must belong to the contract address.",
+                    "v2Examples": {
+                      "userSpecifiedExamples": {},
+                      "autogeneratedExamples": {
+                        "V3ApiKeyRefreshNftMetadataPostRequestBodyContentApplicationJsonSchemaTokenId_example_autogenerated": "44"
+                      }
+                    }
+                  }
+                ],
+                "extraProperties": false,
+                "v2Examples": {
+                  "userSpecifiedExamples": {},
+                  "autogeneratedExamples": {
+                    "nftMetadataEndpointsRefreshNftMetadataV3Example": {}
+                  }
+                },
+                "type": "inlinedRequestBody"
+              }
+            ]
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -85193,6 +85639,7 @@
               "safeName": "GetSpamContractsV3"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -85508,6 +85955,7 @@
               "safeName": "IsSpamContractV3"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -85859,6 +86307,7 @@
               "safeName": "IsAirdropNftV3"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -86168,6 +86617,7 @@
               "safeName": "ReportSpamV3"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -86547,6 +86997,7 @@
               "safeName": "GetFloorPriceV3"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -87417,6 +87868,7 @@
               "safeName": "GetNftSalesV3"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -88496,6 +88948,7 @@
               "safeName": "GetNfTs"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -89765,6 +90218,7 @@
               "safeName": "GetNftMetadata"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -90454,6 +90908,209 @@
             },
             "type": "inlinedRequestBody"
           },
+          "v2RequestBodies": {
+            "requestBodies": [
+              {
+                "contentType": "application/json",
+                "name": {
+                  "originalName": "NFT API V2 Methods (Older Version)_getNFTMetadataBatch_Request",
+                  "camelCase": {
+                    "unsafeName": "nftApiV2MethodsOlderVersionGetNftMetadataBatchRequest",
+                    "safeName": "nftApiV2MethodsOlderVersionGetNftMetadataBatchRequest"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "nft_api_v_2_methods_older_version_get_nft_metadata_batch_request",
+                    "safeName": "nft_api_v_2_methods_older_version_get_nft_metadata_batch_request"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "NFT_API_V_2_METHODS_OLDER_VERSION_GET_NFT_METADATA_BATCH_REQUEST",
+                    "safeName": "NFT_API_V_2_METHODS_OLDER_VERSION_GET_NFT_METADATA_BATCH_REQUEST"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "NftApiV2MethodsOlderVersionGetNftMetadataBatchRequest",
+                    "safeName": "NftApiV2MethodsOlderVersionGetNftMetadataBatchRequest"
+                  }
+                },
+                "extendedProperties": [],
+                "extends": [],
+                "properties": [
+                  {
+                    "name": {
+                      "name": {
+                        "originalName": "tokens",
+                        "camelCase": {
+                          "unsafeName": "tokens",
+                          "safeName": "tokens"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "tokens",
+                          "safeName": "tokens"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "TOKENS",
+                          "safeName": "TOKENS"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "Tokens",
+                          "safeName": "Tokens"
+                        }
+                      },
+                      "wireValue": "tokens"
+                    },
+                    "valueType": {
+                      "container": {
+                        "optional": {
+                          "container": {
+                            "list": {
+                              "fernFilepath": {
+                                "allParts": [],
+                                "packagePath": []
+                              },
+                              "name": {
+                                "originalName": "V2ApiKeyGetNftMetadataBatchPostRequestBodyContentApplicationJsonSchemaTokensItems",
+                                "camelCase": {
+                                  "unsafeName": "v2ApiKeyGetNftMetadataBatchPostRequestBodyContentApplicationJsonSchemaTokensItems",
+                                  "safeName": "v2ApiKeyGetNftMetadataBatchPostRequestBodyContentApplicationJsonSchemaTokensItems"
+                                },
+                                "snakeCase": {
+                                  "unsafeName": "v_2_api_key_get_nft_metadata_batch_post_request_body_content_application_json_schema_tokens_items",
+                                  "safeName": "v_2_api_key_get_nft_metadata_batch_post_request_body_content_application_json_schema_tokens_items"
+                                },
+                                "screamingSnakeCase": {
+                                  "unsafeName": "V_2_API_KEY_GET_NFT_METADATA_BATCH_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_TOKENS_ITEMS",
+                                  "safeName": "V_2_API_KEY_GET_NFT_METADATA_BATCH_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_TOKENS_ITEMS"
+                                },
+                                "pascalCase": {
+                                  "unsafeName": "V2ApiKeyGetNftMetadataBatchPostRequestBodyContentApplicationJsonSchemaTokensItems",
+                                  "safeName": "V2ApiKeyGetNftMetadataBatchPostRequestBodyContentApplicationJsonSchemaTokensItems"
+                                }
+                              },
+                              "typeId": "V2ApiKeyGetNftMetadataBatchPostRequestBodyContentApplicationJsonSchemaTokensItems",
+                              "inline": false,
+                              "type": "named"
+                            },
+                            "type": "list"
+                          },
+                          "type": "container"
+                        },
+                        "type": "optional"
+                      },
+                      "type": "container"
+                    },
+                    "docs": "List of token objects to batch request NFT metadata for. Maximum 100.",
+                    "v2Examples": {
+                      "userSpecifiedExamples": {},
+                      "autogeneratedExamples": {
+                        "V2ApiKeyGetNftMetadataBatchPostRequestBodyContentApplicationJsonSchemaTokens_example_autogenerated": [
+                          {}
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "name": {
+                      "name": {
+                        "originalName": "tokenUriTimeoutInMs",
+                        "camelCase": {
+                          "unsafeName": "tokenUriTimeoutInMs",
+                          "safeName": "tokenUriTimeoutInMs"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "token_uri_timeout_in_ms",
+                          "safeName": "token_uri_timeout_in_ms"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "TOKEN_URI_TIMEOUT_IN_MS",
+                          "safeName": "TOKEN_URI_TIMEOUT_IN_MS"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "TokenUriTimeoutInMs",
+                          "safeName": "TokenUriTimeoutInMs"
+                        }
+                      },
+                      "wireValue": "tokenUriTimeoutInMs"
+                    },
+                    "valueType": {
+                      "container": {
+                        "optional": {
+                          "primitive": {
+                            "v1": "INTEGER",
+                            "v2": {
+                              "validation": {},
+                              "type": "integer"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "optional"
+                      },
+                      "type": "container"
+                    },
+                    "v2Examples": {
+                      "userSpecifiedExamples": {},
+                      "autogeneratedExamples": {
+                        "V2ApiKeyGetNftMetadataBatchPostRequestBodyContentApplicationJsonSchemaTokenUriTimeoutInMs_example_autogenerated": 1
+                      }
+                    }
+                  },
+                  {
+                    "name": {
+                      "name": {
+                        "originalName": "refreshCache",
+                        "camelCase": {
+                          "unsafeName": "refreshCache",
+                          "safeName": "refreshCache"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "refresh_cache",
+                          "safeName": "refresh_cache"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "REFRESH_CACHE",
+                          "safeName": "REFRESH_CACHE"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "RefreshCache",
+                          "safeName": "RefreshCache"
+                        }
+                      },
+                      "wireValue": "refreshCache"
+                    },
+                    "valueType": {
+                      "container": {
+                        "optional": {
+                          "primitive": {
+                            "v1": "BOOLEAN",
+                            "v2": {
+                              "default": false,
+                              "type": "boolean"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "optional"
+                      },
+                      "type": "container"
+                    },
+                    "v2Examples": {
+                      "userSpecifiedExamples": {},
+                      "autogeneratedExamples": {
+                        "V2ApiKeyGetNftMetadataBatchPostRequestBodyContentApplicationJsonSchemaRefreshCache_example_autogenerated": false
+                      }
+                    }
+                  }
+                ],
+                "extraProperties": false,
+                "v2Examples": {
+                  "userSpecifiedExamples": {},
+                  "autogeneratedExamples": {
+                    "nftApiV2MethodsOlderVersionGetNftMetadataBatchExample": {}
+                  }
+                },
+                "type": "inlinedRequestBody"
+              }
+            ]
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -91004,6 +91661,7 @@
               "safeName": "GetContractMetadata"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -91414,6 +92072,100 @@
               }
             },
             "type": "inlinedRequestBody"
+          },
+          "v2RequestBodies": {
+            "requestBodies": [
+              {
+                "contentType": "application/json",
+                "name": {
+                  "originalName": "NFT API V2 Methods (Older Version)_getContractMetadataBatch_Request",
+                  "camelCase": {
+                    "unsafeName": "nftApiV2MethodsOlderVersionGetContractMetadataBatchRequest",
+                    "safeName": "nftApiV2MethodsOlderVersionGetContractMetadataBatchRequest"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "nft_api_v_2_methods_older_version_get_contract_metadata_batch_request",
+                    "safeName": "nft_api_v_2_methods_older_version_get_contract_metadata_batch_request"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "NFT_API_V_2_METHODS_OLDER_VERSION_GET_CONTRACT_METADATA_BATCH_REQUEST",
+                    "safeName": "NFT_API_V_2_METHODS_OLDER_VERSION_GET_CONTRACT_METADATA_BATCH_REQUEST"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "NftApiV2MethodsOlderVersionGetContractMetadataBatchRequest",
+                    "safeName": "NftApiV2MethodsOlderVersionGetContractMetadataBatchRequest"
+                  }
+                },
+                "extendedProperties": [],
+                "extends": [],
+                "properties": [
+                  {
+                    "name": {
+                      "name": {
+                        "originalName": "contractAddresses",
+                        "camelCase": {
+                          "unsafeName": "contractAddresses",
+                          "safeName": "contractAddresses"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "contract_addresses",
+                          "safeName": "contract_addresses"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "CONTRACT_ADDRESSES",
+                          "safeName": "CONTRACT_ADDRESSES"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "ContractAddresses",
+                          "safeName": "ContractAddresses"
+                        }
+                      },
+                      "wireValue": "contractAddresses"
+                    },
+                    "valueType": {
+                      "container": {
+                        "optional": {
+                          "container": {
+                            "list": {
+                              "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                  "default": "0xe785E82358879F061BC3dcAC6f0444462D4b5330",
+                                  "validation": {},
+                                  "type": "string"
+                                }
+                              },
+                              "type": "primitive"
+                            },
+                            "type": "list"
+                          },
+                          "type": "container"
+                        },
+                        "type": "optional"
+                      },
+                      "type": "container"
+                    },
+                    "docs": "list of contract addresses to batch metadata requests for",
+                    "v2Examples": {
+                      "userSpecifiedExamples": {},
+                      "autogeneratedExamples": {
+                        "V2ApiKeyGetContractMetadataBatchPostRequestBodyContentApplicationJsonSchemaContractAddresses_example_autogenerated": [
+                          "0xe785E82358879F061BC3dcAC6f0444462D4b5330"
+                        ]
+                      }
+                    }
+                  }
+                ],
+                "extraProperties": false,
+                "v2Examples": {
+                  "userSpecifiedExamples": {},
+                  "autogeneratedExamples": {
+                    "nftApiV2MethodsOlderVersionGetContractMetadataBatchExample": {}
+                  }
+                },
+                "type": "inlinedRequestBody"
+              }
+            ]
           },
           "response": {
             "statusCode": 200,
@@ -92086,6 +92838,7 @@
               "safeName": "GetNfTsForCollection"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -92699,6 +93452,7 @@
               "safeName": "GetOwnersForToken"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -93110,6 +93864,7 @@
               "safeName": "GetOwnersForCollection"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -93353,6 +94108,7 @@
               "safeName": "GetSpamContracts"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -93668,6 +94424,7 @@
               "safeName": "IsSpamContract"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -93975,6 +94732,7 @@
               "safeName": "IsAirdrop"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -94240,6 +94998,7 @@
               "safeName": "InvalidateContract"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -94554,6 +95313,7 @@
               "safeName": "GetFloorPrice"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -94926,6 +95686,7 @@
               "safeName": "ComputeRarity"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -95256,6 +96017,7 @@
               "safeName": "SearchContractMetadata"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -95642,6 +96404,7 @@
               "safeName": "SummarizeNftAttributes"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -95999,6 +96762,7 @@
               "safeName": "IsHolderOfCollection"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -96854,6 +97618,7 @@
               "safeName": "GetNftSales"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -97774,6 +98539,7 @@
               "safeName": "GetContractsForOwner"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -98300,6 +99066,7 @@
               "safeName": "ReportSpam"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {

@@ -2753,6 +2753,16 @@
         "properties": []
       }
     },
+    "V0BatchJobsPostRequestBodyContentMultipartFormDataSchemaJson": {
+      "name": "V0BatchJobsPostRequestBodyContentMultipartFormDataSchemaJson",
+      "shape": {
+        "type": "object",
+        "extends": [
+          "BaseRequest"
+        ],
+        "properties": []
+      }
+    },
     "AudioInput": {
       "description": "When provided, the input is audio.",
       "name": "AudioInput",
@@ -4907,6 +4917,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "fileDownload"
@@ -4990,6 +5001,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -5410,6 +5422,7 @@
           }
         ],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -5605,16 +5618,88 @@
         "headers": [],
         "request": {
           "type": {
-            "type": "json",
-            "contentType": "application/json; charset=utf-8",
-            "shape": {
-              "type": "reference",
-              "value": {
-                "type": "id",
-                "value": "BaseRequest"
+            "type": "fileUpload",
+            "value": {
+              "name": "Start Job_Request",
+              "properties": [
+                {
+                  "type": "bodyProperty",
+                  "key": "json",
+                  "valueType": {
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "V0BatchJobsPostRequestBodyContentMultipartFormDataSchemaJson"
+                    }
+                  },
+                  "contentType": "multipart/form-data",
+                  "exploded": false
+                },
+                {
+                  "type": "file",
+                  "value": {
+                    "type": "fileArray",
+                    "key": "file",
+                    "isOptional": false,
+                    "contentType": "multipart/form-data",
+                    "description": "Local media files (see recommended input filetypes) to be processed.\n\nIf you wish to supply more than 100 files, consider providing them as an archive (`.zip`, `.tar.gz`, `.tar.bz2`, `.tar.xz`)."
+                  }
+                }
+              ]
+            },
+            "contentType": "multipart/form-data"
+          }
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "fileUpload",
+                "value": {
+                  "name": "Start Job_Request",
+                  "properties": [
+                    {
+                      "type": "bodyProperty",
+                      "key": "json",
+                      "valueType": {
+                        "type": "optional",
+                        "itemType": {
+                          "type": "id",
+                          "value": "V0BatchJobsPostRequestBodyContentMultipartFormDataSchemaJson"
+                        }
+                      },
+                      "contentType": "multipart/form-data",
+                      "exploded": false
+                    },
+                    {
+                      "type": "file",
+                      "value": {
+                        "type": "fileArray",
+                        "key": "file",
+                        "isOptional": false,
+                        "contentType": "multipart/form-data",
+                        "description": "Local media files (see recommended input filetypes) to be processed.\n\nIf you wish to supply more than 100 files, consider providing them as an archive (`.zip`, `.tar.gz`, `.tar.bz2`, `.tar.xz`)."
+                      }
+                    }
+                  ]
+                },
+                "contentType": "multipart/form-data"
+              }
+            },
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json; charset=utf-8",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BaseRequest"
+                  }
+                }
               }
             }
-          }
+          ]
         },
         "response": {
           "type": {
@@ -5650,10 +5735,24 @@
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {},
+            "requestBody": {
+              "file": [
+                "string"
+              ]
+            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {}
+              "type": "form",
+              "value": {
+                "json": {
+                  "type": "json"
+                },
+                "file": {
+                  "type": "filenames",
+                  "value": [
+                    "string"
+                  ]
+                }
+              }
             },
             "responseStatusCode": 200,
             "responseBody": {
@@ -5719,6 +5818,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",

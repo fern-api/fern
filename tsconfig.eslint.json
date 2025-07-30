@@ -1,7 +1,0 @@
-{
-  "extends": "@fern-api/configs/tsconfig/main.json",
-  "compilerOptions": {
-    "types": ["@types/node"],
-    "noEmit": true
-  }
-}

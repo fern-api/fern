@@ -12435,6 +12435,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -12567,6 +12568,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -12698,6 +12700,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -13068,6 +13071,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -13284,6 +13288,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -13579,6 +13584,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -13773,6 +13779,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -14044,6 +14051,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -14225,6 +14233,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -14372,6 +14381,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -14690,6 +14700,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -14941,6 +14952,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -15526,6 +15538,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -15771,6 +15784,57 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "EmployeeEndpointRequest"
+                    }
+                  }
+                }
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/x-www-form-urlencoded",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "EmployeeEndpointRequest"
+                    }
+                  }
+                }
+              },
+              {
+                "type": {
+                  "type": "fileUpload",
+                  "value": {
+                    "name": "employees_create_Request",
+                    "properties": [
+                      {
+                        "type": "bodyProperty",
+                        "key": "model",
+                        "valueType": {
+                          "type": "id",
+                          "value": "EmployeeRequest"
+                        },
+                        "contentType": "multipart/form-data",
+                        "exploded": false
+                      }
+                    ]
+                  },
+                  "contentType": "multipart/form-data"
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -16110,6 +16174,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -16332,6 +16397,74 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "IgnoreCommonModelRequest"
+                    }
+                  }
+                }
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/x-www-form-urlencoded",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "IgnoreCommonModelRequest"
+                    }
+                  }
+                }
+              },
+              {
+                "type": {
+                  "type": "fileUpload",
+                  "value": {
+                    "name": "employees_ignoreCreate_Request",
+                    "properties": [
+                      {
+                        "type": "bodyProperty",
+                        "key": "reason",
+                        "valueType": {
+                          "type": "id",
+                          "value": "ReasonEnum"
+                        },
+                        "contentType": "multipart/form-data",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "message",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 256
+                            }
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "exploded": false
+                      }
+                    ]
+                  },
+                  "contentType": "multipart/form-data"
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -16435,6 +16568,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -16735,6 +16869,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -16959,6 +17094,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -17117,6 +17253,60 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "GenerateRemoteKeyRequest"
+                    }
+                  }
+                }
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/x-www-form-urlencoded",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "GenerateRemoteKeyRequest"
+                    }
+                  }
+                }
+              },
+              {
+                "type": {
+                  "type": "fileUpload",
+                  "value": {
+                    "name": "generate-key_create_Request",
+                    "properties": [
+                      {
+                        "type": "bodyProperty",
+                        "key": "name",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "exploded": false
+                      }
+                    ]
+                  },
+                  "contentType": "multipart/form-data"
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -17391,6 +17581,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -17588,6 +17779,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -17888,6 +18080,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -18024,6 +18217,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -18152,6 +18346,185 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "EndUserDetailsRequest"
+                    }
+                  }
+                }
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/x-www-form-urlencoded",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "EndUserDetailsRequest"
+                    }
+                  }
+                }
+              },
+              {
+                "type": {
+                  "type": "fileUpload",
+                  "value": {
+                    "name": "link-token_create_Request",
+                    "properties": [
+                      {
+                        "type": "bodyProperty",
+                        "key": "end_user_email_address",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 100
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "description": "Your end user's email address. This is purely for identification purposes - setting this value will not cause any emails to be sent.",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "end_user_organization_name",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 100
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "description": "Your end user's organization.",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "end_user_origin_id",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 100
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "description": "This unique identifier typically represents the ID for your end user in your product's database. This value must be distinct from other Linked Accounts' unique identifiers.",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "categories",
+                        "valueType": {
+                          "type": "list",
+                          "itemType": {
+                            "type": "id",
+                            "value": "CategoriesEnum"
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "description": "The integration categories to show in Merge Link.",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "integration",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            }
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "description": "The slug of a specific pre-selected integration for this linking flow token. For examples of slugs, see https://www.merge.dev/docs/basics/integration-metadata/.",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "link_expiry_mins",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "integer",
+                              "minimum": 30,
+                              "maximum": 10080,
+                              "default": 30
+                            }
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "description": "An integer number of minutes between [30, 720 or 10080 if for a Magic Link URL] for how long this token is valid. Defaults to 30.",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "should_create_magic_link_url",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "boolean",
+                                "default": false
+                              }
+                            }
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "description": "Whether to generate a Magic Link URL. Defaults to false. For more information on Magic Link, see https://merge.dev/blog/product/integrations,-fast.-say-hello-to-magic-link/.",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "common_models",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "list",
+                              "itemType": {
+                                "type": "id",
+                                "value": "CommonModelScopesBodyRequest"
+                              }
+                            }
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "description": "An array of objects to specify the models and fields that will be disabled for a given Linked Account. Each object uses model_id, enabled_actions, and disabled_fields to specify the model, method, and fields that are scoped for a given Linked Account.",
+                        "exploded": false
+                      }
+                    ]
+                  },
+                  "contentType": "multipart/form-data"
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -18438,6 +18811,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -18775,6 +19149,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -18984,6 +19359,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -19150,6 +19526,185 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "DataPassthroughRequest"
+                    }
+                  }
+                }
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/x-www-form-urlencoded",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "DataPassthroughRequest"
+                    }
+                  }
+                }
+              },
+              {
+                "type": {
+                  "type": "fileUpload",
+                  "value": {
+                    "name": "passthrough_create_Request",
+                    "properties": [
+                      {
+                        "type": "bodyProperty",
+                        "key": "method",
+                        "valueType": {
+                          "type": "id",
+                          "value": "MethodEnum"
+                        },
+                        "contentType": "multipart/form-data",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "path",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "base_url_override",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            }
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "data",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            }
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "multipart_form_data",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "list",
+                              "itemType": {
+                                "type": "id",
+                                "value": "MultipartFormFieldRequest"
+                              }
+                            }
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "description": "Pass an array of `MultipartFormField` objects in here instead of using the `data` param if `request_format` is set to `MULTIPART`.",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "headers",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "map",
+                              "keyType": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string"
+                                }
+                              },
+                              "valueType": {
+                                "type": "unknown"
+                              }
+                            }
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "description": "The headers to use for the request (Merge will handle the account's authorization headers). `Content-Type` header is required for passthrough. Choose content type corresponding to expected format of receiving server.",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "request_format",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "id",
+                              "value": "RequestFormatEnum"
+                            }
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "normalize_response",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean"
+                            }
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "description": "Optional. If true, the response will always be an object of the form `{\"type\": T, \"value\": ...}` where `T` will be one of `string, boolean, number, null, array, object`.",
+                        "exploded": false
+                      }
+                    ]
+                  },
+                  "contentType": "multipart/form-data"
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -19403,6 +19958,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -19572,6 +20128,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -19918,6 +20475,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -20119,6 +20677,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -20267,6 +20826,60 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "RemoteKeyForRegenerationRequest"
+                    }
+                  }
+                }
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/x-www-form-urlencoded",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "RemoteKeyForRegenerationRequest"
+                    }
+                  }
+                }
+              },
+              {
+                "type": {
+                  "type": "fileUpload",
+                  "value": {
+                    "name": "regenerate-key_create_Request",
+                    "properties": [
+                      {
+                        "type": "bodyProperty",
+                        "key": "name",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "exploded": false
+                      }
+                    ]
+                  },
+                  "contentType": "multipart/form-data"
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -20383,6 +20996,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -20519,6 +21133,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "LinkedAccountSelectiveSyncConfigurationListRequest"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -20726,6 +21357,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -20904,6 +21536,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -21037,6 +21670,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -21312,6 +21946,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -21496,6 +22131,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -21838,6 +22474,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -22034,6 +22671,57 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "TimeOffEndpointRequest"
+                    }
+                  }
+                }
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/x-www-form-urlencoded",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "TimeOffEndpointRequest"
+                    }
+                  }
+                }
+              },
+              {
+                "type": {
+                  "type": "fileUpload",
+                  "value": {
+                    "name": "time-off_create_Request",
+                    "properties": [
+                      {
+                        "type": "bodyProperty",
+                        "key": "model",
+                        "valueType": {
+                          "type": "id",
+                          "value": "TimeOffRequest"
+                        },
+                        "contentType": "multipart/form-data",
+                        "exploded": false
+                      }
+                    ]
+                  },
+                  "contentType": "multipart/form-data"
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -22314,6 +23002,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -22458,6 +23147,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -22758,6 +23448,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -22970,6 +23661,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -23115,6 +23807,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -23237,6 +23930,88 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "WebhookReceiverRequest"
+                    }
+                  }
+                }
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/x-www-form-urlencoded",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "WebhookReceiverRequest"
+                    }
+                  }
+                }
+              },
+              {
+                "type": {
+                  "type": "fileUpload",
+                  "value": {
+                    "name": "webhook-receivers_create_Request",
+                    "properties": [
+                      {
+                        "type": "bodyProperty",
+                        "key": "event",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "is_active",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "boolean"
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "key",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "exploded": false
+                      }
+                    ]
+                  },
+                  "contentType": "multipart/form-data"
+                }
+              }
+            ]
           },
           "response": {
             "type": {

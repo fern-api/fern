@@ -8,10 +8,7 @@
   },
   "sideEffects": false,
   "type": "module",
-  "main": "lib/index.js",
-  "source": "src/index.ts",
-  "types": "lib/index.d.ts",
-  "exports":{
+  "exports": {
     ".": {
       "development": "./src/index.ts",
       "source": "./src/index.ts",
@@ -20,6 +17,9 @@
       "default": "./lib/index.js"
     }
   },
+  "main": "lib/index.js",
+  "source": "src/index.ts",
+  "types": "lib/index.d.ts",
   "files": [
     "lib"
   ],
@@ -30,12 +30,6 @@
     "depcheck": "depcheck",
     "dist:cli": "pnpm compile && tsup ./src/cli.ts --sourcemap && cp -R ../base/src/asIs dist",
     "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-swift-model:latest ../../..",
-    "format": "pnpm format:src && pnpm format:package-json",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "format:package-json": "sort-package-json \"package.json\"",
-    "format:src": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",
-    "lint:eslint:fix": "pnpm lint:eslint --fix",
     "publish:cli": "pnpm dist:cli && cd dist && yarn npm publish",
     "test": "vitest --passWithNoTests --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
@@ -52,17 +46,10 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/swift-codegen": "workspace:*",
     "@fern-api/test-utils": "workspace:*",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
-    "@types/jest": "^29.5.14",
     "@types/node": "18.15.3",
-    "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
     "depcheck": "^1.4.7",
-    "esbuild": "^0.25.0",
-    "eslint": "^8.56.0",
-    "prettier": "^3.4.2",
-    "sort-package-json": "3.3.1",
-    "tsup": "^8.3.5",
-    "typescript": "5.7.2",
+    "tsup": "^8.5.0",
+    "typescript": "5.8.3",
     "vitest": "^2.1.9",
     "zod": "^3.22.3"
   }
