@@ -1,9 +1,9 @@
 public struct ANestedLiteral: Codable, Hashable, Sendable {
-    public let myLiteral: Any
+    public let myLiteral: JSONValue
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        myLiteral: Any,
+        myLiteral: JSONValue,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.myLiteral = myLiteral
@@ -12,7 +12,7 @@ public struct ANestedLiteral: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.myLiteral = try container.decode(Any.self, forKey: .myLiteral)
+        self.myLiteral = try container.decode(JSONValue.self, forKey: .myLiteral)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

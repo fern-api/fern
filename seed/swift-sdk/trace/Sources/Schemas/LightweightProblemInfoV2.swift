@@ -2,14 +2,14 @@ public struct LightweightProblemInfoV2: Codable, Hashable, Sendable {
     public let problemId: ProblemId
     public let problemName: String
     public let problemVersion: Int
-    public let variableTypes: Any
+    public let variableTypes: JSONValue
     public let additionalProperties: [String: JSONValue]
 
     public init(
         problemId: ProblemId,
         problemName: String,
         problemVersion: Int,
-        variableTypes: Any,
+        variableTypes: JSONValue,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.problemId = problemId
@@ -24,7 +24,7 @@ public struct LightweightProblemInfoV2: Codable, Hashable, Sendable {
         self.problemId = try container.decode(ProblemId.self, forKey: .problemId)
         self.problemName = try container.decode(String.self, forKey: .problemName)
         self.problemVersion = try container.decode(Int.self, forKey: .problemVersion)
-        self.variableTypes = try container.decode(Any.self, forKey: .variableTypes)
+        self.variableTypes = try container.decode(JSONValue.self, forKey: .variableTypes)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

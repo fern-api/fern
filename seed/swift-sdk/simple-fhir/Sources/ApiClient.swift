@@ -1,5 +1,5 @@
 public final class ApiClient: Sendable {
-    private let config: ClientConfig
+    private let httpClient: HTTPClient
 
     public init(
         baseURL: String,
@@ -10,13 +10,23 @@ public final class ApiClient: Sendable {
         maxRetries: Int? = nil,
         urlSession: URLSession? = nil
     ) {
-        self.config = ClientConfig(
+        let config = ClientConfig(
             baseURL: baseURL,
             apiKey: apiKey,
             token: token,
             headers: headers,
             timeout: timeout,
             urlSession: urlSession
+        )
+        self.httpClient = HTTPClient(config: config)
+    }
+
+    public func getAccount(accountId: String, requestOptions: RequestOptions? = nil) async throws -> Account {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/account/\(accountId)",
+            requestOptions: requestOptions,
+            responseType: Account.self
         )
     }
 }

@@ -1,7 +1,7 @@
 public final class CustomAuthClient: Sendable {
     public let customAuth: CustomAuthClient
     public let errors: ErrorsClient
-    private let config: ClientConfig
+    private let httpClient: HTTPClient
 
     public init(
         baseURL: String,
@@ -12,7 +12,7 @@ public final class CustomAuthClient: Sendable {
         maxRetries: Int? = nil,
         urlSession: URLSession? = nil
     ) {
-        self.config = ClientConfig(
+        let config = ClientConfig(
             baseURL: baseURL,
             apiKey: apiKey,
             token: token,
@@ -22,5 +22,6 @@ public final class CustomAuthClient: Sendable {
         )
         self.customAuth = CustomAuthClient(config: config)
         self.errors = ErrorsClient(config: config)
+        self.httpClient = HTTPClient(config: config)
     }
 }

@@ -4,7 +4,7 @@ public final class ExamplesClient: Sendable {
     public let health: HealthClient
     public let service: ServiceClient
     public let types: TypesClient
-    private let config: ClientConfig
+    private let httpClient: HTTPClient
 
     public init(
         baseURL: String = ExamplesEnvironment.production.rawValue,
@@ -15,7 +15,7 @@ public final class ExamplesClient: Sendable {
         maxRetries: Int? = nil,
         urlSession: URLSession? = nil
     ) {
-        self.config = ClientConfig(
+        let config = ClientConfig(
             baseURL: baseURL,
             apiKey: apiKey,
             token: token,
@@ -28,5 +28,26 @@ public final class ExamplesClient: Sendable {
         self.health = HealthClient(config: config)
         self.service = ServiceClient(config: config)
         self.types = TypesClient(config: config)
+        self.httpClient = HTTPClient(config: config)
+    }
+
+    public func echo(request: String, requestOptions: RequestOptions? = nil) async throws -> String {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: String.self
+        )
+    }
+
+    public func createType(request: Type, requestOptions: RequestOptions? = nil) async throws -> Identifier {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: Identifier.self
+        )
     }
 }

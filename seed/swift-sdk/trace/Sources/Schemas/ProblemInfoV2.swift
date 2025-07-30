@@ -3,7 +3,7 @@ public struct ProblemInfoV2: Codable, Hashable, Sendable {
     public let problemDescription: ProblemDescription
     public let problemName: String
     public let problemVersion: Int
-    public let supportedLanguages: Any
+    public let supportedLanguages: JSONValue
     public let customFiles: CustomFiles
     public let generatedFiles: GeneratedFiles
     public let customTestCaseTemplates: [TestCaseTemplate]
@@ -16,7 +16,7 @@ public struct ProblemInfoV2: Codable, Hashable, Sendable {
         problemDescription: ProblemDescription,
         problemName: String,
         problemVersion: Int,
-        supportedLanguages: Any,
+        supportedLanguages: JSONValue,
         customFiles: CustomFiles,
         generatedFiles: GeneratedFiles,
         customTestCaseTemplates: [TestCaseTemplate],
@@ -43,7 +43,7 @@ public struct ProblemInfoV2: Codable, Hashable, Sendable {
         self.problemDescription = try container.decode(ProblemDescription.self, forKey: .problemDescription)
         self.problemName = try container.decode(String.self, forKey: .problemName)
         self.problemVersion = try container.decode(Int.self, forKey: .problemVersion)
-        self.supportedLanguages = try container.decode(Any.self, forKey: .supportedLanguages)
+        self.supportedLanguages = try container.decode(JSONValue.self, forKey: .supportedLanguages)
         self.customFiles = try container.decode(CustomFiles.self, forKey: .customFiles)
         self.generatedFiles = try container.decode(GeneratedFiles.self, forKey: .generatedFiles)
         self.customTestCaseTemplates = try container.decode([TestCaseTemplate].self, forKey: .customTestCaseTemplates)

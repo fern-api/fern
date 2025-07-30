@@ -1,12 +1,12 @@
 public struct CreateUserRequest: Codable, Hashable, Sendable {
-    public let type: Any
-    public let version: Any
+    public let type: JSONValue
+    public let version: JSONValue
     public let name: String
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        type: Any,
-        version: Any,
+        type: JSONValue,
+        version: JSONValue,
         name: String,
         additionalProperties: [String: JSONValue] = .init()
     ) {
@@ -18,8 +18,8 @@ public struct CreateUserRequest: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.type = try container.decode(Any.self, forKey: .type)
-        self.version = try container.decode(Any.self, forKey: .version)
+        self.type = try container.decode(JSONValue.self, forKey: .type)
+        self.version = try container.decode(JSONValue.self, forKey: .version)
         self.name = try container.decode(String.self, forKey: .name)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }

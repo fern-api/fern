@@ -1,9 +1,9 @@
 public struct LangServerResponse: Codable, Hashable, Sendable {
-    public let response: Any
+    public let response: JSONValue
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        response: Any,
+        response: JSONValue,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.response = response
@@ -12,7 +12,7 @@ public struct LangServerResponse: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.response = try container.decode(Any.self, forKey: .response)
+        self.response = try container.decode(JSONValue.self, forKey: .response)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

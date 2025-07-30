@@ -12,6 +12,7 @@ import {
     HttpService,
     IntermediateRepresentation,
     NameAndWireValue,
+    Package,
     ServiceId,
     Subpackage,
     SubpackageId
@@ -27,6 +28,30 @@ export class SdkGeneratorContext extends AbstractSwiftGeneratorContext<SdkCustom
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(ir, config, customConfig, generatorNotificationService);
+    }
+
+    public get packageName(): string {
+        return this.ir.apiName.pascalCase.unsafeName;
+    }
+
+    public get libraryName(): string {
+        return this.ir.apiName.pascalCase.unsafeName;
+    }
+
+    public get targetName(): string {
+        return `${this.ir.apiName.pascalCase.unsafeName}Target`;
+    }
+
+    public get rootClientName(): string {
+        return `${this.ir.apiName.pascalCase.unsafeName}Client`;
+    }
+
+    public get environmentEnumName(): string {
+        return `${this.ir.apiName.pascalCase.unsafeName}Environment`;
+    }
+
+    public getSubClientName(subpackage: Subpackage): string {
+        return `${subpackage.name.pascalCase.unsafeName}Client`;
     }
 
     public getCoreAsIsFiles(): AsIsFileDefinition[] {
@@ -48,6 +73,12 @@ export class SdkGeneratorContext extends AbstractSwiftGeneratorContext<SdkCustom
             throw new Error(`Service with id ${serviceId} not found`);
         }
         return service;
+    }
+
+    public getSubpackagesOrThrow(packageOrSubpackage: Package | Subpackage): Subpackage[] {
+        return packageOrSubpackage.subpackages.map((subpackageId) => {
+            return this.getSubpackageOrThrow(subpackageId);
+        });
     }
 
     public getSubpackageOrThrow(subpackageId: SubpackageId): Subpackage {

@@ -52,7 +52,7 @@ export class ObjectGenerator {
         }
         return {
             propertyName,
-            swiftType: swift.Type.dictionary(swift.Type.string(), swift.Type.custom("JSONValue"))
+            swiftType: swift.Type.dictionary(swift.Type.string(), swift.Type.jsonValue())
         };
     }
 

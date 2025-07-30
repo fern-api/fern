@@ -1,7 +1,7 @@
 public final class ApiClient: Sendable {
     public let a: AClient
     public let folder: FolderClient
-    private let config: ClientConfig
+    private let httpClient: HTTPClient
 
     public init(
         baseURL: String,
@@ -12,7 +12,7 @@ public final class ApiClient: Sendable {
         maxRetries: Int? = nil,
         urlSession: URLSession? = nil
     ) {
-        self.config = ClientConfig(
+        let config = ClientConfig(
             baseURL: baseURL,
             apiKey: apiKey,
             token: token,
@@ -22,5 +22,14 @@ public final class ApiClient: Sendable {
         )
         self.a = AClient(config: config)
         self.folder = FolderClient(config: config)
+        self.httpClient = HTTPClient(config: config)
+    }
+
+    public func foo(requestOptions: RequestOptions? = nil) async throws -> Void {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/",
+            requestOptions: requestOptions
+        )
     }
 }

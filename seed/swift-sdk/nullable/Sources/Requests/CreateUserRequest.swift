@@ -2,14 +2,14 @@ public struct CreateUserRequest: Codable, Hashable, Sendable {
     public let username: String
     public let tags: [String]?
     public let metadata: Metadata?
-    public let avatar: Any?
+    public let avatar: JSONValue?
     public let additionalProperties: [String: JSONValue]
 
     public init(
         username: String,
         tags: [String]? = nil,
         metadata: Metadata? = nil,
-        avatar: Any? = nil,
+        avatar: JSONValue? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.username = username
@@ -24,7 +24,7 @@ public struct CreateUserRequest: Codable, Hashable, Sendable {
         self.username = try container.decode(String.self, forKey: .username)
         self.tags = try container.decodeIfPresent([String].self, forKey: .tags)
         self.metadata = try container.decodeIfPresent(Metadata.self, forKey: .metadata)
-        self.avatar = try container.decodeIfPresent(Any.self, forKey: .avatar)
+        self.avatar = try container.decodeIfPresent(JSONValue.self, forKey: .avatar)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

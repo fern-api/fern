@@ -21,20 +21,20 @@ export class Class extends AstNode {
     public readonly name: string;
     public readonly final?: true;
     public readonly accessLevel?: AccessLevel;
-    public readonly conformances?: Protocol[];
+    public readonly conformances: Protocol[];
     public readonly properties: Property[];
-    public readonly initializers?: Initializer[];
-    public readonly methods?: Method[];
+    public readonly initializers: Initializer[];
+    public readonly methods: Method[];
 
     public constructor({ accessLevel, name, final, conformances, properties, initializers, methods }: Class.Args) {
         super();
         this.name = name;
         this.final = final;
         this.accessLevel = accessLevel;
-        this.conformances = conformances;
+        this.conformances = conformances ?? [];
         this.properties = properties;
-        this.initializers = initializers;
-        this.methods = methods;
+        this.initializers = initializers ?? [];
+        this.methods = methods ?? [];
     }
 
     public write(writer: Writer): void {
@@ -46,7 +46,7 @@ export class Class extends AstNode {
             writer.write("final ");
         }
         writer.write(`class ${this.name}`);
-        this.conformances?.forEach((conformance, index) => {
+        this.conformances.forEach((conformance, index) => {
             if (index === 0) {
                 writer.write(": ");
             } else if (index > 0) {
@@ -61,7 +61,7 @@ export class Class extends AstNode {
             property.write(writer);
             writer.newLine();
         });
-        if (this.initializers) {
+        if (this.initializers.length > 0) {
             writer.newLine();
             this.initializers.forEach((initializer, initializerIdx) => {
                 if (initializerIdx > 0) {
@@ -71,7 +71,7 @@ export class Class extends AstNode {
                 writer.newLine();
             });
         }
-        if (this.methods) {
+        if (this.methods.length > 0) {
             writer.newLine();
             this.methods.forEach((method, methodIdx) => {
                 if (methodIdx > 0) {

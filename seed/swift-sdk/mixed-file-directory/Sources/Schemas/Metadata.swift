@@ -1,11 +1,11 @@
 public struct Metadata: Codable, Hashable, Sendable {
     public let id: Id
-    public let value: Any
+    public let value: JSONValue
     public let additionalProperties: [String: JSONValue]
 
     public init(
         id: Id,
-        value: Any,
+        value: JSONValue,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.id = id
@@ -16,7 +16,7 @@ public struct Metadata: Codable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(Id.self, forKey: .id)
-        self.value = try container.decode(Any.self, forKey: .value)
+        self.value = try container.decode(JSONValue.self, forKey: .value)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

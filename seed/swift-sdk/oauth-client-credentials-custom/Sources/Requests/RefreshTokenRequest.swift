@@ -2,8 +2,8 @@ public struct RefreshTokenRequest: Codable, Hashable, Sendable {
     public let clientId: String
     public let clientSecret: String
     public let refreshToken: String
-    public let audience: Any
-    public let grantType: Any
+    public let audience: JSONValue
+    public let grantType: JSONValue
     public let scope: String?
     public let additionalProperties: [String: JSONValue]
 
@@ -11,8 +11,8 @@ public struct RefreshTokenRequest: Codable, Hashable, Sendable {
         clientId: String,
         clientSecret: String,
         refreshToken: String,
-        audience: Any,
-        grantType: Any,
+        audience: JSONValue,
+        grantType: JSONValue,
         scope: String? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
@@ -30,8 +30,8 @@ public struct RefreshTokenRequest: Codable, Hashable, Sendable {
         self.clientId = try container.decode(String.self, forKey: .clientId)
         self.clientSecret = try container.decode(String.self, forKey: .clientSecret)
         self.refreshToken = try container.decode(String.self, forKey: .refreshToken)
-        self.audience = try container.decode(Any.self, forKey: .audience)
-        self.grantType = try container.decode(Any.self, forKey: .grantType)
+        self.audience = try container.decode(JSONValue.self, forKey: .audience)
+        self.grantType = try container.decode(JSONValue.self, forKey: .grantType)
         self.scope = try container.decodeIfPresent(String.self, forKey: .scope)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }

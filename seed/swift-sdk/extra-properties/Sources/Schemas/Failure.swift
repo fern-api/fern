@@ -1,9 +1,9 @@
 public struct Failure: Codable, Hashable, Sendable {
-    public let status: Any
+    public let status: JSONValue
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        status: Any,
+        status: JSONValue,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.status = status
@@ -12,7 +12,7 @@ public struct Failure: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.status = try container.decode(Any.self, forKey: .status)
+        self.status = try container.decode(JSONValue.self, forKey: .status)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

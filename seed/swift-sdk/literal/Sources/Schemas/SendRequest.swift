@@ -1,18 +1,18 @@
 public struct SendRequest: Codable, Hashable, Sendable {
-    public let prompt: Any
+    public let prompt: JSONValue
     public let query: String
-    public let stream: Any
-    public let ending: Any
+    public let stream: JSONValue
+    public let ending: JSONValue
     public let context: SomeLiteral
     public let maybeContext: SomeLiteral?
     public let containerObject: ContainerObject
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        prompt: Any,
+        prompt: JSONValue,
         query: String,
-        stream: Any,
-        ending: Any,
+        stream: JSONValue,
+        ending: JSONValue,
         context: SomeLiteral,
         maybeContext: SomeLiteral? = nil,
         containerObject: ContainerObject,
@@ -30,10 +30,10 @@ public struct SendRequest: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.prompt = try container.decode(Any.self, forKey: .prompt)
+        self.prompt = try container.decode(JSONValue.self, forKey: .prompt)
         self.query = try container.decode(String.self, forKey: .query)
-        self.stream = try container.decode(Any.self, forKey: .stream)
-        self.ending = try container.decode(Any.self, forKey: .ending)
+        self.stream = try container.decode(JSONValue.self, forKey: .stream)
+        self.ending = try container.decode(JSONValue.self, forKey: .ending)
         self.context = try container.decode(SomeLiteral.self, forKey: .context)
         self.maybeContext = try container.decodeIfPresent(SomeLiteral.self, forKey: .maybeContext)
         self.containerObject = try container.decode(ContainerObject.self, forKey: .containerObject)

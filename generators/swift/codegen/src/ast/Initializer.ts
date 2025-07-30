@@ -20,7 +20,7 @@ export class Initializer extends AstNode {
     public readonly accessLevel?: AccessLevel;
     public readonly failable?: true;
     public readonly throws?: true;
-    public readonly parameters?: FunctionParameter[];
+    public readonly parameters: FunctionParameter[];
     public readonly body: CodeBlock;
     public readonly multiline?: true;
 
@@ -29,7 +29,7 @@ export class Initializer extends AstNode {
         this.accessLevel = accessLevel;
         this.failable = failable;
         this.throws = throws;
-        this.parameters = parameters;
+        this.parameters = parameters ?? [];
         this.body = body ?? CodeBlock.empty();
         this.multiline = multiline;
     }
@@ -48,7 +48,7 @@ export class Initializer extends AstNode {
             writer.newLine();
             writer.indent();
         }
-        this.parameters?.forEach((parameter, parameterIdx) => {
+        this.parameters.forEach((parameter, parameterIdx) => {
             if (parameterIdx > 0) {
                 writer.write(",");
                 if (this.multiline) {

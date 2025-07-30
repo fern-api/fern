@@ -1,19 +1,19 @@
 public struct Metadata: Codable, Hashable, Sendable {
     public let createdAt: Date
     public let updatedAt: Date
-    public let avatar: Any
-    public let activated: Any?
+    public let avatar: JSONValue
+    public let activated: JSONValue?
     public let status: Status
-    public let values: [String: Any?]?
+    public let values: [String: JSONValue?]?
     public let additionalProperties: [String: JSONValue]
 
     public init(
         createdAt: Date,
         updatedAt: Date,
-        avatar: Any,
-        activated: Any? = nil,
+        avatar: JSONValue,
+        activated: JSONValue? = nil,
         status: Status,
-        values: [String: Any?]? = nil,
+        values: [String: JSONValue?]? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.createdAt = createdAt
@@ -29,10 +29,10 @@ public struct Metadata: Codable, Hashable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.createdAt = try container.decode(Date.self, forKey: .createdAt)
         self.updatedAt = try container.decode(Date.self, forKey: .updatedAt)
-        self.avatar = try container.decode(Any.self, forKey: .avatar)
-        self.activated = try container.decodeIfPresent(Any.self, forKey: .activated)
+        self.avatar = try container.decode(JSONValue.self, forKey: .avatar)
+        self.activated = try container.decodeIfPresent(JSONValue.self, forKey: .activated)
         self.status = try container.decode(Status.self, forKey: .status)
-        self.values = try container.decodeIfPresent([String: Any?].self, forKey: .values)
+        self.values = try container.decodeIfPresent([String: JSONValue?].self, forKey: .values)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

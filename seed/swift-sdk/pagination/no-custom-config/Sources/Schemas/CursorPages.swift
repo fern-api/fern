@@ -3,7 +3,7 @@ public struct CursorPages: Codable, Hashable, Sendable {
     public let page: Int?
     public let perPage: Int?
     public let totalPages: Int?
-    public let type: Any
+    public let type: JSONValue
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -11,7 +11,7 @@ public struct CursorPages: Codable, Hashable, Sendable {
         page: Int? = nil,
         perPage: Int? = nil,
         totalPages: Int? = nil,
-        type: Any,
+        type: JSONValue,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.next = next
@@ -28,7 +28,7 @@ public struct CursorPages: Codable, Hashable, Sendable {
         self.page = try container.decodeIfPresent(Int.self, forKey: .page)
         self.perPage = try container.decodeIfPresent(Int.self, forKey: .perPage)
         self.totalPages = try container.decodeIfPresent(Int.self, forKey: .totalPages)
-        self.type = try container.decode(Any.self, forKey: .type)
+        self.type = try container.decode(JSONValue.self, forKey: .type)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

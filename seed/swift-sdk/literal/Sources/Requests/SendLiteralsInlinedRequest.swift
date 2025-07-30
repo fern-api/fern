@@ -1,20 +1,20 @@
 public struct SendLiteralsInlinedRequest: Codable, Hashable, Sendable {
-    public let prompt: Any
-    public let context: Any?
+    public let prompt: JSONValue
+    public let context: JSONValue?
     public let query: String
     public let temperature: Double?
-    public let stream: Any
+    public let stream: JSONValue
     public let aliasedContext: SomeAliasedLiteral
     public let maybeContext: SomeAliasedLiteral?
     public let objectWithLiteral: ATopLevelLiteral
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        prompt: Any,
-        context: Any? = nil,
+        prompt: JSONValue,
+        context: JSONValue? = nil,
         query: String,
         temperature: Double? = nil,
-        stream: Any,
+        stream: JSONValue,
         aliasedContext: SomeAliasedLiteral,
         maybeContext: SomeAliasedLiteral? = nil,
         objectWithLiteral: ATopLevelLiteral,
@@ -33,11 +33,11 @@ public struct SendLiteralsInlinedRequest: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.prompt = try container.decode(Any.self, forKey: .prompt)
-        self.context = try container.decodeIfPresent(Any.self, forKey: .context)
+        self.prompt = try container.decode(JSONValue.self, forKey: .prompt)
+        self.context = try container.decodeIfPresent(JSONValue.self, forKey: .context)
         self.query = try container.decode(String.self, forKey: .query)
         self.temperature = try container.decodeIfPresent(Double.self, forKey: .temperature)
-        self.stream = try container.decode(Any.self, forKey: .stream)
+        self.stream = try container.decode(JSONValue.self, forKey: .stream)
         self.aliasedContext = try container.decode(SomeAliasedLiteral.self, forKey: .aliasedContext)
         self.maybeContext = try container.decodeIfPresent(SomeAliasedLiteral.self, forKey: .maybeContext)
         self.objectWithLiteral = try container.decode(ATopLevelLiteral.self, forKey: .objectWithLiteral)
