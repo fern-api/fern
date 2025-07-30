@@ -1,4 +1,4 @@
-import { AbstractExtension } from "@fern-api/v2-importer-commons";
+import { AbstractExtension } from "@fern-api/v3-importer-commons";
 
 import { AsyncAPIV2 } from "../2.x";
 import { AsyncAPIV3 } from "../3.0";

@@ -107,7 +107,7 @@
       "path": "./packages/cli/api-importers/conjure/conjure-sdk"
     },
     {
-      "path": "./packages/cli/api-importers/v2-importer-commons"
+      "path": "./packages/cli/api-importers/v3-importer-commons"
     },
     {
       "path": "./packages/cli/fern-definition/ir-to-jsonschema"
@@ -122,7 +122,7 @@
       "path": "./generators/python-v2/browser-compatible-base"
     },
     {
-      "path": "./packages/cli/api-importers/v2-importer-tests"
+      "path": "./packages/cli/api-importers/v3-importer-tests"
     },
     {
       "path": "./generators/typescript/model/union-generator"

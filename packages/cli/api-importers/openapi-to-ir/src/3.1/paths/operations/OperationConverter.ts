@@ -11,7 +11,7 @@ import {
     V2HttpRequestBodies
 } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
-import { AbstractConverter, ServersConverter } from "@fern-api/v2-importer-commons";
+import { AbstractConverter, ServersConverter } from "@fern-api/v3-importer-commons";
 
 import { FernExamplesExtension } from "../../../extensions/x-fern-examples";
 import { FernStreamingExtension } from "../../../extensions/x-fern-streaming";

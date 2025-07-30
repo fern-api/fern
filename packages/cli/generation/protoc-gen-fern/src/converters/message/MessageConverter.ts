@@ -2,7 +2,7 @@ import { DescriptorProto } from "@bufbuild/protobuf/wkt";
 
 import * as FernIr from "@fern-api/ir-sdk";
 import { Type, TypeId } from "@fern-api/ir-sdk";
-import { AbstractConverter } from "@fern-api/v2-importer-commons";
+import { AbstractConverter } from "@fern-api/v3-importer-commons";
 
 import { ProtofileConverterContext } from "../ProtofileConverterContext";
 import { capitalizeFirstLetter } from "../utils/CapitalizeFirstLetter";

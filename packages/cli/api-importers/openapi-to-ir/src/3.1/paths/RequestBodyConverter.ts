@@ -9,7 +9,7 @@ import {
     ObjectProperty,
     TypeReference
 } from "@fern-api/ir-sdk";
-import { Converters } from "@fern-api/v2-importer-commons";
+import { Converters } from "@fern-api/v3-importer-commons";
 
 import { FernStreamingExtension } from "../../extensions/x-fern-streaming";
 
