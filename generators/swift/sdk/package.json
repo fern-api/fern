@@ -8,10 +8,7 @@
   },
   "sideEffects": false,
   "type": "module",
-  "main": "lib/cli.js",
-  "source": "src/cli.ts",
-  "types": "lib/cli.d.ts",
-  "exports":{
+  "exports": {
     ".": {
       "development": "./src/index.ts",
       "source": "./src/index.ts",
@@ -20,6 +17,9 @@
       "default": "./lib/index.js"
     }
   },
+  "main": "lib/cli.js",
+  "source": "src/cli.ts",
+  "types": "lib/cli.d.ts",
   "files": [
     "lib"
   ],

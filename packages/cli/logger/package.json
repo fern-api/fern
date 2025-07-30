@@ -1,20 +1,15 @@
 {
   "name": "@fern-api/logger",
   "version": "0.0.0",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern.git",
     "directory": "packages/cli/logger"
   },
-  "private": true,
-  "files": [
-    "lib"
-  ],
+  "sideEffects": false,
   "type": "module",
-  "source": "src/index.ts",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
-  "exports":{
+  "exports": {
     ".": {
       "development": "./src/index.ts",
       "source": "./src/index.ts",
@@ -23,15 +18,20 @@
       "default": "./lib/index.js"
     }
   },
-  "sideEffects": false,
+  "main": "lib/index.js",
+  "source": "src/index.ts",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
+    "depcheck": "depcheck",
     "test": "vitest --passWithNoTests --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
-    "test:update": "vitest --passWithNoTests --run -u",
-    "depcheck": "depcheck"
+    "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*"
