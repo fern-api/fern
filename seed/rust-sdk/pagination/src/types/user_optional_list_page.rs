@@ -1,5 +1,6 @@
-use serde::{Deserialize, Serialize};
+use crate::user_optional_list_container::UserOptionalListContainer;
 use uuid::Uuid;
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct UserOptionalListPage {

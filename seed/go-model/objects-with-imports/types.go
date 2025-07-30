@@ -46,6 +46,24 @@ func (n *Node) GetExtraProperties() map[string]any {
 	return n.extraProperties
 }
 
+func (n *Node) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Node
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = Node(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+	n.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (n *Node) String() string {
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
@@ -77,6 +95,24 @@ func (t *Tree) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return t.extraProperties
+}
+
+func (t *Tree) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Tree
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = Tree(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (t *Tree) String() string {

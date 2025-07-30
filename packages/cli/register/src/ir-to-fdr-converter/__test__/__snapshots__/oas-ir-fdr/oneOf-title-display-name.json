@@ -136,6 +136,35 @@
             }
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "key": "fields",
+                      "valueType": {
+                        "type": "optional",
+                        "itemType": {
+                          "type": "list",
+                          "itemType": {
+                            "type": "id",
+                            "value": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",

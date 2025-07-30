@@ -1,7 +1,6 @@
 import { AstNode } from "./core/AstNode";
 import { Comment } from "./Comment";
 import { Writer } from "./core/Writer";
-import { GoTypeReference } from "./GoTypeReference";
 import { Type } from "./Type";
 
 export declare namespace Alias {

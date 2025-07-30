@@ -1,40 +1,25 @@
 {
-    "extends": "@fern-api/configs/tsconfig/main.json",
-    "compilerOptions": {
-      "composite": true,
-      "outDir": "lib",
-      "rootDir": "src"
+  "extends": "@fern-api/configs/tsconfig/main.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src"
+  },
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "./src/**/__test__/**/generated"
+  ],
+  "references": [
+    {
+      "path": "../../../commons/ir-utils"
     },
-    "include": ["./src/**/*"],
-    "exclude": ["./src/**/__test__/**/generated"],
-    "references": [
-      {
-        "path": "../../fern-definition/schema"
-      },
-      {
-        "path": "../../configuration"
-      },
-      {
-        "path": "../../logger"
-      },
-      {
-        "path": "../../task-context"
-      },
-      {
-        "path": "../../../ir-sdk"
-      },
-      {
-        "path": "../../workspace/commons"
-      },
-      {
-        "path": "../../../commons/ir-utils"
-      },
-      {
-        "path": "../../../commons/casings-generator"
-      },
-      {
-        "path": "../v2-importer-commons"
-      }
-    ]
-  }
-  
+    {
+      "path": "../../../ir-sdk"
+    },
+    {
+      "path": "../v2-importer-commons"
+    }
+  ]
+}

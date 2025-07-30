@@ -1,3 +1,5 @@
+use crate::acai::Acai;
+use crate::fig::Fig;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

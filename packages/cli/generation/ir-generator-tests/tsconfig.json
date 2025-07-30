@@ -10,10 +10,13 @@
   ],
   "references": [
     {
-      "path": "../../../commons/core-utils"
+      "path": "../../../commons/casings-generator"
     },
     {
       "path": "../../../commons/fs-utils"
+    },
+    {
+      "path": "../../../commons/ir-utils"
     },
     {
       "path": "../../../ir-sdk"
@@ -34,16 +37,7 @@
       "path": "../../workspace/loader"
     },
     {
-      "path": "../../workspace/commons"
-    },
-    {
-      "path": "../../fern-definition/schema"
-    },
-    {
       "path": "../ir-generator"
-    },
-    {
-      "path": "../../../commons/casings-generator"
     }
   ]
 }

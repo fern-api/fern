@@ -25,7 +25,6 @@ type SubmissionRequest struct {
     Stop StopRequest
 }
 
-
 type InitializeProblemRequest struct {
     ProblemId ProblemId `json:"problemId" url:"problemId"`
     ProblemVersion *int `json:"problemVersion,omitempty" url:"problemVersion,omitempty"`
@@ -53,6 +52,24 @@ func (i *InitializeProblemRequest) GetExtraProperties() map[string]any{
         return nil
     }
     return i.extraProperties
+}
+
+func (i *InitializeProblemRequest) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler InitializeProblemRequest
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *i = InitializeProblemRequest(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *i)
+    if err != nil {
+        return err
+    }
+    i.extraProperties = extraProperties
+    i.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (i *InitializeProblemRequest) String() string{
@@ -129,6 +146,24 @@ func (s *SubmitRequestV2) GetExtraProperties() map[string]any{
     return s.extraProperties
 }
 
+func (s *SubmitRequestV2) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler SubmitRequestV2
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *s = SubmitRequestV2(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *s)
+    if err != nil {
+        return err
+    }
+    s.extraProperties = extraProperties
+    s.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (s *SubmitRequestV2) String() string{
     if len(s.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
@@ -187,6 +222,24 @@ func (w *WorkspaceSubmitRequest) GetExtraProperties() map[string]any{
     return w.extraProperties
 }
 
+func (w *WorkspaceSubmitRequest) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler WorkspaceSubmitRequest
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *w = WorkspaceSubmitRequest(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *w)
+    if err != nil {
+        return err
+    }
+    w.extraProperties = extraProperties
+    w.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (w *WorkspaceSubmitRequest) String() string{
     if len(w.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
@@ -235,6 +288,24 @@ func (s *SubmissionFileInfo) GetExtraProperties() map[string]any{
         return nil
     }
     return s.extraProperties
+}
+
+func (s *SubmissionFileInfo) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler SubmissionFileInfo
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *s = SubmissionFileInfo(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *s)
+    if err != nil {
+        return err
+    }
+    s.extraProperties = extraProperties
+    s.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (s *SubmissionFileInfo) String() string{
@@ -291,6 +362,24 @@ func (s *StopRequest) GetExtraProperties() map[string]any{
     return s.extraProperties
 }
 
+func (s *StopRequest) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler StopRequest
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *s = StopRequest(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *s)
+    if err != nil {
+        return err
+    }
+    s.extraProperties = extraProperties
+    s.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (s *StopRequest) String() string{
     if len(s.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
@@ -314,7 +403,6 @@ type SubmissionResponse struct {
     Terminated TerminatedResponse
 }
 
-
 type CodeExecutionUpdate struct {
     Type string
     BuildingExecutor BuildingExecutorResponse
@@ -329,7 +417,6 @@ type CodeExecutionUpdate struct {
     InvalidRequest InvalidRequestResponse
     Finished FinishedResponse
 }
-
 
 type BuildingExecutorResponse struct {
     SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
@@ -358,6 +445,24 @@ func (b *BuildingExecutorResponse) GetExtraProperties() map[string]any{
         return nil
     }
     return b.extraProperties
+}
+
+func (b *BuildingExecutorResponse) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler BuildingExecutorResponse
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *b = BuildingExecutorResponse(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *b)
+    if err != nil {
+        return err
+    }
+    b.extraProperties = extraProperties
+    b.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (b *BuildingExecutorResponse) String() string{
@@ -400,6 +505,24 @@ func (r *RunningResponse) GetExtraProperties() map[string]any{
         return nil
     }
     return r.extraProperties
+}
+
+func (r *RunningResponse) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler RunningResponse
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *r = RunningResponse(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *r)
+    if err != nil {
+        return err
+    }
+    r.extraProperties = extraProperties
+    r.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (r *RunningResponse) String() string{
@@ -475,6 +598,24 @@ func (e *ErroredResponse) GetExtraProperties() map[string]any{
     return e.extraProperties
 }
 
+func (e *ErroredResponse) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler ErroredResponse
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *e = ErroredResponse(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *e)
+    if err != nil {
+        return err
+    }
+    e.extraProperties = extraProperties
+    e.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (e *ErroredResponse) String() string{
     if len(e.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
@@ -495,7 +636,6 @@ type ErrorInfo struct {
     InternalError InternalError
 }
 
-
 type CompileError struct {
     Message string `json:"message" url:"message"`
 
@@ -515,6 +655,24 @@ func (c *CompileError) GetExtraProperties() map[string]any{
         return nil
     }
     return c.extraProperties
+}
+
+func (c *CompileError) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler CompileError
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *c = CompileError(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *c)
+    if err != nil {
+        return err
+    }
+    c.extraProperties = extraProperties
+    c.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (c *CompileError) String() string{
@@ -551,6 +709,24 @@ func (r *RuntimeError) GetExtraProperties() map[string]any{
     return r.extraProperties
 }
 
+func (r *RuntimeError) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler RuntimeError
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *r = RuntimeError(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *r)
+    if err != nil {
+        return err
+    }
+    r.extraProperties = extraProperties
+    r.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (r *RuntimeError) String() string{
     if len(r.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
@@ -585,6 +761,24 @@ func (i *InternalError) GetExtraProperties() map[string]any{
     return i.extraProperties
 }
 
+func (i *InternalError) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler InternalError
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *i = InternalError(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *i)
+    if err != nil {
+        return err
+    }
+    i.extraProperties = extraProperties
+    i.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (i *InternalError) String() string{
     if len(i.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(i.rawJSON); err == nil {
@@ -617,6 +811,24 @@ func (s *StoppedResponse) GetExtraProperties() map[string]any{
         return nil
     }
     return s.extraProperties
+}
+
+func (s *StoppedResponse) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler StoppedResponse
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *s = StoppedResponse(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *s)
+    if err != nil {
+        return err
+    }
+    s.extraProperties = extraProperties
+    s.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (s *StoppedResponse) String() string{
@@ -659,6 +871,24 @@ func (w *WorkspaceRanResponse) GetExtraProperties() map[string]any{
         return nil
     }
     return w.extraProperties
+}
+
+func (w *WorkspaceRanResponse) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler WorkspaceRanResponse
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *w = WorkspaceRanResponse(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *w)
+    if err != nil {
+        return err
+    }
+    w.extraProperties = extraProperties
+    w.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (w *WorkspaceRanResponse) String() string{
@@ -711,6 +941,24 @@ func (w *WorkspaceRunDetails) GetExtraProperties() map[string]any{
     return w.extraProperties
 }
 
+func (w *WorkspaceRunDetails) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler WorkspaceRunDetails
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *w = WorkspaceRunDetails(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *w)
+    if err != nil {
+        return err
+    }
+    w.extraProperties = extraProperties
+    w.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (w *WorkspaceRunDetails) String() string{
     if len(w.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
@@ -751,6 +999,24 @@ func (g *GradedResponse) GetExtraProperties() map[string]any{
         return nil
     }
     return g.extraProperties
+}
+
+func (g *GradedResponse) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler GradedResponse
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *g = GradedResponse(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *g)
+    if err != nil {
+        return err
+    }
+    g.extraProperties = extraProperties
+    g.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (g *GradedResponse) String() string{
@@ -795,6 +1061,24 @@ func (g *GradedResponseV2) GetExtraProperties() map[string]any{
     return g.extraProperties
 }
 
+func (g *GradedResponseV2) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler GradedResponseV2
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *g = GradedResponseV2(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *g)
+    if err != nil {
+        return err
+    }
+    g.extraProperties = extraProperties
+    g.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (g *GradedResponseV2) String() string{
     if len(g.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
@@ -813,7 +1097,6 @@ type TestCaseGrade struct {
     Hidden TestCaseHiddenGrade
     NonHidden TestCaseNonHiddenGrade
 }
-
 
 type TestCaseHiddenGrade struct {
     Passed bool `json:"passed" url:"passed"`
@@ -834,6 +1117,24 @@ func (t *TestCaseHiddenGrade) GetExtraProperties() map[string]any{
         return nil
     }
     return t.extraProperties
+}
+
+func (t *TestCaseHiddenGrade) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler TestCaseHiddenGrade
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *t = TestCaseHiddenGrade(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *t)
+    if err != nil {
+        return err
+    }
+    t.extraProperties = extraProperties
+    t.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (t *TestCaseHiddenGrade) String() string{
@@ -894,6 +1195,24 @@ func (t *TestCaseNonHiddenGrade) GetExtraProperties() map[string]any{
     return t.extraProperties
 }
 
+func (t *TestCaseNonHiddenGrade) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler TestCaseNonHiddenGrade
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *t = TestCaseNonHiddenGrade(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *t)
+    if err != nil {
+        return err
+    }
+    t.extraProperties = extraProperties
+    t.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (t *TestCaseNonHiddenGrade) String() string{
     if len(t.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
@@ -942,6 +1261,24 @@ func (r *RecordedResponseNotification) GetExtraProperties() map[string]any{
         return nil
     }
     return r.extraProperties
+}
+
+func (r *RecordedResponseNotification) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler RecordedResponseNotification
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *r = RecordedResponseNotification(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *r)
+    if err != nil {
+        return err
+    }
+    r.extraProperties = extraProperties
+    r.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (r *RecordedResponseNotification) String() string{
@@ -1010,6 +1347,24 @@ func (r *RecordingResponseNotification) GetExtraProperties() map[string]any{
     return r.extraProperties
 }
 
+func (r *RecordingResponseNotification) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler RecordingResponseNotification
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *r = RecordingResponseNotification(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *r)
+    if err != nil {
+        return err
+    }
+    r.extraProperties = extraProperties
+    r.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (r *RecordingResponseNotification) String() string{
     if len(r.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
@@ -1052,6 +1407,24 @@ func (l *LightweightStackframeInformation) GetExtraProperties() map[string]any{
     return l.extraProperties
 }
 
+func (l *LightweightStackframeInformation) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler LightweightStackframeInformation
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *l = LightweightStackframeInformation(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *l)
+    if err != nil {
+        return err
+    }
+    l.extraProperties = extraProperties
+    l.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (l *LightweightStackframeInformation) String() string{
     if len(l.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
@@ -1092,6 +1465,24 @@ func (t *TestCaseResultWithStdout) GetExtraProperties() map[string]any{
         return nil
     }
     return t.extraProperties
+}
+
+func (t *TestCaseResultWithStdout) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler TestCaseResultWithStdout
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *t = TestCaseResultWithStdout(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *t)
+    if err != nil {
+        return err
+    }
+    t.extraProperties = extraProperties
+    t.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (t *TestCaseResultWithStdout) String() string{
@@ -1144,6 +1535,24 @@ func (t *TestCaseResult) GetExtraProperties() map[string]any{
     return t.extraProperties
 }
 
+func (t *TestCaseResult) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler TestCaseResult
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *t = TestCaseResult(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *t)
+    if err != nil {
+        return err
+    }
+    t.extraProperties = extraProperties
+    t.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (t *TestCaseResult) String() string{
     if len(t.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
@@ -1164,13 +1573,11 @@ type ActualResult struct {
     ExceptionV2 *ExceptionV2
 }
 
-
 type ExceptionV2 struct {
     Type string
     Generic ExceptionInfo
     Timeout any
 }
-
 
 type ExceptionInfo struct {
     ExceptionType string `json:"exceptionType" url:"exceptionType"`
@@ -1207,6 +1614,24 @@ func (e *ExceptionInfo) GetExtraProperties() map[string]any{
         return nil
     }
     return e.extraProperties
+}
+
+func (e *ExceptionInfo) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler ExceptionInfo
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *e = ExceptionInfo(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *e)
+    if err != nil {
+        return err
+    }
+    e.extraProperties = extraProperties
+    e.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (e *ExceptionInfo) String() string{
@@ -1251,6 +1676,24 @@ func (i *InvalidRequestResponse) GetExtraProperties() map[string]any{
     return i.extraProperties
 }
 
+func (i *InvalidRequestResponse) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler InvalidRequestResponse
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *i = InvalidRequestResponse(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *i)
+    if err != nil {
+        return err
+    }
+    i.extraProperties = extraProperties
+    i.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (i *InvalidRequestResponse) String() string{
     if len(i.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(i.rawJSON); err == nil {
@@ -1271,7 +1714,6 @@ type InvalidRequestCause struct {
     UnexpectedLanguage UnexpectedLanguageError
 }
 
-
 type ExistingSubmissionExecuting struct {
     SubmissionId SubmissionId `json:"submissionId" url:"submissionId"`
 
@@ -1291,6 +1733,24 @@ func (e *ExistingSubmissionExecuting) GetExtraProperties() map[string]any{
         return nil
     }
     return e.extraProperties
+}
+
+func (e *ExistingSubmissionExecuting) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler ExistingSubmissionExecuting
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *e = ExistingSubmissionExecuting(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *e)
+    if err != nil {
+        return err
+    }
+    e.extraProperties = extraProperties
+    e.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (e *ExistingSubmissionExecuting) String() string{
@@ -1325,6 +1785,24 @@ func (s *SubmissionIdNotFound) GetExtraProperties() map[string]any{
         return nil
     }
     return s.extraProperties
+}
+
+func (s *SubmissionIdNotFound) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler SubmissionIdNotFound
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *s = SubmissionIdNotFound(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *s)
+    if err != nil {
+        return err
+    }
+    s.extraProperties = extraProperties
+    s.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (s *SubmissionIdNotFound) String() string{
@@ -1369,6 +1847,24 @@ func (c *CustomTestCasesUnsupported) GetExtraProperties() map[string]any{
     return c.extraProperties
 }
 
+func (c *CustomTestCasesUnsupported) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler CustomTestCasesUnsupported
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *c = CustomTestCasesUnsupported(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *c)
+    if err != nil {
+        return err
+    }
+    c.extraProperties = extraProperties
+    c.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (c *CustomTestCasesUnsupported) String() string{
     if len(c.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -1411,6 +1907,24 @@ func (u *UnexpectedLanguageError) GetExtraProperties() map[string]any{
     return u.extraProperties
 }
 
+func (u *UnexpectedLanguageError) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler UnexpectedLanguageError
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *u = UnexpectedLanguageError(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *u)
+    if err != nil {
+        return err
+    }
+    u.extraProperties = extraProperties
+    u.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (u *UnexpectedLanguageError) String() string{
     if len(u.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
@@ -1434,6 +1948,24 @@ func (t *TerminatedResponse) GetExtraProperties() map[string]any{
         return nil
     }
     return t.extraProperties
+}
+
+func (t *TerminatedResponse) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler TerminatedResponse
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *t = TerminatedResponse(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *t)
+    if err != nil {
+        return err
+    }
+    t.extraProperties = extraProperties
+    t.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (t *TerminatedResponse) String() string{
@@ -1468,6 +2000,24 @@ func (f *FinishedResponse) GetExtraProperties() map[string]any{
         return nil
     }
     return f.extraProperties
+}
+
+func (f *FinishedResponse) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler FinishedResponse
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *f = FinishedResponse(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *f)
+    if err != nil {
+        return err
+    }
+    f.extraProperties = extraProperties
+    f.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (f *FinishedResponse) String() string{
@@ -1512,6 +2062,24 @@ func (s *StdoutResponse) GetExtraProperties() map[string]any{
     return s.extraProperties
 }
 
+func (s *StdoutResponse) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler StdoutResponse
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *s = StdoutResponse(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *s)
+    if err != nil {
+        return err
+    }
+    s.extraProperties = extraProperties
+    s.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (s *StdoutResponse) String() string{
     if len(s.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
@@ -1552,6 +2120,24 @@ func (s *StderrResponse) GetExtraProperties() map[string]any{
         return nil
     }
     return s.extraProperties
+}
+
+func (s *StderrResponse) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler StderrResponse
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *s = StderrResponse(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *s)
+    if err != nil {
+        return err
+    }
+    s.extraProperties = extraProperties
+    s.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (s *StderrResponse) String() string{
@@ -1626,6 +2212,24 @@ func (t *TraceResponse) GetExtraProperties() map[string]any{
         return nil
     }
     return t.extraProperties
+}
+
+func (t *TraceResponse) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler TraceResponse
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *t = TraceResponse(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *t)
+    if err != nil {
+        return err
+    }
+    t.extraProperties = extraProperties
+    t.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (t *TraceResponse) String() string{
@@ -1710,6 +2314,24 @@ func (t *TraceResponseV2) GetExtraProperties() map[string]any{
     return t.extraProperties
 }
 
+func (t *TraceResponseV2) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler TraceResponseV2
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *t = TraceResponseV2(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *t)
+    if err != nil {
+        return err
+    }
+    t.extraProperties = extraProperties
+    t.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (t *TraceResponseV2) String() string{
     if len(t.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
@@ -1750,6 +2372,24 @@ func (t *TracedFile) GetExtraProperties() map[string]any{
         return nil
     }
     return t.extraProperties
+}
+
+func (t *TracedFile) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler TracedFile
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *t = TracedFile(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *t)
+    if err != nil {
+        return err
+    }
+    t.extraProperties = extraProperties
+    t.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (t *TracedFile) String() string{
@@ -1794,6 +2434,24 @@ func (e *ExpressionLocation) GetExtraProperties() map[string]any{
     return e.extraProperties
 }
 
+func (e *ExpressionLocation) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler ExpressionLocation
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *e = ExpressionLocation(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *e)
+    if err != nil {
+        return err
+    }
+    e.extraProperties = extraProperties
+    e.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (e *ExpressionLocation) String() string{
     if len(e.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
@@ -1834,6 +2492,24 @@ func (s *StackInformation) GetExtraProperties() map[string]any{
         return nil
     }
     return s.extraProperties
+}
+
+func (s *StackInformation) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler StackInformation
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *s = StackInformation(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *s)
+    if err != nil {
+        return err
+    }
+    s.extraProperties = extraProperties
+    s.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (s *StackInformation) String() string{
@@ -1886,6 +2562,24 @@ func (s *StackFrame) GetExtraProperties() map[string]any{
     return s.extraProperties
 }
 
+func (s *StackFrame) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler StackFrame
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *s = StackFrame(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *s)
+    if err != nil {
+        return err
+    }
+    s.extraProperties = extraProperties
+    s.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (s *StackFrame) String() string{
     if len(s.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
@@ -1918,6 +2612,24 @@ func (s *Scope) GetExtraProperties() map[string]any{
         return nil
     }
     return s.extraProperties
+}
+
+func (s *Scope) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler Scope
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *s = Scope(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *s)
+    if err != nil {
+        return err
+    }
+    s.extraProperties = extraProperties
+    s.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (s *Scope) String() string{
@@ -1978,6 +2690,24 @@ func (e *ExecutionSessionResponse) GetExtraProperties() map[string]any{
     return e.extraProperties
 }
 
+func (e *ExecutionSessionResponse) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler ExecutionSessionResponse
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *e = ExecutionSessionResponse(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *e)
+    if err != nil {
+        return err
+    }
+    e.extraProperties = extraProperties
+    e.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (e *ExecutionSessionResponse) String() string{
     if len(e.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
@@ -2031,7 +2761,6 @@ type SubmissionStatusV2 struct {
     Workspace WorkspaceSubmissionStatusV2
 }
 
-
 type TestSubmissionStatusV2 struct {
     Updates []*TestSubmissionUpdate `json:"updates" url:"updates"`
     ProblemId ProblemId `json:"problemId" url:"problemId"`
@@ -2077,6 +2806,24 @@ func (t *TestSubmissionStatusV2) GetExtraProperties() map[string]any{
     return t.extraProperties
 }
 
+func (t *TestSubmissionStatusV2) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler TestSubmissionStatusV2
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *t = TestSubmissionStatusV2(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *t)
+    if err != nil {
+        return err
+    }
+    t.extraProperties = extraProperties
+    t.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (t *TestSubmissionStatusV2) String() string{
     if len(t.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
@@ -2109,6 +2856,24 @@ func (w *WorkspaceSubmissionStatusV2) GetExtraProperties() map[string]any{
         return nil
     }
     return w.extraProperties
+}
+
+func (w *WorkspaceSubmissionStatusV2) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler WorkspaceSubmissionStatusV2
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *w = WorkspaceSubmissionStatusV2(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *w)
+    if err != nil {
+        return err
+    }
+    w.extraProperties = extraProperties
+    w.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (w *WorkspaceSubmissionStatusV2) String() string{
@@ -2153,6 +2918,42 @@ func (t *TestSubmissionUpdate) GetExtraProperties() map[string]any{
     return t.extraProperties
 }
 
+func (t *TestSubmissionUpdate) UnmarshalJSON(
+    data []byte,
+) error{
+    type embed TestSubmissionUpdate
+    var unmarshaler = struct{
+        embed
+        UpdateTime *internal.DateTime `json:"updateTime"`
+    }{
+        embed: embed(*t),
+    }
+    if err := json.Unmarshal(data, &unmarshaler); err != nil {
+        return err
+    }
+    *t = TestSubmissionUpdate(unmarshaler.embed)
+    t.UpdateTime = unmarshaler.UpdateTime.Time()
+    extraProperties, err := internal.ExtractExtraProperties(data, *t)
+    if err != nil {
+        return err
+    }
+    t.extraProperties = extraProperties
+    t.rawJSON = json.RawMessage(data)
+    return nil
+}
+
+func (t *TestSubmissionUpdate) MarshalJSON() ([]byte, error){
+    type embed TestSubmissionUpdate
+    var marshaler = struct{
+        embed
+        UpdateTime *internal.DateTime `json:"updateTime"`
+    }{
+        embed: embed(*t),
+        UpdateTime: internal.NewDateTime(t.UpdateTime),
+    }
+    return json.Marshal(marshaler)
+}
+
 func (t *TestSubmissionUpdate) String() string{
     if len(t.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
@@ -2175,7 +2976,6 @@ type TestSubmissionUpdateInfo struct {
     RecordedTestCase RecordedTestCaseUpdate
     Finished any
 }
-
 
 type WorkspaceSubmissionUpdate struct {
     UpdateTime time.Time `json:"updateTime" url:"updateTime"`
@@ -2206,6 +3006,42 @@ func (w *WorkspaceSubmissionUpdate) GetExtraProperties() map[string]any{
     return w.extraProperties
 }
 
+func (w *WorkspaceSubmissionUpdate) UnmarshalJSON(
+    data []byte,
+) error{
+    type embed WorkspaceSubmissionUpdate
+    var unmarshaler = struct{
+        embed
+        UpdateTime *internal.DateTime `json:"updateTime"`
+    }{
+        embed: embed(*w),
+    }
+    if err := json.Unmarshal(data, &unmarshaler); err != nil {
+        return err
+    }
+    *w = WorkspaceSubmissionUpdate(unmarshaler.embed)
+    w.UpdateTime = unmarshaler.UpdateTime.Time()
+    extraProperties, err := internal.ExtractExtraProperties(data, *w)
+    if err != nil {
+        return err
+    }
+    w.extraProperties = extraProperties
+    w.rawJSON = json.RawMessage(data)
+    return nil
+}
+
+func (w *WorkspaceSubmissionUpdate) MarshalJSON() ([]byte, error){
+    type embed WorkspaceSubmissionUpdate
+    var marshaler = struct{
+        embed
+        UpdateTime *internal.DateTime `json:"updateTime"`
+    }{
+        embed: embed(*w),
+        UpdateTime: internal.NewDateTime(w.UpdateTime),
+    }
+    return json.Marshal(marshaler)
+}
+
 func (w *WorkspaceSubmissionUpdate) String() string{
     if len(w.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
@@ -2229,7 +3065,6 @@ type WorkspaceSubmissionUpdateInfo struct {
     Errored *ErrorInfo
     Finished any
 }
-
 
 type GradedTestCaseUpdate struct {
     TestCaseId v2.TestCaseId `json:"testCaseId" url:"testCaseId"`
@@ -2258,6 +3093,24 @@ func (g *GradedTestCaseUpdate) GetExtraProperties() map[string]any{
         return nil
     }
     return g.extraProperties
+}
+
+func (g *GradedTestCaseUpdate) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler GradedTestCaseUpdate
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *g = GradedTestCaseUpdate(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *g)
+    if err != nil {
+        return err
+    }
+    g.extraProperties = extraProperties
+    g.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (g *GradedTestCaseUpdate) String() string{
@@ -2302,6 +3155,24 @@ func (r *RecordedTestCaseUpdate) GetExtraProperties() map[string]any{
     return r.extraProperties
 }
 
+func (r *RecordedTestCaseUpdate) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler RecordedTestCaseUpdate
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *r = RecordedTestCaseUpdate(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *r)
+    if err != nil {
+        return err
+    }
+    r.extraProperties = extraProperties
+    r.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (r *RecordedTestCaseUpdate) String() string{
     if len(r.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
@@ -2336,6 +3207,24 @@ func (w *WorkspaceTracedUpdate) GetExtraProperties() map[string]any{
     return w.extraProperties
 }
 
+func (w *WorkspaceTracedUpdate) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler WorkspaceTracedUpdate
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *w = WorkspaceTracedUpdate(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *w)
+    if err != nil {
+        return err
+    }
+    w.extraProperties = extraProperties
+    w.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (w *WorkspaceTracedUpdate) String() string{
     if len(w.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
@@ -2354,7 +3243,6 @@ type SubmissionTypeState struct {
     Test TestSubmissionState
     Workspace WorkspaceSubmissionState
 }
-
 
 type WorkspaceSubmissionState struct {
     Status *WorkspaceSubmissionStatus `json:"status" url:"status"`
@@ -2375,6 +3263,24 @@ func (w *WorkspaceSubmissionState) GetExtraProperties() map[string]any{
         return nil
     }
     return w.extraProperties
+}
+
+func (w *WorkspaceSubmissionState) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler WorkspaceSubmissionState
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *w = WorkspaceSubmissionState(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *w)
+    if err != nil {
+        return err
+    }
+    w.extraProperties = extraProperties
+    w.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (w *WorkspaceSubmissionState) String() string{
@@ -2398,7 +3304,6 @@ type WorkspaceSubmissionStatus struct {
     Ran WorkspaceRunDetails
     Traced WorkspaceRunDetails
 }
-
 
 type TestSubmissionState struct {
     ProblemId ProblemId `json:"problemId" url:"problemId"`
@@ -2445,6 +3350,24 @@ func (t *TestSubmissionState) GetExtraProperties() map[string]any{
     return t.extraProperties
 }
 
+func (t *TestSubmissionState) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler TestSubmissionState
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *t = TestSubmissionState(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *t)
+    if err != nil {
+        return err
+    }
+    t.extraProperties = extraProperties
+    t.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (t *TestSubmissionState) String() string{
     if len(t.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
@@ -2466,14 +3389,12 @@ type TestSubmissionStatus struct {
     TestCaseIdToState map[string]*SubmissionStatusForTestCase
 }
 
-
 type SubmissionStatusForTestCase struct {
     Type string
     Graded TestCaseResultWithStdout
     GradedV2 *TestCaseGrade
     Traced TracedTestCase
 }
-
 
 type TracedTestCase struct {
     Result *TestCaseResultWithStdout `json:"result" url:"result"`
@@ -2502,6 +3423,24 @@ func (t *TracedTestCase) GetExtraProperties() map[string]any{
         return nil
     }
     return t.extraProperties
+}
+
+func (t *TracedTestCase) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler TracedTestCase
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *t = TracedTestCase(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *t)
+    if err != nil {
+        return err
+    }
+    t.extraProperties = extraProperties
+    t.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (t *TracedTestCase) String() string{
@@ -2548,6 +3487,24 @@ func (t *TraceResponsesPage) GetExtraProperties() map[string]any{
     return t.extraProperties
 }
 
+func (t *TraceResponsesPage) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler TraceResponsesPage
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *t = TraceResponsesPage(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *t)
+    if err != nil {
+        return err
+    }
+    t.extraProperties = extraProperties
+    t.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (t *TraceResponsesPage) String() string{
     if len(t.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
@@ -2592,6 +3549,24 @@ func (t *TraceResponsesPageV2) GetExtraProperties() map[string]any{
     return t.extraProperties
 }
 
+func (t *TraceResponsesPageV2) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler TraceResponsesPageV2
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *t = TraceResponsesPageV2(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *t)
+    if err != nil {
+        return err
+    }
+    t.extraProperties = extraProperties
+    t.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (t *TraceResponsesPageV2) String() string{
     if len(t.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
@@ -2624,6 +3599,24 @@ func (g *GetTraceResponsesPageRequest) GetExtraProperties() map[string]any{
         return nil
     }
     return g.extraProperties
+}
+
+func (g *GetTraceResponsesPageRequest) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler GetTraceResponsesPageRequest
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *g = GetTraceResponsesPageRequest(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *g)
+    if err != nil {
+        return err
+    }
+    g.extraProperties = extraProperties
+    g.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (g *GetTraceResponsesPageRequest) String() string{
@@ -2660,6 +3653,24 @@ func (w *WorkspaceStarterFilesResponse) GetExtraProperties() map[string]any{
     return w.extraProperties
 }
 
+func (w *WorkspaceStarterFilesResponse) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler WorkspaceStarterFilesResponse
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *w = WorkspaceStarterFilesResponse(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *w)
+    if err != nil {
+        return err
+    }
+    w.extraProperties = extraProperties
+    w.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (w *WorkspaceStarterFilesResponse) String() string{
     if len(w.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
@@ -2692,6 +3703,24 @@ func (w *WorkspaceStarterFilesResponseV2) GetExtraProperties() map[string]any{
         return nil
     }
     return w.extraProperties
+}
+
+func (w *WorkspaceStarterFilesResponseV2) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler WorkspaceStarterFilesResponseV2
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *w = WorkspaceStarterFilesResponseV2(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *w)
+    if err != nil {
+        return err
+    }
+    w.extraProperties = extraProperties
+    w.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (w *WorkspaceStarterFilesResponseV2) String() string{
@@ -2734,6 +3763,24 @@ func (w *WorkspaceFiles) GetExtraProperties() map[string]any{
         return nil
     }
     return w.extraProperties
+}
+
+func (w *WorkspaceFiles) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler WorkspaceFiles
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *w = WorkspaceFiles(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *w)
+    if err != nil {
+        return err
+    }
+    w.extraProperties = extraProperties
+    w.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (w *WorkspaceFiles) String() string{
@@ -2811,6 +3858,24 @@ func (e *ExecutionSessionState) GetExtraProperties() map[string]any{
     return e.extraProperties
 }
 
+func (e *ExecutionSessionState) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler ExecutionSessionState
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *e = ExecutionSessionState(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *e)
+    if err != nil {
+        return err
+    }
+    e.extraProperties = extraProperties
+    e.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (e *ExecutionSessionState) String() string{
     if len(e.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
@@ -2859,6 +3924,24 @@ func (g *GetExecutionSessionStateResponse) GetExtraProperties() map[string]any{
         return nil
     }
     return g.extraProperties
+}
+
+func (g *GetExecutionSessionStateResponse) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler GetExecutionSessionStateResponse
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *g = GetExecutionSessionStateResponse(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *g)
+    if err != nil {
+        return err
+    }
+    g.extraProperties = extraProperties
+    g.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (g *GetExecutionSessionStateResponse) String() string{
@@ -2917,6 +4000,42 @@ func (g *GetSubmissionStateResponse) GetExtraProperties() map[string]any{
         return nil
     }
     return g.extraProperties
+}
+
+func (g *GetSubmissionStateResponse) UnmarshalJSON(
+    data []byte,
+) error{
+    type embed GetSubmissionStateResponse
+    var unmarshaler = struct{
+        embed
+        TimeSubmitted *internal.DateTime `json:"timeSubmitted"`
+    }{
+        embed: embed(*g),
+    }
+    if err := json.Unmarshal(data, &unmarshaler); err != nil {
+        return err
+    }
+    *g = GetSubmissionStateResponse(unmarshaler.embed)
+    g.TimeSubmitted = unmarshaler.TimeSubmitted.TimePtr()
+    extraProperties, err := internal.ExtractExtraProperties(data, *g)
+    if err != nil {
+        return err
+    }
+    g.extraProperties = extraProperties
+    g.rawJSON = json.RawMessage(data)
+    return nil
+}
+
+func (g *GetSubmissionStateResponse) MarshalJSON() ([]byte, error){
+    type embed GetSubmissionStateResponse
+    var marshaler = struct{
+        embed
+        TimeSubmitted *internal.DateTime `json:"timeSubmitted"`
+    }{
+        embed: embed(*g),
+        TimeSubmitted: internal.NewOptionalDateTime(g.TimeSubmitted),
+    }
+    return json.Marshal(marshaler)
 }
 
 func (g *GetSubmissionStateResponse) String() string{

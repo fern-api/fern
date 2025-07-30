@@ -25,7 +25,7 @@ test:
     buildCommand:
       - pnpm --filter @fern-typescript/express-generator-cli compile
       - pnpm --filter @fern-typescript/express-generator-cli build
-    runCommand: node express/cli/dist/cli.cjs
+    runCommand: node --enable-source-maps express/cli/dist/cli.cjs
     env:
       NODE_ENV: test
 

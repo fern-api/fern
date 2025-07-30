@@ -29,6 +29,24 @@ func (g *GetShapeRequest) GetExtraProperties() map[string]any {
 	return g.extraProperties
 }
 
+func (g *GetShapeRequest) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler GetShapeRequest
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetShapeRequest(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (g *GetShapeRequest) String() string {
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
@@ -69,6 +87,24 @@ func (c *Circle) GetExtraProperties() map[string]any {
 	return c.extraProperties
 }
 
+func (c *Circle) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Circle
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = Circle(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (c *Circle) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -100,6 +136,24 @@ func (s *Square) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return s.extraProperties
+}
+
+func (s *Square) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Square
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = Square(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (s *Square) String() string {

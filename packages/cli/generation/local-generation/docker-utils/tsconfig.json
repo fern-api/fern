@@ -1,10 +1,26 @@
 {
   "extends": "@fern-api/configs/tsconfig/main.json",
-  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
-  "include": ["./src/**/*"],
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src",
+    "types": ["vitest/globals"]
+  },
+  "include": [
+    "./src/**/*"
+  ],
   "references": [
-    { "path": "../../../../commons/fs-utils" },
-    { "path": "../../../../commons/core-utils" },
-    { "path": "../../../../commons/logging-execa" }
+    {
+      "path": "../../../../commons/core-utils"
+    },
+    {
+      "path": "../../../../commons/fs-utils"
+    },
+    {
+      "path": "../../../../commons/logging-execa"
+    },
+    {
+      "path": "../../../logger"
+    }
   ]
 }

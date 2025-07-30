@@ -248,6 +248,7 @@
               "safeName": "GetStatus"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {

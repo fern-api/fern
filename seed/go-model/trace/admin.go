@@ -8,4 +8,3 @@ type Test struct {
     And bool
     Or bool
 }
-

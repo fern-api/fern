@@ -200,6 +200,7 @@
             }
           }
         },
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "stream",
@@ -345,6 +346,43 @@
               ]
             }
           }
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "description": "The chat message or question.",
+                      "key": "query",
+                      "valueType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    {
+                      "description": "Indicates whether the response should be streamed or not.",
+                      "key": "stream_response",
+                      "valueType": {
+                        "type": "literal",
+                        "value": {
+                          "type": "booleanLiteral",
+                          "value": false
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
         },
         "response": {
           "type": {

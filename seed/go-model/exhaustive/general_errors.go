@@ -29,6 +29,24 @@ func (b *BadObjectRequestInfo) GetExtraProperties() map[string]any {
 	return b.extraProperties
 }
 
+func (b *BadObjectRequestInfo) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler BadObjectRequestInfo
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = BadObjectRequestInfo(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+	b.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (b *BadObjectRequestInfo) String() string {
 	if len(b.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {

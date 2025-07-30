@@ -5,69 +5,34 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": [
-    "./src/**/*"
-  ],
+  "include": ["./src/**/*"],
   "references": [
     {
-      "path": "../../commons/core-utils"
+      "path": "../workspace/loader"
     },
     {
-      "path": "../../commons/fs-utils"
+      "path": "../task-context"
     },
     {
-      "path": "../../commons/logging-execa"
-    },
-    {
-      "path": "../../commons/ir-utils"
-    },
-    {
-      "path": "../../core"
-    },
-    {
-      "path": "../../ir-sdk"
-    },
-    {
-      "path": "../auth"
-    },
-    {
-      "path": "../cli-source-resolver"
-    },
-    {
-      "path": "../configuration-loader"
-    },
-    {
-      "path": "../docs-preview"
-    },
-    {
-      "path": "../generation/ir-generator"
-    },
-    {
-      "path": "../generation/ir-migrations"
-    },
-    {
-      "path": "../generation/local-generation/local-workspace-runner"
+      "path": "../semver-utils"
     },
     {
       "path": "../generation/remote-generation/remote-workspace-runner"
     },
     {
-      "path": "../init"
+      "path": "../register"
     },
     {
-      "path": "../cli-logger"
+      "path": "../generation/protoc-gen-fern"
     },
     {
-      "path": "../logger"
+      "path": "../project-loader"
     },
     {
-      "path": "../login"
+      "path": "../posthog-manager"
     },
     {
-      "path": "../mock"
-    },
-    {
-      "path": "../api-importers/openapi/openapi-ir"
+      "path": "../workspace/oss-validator"
     },
     {
       "path": "../api-importers/openapi/openapi-ir-to-fern"
@@ -76,61 +41,97 @@
       "path": "../api-importers/openapi/openapi-ir-parser"
     },
     {
-      "path": "../posthog-manager"
+      "path": "../api-importers/openapi/openapi-ir"
     },
     {
-      "path": "../project-loader"
+      "path": "../mock"
     },
     {
-      "path": "../register"
+      "path": "../login"
     },
     {
-      "path": "../semver-utils"
+      "path": "../../commons/logging-execa"
     },
     {
-      "path": "../task-context"
+      "path": "../logger"
     },
     {
-      "path": "../workspace/loader"
-    },
-    {
-      "path": "../workspace/commons"
+      "path": "../generation/local-generation/local-workspace-runner"
     },
     {
       "path": "../workspace/lazy-fern-workspace"
     },
     {
-      "path": "../yaml/docs-validator"
-    },
-    {
-      "path": "../yaml/generators-validator"
-    },
-    {
-      "path": "../fern-definition/formatter"
-    },
-    {
-      "path": "../fern-definition/validator"
-    },
-    {
-      "path": "../workspace/oss-validator"
-    },
-    {
-      "path": "../cli-migrations"
-    },
-    {
-      "path": "../fern-definition/schema"
+      "path": "../../commons/ir-utils"
     },
     {
       "path": "../fern-definition/ir-to-jsonschema"
     },
     {
+      "path": "../../ir-sdk"
+    },
+    {
+      "path": "../generation/ir-migrations"
+    },
+    {
+      "path": "../generation/ir-generator"
+    },
+    {
+      "path": "../init"
+    },
+    {
+      "path": "../yaml/generators-validator"
+    },
+    {
+      "path": "../../commons/fs-utils"
+    },
+    {
+      "path": "../fern-definition/validator"
+    },
+    {
+      "path": "../fern-definition/schema"
+    },
+    {
+      "path": "../fern-definition/formatter"
+    },
+    {
+      "path": "../yaml/docs-validator"
+    },
+    {
       "path": "../docs-resolver"
     },
     {
-      "path": "../../../generators/typescript/utils/commons"
+      "path": "../docs-preview"
     },
     {
-      "path": "../generation/protoc-gen-fern"
+      "path": "../../commons/core-utils"
+    },
+    {
+      "path": "../../core"
+    },
+    {
+      "path": "../configuration-loader"
+    },
+    {
+      "path": "../configuration"
+    },
+    {
+      "path": "../cli-source-resolver"
+    },
+    {
+      "path": "../cli-migrations"
+    },
+    {
+      "path": "../cli-logger"
+    },
+    {
+      "path": "../../commons/casings-generator"
+    },
+    {
+      "path": "../auth"
+    },
+    {
+      "path": "../workspace/commons"
     }
   ]
 }

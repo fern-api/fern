@@ -5,41 +5,41 @@
     "type": "git",
     "url": "https://github.com/fern-api/fern.git"
   },
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "development": "./src/index.ts",
+      "source": "./src/index.ts",
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "default": "./lib/index.js"
+    }
+  },
+  "main": "lib/index.js",
+  "source": "src/index.ts",
+  "types": "lib/index.d.ts",
   "files": [
     "lib"
   ],
-  "type": "module",
-  "source": "src/index.ts",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
-  "sideEffects": false,
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
+    "depcheck": "depcheck",
     "test": "vitest --run --passWithNoTests",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
-    "test:update": "vitest --run --passWithNoTests -u",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",
-    "lint:eslint:fix": "yarn lint:eslint --fix",
-    "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "depcheck": "depcheck"
+    "test:update": "vitest --run --passWithNoTests -u"
   },
   "dependencies": {
     "zod": "^3.22.3"
   },
   "devDependencies": {
     "@fern-api/browser-compatible-base-generator": "workspace:*",
-    "@fern-api/core-utils": "workspace:*",
-    "@fern-fern/ir-sdk": "58.2.0",
-    "@types/jest": "^29.5.14",
     "@fern-api/configs": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
-    "eslint": "^8.56.0",
-    "prettier": "^3.4.2",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "typescript": "5.7.2",
     "vitest": "^2.1.9",
     "zod": "^3.22.3"

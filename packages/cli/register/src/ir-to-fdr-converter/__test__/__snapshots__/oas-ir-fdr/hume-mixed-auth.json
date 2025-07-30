@@ -2694,6 +2694,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -2772,6 +2773,22 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "unknown"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -2902,6 +2919,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -3003,6 +3021,22 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "unknown"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -3095,6 +3129,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -3135,7 +3170,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "deleteToolVersionExample",
               "description": "",
               "path": "/v0/evi/tools/id",
               "pathParameters": {
@@ -3151,7 +3185,6 @@
               }
             },
             {
-              "name": "deleteToolVersionExample",
               "description": "",
               "path": "/v0/evi/tools/id",
               "pathParameters": {
@@ -3230,6 +3263,22 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "unknown"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -3348,6 +3397,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -3456,6 +3506,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -3496,7 +3547,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "deleteToolVersion1Example",
               "description": "",
               "path": "/v0/evi/tools/id/version/1",
               "pathParameters": {
@@ -3513,7 +3563,6 @@
               }
             },
             {
-              "name": "deleteToolVersion1Example",
               "description": "",
               "path": "/v0/evi/tools/id/version/1",
               "pathParameters": {
@@ -3611,6 +3660,22 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "unknown"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -3761,6 +3826,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -3839,6 +3905,22 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "unknown"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -3969,6 +4051,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4070,6 +4153,22 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "unknown"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -4162,6 +4261,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4202,7 +4302,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "deletePromptVersionExample",
               "description": "",
               "path": "/v0/evi/prompts/id",
               "pathParameters": {
@@ -4218,7 +4317,6 @@
               }
             },
             {
-              "name": "deletePromptVersionExample",
               "description": "",
               "path": "/v0/evi/prompts/id",
               "pathParameters": {
@@ -4297,6 +4395,22 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "unknown"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -4415,6 +4529,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4523,6 +4638,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4563,7 +4679,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "deletePromptVersion1Example",
               "description": "",
               "path": "/v0/evi/prompts/id/version/1",
               "pathParameters": {
@@ -4580,7 +4695,6 @@
               }
             },
             {
-              "name": "deletePromptVersion1Example",
               "description": "",
               "path": "/v0/evi/prompts/id/version/1",
               "pathParameters": {
@@ -4678,6 +4792,22 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "unknown"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -4815,6 +4945,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4893,6 +5024,22 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "unknown"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -4984,6 +5131,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -5085,6 +5233,22 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "unknown"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -5177,6 +5341,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -5217,7 +5382,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "deleteCustomVoiceExample",
               "description": "",
               "path": "/v0/evi/custom_voices/id",
               "pathParameters": {
@@ -5233,7 +5397,6 @@
               }
             },
             {
-              "name": "deleteCustomVoiceExample",
               "description": "",
               "path": "/v0/evi/custom_voices/id",
               "pathParameters": {
@@ -5312,6 +5475,22 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "unknown"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -5468,6 +5647,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -5546,6 +5726,22 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "unknown"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -5677,6 +5873,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -5778,6 +5975,22 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "unknown"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -5870,6 +6083,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -5910,7 +6124,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "deleteConfigExample",
               "description": "",
               "path": "/v0/evi/configs/id",
               "pathParameters": {
@@ -5926,7 +6139,6 @@
               }
             },
             {
-              "name": "deleteConfigExample",
               "description": "",
               "path": "/v0/evi/configs/id",
               "pathParameters": {
@@ -6005,6 +6217,22 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "unknown"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -6123,6 +6351,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -6231,6 +6460,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -6271,7 +6501,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "deleteConfigVersionExample",
               "description": "",
               "path": "/v0/evi/configs/id/version/1",
               "pathParameters": {
@@ -6288,7 +6517,6 @@
               }
             },
             {
-              "name": "deleteConfigVersionExample",
               "description": "",
               "path": "/v0/evi/configs/id/version/1",
               "pathParameters": {
@@ -6386,6 +6614,22 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "unknown"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -6524,6 +6768,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -6651,6 +6896,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -6740,6 +6986,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -6873,6 +7120,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -7000,6 +7248,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -7129,6 +7378,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -7258,6 +7508,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -7337,6 +7588,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -7441,6 +7693,22 @@
               }
             }
           }
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                }
+              }
+            }
+          ]
         },
         "response": {
           "type": {
@@ -7562,6 +7830,22 @@
             }
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/x-www-form-urlencoded",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                }
+              }
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -7674,6 +7958,22 @@
             }
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                }
+              }
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -7758,6 +8058,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",

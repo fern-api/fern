@@ -102,6 +102,24 @@ func (p *ProblemInfo) GetExtraProperties() map[string]any{
     return p.extraProperties
 }
 
+func (p *ProblemInfo) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler ProblemInfo
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *p = ProblemInfo(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *p)
+    if err != nil {
+        return err
+    }
+    p.extraProperties = extraProperties
+    p.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (p *ProblemInfo) String() string{
     if len(p.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
@@ -136,6 +154,24 @@ func (p *ProblemDescription) GetExtraProperties() map[string]any{
     return p.extraProperties
 }
 
+func (p *ProblemDescription) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler ProblemDescription
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *p = ProblemDescription(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *p)
+    if err != nil {
+        return err
+    }
+    p.extraProperties = extraProperties
+    p.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (p *ProblemDescription) String() string{
     if len(p.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
@@ -155,7 +191,6 @@ type ProblemDescriptionBoard struct {
     Variable *VariableValue
     TestCaseId string
 }
-
 
 type ProblemFiles struct {
     SolutionFile *FileInfo `json:"solutionFile" url:"solutionFile"`
@@ -184,6 +219,24 @@ func (p *ProblemFiles) GetExtraProperties() map[string]any{
         return nil
     }
     return p.extraProperties
+}
+
+func (p *ProblemFiles) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler ProblemFiles
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *p = ProblemFiles(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *p)
+    if err != nil {
+        return err
+    }
+    p.extraProperties = extraProperties
+    p.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (p *ProblemFiles) String() string{
@@ -226,6 +279,24 @@ func (v *VariableTypeAndName) GetExtraProperties() map[string]any{
         return nil
     }
     return v.extraProperties
+}
+
+func (v *VariableTypeAndName) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler VariableTypeAndName
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *v = VariableTypeAndName(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *v)
+    if err != nil {
+        return err
+    }
+    v.extraProperties = extraProperties
+    v.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (v *VariableTypeAndName) String() string{
@@ -310,6 +381,24 @@ func (c *CreateProblemRequest) GetExtraProperties() map[string]any{
     return c.extraProperties
 }
 
+func (c *CreateProblemRequest) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler CreateProblemRequest
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *c = CreateProblemRequest(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *c)
+    if err != nil {
+        return err
+    }
+    c.extraProperties = extraProperties
+    c.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (c *CreateProblemRequest) String() string{
     if len(c.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -328,7 +417,6 @@ type CreateProblemResponse struct {
     Success ProblemId
     Error *CreateProblemError
 }
-
 
 type UpdateProblemResponse struct {
     ProblemVersion int `json:"problemVersion" url:"problemVersion"`
@@ -351,6 +439,24 @@ func (u *UpdateProblemResponse) GetExtraProperties() map[string]any{
     return u.extraProperties
 }
 
+func (u *UpdateProblemResponse) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler UpdateProblemResponse
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *u = UpdateProblemResponse(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *u)
+    if err != nil {
+        return err
+    }
+    u.extraProperties = extraProperties
+    u.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (u *UpdateProblemResponse) String() string{
     if len(u.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
@@ -368,7 +474,6 @@ type CreateProblemError struct {
     ErrorType string
     Generic GenericCreateProblemError
 }
-
 
 type GenericCreateProblemError struct {
     Message string `json:"message" url:"message"`
@@ -407,6 +512,24 @@ func (g *GenericCreateProblemError) GetExtraProperties() map[string]any{
     return g.extraProperties
 }
 
+func (g *GenericCreateProblemError) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler GenericCreateProblemError
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *g = GenericCreateProblemError(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *g)
+    if err != nil {
+        return err
+    }
+    g.extraProperties = extraProperties
+    g.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (g *GenericCreateProblemError) String() string{
     if len(g.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
@@ -439,6 +562,24 @@ func (g *GetDefaultStarterFilesResponse) GetExtraProperties() map[string]any{
         return nil
     }
     return g.extraProperties
+}
+
+func (g *GetDefaultStarterFilesResponse) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler GetDefaultStarterFilesResponse
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *g = GetDefaultStarterFilesResponse(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *g)
+    if err != nil {
+        return err
+    }
+    g.extraProperties = extraProperties
+    g.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (g *GetDefaultStarterFilesResponse) String() string{

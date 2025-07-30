@@ -1,4 +1,4 @@
-FROM node:20.18-alpine3.20 AS node
+FROM node:22.12-alpine3.20 AS node
 FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine3.21
 
 ENV YARN_CACHE_FOLDER=/.yarn
@@ -24,4 +24,4 @@ COPY generators/csharp/sdk/dist /dist
 
 RUN npm install -f -g @fern-api/generator-cli
 
-ENTRYPOINT ["node", "/dist/cli.cjs", "csharp-sdk"]
+ENTRYPOINT ["node", "--enable-source-maps", "/dist/cli.cjs", "csharp-sdk"]

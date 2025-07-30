@@ -1,3 +1,8 @@
+use crate::submission_id::SubmissionId;
+use crate::traced_file::TracedFile;
+use crate::debug_variable_value::DebugVariableValue;
+use crate::expression_location::ExpressionLocation;
+use crate::stack_information::StackInformation;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

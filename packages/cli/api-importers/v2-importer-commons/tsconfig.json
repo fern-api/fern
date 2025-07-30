@@ -9,37 +9,34 @@
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [
     {
-      "path": "../../../commons/core-utils"
-    },
-    {
-      "path": "../../fern-definition/schema"
-    },
-    {
-      "path": "../../configuration"
-    },
-    {
       "path": "../../logger"
     },
     {
-      "path": "../../task-context"
+      "path": "../../../commons/ir-utils"
     },
     {
       "path": "../../../ir-sdk"
     },
     {
-      "path": "../../../commons/ir-utils"
+      "path": "../../../commons/fs-utils"
     },
     {
-      "path": "../../workspace/commons"
+      "path": "../../fern-definition/schema"
     },
     {
-      "path": "../../../commons/ir-utils"
+      "path": "../../../commons/core-utils"
+    },
+    {
+      "path": "../../configuration"
+    },
+    {
+      "path": "../../cli-logger"
     },
     {
       "path": "../../../commons/casings-generator"
     },
     {
-      "path": "../../../commons/fs-utils"
-    },
+      "path": "../../workspace/commons"
+    }
   ]
 }

@@ -7758,6 +7758,7 @@
               "safeName": "ListAccounts"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -8042,6 +8043,7 @@
               "safeName": "RetrieveAccount"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -8458,6 +8460,7 @@
               "safeName": "ListGames"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -9022,6 +9025,7 @@
               "safeName": "RetrieveGame"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -9429,6 +9433,7 @@
               "safeName": "ListGroups"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -9993,6 +9998,7 @@
               "safeName": "RetrieveGroup"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -10400,6 +10406,7 @@
               "safeName": "ListPlayers"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -10723,6 +10730,7 @@
               "safeName": "RetrievePlayer"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -10986,6 +10994,7 @@
               "safeName": "ListLocations"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -11270,6 +11279,7 @@
               "safeName": "RetrieveLocation"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -11494,6 +11504,7 @@
               "safeName": "ListPhotos"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -11808,6 +11819,7 @@
               "safeName": "RetrievePhoto"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {

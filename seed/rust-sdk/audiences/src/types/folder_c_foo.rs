@@ -1,5 +1,5 @@
-use serde::{Deserialize, Serialize};
 use uuid::Uuid;
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct FolderCFoo {

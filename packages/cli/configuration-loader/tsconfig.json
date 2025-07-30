@@ -3,7 +3,8 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "lib",
-    "rootDir": "src"
+    "rootDir": "src",
+    "types": ["vitest/globals"]
   },
   "include": [
     "./src/**/*"
@@ -19,10 +20,13 @@
       "path": "../configuration"
     },
     {
-      "path": "../task-context"
+      "path": "../fern-definition/schema"
     },
     {
-      "path": "../fern-definition/schema"
+      "path": "../logger"
+    },
+    {
+      "path": "../task-context"
     }
   ]
 }

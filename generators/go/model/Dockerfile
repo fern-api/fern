@@ -1,4 +1,4 @@
-FROM node:20.18-alpine3.20 AS node
+FROM node:22.12-alpine3.20 AS node
 FROM golang:1.23.8-alpine3.20
 
 ENV YARN_CACHE_FOLDER=/.yarn
@@ -8,4 +8,4 @@ RUN git config --global user.name "fern" && git config --global user.email "hey@
 
 COPY generators/go-v2/model/dist /dist
 
-ENTRYPOINT ["node", "/dist/cli.cjs"]
+ENTRYPOINT ["node", "--enable-source-maps", "/dist/cli.cjs"]

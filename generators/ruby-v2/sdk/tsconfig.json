@@ -3,10 +3,14 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src/**/*"],
   "references": [
-    { "path": "../../../packages/commons/core-utils" },
-    { "path": "../../../packages/commons/fs-utils" },
-    { "path": "../../base" },
-    { "path": "../ast" },
-    { "path": "../base" },
+    {
+      "path": "../../base"
+    },
+    {
+      "path": "../base"
+    },
+    {
+      "path": "../ast"
+    }
   ]
 }
