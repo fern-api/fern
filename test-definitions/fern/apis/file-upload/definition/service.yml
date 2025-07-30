@@ -165,6 +165,22 @@ service:
 
         # add one non-file endpoint to force snippet generation
     
+    withInlineType:
+      path: /inline-type
+      method: POST
+      request:
+        body:
+          properties:
+            file: file
+            request: MyInlineType
+        content-type: multipart/form-data
+        name: InlineTypeRequest
+      response:
+        status-code: 200
+        type: string
+
+        # add one non-file endpoint to force snippet generation
+    
     simple:
       path: "/snippet"
       method: POST
@@ -188,3 +204,8 @@ types:
     enum:
       - FOO
       - BAR
+
+  MyInlineType:
+    inline: true
+    properties:
+      bar: string
