@@ -14,6 +14,7 @@ export * from "./PathParameter";
 export * from "./PathParameterLocation";
 export * from "./QueryParameter";
 export * from "./HttpRequestBody";
+export * from "./V2HttpRequestBodies";
 export * from "./InlinedRequestBody";
 export * from "./InlinedRequestBodyProperty";
 export * from "./FileUploadRequest";

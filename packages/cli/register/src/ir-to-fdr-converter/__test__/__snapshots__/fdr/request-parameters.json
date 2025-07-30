@@ -122,6 +122,7 @@
               }
             }
           },
+          "requestsV2": {},
           "responsesV2": {},
           "errorsV2": [],
           "examples": [
@@ -328,6 +329,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",

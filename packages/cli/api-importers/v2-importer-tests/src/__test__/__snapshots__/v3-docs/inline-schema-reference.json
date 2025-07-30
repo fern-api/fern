@@ -570,6 +570,7 @@
               "safeName": "GetExample"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {

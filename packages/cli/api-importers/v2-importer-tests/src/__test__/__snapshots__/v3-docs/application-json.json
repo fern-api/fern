@@ -202,6 +202,7 @@
               "safeName": "GetVndFernUserJsonVersion1"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {
@@ -371,6 +372,7 @@
               "safeName": "GetApplicationJson"
             }
           },
+          "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
             "body": {

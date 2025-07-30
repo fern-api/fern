@@ -25566,6 +25566,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -25807,6 +25808,61 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "key": "type",
+                        "valueType": {
+                          "type": "id",
+                          "value": "IssueType"
+                        }
+                      },
+                      {
+                        "description": "Configuration object for the specific issue type selected",
+                        "key": "configs",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "IssueTriggersPostRequestBodyContentApplicationJsonSchemaConfigs"
+                          }
+                        }
+                      },
+                      {
+                        "key": "channels",
+                        "valueType": {
+                          "type": "id",
+                          "value": "IssueTriggerChannels"
+                        }
+                      },
+                      {
+                        "description": "Optional unique name to use as reference when using the API",
+                        "key": "name",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "maxLength": 255
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -26032,6 +26088,58 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "key": "type",
+                        "valueType": {
+                          "type": "id",
+                          "value": "IssueType"
+                        }
+                      },
+                      {
+                        "description": "Configuration object for the specific issue type selected",
+                        "key": "configs",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "IssueTriggersPutRequestBodyContentApplicationJsonSchemaConfigs"
+                          }
+                        }
+                      },
+                      {
+                        "key": "channels",
+                        "valueType": {
+                          "type": "id",
+                          "value": "IssueTriggerChannels"
+                        }
+                      },
+                      {
+                        "description": "Required unique name to use as reference when using the API",
+                        "key": "name",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "maxLength": 255
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -26229,6 +26337,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -26466,6 +26575,74 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Configuration object for the specific issue type selected",
+                        "key": "configs",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "IssueTriggersIdPutRequestBodyContentApplicationJsonSchemaConfigs"
+                          }
+                        }
+                      },
+                      {
+                        "key": "channels",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "IssueTriggerChannels"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Date when the issue trigger was disabled",
+                        "key": "disabled_at",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "format": "date-time"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Optional unique name to use as reference when using the API",
+                        "key": "name",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "maxLength": 255
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -26657,6 +26834,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -26794,6 +26972,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -26967,6 +27146,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -27203,6 +27383,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -27415,6 +27596,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -27705,6 +27887,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -27951,6 +28134,70 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "ID of the event data to bookmark",
+                        "key": "event_data_id",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "maxLength": 255
+                          }
+                        }
+                      },
+                      {
+                        "description": "ID of the associated connection",
+                        "key": "webhook_id",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "maxLength": 255
+                          }
+                        }
+                      },
+                      {
+                        "description": "Descriptive name of the bookmark",
+                        "key": "label",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "maxLength": 255
+                          }
+                        }
+                      },
+                      {
+                        "description": "A unique, human-friendly name for the bookmark",
+                        "key": "name",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "regex": "^[A-z0-9-_]+$",
+                              "maxLength": 155
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -28144,6 +28391,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -28382,6 +28630,79 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "ID of the event data to bookmark",
+                        "key": "event_data_id",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "maxLength": 255
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "ID of the associated connection",
+                        "key": "webhook_id",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "maxLength": 255
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Descriptive name of the bookmark",
+                        "key": "label",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "maxLength": 255
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "A unique, human-friendly name for the bookmark",
+                        "key": "name",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "regex": "^[A-z0-9-_]+$",
+                              "maxLength": 155
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -28582,6 +28903,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -28741,6 +29063,33 @@
                 ]
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Bookmark target",
+                        "key": "target",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "BookmarksIdTriggerPostRequestBodyContentApplicationJsonSchemaTarget"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -29079,6 +29428,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -29349,6 +29699,106 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Name for the destination",
+                        "key": "name",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "regex": "^[A-z0-9-_]+$",
+                            "maxLength": 155
+                          }
+                        }
+                      },
+                      {
+                        "description": "Endpoint of the destination",
+                        "key": "url",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "format": "URL"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Path for the CLI destination",
+                        "key": "cli_path",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Period to rate limit attempts",
+                        "key": "rate_limit_period",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "DestinationsPostRequestBodyContentApplicationJsonSchemaRateLimitPeriod"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Limit event attempts to receive per period",
+                        "key": "rate_limit",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "integer"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "key": "path_forwarding_disabled",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -29604,6 +30054,106 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Name for the destination",
+                        "key": "name",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "regex": "^[A-z0-9-_]+$",
+                            "maxLength": 155
+                          }
+                        }
+                      },
+                      {
+                        "description": "Endpoint of the destination",
+                        "key": "url",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "format": "URL"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Path for the CLI destination",
+                        "key": "cli_path",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Period to rate limit attempts",
+                        "key": "rate_limit_period",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "DestinationsPutRequestBodyContentApplicationJsonSchemaRateLimitPeriod"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Limit event attempts to receive per period",
+                        "key": "rate_limit",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "integer"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "key": "path_forwarding_disabled",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -29781,6 +30331,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -30051,6 +30602,123 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Name for the destination",
+                        "key": "name",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "regex": "^[A-z0-9-_]+$",
+                            "maxLength": 155
+                          }
+                        }
+                      },
+                      {
+                        "description": "Endpoint of the destination",
+                        "key": "url",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "format": "URL"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Path for the CLI destination",
+                        "key": "cli_path",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Period to rate limit attempts",
+                        "key": "rate_limit_period",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "DestinationsIdPutRequestBodyContentApplicationJsonSchemaRateLimitPeriod"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Limit event attempts to receive per period",
+                        "key": "rate_limit",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "integer"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Date the destination was archived",
+                        "key": "archived_at",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "format": "date-time"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "key": "path_forwarding_disabled",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -30243,6 +30911,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -30400,6 +31069,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -30822,6 +31492,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -31044,6 +31715,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -31231,6 +31903,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -31368,6 +32041,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -31605,6 +32279,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -31919,6 +32594,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -32124,6 +32800,33 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Filter properties for the events to be included in the bulk retry",
+                        "key": "query",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQuery"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -32298,6 +33001,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -32450,6 +33154,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -32615,6 +33320,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -32907,6 +33613,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -33112,6 +33819,33 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Filter by the bulk retry ignored event query object",
+                        "key": "query",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "BulkIgnoredEventsRetryPostRequestBodyContentApplicationJsonSchemaQuery"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -33286,6 +34020,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -33438,6 +34173,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -33603,6 +34339,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -33783,6 +34520,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -34019,6 +34757,58 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Label of the integration",
+                        "key": "label",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Decrypted Key/Value object of the associated configuration for that provider",
+                        "key": "configs",
+                        "valueType": {
+                          "type": "id",
+                          "value": "IntegrationsPostRequestBodyContentApplicationJsonSchemaConfigs"
+                        }
+                      },
+                      {
+                        "key": "provider",
+                        "valueType": {
+                          "type": "id",
+                          "value": "IntegrationProvider"
+                        }
+                      },
+                      {
+                        "description": "List of features to enable (see features list above)",
+                        "key": "features",
+                        "valueType": {
+                          "type": "list",
+                          "itemType": {
+                            "type": "id",
+                            "value": "IntegrationFeature"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -34230,6 +35020,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -34461,6 +35252,70 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Label of the integration",
+                        "key": "label",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Decrypted Key/Value object of the associated configuration for that provider",
+                        "key": "configs",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "IntegrationsIdPutRequestBodyContentApplicationJsonSchemaConfigs"
+                          }
+                        }
+                      },
+                      {
+                        "key": "provider",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "IntegrationProvider"
+                          }
+                        }
+                      },
+                      {
+                        "description": "List of features to enable (see features list above)",
+                        "key": "features",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "list",
+                            "itemType": {
+                              "type": "id",
+                              "value": "IntegrationFeature"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -34663,6 +35518,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -34817,6 +35673,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -34985,6 +35842,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -35285,6 +36143,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -35760,6 +36619,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -35895,6 +36755,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -36212,6 +37073,30 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "New status",
+                        "key": "status",
+                        "valueType": {
+                          "type": "id",
+                          "value": "IssuesIdPutRequestBodyContentApplicationJsonSchemaStatus"
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -36425,6 +37310,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -36823,6 +37709,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -37041,6 +37928,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -37224,6 +38112,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -37386,6 +38275,36 @@
                 ]
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Subset of webhook_ids to re-run the event logic on. Useful to retry only specific ignored_events",
+                        "key": "webhook_ids",
+                        "valueType": {
+                          "type": "list",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "maxLength": 255
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -37946,6 +38865,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -38254,6 +39174,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -38582,6 +39503,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -38787,6 +39709,33 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Filter properties for the events to be included in the bulk retry, use query parameters of [Requests](#requests)",
+                        "key": "query",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQuery"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -38961,6 +39910,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -39113,6 +40063,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -39278,6 +40229,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -39538,6 +40490,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -39770,6 +40723,60 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Name for the ruleset",
+                        "key": "name",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "regex": "^[A-z0-9-_]+$",
+                            "maxLength": 155
+                          }
+                        }
+                      },
+                      {
+                        "description": "Array of rules to apply",
+                        "key": "rules",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "list",
+                            "itemType": {
+                              "type": "id",
+                              "value": "Rule"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "key": "is_team_default",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -39987,6 +40994,60 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Name for the ruleset",
+                        "key": "name",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "regex": "^[A-z0-9-_]+$",
+                            "maxLength": 155
+                          }
+                        }
+                      },
+                      {
+                        "description": "Array of rules to apply",
+                        "key": "rules",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "list",
+                            "itemType": {
+                              "type": "id",
+                              "value": "Rule"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "key": "is_team_default",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -40172,6 +41233,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -40407,6 +41469,80 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Name for the ruleset",
+                        "key": "name",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "regex": "^[A-z0-9-_]+$",
+                              "maxLength": 155
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Date the ruleset was archived",
+                        "key": "archived_at",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "format": "date-time"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Array of rules to apply",
+                        "key": "rules",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "list",
+                            "itemType": {
+                              "type": "id",
+                              "value": "Rule"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "key": "is_team_default",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -40603,6 +41739,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -40768,6 +41905,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -41038,6 +42176,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -41246,6 +42385,34 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "A unique name for the source",
+                        "key": "name",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "regex": "^[A-z0-9-_]+$",
+                            "maxLength": 155
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -41439,6 +42606,34 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "A unique name for the source",
+                        "key": "name",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "regex": "^[A-z0-9-_]+$",
+                            "maxLength": 155
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -41626,6 +42821,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -41837,6 +43033,54 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "A unique name for the source",
+                        "key": "name",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "regex": "^[A-z0-9-_]+$",
+                              "maxLength": 155
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Date the source was archived",
+                        "key": "archived_at",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "format": "date-time"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -42035,6 +43279,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -42202,6 +43447,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -42413,6 +43659,62 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Enable or disable webhook notifications on the workspace",
+                        "key": "enabled",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "List of topics to send notifications for",
+                        "key": "topics",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "list",
+                            "itemType": {
+                              "type": "id",
+                              "value": "TopicsValue"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "The Hookdeck Source to send the webhook to",
+                        "key": "source_id",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -42620,6 +43922,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -42835,6 +44138,55 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "A unique, human-friendly name for the transformation",
+                        "key": "name",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "regex": "^[A-z0-9-_]+$",
+                            "maxLength": 155
+                          }
+                        }
+                      },
+                      {
+                        "description": "JavaScript code to be executed",
+                        "key": "code",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Key-value environment variables to be passed to the transformation",
+                        "key": "env",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "TransformationsPostRequestBodyContentApplicationJsonSchemaEnv"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -43037,6 +44389,55 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "A unique, human-friendly name for the transformation",
+                        "key": "name",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "regex": "^[A-z0-9-_]+$",
+                            "maxLength": 155
+                          }
+                        }
+                      },
+                      {
+                        "description": "JavaScript code to be executed",
+                        "key": "code",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Key-value environment variables to be passed to the transformation",
+                        "key": "env",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "TransformationsPutRequestBodyContentApplicationJsonSchemaEnv"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -43212,6 +44613,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -43415,6 +44817,61 @@
                 ]
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "A unique, human-friendly name for the transformation",
+                        "key": "name",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "regex": "^[A-z0-9-_]+$",
+                              "maxLength": 155
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "JavaScript code to be executed",
+                        "key": "code",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Key-value environment variables to be passed to the transformation",
+                        "key": "env",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "TransformationsIdPutRequestBodyContentApplicationJsonSchemaEnv"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -43666,6 +45123,95 @@
                 ]
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Key-value environment variables to be passed to the transformation",
+                        "key": "env",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "TransformationsRunPutRequestBodyContentApplicationJsonSchemaEnv"
+                          }
+                        }
+                      },
+                      {
+                        "description": "ID of the connection to use for the execution `context`",
+                        "key": "webhook_id",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "JavaScript code to be executed",
+                        "key": "code",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Transformation ID",
+                        "key": "transformation_id",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Request input to use for the transformation execution",
+                        "key": "request",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "TransformationsRunPutRequestBodyContentApplicationJsonSchemaRequest"
+                          }
+                        }
+                      },
+                      {
+                        "key": "event_id",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -43953,6 +45499,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -44206,6 +45753,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -44545,6 +46093,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -44961,6 +46510,132 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "A unique name of the connection for the source",
+                        "key": "name",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "regex": "^[A-z0-9-_]+$",
+                            "maxLength": 155
+                          }
+                        }
+                      },
+                      {
+                        "description": "ID of a destination to bind to the connection",
+                        "key": "destination_id",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "maxLength": 255
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "ID of a source to bind to the connection",
+                        "key": "source_id",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "maxLength": 255
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Destination input object",
+                        "key": "destination",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "WebhooksPostRequestBodyContentApplicationJsonSchemaDestination"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Source input object",
+                        "key": "source",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "WebhooksPostRequestBodyContentApplicationJsonSchemaSource"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Ruleset input object",
+                        "key": "ruleset",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "WebhooksPostRequestBodyContentApplicationJsonSchemaRuleset"
+                          }
+                        }
+                      },
+                      {
+                        "description": "ID of a rule to bind to the connection. Default to the Workspace default ruleset",
+                        "key": "ruleset_id",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "maxLength": 255
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Array of rules to apply",
+                        "key": "rules",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "list",
+                            "itemType": {
+                              "type": "id",
+                              "value": "Rule"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -45362,6 +47037,132 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "A unique name of the connection for the source",
+                        "key": "name",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "regex": "^[A-z0-9-_]+$",
+                            "maxLength": 155
+                          }
+                        }
+                      },
+                      {
+                        "description": "ID of a destination to bind to the connection",
+                        "key": "destination_id",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "maxLength": 255
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "ID of a source to bind to the connection",
+                        "key": "source_id",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "maxLength": 255
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Destination input object",
+                        "key": "destination",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "WebhooksPutRequestBodyContentApplicationJsonSchemaDestination"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Source input object",
+                        "key": "source",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "WebhooksPutRequestBodyContentApplicationJsonSchemaSource"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Ruleset input object",
+                        "key": "ruleset",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "WebhooksPutRequestBodyContentApplicationJsonSchemaRuleset"
+                          }
+                        }
+                      },
+                      {
+                        "description": "ID of a rule to bind to the connection. Default to the Workspace default ruleset",
+                        "key": "ruleset_id",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "maxLength": 255
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Array of rules to apply",
+                        "key": "rules",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "list",
+                            "itemType": {
+                              "type": "id",
+                              "value": "Rule"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -45659,6 +47460,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -46005,6 +47807,79 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Unique name of the connection for the source",
+                        "key": "name",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "regex": "^[A-z0-9-_]+$",
+                              "maxLength": 155
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Ruleset input object",
+                        "key": "ruleset",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "WebhooksIdPutRequestBodyContentApplicationJsonSchemaRuleset"
+                          }
+                        }
+                      },
+                      {
+                        "description": "ID of a rule to bind to the connection. Default to the Workspace default ruleset",
+                        "key": "ruleset_id",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "maxLength": 255
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Array of rules to apply",
+                        "key": "rules",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "list",
+                            "itemType": {
+                              "type": "id",
+                              "value": "Rule"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -46313,6 +48188,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -46590,6 +48466,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -46867,6 +48744,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -47144,6 +49022,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",

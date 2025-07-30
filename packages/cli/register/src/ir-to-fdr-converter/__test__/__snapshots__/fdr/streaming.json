@@ -88,6 +88,7 @@
               }
             }
           },
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "stream",
@@ -185,6 +186,7 @@
               }
             }
           },
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",

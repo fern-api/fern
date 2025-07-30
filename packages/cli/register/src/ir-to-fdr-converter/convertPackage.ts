@@ -231,6 +231,9 @@ function convertService(
                 })
             ),
             request: irEndpoint.requestBody != null ? convertRequestBody(irEndpoint.requestBody) : undefined,
+            requestsV2: {
+                requests: irEndpoint.v2RequestBodies?.requestBodies?.map(convertRequestBody).filter(isNonNullish)
+            },
             response: irEndpoint.response != null ? convertResponse(irEndpoint.response) : undefined,
             responsesV2: {
                 responses: irEndpoint.v2Responses?.responses?.map(convertResponse).filter(isNonNullish)

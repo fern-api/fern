@@ -68,6 +68,7 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
                     this.context.maybePrependPackageName(this.operation.name)
                 ),
                 requestBody: convertedRequestBody?.requestBody,
+                v2RequestBodies: undefined,
                 response: convertedResponseBody?.responseBody,
                 v2Responses: undefined,
                 displayName: this.context.maybeRemoveGrpcPackagePrefix(this.operation.name),

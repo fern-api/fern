@@ -48338,6 +48338,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -48666,6 +48667,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -48926,6 +48928,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -49164,6 +49167,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -49379,6 +49383,33 @@
                 ]
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "An existing **hidden field** defined on the form schema, and the corresponding value to set",
+                        "key": "formSubmissionData",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "FormSubmissionsFormSubmissionIdPatchRequestBodyContentApplicationJsonSchemaFormSubmissionData"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -49650,6 +49681,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -50041,6 +50073,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -50310,6 +50343,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -50532,6 +50566,52 @@
                 ]
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Array of Custom Domain ids to publish",
+                        "key": "customDomains",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "list",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Choice of whether to publish to the default Webflow Subdomain",
+                        "key": "publishToWebflowSubdomain",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "default": false
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -50824,6 +50904,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -51807,6 +51888,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -52509,6 +52591,75 @@
             },
             "description": "The order fields to update"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Arbitrary data for your records",
+                        "key": "comment",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Company or method used to ship order",
+                        "key": "shippingProvider",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Tracking number for order shipment",
+                        "key": "shippingTracking",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "URL to track order shipment",
+                        "key": "shippingTrackingURL",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "description": "The order fields to update"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -53178,6 +53329,37 @@
             },
             "description": "The order fulfillment request"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Whether or not the Order Fulfilled email should be sent",
+                        "key": "sendOrderFulfilledEmail",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "default": false
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "description": "The order fulfillment request"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -53820,6 +54002,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -54480,6 +54663,34 @@
               }
             },
             "description": "The order fulfillment request"
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "The reason for the refund",
+                        "key": "reason",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "SitesSiteIdOrdersOrderIdRefundPostRequestBodyContentApplicationJsonSchemaReason"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "description": "The order fulfillment request"
+              }
+            ]
           },
           "response": {
             "type": {
@@ -56483,6 +56694,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -56742,6 +56954,57 @@
               }
             },
             "description": "The updated inventory"
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "infinite or finite",
+                        "key": "inventoryType",
+                        "valueType": {
+                          "type": "id",
+                          "value": "CollectionsCollectionIdItemsItemIdInventoryPatchRequestBodyContentApplicationJsonSchemaInventoryType"
+                        }
+                      },
+                      {
+                        "description": "Adds this quantity to currently store quantity. Can be negative.",
+                        "key": "updateQuantity",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "double"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Immediately sets quantity to this value.",
+                        "key": "quantity",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "double"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "description": "The updated inventory"
+              }
+            ]
           },
           "response": {
             "type": {
@@ -57054,6 +57317,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -57453,6 +57717,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -57689,6 +57954,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -57918,6 +58184,48 @@
                 ]
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "key": "data",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "SitesSiteIdUsersUserIdPatchRequestBodyContentApplicationJsonSchemaData"
+                          }
+                        }
+                      },
+                      {
+                        "description": "An array of access group slugs. Access groups are assigned to the user as type `admin` and the user remains in the group until removed.\n",
+                        "key": "accessGroups",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "list",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -58201,6 +58509,49 @@
                 ]
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Email address of user to send invite to",
+                        "key": "email",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "format": "email"
+                          }
+                        }
+                      },
+                      {
+                        "description": "An array of access group slugs. Access groups are assigned to the user as type `admin` and the user remains in the group until removed.\n",
+                        "key": "accessGroups",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "list",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -59021,6 +59372,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -59314,6 +59666,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -59776,6 +60129,249 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Unique identifier for the Page",
+                        "key": "id",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "format": "objectid"
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "Unique identifier for the Site",
+                        "key": "siteId",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "format": "objectid"
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "Title of the Page",
+                        "key": "title",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "slug of the Page (derived from title)",
+                        "key": "slug",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Identifier of the parent folder",
+                        "key": "parentId",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "format": "objectid"
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "Unique identifier for a linked Collection, value will be null if the Page is not part of a Collection.",
+                        "key": "collectionId",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "format": "objectid"
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "The date the Page was created",
+                        "key": "createdOn",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "format": "date-time"
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "The date the Page was most recently updated",
+                        "key": "lastUpdated",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "format": "date-time"
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "Whether the Page has been archived",
+                        "key": "archived",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "default": false
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "Whether the Page is a draft",
+                        "key": "draft",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "default": false
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "Indicates whether the Page supports [Page Branching](https://university.webflow.com/lesson/page-branching)",
+                        "key": "canBranch",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "default": false
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "Indicates whether the Page is restricted by [Memberships Controls](https://university.webflow.com/lesson/webflow-memberships-overview#how-to-manage-page-restrictions)",
+                        "key": "isMembersOnly",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "default": false
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "SEO-related fields for the Page",
+                        "key": "seo",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "PagesPageIdPutRequestBodyContentApplicationJsonSchemaSeo"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Open Graph fields for the Page",
+                        "key": "openGraph",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "PagesPageIdPutRequestBodyContentApplicationJsonSchemaOpenGraph"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Unique ID of the page locale",
+                        "key": "localeId",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "format": "objectid"
+                              }
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "Relative path of the published page URL",
+                        "key": "publishedPath",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -60078,6 +60674,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -60357,6 +60954,32 @@
                 ]
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "key": "nodes",
+                        "valueType": {
+                          "type": "list",
+                          "itemType": {
+                            "type": "id",
+                            "value": "PagesPageIdDomPostRequestBodyContentApplicationJsonSchemaNodesItems"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -60722,6 +61345,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -60833,6 +61457,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -61020,6 +61645,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -61230,6 +61856,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -61489,6 +62116,56 @@
             },
             "description": "Pass the Name of the collection, as well as the singular name of each item in the collection."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Name of the collection. Each collection name must be distinct.",
+                        "key": "displayName",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Singular name of each item.",
+                        "key": "singularName",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Part of a URL that identifier",
+                        "key": "slug",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "description": "Pass the Name of the collection, as well as the singular name of each item in the collection."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -61697,6 +62374,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -61892,6 +62570,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -62070,6 +62749,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -62299,6 +62979,67 @@
               }
             },
             "description": "The field to create"
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "define whether a field is required in a collection",
+                        "key": "isRequired",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Choose these appropriate field type for your collection data",
+                        "key": "type",
+                        "valueType": {
+                          "type": "id",
+                          "value": "CollectionsCollectionIdFieldsPostRequestBodyContentApplicationJsonSchemaType"
+                        }
+                      },
+                      {
+                        "description": "The name of a field",
+                        "key": "displayName",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Additional text to help anyone filling out this field",
+                        "key": "helpText",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "description": "The field to create"
+              }
+            ]
           },
           "response": {
             "type": {
@@ -62560,6 +63301,62 @@
               }
             },
             "description": "The field details to update"
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Define whether a field is required in a collection",
+                        "key": "isRequired",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "The name of a field",
+                        "key": "displayName",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Additional text to help anyone filling out this field",
+                        "key": "helpText",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "description": "The field details to update"
+              }
+            ]
           },
           "response": {
             "type": {
@@ -62860,6 +63657,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -63218,6 +64016,130 @@
             },
             "description": "Details of the item to create"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Unique identifier for the Item",
+                        "key": "id",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "Identifier for the locale of the CMS item",
+                        "key": "cmsLocaleId",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "The date the item was last published",
+                        "key": "lastPublished",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "format": "date-string"
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "The date the item was last updated",
+                        "key": "lastUpdated",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "format": "date-string"
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "The date the item was created",
+                        "key": "createdOn",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "format": "date-string"
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "Boolean determining if the Item is set to archived",
+                        "key": "isArchived",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "default": false
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Boolean determining if the Item is set to draft",
+                        "key": "isDraft",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "default": false
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "key": "fieldData",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "CollectionsCollectionIdItemsPostRequestBodyContentApplicationJsonSchemaFieldData"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "description": "Details of the item to create"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -63541,6 +64463,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -63899,6 +64822,130 @@
             },
             "description": "Details of the item to create"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Unique identifier for the Item",
+                        "key": "id",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "Identifier for the locale of the CMS item",
+                        "key": "cmsLocaleId",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "The date the item was last published",
+                        "key": "lastPublished",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "format": "date-string"
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "The date the item was last updated",
+                        "key": "lastUpdated",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "format": "date-string"
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "The date the item was created",
+                        "key": "createdOn",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "format": "date-string"
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "Boolean determining if the Item is set to archived",
+                        "key": "isArchived",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "default": false
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Boolean determining if the Item is set to draft",
+                        "key": "isDraft",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "default": false
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "key": "fieldData",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "CollectionsCollectionIdItemsLivePostRequestBodyContentApplicationJsonSchemaFieldData"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "description": "Details of the item to create"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -64248,6 +65295,136 @@
               }
             },
             "description": "Details of the item to create"
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Unique identifier for the Item",
+                        "key": "id",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "Array of identifiers for the locales where the item will be created",
+                        "key": "cmsLocaleIds",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "list",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "The date the item was last published",
+                        "key": "lastPublished",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "format": "date-string"
+                              }
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "The date the item was last updated",
+                        "key": "lastUpdated",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "format": "date-string"
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "The date the item was created",
+                        "key": "createdOn",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "format": "date-string"
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "Boolean determining if the Item is set to archived",
+                        "key": "isArchived",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "default": false
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Boolean determining if the Item is set to draft",
+                        "key": "isDraft",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "default": false
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "key": "fieldData",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "CollectionsCollectionIdItemsBulkPostRequestBodyContentApplicationJsonSchemaFieldData"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "description": "Details of the item to create"
+              }
+            ]
           },
           "response": {
             "type": {
@@ -64616,6 +65793,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -64839,6 +66017,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -65138,6 +66317,130 @@
             },
             "description": "Details of the item to update"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Unique identifier for the Item",
+                        "key": "id",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "Identifier for the locale of the CMS item",
+                        "key": "cmsLocaleId",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "The date the item was last published",
+                        "key": "lastPublished",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "format": "date-string"
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "The date the item was last updated",
+                        "key": "lastUpdated",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "format": "date-string"
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "The date the item was created",
+                        "key": "createdOn",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "format": "date-string"
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "Boolean determining if the Item is set to archived",
+                        "key": "isArchived",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "default": false
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Boolean determining if the Item is set to draft",
+                        "key": "isDraft",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "default": false
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "key": "fieldData",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "CollectionsCollectionIdItemsItemIdPatchRequestBodyContentApplicationJsonSchemaFieldData"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "description": "Details of the item to update"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -65396,6 +66699,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -65619,6 +66923,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -65918,6 +67223,130 @@
             },
             "description": "Details of the item to update"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Unique identifier for the Item",
+                        "key": "id",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "Identifier for the locale of the CMS item",
+                        "key": "cmsLocaleId",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "The date the item was last published",
+                        "key": "lastPublished",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "format": "date-string"
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "The date the item was last updated",
+                        "key": "lastUpdated",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "format": "date-string"
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "The date the item was created",
+                        "key": "createdOn",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "format": "date-string"
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "Boolean determining if the Item is set to archived",
+                        "key": "isArchived",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "default": false
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Boolean determining if the Item is set to draft",
+                        "key": "isDraft",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "default": false
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "key": "fieldData",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "CollectionsCollectionIdItemsItemIdLivePatchRequestBodyContentApplicationJsonSchemaFieldData"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "description": "Details of the item to update"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -66169,6 +67598,36 @@
             },
             "description": "An array of Item IDs"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "key": "itemIds",
+                        "valueType": {
+                          "type": "list",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "format": "objectid"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "description": "An array of Item IDs"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -66367,6 +67826,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -66620,6 +68080,66 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "A list of scripts applied to a Site or a Page",
+                        "key": "scripts",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "list",
+                            "itemType": {
+                              "type": "id",
+                              "value": "PagesPageIdCustomCodePutRequestBodyContentApplicationJsonSchemaScriptsItems"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Date when the Site's scripts were last updated",
+                        "key": "lastUpdated",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "format": "date-string"
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "Date when the Site's scripts were created",
+                        "key": "createdOn",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "format": "date-string"
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -66854,6 +68374,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -67023,6 +68544,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -67276,6 +68798,66 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "A list of scripts applied to a Site or a Page",
+                        "key": "scripts",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "list",
+                            "itemType": {
+                              "type": "id",
+                              "value": "SitesSiteIdCustomCodePutRequestBodyContentApplicationJsonSchemaScriptsItems"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Date when the Site's scripts were last updated",
+                        "key": "lastUpdated",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "format": "date-string"
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "Date when the Site's scripts were created",
+                        "key": "createdOn",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "format": "date-string"
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -67504,6 +69086,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -67690,6 +69273,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -67956,6 +69540,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -68242,6 +69827,77 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "URI for an externally hosted script location",
+                        "key": "hostedLocation",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Sub-Resource Integrity Hash",
+                        "key": "integrityHash",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "format": "hash"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Define whether the script can be copied on site duplication and transfer",
+                        "key": "canCopy",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "default": false
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "A Semantic Version (SemVer) string, denoting the version of the script",
+                        "key": "version",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "description": "User-facing name for the script. Must be between 1 and 50 alphanumeric characters",
+                        "key": "displayName",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -68504,6 +70160,80 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "The code to be added to the site (to be hosted by Webflow).",
+                        "key": "sourceCode",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Sub-Resource Integrity Hash. Only required for externally hosted scripts (passed via hostedLocation)",
+                        "key": "integrityHash",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "format": "hash"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Define whether the script can be copied on site duplication and transfer",
+                        "key": "canCopy",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "default": false
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "A Semantic Version (SemVer) string, denoting the version of the script",
+                        "key": "version",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "description": "User-facing name for the script. Must be between 1 and 50 alphanumeric characters",
+                        "key": "displayName",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -68705,6 +70435,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -68962,6 +70693,56 @@
             },
             "description": "Information about the asset to create"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "file name including file extension",
+                        "key": "fileName",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "description": "MD5 hash of the file",
+                        "key": "fileHash",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "description": "id of the Asset folder (optional)",
+                        "key": "parentFolder",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "description": "Information about the asset to create"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -69178,6 +70959,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -69383,6 +71165,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -69564,6 +71347,33 @@
               }
             },
             "description": "Information about the asset to update"
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "file name including file extension",
+                        "key": "displayName",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "description": "Information about the asset to update"
+              }
+            ]
           },
           "response": {
             "type": {
@@ -69779,6 +71589,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -70013,6 +71824,45 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "A human readable name for the Asset Folder",
+                        "key": "displayName",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "description": "An (optional) pointer to a parent Asset Folder (or null for root)",
+                        "key": "parentFolder",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -70203,6 +72053,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -70395,6 +72246,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -70755,6 +72607,133 @@
             },
             "description": "The Webhook registration object"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Unique identifier for the Webhook registration",
+                        "key": "id",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "format": "objectid"
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "* `form_submission` - Sends the [form_submission](#form_submission) event\n* `site_publish` - Sends a [site_publish](#site_publish) event\n* `page_created` - Send the [page_created](#page_created) event\n* `page_metadata_updated` - Sends the [page_metadata_updated](#page_metadata_updated) event\n* `page_deleted` - Sends the [page_deleted](#page_deleted) event\n* `ecomm_new_order` - Sends the new [ecomm_new_order](#ecomm_new_order) event\n* `ecomm_order_changed` - Sends the [ecomm_order_changed](#ecomm_order_changed) event\n* `ecomm_inventory_changed` - Sends the [ecomm_inventory_changed](#ecomm_inventory_changed) event\n* `user_account_added` - Sends the [user_account_added](#user_account_added) event\n* `user_account_updated` - Sends the [user_account_updated](#user_account_updated) event\n* `user_account_deleted` - Sends the [user_account_deleted](#user_account_deleted) event\n* `collection_item_created` - Sends the [collection_item_created](#collection_item_created) event\n* `collection_item_changed` - Sends the [collection_item_changed](#collection_item_changed) event\n* `collection_item_deleted` - Sends the [collection_item_deleted](#collection_item_deleted) event\n* `collection_item_unpublished` - Sends the [collection_item_unpublished](#collection_item_unpublished) event\n",
+                        "key": "triggerType",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "SitesSiteIdWebhooksPostRequestBodyContentApplicationJsonSchemaTriggerType"
+                          }
+                        }
+                      },
+                      {
+                        "description": "URL to send the Webhook payload to",
+                        "key": "url",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Unique identifier for the Workspace the Webhook is registered in",
+                        "key": "workspaceId",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "format": "objectid"
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "Unique identifier for the Site the Webhook is registered in",
+                        "key": "siteId",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "format": "objectid"
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "Only supported for the `form_submission` trigger type. Filter for the form you want Webhooks to be sent for. ",
+                        "key": "filter",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "SitesSiteIdWebhooksPostRequestBodyContentApplicationJsonSchemaFilter"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Date the Webhook instance was last triggered",
+                        "key": "lastTriggered",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "format": "date-time"
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      },
+                      {
+                        "description": "Date the Webhook registration was created",
+                        "key": "createdOn",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "format": "date-time"
+                            }
+                          }
+                        },
+                        "propertyAccess": "READ_ONLY"
+                      }
+                    ]
+                  }
+                },
+                "description": "The Webhook registration object"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -70955,6 +72934,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -71132,6 +73112,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -71339,6 +73320,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -71594,6 +73576,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -71996,6 +73979,55 @@
               }
             },
             "description": "The Product and SKU to create"
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Indicate whether your Product should be set as \"staging\" or \"live\"",
+                        "key": "publishStatus",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "SitesSiteIdProductsPostRequestBodyContentApplicationJsonSchemaPublishStatus"
+                          }
+                        }
+                      },
+                      {
+                        "key": "product",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "SitesSiteIdProductsPostRequestBodyContentApplicationJsonSchemaProduct"
+                          }
+                        }
+                      },
+                      {
+                        "description": "The SKU object",
+                        "key": "sku",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "SitesSiteIdProductsPostRequestBodyContentApplicationJsonSchemaSku"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "description": "The Product and SKU to create"
+              }
+            ]
           },
           "response": {
             "type": {
@@ -72480,6 +74512,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -72882,6 +74915,56 @@
               }
             },
             "description": "The product to update"
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Indicate whether your Product should be set as \"staging\" or \"live\"",
+                        "key": "publishStatus",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "SitesSiteIdProductsProductIdPatchRequestBodyContentApplicationJsonSchemaPublishStatus"
+                          }
+                        }
+                      },
+                      {
+                        "description": "The Product object",
+                        "key": "product",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "SitesSiteIdProductsProductIdPatchRequestBodyContentApplicationJsonSchemaProduct"
+                          }
+                        }
+                      },
+                      {
+                        "description": "The SKU object",
+                        "key": "sku",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "SitesSiteIdProductsProductIdPatchRequestBodyContentApplicationJsonSchemaSku"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "description": "The product to update"
+              }
+            ]
           },
           "response": {
             "type": {
@@ -73372,6 +75455,45 @@
             },
             "description": "The SKUs to add"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Indicate whether your Product should be set as \"staging\" or \"live\"",
+                        "key": "publishStatus",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "SitesSiteIdProductsProductIdSkusPostRequestBodyContentApplicationJsonSchemaPublishStatus"
+                          }
+                        }
+                      },
+                      {
+                        "description": "An array of the SKU data your are adding",
+                        "key": "skus",
+                        "valueType": {
+                          "type": "list",
+                          "itemType": {
+                            "type": "id",
+                            "value": "SitesSiteIdProductsProductIdSkusPostRequestBodyContentApplicationJsonSchemaSkusItems"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "description": "The SKUs to add"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -73717,6 +75839,42 @@
             },
             "description": "The SKU to update"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Indicate whether your Product should be set as \"staging\" or \"live\"",
+                        "key": "publishStatus",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "SitesSiteIdProductsProductIdSkusSkuIdPatchRequestBodyContentApplicationJsonSchemaPublishStatus"
+                          }
+                        }
+                      },
+                      {
+                        "description": "The SKU object",
+                        "key": "sku",
+                        "valueType": {
+                          "type": "id",
+                          "value": "SitesSiteIdProductsProductIdSkusSkuIdPatchRequestBodyContentApplicationJsonSchemaSku"
+                        }
+                      }
+                    ]
+                  }
+                },
+                "description": "The SKU to update"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -73991,6 +76149,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
