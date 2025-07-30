@@ -1,5 +1,6 @@
-use serde::{Deserialize, Serialize};
+use crate::user_list_container::UserListContainer;
 use uuid::Uuid;
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct UserPage {

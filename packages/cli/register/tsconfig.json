@@ -3,12 +3,34 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "lib",
-    "rootDir": "src",
+    "rootDir": "src"
   },
-  "include": [
-    "./src/**/*"
-  ],
+  "include": ["./src/**/*"],
   "references": [
+    {
+      "path": "../workspace/loader"
+    },
+    {
+      "path": "../task-context"
+    },
+    {
+      "path": "../project-loader"
+    },
+    {
+      "path": "../workspace/lazy-fern-workspace"
+    },
+    {
+      "path": "../../commons/ir-utils"
+    },
+    {
+      "path": "../../ir-sdk"
+    },
+    {
+      "path": "../generation/ir-generator"
+    },
+    {
+      "path": "../../commons/fs-utils"
+    },
     {
       "path": "../../commons/core-utils"
     },
@@ -16,37 +38,16 @@
       "path": "../../core"
     },
     {
-      "path": "../../ir-sdk"
-    },
-    {
-      "path": "../auth"
+      "path": "../configuration"
     },
     {
       "path": "../cli-source-resolver"
     },
     {
-      "path": "../configuration"
-    },
-    {
-      "path": "../workspace/lazy-fern-workspace"
-    },
-    {
-      "path": "../generation/ir-generator"
-    },
-    {
-      "path": "../task-context"
+      "path": "../auth"
     },
     {
       "path": "../workspace/commons"
-    },
-    {
-      "path": "../project-loader"
-    },
-    {
-      "path": "../../commons/fs-utils"
-    },
-    {
-      "path": "../../commons/ir-utils"
-    },
+    }
   ]
 }

@@ -1,4 +1,4 @@
-// Generated types module
+pub mod r#type;
 
-pub mod type;
-pub use type::*;
+pub use r#type::{*};
+

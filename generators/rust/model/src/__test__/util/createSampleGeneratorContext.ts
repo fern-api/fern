@@ -11,11 +11,11 @@ export async function createSampleGeneratorContext(testDefinitionName: string): 
     const absolutePathToWorkspace = AbsoluteFilePath.of(resolve(__dirname, "../test-definitions", testDefinitionName));
     const ir = await createSampleIr(absolutePathToWorkspace);
     const generatorConfig = createSampleGeneratorConfig();
-    const customConfig: ModelCustomConfigSchema = {
+    const customConfig: ModelCustomConfigSchema = ModelCustomConfigSchema.parse({
         generateBuilders: false,
         deriveDebug: true,
         deriveClone: true
-    };
+    });
     const notificationService = new GeneratorNotificationService({
         type: "local",
         _visit: (visitor) => visitor.local()

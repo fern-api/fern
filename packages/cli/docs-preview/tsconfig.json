@@ -1,14 +1,42 @@
 {
   "extends": "@fern-api/configs/tsconfig/main.json",
-  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src",
+    "types": ["vitest/globals"]
+  },
   "include": ["./src/**/*"],
   "references": [
-    { "path": "../../commons/fs-utils" },
-    { "path": "../../ir-sdk" },
-    { "path": "../docs-resolver" },
-    { "path": "../logger" },
-    { "path": "../project-loader" },
-    { "path": "../register" },
-    { "path": "../task-context" }
+    {
+      "path": "../workspace/loader"
+    },
+    {
+      "path": "../docs-markdown-utils"
+    },
+    {
+      "path": "../task-context"
+    },
+    {
+      "path": "../register"
+    },
+    {
+      "path": "../project-loader"
+    },
+    {
+      "path": "../../commons/logging-execa"
+    },
+    {
+      "path": "../logger"
+    },
+    {
+      "path": "../../ir-sdk"
+    },
+    {
+      "path": "../../commons/fs-utils"
+    },
+    {
+      "path": "../docs-resolver"
+    }
   ]
 }

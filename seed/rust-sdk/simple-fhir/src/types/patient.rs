@@ -1,5 +1,6 @@
+use crate::script::Script;
+use crate::base_resource::BaseResource;
 use serde::{Deserialize, Serialize};
-use crate::types::base_resource::BaseResource;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Patient {

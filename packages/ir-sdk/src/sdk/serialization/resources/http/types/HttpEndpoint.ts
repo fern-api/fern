@@ -14,6 +14,7 @@ import { HttpPath } from "./HttpPath";
 import { PathParameter } from "./PathParameter";
 import { QueryParameter } from "./QueryParameter";
 import { HttpRequestBody } from "./HttpRequestBody";
+import { V2HttpRequestBodies } from "./V2HttpRequestBodies";
 import { SdkRequest } from "./SdkRequest";
 import { HttpResponse } from "./HttpResponse";
 import { V2HttpResponses } from "./V2HttpResponses";
@@ -45,6 +46,7 @@ export const HttpEndpoint: core.serialization.ObjectSchema<serializers.HttpEndpo
             allPathParameters: core.serialization.list(PathParameter),
             queryParameters: core.serialization.list(QueryParameter),
             requestBody: HttpRequestBody.optional(),
+            v2RequestBodies: V2HttpRequestBodies.optional(),
             sdkRequest: SdkRequest.optional(),
             response: HttpResponse.optional(),
             v2Responses: V2HttpResponses.optional(),
@@ -77,6 +79,7 @@ export declare namespace HttpEndpoint {
         allPathParameters: PathParameter.Raw[];
         queryParameters: QueryParameter.Raw[];
         requestBody?: HttpRequestBody.Raw | null;
+        v2RequestBodies?: V2HttpRequestBodies.Raw | null;
         sdkRequest?: SdkRequest.Raw | null;
         response?: HttpResponse.Raw | null;
         v2Responses?: V2HttpResponses.Raw | null;

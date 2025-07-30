@@ -3,7 +3,7 @@ import { OpenAPIV3_1 } from "openapi-types";
 
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { HttpHeader, HttpMethod, HttpRequestBody, PathParameter, QueryParameter } from "@fern-api/ir-sdk";
-import { AbstractConverter, Converters, Extensions } from "@fern-api/v2-importer-commons";
+import { AbstractConverter, Converters, Extensions } from "@fern-api/v3-importer-commons";
 
 import { FernStreamingExtension } from "../../../extensions/x-fern-streaming";
 import { GroupNameAndLocation } from "../../../types/GroupNameAndLocation";
@@ -196,7 +196,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         group: string[] | undefined;
         method: string;
         streamingExtension: FernStreamingExtension.Output | undefined;
-    }): ConvertedRequestBody | undefined | null {
+    }): ConvertedRequestBody[] | undefined | null {
         if (this.operation.requestBody == null) {
             return undefined;
         }
@@ -210,29 +210,35 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
             return null;
         }
 
-        const requestBodyConverter = new RequestBodyConverter({
-            context: this.context,
-            breadcrumbs,
-            requestBody: resolvedRequestBody,
-            group: group ?? [],
-            method,
-            streamingExtension
-        });
-        const convertedRequestBody = requestBodyConverter.convert();
+        const convertedRequestBodies: ConvertedRequestBody[] = [];
 
-        if (convertedRequestBody != null) {
-            this.inlinedTypes = {
-                ...this.inlinedTypes,
-                ...convertedRequestBody.inlinedTypes
-            };
-            return {
-                requestBody: convertedRequestBody.requestBody,
-                streamRequestBody: convertedRequestBody.streamRequestBody,
-                examples: convertedRequestBody.examples
-            };
+        for (const [contentType, mediaType] of Object.entries(resolvedRequestBody.content)) {
+            const requestBodyConverter = new RequestBodyConverter({
+                context: this.context,
+                breadcrumbs,
+                contentType,
+                mediaType,
+                description: resolvedRequestBody.description,
+                required: resolvedRequestBody.required,
+                group: group ?? [],
+                method,
+                streamingExtension
+            });
+            const convertedRequestBody = requestBodyConverter.convert();
+            if (convertedRequestBody != null) {
+                this.inlinedTypes = {
+                    ...this.inlinedTypes,
+                    ...convertedRequestBody.inlinedTypes
+                };
+                convertedRequestBodies.push({
+                    requestBody: convertedRequestBody.requestBody,
+                    streamRequestBody: convertedRequestBody.streamRequestBody,
+                    examples: convertedRequestBody.examples
+                });
+            }
         }
 
-        return undefined;
+        return convertedRequestBodies;
     }
 
     protected computeGroupNameAndLocationFromExtensions(): GroupNameAndLocation | undefined {

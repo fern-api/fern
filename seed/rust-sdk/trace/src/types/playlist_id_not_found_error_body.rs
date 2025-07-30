@@ -1,3 +1,4 @@
+use crate::playlist_id::PlaylistId;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

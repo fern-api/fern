@@ -31,6 +31,24 @@ func (p *Parent) GetExtraProperties() map[string]any {
 	return p.extraProperties
 }
 
+func (p *Parent) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Parent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*p = Parent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (p *Parent) String() string {
 	if len(p.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
@@ -70,6 +88,24 @@ func (c *Child) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return c.extraProperties
+}
+
+func (c *Child) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Child
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = Child(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (c *Child) String() string {

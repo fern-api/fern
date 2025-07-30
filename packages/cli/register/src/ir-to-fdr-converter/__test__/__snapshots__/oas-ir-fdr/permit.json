@@ -7243,6 +7243,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -7370,6 +7371,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "OrganizationCreate"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -7510,6 +7528,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -7636,6 +7655,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -7759,6 +7779,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "OrganizationUpdate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -7871,6 +7908,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -8018,6 +8056,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -8151,6 +8190,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ProjectCreate"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -8293,6 +8349,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -8425,6 +8482,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -8547,6 +8605,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ProjectUpdate"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -8712,6 +8787,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -9033,6 +9109,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -9197,6 +9274,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "EnvironmentCreate"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -9369,6 +9463,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -9530,6 +9625,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -9671,6 +9767,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "EnvironmentUpdate"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -9850,6 +9963,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "EnvironmentCopy"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -10104,6 +10234,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -10285,6 +10416,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ResourceCreate"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -10542,6 +10690,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -10771,6 +10920,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ResourceReplace"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -10998,6 +11164,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -11158,6 +11325,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ResourceUpdate"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -11422,6 +11606,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -11618,6 +11803,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ResourceActionCreate"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -11822,6 +12024,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -12013,6 +12216,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -12192,6 +12396,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ResourceActionUpdate"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -12417,6 +12638,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -12617,6 +12839,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ResourceActionGroupCreate"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -12835,6 +13074,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -13032,6 +13272,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -13211,6 +13452,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ResourceActionGroupUpdate"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -13438,6 +13696,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -13644,6 +13903,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ResourceRoleCreate"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -13870,6 +14146,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -14071,6 +14348,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -14250,6 +14528,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ResourceRoleUpdate"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -14480,6 +14775,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "AddRolePermissions"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -14707,6 +15019,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "RemoveRolePermissions"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -14920,6 +15249,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -15130,6 +15460,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -15365,6 +15696,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -15561,6 +15893,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ResourceAttributeCreate"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -15767,6 +16116,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -15992,6 +16342,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -16171,6 +16522,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ResourceAttributeUpdate"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -16393,6 +16761,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -16584,6 +16953,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ResourceAttributeCreate"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -16785,6 +17171,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -17004,6 +17391,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -17178,6 +17566,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ResourceAttributeUpdate"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -17413,6 +17818,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -17600,6 +18006,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "RoleCreate"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -17805,6 +18228,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -17985,6 +18409,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -18145,6 +18570,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "RoleUpdate"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -18354,6 +18796,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "AddRolePermissions"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -18560,6 +19019,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "RemoveRolePermissions"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -18752,6 +19228,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -18941,6 +19418,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -19193,6 +19671,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -19406,6 +19885,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ConditionSetCreate"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -19661,6 +20157,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -19869,6 +20366,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -20029,6 +20527,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ConditionSetUpdate"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -20311,6 +20826,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -20561,6 +21077,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -20829,6 +21346,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -21032,6 +21550,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UserCreate"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -21297,6 +21832,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -21543,6 +22079,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UserCreate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -21597,7 +22150,6 @@
           ],
           "examples": [
             {
-              "name": "usersReplaceUserExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/users/user_id",
               "pathParameters": {
@@ -21732,7 +22284,6 @@
               }
             },
             {
-              "name": "usersReplaceUserExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/users/user_id",
               "pathParameters": {
@@ -21955,6 +22506,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -22115,6 +22667,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UserUpdate"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -22368,6 +22937,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UserRoleCreate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -22563,6 +23149,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UserRoleRemove"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -22790,6 +23393,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -23041,6 +23645,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -23218,6 +23823,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "TenantCreate"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -23421,6 +24043,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -23601,6 +24224,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -23761,6 +24385,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "TenantUpdate"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -23965,6 +24606,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -24177,6 +24819,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -24352,6 +24995,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "RoleAssignmentCreate"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -24532,6 +25192,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "RoleAssignmentRemove"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -24688,6 +25365,26 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "list",
+                      "itemType": {
+                        "type": "id",
+                        "value": "RoleAssignmentCreate"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -24853,6 +25550,26 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "list",
+                      "itemType": {
+                        "type": "id",
+                        "value": "RoleAssignmentRemove"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -25085,6 +25802,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -25258,6 +25976,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ConditionSetRuleCreate"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -25446,6 +26181,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ConditionSetRuleRemove"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -25630,6 +26382,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -25807,6 +26560,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ResourceInstanceCreate"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -26008,6 +26778,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -26188,6 +26959,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -26348,6 +27120,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ResourceInstanceUpdate"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -26548,6 +27337,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UserCreateBulkOperation"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -26705,6 +27511,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UserReplaceBulkOperation"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -26864,6 +27687,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UserDeleteBulkOperation"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -27017,6 +27857,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "TenantCreateBulkOperation"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -27177,6 +28034,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "TenantDeleteBulkOperation"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {

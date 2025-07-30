@@ -1,5 +1,5 @@
+use crate::parent::Parent;
 use serde::{Deserialize, Serialize};
-use crate::types::parent::Parent;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Child {

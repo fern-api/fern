@@ -92,6 +92,25 @@
           },
           "description": "A simple API request."
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Request"
+                  }
+                },
+                "description": "A simple API request."
+              },
+              "description": "A simple API request."
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",

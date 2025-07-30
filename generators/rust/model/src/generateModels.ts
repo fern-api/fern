@@ -11,21 +11,22 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
     for (const [_typeId, typeDeclaration] of Object.entries(context.ir.types)) {
         const file = typeDeclaration.shape._visit<RustFile | undefined>({
             alias: (aliasTypeDeclaration) => {
-                return new AliasGenerator(typeDeclaration, aliasTypeDeclaration).generate();
+                return new AliasGenerator(typeDeclaration, aliasTypeDeclaration, context).generate();
             },
             enum: (enumTypeDeclaration) => {
                 return new EnumGenerator(typeDeclaration, enumTypeDeclaration).generate();
             },
             object: (objectTypeDeclaration) => {
-                return new StructGenerator(typeDeclaration, objectTypeDeclaration).generate();
+                return new StructGenerator(typeDeclaration, objectTypeDeclaration, context).generate();
             },
             union: (unionTypeDeclaration) => {
-                return new UnionGenerator(typeDeclaration, unionTypeDeclaration).generate();
+                return new UnionGenerator(typeDeclaration, unionTypeDeclaration, context).generate();
             },
             undiscriminatedUnion: (undiscriminatedUnionTypeDeclaration) => {
                 return new UndiscriminatedUnionGenerator(
                     typeDeclaration,
-                    undiscriminatedUnionTypeDeclaration
+                    undiscriminatedUnionTypeDeclaration,
+                    context
                 ).generate();
             },
             _other: () => {

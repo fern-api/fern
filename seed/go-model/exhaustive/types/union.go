@@ -43,6 +43,24 @@ func (d *Dog) GetExtraProperties() map[string]any {
 	return d.extraProperties
 }
 
+func (d *Dog) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Dog
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*d = Dog(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
+	if err != nil {
+		return err
+	}
+	d.extraProperties = extraProperties
+	d.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (d *Dog) String() string {
 	if len(d.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
@@ -82,6 +100,24 @@ func (c *Cat) GetExtraProperties() map[string]any {
 		return nil
 	}
 	return c.extraProperties
+}
+
+func (c *Cat) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Cat
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = Cat(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (c *Cat) String() string {

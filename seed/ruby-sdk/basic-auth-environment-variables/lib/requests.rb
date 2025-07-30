@@ -46,7 +46,7 @@ module SeedBasicAuthEnvironmentVariablesClient
       }
       unless @basic_auth_token.nil?
         headers["Authorization"] =
-          (@basic_auth_token.is_a?(Method) ? @basic_auth_token.call : @basic_auth_token)
+          ((@basic_auth_token.is_a? Method) ? @basic_auth_token.call : @basic_auth_token)
       end
       headers
     end
@@ -94,7 +94,7 @@ module SeedBasicAuthEnvironmentVariablesClient
       }
       unless @basic_auth_token.nil?
         headers["Authorization"] =
-          (@basic_auth_token.is_a?(Method) ? @basic_auth_token.call : @basic_auth_token)
+          ((@basic_auth_token.is_a? Method) ? @basic_auth_token.call : @basic_auth_token)
       end
       headers
     end

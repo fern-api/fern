@@ -7,7 +7,7 @@ import {
     FileDescriptorProto
 } from "@bufbuild/protobuf/wkt";
 
-import { AbstractConverter } from "@fern-api/v2-importer-commons";
+import { AbstractConverter } from "@fern-api/v3-importer-commons";
 
 import { Logger } from "../../commons/logging";
 import { ProtofileConverterContext } from "../ProtofileConverterContext";

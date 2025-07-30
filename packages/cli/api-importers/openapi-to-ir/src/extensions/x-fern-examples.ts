@@ -1,5 +1,5 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { AbstractExtension } from "@fern-api/v2-importer-commons";
+import { AbstractExtension } from "@fern-api/v3-importer-commons";
 
 export declare namespace FernExamplesExtension {
     export interface Args extends AbstractExtension.Args {

@@ -1,0 +1,37 @@
+{
+  "extends": "@fern-api/configs/tsconfig/test.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src",
+    "types": [
+      "vitest/globals"
+    ]
+  },
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "./src/**/__test__/**/generated"
+  ],
+  "references": [
+    {
+      "path": "../../../commons/fs-utils"
+    },
+    {
+      "path": "../../cli-source-resolver"
+    },
+    {
+      "path": "../../generation/ir-generator"
+    },
+    {
+      "path": "../../task-context"
+    },
+    {
+      "path": "../../workspace/lazy-fern-workspace"
+    },
+    {
+      "path": "../../workspace/loader"
+    }
+  ]
+}

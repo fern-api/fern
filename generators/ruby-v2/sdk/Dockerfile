@@ -1,4 +1,4 @@
-FROM node:20.18-alpine3.20
+FROM node:22.12-alpine3.20
 
 ENV YARN_CACHE_FOLDER=/.yarn
 
@@ -20,4 +20,4 @@ RUN npm install -f -g @fern-api/generator-cli
 
 COPY generators/ruby-v2/sdk/dist /dist
 
-ENTRYPOINT ["node", "/dist/cli.cjs"]
+ENTRYPOINT ["node", "--enable-source-maps", "/dist/cli.cjs"]

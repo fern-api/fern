@@ -1,8 +1,488 @@
 {
   "extends": "@fern-api/configs/tsconfig/main.json",
-  "ts-node": {
-    "compilerOptions": {
-      "module": "CommonJS"
+  "references": [
+    {
+      "path": "./generators/typescript/express/express-inlined-request-body-schema-generator"
+    },
+    {
+      "path": "./generators/typescript/express/express-endpoint-type-schemas-generator"
+    },
+    {
+      "path": "./generators/typescript/express/express-inlined-request-body-generator"
+    },
+    {
+      "path": "./generators/typescript/sdk/sdk-inlined-request-body-schema-generator"
+    },
+    {
+      "path": "./packages/cli/generation/remote-generation/remote-workspace-runner"
+    },
+    {
+      "path": "./packages/cli/generation/local-generation/local-workspace-runner"
+    },
+    {
+      "path": "./generators/typescript/express/generic-express-error-generators"
+    },
+    {
+      "path": "./generators/typescript/sdk/sdk-endpoint-type-schemas-generator"
+    },
+    {
+      "path": "./generators/typescript/express/express-error-schema-generator"
+    },
+    {
+      "path": "./generators/typescript/model/type-reference-example-generator"
+    },
+    {
+      "path": "./packages/cli/api-importers/openapi/openapi-ir-to-fern-tests"
+    },
+    {
+      "path": "./generators/typescript/utils/abstract-error-class-generator"
+    },
+    {
+      "path": "./generators/typescript/sdk/websocket-type-schema-generator"
+    },
+    {
+      "path": "./packages/cli/workspace/browser-compatible-fern-workspace"
+    },
+    {
+      "path": "./packages/cli/api-importers/conjure/conjure-to-fern-tests"
+    },
+    {
+      "path": "./generators/typescript/sdk/endpoint-error-union-generator"
+    },
+    {
+      "path": "./generators/typescript/express/express-register-generator"
+    },
+    {
+      "path": "./generators/typescript/express/express-service-generator"
+    },
+    {
+      "path": "./generators/typescript/sdk/generic-sdk-error-generators"
+    },
+    {
+      "path": "./packages/cli/generation/local-generation/docker-utils"
+    },
+    {
+      "path": "./packages/cli/api-importers/openapi/openapi-ir-to-fern"
+    },
+    {
+      "path": "./generators/typescript/utils/abstract-schema-generator"
+    },
+    {
+      "path": "./generators/typescript/express/express-error-generator"
+    },
+    {
+      "path": "./generators/typescript/model/type-reference-converters"
+    },
+    {
+      "path": "./packages/cli/api-importers/openapi/openapi-ir-parser"
+    },
+    {
+      "path": "./generators/typescript/sdk/sdk-error-schema-generator"
+    },
+    {
+      "path": "./generators/typescript/sdk/request-wrapper-generator"
+    },
+    {
+      "path": "./packages/cli/api-importers/conjure/conjure-to-fern"
+    },
+    {
+      "path": "./generators/typescript/utils/abstract-generator-cli"
+    },
+    {
+      "path": "./generators/typescript/model/union-schema-generator"
+    },
+    {
+      "path": "./generators/typescript/model/type-schema-generator"
+    },
+    {
+      "path": "./generators/typescript-v2/browser-compatible-base"
+    },
+    {
+      "path": "./generators/typescript/sdk/environments-generator"
+    },
+    {
+      "path": "./generators/typescript/sdk/client-class-generator"
+    },
+    {
+      "path": "./packages/cli/api-importers/conjure/conjure-sdk"
+    },
+    {
+      "path": "./packages/cli/api-importers/v3-importer-commons"
+    },
+    {
+      "path": "./packages/cli/fern-definition/ir-to-jsonschema"
+    },
+    {
+      "path": "./packages/cli/api-importers/openapi/openapi-ir"
+    },
+    {
+      "path": "./generators/typescript/sdk/sdk-error-generator"
+    },
+    {
+      "path": "./generators/python-v2/browser-compatible-base"
+    },
+    {
+      "path": "./packages/cli/api-importers/v3-importer-tests"
+    },
+    {
+      "path": "./generators/typescript/model/union-generator"
+    },
+    {
+      "path": "./packages/cli/generation/ir-generator-tests"
+    },
+    {
+      "path": "./packages/cli/workspace/lazy-fern-workspace"
+    },
+    {
+      "path": "./generators/typescript/model/type-generator"
+    },
+    {
+      "path": "./packages/cli/api-importers/asyncapi-to-ir"
+    },
+    {
+      "path": "./generators/typescript-v2/dynamic-snippets"
+    },
+    {
+      "path": "./generators/typescript/playground/browser"
+    },
+    {
+      "path": "./packages/cli/api-importers/openapi-to-ir"
+    },
+    {
+      "path": "./packages/cli/api-importers/openrpc-to-ir"
+    },
+    {
+      "path": "./packages/cli/generation/protoc-gen-fern"
+    },
+    {
+      "path": "./packages/cli/generation/source-resolver"
+    },
+    {
+      "path": "./generators/typescript/express/generator"
+    },
+    {
+      "path": "./packages/cli/fern-definition/formatter"
+    },
+    {
+      "path": "./packages/cli/fern-definition/validator"
+    },
+    {
+      "path": "./packages/cli/yaml/generators-validator"
+    },
+    {
+      "path": "./packages/cli/generation/ir-migrations"
+    },
+    {
+      "path": "./generators/python-v2/dynamic-snippets"
+    },
+    {
+      "path": "./generators/typescript/utils/resolvers"
+    },
+    {
+      "path": "./packages/cli/generation/ir-generator"
+    },
+    {
+      "path": "./packages/cli/docs-importers/mintlify"
+    },
+    {
+      "path": "./packages/cli/workspace/oss-validator"
+    },
+    {
+      "path": "./generators/typescript/utils/contexts"
+    },
+    {
+      "path": "./packages/cli/docs-importers/commons"
+    },
+    {
+      "path": "./packages/cli/fern-definition/schema"
+    },
+    {
+      "path": "./generators/python-v2/pydantic-model"
+    },
+    {
+      "path": "./generators/java-v2/dynamic-snippets"
+    },
+    {
+      "path": "./generators/ruby-v2/dynamic-snippets"
+    },
+    {
+      "path": "./generators/typescript/utils/commons"
+    },
+    {
+      "path": "./generators/typescript/sdk/generator"
+    },
+    {
+      "path": "./generators/browser-compatible-base"
+    },
+    {
+      "path": "./packages/commons/casings-generator"
+    },
+    {
+      "path": "./generators/csharp/dynamic-snippets"
+    },
+    {
+      "path": "./packages/cli/api-importers/commons"
+    },
+    {
+      "path": "./packages/cli/docs-importers/readme"
+    },
+    {
+      "path": "./generators/typescript-v2/formatter"
+    },
+    {
+      "path": "./packages/cli/configuration-loader"
+    },
+    {
+      "path": "./generators/go-v2/dynamic-snippets"
+    },
+    {
+      "path": "./generators/typescript/express/cli"
+    },
+    {
+      "path": "./packages/cli/cli-source-resolver"
+    },
+    {
+      "path": "./packages/cli/docs-markdown-utils"
+    },
+    {
+      "path": "./packages/cli/yaml/docs-validator"
+    },
+    {
+      "path": "./generators/typescript-mcp/server"
+    },
+    {
+      "path": "./generators/php/dynamic-snippets"
+    },
+    {
+      "path": "./generators/typescript-mcp/model"
+    },
+    {
+      "path": "./packages/cli/workspace/commons"
+    },
+    {
+      "path": "./packages/commons/logging-execa"
+    },
+    {
+      "path": "./generators/python-v2/formatter"
+    },
+    {
+      "path": "./generators/typescript-mcp/base"
+    },
+    {
+      "path": "./generators/typescript-v2/base"
+    },
+    {
+      "path": "./packages/cli/workspace/loader"
+    },
+    {
+      "path": "./generators/typescript/sdk/cli"
+    },
+    {
+      "path": "./packages/cli/posthog-manager"
+    },
+    {
+      "path": "./generators/python-v2/fastapi"
+    },
+    {
+      "path": "./generators/typescript-v2/ast"
+    },
+    {
+      "path": "./packages/cli/cli-migrations"
+    },
+    {
+      "path": "./packages/commons/core-utils"
+    },
+    {
+      "path": "./generators/csharp/formatter"
+    },
+    {
+      "path": "./packages/commons/path-utils"
+    },
+    {
+      "path": "./packages/cli/project-loader"
+    },
+    {
+      "path": "./packages/commons/test-utils"
+    },
+    {
+      "path": "./packages/cli/configuration"
+    },
+    {
+      "path": "./packages/cli/docs-resolver"
+    },
+    {
+      "path": "./generators/go-v2/formatter"
+    },
+    {
+      "path": "./generators/csharp/codegen"
+    },
+    {
+      "path": "./packages/cli/docs-preview"
+    },
+    {
+      "path": "./packages/commons/fs-utils"
+    },
+    {
+      "path": "./packages/commons/ir-utils"
+    },
+    {
+      "path": "./packages/commons/loadable"
+    },
+    {
+      "path": "./generators/python-v2/base"
+    },
+    {
+      "path": "./packages/cli/semver-utils"
+    },
+    {
+      "path": "./packages/cli/task-context"
+    },
+    {
+      "path": "./generators/python-v2/ast"
+    },
+    {
+      "path": "./generators/python-v2/sdk"
+    },
+    {
+      "path": "./generators/ruby-v2/model"
+    },
+    {
+      "path": "./generators/swift/codegen"
+    },
+    {
+      "path": "./packages/cli/cli-logger"
+    },
+    {
+      "path": "./generators/csharp/model"
+    },
+    {
+      "path": "./generators/java-v2/base"
+    },
+    {
+      "path": "./generators/ruby-v2/base"
+    },
+    {
+      "path": "./generators/ruby/codegen"
+    },
+    {
+      "path": "./generators/rust/codegen"
+    },
+    {
+      "path": "./generators/csharp/base"
+    },
+    {
+      "path": "./packages/cli/ete-tests"
+    },
+    {
+      "path": "./generators/go-v2/model"
+    },
+    {
+      "path": "./generators/java-v2/ast"
+    },
+    {
+      "path": "./generators/java-v2/sdk"
+    },
+    {
+      "path": "./generators/php/codegen"
+    },
+    {
+      "path": "./generators/ruby-v2/ast"
+    },
+    {
+      "path": "./generators/ruby-v2/sdk"
+    },
+    {
+      "path": "./packages/snippets/core"
+    },
+    {
+      "path": "./generators/swift/model"
+    },
+    {
+      "path": "./generators/csharp/sdk"
+    },
+    {
+      "path": "./generators/ruby/model"
+    },
+    {
+      "path": "./generators/go-v2/base"
+    },
+    {
+      "path": "./packages/cli/register"
+    },
+    {
+      "path": "./generators/rust/model"
+    },
+    {
+      "path": "./generators/swift/base"
+    },
+    {
+      "path": "./generators/go-v2/ast"
+    },
+    {
+      "path": "./generators/go-v2/sdk"
+    },
+    {
+      "path": "./generators/php/model"
+    },
+    {
+      "path": "./generators/rust/base"
+    },
+    {
+      "path": "./generators/swift/sdk"
+    },
+    {
+      "path": "./generators/ruby/sdk"
+    },
+    {
+      "path": "./packages/cli/logger"
+    },
+    {
+      "path": "./generators/php/base"
+    },
+    {
+      "path": "./generators/ruby/cli"
+    },
+    {
+      "path": "./generators/rust/sdk"
+    },
+    {
+      "path": "./packages/cli/login"
+    },
+    {
+      "path": "./generators/openapi"
+    },
+    {
+      "path": "./generators/php/sdk"
+    },
+    {
+      "path": "./generators/postman"
+    },
+    {
+      "path": "./packages/cli/auth"
+    },
+    {
+      "path": "./packages/cli/init"
+    },
+    {
+      "path": "./packages/cli/mock"
+    },
+    {
+      "path": "./packages/cli/cli"
+    },
+    {
+      "path": "./packages/scripts"
+    },
+    {
+      "path": "./generators/base"
+    },
+    {
+      "path": "./packages/ir-sdk"
+    },
+    {
+      "path": "./packages/core"
+    },
+    {
+      "path": "./packages/seed"
     }
-  }
+  ]
 }

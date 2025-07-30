@@ -10,7 +10,7 @@ import {
     JsonResponse,
     ProtobufMethodType
 } from "@fern-api/ir-sdk";
-import { AbstractConverter } from "@fern-api/v2-importer-commons";
+import { AbstractConverter } from "@fern-api/v3-importer-commons";
 
 import { ProtofileConverterContext } from "../ProtofileConverterContext";
 import { ExampleConverter } from "../message/ExampleConverter";
@@ -68,6 +68,7 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
                     this.context.maybePrependPackageName(this.operation.name)
                 ),
                 requestBody: convertedRequestBody?.requestBody,
+                v2RequestBodies: undefined,
                 response: convertedResponseBody?.responseBody,
                 v2Responses: undefined,
                 displayName: this.context.maybeRemoveGrpcPackagePrefix(this.operation.name),

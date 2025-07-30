@@ -1,32 +1,37 @@
 {
   "name": "@fern-api/fern-definition-formatter",
   "version": "0.0.0",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern.git",
     "directory": "packages/cli/yaml/formatter"
   },
-  "private": true,
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "development": "./src/index.ts",
+      "source": "./src/index.ts",
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "default": "./lib/index.js"
+    }
+  },
+  "main": "lib/index.js",
+  "source": "src/index.ts",
+  "types": "lib/index.d.ts",
   "files": [
     "lib"
   ],
-  "type": "module",
-  "source": "src/index.ts",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
-  "sideEffects": false,
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
+    "depcheck": "depcheck",
     "test": "vitest --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
-    "test:update": "vitest --run -u",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../../.eslintignore",
-    "lint:eslint:fix": "yarn lint:eslint --fix",
-    "format": "prettier --write --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
-    "depcheck": "depcheck"
+    "test:update": "vitest --run -u"
   },
   "dependencies": {
     "@fern-api/api-workspace-commons": "workspace:*",
@@ -40,13 +45,9 @@
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
-    "depcheck": "^1.4.7",
-    "eslint": "^8.56.0",
-    "prettier": "^3.4.2",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
-    "typescript": "5.7.2",
-    "@types/jest": "^29.5.14",
     "@types/prettier2": "npm:@types/prettier@^2.7.3",
+    "depcheck": "^1.4.7",
+    "typescript": "5.8.3",
     "vitest": "^2.1.9"
   }
 }

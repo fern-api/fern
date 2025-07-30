@@ -1,10 +1,22 @@
 {
   "extends": "@fern-api/configs/tsconfig/main.json",
-  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
-  "include": ["./src/**/*"],
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src"
+  },
+  "include": [
+    "./src/**/*"
+  ],
   "references": [
-    { "path": "../../cli/configuration" },
-    { "path": "../../cli/fern-definition/schema" },
-    { "path": "../../ir-sdk" }
+    {
+      "path": "../../cli/configuration"
+    },
+    {
+      "path": "../../cli/fern-definition/schema"
+    },
+    {
+      "path": "../../ir-sdk"
+    }
   ]
 }

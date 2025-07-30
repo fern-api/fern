@@ -1,6 +1,6 @@
 import { ServiceDescriptorProto } from "@bufbuild/protobuf/wkt";
 
-import { AbstractConverter, Converters } from "@fern-api/v2-importer-commons";
+import { AbstractConverter, Converters } from "@fern-api/v3-importer-commons";
 
 import { ProtofileConverterContext } from "../ProtofileConverterContext";
 import { PATH_FIELD_NUMBERS, SOURCE_CODE_INFO_PATH_STARTERS } from "../utils/PathFieldNumbers";

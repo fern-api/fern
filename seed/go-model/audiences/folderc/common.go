@@ -30,6 +30,24 @@ func (f *FolderCFoo) GetExtraProperties() map[string]any {
 	return f.extraProperties
 }
 
+func (f *FolderCFoo) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler FolderCFoo
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = FolderCFoo(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (f *FolderCFoo) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {

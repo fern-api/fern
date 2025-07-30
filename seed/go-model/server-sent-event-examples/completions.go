@@ -37,6 +37,24 @@ func (s *StreamedCompletion) GetExtraProperties() map[string]any {
 	return s.extraProperties
 }
 
+func (s *StreamedCompletion) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler StreamedCompletion
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = StreamedCompletion(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (s *StreamedCompletion) String() string {
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {

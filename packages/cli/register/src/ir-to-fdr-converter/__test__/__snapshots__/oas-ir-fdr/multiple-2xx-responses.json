@@ -67,6 +67,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -107,7 +108,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "getStatusExample",
             "description": "",
             "path": "/status",
             "pathParameters": {},
@@ -125,7 +125,6 @@
             }
           },
           {
-            "name": "getStatusExample",
             "description": "",
             "path": "/status",
             "pathParameters": {},

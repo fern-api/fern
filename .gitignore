@@ -6,6 +6,9 @@ node_modules
 # turbo
 .turbo
 
+# nx
+.nx
+
 # production
 packages/**/build
 packages/**/lib
@@ -71,6 +74,10 @@ seed/python-sdk/**/output.prof
 
 # Cursor
 .cursor
+
+# Claude
+.claude
+CLAUDE.md
 
 # Preview
 **/.preview/

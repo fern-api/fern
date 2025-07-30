@@ -1,7 +1,7 @@
 import { FieldDescriptorProto, FieldDescriptorProto_Type } from "@bufbuild/protobuf/wkt";
 
 import { PrimitiveTypeV1, PrimitiveTypeV2, TypeReference } from "@fern-api/ir-sdk";
-import { AbstractConverter } from "@fern-api/v2-importer-commons";
+import { AbstractConverter } from "@fern-api/v3-importer-commons";
 
 import { ProtofileConverterContext } from "../ProtofileConverterContext";
 

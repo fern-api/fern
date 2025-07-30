@@ -23,11 +23,11 @@ Instantiate and use the client with the following:
 using SeedPagination;
 
 var client = new SeedPaginationClient("TOKEN");
-var pager = await client.Users.ListUsernamesCustomAsync(
+var items = await client.Users.ListUsernamesCustomAsync(
     new ListUsernamesRequestCustom { StartingAfter = "starting_after" }
 );
 
-await foreach (var item in pager)
+await foreach (var item in items)
 {
     // do something with item
 }
@@ -57,11 +57,11 @@ List endpoints are paginated. The SDK provides an async enumerable so that you c
 using SeedPagination;
 
 var client = new SeedPaginationClient("TOKEN");
-var pager = await client.Users.ListUsernamesCustomAsync(
+var items = await client.Users.ListUsernamesCustomAsync(
     new ListUsernamesRequestCustom { StartingAfter = "starting_after" }
 );
 
-await foreach (var item in pager)
+await foreach (var item in items)
 {
     // do something with item
 }

@@ -1,3 +1,4 @@
+use crate::problem_id::ProblemId;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

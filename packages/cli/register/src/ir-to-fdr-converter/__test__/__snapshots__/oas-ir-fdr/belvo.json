@@ -30297,6 +30297,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -30472,6 +30473,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "LinksRequest"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -30693,6 +30711,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "PatchBodyWithoutSaveData"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -30922,6 +30957,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -31121,6 +31157,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "LinksPutRequest"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -31339,6 +31392,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -31516,6 +31570,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ChangeAccessMode"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -32223,6 +32294,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -32562,6 +32634,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "StandardRequest"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -33871,6 +33960,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "PatchBody"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -35208,6 +35314,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -35825,6 +35932,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -36710,6 +36818,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -37259,6 +37368,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "TransactionsRequest"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -38346,6 +38472,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "PatchBody"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -39386,6 +39529,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -39881,6 +40025,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -40379,6 +40524,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -40601,6 +40747,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "BalancesRequest"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -40731,7 +40894,6 @@
           ],
           "examples": [
             {
-              "name": "BalancesExamplePaginated",
               "description": "",
               "path": "/api/balances/",
               "pathParameters": {},
@@ -40830,7 +40992,6 @@
               }
             },
             {
-              "name": "BalancesExamplePaginated",
               "description": "",
               "path": "/api/balances/",
               "pathParameters": {},
@@ -41010,6 +41171,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "PatchBody"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -41140,7 +41318,6 @@
           ],
           "examples": [
             {
-              "name": "BalancesExamplePaginated",
               "description": "",
               "path": "/api/balances/",
               "pathParameters": {},
@@ -41237,7 +41414,6 @@
               }
             },
             {
-              "name": "BalancesExamplePaginated",
               "description": "",
               "path": "/api/balances/",
               "pathParameters": {},
@@ -41422,6 +41598,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -41628,6 +41805,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -41954,6 +42132,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -42213,6 +42392,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -42638,6 +42818,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -42824,6 +43005,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "StandardRequest"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -42954,7 +43152,6 @@
           ],
           "examples": [
             {
-              "name": "OwnerBankingAccount",
               "description": "",
               "path": "/api/owners/",
               "pathParameters": {},
@@ -43015,7 +43212,6 @@
               }
             },
             {
-              "name": "OwnerBankingAccount",
               "description": "",
               "path": "/api/owners/",
               "pathParameters": {},
@@ -43157,6 +43353,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "PatchBody"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -43287,7 +43500,6 @@
           ],
           "examples": [
             {
-              "name": "OwnerBankingAccount",
               "description": "",
               "path": "/api/owners/",
               "pathParameters": {},
@@ -43350,7 +43562,6 @@
               }
             },
             {
-              "name": "OwnerBankingAccount",
               "description": "",
               "path": "/api/owners/",
               "pathParameters": {},
@@ -43501,6 +43712,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -43673,6 +43885,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -44209,6 +44422,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -45101,6 +45315,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "InvoicesRequest"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -46879,6 +47110,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "PatchBody"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -47009,7 +47257,6 @@
           ],
           "examples": [
             {
-              "name": "invoicesPatchInvoicesExample",
               "description": "",
               "path": "/api/invoices/",
               "pathParameters": {},
@@ -47242,7 +47489,6 @@
               }
             },
             {
-              "name": "invoicesPatchInvoicesExample",
               "description": "",
               "path": "/api/invoices/",
               "pathParameters": {},
@@ -47563,6 +47809,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -48392,6 +48639,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -48798,6 +49046,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -51132,6 +51381,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Tax returns_RetrieveTaxReturns_Request"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -55793,6 +56059,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -58060,6 +58327,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -58362,6 +58630,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -58832,6 +59101,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "TaxStatusRequest"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -59694,6 +59980,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -60137,6 +60424,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -60439,6 +60727,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -60609,6 +60898,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "TaxComplianceStatusRequest"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -60714,7 +61020,6 @@
           ],
           "examples": [
             {
-              "name": "taxComplianceStatusRetrieveTaxComplianceStatusExample",
               "description": "",
               "path": "/api/tax-compliance-status/",
               "pathParameters": {},
@@ -60753,7 +61058,6 @@
               }
             },
             {
-              "name": "taxComplianceStatusRetrieveTaxComplianceStatusExample",
               "description": "",
               "path": "/api/tax-compliance-status/",
               "pathParameters": {},
@@ -60880,6 +61184,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -61034,6 +61339,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -61271,6 +61577,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -61507,6 +61814,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "IncomesRequest"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -61628,7 +61952,6 @@
           ],
           "examples": [
             {
-              "name": "incomesRetrieveIncomeExample",
               "description": "",
               "path": "/api/incomes/",
               "pathParameters": {},
@@ -61733,7 +62056,6 @@
               }
             },
             {
-              "name": "incomesRetrieveIncomeExample",
               "description": "",
               "path": "/api/incomes/",
               "pathParameters": {},
@@ -61919,6 +62241,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "PatchBody"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -62049,7 +62388,6 @@
           ],
           "examples": [
             {
-              "name": "incomesPatchIncomesExample",
               "description": "",
               "path": "/api/incomes/",
               "pathParameters": {},
@@ -62160,7 +62498,6 @@
               }
             },
             {
-              "name": "incomesPatchIncomesExample",
               "description": "",
               "path": "/api/incomes/",
               "pathParameters": {},
@@ -62359,6 +62696,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -62589,6 +62927,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -62853,6 +63192,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -63227,6 +63567,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "RecurringExpensesRequest"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -63357,7 +63714,6 @@
           ],
           "examples": [
             {
-              "name": "recurringExpensesRetrieveRecurringExpensesExample",
               "description": "",
               "path": "/api/recurring-expenses/",
               "pathParameters": {},
@@ -63604,7 +63960,6 @@
               }
             },
             {
-              "name": "recurringExpensesRetrieveRecurringExpensesExample",
               "description": "",
               "path": "/api/recurring-expenses/",
               "pathParameters": {},
@@ -63932,6 +64287,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "PatchBody"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -64062,7 +64434,6 @@
           ],
           "examples": [
             {
-              "name": "recurringExpensesPatchRecurringExpensesExample",
               "description": "",
               "path": "/api/recurring-expenses/",
               "pathParameters": {},
@@ -64311,7 +64682,6 @@
               }
             },
             {
-              "name": "recurringExpensesPatchRecurringExpensesExample",
               "description": "",
               "path": "/api/recurring-expenses/",
               "pathParameters": {},
@@ -64647,6 +65017,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -65014,6 +65385,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -65284,6 +65656,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -65536,6 +65909,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "StandardRequest"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -65641,7 +66031,6 @@
           ],
           "examples": [
             {
-              "name": "investmentPortfoliosRetrievePortfolioExample",
               "description": "",
               "path": "/investments/portfolios/",
               "pathParameters": {},
@@ -65762,7 +66151,6 @@
               }
             },
             {
-              "name": "investmentPortfoliosRetrievePortfolioExample",
               "description": "",
               "path": "/investments/portfolios/",
               "pathParameters": {},
@@ -65964,6 +66352,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "PatchBodyWithoutSaveData"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -66069,7 +66474,6 @@
           ],
           "examples": [
             {
-              "name": "investmentPortfoliosPatchPortfolioExample",
               "description": "",
               "path": "/investments/portfolios/",
               "pathParameters": {},
@@ -66192,7 +66596,6 @@
               }
             },
             {
-              "name": "investmentPortfoliosPatchPortfolioExample",
               "description": "",
               "path": "/investments/portfolios/",
               "pathParameters": {},
@@ -66403,6 +66806,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -66639,6 +67043,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -67020,6 +67425,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -67232,6 +67638,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ReceivableTransactionRequest"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -67337,7 +67760,6 @@
           ],
           "examples": [
             {
-              "name": "receivableTransactionsRetrieveReceivableTransactionsExample",
               "description": "",
               "path": "/receivables/transactions/",
               "pathParameters": {},
@@ -67422,7 +67844,6 @@
               }
             },
             {
-              "name": "receivableTransactionsRetrieveReceivableTransactionsExample",
               "description": "",
               "path": "/receivables/transactions/",
               "pathParameters": {},
@@ -67595,6 +68016,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -67791,6 +68213,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -68028,6 +68451,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -68334,6 +68758,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "StandardRequest"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -68464,7 +68905,6 @@
           ],
           "examples": [
             {
-              "name": "riskInsightsRetrieveRiskInsightsExample",
               "description": "",
               "path": "/api/risk-insights/",
               "pathParameters": {},
@@ -68643,7 +69083,6 @@
               }
             },
             {
-              "name": "riskInsightsRetrieveRiskInsightsExample",
               "description": "",
               "path": "/api/risk-insights/",
               "pathParameters": {},
@@ -68903,6 +69342,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "PatchBody"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -69033,7 +69489,6 @@
           ],
           "examples": [
             {
-              "name": "riskInsightsPatchRiskInsightsExample",
               "description": "",
               "path": "/api/risk-insights/",
               "pathParameters": {},
@@ -69214,7 +69669,6 @@
               }
             },
             {
-              "name": "riskInsightsPatchRiskInsightsExample",
               "description": "",
               "path": "/api/risk-insights/",
               "pathParameters": {},
@@ -69483,6 +69937,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -69783,6 +70238,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -70059,6 +70515,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -70271,6 +70728,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "TaxRetentionsRequest"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -70385,7 +70859,6 @@
           ],
           "examples": [
             {
-              "name": "taxRetentionsRetrieveTaxRetentionsExample",
               "description": "",
               "path": "/api/tax-retentions/",
               "pathParameters": {},
@@ -70476,7 +70949,6 @@
               }
             },
             {
-              "name": "taxRetentionsRetrieveTaxRetentionsExample",
               "description": "",
               "path": "/api/tax-retentions/",
               "pathParameters": {},
@@ -70655,6 +71127,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -70851,6 +71324,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -71231,6 +71705,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -71533,6 +72008,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "TaxDeclarationsRequest"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -71647,7 +72139,6 @@
           ],
           "examples": [
             {
-              "name": "taxDeclarationsRetrieveTaxDeclarationsExample",
               "description": "",
               "path": "/api/tax-declarations/",
               "pathParameters": {},
@@ -71808,7 +72299,6 @@
               }
             },
             {
-              "name": "taxDeclarationsRetrieveTaxDeclarationsExample",
               "description": "",
               "path": "/api/tax-declarations/",
               "pathParameters": {},
@@ -72057,6 +72547,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -72343,6 +72834,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -72527,6 +73019,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -72797,6 +73290,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "EmploymentRecordRequest"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -72927,7 +73437,6 @@
           ],
           "examples": [
             {
-              "name": "employmentRecordsRetrieveEmploymentRecordDetailsExample",
               "description": "",
               "path": "/api/employment-records/",
               "pathParameters": {},
@@ -73070,7 +73579,6 @@
               }
             },
             {
-              "name": "employmentRecordsRetrieveEmploymentRecordDetailsExample",
               "description": "",
               "path": "/api/employment-records/",
               "pathParameters": {},
@@ -73301,6 +73809,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -73555,6 +74064,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -73695,6 +74205,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "EyodIncomeVerificationRequest"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -74036,6 +74563,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "CategorizationRequest"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -74323,6 +74867,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -74447,6 +74992,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -74593,6 +75139,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -74735,6 +75282,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "PaymentWebhookRequest"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -74941,6 +75505,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -75095,6 +75660,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -75341,6 +75907,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -75541,6 +76108,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -75866,6 +76434,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -76200,6 +76769,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Customers_CreateCustomer_Request"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -76514,6 +77100,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -76943,6 +77530,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -77248,6 +77836,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Bank Accounts_CreateBankAccount_Request"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -77677,6 +78282,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -78103,6 +78709,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -78259,6 +78866,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Payment Links_CreatePaymentlink_Request"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -78744,6 +79368,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -79406,6 +80031,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -79900,6 +80526,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Payment Intents_CreatePaymentIntent_Request"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -80470,6 +81113,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -80988,6 +81632,23 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "PatchPaymentIntentPse"
+                    }
+                  }
+                }
+              }
+            ]
           },
           "response": {
             "type": {
@@ -81794,6 +82455,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -81952,6 +82614,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",

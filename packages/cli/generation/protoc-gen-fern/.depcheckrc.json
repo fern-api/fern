@@ -1,11 +1,6 @@
 {
   "ignores": [
-    "globals",
-    "@trivago/prettier-plugin-sort-imports",
-    "@types/jest",
-    "@types/node",
-    "@fern-api/configuration",
-    "@fern-api/core-utils"
+    "@fern-api/configuration"
   ],
   "ignore-patterns": ["lib"]
 }

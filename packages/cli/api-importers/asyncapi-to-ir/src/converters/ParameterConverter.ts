@@ -1,7 +1,7 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { TypeId, TypeReference } from "@fern-api/ir-sdk";
-import { Converters, Extensions } from "@fern-api/v2-importer-commons";
+import { Converters, Extensions } from "@fern-api/v3-importer-commons";
 
 import { AsyncAPIParameter } from "../sharedTypes";
 

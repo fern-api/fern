@@ -23,7 +23,12 @@ Instantiate and use the client with the following:
 using SeedServerSentEvents;
 
 var client = new SeedServerSentEventsClient();
-await client.Completions.StreamAsync(new StreamCompletionRequest { Query = "query" });
+var items = await client.Completions.StreamAsync(new StreamCompletionRequest { Query = "query" });
+
+await foreach (var item in items)
+{
+    // do something with item
+}
 ```
 
 ## Exception Handling

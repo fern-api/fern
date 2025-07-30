@@ -3,5 +3,4 @@
 # isort: skip_file
 
 from .weather_report import WeatherReport
-
 __all__ = ["WeatherReport"]

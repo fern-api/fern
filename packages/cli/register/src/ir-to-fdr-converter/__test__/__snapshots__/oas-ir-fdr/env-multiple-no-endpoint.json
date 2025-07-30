@@ -35,6 +35,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",

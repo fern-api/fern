@@ -29,6 +29,24 @@ func (u *UnauthorizedRequestErrorBody) GetExtraProperties() map[string]any {
 	return u.extraProperties
 }
 
+func (u *UnauthorizedRequestErrorBody) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler UnauthorizedRequestErrorBody
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UnauthorizedRequestErrorBody(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
 func (u *UnauthorizedRequestErrorBody) String() string {
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {

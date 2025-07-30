@@ -3521,6 +3521,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -3767,6 +3768,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -3959,6 +3961,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4065,7 +4068,6 @@
           ],
           "examples": [
             {
-              "name": "listAccountBalancesExample",
               "description": "",
               "path": "/accountBalances",
               "pathParameters": {},
@@ -4117,7 +4119,6 @@
               }
             },
             {
-              "name": "listAccountBalancesExample",
               "description": "",
               "path": "/accountBalances",
               "pathParameters": {},
@@ -4300,6 +4301,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4561,6 +4563,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4773,6 +4776,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4944,6 +4948,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -5121,6 +5126,25 @@
               "description": "The replacement overdraft accounts."
             },
             "description": "The replacement overdraft accounts."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "overdraftProtectionPatch"
+                    }
+                  },
+                  "description": "The replacement overdraft accounts."
+                },
+                "description": "The replacement overdraft accounts."
+              }
+            ]
           },
           "response": {
             "type": {
@@ -5367,6 +5391,25 @@
             },
             "description": "Data necessary to invite a joint owner."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "newJointOwnerInvitation"
+                    }
+                  },
+                  "description": "Data necessary to invite a joint owner."
+                },
+                "description": "Data necessary to invite a joint owner."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -5601,6 +5644,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -5836,6 +5880,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -6081,6 +6126,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -6345,6 +6391,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -6815,6 +6862,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -6947,7 +6995,6 @@
           ],
           "examples": [
             {
-              "name": "listTransactionsExample",
               "description": "",
               "path": "/accounts/accountId/transactions",
               "pathParameters": {
@@ -7043,7 +7090,6 @@
               }
             },
             {
-              "name": "listTransactionsExample",
               "description": "",
               "path": "/accounts/accountId/transactions",
               "pathParameters": {
@@ -7121,6 +7167,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -7374,6 +7421,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -7643,6 +7691,25 @@
             },
             "description": "The data necessary to create a new transfer."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "newTransfer"
+                    }
+                  },
+                  "description": "The data necessary to create a new transfer."
+                },
+                "description": "The data necessary to create a new transfer."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -7870,6 +7937,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -8051,6 +8119,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -8225,6 +8294,40 @@
               "description": "The fields to update within the transfer."
             },
             "description": "The fields to update within the transfer."
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/merge-patch+json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "transferPatch"
+                    }
+                  },
+                  "description": "The fields to update within the transfer."
+                },
+                "description": "The fields to update within the transfer."
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "transferPatch"
+                    }
+                  },
+                  "description": "The fields to update within the transfer."
+                },
+                "description": "The fields to update within the transfer."
+              }
+            ]
           },
           "response": {
             "type": {

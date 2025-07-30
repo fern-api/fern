@@ -32,6 +32,24 @@ func (a *ATopLevelLiteral) GetExtraProperties() map[string]any{
     return a.extraProperties
 }
 
+func (a *ATopLevelLiteral) UnmarshalJSON(
+    data []byte,
+) error{
+    type unmarshaler ATopLevelLiteral
+    var value unmarshaler
+    if err := json.Unmarshal(data, &value); err != nil {
+        return err
+    }
+    *a = ATopLevelLiteral(value)
+    extraProperties, err := internal.ExtractExtraProperties(data, *a)
+    if err != nil {
+        return err
+    }
+    a.extraProperties = extraProperties
+    a.rawJSON = json.RawMessage(data)
+    return nil
+}
+
 func (a *ATopLevelLiteral) String() string{
     if len(a.rawJSON) > 0 {
         if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
@@ -63,6 +81,33 @@ func (a *ANestedLiteral) GetExtraProperties() map[string]any{
         return nil
     }
     return a.extraProperties
+}
+
+func (a *ANestedLiteral) UnmarshalJSON(
+    data []byte,
+) error{
+    type embed ANestedLiteral
+    var unmarshaler = struct{
+        embed
+        MyLiteral string `json:"myLiteral"`
+    }{
+        embed: embed(*a),
+    }
+    if err := json.Unmarshal(data, &unmarshaler); err != nil {
+        return err
+    }
+    *a = ANestedLiteral(unmarshaler.embed)
+    if unmarshaler.MyLiteral != "How super cool" {
+        return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", a, "How super cool", unmarshaler.MyLiteral)
+    }
+    a.myLiteral = unmarshaler.MyLiteral
+    extraProperties, err := internal.ExtractExtraProperties(data, *a, "myLiteral")
+    if err != nil {
+        return err
+    }
+    a.extraProperties = extraProperties
+    a.rawJSON = json.RawMessage(data)
+    return nil
 }
 
 func (a *ANestedLiteral) MarshalJSON() ([]byte, error){
