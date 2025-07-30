@@ -65,7 +65,7 @@ runs:
       run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
     - name: Setup Blacksmith Docker
-      if: steps.cache.outputs.cache-hit != 'true'
+      if: contains(runner.labels, 'blacksmith') && steps.cache.outputs.cache-hit != 'true'
       uses: useblacksmith/build-push-action@v1
       with:
         setup-only: true
