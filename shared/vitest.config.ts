@@ -1,14 +1,15 @@
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    test: {
-        globals: true,
-        include: ["**/*.{test,spec}.ts"],
-        server: {
-            deps: {
-                fallbackCJS: true
-            }
-        },
-        maxConcurrency: 10
-    }
+  test: {
+    globals: true,
+    include: ["**/*.{test,spec}.ts"],
+    server: {
+      deps: {
+        fallbackCJS: true,
+      },
+    },
+    maxConcurrency: 10,
+    passWithNoTests: true,
+  },
 });
