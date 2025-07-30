@@ -81,46 +81,49 @@ export function convertObject({
                 continue;
             }
 
-            // if allOf element is an undiscriminated union, then try to grab all properties from the oneOf schemas
-            if (resolvedReference.oneOf != null) {
-                // try to grab all properties from the oneOf schemas
-                for (const oneOfSchema of resolvedReference.oneOf) {
-                    const resolvedOneOfSchema = isReferenceObject(oneOfSchema)
-                        ? context.resolveSchemaReference(oneOfSchema)
-                        : oneOfSchema;
-                    const convertedOneOfSchema = convertSchema(
-                        resolvedOneOfSchema,
-                        false,
-                        context.DUMMY,
-                        breadcrumbs,
-                        source,
-                        namespace
-                    );
-                    if (convertedOneOfSchema.type === "object") {
-                        inlinedParentProperties.push(
-                            ...convertedOneOfSchema.properties.map((property) => {
-                                if (property.schema.type !== "optional" && property.schema.type !== "nullable") {
-                                    return {
-                                        ...property,
-                                        schema: SchemaWithExample.optional({
-                                            nameOverride: undefined,
-                                            generatedName: "",
-                                            title: undefined,
-                                            value: property.schema,
-                                            description: undefined,
-                                            availability: property.availability,
-                                            namespace: undefined,
-                                            groupName: undefined,
-                                            inline: undefined
-                                        })
-                                    };
-                                }
-                                return property;
-                            })
+            // if allOf element is an undiscriminated union, then try to grab all properties from the oneOf or anyOfschemas
+            if (resolvedReference.oneOf != null || resolvedReference.anyOf != null) {
+                const variants = resolvedReference.oneOf ?? resolvedReference.anyOf;
+                if (variants != null) {
+                    // try to grab all properties from the oneOf/anyOf schemas
+                    for (const variantSchema of variants) {
+                        const resolvedVariantSchema = isReferenceObject(variantSchema)
+                            ? context.resolveSchemaReference(variantSchema)
+                            : variantSchema;
+                        const convertedVariantSchema = convertSchema(
+                            resolvedVariantSchema,
+                            false,
+                            context.DUMMY,
+                            breadcrumbs,
+                            source,
+                            namespace
                         );
+                        if (convertedVariantSchema.type === "object") {
+                            inlinedParentProperties.push(
+                                ...convertedVariantSchema.properties.map((property) => {
+                                    if (property.schema.type !== "optional" && property.schema.type !== "nullable") {
+                                        return {
+                                            ...property,
+                                            schema: SchemaWithExample.optional({
+                                                nameOverride: undefined,
+                                                generatedName: "",
+                                                title: undefined,
+                                                value: property.schema,
+                                                description: undefined,
+                                                availability: property.availability,
+                                                namespace: undefined,
+                                                groupName: undefined,
+                                                inline: undefined
+                                            })
+                                        };
+                                    }
+                                    return property;
+                                })
+                            );
+                        }
                     }
+                    continue;
                 }
-                continue;
             }
 
             const schemaId = getSchemaIdFromReference(allOfElement);
