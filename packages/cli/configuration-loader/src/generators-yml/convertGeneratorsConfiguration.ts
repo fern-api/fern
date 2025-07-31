@@ -157,7 +157,8 @@ async function parseAPIConfigurationToApiLocations(
                     type: "protobuf",
                     root: apiConfiguration.proto.root,
                     target: apiConfiguration.proto.target ?? "",
-                    localGeneration: apiConfiguration.proto["local-generation"] ?? false
+                    localGeneration: apiConfiguration.proto["local-generation"] ?? false,
+                    fromOpenAPI: apiConfiguration.proto["from-openapi"] ?? false
                 },
                 origin: undefined,
                 overrides: apiConfiguration.proto.overrides,
@@ -183,7 +184,8 @@ async function parseAPIConfigurationToApiLocations(
                             type: "protobuf",
                             root: definition.proto.root,
                             target: definition.proto.target ?? "",
-                            localGeneration: definition.proto["local-generation"] ?? false
+                            localGeneration: definition.proto["local-generation"] ?? false,
+                            fromOpenAPI: definition.proto["from-openapi"] ?? false
                         },
                         origin: undefined,
                         overrides: definition.proto.overrides,
@@ -334,7 +336,8 @@ async function parseApiConfigurationV2Schema({
                     type: "protobuf",
                     root: spec.proto.root,
                     target: spec.proto.target ?? "",
-                    localGeneration: spec.proto["local-generation"] ?? false
+                    localGeneration: spec.proto["local-generation"] ?? false,
+                    fromOpenAPI: spec.proto["from-openapi"] ?? false
                 },
                 origin: undefined,
                 overrides: spec.proto.overrides,

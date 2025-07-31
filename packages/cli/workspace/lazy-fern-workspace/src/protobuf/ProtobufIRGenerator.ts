@@ -1,4 +1,4 @@
-import { chmod, cp, writeFile } from "fs/promises";
+import { chmod, cp, unlink, writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
 
@@ -15,6 +15,8 @@ import {
     PROTOBUF_MODULE_PACKAGE_JSON,
     PROTOBUF_SHELL_PROXY,
     PROTOBUF_SHELL_PROXY_FILENAME,
+    PROTOBUF_YAML_V1,
+    PROTOBUF_YAML_V2,
     createEmptyProtobufLogger
 } from "./utils";
 
@@ -226,9 +228,25 @@ export class ProtobufIRGenerator {
             cwd,
             logger: createEmptyProtobufLogger()
         });
+        const bufYamlPath = join(cwd, RelativeFilePath.of("buf.yaml"));
 
-        await buf(["config", "init"]);
-        await buf(["generate"]);
+        for (const version of ["v1", "v2"]) {
+            this.context.logger.info(`Running buf generate with version: ${version}`);
+
+            const configContent = version === "v1" ? PROTOBUF_YAML_V1 : PROTOBUF_YAML_V2;
+            try {
+                await writeFile(bufYamlPath, configContent);
+                await buf(["dep", "update"]);
+                await buf(["generate"]);
+                break;
+            } catch (error) {
+                this.context.logger.info("Failed to generate with version: " + version);
+                await unlink(bufYamlPath);
+                if (version === "v2") {
+                    throw error;
+                }
+            }
+        }
 
         return join(cwd, RelativeFilePath.of(PROTOBUF_GENERATOR_OUTPUT_FILEPATH));
     }

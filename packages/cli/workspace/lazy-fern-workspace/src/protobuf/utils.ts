@@ -8,6 +8,16 @@ export const PROTOBUF_EXPORT_CONFIG_V1 = `version: v1
 `;
 export const PROTOBUF_EXPORT_CONFIG_V2 = `version: v2
 `;
+export const PROTOBUF_YAML_V1 = `version: v1
+deps:
+  - buf.build/googleapis/googleapis
+  - buf.build/bufbuild/protovalidate
+`;
+export const PROTOBUF_YAML_V2 = `version: v2
+deps:
+  - buf.build/googleapis/googleapis
+  - buf.build/bufbuild/protovalidate
+`;
 export const PROTOBUF_GEN_CONFIG = `version: v2
 plugins:
   - local: ["bash", "./protoc-gen-fern"]
