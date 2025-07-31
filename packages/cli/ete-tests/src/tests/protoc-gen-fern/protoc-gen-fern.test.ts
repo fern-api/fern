@@ -15,7 +15,12 @@ describe("fern protoc-gen-fern", () => {
 
         await buf(["generate"]);
         const contents = await readFile(path.join(FIXTURES_DIR, "output", "ir.json"), "utf-8");
-        expect(contents).toMatchSnapshot();
+        try {
+            expect(contents).toMatchSnapshot();
+        } catch (error) {
+            console.error("IMPORTANT: Ensure buf version matches version from CI/CD (v1.50.0 as of 7/31/25).");
+            throw error;
+        }
     }, 60_000);
 });
 
