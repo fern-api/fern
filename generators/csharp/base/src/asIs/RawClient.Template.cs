@@ -217,7 +217,7 @@ internal partial class RawClient(ClientOptions clientOptions)
                 }
                 else
                 {
-                    current += $"{Uri.EscapeUriString(queryItem.Key)}={Uri.EscapeUriString(queryItem.Value)}&";
+                    current += $"{Uri.EscapeDataString(queryItem.Key)}={Uri.EscapeDataString(queryItem.Value)}&";
                 }
 
                 return current;
