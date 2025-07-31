@@ -66,7 +66,7 @@ export class ObjectGenerator {
         });
     }
 
-    private generateStructForTypeDeclaration(): swift.Struct {
+    public generateStructForTypeDeclaration(): swift.Struct {
         const codingKeysEnum = this.generateCodingKeysEnum();
         return swift.struct({
             name: this.name,

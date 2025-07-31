@@ -1,8 +1,9 @@
 import { SwiftFile } from "@fern-api/swift-base";
 
-import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { StringEnumGenerator } from "./enum";
+import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { ObjectGenerator } from "./object";
+import { DiscriminatedUnionGenerator } from "./union";
 
 export function generateModels({ context }: { context: ModelGeneratorContext }): SwiftFile[] {
     const files: SwiftFile[] = [];
@@ -18,7 +19,12 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
                     otd.extendedProperties
                 ).generate(),
             undiscriminatedUnion: () => undefined,
-            union: () => undefined,
+            union: (utd) =>
+                new DiscriminatedUnionGenerator(
+                    typeDeclaration.name.name.pascalCase.unsafeName,
+                    utd,
+                    context
+                ).generate(),
             _other: () => undefined
         });
         if (file != null) {

@@ -2,7 +2,6 @@ import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractSwiftGeneratorContext, AsIsFileDefinition, AsIsFiles } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
-
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import {
     EndpointId,
@@ -15,7 +14,9 @@ import {
     Package,
     ServiceId,
     Subpackage,
-    SubpackageId
+    SubpackageId,
+    TypeId,
+    TypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
@@ -48,6 +49,10 @@ export class SdkGeneratorContext extends AbstractSwiftGeneratorContext<SdkCustom
 
     public get environmentEnumName(): string {
         return `${this.ir.apiName.pascalCase.unsafeName}Environment`;
+    }
+
+    public getTypeById(typeId: TypeId): TypeDeclaration | undefined {
+        return this.ir.types[typeId];
     }
 
     public getSubClientName(subpackage: Subpackage): string {
