@@ -1,8 +1,8 @@
 import { AccessLevel } from "./AccessLevel";
-import { Protocol } from "./Protocol";
-import { Type } from "./Type";
 import { AstNode, Writer } from "./core";
+import { Protocol } from "./Protocol";
 import { isReservedKeyword } from "./syntax";
+import { Type } from "./Type";
 
 export declare namespace EnumWithAssociatedValues {
     interface Case {

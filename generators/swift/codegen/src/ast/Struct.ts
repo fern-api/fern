@@ -1,10 +1,10 @@
 import { AccessLevel } from "./AccessLevel";
+import { AstNode, Writer } from "./core";
 import type { EnumWithRawValues } from "./EnumWithRawValues";
 import { Initializer } from "./Initializer";
 import { Method } from "./Method";
 import { Property } from "./Property";
 import { Protocol } from "./Protocol";
-import { AstNode, Writer } from "./core";
 
 export declare namespace Struct {
     interface Args {
@@ -13,8 +13,8 @@ export declare namespace Struct {
         conformances?: Protocol[];
         properties: Property[];
         initializers?: Initializer[];
-        nestedTypes?: (Struct | EnumWithRawValues)[];
         methods?: Method[];
+        nestedTypes?: (Struct | EnumWithRawValues)[];
     }
 }
 
@@ -24,8 +24,8 @@ export class Struct extends AstNode {
     public readonly conformances: string[];
     public readonly properties: Property[];
     public readonly initializers: Initializer[];
-    public readonly nestedTypes: (Struct | EnumWithRawValues)[];
     public readonly methods: Method[];
+    public readonly nestedTypes: (Struct | EnumWithRawValues)[];
 
     public constructor({
         accessLevel,
@@ -33,8 +33,8 @@ export class Struct extends AstNode {
         conformances,
         properties,
         initializers,
-        nestedTypes,
-        methods
+        methods,
+        nestedTypes
     }: Struct.Args) {
         super();
         this.name = name;
@@ -42,8 +42,8 @@ export class Struct extends AstNode {
         this.conformances = conformances ?? [];
         this.properties = properties;
         this.initializers = initializers ?? [];
-        this.nestedTypes = nestedTypes ?? [];
         this.methods = methods ?? [];
+        this.nestedTypes = nestedTypes ?? [];
     }
 
     public write(writer: Writer): void {
