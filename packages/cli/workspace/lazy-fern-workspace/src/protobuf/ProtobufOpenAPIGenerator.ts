@@ -4,8 +4,7 @@ import tmp from "tmp-promise";
 import { AbsoluteFilePath, RelativeFilePath, join, relative } from "@fern-api/fs-utils";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
-import { PROTOBUF_YAML_V2 } from "./utils";
-import { PROTOBUF_YAML_V1 } from "./utils";
+import { PROTOBUF_YAML_V1, PROTOBUF_YAML_V2, createEmptyProtobufLogger } from "./utils";
 
 const PROTOBUF_GENERATOR_CONFIG_FILENAME = "buf.gen.yaml";
 const PROTOBUF_GENERATOR_OUTPUT_PATH = "output";
@@ -84,7 +83,8 @@ export class ProtobufOpenAPIGenerator {
     }): Promise<AbsoluteFilePath> {
         const which = createLoggingExecutable("which", {
             cwd,
-            logger: this.context.logger
+            logger: createEmptyProtobufLogger(),
+            doNotPipeOutput: true
         });
 
         try {
@@ -105,25 +105,19 @@ export class ProtobufOpenAPIGenerator {
 
         const buf = createLoggingExecutable("buf", {
             cwd,
-            logger: this.context.logger
+            logger: createEmptyProtobufLogger()
         });
         const bufYamlPath = join(cwd, RelativeFilePath.of("buf.yaml"));
 
-        for (const version of ["v1", "v2"]) {
-            this.context.logger.info(`Running buf generate with version: ${version}`);
-            const configContent = version === "v1" ? PROTOBUF_YAML_V1 : PROTOBUF_YAML_V2;
-            try {
-                await writeFile(bufYamlPath, configContent);
-                await buf(["dep", "update"]);
-                await buf(["generate", target.toString()]);
-                break;
-            } catch (error) {
-                this.context.logger.info("Failed to generate with version: " + version);
-                await unlink(bufYamlPath);
-                if (version === "v2") {
-                    throw error;
-                }
-            }
+        const configContent = PROTOBUF_YAML_V2;
+        try {
+            await writeFile(bufYamlPath, configContent);
+            await buf(["dep", "update"]);
+            await buf(["generate", target.toString()]);
+            await unlink(bufYamlPath);
+        } catch (error) {
+            await unlink(bufYamlPath);
+            throw error;
         }
         return join(cwd, RelativeFilePath.of(PROTOBUF_GENERATOR_OUTPUT_FILEPATH));
     }

@@ -102,7 +102,8 @@ export class ProtobufIRGenerator {
         // Use buf export to get all relevant .proto files
         const which = createLoggingExecutable("which", {
             cwd: protobufGeneratorConfigPath,
-            logger: createEmptyProtobufLogger()
+            logger: createEmptyProtobufLogger(),
+            doNotPipeOutput: true
         });
 
         try {
