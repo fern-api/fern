@@ -1,5 +1,5 @@
-import { swift } from "../..";
-import { AccessLevel } from "../AccessLevel";
+import { swift } from "../../..";
+import { AccessLevel } from "../../AccessLevel";
 
 describe("EnumWithAssociatedValues", () => {
     describe("write", () => {
