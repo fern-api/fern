@@ -1,5 +1,6 @@
 import { AccessLevel } from "./AccessLevel";
 import { AstNode, Writer } from "./core";
+import { EnumWithRawValues } from "./EnumWithRawValues";
 import { Initializer } from "./Initializer";
 import { Method } from "./Method";
 import { Protocol } from "./Protocol";
@@ -20,7 +21,7 @@ export declare namespace EnumWithAssociatedValues {
         cases: Case[];
         initializers?: Initializer[];
         methods?: Method[];
-        nestedTypes?: Struct[];
+        nestedTypes?: (EnumWithRawValues | Struct)[];
     }
 }
 
@@ -31,7 +32,7 @@ export class EnumWithAssociatedValues extends AstNode {
     public readonly cases: EnumWithAssociatedValues.Case[];
     public readonly initializers: Initializer[];
     public readonly methods: Method[];
-    public readonly nestedTypes: Struct[];
+    public readonly nestedTypes: (EnumWithRawValues | Struct)[];
 
     public constructor({
         accessLevel,
