@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - "dak/ci/update-docs-changelogs"
   workflow_dispatch:
 
 permissions:
@@ -20,6 +19,23 @@ jobs:
         with:
           ref: main
 
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Write generator changelogs
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+        run: |
+          echo "Generating changelogs for generators"
+          pnpm seed:local generate changelog generator -o ./changelogs/ --clean-directory
+
+      - name: Write CLI changelogs
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+        run: |
+          echo "Generating changelogs for CLI"
+          pnpm seed:local generate changelog cli -o ./changelogs/cli/ --clean-directory
+
       - name: Checkout main branch of docs repo
         uses: actions/checkout@v4
         with:
@@ -28,28 +44,28 @@ jobs:
           path: docs
 
       - name: update csharp-sdk changelog
-        run: rsync -avu --delete "fern/pages/changelogs/csharp-sdk/" "docs/fern/products/sdks/overview/csharp/changelog"
+        run: rsync -avu --delete "changelogs/csharp-sdk/" "docs/fern/products/sdks/overview/csharp/changelog"
 
       - name: update go-sdk changelog
-        run: rsync -avu --delete "fern/pages/changelogs/go-sdk/" "docs/fern/products/sdks/overview/go/changelog"
+        run: rsync -avu --delete "changelogs/go-sdk/" "docs/fern/products/sdks/overview/go/changelog"
 
       - name: update java-sdk changelog
-        run: rsync -avu --delete "fern/pages/changelogs/java-sdk/" "docs/fern/products/sdks/overview/java/changelog"
+        run: rsync -avu --delete "changelogs/java-sdk/" "docs/fern/products/sdks/overview/java/changelog"
 
       - name: update php-sdk changelog
-        run: rsync -avu --delete "fern/pages/changelogs/php-sdk/" "docs/fern/products/sdks/overview/php/changelog"
+        run: rsync -avu --delete "changelogs/php-sdk/" "docs/fern/products/sdks/overview/php/changelog"
 
       - name: update python-sdk changelog
-        run: rsync -avu --delete "fern/pages/changelogs/python-sdk/" "docs/fern/products/sdks/overview/python/changelog"
+        run: rsync -avu --delete "changelogs/python-sdk/" "docs/fern/products/sdks/overview/python/changelog"
 
       - name: update ruby-sdk changelog
-        run: rsync -avu --delete "fern/pages/changelogs/ruby-sdk/" "docs/fern/products/sdks/overview/ruby/changelog"
+        run: rsync -avu --delete "changelogs/ruby-sdk/" "docs/fern/products/sdks/overview/ruby/changelog"
 
       - name: update ts-sdk changelog
-        run: rsync -avu --delete "fern/pages/changelogs/ts-sdk/" "docs/fern/products/sdks/overview/typescript/changelog"
+        run: rsync -avu --delete "changelogs/ts-sdk/" "docs/fern/products/sdks/overview/typescript/changelog"
 
       - name: update cli changelog
-        run: rsync -avu --delete "fern/pages/changelogs/cli/" "docs/fern/products/cli-api-reference/cli-changelog"
+        run: rsync -avu --delete "changelogs/cli/" "docs/fern/products/cli-api-reference/cli-changelog"
 
       - name: create PR
         id: cpr
@@ -62,18 +78,18 @@ jobs:
           delete-branch: true
           path: docs
 
-      - name: Enable Pull Request Automerge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-          repository: fern-api/docs
-          merge-method: squash
+      # - name: Enable Pull Request Automerge
+      #   if: steps.cpr.outputs.pull-request-operation == 'created'
+      #   uses: peter-evans/enable-pull-request-automerge@v3
+      #   with:
+      #     token: ${{ secrets.FERN_GITHUB_PAT }}
+      #     pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+      #     repository: fern-api/docs
+      #     merge-method: squash
 
-      - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        env:
-          GH_TOKEN: ${{ secrets.PR_BOT_GH_PAT }}
-        run: gh pr review ${{ steps.cpr.outputs.pull-request-number }} --repo fern-api/docs --approve
+      # - name: Approve PR
+      #   if: steps.cpr.outputs.pull-request-operation == 'created'
+      #   env:
+      #     GH_TOKEN: ${{ secrets.PR_BOT_GH_PAT }}
+      #   run: gh pr review ${{ steps.cpr.outputs.pull-request-number }} --repo fern-api/docs --approve
         
