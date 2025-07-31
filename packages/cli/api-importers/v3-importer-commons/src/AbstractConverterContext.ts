@@ -22,6 +22,7 @@ import { Logger } from "@fern-api/logger";
 import { Extensions } from ".";
 import { APIErrorLevel, ErrorCollector } from "./ErrorCollector";
 import { SchemaConverter } from "./converters/schema/SchemaConverter";
+import { removeSimilarWords } from "./utils/BreadcrumbUtils";
 
 export type DisplayNameOverrideSource = "schema_identifier" | "discriminator_key" | "reference_identifier";
 
@@ -151,8 +152,37 @@ export abstract class AbstractConverterContext<Spec extends object> {
             return true;
         });
 
-        const camelCased = camelCase(filteredBreadcrumbs.join("_"));
-        return camelCased.charAt(0).toUpperCase() + camelCased.slice(1);
+        // If any breadcrumb is a path (starts with "/"), or contains "-" or "_", split it into its parts
+        let meaningfulBreadcrumbs = filteredBreadcrumbs.flatMap((crumb) => {
+            if (typeof crumb === "string") {
+                // Remove leading/trailing slashes if present, then split by "/", "-", and "_"
+                return crumb
+                    .replace(/^\/+|\/+$/g, "")
+                    .split(/\/|_|-/)
+                    .filter(Boolean);
+            }
+            return [crumb];
+        });
+
+        // Remove duplicate or similar words to avoid redundancy
+        let deduplicatedBreadcrumbs = removeSimilarWords(meaningfulBreadcrumbs);
+
+        // If we have more than 3 breadcrumbs, prioritize the last ones (most specific)
+        if (deduplicatedBreadcrumbs.length > 3) {
+            // Take the first one (usually the main context) and the last two (most specific)
+            const first = deduplicatedBreadcrumbs[0];
+            if (first != null) {
+                deduplicatedBreadcrumbs = [first, ...deduplicatedBreadcrumbs.slice(-2)];
+            } else {
+                deduplicatedBreadcrumbs = deduplicatedBreadcrumbs.slice(-3);
+            }
+        }
+
+        const camelCased = camelCase(deduplicatedBreadcrumbs.join("_"));
+
+        const result = camelCased.charAt(0).toUpperCase() + camelCased.slice(1);
+
+        return result;
     }
 
     /**
