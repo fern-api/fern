@@ -1,3 +1,11 @@
+- version: 2.39.2
+  changelogEntry:
+    - summary: |
+        Fix javadoc compilation errors by using HTML entities for special characters in builder examples
+      type: fix
+  createdAt: '2025-07-31'
+  irVersion: 58
+
 - version: 2.39.1
   changelogEntry:
     - summary: |
