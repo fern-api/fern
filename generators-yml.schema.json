@@ -777,6 +777,16 @@
               "type": "null"
             }
           ]
+        },
+        "from-openapi": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
