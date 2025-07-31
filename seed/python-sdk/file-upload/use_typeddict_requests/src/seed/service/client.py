@@ -8,6 +8,7 @@ from ..core.request_options import RequestOptions
 from .raw_client import AsyncRawServiceClient, RawServiceClient
 from .requests.my_alias_object import MyAliasObjectParams
 from .requests.my_collection_alias_object import MyCollectionAliasObjectParams
+from .requests.my_inline_type import MyInlineTypeParams
 from .requests.my_object import MyObjectParams
 from .requests.my_object_with_optional import MyObjectWithOptionalParams
 from .types.id import Id
@@ -347,6 +348,27 @@ class ServiceClient:
         _response = self._raw_client.optional_args(
             image_file=image_file, request=request, request_options=request_options
         )
+        return _response.data
+
+    def with_inline_type(
+        self, *, file: core.File, request: MyInlineTypeParams, request_options: typing.Optional[RequestOptions] = None
+    ) -> str:
+        """
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        request : MyInlineTypeParams
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+        """
+        _response = self._raw_client.with_inline_type(file=file, request=request, request_options=request_options)
         return _response.data
 
     def simple(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
@@ -705,6 +727,27 @@ class AsyncServiceClient:
         _response = await self._raw_client.optional_args(
             image_file=image_file, request=request, request_options=request_options
         )
+        return _response.data
+
+    async def with_inline_type(
+        self, *, file: core.File, request: MyInlineTypeParams, request_options: typing.Optional[RequestOptions] = None
+    ) -> str:
+        """
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        request : MyInlineTypeParams
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+        """
+        _response = await self._raw_client.with_inline_type(file=file, request=request, request_options=request_options)
         return _response.data
 
     async def simple(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:

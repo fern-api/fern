@@ -4,7 +4,15 @@
 
 from . import service
 from .client import AsyncSeedFileUpload, SeedFileUpload
-from .service import Id, MyAliasObject, MyCollectionAliasObject, MyObject, MyObjectWithOptional, ObjectType
+from .service import (
+    Id,
+    MyAliasObject,
+    MyCollectionAliasObject,
+    MyInlineType,
+    MyObject,
+    MyObjectWithOptional,
+    ObjectType,
+)
 from .version import __version__
 
 __all__ = [
@@ -12,6 +20,7 @@ __all__ = [
     "Id",
     "MyAliasObject",
     "MyCollectionAliasObject",
+    "MyInlineType",
     "MyObject",
     "MyObjectWithOptional",
     "ObjectType",
