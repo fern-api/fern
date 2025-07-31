@@ -1,4 +1,4 @@
-import { chmod, cp, unlink, writeFile } from "fs/promises";
+import { chmod, cp, writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
 
