@@ -129,12 +129,20 @@ export function getGeneratorConfig({
             };
         },
         downloadFiles: () => {
-            return {
+            const outputConfig: FernGeneratorExec.GeneratorOutputConfig = {
                 mode: FernGeneratorExec.OutputMode.downloadFiles(),
                 path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
-                snippetFilepath: DOCKER_PATH_TO_SNIPPET,
                 publishingMetadata: generatorInvocation.publishMetadata
             };
+            if (absolutePathToSnippet !== undefined) {
+                binds.push(`${absolutePathToSnippet}:${DOCKER_PATH_TO_SNIPPET}`);
+                outputConfig.snippetFilepath = DOCKER_PATH_TO_SNIPPET;
+            }
+            if (absolutePathToSnippetTemplates !== undefined) {
+                binds.push(`${absolutePathToSnippetTemplates}:${DOCKER_PATH_TO_SNIPPET_TEMPLATES}`);
+                outputConfig.snippetTemplateFilepath = DOCKER_PATH_TO_SNIPPET_TEMPLATES;
+            }
+            return outputConfig;
         },
         github: (value) => {
             const outputConfig: FernGeneratorExec.GeneratorOutputConfig = {
