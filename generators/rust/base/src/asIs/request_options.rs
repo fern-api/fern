@@ -7,6 +7,7 @@ pub struct RequestOptions {
     pub bearer_token: Option<String>,
     pub max_retries: Option<u32>,
     pub additional_headers: HashMap<String, String>,
+    pub query_parameters: HashMap<String, String>,
 }
 
 impl RequestOptions {
@@ -31,6 +32,11 @@ impl RequestOptions {
     
     pub fn additional_header(mut self, key: impl Into<String>, value: impl Into<String>) -> Self {
         self.additional_headers.insert(key.into(), value.into());
+        self
+    }
+    
+    pub fn query_parameter(mut self, key: impl Into<String>, value: impl Into<String>) -> Self {
+        self.query_parameters.insert(key.into(), value.into());
         self
     }
 }

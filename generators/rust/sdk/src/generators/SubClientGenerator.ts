@@ -123,6 +123,7 @@ export class SubClientGenerator {
         const httpMethod = this.getHttpMethod(endpoint);
         const pathExpression = this.getPathExpression(endpoint);
         const requestBody = this.getRequestBody(endpoint, params);
+        const optionsExpression = this.buildRequestOptions(endpoint, params);
 
         const returnType = rust.Type.result(
             this.getReturnType(endpoint),
@@ -138,7 +139,7 @@ export class SubClientGenerator {
             Method::${httpMethod},
             ${pathExpression},
             ${requestBody},
-            options,
+            ${optionsExpression},
         ).await`
         };
     }
@@ -349,6 +350,33 @@ export class SubClientGenerator {
             return "Some(serde_json::to_value(request).unwrap_or_default())";
         }
         return "None";
+    }
+
+    private buildRequestOptions(endpoint: HttpEndpoint, params: EndpointParameter[]): string {
+        const queryParams = endpoint.queryParameters;
+        if (queryParams.length === 0) {
+            return "options";
+        }
+
+        // Generate code to build RequestOptions with query parameters
+        const queryParamStatements = queryParams.map((queryParam) => {
+            const paramName = queryParam.name.name.snakeCase.safeName;
+            const wireValue = queryParam.name.wireValue;
+            return `if let Some(value) = ${paramName} {
+                request_options.query_parameters.insert("${wireValue}".to_string(), value.to_string());
+            }`;
+        });
+
+        return `{
+            let mut request_options = options.unwrap_or_default();
+            ${queryParamStatements.join("\n            ")}
+            Some(request_options)
+        }`;
+    }
+
+    private getQueryParameterValue(queryParam: any, paramName: string): string {
+        // For now, assume all query parameters are optional strings or can be converted to strings
+        return paramName;
     }
 
     // =============================================================================

@@ -31,7 +31,7 @@ impl HttpClient {
     where
         T: DeserializeOwned,
     {
-        let url = format!("{}{}", self.config.base_url, path);
+        let url = self.build_url(path, &options)?;
         let mut request = self.client.request(method, &url);
         
         // Apply body if provided
@@ -49,6 +49,43 @@ impl HttpClient {
         // Execute with retries
         let response = self.execute_with_retries(req, &options).await?;
         self.parse_response(response).await
+    }
+    
+    fn build_url(&self, path: &str, options: &Option<RequestOptions>) -> Result<String, ClientError> {
+        let mut url = format!("{}{}", self.config.base_url, path);
+        
+        if let Some(options) = options {
+            if !options.query_parameters.is_empty() {
+                let query_string = self.serialize_query_parameters(&options.query_parameters)?;
+                url.push('?');
+                url.push_str(&query_string);
+            }
+        }
+        
+        Ok(url)
+    }
+    
+    fn serialize_query_parameters(&self, params: &std::collections::HashMap<String, String>) -> Result<String, ClientError> {
+        let mut query_parts = Vec::new();
+        for (key, value) in params {
+            // Simple URL encoding - replace spaces and special characters
+            let encoded_key = self.url_encode(key);
+            let encoded_value = self.url_encode(value);
+            query_parts.push(format!("{}={}", encoded_key, encoded_value));
+        }
+        
+        Ok(query_parts.join("&"))
+    }
+    
+    fn url_encode(&self, input: &str) -> String {
+        input
+            .chars()
+            .map(|c| match c {
+                'A'..='Z' | 'a'..='z' | '0'..='9' | '-' | '_' | '.' | '~' => c.to_string(),
+                ' ' => "+".to_string(),
+                _ => format!("%{:02X}", c as u8),
+            })
+            .collect()
     }
     
     fn apply_auth_headers(&self, request: &mut Request, options: &Option<RequestOptions>) -> Result<(), ClientError> {
