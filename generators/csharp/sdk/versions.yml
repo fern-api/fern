@@ -1,4 +1,10 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.1.5
+  changelogEntry:
+    - type: fix
+      summary: Add test for RawClient.ts to test Query Parameter Escaping 
+  createdAt: '2025-07-31'
+  irVersion: 58
 - version: 2.1.4
   changelogEntry:
     - type: fix
