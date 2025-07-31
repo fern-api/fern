@@ -76,6 +76,16 @@ public final class ServiceClient: Sendable {
         )
     }
 
+    public func withInlineType(request: any Codable, requestOptions: RequestOptions? = nil) async throws -> String {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/inline-type",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: String.self
+        )
+    }
+
     public func simple(requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,

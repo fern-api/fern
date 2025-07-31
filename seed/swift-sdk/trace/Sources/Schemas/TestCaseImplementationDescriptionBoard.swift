@@ -1,6 +1,6 @@
-public enum Metadata: Codable, Hashable, Sendable {
+public enum TestCaseImplementationDescriptionBoard: Codable, Hashable, Sendable {
     case html(Html)
-    case markdown(Markdown)
+    case paramId(ParamId)
 
     public struct Html: Codable, Hashable, Sendable {
         public let value: String
@@ -12,10 +12,10 @@ public enum Metadata: Codable, Hashable, Sendable {
         }
     }
 
-    public struct Markdown: Codable, Hashable, Sendable {
-        public let value: String
+    public struct ParamId: Codable, Hashable, Sendable {
+        public let value: ParameterId
 
-        public init(value: String) {
+        public init(value: ParameterId) {
         }
 
         private enum CodingKeys: String, CodingKey {

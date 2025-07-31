@@ -1,8 +1,8 @@
-public enum Metadata: Codable, Hashable, Sendable {
-    case html(Html)
-    case markdown(Markdown)
+public enum Data: Codable, Hashable, Sendable {
+    case string(String)
+    case base64(Base64)
 
-    public struct Html: Codable, Hashable, Sendable {
+    public struct String: Codable, Hashable, Sendable {
         public let value: String
 
         public init(value: String) {
@@ -12,7 +12,7 @@ public enum Metadata: Codable, Hashable, Sendable {
         }
     }
 
-    public struct Markdown: Codable, Hashable, Sendable {
+    public struct Base64: Codable, Hashable, Sendable {
         public let value: String
 
         public init(value: String) {
