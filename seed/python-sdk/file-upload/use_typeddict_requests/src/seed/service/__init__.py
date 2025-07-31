@@ -2,8 +2,14 @@
 
 # isort: skip_file
 
-from .types import Id, MyAliasObject, MyCollectionAliasObject, MyObject, MyObjectWithOptional, ObjectType
-from .requests import MyAliasObjectParams, MyCollectionAliasObjectParams, MyObjectParams, MyObjectWithOptionalParams
+from .types import Id, MyAliasObject, MyCollectionAliasObject, MyInlineType, MyObject, MyObjectWithOptional, ObjectType
+from .requests import (
+    MyAliasObjectParams,
+    MyCollectionAliasObjectParams,
+    MyInlineTypeParams,
+    MyObjectParams,
+    MyObjectWithOptionalParams,
+)
 
 __all__ = [
     "Id",
@@ -11,6 +17,8 @@ __all__ = [
     "MyAliasObjectParams",
     "MyCollectionAliasObject",
     "MyCollectionAliasObjectParams",
+    "MyInlineType",
+    "MyInlineTypeParams",
     "MyObject",
     "MyObjectParams",
     "MyObjectWithOptional",

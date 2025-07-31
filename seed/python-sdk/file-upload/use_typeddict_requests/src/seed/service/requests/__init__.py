@@ -4,7 +4,14 @@
 
 from .my_alias_object import MyAliasObjectParams
 from .my_collection_alias_object import MyCollectionAliasObjectParams
+from .my_inline_type import MyInlineTypeParams
 from .my_object import MyObjectParams
 from .my_object_with_optional import MyObjectWithOptionalParams
 
-__all__ = ["MyAliasObjectParams", "MyCollectionAliasObjectParams", "MyObjectParams", "MyObjectWithOptionalParams"]
+__all__ = [
+    "MyAliasObjectParams",
+    "MyCollectionAliasObjectParams",
+    "MyInlineTypeParams",
+    "MyObjectParams",
+    "MyObjectWithOptionalParams",
+]
