@@ -86,8 +86,6 @@ export class EnumWithAssociatedValues extends AstNode {
             writer.write(")");
             writer.newLine();
         });
-        writer.dedent();
-        writer.write("}");
         if (this.initializers.length > 0) {
             writer.newLine();
             this.initializers.forEach((initializer, initializerIdx) => {
@@ -118,5 +116,7 @@ export class EnumWithAssociatedValues extends AstNode {
                 writer.newLine();
             });
         }
+        writer.dedent();
+        writer.write("}");
     }
 }
