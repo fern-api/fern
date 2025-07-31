@@ -95,7 +95,7 @@ public class SeedLiteralClientBuilder {
      *
      * Example:
      * <pre>{@code
-     * @Override
+     * &#64;Override
      * protected void setCustomHeaders(ClientOptions.Builder builder) {
      *     super.setCustomHeaders(builder); // Keep existing headers
      *     builder.addHeader("X-Trace-ID", generateTraceId());
@@ -152,9 +152,9 @@ public class SeedLiteralClientBuilder {
      *
      * Example:
      * <pre>{@code
-     * @Override
+     * &#64;Override
      * protected void setAdditional(ClientOptions.Builder builder) {
-     *     builder.addHeader("X-Request-ID", () -> UUID.randomUUID().toString());
+     *     builder.addHeader("X-Request-ID", () -&gt; UUID.randomUUID().toString());
      *     builder.addHeader("X-Client-Version", "1.0.0");
      * }
      * }</pre>
@@ -168,7 +168,7 @@ public class SeedLiteralClientBuilder {
      *
      * Example:
      * <pre>{@code
-     * @Override
+     * &#64;Override
      * protected void validateConfiguration() {
      *     super.validateConfiguration(); // Run parent validations
      *     if (tenantId == null || tenantId.isEmpty()) {
