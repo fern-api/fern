@@ -43,9 +43,6 @@ jobs:
           ref: main
           path: docs
 
-      - name: Debug
-        run: ls changelogs
-
       - name: update csharp-sdk changelog
         run: rsync -avu --delete "changelogs/csharp-sdk/" "docs/fern/products/sdks/overview/csharp/changelog"
 
