@@ -1,10 +1,9 @@
-name: Copy Changelogs
+name: Write Changelogs to Docs
 
 on:
   push:
     branches:
       - main
-      - "dak/ci/update-docs-changelogs"
   workflow_dispatch:
 
 permissions:
@@ -20,6 +19,23 @@ jobs:
         with:
           ref: main
 
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Write generator changelogs
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+        run: |
+          echo "Generating changelogs for generators"
+          pnpm seed:local generate changelog generator -o ./changelogs/ --clean-directory
+
+      - name: Write CLI changelogs
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+        run: |
+          echo "Generating changelogs for CLI"
+          pnpm seed:local generate changelog cli -o ./changelogs/cli/ --clean-directory
+
       - name: Checkout main branch of docs repo
         uses: actions/checkout@v4
         with:
@@ -28,36 +44,36 @@ jobs:
           path: docs
 
       - name: update csharp-sdk changelog
-        run: rsync -avu --delete "fern/pages/changelogs/csharp-sdk/" "docs/fern/products/sdks/overview/csharp/changelog"
+        run: rsync -avu --delete "changelogs/csharp-sdk/" "docs/fern/products/sdks/overview/csharp/changelog"
 
       - name: update go-sdk changelog
-        run: rsync -avu --delete "fern/pages/changelogs/go-sdk/" "docs/fern/products/sdks/overview/go/changelog"
+        run: rsync -avu --delete "changelogs/go-sdk/" "docs/fern/products/sdks/overview/go/changelog"
 
       - name: update java-sdk changelog
-        run: rsync -avu --delete "fern/pages/changelogs/java-sdk/" "docs/fern/products/sdks/overview/java/changelog"
+        run: rsync -avu --delete "changelogs/java-sdk/" "docs/fern/products/sdks/overview/java/changelog"
 
       - name: update php-sdk changelog
-        run: rsync -avu --delete "fern/pages/changelogs/php-sdk/" "docs/fern/products/sdks/overview/php/changelog"
+        run: rsync -avu --delete "changelogs/php-sdk/" "docs/fern/products/sdks/overview/php/changelog"
 
       - name: update python-sdk changelog
-        run: rsync -avu --delete "fern/pages/changelogs/python-sdk/" "docs/fern/products/sdks/overview/python/changelog"
+        run: rsync -avu --delete "changelogs/python-sdk/" "docs/fern/products/sdks/overview/python/changelog"
 
       - name: update ruby-sdk changelog
-        run: rsync -avu --delete "fern/pages/changelogs/ruby-sdk/" "docs/fern/products/sdks/overview/ruby/changelog"
+        run: rsync -avu --delete "changelogs/ruby-sdk/" "docs/fern/products/sdks/overview/ruby/changelog"
 
       - name: update ts-sdk changelog
-        run: rsync -avu --delete "fern/pages/changelogs/ts-sdk/" "docs/fern/products/sdks/overview/typescript/changelog"
+        run: rsync -avu --delete "changelogs/ts-sdk/" "docs/fern/products/sdks/overview/typescript/changelog"
 
       - name: update cli changelog
-        run: rsync -avu --delete "fern/pages/changelogs/cli/" "docs/fern/products/cli-api-reference/cli-changelog"
+        run: rsync -avu --delete "changelogs/cli/" "docs/fern/products/cli-api-reference/cli-changelog"
 
       - name: create PR
         id: cpr
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
-          commit-message: "copy over changelogs"
-          title: "Copy over changelogs from fern repo"
+          commit-message: "update changelogs"
+          title: "Update changelogs from fern repo"
           branch: update-changelogs
           delete-branch: true
           path: docs
