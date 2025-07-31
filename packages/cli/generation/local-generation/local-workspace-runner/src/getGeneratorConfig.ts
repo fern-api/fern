@@ -135,7 +135,6 @@ export function getGeneratorConfig({
                 publishingMetadata: generatorInvocation.publishMetadata
             };
             if (absolutePathToSnippet !== undefined) {
-                console.log(`[DEBUG] Adding snippet bind: ${absolutePathToSnippet}:${DOCKER_PATH_TO_SNIPPET}`);
                 binds.push(`${absolutePathToSnippet}:${DOCKER_PATH_TO_SNIPPET}`);
                 outputConfig.snippetFilepath = DOCKER_PATH_TO_SNIPPET;
             }
