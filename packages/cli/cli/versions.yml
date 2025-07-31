@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        IR parser: Extended the logic for flattening properties in oneOf schemas to anyOf schemas as well
+        IR parser: Extended the logic for flattening properties in oneOf schemas to anyOf schemas
       type: feat
   irVersion: 58
   createdAt: "2025-07-30"
