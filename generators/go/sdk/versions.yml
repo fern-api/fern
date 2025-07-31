@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.5.4
+  changelogEntry:
+    - summary: |
+        THIS IS JUST A TEST. DO NOT MERGE
+      type: fix
+  createdAt: '2025-07-31'
+  irVersion: 58
+
 - version: 1.5.3
   changelogEntry:
     - summary: |
