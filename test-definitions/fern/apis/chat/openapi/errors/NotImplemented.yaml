@@ -1,0 +1,9 @@
+description: |
+  This error is returned when the requested feature is not implemented.
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        data:
+          type: string
