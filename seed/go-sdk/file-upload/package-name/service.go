@@ -51,6 +51,52 @@ type MyAliasObject = *MyObject
 
 type MyCollectionAliasObject = []*MyObject
 
+type MyInlineType struct {
+	Bar string `json:"bar" url:"bar"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (m *MyInlineType) GetBar() string {
+	if m == nil {
+		return ""
+	}
+	return m.Bar
+}
+
+func (m *MyInlineType) GetExtraProperties() map[string]interface{} {
+	return m.extraProperties
+}
+
+func (m *MyInlineType) UnmarshalJSON(data []byte) error {
+	type unmarshaler MyInlineType
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*m = MyInlineType(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+	m.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (m *MyInlineType) String() string {
+	if len(m.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(m); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", m)
+}
+
 type MyObject struct {
 	Foo string `json:"foo" url:"foo"`
 
@@ -203,4 +249,9 @@ type WithFormEncodingRequest struct {
 	File io.Reader `json:"-" url:"-"`
 	Foo  string    `json:"foo" url:"-"`
 	Bar  *MyObject `json:"bar,omitempty" url:"-"`
+}
+
+type InlineTypeRequest struct {
+	File    io.Reader     `json:"-" url:"-"`
+	Request *MyInlineType `json:"request,omitempty" url:"-"`
 }
