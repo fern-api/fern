@@ -6,6 +6,12 @@
   irVersion: 58
   createdAt: "2025-08-01"
   version: 0.65.42
+  
+        Allows SDK generation to complete even if an example doesn't correctly generate as part of the IR. 
+      type: fix
+  irVersion: 58
+  createdAt: "2025-08-01"
+  version: 0.65.42
 
 - changelogEntry:
     - summary: |
