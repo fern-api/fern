@@ -57,7 +57,7 @@ types:
       passwordEnvironmentVariable: string
       mavenUrlEnvironmentVariable: string
 
-    PypiPublishTarget:
-      properties:
-        version: string
-        packageName: string
+  PypiPublishTarget:
+    properties:
+      version: optional<string>
+      packageName: optional<string>
