@@ -74,6 +74,7 @@ export async function runLocalGenerationForSeed({
                         absolutePathToFernConfig,
                         workspace,
                         generatorInvocation,
+                        version: 'adi_test_version',
                         absolutePathToLocalOutput: generatorInvocation.absolutePathToLocalOutput,
                         absolutePathToLocalSnippetJSON: generatorInvocation.absolutePathToLocalOutput
                             ? AbsoluteFilePath.of(
@@ -270,6 +271,7 @@ export async function writeIrAndConfigJson({
                         absolutePathToFernConfig,
                         workspace,
                         generatorInvocation,
+                        version: 'adi_test_version',
                         absolutePathToLocalOutput: generatorInvocation.absolutePathToLocalOutput,
                         absolutePathToLocalSnippetJSON: AbsoluteFilePath.of(
                             join(
