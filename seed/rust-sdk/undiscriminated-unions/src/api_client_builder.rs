@@ -35,6 +35,18 @@ impl ApiClientBuilder {
         self
     }
     
+    /// Set the username for basic authentication
+    pub fn username(mut self, username: impl Into<String>) -> Self {
+        self.config.username = Some(username.into());
+        self
+    }
+    
+    /// Set the password for basic authentication
+    pub fn password(mut self, password: impl Into<String>) -> Self {
+        self.config.password = Some(password.into());
+        self
+    }
+    
     /// Set the request timeout
     pub fn timeout(mut self, timeout: Duration) -> Self {
         self.config.timeout = timeout;
@@ -68,6 +80,25 @@ impl ApiClientBuilder {
     /// Build the client with validation
     pub fn build(self) -> Result<UnionClient, ClientError> {
         self.config.validate().map_err(ClientError::ConfigError)?;
-        UnionClient::new(self.config)
+        
+        // Extract auth parameters from config
+        let api_key = self.config.api_key.clone();
+        let bearer_token = self.config.bearer_token.clone();
+        let username = self.config.username.clone();
+        let password = self.config.password.clone();
+        
+        // Call the client constructor with appropriate parameters based on auth type
+        match (api_key, bearer_token, username, password) {
+            // API Key auth
+            (Some(key), None, None, None) => UnionClient::new(self.config, Some(key)),
+            // Bearer token auth  
+            (None, Some(token), None, None) => UnionClient::new(self.config, Some(token)),
+            // Basic auth
+            (None, None, Some(user), pass) => UnionClient::new(self.config, Some(user), pass),
+            // Multiple auth methods
+            (Some(key), Some(token), None, None) => UnionClient::new(self.config, Some(key), Some(token)),
+            // No auth or unknown combination - try single parameter
+            _ => UnionClient::new(self.config),
+        }
     }
 }

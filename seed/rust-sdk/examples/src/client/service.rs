@@ -13,31 +13,21 @@ impl ServiceClient {
         Ok(Self { http_client, token })
     }
 
-    pub async fn get_file(&self, filename: &String, options: Option<RequestOptions>) -> Result<File, ClientError> {
+    pub async fn get_movie(&self, movie_id: &MovieId, options: Option<RequestOptions>) -> Result<Movie, ClientError> {
         self.http_client.execute_request(
             Method::GET,
-            &format!("/file/{}", filename),
+            &format!("/movie/{}", movie_id.0),
             None,
             None,
             options,
         ).await
     }
 
-}
-
-ng(&self, options: Option<RequestOptions>) -> Result<bool, ClientError> {
+    pub async fn create_movie(&self, request: &Movie, options: Option<RequestOptions>) -> Result<MovieId, ClientError> {
         self.http_client.execute_request(
-            Method::GET,
-            "/ping",
-            None,
-            None,
-            options,
-        ).await
-    }
-
-}
-
-_value(request).unwrap_or_default()),
+            Method::POST,
+            "/movie",
+            Some(serde_json::to_value(request).unwrap_or_default()),
             None,
             options,
         ).await
