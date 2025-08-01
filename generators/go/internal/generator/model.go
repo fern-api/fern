@@ -109,7 +109,9 @@ func (t *typeVisitor) VisitEnum(enum *ir.EnumTypeDeclaration) error {
 		if useEnumWireValue {
 			enumName = t.typeName + enumValue.Name.WireValue
 		}
-		escapedWireValue := strings.ReplaceAll(strings.ReplaceAll(enumValue.Name.WireValue, `\`, `\\`), `"`, `\"`)
+		// Escape backslash in the wire value.
+		escapedWireValue := strings.ReplaceAll(enumValue.Name.WireValue, `"`, `\"`)
+		escapedWireValue = strings.ReplaceAll(escapedWireValue, "\\", `\\`)
 		t.writer.P("case \"", escapedWireValue, "\":")
 		t.writer.P("return ", enumName, ", nil")
 	}
