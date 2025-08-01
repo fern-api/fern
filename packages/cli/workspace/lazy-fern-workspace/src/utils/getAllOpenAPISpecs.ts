@@ -1,6 +1,6 @@
 import { OpenAPISpec, ProtobufSpec, Spec } from "@fern-api/api-workspace-commons";
 import { isNonNullish } from "@fern-api/core-utils";
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { listFiles, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 
 import { ProtobufOpenAPIGenerator } from "../protobuf/ProtobufOpenAPIGenerator";
@@ -23,10 +23,28 @@ export async function getAllOpenAPISpecs({
     const protobufSpecs: ProtobufSpec[] = specs.filter((spec): spec is ProtobufSpec => spec.type === "protobuf");
     const openApiSpecsFromProto = await Promise.all(
         protobufSpecs.map(async (protobufSpec) => {
-            return convertProtobufToOpenAPI({ generator, protobufSpec, relativePathToDependency });
+            if (protobufSpec.absoluteFilepathToProtobufTarget != null) {
+                return convertProtobufToOpenAPI({ generator, protobufSpec, relativePathToDependency });
+            }
+            const allProtobufTargetFilepaths = await listFiles(protobufSpec.absoluteFilepathToProtobufRoot, "proto");
+            const openApiSpecs = await Promise.all(
+                allProtobufTargetFilepaths.map((file) => {
+                    return convertProtobufToOpenAPI({
+                        generator,
+                        protobufSpec: {
+                            ...protobufSpec,
+                            absoluteFilepathToProtobufTarget: file
+                        },
+                        relativePathToDependency
+                    });
+                })
+            );
+            return openApiSpecs.filter((spec) => isNonNullish(spec));
         })
     );
-    return [...openApiSpecs, ...openApiSpecsFromProto.filter((spec) => isNonNullish(spec))];
+
+    const flattenedSpecs = openApiSpecsFromProto.flat().filter((spec) => isNonNullish(spec));
+    return [...openApiSpecs, ...flattenedSpecs];
 }
 
 export async function convertProtobufToOpenAPI({
@@ -45,7 +63,8 @@ export async function convertProtobufToOpenAPI({
         absoluteFilepathToProtobufRoot: protobufSpec.absoluteFilepathToProtobufRoot,
         absoluteFilepathToProtobufTarget: protobufSpec.absoluteFilepathToProtobufTarget,
         relativeFilepathToProtobufRoot: protobufSpec.relativeFilepathToProtobufRoot,
-        local: protobufSpec.generateLocally
+        local: protobufSpec.generateLocally,
+        deps: protobufSpec.dependencies
     });
     return {
         type: "openapi",

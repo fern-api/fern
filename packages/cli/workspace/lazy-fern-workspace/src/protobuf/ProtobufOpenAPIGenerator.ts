@@ -1,9 +1,10 @@
-import { cp, writeFile } from "fs/promises";
+import { cp, readFile, readdir, unlink, writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 
 import { AbsoluteFilePath, RelativeFilePath, join, relative } from "@fern-api/fs-utils";
-import { createLoggingExecutable } from "@fern-api/logging-execa";
+import { createLoggingExecutable, runExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
+import { getProtobufYamlV1, getProtobufYamlV2 } from "./utils";
 
 const PROTOBUF_GENERATOR_CONFIG_FILENAME = "buf.gen.yaml";
 const PROTOBUF_GENERATOR_OUTPUT_PATH = "output";
@@ -20,18 +21,21 @@ export class ProtobufOpenAPIGenerator {
         absoluteFilepathToProtobufRoot,
         absoluteFilepathToProtobufTarget,
         relativeFilepathToProtobufRoot,
-        local
+        local,
+        deps
     }: {
         absoluteFilepathToProtobufRoot: AbsoluteFilePath;
         absoluteFilepathToProtobufTarget: AbsoluteFilePath;
         relativeFilepathToProtobufRoot: RelativeFilePath;
         local: boolean;
+        deps: string[];
     }): Promise<AbsoluteFilePath> {
         if (local) {
             return this.generateLocal({
                 absoluteFilepathToProtobufRoot,
                 absoluteFilepathToProtobufTarget,
-                relativeFilepathToProtobufRoot
+                relativeFilepathToProtobufRoot,
+                deps
             });
         }
         return this.generateRemote();
@@ -40,11 +44,13 @@ export class ProtobufOpenAPIGenerator {
     private async generateLocal({
         absoluteFilepathToProtobufRoot,
         absoluteFilepathToProtobufTarget,
-        relativeFilepathToProtobufRoot
+        relativeFilepathToProtobufRoot,
+        deps
     }: {
         absoluteFilepathToProtobufRoot: AbsoluteFilePath;
         absoluteFilepathToProtobufTarget: AbsoluteFilePath;
         relativeFilepathToProtobufRoot: RelativeFilePath;
+        deps: string[];
     }): Promise<AbsoluteFilePath> {
         const protobufGeneratorConfigPath = await this.setupProtobufGeneratorConfig({
             absoluteFilepathToProtobufRoot,
@@ -53,7 +59,8 @@ export class ProtobufOpenAPIGenerator {
         const protoTargetRelativeFilePath = relative(absoluteFilepathToProtobufRoot, absoluteFilepathToProtobufTarget);
         return this.doGenerateLocal({
             cwd: protobufGeneratorConfigPath,
-            target: protoTargetRelativeFilePath
+            target: protoTargetRelativeFilePath,
+            deps
         });
     }
 
@@ -75,14 +82,17 @@ export class ProtobufOpenAPIGenerator {
 
     private async doGenerateLocal({
         cwd,
-        target
+        target,
+        deps
     }: {
         cwd: AbsoluteFilePath;
         target: RelativeFilePath;
+        deps: string[];
     }): Promise<AbsoluteFilePath> {
         const which = createLoggingExecutable("which", {
             cwd,
-            logger: this.context.logger
+            logger: undefined,
+            doNotPipeOutput: true
         });
 
         try {
@@ -101,12 +111,35 @@ export class ProtobufOpenAPIGenerator {
             );
         }
 
+        const bufYamlPath = join(cwd, RelativeFilePath.of("buf.yaml"));
+
+        const configContent = getProtobufYamlV1(deps);
+
         const buf = createLoggingExecutable("buf", {
             cwd,
-            logger: this.context.logger
+            logger: undefined,
+            stdout: "ignore",
+            stderr: "pipe"
         });
-        await buf(["config", "init"]);
-        await buf(["generate", target]);
+
+        try {
+            await writeFile(bufYamlPath, configContent);
+            if (deps.length > 0) {
+                const bufDepUpdateResult = await buf(["dep", "update"]);
+                if (bufDepUpdateResult.exitCode !== 0) {
+                    this.context.failAndThrow(bufDepUpdateResult.stderr);
+                }
+            }
+
+            const bufGenerateResult = await buf(["generate", target.toString()]);
+            if (bufGenerateResult.exitCode !== 0) {
+                this.context.failAndThrow(bufGenerateResult.stderr);
+            }
+            await unlink(bufYamlPath);
+        } catch (error) {
+            await unlink(bufYamlPath);
+            throw error;
+        }
         return join(cwd, RelativeFilePath.of(PROTOBUF_GENERATOR_OUTPUT_FILEPATH));
     }
 
