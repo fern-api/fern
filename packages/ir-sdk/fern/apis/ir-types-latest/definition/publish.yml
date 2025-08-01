@@ -16,6 +16,9 @@ types:
       generateFullProject:
         type: boolean
         docs: If true, will generate the entire project (pyproject.toml, package.json, etc)
+      pypiTarget:
+        type: PypiPublishTarget
+        optional: true
   
   GithubPublish: 
     properties: 
@@ -34,6 +37,7 @@ types:
       postman: PostmanPublishTarget
       npm: NpmPublishTarget
       maven: MavenPublishTarget
+      pypi: PypiPublishTarget
   
   PostmanPublishTarget: 
     properties: 
@@ -54,3 +58,7 @@ types:
       usernameEnvironmentVariable: string
       passwordEnvironmentVariable: string
       mavenUrlEnvironmentVariable: string
+
+    PypiPublishTarget:
+      properties:
+        pypiUrl: string
