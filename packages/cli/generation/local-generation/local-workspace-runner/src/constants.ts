@@ -1,10 +1,20 @@
 import path from "path";
 
 export const DOCKER_FERN_DIRECTORY = "/fern";
-export const DOCKER_CODEGEN_OUTPUT_DIRECTORY = path.join(DOCKER_FERN_DIRECTORY, "output");
-export const DOCKER_GENERATOR_CONFIG_PATH = path.join(DOCKER_FERN_DIRECTORY, "config.json");
-export const DOCKER_PATH_TO_IR = path.join(DOCKER_FERN_DIRECTORY, "ir.json");
-export const DOCKER_PATH_TO_SNIPPET = path.join(DOCKER_FERN_DIRECTORY, "snippet.json");
-export const DOCKER_PATH_TO_SNIPPET_TEMPLATES = path.join(DOCKER_FERN_DIRECTORY, "snippet-templates.json");
-export const DOCKER_GENERATORS_DIRECTORY = path.join(DOCKER_FERN_DIRECTORY, "generators");
-export const DOCKER_SOURCES_DIRECTORY = path.join(DOCKER_FERN_DIRECTORY, "sources");
+export const CODEGEN_OUTPUT_DIRECTORY_NAME = "output";
+export const GENERATOR_CONFIG_FILENAME = "config.json";
+export const IR_FILENAME = "ir.json";
+export const SNIPPET_FILENAME = "snippet.json";
+export const SNIPPET_TEMPLATES_FILENAME = "snippet-templates.json";
+export const GENERATORS_DIRECTORY_NAME = "generators";
+export const SOURCES_DIRECTORY_NAME = "sources";
+
+export const DOCKER_CODEGEN_OUTPUT_DIRECTORY = path.join(DOCKER_FERN_DIRECTORY, CODEGEN_OUTPUT_DIRECTORY_NAME);
+export const DOCKER_GENERATOR_CONFIG_PATH = path.join(DOCKER_FERN_DIRECTORY, GENERATOR_CONFIG_FILENAME);
+export const DOCKER_PATH_TO_IR = path.join(DOCKER_FERN_DIRECTORY, IR_FILENAME);
+export const DOCKER_PATH_TO_SNIPPET = path.join(DOCKER_FERN_DIRECTORY, SNIPPET_FILENAME);
+export const DOCKER_PATH_TO_SNIPPET_TEMPLATES = path.join(DOCKER_FERN_DIRECTORY, SNIPPET_TEMPLATES_FILENAME);
+export const DOCKER_GENERATORS_DIRECTORY = path.join(DOCKER_FERN_DIRECTORY, GENERATORS_DIRECTORY_NAME);
+export const DOCKER_SOURCES_DIRECTORY = path.join(DOCKER_FERN_DIRECTORY, SOURCES_DIRECTORY_NAME);
+
+export const DEFAULT_NODE_DEBUG_PORT = "9229";

@@ -24,8 +24,8 @@ RUN yarn add \
   webpack@^5.97.1 \
   fetch-mock-jest@^1.5.1
 
-COPY generators/typescript/sdk/cli/dist /
+COPY generators/typescript/sdk/cli/dist/ /
 
 RUN npm install -f -g @fern-api/generator-cli
 
-ENTRYPOINT ["node", "--enable-source-maps", "/nodeCli.cjs"]
+ENTRYPOINT ["node", "--enable-source-maps", "/dist/cli.cjs"]

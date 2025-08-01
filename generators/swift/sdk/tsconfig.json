@@ -13,28 +13,25 @@
   ],
   "references": [
     {
-      "path": "../../../packages/cli/logger"
-    },
-    {
-      "path": "../../../packages/commons/core-utils"
-    },
-    {
-      "path": "../../../packages/commons/fs-utils"
-    },
-    {
       "path": "../../../packages/commons/test-utils"
     },
     {
-      "path": "../../base"
-    },
-    {
-      "path": "../base"
+      "path": "../model"
     },
     {
       "path": "../codegen"
     },
     {
-      "path": "../model"
+      "path": "../base"
+    },
+    {
+      "path": "../../../packages/commons/fs-utils"
+    },
+    {
+      "path": "../../../packages/commons/core-utils"
+    },
+    {
+      "path": "../../base"
     }
   ]
 }

@@ -10,19 +10,16 @@
   ],
   "references": [
     {
-      "path": "../../../packages/commons/core-utils"
+      "path": "../codegen"
     },
     {
       "path": "../../../packages/commons/fs-utils"
     },
     {
-      "path": "../../../packages/commons/logging-execa"
+      "path": "../../../packages/commons/core-utils"
     },
     {
       "path": "../../base"
-    },
-    {
-      "path": "../codegen"
     }
   ]
 }

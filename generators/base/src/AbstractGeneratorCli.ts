@@ -130,7 +130,9 @@ async function getGeneratorConfig(): Promise<FernGeneratorExec.GeneratorConfig> 
         unrecognizedObjectKeys: "passthrough"
     });
     if (!validatedConfig.ok) {
-        throw new Error(`The generator config failed to pass validation. ${validatedConfig.errors.join(", ")}`);
+        throw new Error(
+            `The generator config failed to pass validation. ${validatedConfig.errors.map((e) => (typeof e === "object" ? JSON.stringify(e) : String(e))).join(", ")}`
+        );
     }
     return validatedConfig.value;
 }

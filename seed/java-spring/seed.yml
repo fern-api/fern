@@ -25,7 +25,7 @@ test:
       - chmod +x install-gradle.sh && ./install-gradle.sh
       - cd spring
       - tar -xvf build/distributions/spring.tar -C .
-    runCommand: cd spring/spring && java -cp spring.jar:lib/* com.fern.java.spring.Cli
+    runCommand: cd spring/spring && java -cp spring.jar:lib/* com.fern.java.spring.Cli {CONFIG_PATH}
     env: {}
 fixtures:
   imdb:
