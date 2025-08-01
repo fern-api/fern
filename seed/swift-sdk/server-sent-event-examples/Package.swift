@@ -13,13 +13,13 @@ let package = Package(
     products: [
         .library(
             name: "ServerSentEvents",
-            targets: ["ServerSentEventsTarget"]
+            targets: ["ServerSentEvents"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "ServerSentEventsTarget",
+            name: "ServerSentEvents",
             path: "Sources"
         )
     ]

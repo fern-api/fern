@@ -44,7 +44,7 @@ export abstract class AbstractSwiftGeneratorContext<
     }
 
     public get targetName(): string {
-        return `${this.ir.apiName.pascalCase.unsafeName}Target`;
+        return this.ir.apiName.pascalCase.unsafeName;
     }
 
     public get rootClientName(): string {

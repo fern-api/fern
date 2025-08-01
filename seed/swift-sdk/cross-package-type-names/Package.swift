@@ -13,13 +13,13 @@ let package = Package(
     products: [
         .library(
             name: "CrossPackageTypeNames",
-            targets: ["CrossPackageTypeNamesTarget"]
+            targets: ["CrossPackageTypeNames"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "CrossPackageTypeNamesTarget",
+            name: "CrossPackageTypeNames",
             path: "Sources"
         )
     ]

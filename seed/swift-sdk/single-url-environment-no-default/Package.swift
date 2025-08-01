@@ -13,13 +13,13 @@ let package = Package(
     products: [
         .library(
             name: "SingleUrlEnvironmentNoDefault",
-            targets: ["SingleUrlEnvironmentNoDefaultTarget"]
+            targets: ["SingleUrlEnvironmentNoDefault"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "SingleUrlEnvironmentNoDefaultTarget",
+            name: "SingleUrlEnvironmentNoDefault",
             path: "Sources"
         )
     ]
