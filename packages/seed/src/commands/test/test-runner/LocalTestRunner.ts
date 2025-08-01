@@ -12,7 +12,7 @@ import { TestRunner } from "./TestRunner";
 import { generatorsYml } from "@fern-api/configuration";
 
 export class LocalTestRunner extends TestRunner {
-    async build(): Promise<void> {
+    public async build(): Promise<void> {
         const localConfig = await this.getLocalConfigOrthrow();
         const workingDir = AbsoluteFilePath.of(
             path.join(__dirname, RelativeFilePath.of("../../.."), RelativeFilePath.of(localConfig.workingDirectory))
@@ -28,13 +28,16 @@ export class LocalTestRunner extends TestRunner {
         }
     }
 
-    public async runGenerator(args: Parameters<TestRunner["runGenerator"]>[0]): Promise<void> {
+    protected async runGenerator(args: Parameters<TestRunner["runGenerator"]>[0]): Promise<void> {
         const localConfig = await this.getLocalConfigOrthrow();
         const commands = Array.isArray(localConfig.runCommand) ? localConfig.runCommand : [localConfig.runCommand];
         await this.runGeneratorLocal(args, commands);
     }
 
-    public async runGeneratorLocal(args: Parameters<TestRunner["runGenerator"]>[0], commands: string[]): Promise<void> {
+    private async runGeneratorLocal(
+        args: Parameters<TestRunner["runGenerator"]>[0],
+        commands: string[]
+    ): Promise<void> {
         const {
             absolutePathToFernDefinition,
             fernWorkspace,

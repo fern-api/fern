@@ -32,6 +32,8 @@ export declare namespace TestRunner {
         /** Configuration specific to the fixture **/
         configuration: FixtureConfigurations | undefined;
         inspect: boolean;
+        absolutePathToApiDefinition?: AbsoluteFilePath;
+        outputDir?: AbsoluteFilePath;
     }
 
     interface DoRunArgs {
@@ -103,7 +105,13 @@ export abstract class TestRunner {
 
     public abstract build(): Promise<void>;
 
-    public async run({ fixture, configuration, inspect }: TestRunner.RunArgs): Promise<TestRunner.TestResult> {
+    public async run({
+        fixture,
+        configuration,
+        inspect,
+        absolutePathToApiDefinition,
+        outputDir
+    }: TestRunner.RunArgs): Promise<TestRunner.TestResult> {
         try {
             if (this.buildInvocation == null) {
                 this.buildInvocation = this.build();
@@ -113,19 +121,23 @@ export abstract class TestRunner {
             const metrics: TestRunner.TestCaseMetrics = {};
 
             const id = configuration != null ? `${fixture}:${configuration.outputFolder}` : `${fixture}`;
-            const absolutePathToAPIDefinition = AbsoluteFilePath.of(
-                path.join(__dirname, "../../../test-definitions", FERN_DIRECTORY, APIS_DIRECTORY, fixture)
-            );
+            if (!absolutePathToApiDefinition) {
+                absolutePathToApiDefinition = AbsoluteFilePath.of(
+                    path.join(__dirname, "../../../test-definitions", FERN_DIRECTORY, APIS_DIRECTORY, fixture)
+                );
+            }
             const taskContext = this.taskContextFactory.create(`${this.generator.workspaceName}:${id}`);
             const outputFolder = configuration?.outputFolder ?? fixture;
-            const outputDir =
-                configuration == null
-                    ? join(this.generator.absolutePathToWorkspace, RelativeFilePath.of(fixture))
-                    : join(
-                          this.generator.absolutePathToWorkspace,
-                          RelativeFilePath.of(fixture),
-                          RelativeFilePath.of(configuration.outputFolder)
-                      );
+            if (!outputDir) {
+                outputDir =
+                    configuration == null
+                        ? join(this.generator.absolutePathToWorkspace, RelativeFilePath.of(fixture))
+                        : join(
+                              this.generator.absolutePathToWorkspace,
+                              RelativeFilePath.of(fixture),
+                              RelativeFilePath.of(configuration.outputFolder)
+                          );
+            }
             const language = this.generator.workspaceConfig.language;
             const outputVersion = configuration?.outputVersion ?? "0.0.1";
             const customConfig =
@@ -142,7 +154,7 @@ export abstract class TestRunner {
             const readme = configuration?.readmeConfig ?? undefined;
             const fernWorkspace = await (
                 await convertGeneratorWorkspaceToFernWorkspace({
-                    absolutePathToAPIDefinition,
+                    absolutePathToAPIDefinition: absolutePathToApiDefinition,
                     taskContext,
                     fixture
                 })
@@ -178,7 +190,7 @@ export abstract class TestRunner {
                     taskContext,
                     outputDir,
                     absolutePathToWorkspace: this.generator.absolutePathToWorkspace,
-                    absolutePathToFernDefinition: absolutePathToAPIDefinition,
+                    absolutePathToFernDefinition: absolutePathToApiDefinition,
                     outputMode,
                     outputFolder,
                     keepDocker: this.keepDocker,
@@ -239,10 +251,7 @@ export abstract class TestRunner {
         }
     }
 
-    /**
-     *
-     */
-    public abstract runGenerator(args: TestRunner.DoRunArgs): Promise<void>;
+    protected abstract runGenerator(args: TestRunner.DoRunArgs): Promise<void>;
 
     protected getParsedDockerImageName(): ParsedDockerName {
         return parseDockerOrThrow(this.generator.workspaceConfig.test.docker.image);

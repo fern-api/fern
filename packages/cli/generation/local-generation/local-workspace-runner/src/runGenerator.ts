@@ -179,6 +179,17 @@ export async function writeFilesToDiskAndRunGenerator({
         inspect
     });
 
+    const taskHandler = new LocalTaskHandler({
+        context,
+        absolutePathToLocalOutput,
+        absolutePathToTmpOutputDirectory,
+        absolutePathToLocalSnippetJSON,
+        absolutePathToLocalSnippetTemplateJSON,
+        absolutePathToTmpSnippetJSON,
+        absolutePathToTmpSnippetTemplatesJSON
+    });
+    await taskHandler.copyGeneratedFiles();
+
     return {
         ir: latest,
         generatorConfig: config

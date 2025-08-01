@@ -1,6 +1,7 @@
 displayName: TypeScript SDK
 irVersion: v58
 image: fernapi/fern-typescript-sdk
+imageAliases: [fernapi/fern-typescript-node-sdk]
 changelogLocation: ../../generators/typescript/sdk/versions.yml
 publish:
   preBuildCommands:

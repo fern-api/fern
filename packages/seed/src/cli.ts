@@ -235,6 +235,18 @@ function addRunCommand(cli: Argv) {
                     string: true,
                     demandOption: false
                 })
+                .option("local", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false,
+                    description: "Run the generator locally instead of using Docker"
+                })
+                .option("keepDocker", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false,
+                    description: "Keeps the docker container after the generator finishes (Docker mode only)"
+                })
                 .option("inspect", {
                     type: "boolean",
                     demandOption: false,
@@ -251,20 +263,27 @@ function addRunCommand(cli: Argv) {
                 );
             }
 
+            if (argv.local && generator.workspaceConfig.test.local == null) {
+                throw new Error(
+                    `Generator ${generator.workspaceName} does not have a local test configuration. Please add a 'test.local' section to your seed.yml with 'buildCommand' and 'runCommand' properties.`
+                );
+            }
+
             await runWithCustomFixture({
                 pathToFixture: argv.path.startsWith("/")
                     ? AbsoluteFilePath.of(argv.path)
                     : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(argv.path)),
                 workspace: generator,
                 logLevel: argv["log-level"],
-                audience: argv.audience,
                 skipScripts: argv.skipScripts,
                 outputPath: argv["output-path"]
                     ? argv["output-path"].startsWith("/")
                         ? AbsoluteFilePath.of(argv["output-path"])
                         : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(argv["output-path"]))
                     : undefined,
-                inspect: argv.inspect
+                inspect: argv.inspect,
+                local: argv.local,
+                keepDocker: argv.keepDocker
             });
         }
     );
