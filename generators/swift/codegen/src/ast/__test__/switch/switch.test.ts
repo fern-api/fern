@@ -25,7 +25,8 @@ describe("Statement.switch", () => {
                   handleActive
               case "inactive":
                   handleInactive
-              }"
+              }
+              "
             `);
         });
 
@@ -47,7 +48,8 @@ describe("Statement.switch", () => {
                   handleOne
               default:
                   handleDefault
-              }"
+              }
+              "
             `);
         });
 
@@ -72,7 +74,8 @@ describe("Statement.switch", () => {
                   moveNorth
               case .south:
                   moveSouth
-              }"
+              }
+              "
             `);
         });
 
@@ -98,7 +101,8 @@ describe("Statement.switch", () => {
                   print(result)
               default:
                   print("Unknown")
-              }"
+              }
+              "
             `);
         });
     });

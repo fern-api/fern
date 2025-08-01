@@ -17,7 +17,8 @@ public enum UnionWithOptionalTime: Codable, Hashable, Sendable {
                     debugDescription: "Unknown shape discriminant value: \(discriminant)"
                 )
             )
-        }}
+        }
+    }
 
     public func encode(to encoder: Encoder) throws -> Void {
     }
