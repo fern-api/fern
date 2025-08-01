@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package test.service;
+
+import "google/api/annotations.proto";
+
+option go_package = "github.com";
+
+service TestService {
+  // Echo returns the message sent
+  rpc Echo(EchoRequest) returns (EchoResponse) {
+    option (google.api.http) = {
+      post: "/v1/echo"
+      body: "*"
+    };
+  }
+
+  // Add adds two numbers together
+  rpc Add(AddRequest) returns (AddResponse) {
+    option (google.api.http) = {
+      post: "/v1/add"
+      body: "*"
+    };
+  }
+}
+
+message EchoRequest {
+  string message = 1;
+}
+
+message EchoResponse {
+  string message = 1;
+}
+
+message AddRequest {
+  int32 x = 1;
+  int32 y = 2;
+}
+
+message AddResponse {
+  int32 sum = 1;
+}
