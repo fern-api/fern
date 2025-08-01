@@ -787,6 +787,19 @@
               "type": "null"
             }
           ]
+        },
+        "dependencies": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
