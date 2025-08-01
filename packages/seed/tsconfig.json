@@ -27,9 +27,6 @@
       "path": "../cli/generation/local-generation/local-workspace-runner"
     },
     {
-      "path": "../ir-sdk"
-    },
-    {
       "path": "../commons/fs-utils"
     },
     {

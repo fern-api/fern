@@ -4,7 +4,11 @@
 
 import * as FernIr from "../../../index";
 
-export type PublishTarget = FernIr.PublishTarget.Postman | FernIr.PublishTarget.Npm | FernIr.PublishTarget.Maven;
+export type PublishTarget =
+    | FernIr.PublishTarget.Postman
+    | FernIr.PublishTarget.Npm
+    | FernIr.PublishTarget.Maven
+    | FernIr.PublishTarget.Pypi;
 
 export namespace PublishTarget {
     export interface Postman extends FernIr.PostmanPublishTarget, _Utils {
@@ -19,6 +23,10 @@ export namespace PublishTarget {
         type: "maven";
     }
 
+    export interface Pypi extends FernIr.PypiPublishTarget, _Utils {
+        type: "pypi";
+    }
+
     export interface _Utils {
         _visit: <_Result>(visitor: FernIr.PublishTarget._Visitor<_Result>) => _Result;
     }
@@ -27,6 +35,7 @@ export namespace PublishTarget {
         postman: (value: FernIr.PostmanPublishTarget) => _Result;
         npm: (value: FernIr.NpmPublishTarget) => _Result;
         maven: (value: FernIr.MavenPublishTarget) => _Result;
+        pypi: (value: FernIr.PypiPublishTarget) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -71,6 +80,19 @@ export const PublishTarget = {
         };
     },
 
+    pypi: (value: FernIr.PypiPublishTarget): FernIr.PublishTarget.Pypi => {
+        return {
+            ...value,
+            type: "pypi",
+            _visit: function <_Result>(
+                this: FernIr.PublishTarget.Pypi,
+                visitor: FernIr.PublishTarget._Visitor<_Result>,
+            ) {
+                return FernIr.PublishTarget._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(value: FernIr.PublishTarget, visitor: FernIr.PublishTarget._Visitor<_Result>): _Result => {
         switch (value.type) {
             case "postman":
@@ -79,6 +101,8 @@ export const PublishTarget = {
                 return visitor.npm(value);
             case "maven":
                 return visitor.maven(value);
+            case "pypi":
+                return visitor.pypi(value);
             default:
                 return visitor._other(value as any);
         }

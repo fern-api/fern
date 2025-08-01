@@ -19,12 +19,14 @@ export async function testGenerator({
     runner,
     generator,
     fixtures,
-    outputFolder
+    outputFolder,
+    inspect
 }: {
     runner: TestRunner;
     generator: GeneratorWorkspace;
     fixtures: string[];
     outputFolder?: string;
+    inspect: boolean;
 }): Promise<boolean> {
     const testCases: Promise<TestRunner.TestResult>[] = [];
     for (const fixture of fixtures) {
@@ -44,7 +46,8 @@ export async function testGenerator({
                 testCases.push(
                     runner.run({
                         fixture,
-                        configuration: instance
+                        configuration: instance,
+                        inspect
                     })
                 );
             }
@@ -52,7 +55,8 @@ export async function testGenerator({
             testCases.push(
                 runner.run({
                     fixture,
-                    configuration: undefined
+                    configuration: undefined,
+                    inspect
                 })
             );
         }

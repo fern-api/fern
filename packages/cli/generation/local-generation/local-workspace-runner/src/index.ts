@@ -1,6 +1,16 @@
-export { getGeneratorConfig } from "./getGeneratorConfig";
-export { getIntermediateRepresentation } from "./getIntermediateRepresentation";
-export { runLocalGenerationForSeed } from "./runLocalGenerationForSeed";
-export { runLocalGenerationForWorkspace } from "./runLocalGenerationForWorkspace";
-export { LocalTaskHandler } from "./LocalTaskHandler";
-export { generateDynamicSnippetTests } from "./dynamic-snippets/generateDynamicSnippetTests";
+export {
+    runContainerizedGenerationForSeed,
+    runNativeGenerationForSeed,
+    runNativeGenerationWithCommand
+} from "./runLocalGenerationForSeed";
+
+export { type ExecutionEnvironment } from "./ExecutionEnvironment";
+export { DockerExecutionEnvironment } from "./DockerExecutionEnvironment";
+export { NativeExecutionEnvironment } from "./NativeExecutionEnvironment";
+export { GenerationRunner } from "./GenerationRunner";
+
+export * from "./runLocalGenerationForWorkspace";
+export * from "./GenerationRunner";
+export * from "./ExecutionEnvironment";
+export * from "./NativeExecutionEnvironment";
+export * from "./DockerExecutionEnvironment";

@@ -31,6 +31,7 @@ export async function generateWorkspace({
     absolutePathToPreview,
     mode,
     runner,
+    inspect,
     lfsOverride
 }: {
     organization: string;
@@ -46,6 +47,7 @@ export async function generateWorkspace({
     absolutePathToPreview: AbsoluteFilePath | undefined;
     mode: GenerationMode | undefined;
     runner: ContainerRunner | undefined;
+    inspect: boolean;
     lfsOverride: string | undefined;
 }): Promise<void> {
     if (workspace.generatorsConfiguration == null) {
@@ -91,7 +93,8 @@ export async function generateWorkspace({
             generatorGroup: group,
             keepDocker,
             context,
-            runner
+            runner,
+            inspect
         });
     } else {
         if (!token) {

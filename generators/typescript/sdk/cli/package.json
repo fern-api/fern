@@ -24,11 +24,11 @@
     "lib"
   ],
   "scripts": {
-    "clean": "rm -rf ./lib && tsc --build --clean",
+    "clean": "rm -rf ./lib && rm -rf ./dist",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
-    "dist:cli": "rm -rf ./lib && rm -rf ./dist && pnpm compile && tsup ./src/nodeCli.ts --format cjs --sourcemap",
+    "dist:cli": "pnpm clean && pnpm compile && node build.mjs",
     "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-typescript-node-sdk:latest -t fernapi/fern-typescript-sdk:latest ../../../..",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",

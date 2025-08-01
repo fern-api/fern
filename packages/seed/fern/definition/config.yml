@@ -14,6 +14,7 @@ types:
   SeedWorkspaceConfiguration:
     properties:
       image: string
+      imageAliases: optional<list<string>>
       displayName: string
       irVersion: string
       test: TestConfiguration

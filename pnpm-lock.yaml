@@ -7475,15 +7475,15 @@ importers:
       '@fern-api/ir-generator':
         specifier: workspace:*
         version: link:../../cli/generation/ir-generator
+      '@fern-api/ir-sdk':
+        specifier: workspace:*
+        version: link:../../ir-sdk
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../cli/task-context
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../../cli/workspace/loader
-      '@fern-fern/ir-sdk':
-        specifier: ^58.2.0
-        version: 58.2.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -7605,9 +7605,6 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../commons/fs-utils
-      '@fern-api/ir-sdk':
-        specifier: workspace:*
-        version: link:../ir-sdk
       '@fern-api/local-workspace-runner':
         specifier: workspace:*
         version: link:../cli/generation/local-generation/local-workspace-runner
@@ -7629,9 +7626,6 @@ importers:
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
-      '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1045
-        version: 0.0.1045
       '@fern-fern/generators-sdk':
         specifier: 0.114.0-5745f9e74
         version: 0.114.0-5745f9e74

@@ -13,22 +13,25 @@
   ],
   "references": [
     {
-      "path": "../../cli/cli-source-resolver"
-    },
-    {
-      "path": "../../cli/configuration"
-    },
-    {
-      "path": "../../cli/generation/ir-generator"
-    },
-    {
-      "path": "../../cli/task-context"
+      "path": "../../ir-sdk"
     },
     {
       "path": "../../cli/workspace/loader"
     },
     {
+      "path": "../../cli/task-context"
+    },
+    {
+      "path": "../../cli/generation/ir-generator"
+    },
+    {
       "path": "../fs-utils"
+    },
+    {
+      "path": "../../cli/configuration"
+    },
+    {
+      "path": "../../cli/cli-source-resolver"
     }
   ]
 }
