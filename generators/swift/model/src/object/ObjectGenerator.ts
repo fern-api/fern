@@ -4,7 +4,7 @@ import { swift } from "@fern-api/swift-codegen";
 import { InlinedRequestBodyProperty, ObjectProperty } from "@fern-fern/ir-sdk/api";
 
 import { getSwiftTypeForTypeReference } from "../converters";
-import { StructGenerator } from "../helpers/struct-generator";
+import { StructGenerator } from "../helpers";
 
 export class ObjectGenerator {
     private readonly name: string;
