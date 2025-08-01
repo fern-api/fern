@@ -87,18 +87,7 @@ impl ApiClientBuilder {
         let username = self.config.username.clone();
         let password = self.config.password.clone();
         
-        // Call the client constructor with appropriate parameters based on auth type
-        match (api_key, bearer_token, username, password) {
-            // API Key auth
-            (Some(key), None, None, None) => WebsocketClient::new(self.config, Some(key)),
-            // Bearer token auth  
-            (None, Some(token), None, None) => WebsocketClient::new(self.config, Some(token)),
-            // Basic auth
-            (None, None, Some(user), pass) => WebsocketClient::new(self.config, Some(user), pass),
-            // Multiple auth methods
-            (Some(key), Some(token), None, None) => WebsocketClient::new(self.config, Some(key), Some(token)),
-            // No auth or unknown combination - try single parameter
-            _ => WebsocketClient::new(self.config),
-        }
+        // Call the client constructor with all authentication parameters
+        WebsocketClient::new(self.config, api_key, bearer_token, username, password)
     }
 }

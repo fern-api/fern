@@ -103,49 +103,29 @@ export class SubClientGenerator {
             }
         ];
 
-        // Add auth-specific fields based on auth schemes
-        this.auth.schemes?.forEach((scheme) => {
-            AuthScheme._visit(scheme, {
-                bearer: (bearerScheme) => {
-                    fields.push({
-                        name: bearerScheme.token.snakeCase.safeName,
-                        type: "Option<String>",
-                        visibility: "pub"
-                    });
-                },
-                basic: (basicScheme) => {
-                    fields.push({
-                        name: basicScheme.username.snakeCase.safeName,
-                        type: "Option<String>",
-                        visibility: "pub"
-                    });
-                    fields.push({
-                        name: basicScheme.password.snakeCase.safeName,
-                        type: "Option<String>",
-                        visibility: "pub"
-                    });
-                },
-                header: (headerScheme) => {
-                    const rustType = generateRustTypeForTypeReference(headerScheme.valueType);
-                    fields.push({
-                        name: headerScheme.name.name.snakeCase.safeName,
-                        type: `Option<${rustType.toString()}>`,
-                        visibility: "pub"
-                    });
-                },
-                oauth: (oauthScheme) => {
-                    // For OAuth, we typically store the access token
-                    fields.push({
-                        name: "access_token",
-                        type: "Option<String>",
-                        visibility: "pub"
-                    });
-                },
-                _other: () => {
-                    // Handle unknown auth types
-                }
-            });
-        });
+        // Always add standard auth fields for consistent API
+        fields.push(
+            {
+                name: "api_key",
+                type: "Option<String>",
+                visibility: "pub"
+            },
+            {
+                name: "bearer_token",
+                type: "Option<String>",
+                visibility: "pub"
+            },
+            {
+                name: "username",
+                type: "Option<String>",
+                visibility: "pub"
+            },
+            {
+                name: "password",
+                type: "Option<String>",
+                visibility: "pub"
+            }
+        );
 
         return fields;
     }
@@ -155,50 +135,23 @@ export class SubClientGenerator {
         const errorType = rust.Type.reference(rust.reference({ name: "ClientError" }));
         const returnType = rust.Type.result(selfType, errorType);
 
-        // Generate parameters based on auth schemes
-        const parameters: string[] = [];
-        const fieldAssignments: string[] = [];
+        // Use consistent parameter signature for all auth types
+        const parameters = [
+            "config: ClientConfig",
+            "api_key: Option<String>",
+            "bearer_token: Option<String>",
+            "username: Option<String>",
+            "password: Option<String>"
+        ];
 
-        // Always include config
-        parameters.push("config: ClientConfig");
-        fieldAssignments.push("let http_client = HttpClient::new(config)?;");
-
-        // Add auth-specific parameters
-        this.auth.schemes?.forEach((scheme) => {
-            AuthScheme._visit(scheme, {
-                bearer: (bearerScheme) => {
-                    const paramName = bearerScheme.token.snakeCase.safeName;
-                    parameters.push(`${paramName}: Option<String>`);
-                    fieldAssignments.push(`${paramName}`);
-                },
-                basic: (basicScheme) => {
-                    const userParam = basicScheme.username.snakeCase.safeName;
-                    const passParam = basicScheme.password.snakeCase.safeName;
-                    parameters.push(`${userParam}: Option<String>`);
-                    parameters.push(`${passParam}: Option<String>`);
-                    fieldAssignments.push(`${userParam}`);
-                    fieldAssignments.push(`${passParam}`);
-                },
-                header: (headerScheme) => {
-                    const paramName = headerScheme.name.name.snakeCase.safeName;
-                    const rustType = generateRustTypeForTypeReference(headerScheme.valueType);
-                    parameters.push(`${paramName}: Option<${rustType.toString()}>`);
-                    fieldAssignments.push(`${paramName}`);
-                },
-                oauth: (oauthScheme) => {
-                    parameters.push("access_token: Option<String>");
-                    fieldAssignments.push("access_token");
-                },
-                _other: () => {
-                    // Handle unknown auth types
-                }
-            });
-        });
-
-        // Build the constructor body
-        const allFieldAssignments = ["http_client", ...fieldAssignments.slice(1)]; // Skip the http_client creation line
-        const constructorBody = `${fieldAssignments[0]}
-        Ok(Self { ${allFieldAssignments.join(", ")} })`;
+        const constructorBody = `let http_client = HttpClient::new(config)?;
+        Ok(Self { 
+            http_client, 
+            api_key, 
+            bearer_token, 
+            username, 
+            password 
+        })`;
 
         return {
             name: "new",

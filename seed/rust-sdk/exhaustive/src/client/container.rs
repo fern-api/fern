@@ -4,13 +4,22 @@ use crate::{types::*};
 
 pub struct ContainerClient {
     pub http_client: HttpClient,
-    pub token: Option<String>,
+    pub api_key: Option<String>,
+    pub bearer_token: Option<String>,
+    pub username: Option<String>,
+    pub password: Option<String>,
 }
 
 impl ContainerClient {
-    pub fn new(config: ClientConfig, token: Option<String>) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig, api_key: Option<String>, bearer_token: Option<String>, username: Option<String>, password: Option<String>) -> Result<Self, ClientError> {
         let http_client = HttpClient::new(config)?;
-        Ok(Self { http_client, token })
+        Ok(Self { 
+            http_client, 
+            api_key, 
+            bearer_token, 
+            username, 
+            password 
+        })
     }
 
     pub async fn get_and_return_list_of_primitives(&self, request: &Vec<String>, options: Option<RequestOptions>) -> Result<Vec<String>, ClientError> {
