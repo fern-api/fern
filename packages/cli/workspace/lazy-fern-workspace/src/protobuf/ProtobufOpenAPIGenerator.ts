@@ -160,7 +160,6 @@ export class ProtobufOpenAPIGenerator {
                 await unlink(bufLockPath);
             }
             await unlink(bufYamlPath);
-
         } catch (error) {
             if (cleanupBufLock) {
                 await unlink(bufLockPath);
