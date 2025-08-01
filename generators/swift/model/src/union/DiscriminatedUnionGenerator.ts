@@ -179,7 +179,6 @@ export class DiscriminatedUnionGenerator {
     }
 
     private generateEncodeMethod(): swift.Method {
-        const bodyStatements: swift.Statement[] = []; // TODO(kafkas): Implement
         return swift.method({
             unsafeName: "encode",
             accessLevel: swift.AccessLevel.Public,
@@ -192,7 +191,36 @@ export class DiscriminatedUnionGenerator {
             ],
             throws: true,
             returnType: swift.Type.void(),
-            body: swift.CodeBlock.withStatements(bodyStatements)
+            body: swift.CodeBlock.withStatements([
+                swift.Statement.switch({
+                    target: swift.Expression.rawValue("self"),
+                    cases: this.unionTypeDeclaration.types.map((singleUnionType) => {
+                        return {
+                            pattern: swift.Pattern.enumCaseValueBinding({
+                                caseName: singleUnionType.discriminantValue.name.camelCase.unsafeName,
+                                referenceName: "data",
+                                declarationType: swift.DeclarationType.Let
+                            }),
+                            body: [
+                                swift.Statement.expressionStatement(
+                                    swift.Expression.try(
+                                        swift.Expression.methodCall({
+                                            target: swift.Expression.reference("data"),
+                                            methodName: "encode",
+                                            arguments_: [
+                                                swift.functionArgument({
+                                                    label: "to",
+                                                    value: swift.Expression.reference("encoder")
+                                                })
+                                            ]
+                                        })
+                                    )
+                                )
+                            ]
+                        };
+                    })
+                })
+            ])
         });
     }
 
