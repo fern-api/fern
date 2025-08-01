@@ -3,9 +3,9 @@ import { glob } from "glob";
 import path from "path";
 import { Project } from "ts-morph";
 
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 
-const filePathOnDockerContainer = AbsoluteFilePath.of("/assets/asIs");
+const asIsFilePath = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("assets/asIs"));
 
 const DEFAULT_PACKAGE_PATH = "src";
 export namespace AsIsManager {
@@ -78,13 +78,13 @@ export class AsIsManager {
         for (const [sourcePattern, targetPattern] of filesToCopy.flatMap(Object.entries) as [string, string][]) {
             if (sourcePattern.includes("*")) {
                 const matches = await glob(sourcePattern, {
-                    cwd: filePathOnDockerContainer,
+                    cwd: asIsFilePath,
                     absolute: false
                 });
 
                 for (const match of matches) {
-                    const sourceFilePath = path.join(filePathOnDockerContainer, match);
-                    const relativePath = path.relative(filePathOnDockerContainer, match);
+                    const sourceFilePath = path.join(asIsFilePath, match);
+                    const relativePath = path.relative(asIsFilePath, match);
                     const targetFilePath = path.join(targetPattern, relativePath);
                     let fileContent = await fs.readFile(sourceFilePath, "utf-8");
 
@@ -109,7 +109,7 @@ export class AsIsManager {
                 }
             } else {
                 // Handle direct file mapping
-                const fileContent = await fs.readFile(path.join(filePathOnDockerContainer, sourcePattern), "utf-8");
+                const fileContent = await fs.readFile(path.join(asIsFilePath, sourcePattern), "utf-8");
                 project.createSourceFile(targetPattern, fileContent, { overwrite: true });
             }
         }

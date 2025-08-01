@@ -10,6 +10,7 @@ import { isNonNullish } from "@fern-api/core-utils";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { EndpointId, FeatureId, FernFilepath, HttpEndpoint, SdkRequestWrapper } from "@fern-fern/ir-sdk/api";
+import { join } from "path";
 
 interface EndpointWithFilepath {
     endpoint: HttpEndpoint;
@@ -329,7 +330,7 @@ const bodyUsed = response.bodyUsed;
         }
         const binaryResponseEndpoint = binaryResponseEndpoints[0] as EndpointWithFilepath;
 
-        const templateFile = readFileSync("/assets/readme/binary-response-addendum.md", "utf-8");
+        const templateFile = readFileSync(join(__dirname, "assets/readme/binary-response-addendum.md"), "utf-8");
         const compileTemplate = template(templateFile);
         return compileTemplate({
             snippet: this.writeCode(code`const response = await ${this.getMethodCall(binaryResponseEndpoint)}(...);`)

@@ -10,10 +10,10 @@
   ],
   "references": [
     {
-      "path": "../../../commons/casings-generator"
+      "path": "../../api-importers/v3-importer-commons"
     },
     {
-      "path": "../../../commons/core-utils"
+      "path": "../../logger"
     },
     {
       "path": "../../../commons/ir-utils"
@@ -22,10 +22,7 @@
       "path": "../../../ir-sdk"
     },
     {
-      "path": "../../api-importers/v3-importer-commons"
-    },
-    {
-      "path": "../../logger"
+      "path": "../../../commons/casings-generator"
     }
   ]
 }

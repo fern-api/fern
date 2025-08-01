@@ -45,8 +45,7 @@ export async function loadGeneratorWorkspaces(): Promise<GeneratorWorkspace[]> {
         const seedConfig = await readFile(join(absolutePathToWorkspace, RelativeFilePath.of(SEED_CONFIG_FILENAME)));
         workspaces.push({
             absolutePathToWorkspace,
-            // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-            workspaceConfig: yaml.load(seedConfig.toString()) as any as FernSeedConfig.SeedWorkspaceConfiguration,
+            workspaceConfig: yaml.load(seedConfig.toString()) as unknown as FernSeedConfig.SeedWorkspaceConfiguration,
             workspaceName: workspace
         });
     }
@@ -79,7 +78,7 @@ export async function loadCliWorkspace(): Promise<CliWorkspace> {
 
     const absolutePathToWorkspace = join(seedDirectory, RelativeFilePath.of(CLI_SEED_DIRECTORY));
     const seedConfig = await readFile(join(absolutePathToWorkspace, RelativeFilePath.of(SEED_CONFIG_FILENAME)));
-    const workspaceConfig = yaml.load(seedConfig.toString()) as any as FernSeedConfig.CliSeedWorkspaceConfiguration;
+    const workspaceConfig = yaml.load(seedConfig.toString()) as unknown as FernSeedConfig.CliSeedWorkspaceConfiguration;
 
     return {
         workspaceName: CLI_SEED_DIRECTORY,
