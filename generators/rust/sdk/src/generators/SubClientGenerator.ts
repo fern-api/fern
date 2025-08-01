@@ -4,6 +4,8 @@ import { UseStatement, rust } from "@fern-api/rust-codegen";
 import { generateRustTypeForTypeReference } from "@fern-api/rust-model";
 
 import {
+    ApiAuth,
+    AuthScheme,
     HttpEndpoint,
     HttpService,
     PrimitiveTypeV1,
@@ -25,11 +27,13 @@ export class SubClientGenerator {
     private readonly context: SdkGeneratorContext;
     private readonly subpackage: Subpackage;
     private readonly service?: HttpService;
+    private readonly auth: ApiAuth;
 
     constructor(context: SdkGeneratorContext, subpackage: Subpackage) {
         this.context = context;
         this.subpackage = subpackage;
         this.service = subpackage.service ? this.context.getHttpServiceOrThrow(subpackage.service) : undefined;
+        this.auth = context.ir.auth;
     }
 
     // =============================================================================
@@ -91,28 +95,117 @@ export class SubClientGenerator {
     }
 
     private generateFields(): rust.Client.Field[] {
-        return [
+        const fields: rust.Client.Field[] = [
             {
                 name: "http_client",
                 type: rust.Type.reference(rust.reference({ name: "HttpClient" })).toString(),
                 visibility: "pub"
             }
         ];
+
+        // Add auth-specific fields based on auth schemes
+        this.auth.schemes?.forEach((scheme) => {
+            AuthScheme._visit(scheme, {
+                bearer: (bearerScheme) => {
+                    fields.push({
+                        name: bearerScheme.token.snakeCase.safeName,
+                        type: "Option<String>",
+                        visibility: "pub"
+                    });
+                },
+                basic: (basicScheme) => {
+                    fields.push({
+                        name: basicScheme.username.snakeCase.safeName,
+                        type: "Option<String>",
+                        visibility: "pub"
+                    });
+                    fields.push({
+                        name: basicScheme.password.snakeCase.safeName,
+                        type: "Option<String>",
+                        visibility: "pub"
+                    });
+                },
+                header: (headerScheme) => {
+                    const rustType = generateRustTypeForTypeReference(headerScheme.valueType);
+                    fields.push({
+                        name: headerScheme.name.name.snakeCase.safeName,
+                        type: `Option<${rustType.toString()}>`,
+                        visibility: "pub"
+                    });
+                },
+                oauth: (oauthScheme) => {
+                    // For OAuth, we typically store the access token
+                    fields.push({
+                        name: "access_token",
+                        type: "Option<String>",
+                        visibility: "pub"
+                    });
+                },
+                _other: () => {
+                    // Handle unknown auth types
+                }
+            });
+        });
+
+        return fields;
     }
 
     private generateConstructor(): rust.Client.SimpleMethod {
-        const configType = rust.Type.reference(rust.reference({ name: "ClientConfig" }));
         const selfType = rust.Type.reference(rust.reference({ name: "Self" }));
         const errorType = rust.Type.reference(rust.reference({ name: "ClientError" }));
         const returnType = rust.Type.result(selfType, errorType);
 
+        // Generate parameters based on auth schemes
+        const parameters: string[] = [];
+        const fieldAssignments: string[] = [];
+
+        // Always include config
+        parameters.push("config: ClientConfig");
+        fieldAssignments.push("let http_client = HttpClient::new(config)?;");
+
+        // Add auth-specific parameters
+        this.auth.schemes?.forEach((scheme) => {
+            AuthScheme._visit(scheme, {
+                bearer: (bearerScheme) => {
+                    const paramName = bearerScheme.token.snakeCase.safeName;
+                    parameters.push(`${paramName}: Option<String>`);
+                    fieldAssignments.push(`${paramName}`);
+                },
+                basic: (basicScheme) => {
+                    const userParam = basicScheme.username.snakeCase.safeName;
+                    const passParam = basicScheme.password.snakeCase.safeName;
+                    parameters.push(`${userParam}: Option<String>`);
+                    parameters.push(`${passParam}: Option<String>`);
+                    fieldAssignments.push(`${userParam}`);
+                    fieldAssignments.push(`${passParam}`);
+                },
+                header: (headerScheme) => {
+                    const paramName = headerScheme.name.name.snakeCase.safeName;
+                    const rustType = generateRustTypeForTypeReference(headerScheme.valueType);
+                    parameters.push(`${paramName}: Option<${rustType.toString()}>`);
+                    fieldAssignments.push(`${paramName}`);
+                },
+                oauth: (oauthScheme) => {
+                    parameters.push("access_token: Option<String>");
+                    fieldAssignments.push("access_token");
+                },
+                _other: () => {
+                    // Handle unknown auth types
+                }
+            });
+        });
+
+        // Build the constructor body
+        const allFieldAssignments = ["http_client", ...fieldAssignments.slice(1)]; // Skip the http_client creation line
+        const constructorBody = `${fieldAssignments[0]}
+        Ok(Self { ${allFieldAssignments.join(", ")} })`;
+
         return {
             name: "new",
-            parameters: [`config: ${configType.toString()}`],
+            parameters,
             returnType: returnType.toString(),
             isAsync: false,
-            body: `let http_client = HttpClient::new(config)?;
-        Ok(Self { http_client })`
+            body: constructorBody
         };
     }
 
@@ -147,7 +240,7 @@ export class SubClientGenerator {
             ${pathExpression},
             ${requestBody},
             ${this.buildQueryParameters(endpoint)},
-            ${this.hasQueryParameters(endpoint) ? "options" : "options"},
+            options,
         ).await`
         };
     }
