@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
+- changelogEntry:
+    - summary: |
+        Add lfs-override param to override output mode.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-30"
+  version: 0.65.38
+
 - changelogEntry:
     - summary: |
         If endpoint example generation fails, catch the exception and continue instead of completely failing 
