@@ -20,7 +20,7 @@ export async function createSampleGeneratorContext(testDefinitionName: string): 
         type: "local",
         _visit: (visitor) => visitor.local()
     });
-    return new ModelGeneratorContext(ir, generatorConfig, customConfig, notificationService);
+    return new ModelGeneratorContext(ir as any, generatorConfig, customConfig, notificationService);
 }
 
 function createSampleGeneratorConfig(): FernGeneratorExec.config.GeneratorConfig {
