@@ -1,12 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- changelogEntry:
+    - summary: |
+        Add support for proxying IR generation from proto through protoc-gen-openapi.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-31"
+  version: 0.65.41
 
 - changelogEntry:
     - summary: |
         Add lfs-override param to override output mode.
       type: feat
   irVersion: 58
-  createdAt: "2025-07-30"
-  version: 0.65.38
+  createdAt: "2025-07-31"
+  version: 0.65.40
 
 - changelogEntry:
     - summary: |
@@ -14,14 +21,6 @@
         in generators.yml were not being generated when using `--local` flag due to missing Docker volume 
         mounting for the downloadFiles output mode.
       type: fix
-  irVersion: 58
-  createdAt: "2025-07-31"
-  version: 0.65.39
-
-- changelogEntry:
-    - summary: |
-        Add support for proxying IR generation from proto through protoc-gen-openapi.
-      type: feat
   irVersion: 58
   createdAt: "2025-07-31"
   version: 0.65.39
