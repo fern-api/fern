@@ -1,6 +1,56 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Cache buf.lock contents to prevent BSR rate limiting during `buf dep update`.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-08-01"
+  version: 0.65.43
+  
+- changelogEntry:
+    - summary: |
+        Allows SDK generation to complete even if an example doesn't correctly generate as part of the IR. 
+      type: fix
+  irVersion: 58
+  createdAt: "2025-08-01"
+  version: 0.65.42
+
+- changelogEntry:
+    - summary: |
+        Add support for proxying IR generation from proto through protoc-gen-openapi.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-31"
+  version: 0.65.41
+
+- changelogEntry:
+    - summary: |
+        Add lfs-override param to override output mode.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-31"
+  version: 0.65.40
+
+- changelogEntry:
+    - summary: |
+        Fix snippet generation for local file system output mode. Snippets configured with `snippets.path` 
+        in generators.yml were not being generated when using `--local` flag due to missing Docker volume 
+        mounting for the downloadFiles output mode.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-31"
+  version: 0.65.39
+
+- changelogEntry:
+    - summary: |
+        IR parser: Extended the logic for flattening properties in oneOf schemas to anyOf schemas as well
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-30"
+  version: 0.65.38
+
+- changelogEntry:
+    - summary: |
         Add support for snippet.json output as part of self hosted SDK generation. The following config in 
         `generators.yml` will generate a `snippet.json` file in the relevant director: 
         ```

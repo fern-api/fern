@@ -319,6 +319,47 @@ public partial class ServiceClient
         }
     }
 
+    public async Task<string> WithInlineTypeAsync(
+        InlineTypeRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var multipartFormRequest_ = new MultipartFormRequest
+        {
+            BaseUrl = _client.Options.BaseUrl,
+            Method = HttpMethod.Post,
+            Path = "/inline-type",
+            Options = options,
+        };
+        multipartFormRequest_.AddFileParameterPart("file", request.File);
+        multipartFormRequest_.AddJsonPart("request", request.Request);
+        var response = await _client
+            .SendRequestAsync(multipartFormRequest_, cancellationToken)
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<string>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedFileUploadException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedFileUploadApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
     /// <example><code>
     /// await client.Service.SimpleAsync();
     /// </code></example>

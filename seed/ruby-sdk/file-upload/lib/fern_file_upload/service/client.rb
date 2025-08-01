@@ -8,6 +8,7 @@ require_relative "types/my_collection_alias_object"
 require_relative "../../core/file_utilities"
 require_relative "types/my_object_with_optional"
 require "json"
+require_relative "types/my_inline_type"
 require "async"
 
 module SeedFileUploadClient
@@ -276,6 +277,32 @@ module SeedFileUploadClient
           request: request
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/optional-args"
+      end
+      JSON.parse(response.body)
+    end
+
+    # @param file [String, IO]
+    # @param request [Hash] Request of type SeedFileUploadClient::Service::MyInlineType, as a Hash
+    #   * :bar (String)
+    # @param request_options [SeedFileUploadClient::RequestOptions]
+    # @return [String]
+    def with_inline_type(file:, request:, request_options: nil)
+      response = @request_client.conn.post do |req|
+        req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
+        req.body = {
+          **(request_options&.additional_body_parameters || {}),
+          file: SeedFileUploadClient::FileUtilities.as_faraday_multipart(file_like: file),
+          request: request
+        }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/inline-type"
       end
       JSON.parse(response.body)
     end
@@ -582,6 +609,35 @@ module SeedFileUploadClient
             request: request
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/optional-args"
+        end
+        parsed_json = JSON.parse(response.body)
+        parsed_json
+      end
+    end
+
+    # @param file [String, IO]
+    # @param request [Hash] Request of type SeedFileUploadClient::Service::MyInlineType, as a Hash
+    #   * :bar (String)
+    # @param request_options [SeedFileUploadClient::RequestOptions]
+    # @return [String]
+    def with_inline_type(file:, request:, request_options: nil)
+      Async do
+        response = @request_client.conn.post do |req|
+          req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
+          req.body = {
+            **(request_options&.additional_body_parameters || {}),
+            file: SeedFileUploadClient::FileUtilities.as_faraday_multipart(file_like: file),
+            request: request
+          }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/inline-type"
         end
         parsed_json = JSON.parse(response.body)
         parsed_json

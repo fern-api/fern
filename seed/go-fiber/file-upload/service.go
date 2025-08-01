@@ -43,6 +43,45 @@ type MyAliasObject = *MyObject
 
 type MyCollectionAliasObject = []*MyObject
 
+type MyInlineType struct {
+	Bar string `json:"bar" url:"bar"`
+
+	extraProperties map[string]interface{}
+}
+
+func (m *MyInlineType) GetBar() string {
+	if m == nil {
+		return ""
+	}
+	return m.Bar
+}
+
+func (m *MyInlineType) GetExtraProperties() map[string]interface{} {
+	return m.extraProperties
+}
+
+func (m *MyInlineType) UnmarshalJSON(data []byte) error {
+	type unmarshaler MyInlineType
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*m = MyInlineType(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+	return nil
+}
+
+func (m *MyInlineType) String() string {
+	if value, err := internal.StringifyJSON(m); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", m)
+}
+
 type MyObject struct {
 	Foo string `json:"foo" url:"foo"`
 
@@ -175,4 +214,8 @@ type MyOtherRequest struct {
 type WithFormEncodingRequest struct {
 	Foo string    `json:"foo" url:"-"`
 	Bar *MyObject `json:"bar,omitempty" url:"-"`
+}
+
+type InlineTypeRequest struct {
+	Request *MyInlineType `json:"request,omitempty" url:"-"`
 }

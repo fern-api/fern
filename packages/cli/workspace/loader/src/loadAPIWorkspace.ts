@@ -72,7 +72,9 @@ export async function loadSingleNamespaceAPIWorkspace({
                 absoluteFilepathToProtobufTarget: absoluteFilepathToTarget,
                 absoluteFilepathToOverrides,
                 relativeFilepathToProtobufRoot,
+                dependencies: definition.schema.dependencies,
                 generateLocally: definition.schema.localGeneration,
+                fromOpenAPI: definition.schema.fromOpenAPI,
                 settings: {
                     audiences: definition.audiences ?? [],
                     useTitlesAsName: definition.settings?.shouldUseTitleAsName ?? true,
@@ -270,11 +272,20 @@ export async function loadAPIWorkspace({
                         return false;
                     }
                     if (spec.type === "protobuf") {
-                        return false;
+                        if (!spec.fromOpenAPI) {
+                            return false;
+                        }
                     }
                     return true;
                 }) as (OpenAPISpec | ProtobufSpec)[],
-                allSpecs: specs,
+                allSpecs: specs.filter((spec) => {
+                    if (spec.type === "protobuf") {
+                        if (spec.fromOpenAPI) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }),
                 workspaceName,
                 absoluteFilePath: absolutePathToWorkspace,
                 generatorsConfiguration,

@@ -208,7 +208,9 @@ internal partial class RawClient(ClientOptions clientOptions)
                 {
                     var items = collection
                         .Cast<object>()
-                        .Select(value => $"{queryItem.Key}={value}")
+                        .Select(value =>
+                            $"{Uri.EscapeDataString(queryItem.Key)}={Uri.EscapeDataString(value.ToString())}"
+                        )
                         .ToList();
                     if (items.Any())
                     {
@@ -217,7 +219,8 @@ internal partial class RawClient(ClientOptions clientOptions)
                 }
                 else
                 {
-                    current += $"{queryItem.Key}={queryItem.Value}&";
+                    current +=
+                        $"{Uri.EscapeDataString(queryItem.Key)}={Uri.EscapeDataString(queryItem.Value)}&";
                 }
 
                 return current;

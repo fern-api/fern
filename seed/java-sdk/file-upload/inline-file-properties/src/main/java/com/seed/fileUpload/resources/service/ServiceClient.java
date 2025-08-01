@@ -5,6 +5,7 @@ package com.seed.fileUpload.resources.service;
 
 import com.seed.fileUpload.core.ClientOptions;
 import com.seed.fileUpload.core.RequestOptions;
+import com.seed.fileUpload.resources.service.requests.InlineTypeRequest;
 import com.seed.fileUpload.resources.service.requests.JustFileRequest;
 import com.seed.fileUpload.resources.service.requests.JustFileWithQueryParamsRequest;
 import com.seed.fileUpload.resources.service.requests.MyOtherRequest;
@@ -88,6 +89,14 @@ public class ServiceClient {
 
     public String optionalArgs(OptionalArgsRequest request, RequestOptions requestOptions) {
         return this.rawClient.optionalArgs(request, requestOptions).body();
+    }
+
+    public String withInlineType(InlineTypeRequest request) {
+        return this.rawClient.withInlineType(request).body();
+    }
+
+    public String withInlineType(InlineTypeRequest request, RequestOptions requestOptions) {
+        return this.rawClient.withInlineType(request, requestOptions).body();
     }
 
     public void simple() {

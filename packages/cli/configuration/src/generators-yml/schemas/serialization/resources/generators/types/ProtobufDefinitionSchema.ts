@@ -14,6 +14,8 @@ export const ProtobufDefinitionSchema: core.serialization.ObjectSchema<
     root: core.serialization.string(),
     overrides: core.serialization.string().optional(),
     "local-generation": core.serialization.boolean().optional(),
+    "from-openapi": core.serialization.boolean().optional(),
+    dependencies: core.serialization.list(core.serialization.string()).optional(),
 });
 
 export declare namespace ProtobufDefinitionSchema {
@@ -22,5 +24,7 @@ export declare namespace ProtobufDefinitionSchema {
         root: string;
         overrides?: string | null;
         "local-generation"?: boolean | null;
+        "from-openapi"?: boolean | null;
+        dependencies?: string[] | null;
     }
 }

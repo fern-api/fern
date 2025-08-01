@@ -124,12 +124,13 @@ export function getGeneratorConfig({
             };
         },
         downloadFiles: () => {
-            return {
+            const outputConfig: FernGeneratorExec.GeneratorOutputConfig = {
                 mode: FernGeneratorExec.OutputMode.downloadFiles(),
                 path: outputDirectory,
                 snippetFilepath: snippetPath,
                 publishingMetadata: generatorInvocation.publishMetadata
             };
+            return outputConfig;
         },
         github: (value) => {
             const outputConfig: FernGeneratorExec.GeneratorOutputConfig = {

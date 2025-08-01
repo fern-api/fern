@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.6.5
+  changelogEntry:
+    - summary: If an enum wire value is not found, use the first enum value as a fallback.
+      type: fix
+  createdAt: "2025-08-01"
+  irVersion: 58
+
+- version: 2.6.4
+  changelogEntry:
+    - summary: Fix inline types inside of multipart-form requests
+      type: fix
+  createdAt: "2025-07-30"
+  irVersion: 58
+
 - version: 2.6.3
   changelogEntry:
     - summary: |
