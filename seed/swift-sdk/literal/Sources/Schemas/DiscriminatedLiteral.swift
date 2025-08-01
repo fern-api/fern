@@ -27,6 +27,16 @@ public enum DiscriminatedLiteral: Codable, Hashable, Sendable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
+        switch self {
+        case .customName(let data):
+            try data.encode(to: encoder)
+        case .defaultName(let data):
+            try data.encode(to: encoder)
+        case .george(let data):
+            try data.encode(to: encoder)
+        case .literalGeorge(let data):
+            try data.encode(to: encoder)
+        }
     }
 
     public struct CustomName: Codable, Hashable, Sendable {
@@ -51,6 +61,7 @@ public enum DiscriminatedLiteral: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -82,6 +93,7 @@ public enum DiscriminatedLiteral: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -113,6 +125,7 @@ public enum DiscriminatedLiteral: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -144,6 +157,7 @@ public enum DiscriminatedLiteral: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 

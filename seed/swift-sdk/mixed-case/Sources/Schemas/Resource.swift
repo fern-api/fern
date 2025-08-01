@@ -21,6 +21,12 @@ public enum Resource: Codable, Hashable, Sendable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
+        switch self {
+        case .user(let data):
+            try data.encode(to: encoder)
+        case .organization(let data):
+            try data.encode(to: encoder)
+        }
     }
 
     public struct User: Codable, Hashable, Sendable {
@@ -53,6 +59,7 @@ public enum Resource: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.resourceType, forKey: .resourceType)
             try container.encode(self.userName, forKey: .userName)
             try container.encode(self.metadataTags, forKey: .metadataTags)
             try container.encode(self.extraProperties, forKey: .extraProperties)
@@ -88,6 +95,7 @@ public enum Resource: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.resourceType, forKey: .resourceType)
             try container.encode(self.name, forKey: .name)
         }
 

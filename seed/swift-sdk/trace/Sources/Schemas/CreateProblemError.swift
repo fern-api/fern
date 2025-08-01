@@ -18,6 +18,10 @@ public enum CreateProblemError: Codable, Hashable, Sendable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
+        switch self {
+        case .generic(let data):
+            try data.encode(to: encoder)
+        }
     }
 
     public struct Generic: Codable, Hashable, Sendable {
@@ -50,6 +54,7 @@ public enum CreateProblemError: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.errorType, forKey: .errorType)
             try container.encode(self.message, forKey: .message)
             try container.encode(self.type, forKey: .type)
             try container.encode(self.stacktrace, forKey: .stacktrace)

@@ -102,6 +102,66 @@ public enum BigUnion: Codable, Hashable, Sendable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
+        switch self {
+        case .normalSweet(let data):
+            try data.encode(to: encoder)
+        case .thankfulFactor(let data):
+            try data.encode(to: encoder)
+        case .jumboEnd(let data):
+            try data.encode(to: encoder)
+        case .hastyPain(let data):
+            try data.encode(to: encoder)
+        case .mistySnow(let data):
+            try data.encode(to: encoder)
+        case .distinctFailure(let data):
+            try data.encode(to: encoder)
+        case .practicalPrinciple(let data):
+            try data.encode(to: encoder)
+        case .limpingStep(let data):
+            try data.encode(to: encoder)
+        case .vibrantExcitement(let data):
+            try data.encode(to: encoder)
+        case .activeDiamond(let data):
+            try data.encode(to: encoder)
+        case .popularLimit(let data):
+            try data.encode(to: encoder)
+        case .falseMirror(let data):
+            try data.encode(to: encoder)
+        case .primaryBlock(let data):
+            try data.encode(to: encoder)
+        case .rotatingRatio(let data):
+            try data.encode(to: encoder)
+        case .colorfulCover(let data):
+            try data.encode(to: encoder)
+        case .disloyalValue(let data):
+            try data.encode(to: encoder)
+        case .gruesomeCoach(let data):
+            try data.encode(to: encoder)
+        case .totalWork(let data):
+            try data.encode(to: encoder)
+        case .harmoniousPlay(let data):
+            try data.encode(to: encoder)
+        case .uniqueStress(let data):
+            try data.encode(to: encoder)
+        case .unwillingSmoke(let data):
+            try data.encode(to: encoder)
+        case .frozenSleep(let data):
+            try data.encode(to: encoder)
+        case .diligentDeal(let data):
+            try data.encode(to: encoder)
+        case .attractiveScript(let data):
+            try data.encode(to: encoder)
+        case .hoarseMouse(let data):
+            try data.encode(to: encoder)
+        case .circularCard(let data):
+            try data.encode(to: encoder)
+        case .potableBad(let data):
+            try data.encode(to: encoder)
+        case .triangularRepair(let data):
+            try data.encode(to: encoder)
+        case .gaseousRoad(let data):
+            try data.encode(to: encoder)
+        }
     }
 
     public struct NormalSweet: Codable, Hashable, Sendable {
@@ -126,6 +186,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -157,6 +218,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -188,6 +250,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -219,6 +282,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -250,6 +314,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -281,6 +346,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -312,6 +378,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -343,6 +410,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -374,6 +442,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -405,6 +474,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -436,6 +506,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -467,6 +538,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -498,6 +570,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -529,6 +602,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -560,6 +634,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -591,6 +666,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -622,6 +698,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -653,6 +730,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -684,6 +762,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -715,6 +794,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -746,6 +826,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -777,6 +858,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -808,6 +890,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -839,6 +922,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -870,6 +954,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -901,6 +986,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -932,6 +1018,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -963,6 +1050,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -994,6 +1082,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 

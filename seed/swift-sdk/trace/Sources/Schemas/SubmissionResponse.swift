@@ -33,6 +33,20 @@ public enum SubmissionResponse: Codable, Hashable, Sendable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
+        switch self {
+        case .serverInitialized(let data):
+            try data.encode(to: encoder)
+        case .problemInitialized(let data):
+            try data.encode(to: encoder)
+        case .workspaceInitialized(let data):
+            try data.encode(to: encoder)
+        case .serverErrored(let data):
+            try data.encode(to: encoder)
+        case .codeExecutionUpdate(let data):
+            try data.encode(to: encoder)
+        case .terminated(let data):
+            try data.encode(to: encoder)
+        }
     }
 
     public struct ServerInitialized: Codable, Hashable, Sendable {
@@ -75,6 +89,7 @@ public enum SubmissionResponse: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -132,6 +147,7 @@ public enum SubmissionResponse: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.exceptionType, forKey: .exceptionType)
             try container.encode(self.exceptionMessage, forKey: .exceptionMessage)
             try container.encode(self.exceptionStacktrace, forKey: .exceptionStacktrace)
@@ -167,6 +183,7 @@ public enum SubmissionResponse: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -192,6 +209,7 @@ public enum SubmissionResponse: Codable, Hashable, Sendable {
 
         public func encode(to encoder: Encoder) throws -> Void {
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
         }
     }
 

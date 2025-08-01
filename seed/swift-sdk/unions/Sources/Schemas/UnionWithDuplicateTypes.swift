@@ -21,6 +21,12 @@ public enum UnionWithDuplicateTypes: Codable, Hashable, Sendable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
+        switch self {
+        case .foo1(let data):
+            try data.encode(to: encoder)
+        case .foo2(let data):
+            try data.encode(to: encoder)
+        }
     }
 
     public struct Foo1: Codable, Hashable, Sendable {
@@ -45,6 +51,7 @@ public enum UnionWithDuplicateTypes: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.name, forKey: .name)
         }
 
@@ -76,6 +83,7 @@ public enum UnionWithDuplicateTypes: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.name, forKey: .name)
         }
 

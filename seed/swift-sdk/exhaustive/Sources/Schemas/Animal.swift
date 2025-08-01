@@ -21,6 +21,12 @@ public enum Animal: Codable, Hashable, Sendable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
+        switch self {
+        case .dog(let data):
+            try data.encode(to: encoder)
+        case .cat(let data):
+            try data.encode(to: encoder)
+        }
     }
 
     public struct Dog: Codable, Hashable, Sendable {
@@ -49,6 +55,7 @@ public enum Animal: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.animal, forKey: .animal)
             try container.encode(self.name, forKey: .name)
             try container.encode(self.likesToWoof, forKey: .likesToWoof)
         }
@@ -86,6 +93,7 @@ public enum Animal: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.animal, forKey: .animal)
             try container.encode(self.name, forKey: .name)
             try container.encode(self.likesToMeow, forKey: .likesToMeow)
         }

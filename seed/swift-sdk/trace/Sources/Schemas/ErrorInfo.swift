@@ -24,6 +24,14 @@ public enum ErrorInfo: Codable, Hashable, Sendable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
+        switch self {
+        case .compileError(let data):
+            try data.encode(to: encoder)
+        case .runtimeError(let data):
+            try data.encode(to: encoder)
+        case .internalError(let data):
+            try data.encode(to: encoder)
+        }
     }
 
     public struct CompileError: Codable, Hashable, Sendable {
@@ -48,6 +56,7 @@ public enum ErrorInfo: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.message, forKey: .message)
         }
 
@@ -79,6 +88,7 @@ public enum ErrorInfo: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.message, forKey: .message)
         }
 
@@ -110,6 +120,7 @@ public enum ErrorInfo: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.exceptionInfo, forKey: .exceptionInfo)
         }
 

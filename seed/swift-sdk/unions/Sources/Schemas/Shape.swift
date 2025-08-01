@@ -21,6 +21,12 @@ public enum Shape: Codable, Hashable, Sendable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
+        switch self {
+        case .circle(let data):
+            try data.encode(to: encoder)
+        case .square(let data):
+            try data.encode(to: encoder)
+        }
     }
 
     public struct Circle: Codable, Hashable, Sendable {
@@ -45,6 +51,7 @@ public enum Shape: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.radius, forKey: .radius)
         }
 
@@ -76,6 +83,7 @@ public enum Shape: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.length, forKey: .length)
         }
 

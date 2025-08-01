@@ -36,6 +36,22 @@ public enum WorkspaceSubmissionUpdateInfo: Codable, Hashable, Sendable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
+        switch self {
+        case .running(let data):
+            try data.encode(to: encoder)
+        case .ran(let data):
+            try data.encode(to: encoder)
+        case .stopped(let data):
+            try data.encode(to: encoder)
+        case .traced(let data):
+            try data.encode(to: encoder)
+        case .tracedV2(let data):
+            try data.encode(to: encoder)
+        case .errored(let data):
+            try data.encode(to: encoder)
+        case .finished(let data):
+            try data.encode(to: encoder)
+        }
     }
 
     public struct Running: Codable, Hashable, Sendable {
@@ -60,6 +76,7 @@ public enum WorkspaceSubmissionUpdateInfo: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -99,6 +116,7 @@ public enum WorkspaceSubmissionUpdateInfo: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encodeIfPresent(self.exceptionV2, forKey: .exceptionV2)
             try container.encodeIfPresent(self.exception, forKey: .exception)
             try container.encode(self.stdout, forKey: .stdout)
@@ -170,6 +188,7 @@ public enum WorkspaceSubmissionUpdateInfo: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.traceResponsesSize, forKey: .traceResponsesSize)
         }
 
@@ -201,6 +220,7 @@ public enum WorkspaceSubmissionUpdateInfo: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 

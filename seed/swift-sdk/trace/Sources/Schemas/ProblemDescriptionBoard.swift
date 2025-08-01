@@ -24,6 +24,14 @@ public enum ProblemDescriptionBoard: Codable, Hashable, Sendable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
+        switch self {
+        case .html(let data):
+            try data.encode(to: encoder)
+        case .variable(let data):
+            try data.encode(to: encoder)
+        case .testCaseId(let data):
+            try data.encode(to: encoder)
+        }
     }
 
     public struct Html: Codable, Hashable, Sendable {
@@ -48,6 +56,7 @@ public enum ProblemDescriptionBoard: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -79,6 +88,7 @@ public enum ProblemDescriptionBoard: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -110,6 +120,7 @@ public enum ProblemDescriptionBoard: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 

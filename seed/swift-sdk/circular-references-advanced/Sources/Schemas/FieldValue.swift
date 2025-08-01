@@ -24,6 +24,14 @@ public enum FieldValue: Codable, Hashable, Sendable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
+        switch self {
+        case .primitiveValue(let data):
+            try data.encode(to: encoder)
+        case .objectValue(let data):
+            try data.encode(to: encoder)
+        case .containerValue(let data):
+            try data.encode(to: encoder)
+        }
     }
 
     public struct PrimitiveValue: Codable, Hashable, Sendable {
@@ -48,6 +56,7 @@ public enum FieldValue: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -73,6 +82,7 @@ public enum FieldValue: Codable, Hashable, Sendable {
 
         public func encode(to encoder: Encoder) throws -> Void {
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
         }
     }
 
@@ -98,6 +108,7 @@ public enum FieldValue: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 

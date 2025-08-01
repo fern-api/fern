@@ -48,6 +48,30 @@ public enum VariableValue: Codable, Hashable, Sendable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
+        switch self {
+        case .integerValue(let data):
+            try data.encode(to: encoder)
+        case .booleanValue(let data):
+            try data.encode(to: encoder)
+        case .doubleValue(let data):
+            try data.encode(to: encoder)
+        case .stringValue(let data):
+            try data.encode(to: encoder)
+        case .charValue(let data):
+            try data.encode(to: encoder)
+        case .mapValue(let data):
+            try data.encode(to: encoder)
+        case .listValue(let data):
+            try data.encode(to: encoder)
+        case .binaryTreeValue(let data):
+            try data.encode(to: encoder)
+        case .singlyLinkedListValue(let data):
+            try data.encode(to: encoder)
+        case .doublyLinkedListValue(let data):
+            try data.encode(to: encoder)
+        case .nullValue(let data):
+            try data.encode(to: encoder)
+        }
     }
 
     public struct IntegerValue: Codable, Hashable, Sendable {
@@ -72,6 +96,7 @@ public enum VariableValue: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -103,6 +128,7 @@ public enum VariableValue: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -134,6 +160,7 @@ public enum VariableValue: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -165,6 +192,7 @@ public enum VariableValue: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -196,6 +224,7 @@ public enum VariableValue: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -227,6 +256,7 @@ public enum VariableValue: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.keyValuePairs, forKey: .keyValuePairs)
         }
 
@@ -258,6 +288,7 @@ public enum VariableValue: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -293,6 +324,7 @@ public enum VariableValue: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encodeIfPresent(self.root, forKey: .root)
             try container.encode(self.nodes, forKey: .nodes)
         }
@@ -330,6 +362,7 @@ public enum VariableValue: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encodeIfPresent(self.head, forKey: .head)
             try container.encode(self.nodes, forKey: .nodes)
         }
@@ -367,6 +400,7 @@ public enum VariableValue: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encodeIfPresent(self.head, forKey: .head)
             try container.encode(self.nodes, forKey: .nodes)
         }

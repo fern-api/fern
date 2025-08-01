@@ -21,6 +21,12 @@ public enum SubmissionStatusV2: Codable, Hashable, Sendable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
+        switch self {
+        case .test(let data):
+            try data.encode(to: encoder)
+        case .workspace(let data):
+            try data.encode(to: encoder)
+        }
     }
 
     public struct Test: Codable, Hashable, Sendable {
@@ -57,6 +63,7 @@ public enum SubmissionStatusV2: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.updates, forKey: .updates)
             try container.encode(self.problemId, forKey: .problemId)
             try container.encode(self.problemVersion, forKey: .problemVersion)
@@ -94,6 +101,7 @@ public enum SubmissionStatusV2: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.updates, forKey: .updates)
         }
 

@@ -24,6 +24,14 @@ public enum FunctionSignature: Codable, Hashable, Sendable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
+        switch self {
+        case .void(let data):
+            try data.encode(to: encoder)
+        case .nonVoid(let data):
+            try data.encode(to: encoder)
+        case .voidThatTakesActualResult(let data):
+            try data.encode(to: encoder)
+        }
     }
 
     public struct Void: Codable, Hashable, Sendable {
@@ -48,6 +56,7 @@ public enum FunctionSignature: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.parameters, forKey: .parameters)
         }
 
@@ -83,6 +92,7 @@ public enum FunctionSignature: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.parameters, forKey: .parameters)
             try container.encode(self.returnType, forKey: .returnType)
         }
@@ -120,6 +130,7 @@ public enum FunctionSignature: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.parameters, forKey: .parameters)
             try container.encode(self.actualResultType, forKey: .actualResultType)
         }

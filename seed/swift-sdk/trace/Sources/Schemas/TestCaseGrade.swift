@@ -21,6 +21,12 @@ public enum TestCaseGrade: Codable, Hashable, Sendable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
+        switch self {
+        case .hidden(let data):
+            try data.encode(to: encoder)
+        case .nonHidden(let data):
+            try data.encode(to: encoder)
+        }
     }
 
     public struct Hidden: Codable, Hashable, Sendable {
@@ -45,6 +51,7 @@ public enum TestCaseGrade: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.passed, forKey: .passed)
         }
 
@@ -88,6 +95,7 @@ public enum TestCaseGrade: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.passed, forKey: .passed)
             try container.encodeIfPresent(self.actualResult, forKey: .actualResult)
             try container.encodeIfPresent(self.exception, forKey: .exception)

@@ -24,6 +24,14 @@ public enum ActualResult: Codable, Hashable, Sendable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
+        switch self {
+        case .value(let data):
+            try data.encode(to: encoder)
+        case .exception(let data):
+            try data.encode(to: encoder)
+        case .exceptionV2(let data):
+            try data.encode(to: encoder)
+        }
     }
 
     public struct Value: Codable, Hashable, Sendable {
@@ -48,6 +56,7 @@ public enum ActualResult: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -87,6 +96,7 @@ public enum ActualResult: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.exceptionType, forKey: .exceptionType)
             try container.encode(self.exceptionMessage, forKey: .exceptionMessage)
             try container.encode(self.exceptionStacktrace, forKey: .exceptionStacktrace)
@@ -122,6 +132,7 @@ public enum ActualResult: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 

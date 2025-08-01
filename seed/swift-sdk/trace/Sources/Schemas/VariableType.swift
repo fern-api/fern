@@ -45,6 +45,28 @@ public enum VariableType: Codable, Hashable, Sendable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
+        switch self {
+        case .integerType(let data):
+            try data.encode(to: encoder)
+        case .doubleType(let data):
+            try data.encode(to: encoder)
+        case .booleanType(let data):
+            try data.encode(to: encoder)
+        case .stringType(let data):
+            try data.encode(to: encoder)
+        case .charType(let data):
+            try data.encode(to: encoder)
+        case .listType(let data):
+            try data.encode(to: encoder)
+        case .mapType(let data):
+            try data.encode(to: encoder)
+        case .binaryTreeType(let data):
+            try data.encode(to: encoder)
+        case .singlyLinkedListType(let data):
+            try data.encode(to: encoder)
+        case .doublyLinkedListType(let data):
+            try data.encode(to: encoder)
+        }
     }
 
     public struct IntegerType: Codable, Hashable, Sendable {
@@ -163,6 +185,7 @@ public enum VariableType: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.valueType, forKey: .valueType)
             try container.encodeIfPresent(self.isFixedLength, forKey: .isFixedLength)
         }
@@ -200,6 +223,7 @@ public enum VariableType: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.keyType, forKey: .keyType)
             try container.encode(self.valueType, forKey: .valueType)
         }

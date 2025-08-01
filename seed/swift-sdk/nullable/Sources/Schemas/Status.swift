@@ -24,6 +24,14 @@ public enum Status: Codable, Hashable, Sendable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
+        switch self {
+        case .active(let data):
+            try data.encode(to: encoder)
+        case .archived(let data):
+            try data.encode(to: encoder)
+        case .softDeleted(let data):
+            try data.encode(to: encoder)
+        }
     }
 
     public struct Active: Codable, Hashable, Sendable {
@@ -66,6 +74,7 @@ public enum Status: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -97,6 +106,7 @@ public enum Status: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encodeIfPresent(self.value, forKey: .value)
         }
 

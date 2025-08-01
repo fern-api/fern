@@ -21,6 +21,12 @@ public enum ExceptionV2: Codable, Hashable, Sendable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
+        switch self {
+        case .generic(let data):
+            try data.encode(to: encoder)
+        case .timeout(let data):
+            try data.encode(to: encoder)
+        }
     }
 
     public struct Generic: Codable, Hashable, Sendable {
@@ -53,6 +59,7 @@ public enum ExceptionV2: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.exceptionType, forKey: .exceptionType)
             try container.encode(self.exceptionMessage, forKey: .exceptionMessage)
             try container.encode(self.exceptionStacktrace, forKey: .exceptionStacktrace)

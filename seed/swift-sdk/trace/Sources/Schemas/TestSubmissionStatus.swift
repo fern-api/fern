@@ -27,6 +27,16 @@ public enum TestSubmissionStatus: Codable, Hashable, Sendable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
+        switch self {
+        case .stopped(let data):
+            try data.encode(to: encoder)
+        case .errored(let data):
+            try data.encode(to: encoder)
+        case .running(let data):
+            try data.encode(to: encoder)
+        case .testCaseIdToState(let data):
+            try data.encode(to: encoder)
+        }
     }
 
     public struct Stopped: Codable, Hashable, Sendable {
@@ -69,6 +79,7 @@ public enum TestSubmissionStatus: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -100,6 +111,7 @@ public enum TestSubmissionStatus: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
@@ -131,6 +143,7 @@ public enum TestSubmissionStatus: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
+            try container.encode(self.type, forKey: .type)
             try container.encode(self.value, forKey: .value)
         }
 
