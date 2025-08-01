@@ -184,7 +184,8 @@ function getPublishConfig({
 
     if (generatorInvocation.raw?.output?.location === "local-file-system") {
         return FernIr.PublishingConfig.filesystem({
-            generateFullProject: org?.selfHostedSdKs ?? false
+            generateFullProject: org?.selfHostedSdKs ?? false,
+            publishTarget: undefined,
         });
     }
 
