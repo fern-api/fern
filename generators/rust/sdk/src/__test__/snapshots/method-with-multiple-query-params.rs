@@ -4,14 +4,15 @@ pub async fn gettest(limit: Option<&String>, offset: Option<&String>, options: O
             "/api/test",
             None,
             {
-            let mut request_options = options.unwrap_or_default();
+            let mut query_params = Vec::new();
             if let Some(value) = limit {
-                request_options.query_parameters.insert("limit".to_string(), value.to_string());
+                query_params.push(("limit".to_string(), value.to_string()));
             }
             if let Some(value) = offset {
-                request_options.query_parameters.insert("offset".to_string(), value.to_string());
+                query_params.push(("offset".to_string(), value.to_string()));
             }
-            Some(request_options)
+            Some(query_params)
         },
+            options,
         ).await
 }

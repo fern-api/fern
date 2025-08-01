@@ -3,7 +3,14 @@ import { RustFile } from "@fern-api/rust-base";
 import { UseStatement, rust } from "@fern-api/rust-codegen";
 import { generateRustTypeForTypeReference } from "@fern-api/rust-model";
 
-import { HttpEndpoint, HttpService, PrimitiveTypeV1, Subpackage, TypeReference } from "@fern-fern/ir-sdk/api";
+import {
+    HttpEndpoint,
+    HttpService,
+    PrimitiveTypeV1,
+    QueryParameter,
+    Subpackage,
+    TypeReference
+} from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -379,12 +386,12 @@ export class SubClientGenerator {
         return endpoint.queryParameters.length > 0;
     }
 
-    private getQueryParameterConversion(queryParam: any, paramName: string): string {
+    private getQueryParameterConversion(queryParam: QueryParameter, paramName: string): string {
         // Handle different types of query parameters
         return "value.to_string()";
     }
 
-    private getQueryParameterValue(queryParam: any, paramName: string): string {
+    private getQueryParameterValue(queryParam: QueryParameter, paramName: string): string {
         // For now, assume all query parameters are optional strings or can be converted to strings
         return paramName;
     }
