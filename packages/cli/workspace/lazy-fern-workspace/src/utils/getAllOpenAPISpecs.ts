@@ -30,7 +30,7 @@ export async function getAllOpenAPISpecs({
             const allProtobufTargetFilepaths = await listFiles(protobufSpec.absoluteFilepathToProtobufRoot, "proto");
             let accumulatedBufLockContents: string | undefined;
             const openApiSpecs: OpenAPISpec[] = [];
-            
+
             for (const file of allProtobufTargetFilepaths) {
                 const result = await convertProtobufToOpenAPI({
                     generator,

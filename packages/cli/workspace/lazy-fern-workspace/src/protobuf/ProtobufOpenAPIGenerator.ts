@@ -134,7 +134,7 @@ export class ProtobufOpenAPIGenerator {
 
         try {
             await writeFile(bufYamlPath, configContent);
-            
+
             const bufLockPath = join(cwd, RelativeFilePath.of("buf.lock"));
             if (existingBufLockContents != null) {
                 await writeFile(bufLockPath, existingBufLockContents);
@@ -165,7 +165,10 @@ export class ProtobufOpenAPIGenerator {
         };
     }
 
-    private async generateRemote(): Promise<{ absoluteFilepath: AbsoluteFilePath; bufLockContents: string | undefined }> {
+    private async generateRemote(): Promise<{
+        absoluteFilepath: AbsoluteFilePath;
+        bufLockContents: string | undefined;
+    }> {
         this.context.failAndThrow("Remote Protobuf generation is unimplemented.");
     }
 }
