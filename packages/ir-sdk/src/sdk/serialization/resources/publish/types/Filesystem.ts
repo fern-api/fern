@@ -5,14 +5,17 @@
 import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
+import { PublishTarget } from "./PublishTarget";
 
 export const Filesystem: core.serialization.ObjectSchema<serializers.Filesystem.Raw, FernIr.Filesystem> =
     core.serialization.objectWithoutOptionalProperties({
         generateFullProject: core.serialization.boolean(),
+        publishTarget: PublishTarget.optional(),
     });
 
 export declare namespace Filesystem {
     export interface Raw {
         generateFullProject: boolean;
+        publishTarget?: PublishTarget.Raw | null;
     }
 }

@@ -1,5 +1,2 @@
 *
-!generators/typescript/asIs/
-!generators/typescript/utils/core-utilities/
-!generators/typescript/sdk/features.yml
-!generators/typescript/sdk/cli/dist/
+!generators/typescript/sdk/cli/dist
