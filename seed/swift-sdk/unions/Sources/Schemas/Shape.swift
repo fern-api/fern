@@ -2,6 +2,13 @@ public enum Shape: Codable, Hashable, Sendable {
     case circle(Circle)
     case square(Square)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct Circle: Codable, Hashable, Sendable {
         public let type: String = "circle"
         public let radius: Double
@@ -28,6 +35,7 @@ public enum Shape: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case radius
         }
     }
@@ -58,7 +66,12 @@ public enum Shape: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case length
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

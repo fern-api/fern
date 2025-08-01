@@ -2,6 +2,13 @@ public enum TestCaseImplementationReference: Codable, Hashable, Sendable {
     case templateId(TemplateId)
     case implementation(Implementation)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct TemplateId: Codable, Hashable, Sendable {
         public let type: String = "templateId"
         public let value: TestCaseTemplateId
@@ -28,6 +35,7 @@ public enum TestCaseImplementationReference: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -63,8 +71,13 @@ public enum TestCaseImplementationReference: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case description
             case function
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

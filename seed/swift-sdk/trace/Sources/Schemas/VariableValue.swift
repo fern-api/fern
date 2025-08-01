@@ -11,6 +11,13 @@ public enum VariableValue: Codable, Hashable, Sendable {
     case doublyLinkedListValue(DoublyLinkedListValue)
     case nullValue(NullValue)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct IntegerValue: Codable, Hashable, Sendable {
         public let type: String = "integerValue"
         public let value: Int
@@ -37,6 +44,7 @@ public enum VariableValue: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -67,6 +75,7 @@ public enum VariableValue: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -97,6 +106,7 @@ public enum VariableValue: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -127,6 +137,7 @@ public enum VariableValue: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -157,6 +168,7 @@ public enum VariableValue: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -187,6 +199,7 @@ public enum VariableValue: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case keyValuePairs
         }
     }
@@ -217,6 +230,7 @@ public enum VariableValue: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -252,6 +266,7 @@ public enum VariableValue: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case root
             case nodes
         }
@@ -288,6 +303,7 @@ public enum VariableValue: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case head
             case nodes
         }
@@ -324,6 +340,7 @@ public enum VariableValue: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case head
             case nodes
         }
@@ -345,5 +362,9 @@ public enum VariableValue: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             try encoder.encodeAdditionalProperties(self.additionalProperties)
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

@@ -4,6 +4,13 @@ public enum UnionWithDuplicatePrimitive: Codable, Hashable, Sendable {
     case string1(String1)
     case string2(String2)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct Integer1: Codable, Hashable, Sendable {
         public let type: String = "integer1"
         public let value: Int
@@ -30,6 +37,7 @@ public enum UnionWithDuplicatePrimitive: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -60,6 +68,7 @@ public enum UnionWithDuplicatePrimitive: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -90,6 +99,7 @@ public enum UnionWithDuplicatePrimitive: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -120,7 +130,12 @@ public enum UnionWithDuplicatePrimitive: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

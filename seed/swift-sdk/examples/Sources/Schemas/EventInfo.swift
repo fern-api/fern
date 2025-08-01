@@ -2,6 +2,13 @@ public enum EventInfo: Codable, Hashable, Sendable {
     case metadata(Metadata)
     case tag(Tag)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct Metadata: Codable, Hashable, Sendable {
         public let type: String = "metadata"
         public let id: String
@@ -38,6 +45,7 @@ public enum EventInfo: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case id
             case data
             case jsonString
@@ -70,7 +78,12 @@ public enum EventInfo: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

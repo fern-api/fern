@@ -2,6 +2,13 @@ public enum ContainerValue: Codable, Hashable, Sendable {
     case list(List)
     case optional(Optional)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct List: Codable, Hashable, Sendable {
         public let type: String = "list"
         public let value: [FieldValue]
@@ -28,6 +35,7 @@ public enum ContainerValue: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -58,7 +66,12 @@ public enum ContainerValue: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

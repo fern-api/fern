@@ -13,6 +13,13 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
     case nullValue(NullValue)
     case genericValue(GenericValue)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct IntegerValue: Codable, Hashable, Sendable {
         public let type: String = "integerValue"
         public let value: Int
@@ -39,6 +46,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -69,6 +77,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -99,6 +108,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -129,6 +139,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -159,6 +170,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -189,6 +201,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case keyValuePairs
         }
     }
@@ -219,6 +232,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -254,6 +268,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case nodeId
             case fullTree
         }
@@ -290,6 +305,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case nodeId
             case fullList
         }
@@ -326,6 +342,7 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case nodeId
             case fullList
         }
@@ -398,8 +415,13 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case stringifiedType
             case stringifiedValue
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

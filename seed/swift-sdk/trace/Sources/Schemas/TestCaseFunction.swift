@@ -2,6 +2,13 @@ public enum TestCaseFunction: Codable, Hashable, Sendable {
     case withActualResult(WithActualResult)
     case custom(Custom)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct WithActualResult: Codable, Hashable, Sendable {
         public let type: String = "withActualResult"
         public let getActualResult: NonVoidFunctionDefinition
@@ -33,6 +40,7 @@ public enum TestCaseFunction: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case getActualResult
             case assertCorrectnessCheck
         }
@@ -69,8 +77,13 @@ public enum TestCaseFunction: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case parameters
             case code
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

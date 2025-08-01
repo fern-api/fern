@@ -3,6 +3,13 @@ public enum FunctionSignature: Codable, Hashable, Sendable {
     case nonVoid(NonVoid)
     case voidThatTakesActualResult(VoidThatTakesActualResult)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct Void: Codable, Hashable, Sendable {
         public let type: String = "void"
         public let parameters: [Parameter]
@@ -29,6 +36,7 @@ public enum FunctionSignature: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case parameters
         }
     }
@@ -64,6 +72,7 @@ public enum FunctionSignature: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case parameters
             case returnType
         }
@@ -100,8 +109,13 @@ public enum FunctionSignature: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case parameters
             case actualResultType
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

@@ -1,6 +1,13 @@
 public enum UnionWithLiteral: Codable, Hashable, Sendable {
     case fern(Fern)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct Fern: Codable, Hashable, Sendable {
         public let type: String = "fern"
         public let value: JSONValue
@@ -27,7 +34,12 @@ public enum UnionWithLiteral: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

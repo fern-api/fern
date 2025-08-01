@@ -5,6 +5,13 @@ public enum WorkspaceSubmissionStatus: Codable, Hashable, Sendable {
     case ran(Ran)
     case traced(Traced)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct Stopped: Codable, Hashable, Sendable {
         public let additionalProperties: [String: JSONValue]
 
@@ -49,6 +56,7 @@ public enum WorkspaceSubmissionStatus: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -79,6 +87,7 @@ public enum WorkspaceSubmissionStatus: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -119,6 +128,7 @@ public enum WorkspaceSubmissionStatus: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case exceptionV2
             case exception
             case stdout
@@ -161,9 +171,14 @@ public enum WorkspaceSubmissionStatus: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case exceptionV2
             case exception
             case stdout
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

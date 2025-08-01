@@ -6,6 +6,13 @@ public enum TestSubmissionUpdateInfo: Codable, Hashable, Sendable {
     case recordedTestCase(RecordedTestCase)
     case finished(Finished)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct Running: Codable, Hashable, Sendable {
         public let type: String = "running"
         public let value: RunningSubmissionState
@@ -32,6 +39,7 @@ public enum TestSubmissionUpdateInfo: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -80,6 +88,7 @@ public enum TestSubmissionUpdateInfo: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -115,6 +124,7 @@ public enum TestSubmissionUpdateInfo: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case testCaseId
             case grade
         }
@@ -151,6 +161,7 @@ public enum TestSubmissionUpdateInfo: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case testCaseId
             case traceResponsesSize
         }
@@ -172,5 +183,9 @@ public enum TestSubmissionUpdateInfo: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             try encoder.encodeAdditionalProperties(self.additionalProperties)
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

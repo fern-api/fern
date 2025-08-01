@@ -2,6 +2,13 @@ public enum Resource: Codable, Hashable, Sendable {
     case user(User)
     case organization(Organization)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct User: Codable, Hashable, Sendable {
         public let resourceType: String = "user"
         public let userName: String
@@ -38,6 +45,7 @@ public enum Resource: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case resourceType = "resource_type"
             case userName
             case metadataTags = "metadata_tags"
             case extraProperties = "EXTRA_PROPERTIES"
@@ -70,7 +78,12 @@ public enum Resource: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case resourceType = "resource_type"
             case name
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case resourceType = "resource_type"
     }
 }

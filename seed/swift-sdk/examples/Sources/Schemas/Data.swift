@@ -2,6 +2,13 @@ public enum Data: Codable, Hashable, Sendable {
     case string(String)
     case base64(Base64)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct String: Codable, Hashable, Sendable {
         public let type: String = "string"
         public let value: String
@@ -28,6 +35,7 @@ public enum Data: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -58,7 +66,12 @@ public enum Data: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

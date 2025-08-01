@@ -3,6 +3,13 @@ public enum ErrorInfo: Codable, Hashable, Sendable {
     case runtimeError(RuntimeError)
     case internalError(InternalError)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct CompileError: Codable, Hashable, Sendable {
         public let type: String = "compileError"
         public let message: String
@@ -29,6 +36,7 @@ public enum ErrorInfo: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case message
         }
     }
@@ -59,6 +67,7 @@ public enum ErrorInfo: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case message
         }
     }
@@ -89,7 +98,12 @@ public enum ErrorInfo: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case exceptionInfo
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

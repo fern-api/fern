@@ -2,6 +2,13 @@ public enum TestCaseGrade: Codable, Hashable, Sendable {
     case hidden(Hidden)
     case nonHidden(NonHidden)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct Hidden: Codable, Hashable, Sendable {
         public let type: String = "hidden"
         public let passed: Bool
@@ -28,6 +35,7 @@ public enum TestCaseGrade: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case passed
         }
     }
@@ -73,10 +81,15 @@ public enum TestCaseGrade: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case passed
             case actualResult
             case exception
             case stdout
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

@@ -2,6 +2,13 @@ public enum SubmissionTypeState: Codable, Hashable, Sendable {
     case test(Test)
     case workspace(Workspace)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct Test: Codable, Hashable, Sendable {
         public let type: String = "test"
         public let problemId: ProblemId
@@ -43,6 +50,7 @@ public enum SubmissionTypeState: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case problemId
             case defaultTestCases
             case customTestCases
@@ -76,7 +84,12 @@ public enum SubmissionTypeState: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case status
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

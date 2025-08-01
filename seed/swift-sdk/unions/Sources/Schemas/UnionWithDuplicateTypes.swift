@@ -2,6 +2,13 @@ public enum UnionWithDuplicateTypes: Codable, Hashable, Sendable {
     case foo1(Foo1)
     case foo2(Foo2)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct Foo1: Codable, Hashable, Sendable {
         public let type: String = "foo1"
         public let name: String
@@ -28,6 +35,7 @@ public enum UnionWithDuplicateTypes: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case name
         }
     }
@@ -58,7 +66,12 @@ public enum UnionWithDuplicateTypes: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case name
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

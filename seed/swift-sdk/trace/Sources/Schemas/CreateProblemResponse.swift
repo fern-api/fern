@@ -2,6 +2,13 @@ public enum CreateProblemResponse: Codable, Hashable, Sendable {
     case success(Success)
     case error(Error)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct Success: Codable, Hashable, Sendable {
         public let type: String = "success"
         public let value: ProblemId
@@ -28,6 +35,7 @@ public enum CreateProblemResponse: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -58,7 +66,12 @@ public enum CreateProblemResponse: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

@@ -2,6 +2,13 @@ public enum Exception: Codable, Hashable, Sendable {
     case generic(Generic)
     case timeout(Timeout)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct Generic: Codable, Hashable, Sendable {
         public let type: String = "generic"
         public let exceptionType: String
@@ -38,6 +45,7 @@ public enum Exception: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case exceptionType
             case exceptionMessage
             case exceptionStacktrace
@@ -60,5 +68,9 @@ public enum Exception: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             try encoder.encodeAdditionalProperties(self.additionalProperties)
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

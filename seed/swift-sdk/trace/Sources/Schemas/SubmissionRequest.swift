@@ -5,6 +5,13 @@ public enum SubmissionRequest: Codable, Hashable, Sendable {
     case workspaceSubmit(WorkspaceSubmit)
     case stop(Stop)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct InitializeProblemRequest: Codable, Hashable, Sendable {
         public let type: String = "initializeProblemRequest"
         public let problemId: ProblemId
@@ -36,6 +43,7 @@ public enum SubmissionRequest: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case problemId
             case problemVersion
         }
@@ -110,6 +118,7 @@ public enum SubmissionRequest: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case submissionId
             case language
             case submissionFiles
@@ -160,6 +169,7 @@ public enum SubmissionRequest: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case submissionId
             case language
             case submissionFiles
@@ -193,7 +203,12 @@ public enum SubmissionRequest: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case submissionId
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

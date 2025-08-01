@@ -2,6 +2,13 @@ public enum CustomFiles: Codable, Hashable, Sendable {
     case basic(Basic)
     case custom(Custom)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct Basic: Codable, Hashable, Sendable {
         public let type: String = "basic"
         public let methodName: String
@@ -43,6 +50,7 @@ public enum CustomFiles: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case methodName
             case signature
             case additionalFiles
@@ -76,7 +84,12 @@ public enum CustomFiles: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

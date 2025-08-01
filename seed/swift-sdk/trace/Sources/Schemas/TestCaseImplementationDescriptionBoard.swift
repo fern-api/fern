@@ -2,6 +2,13 @@ public enum TestCaseImplementationDescriptionBoard: Codable, Hashable, Sendable 
     case html(Html)
     case paramId(ParamId)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct Html: Codable, Hashable, Sendable {
         public let type: String = "html"
         public let value: String
@@ -28,6 +35,7 @@ public enum TestCaseImplementationDescriptionBoard: Codable, Hashable, Sendable 
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -58,7 +66,12 @@ public enum TestCaseImplementationDescriptionBoard: Codable, Hashable, Sendable 
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

@@ -4,6 +4,13 @@ public enum DiscriminatedLiteral: Codable, Hashable, Sendable {
     case george(George)
     case literalGeorge(LiteralGeorge)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct CustomName: Codable, Hashable, Sendable {
         public let type: String = "customName"
         public let value: String
@@ -30,6 +37,7 @@ public enum DiscriminatedLiteral: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -60,6 +68,7 @@ public enum DiscriminatedLiteral: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -90,6 +99,7 @@ public enum DiscriminatedLiteral: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -120,7 +130,12 @@ public enum DiscriminatedLiteral: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

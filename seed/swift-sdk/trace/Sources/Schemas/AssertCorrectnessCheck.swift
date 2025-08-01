@@ -2,6 +2,13 @@ public enum AssertCorrectnessCheck: Codable, Hashable, Sendable {
     case deepEquality(DeepEquality)
     case custom(Custom)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct DeepEquality: Codable, Hashable, Sendable {
         public let type: String = "deepEquality"
         public let expectedValueParameterId: ParameterId
@@ -28,6 +35,7 @@ public enum AssertCorrectnessCheck: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case expectedValueParameterId
         }
     }
@@ -63,8 +71,13 @@ public enum AssertCorrectnessCheck: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case additionalParameters
             case code
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

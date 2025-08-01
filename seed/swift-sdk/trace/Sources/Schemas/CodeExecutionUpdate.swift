@@ -11,6 +11,13 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
     case invalidRequest(InvalidRequest)
     case finished(Finished)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct BuildingExecutor: Codable, Hashable, Sendable {
         public let type: String = "buildingExecutor"
         public let submissionId: SubmissionId
@@ -42,6 +49,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case submissionId
             case status
         }
@@ -78,6 +86,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case submissionId
             case state
         }
@@ -114,6 +123,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case submissionId
             case errorInfo
         }
@@ -145,6 +155,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case submissionId
         }
     }
@@ -180,6 +191,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case submissionId
             case testCases
         }
@@ -216,6 +228,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case submissionId
             case testCases
         }
@@ -252,6 +265,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case submissionId
             case runDetails
         }
@@ -303,6 +317,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case submissionId
             case testCaseId
             case lineNumber
@@ -347,6 +362,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case submissionId
             case traceResponsesSize
             case testCaseId
@@ -384,6 +400,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case request
             case cause
         }
@@ -415,7 +432,12 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case submissionId
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

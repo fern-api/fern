@@ -3,6 +3,13 @@ public enum ActualResult: Codable, Hashable, Sendable {
     case exception(Exception)
     case exceptionV2(ExceptionV2)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct Value: Codable, Hashable, Sendable {
         public let type: String = "value"
         public let value: VariableValue
@@ -29,6 +36,7 @@ public enum ActualResult: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -69,6 +77,7 @@ public enum ActualResult: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case exceptionType
             case exceptionMessage
             case exceptionStacktrace
@@ -101,7 +110,12 @@ public enum ActualResult: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

@@ -2,6 +2,13 @@ public enum Animal: Codable, Hashable, Sendable {
     case dog(Dog)
     case cat(Cat)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct Dog: Codable, Hashable, Sendable {
         public let animal: String = "dog"
         public let name: String
@@ -33,6 +40,7 @@ public enum Animal: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case animal
             case name
             case likesToWoof
         }
@@ -69,8 +77,13 @@ public enum Animal: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case animal
             case name
             case likesToMeow
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case animal
     }
 }

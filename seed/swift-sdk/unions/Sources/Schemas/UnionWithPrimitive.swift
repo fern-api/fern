@@ -2,6 +2,13 @@ public enum UnionWithPrimitive: Codable, Hashable, Sendable {
     case integer(Integer)
     case string(String)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct Integer: Codable, Hashable, Sendable {
         public let type: String = "integer"
         public let value: Int
@@ -28,6 +35,7 @@ public enum UnionWithPrimitive: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -58,7 +66,12 @@ public enum UnionWithPrimitive: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

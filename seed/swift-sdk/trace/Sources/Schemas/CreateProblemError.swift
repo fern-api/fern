@@ -1,6 +1,13 @@
 public enum CreateProblemError: Codable, Hashable, Sendable {
     case generic(Generic)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct Generic: Codable, Hashable, Sendable {
         public let errorType: String = "generic"
         public let message: String
@@ -37,9 +44,14 @@ public enum CreateProblemError: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case errorType = "_type"
             case message
             case type
             case stacktrace
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case errorType = "_type"
     }
 }

@@ -10,6 +10,13 @@ public enum VariableType: Codable, Hashable, Sendable {
     case singlyLinkedListType(SinglyLinkedListType)
     case doublyLinkedListType(DoublyLinkedListType)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct IntegerType: Codable, Hashable, Sendable {
         public let additionalProperties: [String: JSONValue]
 
@@ -131,6 +138,7 @@ public enum VariableType: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case valueType
             case isFixedLength
         }
@@ -167,6 +175,7 @@ public enum VariableType: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case keyType
             case valueType
         }
@@ -224,5 +233,9 @@ public enum VariableType: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             try encoder.encodeAdditionalProperties(self.additionalProperties)
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

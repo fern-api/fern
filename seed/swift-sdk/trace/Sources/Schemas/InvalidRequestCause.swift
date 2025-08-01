@@ -3,6 +3,13 @@ public enum InvalidRequestCause: Codable, Hashable, Sendable {
     case customTestCasesUnsupported(CustomTestCasesUnsupported)
     case unexpectedLanguage(UnexpectedLanguage)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct SubmissionIdNotFound: Codable, Hashable, Sendable {
         public let type: String = "submissionIdNotFound"
         public let missingSubmissionId: SubmissionId
@@ -29,6 +36,7 @@ public enum InvalidRequestCause: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case missingSubmissionId
         }
     }
@@ -64,6 +72,7 @@ public enum InvalidRequestCause: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case problemId
             case submissionId
         }
@@ -100,8 +109,13 @@ public enum InvalidRequestCause: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case expectedLanguage
             case actualLanguage
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

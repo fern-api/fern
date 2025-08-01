@@ -2,6 +2,13 @@ public enum UnionWithOptionalTime: Codable, Hashable, Sendable {
     case date(Date)
     case datetime(Datetime)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct Date: Codable, Hashable, Sendable {
         public let type: String = "date"
         public let value: Date?
@@ -28,6 +35,7 @@ public enum UnionWithOptionalTime: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -58,7 +66,12 @@ public enum UnionWithOptionalTime: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

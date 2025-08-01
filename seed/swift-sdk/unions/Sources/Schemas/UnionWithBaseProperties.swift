@@ -3,6 +3,13 @@ public enum UnionWithBaseProperties: Codable, Hashable, Sendable {
     case string(String)
     case foo(Foo)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct Integer: Codable, Hashable, Sendable {
         public let type: String = "integer"
         public let value: Int
@@ -29,6 +36,7 @@ public enum UnionWithBaseProperties: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -59,6 +67,7 @@ public enum UnionWithBaseProperties: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -89,7 +98,12 @@ public enum UnionWithBaseProperties: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case name
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

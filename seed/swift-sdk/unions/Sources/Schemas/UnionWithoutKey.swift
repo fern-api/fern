@@ -2,6 +2,13 @@ public enum UnionWithoutKey: Codable, Hashable, Sendable {
     case foo(Foo)
     case bar(Bar)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct Foo: Codable, Hashable, Sendable {
         public let type: String = "foo"
         public let name: String
@@ -28,6 +35,7 @@ public enum UnionWithoutKey: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case name
         }
     }
@@ -58,7 +66,12 @@ public enum UnionWithoutKey: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case name
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

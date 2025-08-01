@@ -3,6 +3,13 @@ public enum SubmissionStatusForTestCase: Codable, Hashable, Sendable {
     case gradedV2(GradedV2)
     case traced(Traced)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct Graded: Codable, Hashable, Sendable {
         public let type: String = "graded"
         public let result: TestCaseResult
@@ -34,6 +41,7 @@ public enum SubmissionStatusForTestCase: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case result
             case stdout
         }
@@ -65,6 +73,7 @@ public enum SubmissionStatusForTestCase: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -100,8 +109,13 @@ public enum SubmissionStatusForTestCase: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case result
             case traceResponsesSize
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

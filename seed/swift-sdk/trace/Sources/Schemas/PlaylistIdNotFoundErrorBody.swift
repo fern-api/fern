@@ -1,6 +1,13 @@
 public enum PlaylistIdNotFoundErrorBody: Codable, Hashable, Sendable {
     case playlistId(PlaylistId)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct PlaylistId: Codable, Hashable, Sendable {
         public let type: String = "playlistId"
         public let value: PlaylistId
@@ -27,7 +34,12 @@ public enum PlaylistIdNotFoundErrorBody: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

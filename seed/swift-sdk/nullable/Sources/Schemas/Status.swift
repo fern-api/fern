@@ -3,6 +3,13 @@ public enum Status: Codable, Hashable, Sendable {
     case archived(Archived)
     case softDeleted(SoftDeleted)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct Active: Codable, Hashable, Sendable {
         public let additionalProperties: [String: JSONValue]
 
@@ -47,6 +54,7 @@ public enum Status: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -77,7 +85,12 @@ public enum Status: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

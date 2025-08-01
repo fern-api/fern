@@ -6,6 +6,13 @@ public enum SubmissionResponse: Codable, Hashable, Sendable {
     case codeExecutionUpdate(CodeExecutionUpdate)
     case terminated(Terminated)
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+    }
+
     public struct ServerInitialized: Codable, Hashable, Sendable {
         public let additionalProperties: [String: JSONValue]
 
@@ -50,6 +57,7 @@ public enum SubmissionResponse: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -108,6 +116,7 @@ public enum SubmissionResponse: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case exceptionType
             case exceptionMessage
             case exceptionStacktrace
@@ -140,6 +149,7 @@ public enum SubmissionResponse: Codable, Hashable, Sendable {
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
+            case type
             case value
         }
     }
@@ -161,5 +171,9 @@ public enum SubmissionResponse: Codable, Hashable, Sendable {
         public func encode(to encoder: Encoder) throws -> Void {
             try encoder.encodeAdditionalProperties(self.additionalProperties)
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }
