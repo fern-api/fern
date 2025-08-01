@@ -7,6 +7,7 @@ import { TypeId, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { getSwiftTypeForTypeReference } from "../converters";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import { ObjectGenerator } from "../object";
+import { StructGenerator } from "../helpers";
 
 export class DiscriminatedUnionGenerator {
     private readonly name: string;
@@ -57,61 +58,43 @@ export class DiscriminatedUnionGenerator {
 
     private generateNestedTypesForTypeDeclaration(): swift.Struct[] {
         return this.unionTypeDeclaration.types.map((singleUnionType) => {
-            const properties = singleUnionType.shape._visit({
-                noProperties: () => [],
-                singleProperty: (singleUnionTypeProperty) => [
-                    swift.property({
-                        unsafeName: singleUnionTypeProperty.name.name.camelCase.unsafeName,
-                        accessLevel: swift.AccessLevel.Public,
-                        declarationType: swift.DeclarationType.Let,
-                        type: getSwiftTypeForTypeReference(singleUnionTypeProperty.type)
-                    })
-                ],
-                samePropertiesAsObject: (declaredTypeName) => {
-                    const struct = this.getStructForVariantType(declaredTypeName.typeId);
-                    return [
-                        swift.property({
-                            unsafeName: this.unionTypeDeclaration.discriminant.name.camelCase.unsafeName,
-                            accessLevel: swift.AccessLevel.Public,
-                            declarationType: swift.DeclarationType.Let,
-                            type: swift.Type.string(),
-                            defaultValue: swift.Expression.rawStringValue(singleUnionType.discriminantValue.wireValue)
-                        }),
-                        ...struct.properties
-                    ];
-                },
-                _other: () => []
-            });
+            const constantPropertyDefinitions: StructGenerator.ConstantPropertyDefinition[] = [];
+            const dataPropertyDefinitions: StructGenerator.DataPropertyDefinition[] = [];
 
-            // TODO: Reuse between this method and ObjectGenerator
-            return swift.struct({
+            if (singleUnionType.shape.propertiesType === "singleProperty") {
+                const swiftType = getSwiftTypeForTypeReference(singleUnionType.shape.type);
+                constantPropertyDefinitions.push({
+                    unsafeName: this.unionTypeDeclaration.discriminant.name.camelCase.unsafeName,
+                    type: swift.Type.string(),
+                    value: swift.Expression.rawStringValue(singleUnionType.discriminantValue.wireValue)
+                });
+                dataPropertyDefinitions.push({
+                    unsafeName: singleUnionType.shape.name.name.camelCase.unsafeName,
+                    nameWireValue: singleUnionType.shape.name.wireValue,
+                    type: swiftType
+                });
+            } else if (singleUnionType.shape.propertiesType === "samePropertiesAsObject") {
+                const struct = this.getStructForVariantType(singleUnionType.shape.typeId);
+                constantPropertyDefinitions.push({
+                    unsafeName: this.unionTypeDeclaration.discriminant.name.camelCase.unsafeName,
+                    type: swift.Type.string(),
+                    value: swift.Expression.rawStringValue(singleUnionType.discriminantValue.wireValue)
+                });
+                dataPropertyDefinitions.push(
+                    ...struct.properties.map((p) => ({
+                        unsafeName: p.unsafeName,
+                        nameWireValue: "placeholder", // TODO: Implement
+                        type: p.type
+                    }))
+                );
+            }
+
+            return new StructGenerator({
                 name: singleUnionType.discriminantValue.name.pascalCase.unsafeName,
-                accessLevel: swift.AccessLevel.Public,
-                conformances: [swift.Protocol.Codable, swift.Protocol.Hashable, swift.Protocol.Sendable],
-                properties,
-                initializers: [
-                    swift.initializer({
-                        accessLevel: swift.AccessLevel.Public,
-                        parameters: properties.map((p) =>
-                            swift.functionParameter({
-                                argumentLabel: p.unsafeName,
-                                unsafeName: p.unsafeName,
-                                type: p.type
-                            })
-                        ),
-                        body: swift.CodeBlock.withStatements([])
-                    })
-                ],
-                methods: [],
-                nestedTypes: [
-                    swift.enumWithRawValues({
-                        name: "CodingKeys",
-                        accessLevel: swift.AccessLevel.Private,
-                        conformances: ["String", swift.Protocol.CodingKey],
-                        cases: []
-                    })
-                ]
-            });
+                constantPropertyDefinitions,
+                dataPropertyDefinitions,
+                additionalProperties: true
+            }).generate();
         });
     }
 
