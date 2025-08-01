@@ -15,7 +15,6 @@ import {
     PROTOBUF_MODULE_PACKAGE_JSON,
     PROTOBUF_SHELL_PROXY,
     PROTOBUF_SHELL_PROXY_FILENAME,
-    createEmptyProtobufLogger,
     getProtobufYamlV1
 } from "./utils";
 
