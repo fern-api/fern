@@ -1,8 +1,8 @@
 import { assertNever } from "@fern-api/core-utils";
 
+import { AstNode, Writer } from "./core";
 import { DeclarationType } from "./DeclarationType";
 import { Expression } from "./Expression";
-import { AstNode, Writer } from "./core";
 import { escapeReservedKeyword } from "./syntax/reserved-keywords";
 
 type ConstantDeclaration = {
@@ -44,6 +44,16 @@ type ImportStatement = {
     moduleName: string;
 };
 
+type Switch = {
+    type: "switch";
+    target: Expression;
+    cases: {
+        pattern: Expression;
+        body: Statement[];
+    }[];
+    defaultCase?: Statement[];
+};
+
 type InternalStatement =
     | ConstantDeclaration
     | VariableDeclaration
@@ -51,7 +61,8 @@ type InternalStatement =
     | PropertyAssignment
     | Return
     | ExpressionStatement
-    | ImportStatement;
+    | ImportStatement
+    | Switch;
 
 export class Statement extends AstNode {
     private internalStatement: InternalStatement;
@@ -106,6 +117,37 @@ export class Statement extends AstNode {
                 writer.write(this.internalStatement.moduleName);
                 writer.newLine();
                 break;
+            case "switch":
+                writer.write("switch ");
+                this.internalStatement.target.write(writer);
+                writer.write(" {");
+                writer.newLine();
+                for (const switchCase of this.internalStatement.cases) {
+                    writer.write("case ");
+                    switchCase.pattern.write(writer);
+                    writer.write(":");
+                    writer.newLine();
+                    if (switchCase.body.length > 0) {
+                        writer.indent();
+                        for (const statement of switchCase.body) {
+                            statement.write(writer);
+                        }
+                        writer.dedent();
+                    }
+                }
+                if (this.internalStatement.defaultCase) {
+                    writer.write("default:");
+                    writer.newLine();
+                    if (this.internalStatement.defaultCase.length > 0) {
+                        writer.indent();
+                        for (const statement of this.internalStatement.defaultCase) {
+                            statement.write(writer);
+                        }
+                        writer.dedent();
+                    }
+                }
+                writer.write("}");
+                break;
             default:
                 assertNever(this.internalStatement);
         }
@@ -137,5 +179,9 @@ export class Statement extends AstNode {
 
     public static import(moduleName: string): Statement {
         return new this({ type: "import", moduleName });
+    }
+
+    public static switch(params: Omit<Switch, "type">): Statement {
+        return new this({ type: "switch", ...params });
     }
 }
