@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Excape $ signs when converting from OpenAPI -> Fern Definition (for enums), because the Fern Definition treats 
+        Escape $ signs when converting from OpenAPI -> Fern Definition (for enums), because the Fern Definition treats 
         $ sign examples as references. 
       type: feat
   irVersion: 58
