@@ -19,6 +19,14 @@
 
 - changelogEntry:
     - summary: |
+        Add support for proxying IR generation from proto through protoc-gen-openapi.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-31"
+  version: 0.65.39
+
+- changelogEntry:
+    - summary: |
         IR parser: Extended the logic for flattening properties in oneOf schemas to anyOf schemas as well
       type: feat
   irVersion: 58

@@ -8,6 +8,27 @@ export const PROTOBUF_EXPORT_CONFIG_V1 = `version: v1
 `;
 export const PROTOBUF_EXPORT_CONFIG_V2 = `version: v2
 `;
+export const getProtobufYamlV1 = (deps: string[]): string => {
+    let yaml = `version: v1\n`;
+    if (deps.length > 0) {
+        yaml += `deps:\n`;
+        for (const dep of deps) {
+            yaml += `  - ${dep}\n`;
+        }
+    }
+    return yaml;
+};
+
+export const getProtobufYamlV2 = (deps: string[]): string => {
+    let yaml = `version: v2\n`;
+    if (deps.length > 0) {
+        yaml += `deps:\n`;
+        for (const dep of deps) {
+            yaml += `  - ${dep}\n`;
+        }
+    }
+    return yaml;
+};
 export const PROTOBUF_GEN_CONFIG = `version: v2
 plugins:
   - local: ["bash", "./protoc-gen-fern"]
