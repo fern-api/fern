@@ -16,9 +16,7 @@ types:
       generateFullProject:
         type: boolean
         docs: If true, will generate the entire project (pyproject.toml, package.json, etc)
-      pypiTarget:
-        type: PypiPublishTarget
-        optional: true
+      publishTarget: optional<PublishTarget>
   
   GithubPublish: 
     properties: 
@@ -61,4 +59,5 @@ types:
 
     PypiPublishTarget:
       properties:
-        pypiUrl: string
+        version: string
+        packageName: string
