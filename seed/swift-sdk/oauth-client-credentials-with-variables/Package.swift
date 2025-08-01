@@ -13,13 +13,13 @@ let package = Package(
     products: [
         .library(
             name: "OauthClientCredentialsWithVariables",
-            targets: ["OauthClientCredentialsWithVariablesTarget"]
+            targets: ["OauthClientCredentialsWithVariables"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "OauthClientCredentialsWithVariablesTarget",
+            name: "OauthClientCredentialsWithVariables",
             path: "Sources"
         )
     ]

@@ -13,13 +13,13 @@ let package = Package(
     products: [
         .library(
             name: "PlainText",
-            targets: ["PlainTextTarget"]
+            targets: ["PlainText"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "PlainTextTarget",
+            name: "PlainText",
             path: "Sources"
         )
     ]

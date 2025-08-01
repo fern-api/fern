@@ -13,13 +13,13 @@ let package = Package(
     products: [
         .library(
             name: "AnyAuth",
-            targets: ["AnyAuthTarget"]
+            targets: ["AnyAuth"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "AnyAuthTarget",
+            name: "AnyAuth",
             path: "Sources"
         )
     ]

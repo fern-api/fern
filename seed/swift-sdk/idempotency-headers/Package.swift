@@ -13,13 +13,13 @@ let package = Package(
     products: [
         .library(
             name: "IdempotencyHeaders",
-            targets: ["IdempotencyHeadersTarget"]
+            targets: ["IdempotencyHeaders"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "IdempotencyHeadersTarget",
+            name: "IdempotencyHeaders",
             path: "Sources"
         )
     ]

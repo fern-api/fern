@@ -13,13 +13,13 @@ let package = Package(
     products: [
         .library(
             name: "Websocket",
-            targets: ["WebsocketTarget"]
+            targets: ["Websocket"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "WebsocketTarget",
+            name: "Websocket",
             path: "Sources"
         )
     ]
