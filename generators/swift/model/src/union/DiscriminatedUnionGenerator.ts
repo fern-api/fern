@@ -71,8 +71,95 @@ export class DiscriminatedUnionGenerator {
                         ]
                     })
                 )
-            )
-        ]; // TODO(kafkas): Implement
+            ),
+            swift.Statement.constantDeclaration(
+                "discriminant",
+                swift.Expression.try(
+                    swift.Expression.methodCall({
+                        target: swift.Expression.reference("container"),
+                        methodName: "decode",
+                        arguments_: [
+                            swift.functionArgument({
+                                value: swift.Expression.memberAccess({
+                                    target: swift.Type.string(),
+                                    memberName: "self"
+                                })
+                            }),
+                            swift.functionArgument({
+                                label: "forKey",
+                                value: swift.Expression.enumCaseShorthand(
+                                    this.unionTypeDeclaration.discriminant.name.camelCase.unsafeName
+                                )
+                            })
+                        ]
+                    })
+                )
+            ),
+            swift.Statement.switch({
+                target: swift.Expression.reference("discriminant"),
+                cases: this.unionTypeDeclaration.types.map((singleUnionType) => {
+                    return {
+                        pattern: swift.Expression.rawStringValue(singleUnionType.discriminantValue.wireValue),
+                        body: [
+                            swift.Statement.selfAssignment(
+                                swift.Expression.contextualMethodCall({
+                                    methodName: singleUnionType.discriminantValue.name.camelCase.unsafeName,
+                                    arguments_: [
+                                        swift.functionArgument({
+                                            value: swift.Expression.try(
+                                                swift.Expression.structInitialization({
+                                                    unsafeName:
+                                                        singleUnionType.discriminantValue.name.pascalCase.unsafeName,
+                                                    arguments_: [
+                                                        swift.functionArgument({
+                                                            label: "from",
+                                                            value: swift.Expression.reference("decoder")
+                                                        })
+                                                    ]
+                                                })
+                                            )
+                                        })
+                                    ]
+                                })
+                            )
+                        ]
+                    };
+                }),
+                defaultCase: [
+                    swift.Statement.throw(
+                        swift.Expression.methodCall({
+                            target: swift.Expression.reference("DecodingError"),
+                            methodName: "dataCorrupted",
+                            arguments_: [
+                                swift.functionArgument({
+                                    value: swift.Expression.methodCall({
+                                        target: swift.Expression.reference("DecodingError"),
+                                        methodName: "Context",
+                                        arguments_: [
+                                            swift.functionArgument({
+                                                label: "codingPath",
+                                                value: swift.Expression.memberAccess({
+                                                    target: swift.Expression.reference("decoder"),
+                                                    memberName: "codingPath"
+                                                })
+                                            }),
+                                            swift.functionArgument({
+                                                label: "debugDescription",
+                                                value: swift.Expression.rawStringValue(
+                                                    `Unknown shape discriminant value: \\(discriminant)`
+                                                )
+                                            })
+                                        ],
+                                        multiline: true
+                                    })
+                                })
+                            ],
+                            multiline: true
+                        })
+                    )
+                ]
+            })
+        ];
         return swift.initializer({
             accessLevel: swift.AccessLevel.Public,
             throws: true,
