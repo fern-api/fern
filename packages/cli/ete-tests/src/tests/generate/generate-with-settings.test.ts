@@ -4,7 +4,6 @@ import tmp from "tmp-promise";
 import {
     AbsoluteFilePath,
     RelativeFilePath,
-    getDirectoryContents,
     getDirectoryContentsForSnapshot,
     join
 } from "@fern-api/fs-utils";

@@ -3,7 +3,7 @@ import path from "path";
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { runLocalGenerationForSeed } from "@fern-api/local-workspace-runner";
+import { runContainerizedGenerationForSeed } from "@fern-api/local-workspace-runner";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
 import { TaskContext } from "@fern-api/task-context";
 
@@ -58,7 +58,7 @@ export class DockerTestRunner extends TestRunner {
             generators: [
                 await getGeneratorInvocation({
                     absolutePathToOutput: outputDir,
-                    docker: this.getParsedDockerName(),
+                    docker: this.getParsedDockerImageName(),
                     language,
                     customConfig,
                     publishConfig,
@@ -70,18 +70,19 @@ export class DockerTestRunner extends TestRunner {
                 })
             ]
         };
-        await runLocalGenerationForSeed({
+        await runContainerizedGenerationForSeed({
             organization: DUMMY_ORGANIZATION,
             absolutePathToFernConfig: absolutePathToFernDefinition,
             workspace: fernWorkspace,
             generatorGroup,
-            keepDocker: keepDocker ?? false,
             context: taskContext,
             irVersionOverride: irVersion,
             outputVersionOverride: outputVersion,
             shouldGenerateDynamicSnippetTests,
             skipUnstableDynamicSnippetTests: true,
-            inspect
+            inspect,
+            keepDocker: keepDocker ?? false,
+            dockerImage: this.getDockerImageName()
         });
     }
 
@@ -102,17 +103,18 @@ export class DockerTestRunner extends TestRunner {
         shouldGenerateDynamicSnippetTests: boolean | undefined;
         inspect: boolean;
     }): Promise<void> {
-        await runLocalGenerationForSeed({
+        await runContainerizedGenerationForSeed({
             organization: DUMMY_ORGANIZATION,
             absolutePathToFernConfig: absolutePathToFernDefinition,
             workspace: fernWorkspace,
             generatorGroup: { ...group },
-            keepDocker: true,
             context: taskContext,
             irVersionOverride: irVersion,
             outputVersionOverride: undefined,
             shouldGenerateDynamicSnippetTests,
-            inspect
+            inspect,
+            keepDocker: true,
+            dockerImage: this.getDockerImageName()
         });
     }
 }

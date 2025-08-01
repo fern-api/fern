@@ -5,48 +5,25 @@ import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 
-import { Semaphore } from "../../Semaphore";
-import { DockerScriptConfig } from "../../config/api";
-import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
-
-export declare namespace ScriptRunner {
-    interface RunArgs {
-        taskContext: TaskContext;
-        outputDir: AbsoluteFilePath;
-        id: string;
-    }
-
-    type RunResponse = ScriptSuccessResponse | ScriptFailureResponse;
-
-    interface ScriptSuccessResponse {
-        type: "success";
-    }
-
-    interface ScriptFailureResponse {
-        type: "failure";
-        message: string;
-    }
-}
+import { DockerScriptConfig } from "../../../config/api";
+import { GeneratorWorkspace } from "../../../loadGeneratorWorkspaces";
+import { ScriptRunner } from "./ScriptRunner";
 
 interface RunningScriptConfig extends DockerScriptConfig {
     containerId: string;
 }
 
 /**
- * Runs scripts on the generated code to verify the output.
+ * Runs scripts on the generated code to verify the output using Docker containers.
  */
-export class ScriptRunner {
+export class DockerScriptRunner extends ScriptRunner {
     private startContainersFn: Promise<void> | undefined;
     private scripts: RunningScriptConfig[] = [];
-    private lock = new Semaphore(1);
 
-    constructor(
-        private readonly workspace: GeneratorWorkspace,
-        private readonly skipScripts: boolean,
-        private readonly context: TaskContext
-    ) {
+    constructor(workspace: GeneratorWorkspace, skipScripts: boolean, context: TaskContext) {
+        super(workspace, skipScripts, context);
         if (!skipScripts) {
-            this.startContainersFn = this.startContainers(context);
+            this.startContainersFn = this.initialize();
         }
     }
 
@@ -71,6 +48,10 @@ export class ScriptRunner {
         for (const script of this.scripts) {
             await loggingExeca(undefined, "docker", ["kill", script.containerId]);
         }
+    }
+
+    protected async initialize(): Promise<void> {
+        await this.startContainers(this.context);
     }
 
     private async runScript({

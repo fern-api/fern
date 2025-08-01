@@ -1,4 +1,3 @@
-import { cp, mkdir, writeFile } from "fs/promises";
 import path from "path";
 
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
@@ -13,7 +12,7 @@ import { GeneratorWorkspace } from "../../../loadGeneratorWorkspaces";
 import { convertGeneratorWorkspaceToFernWorkspace } from "../../../utils/convertSeedWorkspaceToFernWorkspace";
 import { ParsedDockerName, parseDockerOrThrow } from "../../../utils/parseDockerOrThrow";
 import { workspaceShouldGenerateDynamicSnippetTests } from "../../../workspaceShouldGenerateDynamicSnippetTests";
-import { ScriptRunner } from "../ScriptRunner";
+import { ScriptRunner } from "..";
 import { TaskContextFactory } from "../TaskContextFactory";
 
 export declare namespace TestRunner {
@@ -102,14 +101,8 @@ export abstract class TestRunner {
         this.scriptRunner = scriptRunner;
     }
 
-    /**
-     * Builds the generator.
-     */
     public abstract build(): Promise<void>;
 
-    /**
-     * Runs the generator.
-     */
     public async run({ fixture, configuration, inspect }: TestRunner.RunArgs): Promise<TestRunner.TestResult> {
         try {
             if (this.buildInvocation == null) {
@@ -171,20 +164,21 @@ export abstract class TestRunner {
             try {
                 const generationStopwatch = new Stopwatch();
                 generationStopwatch.start();
+
                 await this.runGenerator({
                     id,
-                    absolutePathToFernDefinition: absolutePathToAPIDefinition,
-                    absolutePathToWorkspace: this.generator.absolutePathToWorkspace,
                     fernWorkspace,
+                    fixture,
                     irVersion,
                     outputVersion,
                     language,
-                    selectAudiences: configuration?.audiences,
-                    fixture,
                     customConfig,
                     publishConfig,
+                    selectAudiences: configuration?.audiences,
                     taskContext,
                     outputDir,
+                    absolutePathToWorkspace: this.generator.absolutePathToWorkspace,
+                    absolutePathToFernDefinition: absolutePathToAPIDefinition,
                     outputMode,
                     outputFolder,
                     keepDocker: this.keepDocker,
@@ -193,6 +187,7 @@ export abstract class TestRunner {
                     shouldGenerateDynamicSnippetTests: workspaceShouldGenerateDynamicSnippetTests(this.generator),
                     inspect
                 });
+
                 generationStopwatch.stop();
                 metrics.generationTime = generationStopwatch.duration();
             } catch (error) {
@@ -249,7 +244,10 @@ export abstract class TestRunner {
      */
     public abstract runGenerator(args: TestRunner.DoRunArgs): Promise<void>;
 
-    protected getParsedDockerName(): ParsedDockerName {
+    protected getParsedDockerImageName(): ParsedDockerName {
         return parseDockerOrThrow(this.generator.workspaceConfig.test.docker.image);
+    }
+    protected getDockerImageName(): string {
+        return this.generator.workspaceConfig.test.docker.image;
     }
 }

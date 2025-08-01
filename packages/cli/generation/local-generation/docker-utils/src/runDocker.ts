@@ -35,7 +35,17 @@ export async function runDocker({
     runner
 }: runDocker.Args): Promise<void> {
     const tryRun = () =>
-        tryRunDocker({ logger, imageName, args, binds, envVars, ports, removeAfterCompletion, writeLogsToFile, runner });
+        tryRunDocker({
+            logger,
+            imageName,
+            args,
+            binds,
+            envVars,
+            ports,
+            removeAfterCompletion,
+            writeLogsToFile,
+            runner
+        });
     try {
         await tryRun();
     } catch (e) {

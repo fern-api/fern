@@ -16,13 +16,6 @@ import {
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { EnvironmentVariable } from "@fern-fern/generator-exec-sdk/api";
 
-import {
-    DOCKER_CODEGEN_OUTPUT_DIRECTORY,
-    DOCKER_PATH_TO_IR,
-    DOCKER_PATH_TO_SNIPPET,
-    DOCKER_PATH_TO_SNIPPET_TEMPLATES
-} from "./constants";
-
 const DEFAULT_OUTPUT_VERSION = "0.0.1";
 
 export declare namespace getGeneratorConfig {
@@ -37,11 +30,12 @@ export declare namespace getGeneratorConfig {
         writeUnitTests: boolean;
         generateOauthClients: boolean;
         generatePaginatedClients: boolean;
-    }
-
-    export interface Return {
-        config: FernGeneratorExec.GeneratorConfig;
-        binds: string[];
+        paths: {
+            snippetPath: AbsoluteFilePath | undefined;
+            snippetTemplatePath: AbsoluteFilePath | undefined;
+            irPath: AbsoluteFilePath;
+            outputDirectory: AbsoluteFilePath;
+        };
     }
 }
 
@@ -110,29 +104,30 @@ export function getGeneratorConfig({
     absolutePathToSnippetTemplates,
     writeUnitTests,
     generateOauthClients,
-    generatePaginatedClients
-}: getGeneratorConfig.Args): getGeneratorConfig.Return {
-    const binds: string[] = [];
+    generatePaginatedClients,
+    paths
+}: getGeneratorConfig.Args): FernGeneratorExec.GeneratorConfig {
+    const { snippetPath, snippetTemplatePath, irPath, outputDirectory } = paths;
     const output = generatorInvocation.outputMode._visit<FernGeneratorExec.GeneratorOutputConfig>({
         publish: (value) => {
             return {
-                ...newDummyPublishOutputConfig(outputVersion, value, generatorInvocation),
-                snippetFilepath: DOCKER_PATH_TO_SNIPPET,
+                ...newDummyPublishOutputConfig(outputVersion, value, generatorInvocation, paths),
+                snippetFilepath: snippetPath,
                 publishingMetadata: generatorInvocation.publishMetadata
             };
         },
         publishV2: (value) => {
             return {
-                ...newDummyPublishOutputConfig(outputVersion, value, generatorInvocation),
-                snippetFilepath: DOCKER_PATH_TO_SNIPPET,
+                ...newDummyPublishOutputConfig(outputVersion, value, generatorInvocation, paths),
+                snippetFilepath: snippetPath,
                 publishingMetadata: generatorInvocation.publishMetadata
             };
         },
         downloadFiles: () => {
             return {
                 mode: FernGeneratorExec.OutputMode.downloadFiles(),
-                path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
-                snippetFilepath: DOCKER_PATH_TO_SNIPPET,
+                path: outputDirectory,
+                snippetFilepath: snippetPath,
                 publishingMetadata: generatorInvocation.publishMetadata
             };
         },
@@ -144,16 +139,14 @@ export function getGeneratorConfig({
                     publishInfo: getGithubPublishConfig(value.publishInfo),
                     installationToken: undefined // Don't attempt to clone the repository when generating locally.
                 }),
-                path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
+                path: outputDirectory,
                 publishingMetadata: generatorInvocation.publishMetadata
             };
             if (absolutePathToSnippet !== undefined) {
-                binds.push(`${absolutePathToSnippet}:${DOCKER_PATH_TO_SNIPPET}`);
-                outputConfig.snippetFilepath = DOCKER_PATH_TO_SNIPPET;
+                outputConfig.snippetFilepath = snippetPath;
             }
             if (absolutePathToSnippetTemplates !== undefined) {
-                binds.push(`${absolutePathToSnippetTemplates}:${DOCKER_PATH_TO_SNIPPET_TEMPLATES}`);
-                outputConfig.snippetTemplateFilepath = DOCKER_PATH_TO_SNIPPET_TEMPLATES;
+                outputConfig.snippetTemplateFilepath = snippetTemplatePath;
             }
             return outputConfig;
         },
@@ -172,16 +165,14 @@ export function getGeneratorConfig({
                     version: outputVersion,
                     publishInfo: getGithubPublishConfig(value.publishInfo)
                 }),
-                path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
+                path: outputDirectory,
                 publishingMetadata: generatorInvocation.publishMetadata
             };
             if (absolutePathToSnippet !== undefined) {
-                binds.push(`${absolutePathToSnippet}:${DOCKER_PATH_TO_SNIPPET}`);
-                outputConfig.snippetFilepath = DOCKER_PATH_TO_SNIPPET;
+                outputConfig.snippetFilepath = snippetPath;
             }
             if (absolutePathToSnippetTemplates !== undefined) {
-                binds.push(`${absolutePathToSnippetTemplates}:${DOCKER_PATH_TO_SNIPPET_TEMPLATES}`);
-                outputConfig.snippetTemplateFilepath = DOCKER_PATH_TO_SNIPPET_TEMPLATES;
+                outputConfig.snippetTemplateFilepath = snippetTemplatePath;
             }
             return outputConfig;
         },
@@ -190,29 +181,30 @@ export function getGeneratorConfig({
         }
     });
     return {
-        binds,
-        config: {
-            irFilepath: DOCKER_PATH_TO_IR,
-            output,
-            publish: undefined,
-            customConfig,
-            workspaceName,
-            organization,
-            environment: FernGeneratorExec.GeneratorEnvironment.local(),
-            dryRun: false,
-            whitelabel: false,
-            writeUnitTests,
-            generateOauthClients,
-            generatePaginatedClients
-        }
+        irFilepath: irPath,
+        output,
+        publish: undefined,
+        customConfig,
+        workspaceName,
+        organization,
+        environment: FernGeneratorExec.GeneratorEnvironment.local(),
+        dryRun: false,
+        whitelabel: false,
+        writeUnitTests,
+        generateOauthClients,
+        generatePaginatedClients
     };
 }
 
 function newDummyPublishOutputConfig(
     version: string,
     multipleOutputMode: PublishOutputMode | PublishOutputModeV2,
-    generatorInvocation: GeneratorInvocation
+    generatorInvocation: GeneratorInvocation,
+    paths: {
+        outputDirectory: AbsoluteFilePath;
+    }
 ): FernGeneratorExec.GeneratorOutputConfig {
+    const { outputDirectory } = paths;
     let outputMode: NpmOutput | MavenOutput | PypiOutput | RubyGemsOutput | PostmanOutput | NugetOutput | undefined;
     if ("registryOverrides" in multipleOutputMode) {
         outputMode = multipleOutputMode.registryOverrides.maven ?? multipleOutputMode.registryOverrides.npm;
@@ -244,6 +236,6 @@ function newDummyPublishOutputConfig(
             repoUrl,
             version
         }),
-        path: DOCKER_CODEGEN_OUTPUT_DIRECTORY
+        path: outputDirectory
     };
 }

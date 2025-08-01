@@ -28,7 +28,8 @@ export async function generateWorkspace({
     keepDocker,
     absolutePathToPreview,
     mode,
-    runner
+    runner,
+    inspect
 }: {
     organization: string;
     workspace: AbstractAPIWorkspace<unknown>;
@@ -43,6 +44,7 @@ export async function generateWorkspace({
     absolutePathToPreview: AbsoluteFilePath | undefined;
     mode: GenerationMode | undefined;
     runner: ContainerRunner | undefined;
+    inspect: boolean;
 }): Promise<void> {
     if (workspace.generatorsConfiguration == null) {
         context.logger.warn("This workspaces has no generators.yml");
@@ -82,7 +84,8 @@ export async function generateWorkspace({
             generatorGroup: group,
             keepDocker,
             context,
-            runner
+            runner,
+            inspect
         });
     } else {
         if (!token) {

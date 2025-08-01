@@ -10,7 +10,7 @@ test:
     workingDirectory: generators/typescript-mcp
     buildCommand:
       - pnpm --filter @fern-api/typescript-mcp-server dist:cli
-    runCommand: node --enable-source-maps server/dist/cli.cjs
+    runCommand: node --enable-source-maps server/dist/cli.cjs {CONFIG_PATH}
 language: typescript
 generatorType: SDK
 defaultOutputMode: github

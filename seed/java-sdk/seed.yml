@@ -34,7 +34,7 @@ test:
       - chmod +x install-gradle.sh && ./install-gradle.sh
       - cd sdk
       - tar -xvf build/distributions/sdk.tar -C .
-    runCommand: cd sdk/sdk && java -cp sdk.jar:lib/* com.fern.java.client.Cli
+    runCommand: cd sdk/sdk && java -cp sdk.jar:lib/* com.fern.java.client.Cli {CONFIG_PATH}
     env: {}
 
 language: java

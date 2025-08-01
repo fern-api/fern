@@ -30,7 +30,7 @@ test:
       - chmod +x install-gradle.sh && ./install-gradle.sh
       - cd model
       - tar -xvf build/distributions/model.tar -C .
-    runCommand: cd model/model && java -cp model.jar:lib/* com.fern.java.model.Cli
+    runCommand: cd model/model && java -cp model.jar:lib/* com.fern.java.model.Cli {CONFIG_PATH}
   env: {}
 language: java
 generatorType: Model

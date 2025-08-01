@@ -543,7 +543,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     preview: argv.preview,
                     mode: argv.mode,
                     force: argv.force,
-                    runner: argv.runner as ContainerRunner
+                    runner: argv.runner as ContainerRunner,
+                    inspect: false
                 });
             }
             if (argv.docs != null) {
@@ -585,7 +586,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 preview: argv.preview,
                 mode: argv.mode,
                 force: argv.force,
-                runner: argv.runner as ContainerRunner
+                runner: argv.runner as ContainerRunner,
+                inspect: false
             });
         }
     );
