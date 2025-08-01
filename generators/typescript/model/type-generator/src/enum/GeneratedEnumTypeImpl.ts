@@ -266,9 +266,16 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
             throw new Error("Example is not for an enum");
         }
 
-        const enumValue = this.shape.values.find((enumValue) => enumValue.name.wireValue === example.value.wireValue);
+        let enumValue = this.shape.values.find((enumValue) => enumValue.name.wireValue === example.value.wireValue);
         if (enumValue == null) {
-            throw new Error("No enum with wire value: " + example.value.wireValue);
+            const defaultEnumValue = this.shape.values[0];
+            // If no matching enum value, pick the first value from the enum definition
+            if (defaultEnumValue == null) {
+                throw new Error("Enum has no values defined.");
+            }
+            // Use the first enum value as a fallback
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            enumValue = defaultEnumValue;
         }
         if (opts.isForTypeDeclarationComment) {
             return ts.factory.createPropertyAccessExpression(
