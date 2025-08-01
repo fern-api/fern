@@ -196,6 +196,9 @@ types:
       from-openapi:
         type: optional<boolean>
         docs: Whether to convert to OpenAPI before generating
+      deps:
+        type: optional<list<string>>
+        docs: Dependencies to use for generation.
 
   ProtobufAPIDefinitionSchema:
     properties:

@@ -91,6 +91,7 @@ export interface ProtoAPIDefinitionSchema {
     target: string;
     localGeneration: boolean;
     fromOpenAPI: boolean;
+    deps: string[];
 }
 
 export interface OSSAPIDefinitionSchema {

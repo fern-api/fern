@@ -1,0 +1,9 @@
+api:
+  specs:
+    - proto:
+        root: ../protos
+        local-generation: true
+        from-openapi: true
+        deps:
+          - buf.build/googleapis/googleapis
+          - buf.build/bufbuild/protovalidate

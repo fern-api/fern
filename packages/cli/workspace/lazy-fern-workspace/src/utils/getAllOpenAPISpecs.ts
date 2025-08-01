@@ -63,7 +63,8 @@ export async function convertProtobufToOpenAPI({
         absoluteFilepathToProtobufRoot: protobufSpec.absoluteFilepathToProtobufRoot,
         absoluteFilepathToProtobufTarget: protobufSpec.absoluteFilepathToProtobufTarget,
         relativeFilepathToProtobufRoot: protobufSpec.relativeFilepathToProtobufRoot,
-        local: protobufSpec.generateLocally
+        local: protobufSpec.generateLocally,
+        deps: protobufSpec.dependencies
     });
     return {
         type: "openapi",

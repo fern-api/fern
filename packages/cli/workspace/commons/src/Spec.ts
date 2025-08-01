@@ -29,5 +29,6 @@ export interface ProtobufSpec {
     relativeFilepathToProtobufRoot: RelativeFilePath;
     generateLocally: boolean;
     fromOpenAPI: boolean;
+    dependencies: string[];
     settings?: ParseOpenAPIOptions;
 }
