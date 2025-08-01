@@ -45,7 +45,67 @@ export class DiscriminatedUnionGenerator {
             accessLevel: swift.AccessLevel.Public,
             conformances: [swift.Protocol.Codable, swift.Protocol.Hashable, swift.Protocol.Sendable],
             cases: this.generateCasesForTypeDeclaration(),
+            initializers: this.generateInitializers(),
+            methods: this.generateMethods(),
             nestedTypes: this.generateNestedTypesForTypeDeclaration()
+        });
+    }
+
+    private generateInitializers(): swift.Initializer[] {
+        return [this.generateInitializerForDecoder()];
+    }
+
+    private generateInitializerForDecoder() {
+        const bodyStatements: swift.Statement[] = [
+            swift.Statement.constantDeclaration(
+                "container",
+                swift.Expression.try(
+                    swift.Expression.methodCall({
+                        target: swift.Expression.reference("decoder"),
+                        methodName: "container",
+                        arguments_: [
+                            swift.functionArgument({
+                                label: "keyedBy",
+                                value: swift.Expression.rawValue("CodingKeys.self")
+                            })
+                        ]
+                    })
+                )
+            )
+        ]; // TODO(kafkas): Implement
+        return swift.initializer({
+            accessLevel: swift.AccessLevel.Public,
+            throws: true,
+            parameters: [
+                swift.functionParameter({
+                    argumentLabel: "from",
+                    unsafeName: "decoder",
+                    type: swift.Type.custom("Decoder")
+                })
+            ],
+            body: swift.CodeBlock.withStatements(bodyStatements)
+        });
+    }
+
+    private generateMethods(): swift.Method[] {
+        return [this.generateEncodeMethod()];
+    }
+
+    private generateEncodeMethod(): swift.Method {
+        const bodyStatements: swift.Statement[] = []; // TODO(kafkas): Implement
+        return swift.method({
+            unsafeName: "encode",
+            accessLevel: swift.AccessLevel.Public,
+            parameters: [
+                swift.functionParameter({
+                    argumentLabel: "to",
+                    unsafeName: "encoder",
+                    type: swift.Type.custom("Encoder")
+                })
+            ],
+            throws: true,
+            returnType: swift.Type.void(),
+            body: swift.CodeBlock.withStatements(bodyStatements)
         });
     }
 
@@ -58,8 +118,8 @@ export class DiscriminatedUnionGenerator {
         });
     }
 
-    private generateNestedTypesForTypeDeclaration(): swift.Struct[] {
-        return this.unionTypeDeclaration.types.map((singleUnionType) => {
+    private generateNestedTypesForTypeDeclaration(): (swift.Struct | swift.EnumWithRawValues)[] {
+        const variantStructs = this.unionTypeDeclaration.types.map((singleUnionType) => {
             const constantPropertyDefinitions: StructGenerator.ConstantPropertyDefinition[] = [];
             const dataPropertyDefinitions: StructGenerator.DataPropertyDefinition[] = [];
 
@@ -67,6 +127,7 @@ export class DiscriminatedUnionGenerator {
                 const swiftType = getSwiftTypeForTypeReference(singleUnionType.shape.type);
                 constantPropertyDefinitions.push({
                     unsafeName: this.unionTypeDeclaration.discriminant.name.camelCase.unsafeName,
+                    rawName: this.unionTypeDeclaration.discriminant.wireValue,
                     type: swift.Type.string(),
                     value: swift.Expression.rawStringValue(singleUnionType.discriminantValue.wireValue)
                 });
@@ -79,6 +140,7 @@ export class DiscriminatedUnionGenerator {
                 const variantProperties = this.getPropertiesOfVariant(singleUnionType.shape.typeId);
                 constantPropertyDefinitions.push({
                     unsafeName: this.unionTypeDeclaration.discriminant.name.camelCase.unsafeName,
+                    rawName: this.unionTypeDeclaration.discriminant.wireValue,
                     type: swift.Type.string(),
                     value: swift.Expression.rawStringValue(singleUnionType.discriminantValue.wireValue)
                 });
@@ -102,6 +164,8 @@ export class DiscriminatedUnionGenerator {
                 additionalProperties: true
             }).generate();
         });
+
+        return [...variantStructs, this.generateCodingKeysEnum()];
     }
 
     private getPropertiesOfVariant(typeId: TypeId): ObjectProperty[] {
@@ -113,6 +177,19 @@ export class DiscriminatedUnionGenerator {
             union: () => [],
             undiscriminatedUnion: () => [],
             _other: () => []
+        });
+    }
+
+    private generateCodingKeysEnum(): swift.EnumWithRawValues {
+        return swift.enumWithRawValues({
+            name: "CodingKeys",
+            conformances: ["String", swift.Protocol.CodingKey, swift.Protocol.CaseIterable],
+            cases: [
+                {
+                    unsafeName: this.unionTypeDeclaration.discriminant.name.camelCase.unsafeName,
+                    rawValue: this.unionTypeDeclaration.discriminant.wireValue
+                }
+            ]
         });
     }
 }

@@ -3,6 +3,7 @@ import { swift } from "@fern-api/swift-codegen";
 export declare namespace StructGenerator {
     interface ConstantPropertyDefinition {
         unsafeName: string;
+        rawName: string;
         type: swift.Type;
         value: swift.Expression;
     }
@@ -339,12 +340,16 @@ export class StructGenerator {
         return swift.enumWithRawValues({
             name: "CodingKeys",
             conformances: ["String", swift.Protocol.CodingKey, swift.Protocol.CaseIterable],
-            cases: this.dataPropertyDefinitions.map((property) => {
-                return {
+            cases: [
+                ...this.constantPropertyDefinitions.map((property) => ({
                     unsafeName: property.unsafeName,
                     rawValue: property.rawName
-                };
-            })
+                })),
+                ...this.dataPropertyDefinitions.map((property) => ({
+                    unsafeName: property.unsafeName,
+                    rawValue: property.rawName
+                }))
+            ]
         });
     }
 }
