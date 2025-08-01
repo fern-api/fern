@@ -9,8 +9,6 @@ COPY generators/typescript/express/cli/docker/cache_heavy_dependencies.sh /
 RUN /cache_heavy_dependencies.sh
 RUN rm /cache_heavy_dependencies.sh
 
-COPY generators/typescript/asIs/ /assets/asIs
-COPY generators/typescript/utils/core-utilities/ /assets/core-utilities
-COPY generators/typescript/express/cli/docker/dist/cli.cjs /cli.cjs
+COPY generators/typescript/express/cli/docker/dist /
 
 ENTRYPOINT ["node", "--enable-source-maps", "/cli.cjs"]
