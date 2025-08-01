@@ -268,7 +268,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     const protobufIRFilepath = await protobufIRGenerator.generate({
                         absoluteFilepathToProtobufRoot: spec.absoluteFilepathToProtobufRoot,
                         absoluteFilepathToProtobufTarget: spec.absoluteFilepathToProtobufTarget,
-                        local: true
+                        local: true,
+                        deps: spec.dependencies
                     });
 
                     const result = await readFile(protobufIRFilepath, "utf-8");

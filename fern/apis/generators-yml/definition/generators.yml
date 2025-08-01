@@ -193,6 +193,12 @@ types:
       local-generation:
         type: optional<boolean>
         docs: Whether to compile the `.proto` files locally. By default, we generate remotely.
+      from-openapi:
+        type: optional<boolean>
+        docs: Whether to convert to OpenAPI before generating
+      dependencies:
+        type: optional<list<string>>
+        docs: Dependencies to use for generation.
 
   ProtobufAPIDefinitionSchema:
     properties:

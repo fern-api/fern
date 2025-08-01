@@ -520,6 +520,11 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     choices: ["docker", "podman"],
                     description: "Choose the container runtime to use for local generation.",
                     default: undefined
+                })
+                .option("lfs-override", {
+                    type: "string",
+                    hidden: true,
+                    description: "Override output mode to local-file-system with the specified path"
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -543,7 +548,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     preview: argv.preview,
                     mode: argv.mode,
                     force: argv.force,
-                    runner: argv.runner as ContainerRunner
+                    runner: argv.runner as ContainerRunner,
+                    lfsOverride: argv.lfsOverride
                 });
             }
             if (argv.docs != null) {
@@ -585,7 +591,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 preview: argv.preview,
                 mode: argv.mode,
                 force: argv.force,
-                runner: argv.runner as ContainerRunner
+                runner: argv.runner as ContainerRunner,
+                lfsOverride: argv.lfsOverride
             });
         }
     );

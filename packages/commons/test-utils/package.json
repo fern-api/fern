@@ -40,7 +40,7 @@
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-fern/ir-sdk": "^58.2.0",
+    "@fern-api/ir-sdk": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "typescript": "5.8.3",

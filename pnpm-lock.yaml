@@ -7475,15 +7475,15 @@ importers:
       '@fern-api/ir-generator':
         specifier: workspace:*
         version: link:../../cli/generation/ir-generator
+      '@fern-api/ir-sdk':
+        specifier: workspace:*
+        version: link:../../ir-sdk
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../cli/task-context
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../../cli/workspace/loader
-      '@fern-fern/ir-sdk':
-        specifier: ^58.2.0
-        version: 58.2.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3

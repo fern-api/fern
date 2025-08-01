@@ -1,6 +1,6 @@
 import { OpenAPISpec, ProtobufSpec, Spec } from "@fern-api/api-workspace-commons";
 import { isNonNullish } from "@fern-api/core-utils";
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { listFiles, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 
 import { ProtobufOpenAPIGenerator } from "../protobuf/ProtobufOpenAPIGenerator";
@@ -23,21 +23,50 @@ export async function getAllOpenAPISpecs({
     const protobufSpecs: ProtobufSpec[] = specs.filter((spec): spec is ProtobufSpec => spec.type === "protobuf");
     const openApiSpecsFromProto = await Promise.all(
         protobufSpecs.map(async (protobufSpec) => {
-            return convertProtobufToOpenAPI({ generator, protobufSpec, relativePathToDependency });
+            if (protobufSpec.absoluteFilepathToProtobufTarget != null) {
+                const result = await convertProtobufToOpenAPI({ generator, protobufSpec, relativePathToDependency });
+                return result ? [result.openApiSpec] : [];
+            }
+            const allProtobufTargetFilepaths = await listFiles(protobufSpec.absoluteFilepathToProtobufRoot, "proto");
+            let accumulatedBufLockContents: string | undefined;
+            const openApiSpecs: OpenAPISpec[] = [];
+
+            for (const file of allProtobufTargetFilepaths) {
+                const result = await convertProtobufToOpenAPI({
+                    generator,
+                    protobufSpec: {
+                        ...protobufSpec,
+                        absoluteFilepathToProtobufTarget: file
+                    },
+                    relativePathToDependency,
+                    existingBufLockContents: accumulatedBufLockContents
+                });
+                if (result != null) {
+                    openApiSpecs.push(result.openApiSpec);
+                    if (result.bufLockContents != null) {
+                        accumulatedBufLockContents = result.bufLockContents;
+                    }
+                }
+            }
+            return openApiSpecs;
         })
     );
-    return [...openApiSpecs, ...openApiSpecsFromProto.filter((spec) => isNonNullish(spec))];
+
+    const flattenedSpecs = openApiSpecsFromProto.flat().filter((spec) => isNonNullish(spec));
+    return [...openApiSpecs, ...flattenedSpecs];
 }
 
 export async function convertProtobufToOpenAPI({
     generator,
     protobufSpec,
-    relativePathToDependency
+    relativePathToDependency,
+    existingBufLockContents
 }: {
     generator: ProtobufOpenAPIGenerator;
     protobufSpec: ProtobufSpec;
     relativePathToDependency?: RelativeFilePath;
-}): Promise<OpenAPISpec | undefined> {
+    existingBufLockContents?: string;
+}): Promise<{ bufLockContents: string | undefined; openApiSpec: OpenAPISpec } | undefined> {
     if (protobufSpec.absoluteFilepathToProtobufTarget == null) {
         return undefined;
     }
@@ -45,18 +74,23 @@ export async function convertProtobufToOpenAPI({
         absoluteFilepathToProtobufRoot: protobufSpec.absoluteFilepathToProtobufRoot,
         absoluteFilepathToProtobufTarget: protobufSpec.absoluteFilepathToProtobufTarget,
         relativeFilepathToProtobufRoot: protobufSpec.relativeFilepathToProtobufRoot,
-        local: protobufSpec.generateLocally
+        local: protobufSpec.generateLocally,
+        deps: protobufSpec.dependencies,
+        existingBufLockContents
     });
     return {
-        type: "openapi",
-        absoluteFilepath: openAPIAbsoluteFilePath,
-        absoluteFilepathToOverrides: protobufSpec.absoluteFilepathToOverrides,
-        settings: protobufSpec.settings,
-        source: {
-            type: "protobuf",
-            relativePathToDependency,
-            root: protobufSpec.absoluteFilepathToProtobufRoot,
-            file: protobufSpec.absoluteFilepathToProtobufTarget
+        bufLockContents: openAPIAbsoluteFilePath.bufLockContents,
+        openApiSpec: {
+            type: "openapi",
+            absoluteFilepath: openAPIAbsoluteFilePath.absoluteFilepath,
+            absoluteFilepathToOverrides: protobufSpec.absoluteFilepathToOverrides,
+            settings: protobufSpec.settings,
+            source: {
+                type: "protobuf",
+                relativePathToDependency,
+                root: protobufSpec.absoluteFilepathToProtobufRoot,
+                file: protobufSpec.absoluteFilepathToProtobufTarget
+            }
         }
     };
 }
