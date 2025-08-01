@@ -124,3 +124,7 @@ groups:
 ```
 
 Fern will handle the rest automatically.
+
+## Contributing
+
+We welcome contributions to the Java generators! Please see our [contributing guidelines](../../CONTRIBUTING.md) for more information.
