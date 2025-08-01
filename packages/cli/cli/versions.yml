@@ -1,15 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        If endpoint example generation fails, catch the exception and continue instead of completely failing 
-        SDK generation. 
-      type: fix
-  irVersion: 58
-  createdAt: "2025-08-01"
-  version: 0.65.42
-
-- changelogEntry:
-    - summary: |
         Add support for proxying IR generation from proto through protoc-gen-openapi.
       type: feat
   irVersion: 58
@@ -26,11 +17,12 @@
 
 - changelogEntry:
     - summary: |
-        If endpoint example generation fails, catch the exception and continue instead of completely failing 
-        SDK generation. 
-      type: feat
+        Fix snippet generation for local file system output mode. Snippets configured with `snippets.path` 
+        in generators.yml were not being generated when using `--local` flag due to missing Docker volume 
+        mounting for the downloadFiles output mode.
+      type: fix
   irVersion: 58
-  createdAt: "2025-07-30"
+  createdAt: "2025-07-31"
   version: 0.65.39
 
 - changelogEntry:
