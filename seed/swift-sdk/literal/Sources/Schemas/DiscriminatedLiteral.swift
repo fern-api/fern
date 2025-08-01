@@ -6,7 +6,24 @@ public enum DiscriminatedLiteral: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-    }
+        let discriminant = try container.decode(String.self, forKey: .type)
+        switch discriminant {
+        case "customName":
+            self = .customName(try CustomName(from: decoder))
+        case "defaultName":
+            self = .defaultName(try DefaultName(from: decoder))
+        case "george":
+            self = .george(try George(from: decoder))
+        case "literalGeorge":
+            self = .literalGeorge(try LiteralGeorge(from: decoder))
+        default:
+            throw DecodingError.dataCorrupted(
+                DecodingError.Context(
+                    codingPath: decoder.codingPath,
+                    debugDescription: "Unknown shape discriminant value: \(discriminant)"
+                )
+            )
+        }}
 
     public func encode(to encoder: Encoder) throws -> Void {
     }

@@ -7,7 +7,26 @@ public enum SubmissionRequest: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-    }
+        let discriminant = try container.decode(String.self, forKey: .type)
+        switch discriminant {
+        case "initializeProblemRequest":
+            self = .initializeProblemRequest(try InitializeProblemRequest(from: decoder))
+        case "initializeWorkspaceRequest":
+            self = .initializeWorkspaceRequest(try InitializeWorkspaceRequest(from: decoder))
+        case "submitV2":
+            self = .submitV2(try SubmitV2(from: decoder))
+        case "workspaceSubmit":
+            self = .workspaceSubmit(try WorkspaceSubmit(from: decoder))
+        case "stop":
+            self = .stop(try Stop(from: decoder))
+        default:
+            throw DecodingError.dataCorrupted(
+                DecodingError.Context(
+                    codingPath: decoder.codingPath,
+                    debugDescription: "Unknown shape discriminant value: \(discriminant)"
+                )
+            )
+        }}
 
     public func encode(to encoder: Encoder) throws -> Void {
     }

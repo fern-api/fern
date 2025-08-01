@@ -15,7 +15,42 @@ public enum DebugVariableValue: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-    }
+        let discriminant = try container.decode(String.self, forKey: .type)
+        switch discriminant {
+        case "integerValue":
+            self = .integerValue(try IntegerValue(from: decoder))
+        case "booleanValue":
+            self = .booleanValue(try BooleanValue(from: decoder))
+        case "doubleValue":
+            self = .doubleValue(try DoubleValue(from: decoder))
+        case "stringValue":
+            self = .stringValue(try StringValue(from: decoder))
+        case "charValue":
+            self = .charValue(try CharValue(from: decoder))
+        case "mapValue":
+            self = .mapValue(try MapValue(from: decoder))
+        case "listValue":
+            self = .listValue(try ListValue(from: decoder))
+        case "binaryTreeNodeValue":
+            self = .binaryTreeNodeValue(try BinaryTreeNodeValue(from: decoder))
+        case "singlyLinkedListNodeValue":
+            self = .singlyLinkedListNodeValue(try SinglyLinkedListNodeValue(from: decoder))
+        case "doublyLinkedListNodeValue":
+            self = .doublyLinkedListNodeValue(try DoublyLinkedListNodeValue(from: decoder))
+        case "undefinedValue":
+            self = .undefinedValue(try UndefinedValue(from: decoder))
+        case "nullValue":
+            self = .nullValue(try NullValue(from: decoder))
+        case "genericValue":
+            self = .genericValue(try GenericValue(from: decoder))
+        default:
+            throw DecodingError.dataCorrupted(
+                DecodingError.Context(
+                    codingPath: decoder.codingPath,
+                    debugDescription: "Unknown shape discriminant value: \(discriminant)"
+                )
+            )
+        }}
 
     public func encode(to encoder: Encoder) throws -> Void {
     }

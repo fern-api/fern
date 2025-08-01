@@ -5,7 +5,22 @@ public enum UnionWithMultipleNoProperties: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-    }
+        let discriminant = try container.decode(String.self, forKey: .type)
+        switch discriminant {
+        case "foo":
+            self = .foo(try Foo(from: decoder))
+        case "empty1":
+            self = .empty1(try Empty1(from: decoder))
+        case "empty2":
+            self = .empty2(try Empty2(from: decoder))
+        default:
+            throw DecodingError.dataCorrupted(
+                DecodingError.Context(
+                    codingPath: decoder.codingPath,
+                    debugDescription: "Unknown shape discriminant value: \(discriminant)"
+                )
+            )
+        }}
 
     public func encode(to encoder: Encoder) throws -> Void {
     }

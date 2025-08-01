@@ -9,7 +9,30 @@ public enum WorkspaceSubmissionUpdateInfo: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-    }
+        let discriminant = try container.decode(String.self, forKey: .type)
+        switch discriminant {
+        case "running":
+            self = .running(try Running(from: decoder))
+        case "ran":
+            self = .ran(try Ran(from: decoder))
+        case "stopped":
+            self = .stopped(try Stopped(from: decoder))
+        case "traced":
+            self = .traced(try Traced(from: decoder))
+        case "tracedV2":
+            self = .tracedV2(try TracedV2(from: decoder))
+        case "errored":
+            self = .errored(try Errored(from: decoder))
+        case "finished":
+            self = .finished(try Finished(from: decoder))
+        default:
+            throw DecodingError.dataCorrupted(
+                DecodingError.Context(
+                    codingPath: decoder.codingPath,
+                    debugDescription: "Unknown shape discriminant value: \(discriminant)"
+                )
+            )
+        }}
 
     public func encode(to encoder: Encoder) throws -> Void {
     }

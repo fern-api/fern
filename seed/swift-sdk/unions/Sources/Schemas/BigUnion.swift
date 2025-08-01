@@ -31,7 +31,74 @@ public enum BigUnion: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-    }
+        let discriminant = try container.decode(String.self, forKey: .type)
+        switch discriminant {
+        case "normalSweet":
+            self = .normalSweet(try NormalSweet(from: decoder))
+        case "thankfulFactor":
+            self = .thankfulFactor(try ThankfulFactor(from: decoder))
+        case "jumboEnd":
+            self = .jumboEnd(try JumboEnd(from: decoder))
+        case "hastyPain":
+            self = .hastyPain(try HastyPain(from: decoder))
+        case "mistySnow":
+            self = .mistySnow(try MistySnow(from: decoder))
+        case "distinctFailure":
+            self = .distinctFailure(try DistinctFailure(from: decoder))
+        case "practicalPrinciple":
+            self = .practicalPrinciple(try PracticalPrinciple(from: decoder))
+        case "limpingStep":
+            self = .limpingStep(try LimpingStep(from: decoder))
+        case "vibrantExcitement":
+            self = .vibrantExcitement(try VibrantExcitement(from: decoder))
+        case "activeDiamond":
+            self = .activeDiamond(try ActiveDiamond(from: decoder))
+        case "popularLimit":
+            self = .popularLimit(try PopularLimit(from: decoder))
+        case "falseMirror":
+            self = .falseMirror(try FalseMirror(from: decoder))
+        case "primaryBlock":
+            self = .primaryBlock(try PrimaryBlock(from: decoder))
+        case "rotatingRatio":
+            self = .rotatingRatio(try RotatingRatio(from: decoder))
+        case "colorfulCover":
+            self = .colorfulCover(try ColorfulCover(from: decoder))
+        case "disloyalValue":
+            self = .disloyalValue(try DisloyalValue(from: decoder))
+        case "gruesomeCoach":
+            self = .gruesomeCoach(try GruesomeCoach(from: decoder))
+        case "totalWork":
+            self = .totalWork(try TotalWork(from: decoder))
+        case "harmoniousPlay":
+            self = .harmoniousPlay(try HarmoniousPlay(from: decoder))
+        case "uniqueStress":
+            self = .uniqueStress(try UniqueStress(from: decoder))
+        case "unwillingSmoke":
+            self = .unwillingSmoke(try UnwillingSmoke(from: decoder))
+        case "frozenSleep":
+            self = .frozenSleep(try FrozenSleep(from: decoder))
+        case "diligentDeal":
+            self = .diligentDeal(try DiligentDeal(from: decoder))
+        case "attractiveScript":
+            self = .attractiveScript(try AttractiveScript(from: decoder))
+        case "hoarseMouse":
+            self = .hoarseMouse(try HoarseMouse(from: decoder))
+        case "circularCard":
+            self = .circularCard(try CircularCard(from: decoder))
+        case "potableBad":
+            self = .potableBad(try PotableBad(from: decoder))
+        case "triangularRepair":
+            self = .triangularRepair(try TriangularRepair(from: decoder))
+        case "gaseousRoad":
+            self = .gaseousRoad(try GaseousRoad(from: decoder))
+        default:
+            throw DecodingError.dataCorrupted(
+                DecodingError.Context(
+                    codingPath: decoder.codingPath,
+                    debugDescription: "Unknown shape discriminant value: \(discriminant)"
+                )
+            )
+        }}
 
     public func encode(to encoder: Encoder) throws -> Void {
     }

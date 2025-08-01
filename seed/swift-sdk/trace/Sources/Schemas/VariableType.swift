@@ -12,7 +12,36 @@ public enum VariableType: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-    }
+        let discriminant = try container.decode(String.self, forKey: .type)
+        switch discriminant {
+        case "integerType":
+            self = .integerType(try IntegerType(from: decoder))
+        case "doubleType":
+            self = .doubleType(try DoubleType(from: decoder))
+        case "booleanType":
+            self = .booleanType(try BooleanType(from: decoder))
+        case "stringType":
+            self = .stringType(try StringType(from: decoder))
+        case "charType":
+            self = .charType(try CharType(from: decoder))
+        case "listType":
+            self = .listType(try ListType(from: decoder))
+        case "mapType":
+            self = .mapType(try MapType(from: decoder))
+        case "binaryTreeType":
+            self = .binaryTreeType(try BinaryTreeType(from: decoder))
+        case "singlyLinkedListType":
+            self = .singlyLinkedListType(try SinglyLinkedListType(from: decoder))
+        case "doublyLinkedListType":
+            self = .doublyLinkedListType(try DoublyLinkedListType(from: decoder))
+        default:
+            throw DecodingError.dataCorrupted(
+                DecodingError.Context(
+                    codingPath: decoder.codingPath,
+                    debugDescription: "Unknown shape discriminant value: \(discriminant)"
+                )
+            )
+        }}
 
     public func encode(to encoder: Encoder) throws -> Void {
     }

@@ -6,7 +6,24 @@ public enum UnionWithDuplicatePrimitive: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-    }
+        let discriminant = try container.decode(String.self, forKey: .type)
+        switch discriminant {
+        case "integer1":
+            self = .integer1(try Integer1(from: decoder))
+        case "integer2":
+            self = .integer2(try Integer2(from: decoder))
+        case "string1":
+            self = .string1(try String1(from: decoder))
+        case "string2":
+            self = .string2(try String2(from: decoder))
+        default:
+            throw DecodingError.dataCorrupted(
+                DecodingError.Context(
+                    codingPath: decoder.codingPath,
+                    debugDescription: "Unknown shape discriminant value: \(discriminant)"
+                )
+            )
+        }}
 
     public func encode(to encoder: Encoder) throws -> Void {
     }
