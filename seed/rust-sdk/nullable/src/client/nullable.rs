@@ -17,6 +17,25 @@ impl NullableClient {
             Method::GET,
             "/users",
             None,
+            {
+            let mut query_params = Vec::new();
+            if let Some(value) = usernames {
+                query_params.push(("usernames".to_string(), value.to_string()));
+            }
+            if let Some(value) = avatar {
+                query_params.push(("avatar".to_string(), value.to_string()));
+            }
+            if let Some(value) = activated {
+                query_params.push(("activated".to_string(), value.to_string()));
+            }
+            if let Some(value) = tags {
+                query_params.push(("tags".to_string(), value.to_string()));
+            }
+            if let Some(value) = extra {
+                query_params.push(("extra".to_string(), value.to_string()));
+            }
+            Some(query_params)
+        },
             options,
         ).await
     }
@@ -26,6 +45,7 @@ impl NullableClient {
             Method::POST,
             "/users",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -35,6 +55,7 @@ impl NullableClient {
             Method::DELETE,
             "/users",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }

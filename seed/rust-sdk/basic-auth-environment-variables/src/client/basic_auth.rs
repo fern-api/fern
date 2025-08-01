@@ -4,18 +4,21 @@ use crate::{types::*};
 
 pub struct BasicAuthClient {
     pub http_client: HttpClient,
+    pub username: Option<String>,
+    pub access_token: Option<String>,
 }
 
 impl BasicAuthClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig, username: Option<String>, access_token: Option<String>) -> Result<Self, ClientError> {
         let http_client = HttpClient::new(config)?;
-        Ok(Self { http_client })
+        Ok(Self { http_client, username, access_token })
     }
 
     pub async fn get_with_basic_auth(&self, options: Option<RequestOptions>) -> Result<bool, ClientError> {
         self.http_client.execute_request(
             Method::GET,
             "basic-auth",
+            None,
             None,
             options,
         ).await
@@ -26,6 +29,7 @@ impl BasicAuthClient {
             Method::POST,
             "basic-auth",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }

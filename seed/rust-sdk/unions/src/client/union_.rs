@@ -17,6 +17,7 @@ impl UnionClient {
             Method::GET,
             &format!("/{}", id),
             None,
+            None,
             options,
         ).await
     }
@@ -26,6 +27,7 @@ impl UnionClient {
             Method::PATCH,
             "",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }

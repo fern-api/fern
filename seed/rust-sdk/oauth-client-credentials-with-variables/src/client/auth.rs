@@ -4,12 +4,13 @@ use crate::{types::*};
 
 pub struct AuthClient {
     pub http_client: HttpClient,
+    pub access_token: Option<String>,
 }
 
 impl AuthClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig, access_token: Option<String>) -> Result<Self, ClientError> {
         let http_client = HttpClient::new(config)?;
-        Ok(Self { http_client })
+        Ok(Self { http_client, access_token })
     }
 
     pub async fn get_token_with_client_credentials(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<TokenResponse, ClientError> {
@@ -17,6 +18,7 @@ impl AuthClient {
             Method::POST,
             "/token",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -26,6 +28,7 @@ impl AuthClient {
             Method::POST,
             "/token",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }

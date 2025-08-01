@@ -17,6 +17,13 @@ impl FooClient {
             Method::POST,
             "",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            {
+            let mut query_params = Vec::new();
+            if let Some(value) = optional_string {
+                query_params.push(("optionalString".to_string(), value.to_string()));
+            }
+            Some(query_params)
+        },
             options,
         ).await
     }

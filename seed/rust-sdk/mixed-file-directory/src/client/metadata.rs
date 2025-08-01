@@ -17,6 +17,13 @@ impl MetadataClient {
             Method::GET,
             "/users/events/metadata/",
             None,
+            {
+            let mut query_params = Vec::new();
+            if let Some(value) = id {
+                query_params.push(("id".to_string(), value.to_string()));
+            }
+            Some(query_params)
+        },
             options,
         ).await
     }

@@ -17,6 +17,22 @@ impl QueryParamClient {
             Method::POST,
             "query",
             None,
+            {
+            let mut query_params = Vec::new();
+            if let Some(value) = operand {
+                query_params.push(("operand".to_string(), value.to_string()));
+            }
+            if let Some(value) = maybe_operand {
+                query_params.push(("maybeOperand".to_string(), value.to_string()));
+            }
+            if let Some(value) = operand_or_color {
+                query_params.push(("operandOrColor".to_string(), value.to_string()));
+            }
+            if let Some(value) = maybe_operand_or_color {
+                query_params.push(("maybeOperandOrColor".to_string(), value.to_string()));
+            }
+            Some(query_params)
+        },
             options,
         ).await
     }
@@ -26,6 +42,22 @@ impl QueryParamClient {
             Method::POST,
             "query-list",
             None,
+            {
+            let mut query_params = Vec::new();
+            if let Some(value) = operand {
+                query_params.push(("operand".to_string(), value.to_string()));
+            }
+            if let Some(value) = maybe_operand {
+                query_params.push(("maybeOperand".to_string(), value.to_string()));
+            }
+            if let Some(value) = operand_or_color {
+                query_params.push(("operandOrColor".to_string(), value.to_string()));
+            }
+            if let Some(value) = maybe_operand_or_color {
+                query_params.push(("maybeOperandOrColor".to_string(), value.to_string()));
+            }
+            Some(query_params)
+        },
             options,
         ).await
     }

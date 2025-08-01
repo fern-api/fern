@@ -4,12 +4,13 @@ use crate::{types::*};
 
 pub struct PrimitiveClient {
     pub http_client: HttpClient,
+    pub token: Option<String>,
 }
 
 impl PrimitiveClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig, token: Option<String>) -> Result<Self, ClientError> {
         let http_client = HttpClient::new(config)?;
-        Ok(Self { http_client })
+        Ok(Self { http_client, token })
     }
 
     pub async fn get_and_return_string(&self, request: &String, options: Option<RequestOptions>) -> Result<String, ClientError> {
@@ -17,6 +18,7 @@ impl PrimitiveClient {
             Method::POST,
             "/primitive/string",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -26,6 +28,7 @@ impl PrimitiveClient {
             Method::POST,
             "/primitive/integer",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -35,6 +38,7 @@ impl PrimitiveClient {
             Method::POST,
             "/primitive/long",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -44,6 +48,7 @@ impl PrimitiveClient {
             Method::POST,
             "/primitive/double",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -53,6 +58,7 @@ impl PrimitiveClient {
             Method::POST,
             "/primitive/boolean",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -62,6 +68,7 @@ impl PrimitiveClient {
             Method::POST,
             "/primitive/datetime",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -71,6 +78,7 @@ impl PrimitiveClient {
             Method::POST,
             "/primitive/date",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -80,6 +88,7 @@ impl PrimitiveClient {
             Method::POST,
             "/primitive/uuid",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -89,6 +98,7 @@ impl PrimitiveClient {
             Method::POST,
             "/primitive/base64",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }

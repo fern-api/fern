@@ -17,6 +17,7 @@ impl UnionClient {
             Method::POST,
             "",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -25,6 +26,7 @@ impl UnionClient {
         self.http_client.execute_request(
             Method::GET,
             "/metadata",
+            None,
             None,
             options,
         ).await
@@ -35,6 +37,7 @@ impl UnionClient {
             Method::PUT,
             "/metadata",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -44,6 +47,7 @@ impl UnionClient {
             Method::POST,
             "/call",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -53,6 +57,7 @@ impl UnionClient {
             Method::POST,
             "/duplicate",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -62,6 +67,7 @@ impl UnionClient {
             Method::POST,
             "/nested",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }

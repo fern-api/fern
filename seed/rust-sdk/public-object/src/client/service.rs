@@ -16,6 +16,7 @@ impl ServiceClient {
             Method::GET,
             "/helloworld.txt",
             None,
+            None,
             options,
         ).await
     }

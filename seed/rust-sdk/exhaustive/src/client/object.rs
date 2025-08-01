@@ -4,12 +4,13 @@ use crate::{types::*};
 
 pub struct ObjectClient {
     pub http_client: HttpClient,
+    pub token: Option<String>,
 }
 
 impl ObjectClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig, token: Option<String>) -> Result<Self, ClientError> {
         let http_client = HttpClient::new(config)?;
-        Ok(Self { http_client })
+        Ok(Self { http_client, token })
     }
 
     pub async fn get_and_return_with_optional_field(&self, request: &ObjectWithOptionalField, options: Option<RequestOptions>) -> Result<ObjectWithOptionalField, ClientError> {
@@ -17,6 +18,7 @@ impl ObjectClient {
             Method::POST,
             "/object/get-and-return-with-optional-field",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -26,6 +28,7 @@ impl ObjectClient {
             Method::POST,
             "/object/get-and-return-with-required-field",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -35,6 +38,7 @@ impl ObjectClient {
             Method::POST,
             "/object/get-and-return-with-map-of-map",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -44,6 +48,7 @@ impl ObjectClient {
             Method::POST,
             "/object/get-and-return-nested-with-optional-field",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -53,6 +58,7 @@ impl ObjectClient {
             Method::POST,
             &format!("/object/get-and-return-nested-with-required-field/{}", string),
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -62,6 +68,7 @@ impl ObjectClient {
             Method::POST,
             "/object/get-and-return-nested-with-required-field-list",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }

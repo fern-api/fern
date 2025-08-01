@@ -17,6 +17,7 @@ impl ServiceClient {
             Method::GET,
             &format!("/{}{}", id, nested_id),
             None,
+            None,
             options,
         ).await
     }

@@ -17,6 +17,13 @@ impl PackageClient {
             Method::POST,
             "",
             None,
+            {
+            let mut query_params = Vec::new();
+            if let Some(value) = for_ {
+                query_params.push(("for".to_string(), value.to_string()));
+            }
+            Some(query_params)
+        },
             options,
         ).await
     }

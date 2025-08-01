@@ -17,6 +17,7 @@ impl UserClient {
             Method::HEAD,
             "/users",
             None,
+            None,
             options,
         ).await
     }
@@ -26,6 +27,13 @@ impl UserClient {
             Method::GET,
             "/users",
             None,
+            {
+            let mut query_params = Vec::new();
+            if let Some(value) = limit {
+                query_params.push(("limit".to_string(), value.to_string()));
+            }
+            Some(query_params)
+        },
             options,
         ).await
     }

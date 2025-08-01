@@ -4,12 +4,13 @@ use crate::{types::*};
 
 pub struct ComplexClient {
     pub http_client: HttpClient,
+    pub token: Option<String>,
 }
 
 impl ComplexClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig, token: Option<String>) -> Result<Self, ClientError> {
         let http_client = HttpClient::new(config)?;
-        Ok(Self { http_client })
+        Ok(Self { http_client, token })
     }
 
     pub async fn search(&self, index: &String, request: &SearchRequest, options: Option<RequestOptions>) -> Result<PaginatedConversationResponse, ClientError> {
@@ -17,6 +18,7 @@ impl ComplexClient {
             Method::POST,
             &format!("{}", index),
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }

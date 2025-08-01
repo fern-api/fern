@@ -17,6 +17,7 @@ impl ServiceClient {
             Method::GET,
             "/service",
             None,
+            None,
             options,
         ).await
     }
@@ -26,6 +27,7 @@ impl ServiceClient {
             Method::POST,
             "/service",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }

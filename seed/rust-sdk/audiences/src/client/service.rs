@@ -17,6 +17,7 @@ impl ServiceClient {
             Method::GET,
             "/partner-path",
             None,
+            None,
             options,
         ).await
     }

@@ -17,6 +17,7 @@ impl PathParamClient {
             Method::POST,
             &format!("path/{}{}", operand, operand_or_color),
             None,
+            None,
             options,
         ).await
     }

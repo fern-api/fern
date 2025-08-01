@@ -17,6 +17,7 @@ impl ServiceClient {
             Method::GET,
             "",
             None,
+            None,
             options,
         ).await
     }

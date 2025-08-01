@@ -17,6 +17,7 @@ impl UserClient {
             Method::GET,
             &format!("users/{}", user_id),
             None,
+            None,
             options,
         ).await
     }
@@ -26,6 +27,7 @@ impl UserClient {
             Method::POST,
             "users",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }

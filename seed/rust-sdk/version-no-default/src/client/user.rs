@@ -17,6 +17,7 @@ impl UserClient {
             Method::GET,
             &format!("/users/{}", user_id.0),
             None,
+            None,
             options,
         ).await
     }

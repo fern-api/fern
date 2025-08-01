@@ -17,6 +17,7 @@ impl UserClient {
             Method::GET,
             &format!("/{}{}", tenant_id, user_id),
             None,
+            None,
             options,
         ).await
     }
@@ -26,6 +27,7 @@ impl UserClient {
             Method::POST,
             &format!("/{}", tenant_id),
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -35,6 +37,7 @@ impl UserClient {
             Method::PATCH,
             &format!("/{}{}", tenant_id, user_id),
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -44,6 +47,13 @@ impl UserClient {
             Method::GET,
             &format!("/{}{}", tenant_id, user_id),
             None,
+            {
+            let mut query_params = Vec::new();
+            if let Some(value) = limit {
+                query_params.push(("limit".to_string(), value.to_string()));
+            }
+            Some(query_params)
+        },
             options,
         ).await
     }

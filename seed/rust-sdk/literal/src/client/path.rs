@@ -17,6 +17,7 @@ impl PathClient {
             Method::POST,
             &format!("path/{}", id),
             None,
+            None,
             options,
         ).await
     }

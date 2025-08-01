@@ -17,6 +17,37 @@ impl QueryClient {
             Method::POST,
             "query",
             None,
+            {
+            let mut query_params = Vec::new();
+            if let Some(value) = prompt {
+                query_params.push(("prompt".to_string(), value.to_string()));
+            }
+            if let Some(value) = optional_prompt {
+                query_params.push(("optional_prompt".to_string(), value.to_string()));
+            }
+            if let Some(value) = alias_prompt {
+                query_params.push(("alias_prompt".to_string(), value.to_string()));
+            }
+            if let Some(value) = alias_optional_prompt {
+                query_params.push(("alias_optional_prompt".to_string(), value.to_string()));
+            }
+            if let Some(value) = query {
+                query_params.push(("query".to_string(), value.to_string()));
+            }
+            if let Some(value) = stream {
+                query_params.push(("stream".to_string(), value.to_string()));
+            }
+            if let Some(value) = optional_stream {
+                query_params.push(("optional_stream".to_string(), value.to_string()));
+            }
+            if let Some(value) = alias_stream {
+                query_params.push(("alias_stream".to_string(), value.to_string()));
+            }
+            if let Some(value) = alias_optional_stream {
+                query_params.push(("alias_optional_stream".to_string(), value.to_string()));
+            }
+            Some(query_params)
+        },
             options,
         ).await
     }

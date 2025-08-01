@@ -17,6 +17,7 @@ impl PropertyBasedErrorClient {
             Method::GET,
             "property-based-error",
             None,
+            None,
             options,
         ).await
     }

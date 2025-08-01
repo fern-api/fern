@@ -17,6 +17,7 @@ impl BigunionClient {
             Method::GET,
             &format!("/{}", id),
             None,
+            None,
             options,
         ).await
     }
@@ -26,6 +27,7 @@ impl BigunionClient {
             Method::PATCH,
             "",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -35,6 +37,7 @@ impl BigunionClient {
             Method::PATCH,
             "/many",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }

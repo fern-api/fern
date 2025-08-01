@@ -17,6 +17,7 @@ impl ServiceClient {
             Method::POST,
             "",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -26,6 +27,7 @@ impl ServiceClient {
             Method::POST,
             "/just-file",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -35,6 +37,25 @@ impl ServiceClient {
             Method::POST,
             "/just-file-with-query-params",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            {
+            let mut query_params = Vec::new();
+            if let Some(value) = maybe_string {
+                query_params.push(("maybeString".to_string(), value.to_string()));
+            }
+            if let Some(value) = integer {
+                query_params.push(("integer".to_string(), value.to_string()));
+            }
+            if let Some(value) = maybe_integer {
+                query_params.push(("maybeInteger".to_string(), value.to_string()));
+            }
+            if let Some(value) = list_of_strings {
+                query_params.push(("listOfStrings".to_string(), value.to_string()));
+            }
+            if let Some(value) = optional_list_of_strings {
+                query_params.push(("optionalListOfStrings".to_string(), value.to_string()));
+            }
+            Some(query_params)
+        },
             options,
         ).await
     }
@@ -44,6 +65,7 @@ impl ServiceClient {
             Method::POST,
             "/with-content-type",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -53,6 +75,7 @@ impl ServiceClient {
             Method::POST,
             "/with-form-encoding",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -62,6 +85,7 @@ impl ServiceClient {
             Method::POST,
             "",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -71,6 +95,17 @@ impl ServiceClient {
             Method::POST,
             "/optional-args",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
+            options,
+        ).await
+    }
+
+    pub async fn with_inline_type(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<String, ClientError> {
+        self.http_client.execute_request(
+            Method::POST,
+            "/inline-type",
+            Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -79,6 +114,7 @@ impl ServiceClient {
         self.http_client.execute_request(
             Method::POST,
             "/snippet",
+            None,
             None,
             options,
         ).await

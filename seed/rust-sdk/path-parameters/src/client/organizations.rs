@@ -17,6 +17,7 @@ impl OrganizationsClient {
             Method::GET,
             &format!("/{}{}", tenant_id, organization_id),
             None,
+            None,
             options,
         ).await
     }
@@ -25,6 +26,7 @@ impl OrganizationsClient {
         self.http_client.execute_request(
             Method::GET,
             &format!("/{}{}{}", tenant_id, organization_id, user_id),
+            None,
             None,
             options,
         ).await
@@ -35,6 +37,13 @@ impl OrganizationsClient {
             Method::GET,
             &format!("/{}{}", tenant_id, organization_id),
             None,
+            {
+            let mut query_params = Vec::new();
+            if let Some(value) = limit {
+                query_params.push(("limit".to_string(), value.to_string()));
+            }
+            Some(query_params)
+        },
             options,
         ).await
     }

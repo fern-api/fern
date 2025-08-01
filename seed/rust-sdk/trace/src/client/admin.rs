@@ -4,12 +4,13 @@ use crate::{types::*};
 
 pub struct AdminClient {
     pub http_client: HttpClient,
+    pub token: Option<String>,
 }
 
 impl AdminClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig, token: Option<String>) -> Result<Self, ClientError> {
         let http_client = HttpClient::new(config)?;
-        Ok(Self { http_client })
+        Ok(Self { http_client, token })
     }
 
     pub async fn update_test_submission_status(&self, submission_id: &SubmissionId, request: &TestSubmissionStatus, options: Option<RequestOptions>) -> Result<(), ClientError> {
@@ -17,6 +18,7 @@ impl AdminClient {
             Method::POST,
             &format!("/admin/store-test-submission-status/{}", submission_id.0),
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -26,6 +28,7 @@ impl AdminClient {
             Method::POST,
             &format!("/admin/store-test-submission-status-v2/{}", submission_id.0),
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -35,6 +38,7 @@ impl AdminClient {
             Method::POST,
             &format!("/admin/store-workspace-submission-status/{}", submission_id.0),
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -44,6 +48,7 @@ impl AdminClient {
             Method::POST,
             &format!("/admin/store-workspace-submission-status-v2/{}", submission_id.0),
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -53,6 +58,7 @@ impl AdminClient {
             Method::POST,
             &format!("/admin/store-test-trace/submission/{}{}", submission_id.0, test_case_id),
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -62,6 +68,7 @@ impl AdminClient {
             Method::POST,
             &format!("/admin/store-test-trace-v2/submission/{}{}", submission_id.0, test_case_id.0),
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -71,6 +78,7 @@ impl AdminClient {
             Method::POST,
             &format!("/admin/store-workspace-trace/submission/{}", submission_id.0),
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -80,6 +88,7 @@ impl AdminClient {
             Method::POST,
             &format!("/admin/store-workspace-trace-v2/submission/{}", submission_id.0),
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }

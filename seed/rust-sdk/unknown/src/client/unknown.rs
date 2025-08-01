@@ -17,6 +17,7 @@ impl UnknownClient {
             Method::POST,
             "",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -26,6 +27,7 @@ impl UnknownClient {
             Method::POST,
             "/with-object",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }

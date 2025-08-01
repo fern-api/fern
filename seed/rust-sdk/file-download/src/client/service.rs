@@ -16,6 +16,7 @@ impl ServiceClient {
             Method::POST,
             "/snippet",
             None,
+            None,
             options,
         ).await
     }
@@ -24,6 +25,7 @@ impl ServiceClient {
         self.http_client.execute_request(
             Method::POST,
             "",
+            None,
             None,
             options,
         ).await

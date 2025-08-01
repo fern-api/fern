@@ -16,6 +16,7 @@ impl ServiceClient {
             Method::POST,
             "text",
             None,
+            None,
             options,
         ).await
     }

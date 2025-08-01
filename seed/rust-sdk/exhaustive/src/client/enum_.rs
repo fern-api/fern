@@ -4,12 +4,13 @@ use crate::{types::*};
 
 pub struct EnumClient {
     pub http_client: HttpClient,
+    pub token: Option<String>,
 }
 
 impl EnumClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig, token: Option<String>) -> Result<Self, ClientError> {
         let http_client = HttpClient::new(config)?;
-        Ok(Self { http_client })
+        Ok(Self { http_client, token })
     }
 
     pub async fn get_and_return_enum(&self, request: &WeatherReport, options: Option<RequestOptions>) -> Result<WeatherReport, ClientError> {
@@ -17,6 +18,7 @@ impl EnumClient {
             Method::POST,
             "/enum",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }

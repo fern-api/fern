@@ -4,12 +4,13 @@ use crate::{types::*};
 
 pub struct UsersClient {
     pub http_client: HttpClient,
+    pub token: Option<String>,
 }
 
 impl UsersClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig, token: Option<String>) -> Result<Self, ClientError> {
         let http_client = HttpClient::new(config)?;
-        Ok(Self { http_client })
+        Ok(Self { http_client, token })
     }
 
     pub async fn list_usernames_custom(&self, starting_after: Option<&Option<String>>, options: Option<RequestOptions>) -> Result<UsernameCursor, ClientError> {
@@ -17,6 +18,13 @@ impl UsersClient {
             Method::GET,
             "/users",
             None,
+            {
+            let mut query_params = Vec::new();
+            if let Some(value) = starting_after {
+                query_params.push(("starting_after".to_string(), value.to_string()));
+            }
+            Some(query_params)
+        },
             options,
         ).await
     }

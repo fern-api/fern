@@ -4,18 +4,20 @@ use crate::{types::*};
 
 pub struct NoReqBodyClient {
     pub http_client: HttpClient,
+    pub token: Option<String>,
 }
 
 impl NoReqBodyClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig, token: Option<String>) -> Result<Self, ClientError> {
         let http_client = HttpClient::new(config)?;
-        Ok(Self { http_client })
+        Ok(Self { http_client, token })
     }
 
     pub async fn get_with_no_request_body(&self, options: Option<RequestOptions>) -> Result<ObjectWithOptionalField, ClientError> {
         self.http_client.execute_request(
             Method::GET,
             "/no-req-body",
+            None,
             None,
             options,
         ).await
@@ -25,6 +27,7 @@ impl NoReqBodyClient {
         self.http_client.execute_request(
             Method::POST,
             "/no-req-body",
+            None,
             None,
             options,
         ).await

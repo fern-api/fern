@@ -17,6 +17,7 @@ impl ServiceClient {
             Method::GET,
             &format!("/resource/{}", resource_id),
             None,
+            None,
             options,
         ).await
     }
@@ -26,6 +27,16 @@ impl ServiceClient {
             Method::GET,
             "/resource",
             None,
+            {
+            let mut query_params = Vec::new();
+            if let Some(value) = page_limit {
+                query_params.push(("page_limit".to_string(), value.to_string()));
+            }
+            if let Some(value) = before_date {
+                query_params.push(("beforeDate".to_string(), value.to_string()));
+            }
+            Some(query_params)
+        },
             options,
         ).await
     }

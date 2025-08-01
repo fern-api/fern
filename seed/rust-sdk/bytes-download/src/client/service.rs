@@ -16,6 +16,7 @@ impl ServiceClient {
             Method::GET,
             &format!("download-content/{}", id),
             None,
+            None,
             options,
         ).await
     }
