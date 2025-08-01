@@ -3,5 +3,4 @@
 # isort: skip_file
 
 from .object_with_docs import ObjectWithDocs
-
 __all__ = ["ObjectWithDocs"]
