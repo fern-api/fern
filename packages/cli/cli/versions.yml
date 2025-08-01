@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Cache buf.lock contents to prevent BSR rate limiting during `buf dep update`.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-08-01"
+  version: 0.65.43
+  
+- changelogEntry:
+    - summary: |
         Allows SDK generation to complete even if an example doesn't correctly generate as part of the IR. 
       type: fix
   irVersion: 58
