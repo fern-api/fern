@@ -1,4 +1,4 @@
-import { assertDefined, assertNever } from "@fern-api/core-utils";
+import { assertDefined, assertNever, noop } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
@@ -87,7 +87,7 @@ export class DiscriminatedUnionGenerator {
                     }))
                 );
             } else if (singleUnionType.shape.propertiesType === "noProperties") {
-                // TODO: Implement
+                noop();
             } else {
                 assertNever(singleUnionType.shape);
             }
@@ -102,8 +102,7 @@ export class DiscriminatedUnionGenerator {
     }
 
     private getPropertiesOfVariant(typeId: TypeId): ObjectProperty[] {
-        const typeDeclaration = this.context.getTypeById(typeId);
-        assertDefined(typeDeclaration, `Type declaration not found for type id: ${typeId}`);
+        const typeDeclaration = this.context.getTypeDeclarationOrThrow(typeId);
         return typeDeclaration.shape._visit({
             alias: () => [],
             enum: () => [],
