@@ -218,13 +218,7 @@ export class ProtobufIRGenerator {
         await chmod(shellProxyPath, 0o755);
     }
 
-    private async doGenerateLocal({
-        cwd,
-        deps
-    }: {
-        cwd: AbsoluteFilePath;
-        deps: string[];
-    }): Promise<AbsoluteFilePath> {
+    private async doGenerateLocal({ cwd, deps }: { cwd: AbsoluteFilePath; deps: string[] }): Promise<AbsoluteFilePath> {
         const which = createLoggingExecutable("which", {
             cwd,
             logger: undefined,
