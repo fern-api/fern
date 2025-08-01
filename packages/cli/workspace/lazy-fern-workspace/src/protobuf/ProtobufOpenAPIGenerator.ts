@@ -122,6 +122,7 @@ export class ProtobufOpenAPIGenerator {
         }
 
         const bufYamlPath = join(cwd, RelativeFilePath.of("buf.yaml"));
+        const bufLockPath = join(cwd, RelativeFilePath.of("buf.lock"));
 
         const configContent = getProtobufYamlV1(deps);
 
@@ -135,7 +136,6 @@ export class ProtobufOpenAPIGenerator {
         try {
             await writeFile(bufYamlPath, configContent);
 
-            const bufLockPath = join(cwd, RelativeFilePath.of("buf.lock"));
             if (existingBufLockContents != null) {
                 await writeFile(bufLockPath, existingBufLockContents);
             } else if (deps.length > 0) {
@@ -154,8 +154,10 @@ export class ProtobufOpenAPIGenerator {
             if (bufGenerateResult.exitCode !== 0) {
                 this.context.failAndThrow(bufGenerateResult.stderr);
             }
+            await unlink(bufLockPath);
             await unlink(bufYamlPath);
         } catch (error) {
+            await unlink(bufLockPath);
             await unlink(bufYamlPath);
             throw error;
         }

@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Cache buf.lock contents to prevent BSR rate limiting during `buf dep update`.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-08-01"
+  version: 0.65.42
+
+- changelogEntry:
+    - summary: |
         Add support for proxying IR generation from proto through protoc-gen-openapi.
       type: feat
   irVersion: 58
