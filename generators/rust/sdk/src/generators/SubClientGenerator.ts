@@ -123,7 +123,7 @@ export class SubClientGenerator {
         const httpMethod = this.getHttpMethod(endpoint);
         const pathExpression = this.getPathExpression(endpoint);
         const requestBody = this.getRequestBody(endpoint, params);
-        const optionsExpression = this.buildRequestOptions(endpoint, params);
+        // Remove this line as we're now handling query params separately
 
         const returnType = rust.Type.result(
             this.getReturnType(endpoint),
@@ -139,7 +139,8 @@ export class SubClientGenerator {
             Method::${httpMethod},
             ${pathExpression},
             ${requestBody},
-            ${optionsExpression},
+            ${this.buildQueryParameters(endpoint)},
+            ${this.hasQueryParameters(endpoint) ? "options" : "options"},
         ).await`
         };
     }
@@ -352,26 +353,35 @@ export class SubClientGenerator {
         return "None";
     }
 
-    private buildRequestOptions(endpoint: HttpEndpoint, params: EndpointParameter[]): string {
+    private buildQueryParameters(endpoint: HttpEndpoint): string {
         const queryParams = endpoint.queryParameters;
         if (queryParams.length === 0) {
-            return "options";
+            return "None";
         }
 
-        // Generate code to build RequestOptions with query parameters
+        // Generate code to build Vec<(String, String)> with query parameters
         const queryParamStatements = queryParams.map((queryParam) => {
             const paramName = queryParam.name.name.snakeCase.safeName;
             const wireValue = queryParam.name.wireValue;
             return `if let Some(value) = ${paramName} {
-                request_options.query_parameters.insert("${wireValue}".to_string(), value.to_string());
+                query_params.push(("${wireValue}".to_string(), ${this.getQueryParameterConversion(queryParam, paramName)}));
             }`;
         });
 
         return `{
-            let mut request_options = options.unwrap_or_default();
+            let mut query_params = Vec::new();
             ${queryParamStatements.join("\n            ")}
-            Some(request_options)
+            Some(query_params)
         }`;
+    }
+
+    private hasQueryParameters(endpoint: HttpEndpoint): boolean {
+        return endpoint.queryParameters.length > 0;
+    }
+
+    private getQueryParameterConversion(queryParam: any, paramName: string): string {
+        // Handle different types of query parameters
+        return "value.to_string()";
     }
 
     private getQueryParameterValue(queryParam: any, paramName: string): string {
