@@ -3,7 +3,8 @@ import { assertNever } from "@fern-api/core-utils";
 import { AstNode, Writer } from "./core";
 import { DeclarationType } from "./DeclarationType";
 import { Expression } from "./Expression";
-import { escapeReservedKeyword } from "./syntax/reserved-keywords";
+import { Pattern } from "./Pattern";
+import { escapeReservedKeyword } from "./syntax";
 
 type ConstantDeclaration = {
     type: "constant-declaration";
@@ -58,7 +59,7 @@ type Switch = {
     type: "switch";
     target: Expression;
     cases: {
-        pattern: Expression;
+        pattern: Expression | Pattern;
         body: Statement[];
     }[];
     defaultCase?: Statement[];
