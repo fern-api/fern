@@ -39,6 +39,11 @@ type Return = {
     expression: Expression;
 };
 
+type Throw = {
+    type: "throw";
+    expression: Expression;
+};
+
 type ExpressionStatement = {
     type: "expression-statement";
     expression: Expression;
@@ -66,6 +71,7 @@ type InternalStatement =
     | SelfAssignment
     | PropertyAssignment
     | Return
+    | Throw
     | ExpressionStatement
     | ImportStatement
     | Switch;
@@ -116,6 +122,11 @@ export class Statement extends AstNode {
                 break;
             case "return":
                 writer.write("return ");
+                this.internalStatement.expression.write(writer);
+                writer.newLine();
+                break;
+            case "throw":
+                writer.write("throw ");
                 this.internalStatement.expression.write(writer);
                 writer.newLine();
                 break;
@@ -186,6 +197,10 @@ export class Statement extends AstNode {
 
     public static return(expression: Expression): Statement {
         return new this({ type: "return", expression });
+    }
+
+    public static throw(expression: Expression): Statement {
+        return new this({ type: "throw", expression });
     }
 
     public static expressionStatement(expression: Expression): Statement {
