@@ -20,6 +20,7 @@ export async function createSampleGeneratorContext(testDefinitionName: string): 
         type: "local",
         _visit: (visitor) => visitor.local()
     });
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     return new ModelGeneratorContext(ir as any, generatorConfig, customConfig, notificationService);
 }
 
