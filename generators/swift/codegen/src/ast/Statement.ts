@@ -23,6 +23,11 @@ type VariableAssignment = {
     value: Expression;
 };
 
+type SelfAssignment = {
+    type: "self-assignment";
+    value: Expression;
+};
+
 type PropertyAssignment = {
     type: "property-assignment";
     unsafeName: string;
@@ -58,6 +63,7 @@ type InternalStatement =
     | ConstantDeclaration
     | VariableDeclaration
     | VariableAssignment
+    | SelfAssignment
     | PropertyAssignment
     | Return
     | ExpressionStatement
@@ -94,6 +100,11 @@ export class Statement extends AstNode {
                 writer.write(escapeReservedKeyword(this.internalStatement.unsafeName));
                 writer.write(" = ");
                 this.internalStatement.value.write(writer);
+                writer.newLine();
+                break;
+            case "self-assignment":
+                writer.write("self = ");
+                writer.write(this.internalStatement.value.toString());
                 writer.newLine();
                 break;
             case "property-assignment":
@@ -163,6 +174,10 @@ export class Statement extends AstNode {
 
     public static variableAssignment(unsafeName: string, value: Expression): Statement {
         return new this({ type: "variable-assignment", unsafeName, value });
+    }
+
+    public static selfAssignment(value: Expression): Statement {
+        return new this({ type: "self-assignment", value });
     }
 
     public static propertyAssignment(unsafeName: string, value: Expression): Statement {
