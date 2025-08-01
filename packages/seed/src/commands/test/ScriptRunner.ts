@@ -1,3 +1,4 @@
+import { execSync } from "child_process";
 import { writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 
@@ -86,7 +87,7 @@ export class ScriptRunner {
         containerId: string;
         script: DockerScriptConfig;
     }): Promise<ScriptRunner.RunResponse> {
-        taskContext.logger.info(`Running script ${script.commands[0] ?? ""} on ${id}`);
+        // taskContext.logger.info(`Running script ${script.commands[0] ?? ""} on ${id}`);
 
         const workDir = id.replace(":", "_");
         const scriptFile = await tmp.file();
@@ -145,7 +146,7 @@ export class ScriptRunner {
             "docker",
             ["exec", containerId, "/bin/sh", "-c", `chmod +x /${workDir}/test.sh && /${workDir}/test.sh`],
             {
-                doNotPipeOutput: true,
+                // doNotPipeOutput: true,
                 reject: false
             }
         );
@@ -168,6 +169,9 @@ export class ScriptRunner {
     private async startContainers(context: TaskContext): Promise<void> {
         const absoluteFilePathToFernCli = await this.buildFernCli(context);
         const cliVolumeBind = `${absoluteFilePathToFernCli}:/fern`;
+        const poetryCacheDir = execSync("poetry config cache-dir 2>/dev/null || echo $HOME/.cache/pypoetry", {
+            encoding: "utf8"
+        }).trim();
         // Start running a docker container for each script instance
         for (const script of this.workspace.workspaceConfig.scripts ?? []) {
             const startSeedCommand = await loggingExeca(undefined, "docker", [
@@ -175,6 +179,8 @@ export class ScriptRunner {
                 "-dit",
                 "-v",
                 cliVolumeBind,
+                "-v",
+                `${poetryCacheDir}:/root/.cache/pypoetry`,
                 script.docker,
                 "/bin/sh"
             ]);
