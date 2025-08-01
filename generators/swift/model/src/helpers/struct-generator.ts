@@ -76,7 +76,7 @@ export class StructGenerator {
             conformances: [swift.Protocol.Codable, swift.Protocol.Hashable, swift.Protocol.Sendable],
             properties,
             initializers: this.generateInitializers(dataProperties),
-            methods: this.generateMethods(dataProperties),
+            methods: this.generateMethods(constantProperties, dataProperties),
             nestedTypes: this.generateNestedTypes(dataProperties)
         });
     }
@@ -237,15 +237,15 @@ export class StructGenerator {
         });
     }
 
-    private generateMethods(dataProperties: swift.Property[]) {
+    private generateMethods(constantProperties: swift.Property[], dataProperties: swift.Property[]) {
         const methods: swift.Method[] = [];
         if (this.additionalPropertiesInfo) {
-            methods.push(this.generateEncodeMethod(dataProperties));
+            methods.push(this.generateEncodeMethod(constantProperties, dataProperties));
         }
         return methods;
     }
 
-    private generateEncodeMethod(dataProperties: swift.Property[]) {
+    private generateEncodeMethod(constantProperties: swift.Property[], dataProperties: swift.Property[]) {
         const bodyStatements: swift.Statement[] = [];
 
         if (dataProperties.length > 0) {
@@ -287,7 +287,7 @@ export class StructGenerator {
             );
         }
 
-        dataProperties.forEach((p) => {
+        [...constantProperties, ...dataProperties].forEach((p) => {
             bodyStatements.push(
                 swift.Statement.expressionStatement(
                     swift.Expression.try(
