@@ -89,6 +89,7 @@ export async function generateWorkspace({
             projectConfig,
             workspace,
             generatorGroup: group,
+            version,
             keepDocker,
             context,
             runner

@@ -25,6 +25,7 @@ export async function runLocalGenerationForWorkspace({
     projectConfig,
     workspace,
     generatorGroup,
+    version,
     keepDocker,
     context,
     runner
@@ -33,6 +34,7 @@ export async function runLocalGenerationForWorkspace({
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: AbstractAPIWorkspace<unknown>;
     generatorGroup: generatorsYml.GeneratorGroup;
+    version: string | undefined;
     keepDocker: boolean;
     context: TaskContext;
     runner: ContainerRunner | undefined;
@@ -63,7 +65,7 @@ export async function runLocalGenerationForWorkspace({
                         disabled: generatorInvocation.disableExamples
                     },
                     readme: generatorInvocation.readme,
-                    version: undefined,
+                    version: version,
                     packageName: generatorsYml.getPackageName({ generatorInvocation }),
                     context,
                     sourceResolver: new SourceResolverImpl(context, fernWorkspace)
@@ -129,6 +131,7 @@ export async function runLocalGenerationForWorkspace({
                     absolutePathToLocalOutput,
                     absolutePathToLocalSnippetJSON,
                     absolutePathToLocalSnippetTemplateJSON: undefined,
+                    version,
                     audiences: generatorGroup.audiences,
                     workspaceTempDir,
                     keepDocker,
