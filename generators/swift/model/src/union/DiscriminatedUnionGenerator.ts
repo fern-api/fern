@@ -288,7 +288,7 @@ export class DiscriminatedUnionGenerator {
         return typeDeclaration.shape._visit({
             alias: () => [],
             enum: () => [],
-            object: (otd) => otd.properties,
+            object: (otd) => [...(otd.extendedProperties ?? []), ...otd.properties],
             union: () => [],
             undiscriminatedUnion: () => [],
             _other: () => []
