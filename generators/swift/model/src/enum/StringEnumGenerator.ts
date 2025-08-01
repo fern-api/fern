@@ -5,31 +5,35 @@ import { swift } from "@fern-api/swift-codegen";
 import { EnumTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 export class StringEnumGenerator {
+    private readonly name: string;
+    private readonly directory: RelativeFilePath;
     private readonly typeDeclaration: TypeDeclaration;
     private readonly enumTypeDeclaration: EnumTypeDeclaration;
 
-    public constructor(typeDeclaration: TypeDeclaration, enumTypeDeclaration: EnumTypeDeclaration) {
+    public constructor(
+        name: string,
+        directory: RelativeFilePath,
+        typeDeclaration: TypeDeclaration,
+        enumTypeDeclaration: EnumTypeDeclaration
+    ) {
+        this.name = name;
+        this.directory = directory;
         this.typeDeclaration = typeDeclaration;
         this.enumTypeDeclaration = enumTypeDeclaration;
+    }
+
+    private get filename(): string {
+        return this.name + ".swift";
     }
 
     public generate(): SwiftFile {
         const swiftEnum = this.generateEnumForTypeDeclaration();
         const fileContents = swiftEnum.toString();
         return new SwiftFile({
-            filename: this.getFilename(),
-            directory: this.getFileDirectory(),
+            filename: this.filename,
+            directory: this.directory,
             fileContents
         });
-    }
-
-    private getFilename(): string {
-        // TODO(kafkas): File names need to be unique across the generated output so we'll need to validate this
-        return this.typeDeclaration.name.name.pascalCase.unsafeName + ".swift";
-    }
-
-    private getFileDirectory(): RelativeFilePath {
-        return RelativeFilePath.of("Schemas");
     }
 
     private generateEnumForTypeDeclaration(): swift.EnumWithRawValues {

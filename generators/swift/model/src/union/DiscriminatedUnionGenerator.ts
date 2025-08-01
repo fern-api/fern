@@ -1,4 +1,4 @@
-import { assertDefined, assertNever, noop } from "@fern-api/core-utils";
+import { assertNever, noop } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
@@ -10,28 +10,31 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 export class DiscriminatedUnionGenerator {
     private readonly name: string;
+    private readonly directory: RelativeFilePath;
     private readonly unionTypeDeclaration: UnionTypeDeclaration;
     private readonly context: ModelGeneratorContext;
 
-    public constructor(name: string, unionTypeDeclaration: UnionTypeDeclaration, context: ModelGeneratorContext) {
+    public constructor(
+        name: string,
+        directory: RelativeFilePath,
+        unionTypeDeclaration: UnionTypeDeclaration,
+        context: ModelGeneratorContext
+    ) {
         this.name = name;
+        this.directory = directory;
         this.unionTypeDeclaration = unionTypeDeclaration;
         this.context = context;
     }
 
-    private getFileDirectory(): RelativeFilePath {
-        return RelativeFilePath.of("Schemas");
-    }
-
-    private getFilename(): string {
+    private get filename(): string {
         return this.name + ".swift";
     }
 
     public generate(): SwiftFile {
         const swiftEnum = this.generateEnumForTypeDeclaration();
         return new SwiftFile({
-            filename: this.getFilename(),
-            directory: this.getFileDirectory(),
+            filename: this.filename,
+            directory: this.directory,
             fileContents: [swiftEnum]
         });
     }

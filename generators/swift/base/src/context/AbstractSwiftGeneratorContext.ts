@@ -35,6 +35,38 @@ export abstract class AbstractSwiftGeneratorContext<
         });
     }
 
+    public get packageName(): string {
+        return this.ir.apiName.pascalCase.unsafeName;
+    }
+
+    public get libraryName(): string {
+        return this.ir.apiName.pascalCase.unsafeName;
+    }
+
+    public get targetName(): string {
+        return `${this.ir.apiName.pascalCase.unsafeName}Target`;
+    }
+
+    public get rootClientName(): string {
+        return `${this.ir.apiName.pascalCase.unsafeName}Client`;
+    }
+
+    public get environmentEnumName(): string {
+        return `${this.ir.apiName.pascalCase.unsafeName}Environment`;
+    }
+
+    public get schemasDirectory(): RelativeFilePath {
+        return RelativeFilePath.of("Schemas");
+    }
+
+    public get requestsDirectory(): RelativeFilePath {
+        return RelativeFilePath.of("Requests");
+    }
+
+    public getSubClientName(subpackage: Subpackage): string {
+        return `${subpackage.name.pascalCase.unsafeName}Client`;
+    }
+
     public getTypeDeclarationOrThrow(typeId: TypeId): TypeDeclaration {
         const typeDeclaration = this.ir.types[typeId];
         assertDefined(typeDeclaration, `Type declaration with the id '${typeId}' not found`);
