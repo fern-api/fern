@@ -196,7 +196,7 @@ types:
       from-openapi:
         type: optional<boolean>
         docs: Whether to convert to OpenAPI before generating
-      deps:
+      dependencies:
         type: optional<list<string>>
         docs: Dependencies to use for generation.
 

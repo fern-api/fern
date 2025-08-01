@@ -14,5 +14,5 @@ export interface ProtobufDefinitionSchema {
     /** Whether to convert to OpenAPI before generating */
     "from-openapi"?: boolean;
     /** Dependencies to use for generation. */
-    deps?: string[];
+    dependencies?: string[];
 }

@@ -159,7 +159,7 @@ async function parseAPIConfigurationToApiLocations(
                     target: apiConfiguration.proto.target ?? "",
                     localGeneration: apiConfiguration.proto["local-generation"] ?? false,
                     fromOpenAPI: apiConfiguration.proto["from-openapi"] ?? false,
-                    deps: apiConfiguration.proto.deps ?? []
+                    dependencies: apiConfiguration.proto.dependencies ?? []
                 },
                 origin: undefined,
                 overrides: apiConfiguration.proto.overrides,
@@ -187,7 +187,7 @@ async function parseAPIConfigurationToApiLocations(
                             target: definition.proto.target ?? "",
                             localGeneration: definition.proto["local-generation"] ?? false,
                             fromOpenAPI: definition.proto["from-openapi"] ?? false,
-                            deps: definition.proto.deps ?? []
+                            dependencies: definition.proto.dependencies ?? []
                         },
                         origin: undefined,
                         overrides: definition.proto.overrides,
@@ -340,7 +340,7 @@ async function parseApiConfigurationV2Schema({
                     target: spec.proto.target ?? "",
                     localGeneration: spec.proto["local-generation"] ?? false,
                     fromOpenAPI: spec.proto["from-openapi"] ?? false,
-                    deps: spec.proto.deps ?? []
+                    dependencies: spec.proto.dependencies ?? []
                 },
                 origin: undefined,
                 overrides: spec.proto.overrides,

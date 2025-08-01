@@ -72,7 +72,7 @@ export async function loadSingleNamespaceAPIWorkspace({
                 absoluteFilepathToProtobufTarget: absoluteFilepathToTarget,
                 absoluteFilepathToOverrides,
                 relativeFilepathToProtobufRoot,
-                dependencies: definition.schema.deps,
+                dependencies: definition.schema.dependencies,
                 generateLocally: definition.schema.localGeneration,
                 fromOpenAPI: definition.schema.fromOpenAPI,
                 settings: {
