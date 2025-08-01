@@ -1,13 +1,12 @@
-import { assertDefined } from "@fern-api/core-utils";
+import { assertDefined, assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
-import { TypeId, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { ObjectProperty, TypeId, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { getSwiftTypeForTypeReference } from "../converters";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { ObjectGenerator } from "../object";
 import { StructGenerator } from "../helpers";
+import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 export class DiscriminatedUnionGenerator {
     private readonly name: string;
@@ -70,23 +69,27 @@ export class DiscriminatedUnionGenerator {
                 });
                 dataPropertyDefinitions.push({
                     unsafeName: singleUnionType.shape.name.name.camelCase.unsafeName,
-                    nameWireValue: singleUnionType.shape.name.wireValue,
+                    rawName: singleUnionType.shape.name.wireValue,
                     type: swiftType
                 });
             } else if (singleUnionType.shape.propertiesType === "samePropertiesAsObject") {
-                const struct = this.getStructForVariantType(singleUnionType.shape.typeId);
+                const variantProperties = this.getPropertiesOfVariant(singleUnionType.shape.typeId);
                 constantPropertyDefinitions.push({
                     unsafeName: this.unionTypeDeclaration.discriminant.name.camelCase.unsafeName,
                     type: swift.Type.string(),
                     value: swift.Expression.rawStringValue(singleUnionType.discriminantValue.wireValue)
                 });
                 dataPropertyDefinitions.push(
-                    ...struct.properties.map((p) => ({
-                        unsafeName: p.unsafeName,
-                        nameWireValue: "placeholder", // TODO: Implement
-                        type: p.type
+                    ...variantProperties.map((p) => ({
+                        unsafeName: p.name.name.camelCase.unsafeName,
+                        rawName: p.name.wireValue,
+                        type: getSwiftTypeForTypeReference(p.valueType)
                     }))
                 );
+            } else if (singleUnionType.shape.propertiesType === "noProperties") {
+                // TODO: Implement
+            } else {
+                assertNever(singleUnionType.shape);
             }
 
             return new StructGenerator({
@@ -98,24 +101,16 @@ export class DiscriminatedUnionGenerator {
         });
     }
 
-    private getStructForVariantType(typeId: TypeId): swift.Struct {
+    private getPropertiesOfVariant(typeId: TypeId): ObjectProperty[] {
         const typeDeclaration = this.context.getTypeById(typeId);
         assertDefined(typeDeclaration, `Type declaration not found for type id: ${typeId}`);
-        const struct = typeDeclaration.shape._visit({
-            alias: () => undefined,
-            enum: () => undefined,
-            object: (otd) =>
-                new ObjectGenerator(
-                    typeDeclaration.name.name.pascalCase.unsafeName,
-                    "schema",
-                    otd.properties,
-                    otd.extendedProperties
-                ).generateStructForTypeDeclaration(),
-            union: () => undefined,
-            undiscriminatedUnion: () => undefined,
-            _other: () => undefined
+        return typeDeclaration.shape._visit({
+            alias: () => [],
+            enum: () => [],
+            object: (otd) => otd.properties,
+            union: () => [],
+            undiscriminatedUnion: () => [],
+            _other: () => []
         });
-        assertDefined(struct, `Unexpected type declaration for union variant type: ${typeId}`);
-        return struct;
     }
 }

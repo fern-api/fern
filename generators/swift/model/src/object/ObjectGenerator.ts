@@ -58,7 +58,7 @@ export class ObjectGenerator {
             constantPropertyDefinitions: [],
             dataPropertyDefinitions: this.properties.map((p) => ({
                 unsafeName: p.name.name.camelCase.unsafeName,
-                nameWireValue: p.name.wireValue,
+                rawName: p.name.wireValue,
                 type: getSwiftTypeForTypeReference(p.valueType)
             })),
             additionalProperties: true

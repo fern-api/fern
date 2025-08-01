@@ -89,20 +89,17 @@ public enum WorkspaceSubmissionStatus: Codable, Hashable, Sendable {
         public let exception: ExceptionInfo?
         public let stdout: String
         public let additionalProperties: [String: JSONValue]
-        public let _additionalProperties: [String: JSONValue]
 
         public init(
             exceptionV2: ExceptionV2? = nil,
             exception: ExceptionInfo? = nil,
             stdout: String,
-            additionalProperties: [String: JSONValue],
-            _additionalProperties: [String: JSONValue] = .init()
+            additionalProperties: [String: JSONValue] = .init()
         ) {
             self.exceptionV2 = exceptionV2
             self.exception = exception
             self.stdout = stdout
             self.additionalProperties = additionalProperties
-            self._additionalProperties = _additionalProperties
         }
 
         public init(from decoder: Decoder) throws {
@@ -110,24 +107,21 @@ public enum WorkspaceSubmissionStatus: Codable, Hashable, Sendable {
             self.exceptionV2 = try container.decodeIfPresent(ExceptionV2.self, forKey: .exceptionV2)
             self.exception = try container.decodeIfPresent(ExceptionInfo.self, forKey: .exception)
             self.stdout = try container.decode(String.self, forKey: .stdout)
-            self.additionalProperties = try container.decode([String: JSONValue].self, forKey: .additionalProperties)
-            self._additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
+            self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
-            try encoder.encodeAdditionalProperties(self._additionalProperties)
+            try encoder.encodeAdditionalProperties(self.additionalProperties)
             try container.encodeIfPresent(self.exceptionV2, forKey: .exceptionV2)
             try container.encodeIfPresent(self.exception, forKey: .exception)
             try container.encode(self.stdout, forKey: .stdout)
-            try container.encode(self.additionalProperties, forKey: .additionalProperties)
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
-            case exceptionV2 = "placeholder"
-            case exception = "placeholder"
-            case stdout = "placeholder"
-            case additionalProperties = "placeholder"
+            case exceptionV2
+            case exception
+            case stdout
         }
     }
 
@@ -137,20 +131,17 @@ public enum WorkspaceSubmissionStatus: Codable, Hashable, Sendable {
         public let exception: ExceptionInfo?
         public let stdout: String
         public let additionalProperties: [String: JSONValue]
-        public let _additionalProperties: [String: JSONValue]
 
         public init(
             exceptionV2: ExceptionV2? = nil,
             exception: ExceptionInfo? = nil,
             stdout: String,
-            additionalProperties: [String: JSONValue],
-            _additionalProperties: [String: JSONValue] = .init()
+            additionalProperties: [String: JSONValue] = .init()
         ) {
             self.exceptionV2 = exceptionV2
             self.exception = exception
             self.stdout = stdout
             self.additionalProperties = additionalProperties
-            self._additionalProperties = _additionalProperties
         }
 
         public init(from decoder: Decoder) throws {
@@ -158,24 +149,21 @@ public enum WorkspaceSubmissionStatus: Codable, Hashable, Sendable {
             self.exceptionV2 = try container.decodeIfPresent(ExceptionV2.self, forKey: .exceptionV2)
             self.exception = try container.decodeIfPresent(ExceptionInfo.self, forKey: .exception)
             self.stdout = try container.decode(String.self, forKey: .stdout)
-            self.additionalProperties = try container.decode([String: JSONValue].self, forKey: .additionalProperties)
-            self._additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
+            self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
-            try encoder.encodeAdditionalProperties(self._additionalProperties)
+            try encoder.encodeAdditionalProperties(self.additionalProperties)
             try container.encodeIfPresent(self.exceptionV2, forKey: .exceptionV2)
             try container.encodeIfPresent(self.exception, forKey: .exception)
             try container.encode(self.stdout, forKey: .stdout)
-            try container.encode(self.additionalProperties, forKey: .additionalProperties)
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
-            case exceptionV2 = "placeholder"
-            case exception = "placeholder"
-            case stdout = "placeholder"
-            case additionalProperties = "placeholder"
+            case exceptionV2
+            case exception
+            case stdout
         }
     }
 }

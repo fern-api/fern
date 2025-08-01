@@ -9,7 +9,7 @@ export declare namespace StructGenerator {
 
     interface DataPropertyDefinition {
         unsafeName: string;
-        nameWireValue: string;
+        rawName: string;
         type: swift.Type;
     }
 
@@ -342,7 +342,7 @@ export class StructGenerator {
             cases: this.dataPropertyDefinitions.map((property) => {
                 return {
                     unsafeName: property.unsafeName,
-                    rawValue: property.nameWireValue
+                    rawValue: property.rawName
                 };
             })
         });

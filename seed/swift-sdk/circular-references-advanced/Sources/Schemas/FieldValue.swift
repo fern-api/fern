@@ -36,30 +36,19 @@ public enum FieldValue: Codable, Hashable, Sendable {
     public struct ObjectValue: Codable, Hashable, Sendable {
         public let type: String = "object_value"
         public let additionalProperties: [String: JSONValue]
-        public let _additionalProperties: [String: JSONValue]
 
         public init(
-            additionalProperties: [String: JSONValue],
-            _additionalProperties: [String: JSONValue] = .init()
+            additionalProperties: [String: JSONValue] = .init()
         ) {
             self.additionalProperties = additionalProperties
-            self._additionalProperties = _additionalProperties
         }
 
         public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.additionalProperties = try container.decode([String: JSONValue].self, forKey: .additionalProperties)
-            self._additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
+            self.additionalProperties = try decoder.decodeAdditionalProperties(knownKeys: [])
         }
 
         public func encode(to encoder: Encoder) throws -> Void {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            try encoder.encodeAdditionalProperties(self._additionalProperties)
-            try container.encode(self.additionalProperties, forKey: .additionalProperties)
-        }
-
-        enum CodingKeys: String, CodingKey, CaseIterable {
-            case additionalProperties = "placeholder"
+            try encoder.encodeAdditionalProperties(self.additionalProperties)
         }
     }
 

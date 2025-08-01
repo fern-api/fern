@@ -165,35 +165,29 @@ public enum VariableValue: Codable, Hashable, Sendable {
         public let type: String = "mapValue"
         public let keyValuePairs: [KeyValuePair]
         public let additionalProperties: [String: JSONValue]
-        public let _additionalProperties: [String: JSONValue]
 
         public init(
             keyValuePairs: [KeyValuePair],
-            additionalProperties: [String: JSONValue],
-            _additionalProperties: [String: JSONValue] = .init()
+            additionalProperties: [String: JSONValue] = .init()
         ) {
             self.keyValuePairs = keyValuePairs
             self.additionalProperties = additionalProperties
-            self._additionalProperties = _additionalProperties
         }
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.keyValuePairs = try container.decode([KeyValuePair].self, forKey: .keyValuePairs)
-            self.additionalProperties = try container.decode([String: JSONValue].self, forKey: .additionalProperties)
-            self._additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
+            self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
-            try encoder.encodeAdditionalProperties(self._additionalProperties)
+            try encoder.encodeAdditionalProperties(self.additionalProperties)
             try container.encode(self.keyValuePairs, forKey: .keyValuePairs)
-            try container.encode(self.additionalProperties, forKey: .additionalProperties)
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
-            case keyValuePairs = "placeholder"
-            case additionalProperties = "placeholder"
+            case keyValuePairs
         }
     }
 
@@ -232,40 +226,34 @@ public enum VariableValue: Codable, Hashable, Sendable {
         public let root: NodeId?
         public let nodes: [NodeId: BinaryTreeNodeValue]
         public let additionalProperties: [String: JSONValue]
-        public let _additionalProperties: [String: JSONValue]
 
         public init(
             root: NodeId? = nil,
             nodes: [NodeId: BinaryTreeNodeValue],
-            additionalProperties: [String: JSONValue],
-            _additionalProperties: [String: JSONValue] = .init()
+            additionalProperties: [String: JSONValue] = .init()
         ) {
             self.root = root
             self.nodes = nodes
             self.additionalProperties = additionalProperties
-            self._additionalProperties = _additionalProperties
         }
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.root = try container.decodeIfPresent(NodeId.self, forKey: .root)
             self.nodes = try container.decode([NodeId: BinaryTreeNodeValue].self, forKey: .nodes)
-            self.additionalProperties = try container.decode([String: JSONValue].self, forKey: .additionalProperties)
-            self._additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
+            self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
-            try encoder.encodeAdditionalProperties(self._additionalProperties)
+            try encoder.encodeAdditionalProperties(self.additionalProperties)
             try container.encodeIfPresent(self.root, forKey: .root)
             try container.encode(self.nodes, forKey: .nodes)
-            try container.encode(self.additionalProperties, forKey: .additionalProperties)
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
-            case root = "placeholder"
-            case nodes = "placeholder"
-            case additionalProperties = "placeholder"
+            case root
+            case nodes
         }
     }
 
@@ -274,40 +262,34 @@ public enum VariableValue: Codable, Hashable, Sendable {
         public let head: NodeId?
         public let nodes: [NodeId: SinglyLinkedListNodeValue]
         public let additionalProperties: [String: JSONValue]
-        public let _additionalProperties: [String: JSONValue]
 
         public init(
             head: NodeId? = nil,
             nodes: [NodeId: SinglyLinkedListNodeValue],
-            additionalProperties: [String: JSONValue],
-            _additionalProperties: [String: JSONValue] = .init()
+            additionalProperties: [String: JSONValue] = .init()
         ) {
             self.head = head
             self.nodes = nodes
             self.additionalProperties = additionalProperties
-            self._additionalProperties = _additionalProperties
         }
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.head = try container.decodeIfPresent(NodeId.self, forKey: .head)
             self.nodes = try container.decode([NodeId: SinglyLinkedListNodeValue].self, forKey: .nodes)
-            self.additionalProperties = try container.decode([String: JSONValue].self, forKey: .additionalProperties)
-            self._additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
+            self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
-            try encoder.encodeAdditionalProperties(self._additionalProperties)
+            try encoder.encodeAdditionalProperties(self.additionalProperties)
             try container.encodeIfPresent(self.head, forKey: .head)
             try container.encode(self.nodes, forKey: .nodes)
-            try container.encode(self.additionalProperties, forKey: .additionalProperties)
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
-            case head = "placeholder"
-            case nodes = "placeholder"
-            case additionalProperties = "placeholder"
+            case head
+            case nodes
         }
     }
 
@@ -316,40 +298,34 @@ public enum VariableValue: Codable, Hashable, Sendable {
         public let head: NodeId?
         public let nodes: [NodeId: DoublyLinkedListNodeValue]
         public let additionalProperties: [String: JSONValue]
-        public let _additionalProperties: [String: JSONValue]
 
         public init(
             head: NodeId? = nil,
             nodes: [NodeId: DoublyLinkedListNodeValue],
-            additionalProperties: [String: JSONValue],
-            _additionalProperties: [String: JSONValue] = .init()
+            additionalProperties: [String: JSONValue] = .init()
         ) {
             self.head = head
             self.nodes = nodes
             self.additionalProperties = additionalProperties
-            self._additionalProperties = _additionalProperties
         }
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.head = try container.decodeIfPresent(NodeId.self, forKey: .head)
             self.nodes = try container.decode([NodeId: DoublyLinkedListNodeValue].self, forKey: .nodes)
-            self.additionalProperties = try container.decode([String: JSONValue].self, forKey: .additionalProperties)
-            self._additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
+            self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 
         public func encode(to encoder: Encoder) throws -> Void {
             var container = encoder.container(keyedBy: CodingKeys.self)
-            try encoder.encodeAdditionalProperties(self._additionalProperties)
+            try encoder.encodeAdditionalProperties(self.additionalProperties)
             try container.encodeIfPresent(self.head, forKey: .head)
             try container.encode(self.nodes, forKey: .nodes)
-            try container.encode(self.additionalProperties, forKey: .additionalProperties)
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
-            case head = "placeholder"
-            case nodes = "placeholder"
-            case additionalProperties = "placeholder"
+            case head
+            case nodes
         }
     }
 
