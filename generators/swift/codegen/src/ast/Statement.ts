@@ -92,7 +92,6 @@ export class Statement extends AstNode {
                 writer.write(escapeReservedKeyword(this.internalStatement.unsafeName));
                 writer.write(" = ");
                 this.internalStatement.value.write(writer);
-                writer.newLine();
                 break;
             case "variable-declaration":
                 writer.write(DeclarationType.Var);
@@ -100,44 +99,36 @@ export class Statement extends AstNode {
                 writer.write(escapeReservedKeyword(this.internalStatement.unsafeName));
                 writer.write(" = ");
                 this.internalStatement.value.write(writer);
-                writer.newLine();
                 break;
             case "variable-assignment":
                 writer.write(escapeReservedKeyword(this.internalStatement.unsafeName));
                 writer.write(" = ");
                 this.internalStatement.value.write(writer);
-                writer.newLine();
                 break;
             case "self-assignment":
                 writer.write("self = ");
                 writer.write(this.internalStatement.value.toString());
-                writer.newLine();
                 break;
             case "property-assignment":
                 writer.write("self.");
                 writer.write(this.internalStatement.unsafeName);
                 writer.write(" = ");
                 this.internalStatement.value.write(writer);
-                writer.newLine();
                 break;
             case "return":
                 writer.write("return ");
                 this.internalStatement.expression.write(writer);
-                writer.newLine();
                 break;
             case "throw":
                 writer.write("throw ");
                 this.internalStatement.expression.write(writer);
-                writer.newLine();
                 break;
             case "expression-statement":
                 this.internalStatement.expression.write(writer);
-                writer.newLine();
                 break;
             case "import":
                 writer.write("import ");
                 writer.write(this.internalStatement.moduleName);
-                writer.newLine();
                 break;
             case "switch":
                 writer.write("switch ");
@@ -173,6 +164,7 @@ export class Statement extends AstNode {
             default:
                 assertNever(this.internalStatement);
         }
+        writer.newLine();
     }
 
     public static constantDeclaration(unsafeName: string, value: Expression): Statement {
