@@ -86,7 +86,10 @@ describe("Statement.switch", () => {
                     {
                         pattern: swift.Expression.rawStringValue("add"),
                         body: [
-                            swift.Statement.constantDeclaration("result", swift.Expression.rawValue("a + b")),
+                            swift.Statement.constantDeclaration({
+                                unsafeName: "result",
+                                value: swift.Expression.rawValue("a + b")
+                            }),
                             swift.Statement.expressionStatement(swift.Expression.rawValue("print(result)"))
                         ]
                     }

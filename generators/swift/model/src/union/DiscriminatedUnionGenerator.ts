@@ -66,9 +66,9 @@ export class DiscriminatedUnionGenerator {
 
     private generateInitializerForDecoder() {
         const bodyStatements: swift.Statement[] = [
-            swift.Statement.constantDeclaration(
-                "container",
-                swift.Expression.try(
+            swift.Statement.constantDeclaration({
+                unsafeName: "container",
+                value: swift.Expression.try(
                     swift.Expression.methodCall({
                         target: swift.Expression.reference("decoder"),
                         methodName: "container",
@@ -80,10 +80,10 @@ export class DiscriminatedUnionGenerator {
                         ]
                     })
                 )
-            ),
-            swift.Statement.constantDeclaration(
-                "discriminant",
-                swift.Expression.try(
+            }),
+            swift.Statement.constantDeclaration({
+                unsafeName: "discriminant",
+                value: swift.Expression.try(
                     swift.Expression.methodCall({
                         target: swift.Expression.reference("container"),
                         methodName: "decode",
@@ -103,7 +103,7 @@ export class DiscriminatedUnionGenerator {
                         ]
                     })
                 )
-            ),
+            }),
             swift.Statement.switch({
                 target: swift.Expression.reference("discriminant"),
                 cases: this.unionTypeDeclaration.types.map((singleUnionType) => {

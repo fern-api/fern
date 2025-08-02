@@ -6,7 +6,11 @@ describe("Statement.if", () => {
     describe("write", () => {
         it("should write basic if statement", () => {
             const ifStatement = swift.Statement.if({
-                condition: swift.Statement.constantDeclaration("value", swift.Expression.reference("optionalValue")),
+                condition: swift.Statement.constantDeclaration({
+                    unsafeName: "value",
+                    value: swift.Expression.reference("optionalValue"),
+                    noTrailingNewline: true
+                }),
                 body: [swift.Statement.expressionStatement(swift.Expression.reference("doSomething"))]
             });
 
@@ -20,7 +24,11 @@ describe("Statement.if", () => {
 
         it("should write if statement with else clause", () => {
             const ifStatement = swift.Statement.if({
-                condition: swift.Statement.constantDeclaration("value", swift.Expression.reference("optionalValue")),
+                condition: swift.Statement.constantDeclaration({
+                    unsafeName: "value",
+                    value: swift.Expression.reference("optionalValue"),
+                    noTrailingNewline: true
+                }),
                 body: [swift.Statement.expressionStatement(swift.Expression.reference("handleValue"))],
                 elseBody: [swift.Statement.expressionStatement(swift.Expression.reference("handleDefault"))]
             });
@@ -37,11 +45,19 @@ describe("Statement.if", () => {
 
         it("should write if statement with single else if clause", () => {
             const ifStatement = swift.Statement.if({
-                condition: swift.Statement.constantDeclaration("x", swift.Expression.reference("getX()")),
+                condition: swift.Statement.constantDeclaration({
+                    unsafeName: "x",
+                    value: swift.Expression.reference("getX()"),
+                    noTrailingNewline: true
+                }),
                 body: [swift.Statement.expressionStatement(swift.Expression.reference("handleX"))],
                 elseIfs: [
                     {
-                        condition: swift.Statement.constantDeclaration("y", swift.Expression.reference("getY()")),
+                        condition: swift.Statement.constantDeclaration({
+                            unsafeName: "y",
+                            value: swift.Expression.reference("getY()"),
+                            noTrailingNewline: true
+                        }),
                         body: [swift.Statement.expressionStatement(swift.Expression.reference("handleY"))]
                     }
                 ]
@@ -59,15 +75,27 @@ describe("Statement.if", () => {
 
         it("should write if statement with multiple else if clauses and else clause", () => {
             const ifStatement = swift.Statement.if({
-                condition: swift.Statement.constantDeclaration("a", swift.Expression.reference("getA()")),
+                condition: swift.Statement.constantDeclaration({
+                    unsafeName: "a",
+                    value: swift.Expression.reference("getA()"),
+                    noTrailingNewline: true
+                }),
                 body: [swift.Statement.expressionStatement(swift.Expression.reference("handleA"))],
                 elseIfs: [
                     {
-                        condition: swift.Statement.constantDeclaration("b", swift.Expression.reference("getB()")),
+                        condition: swift.Statement.constantDeclaration({
+                            unsafeName: "b",
+                            value: swift.Expression.reference("getB()"),
+                            noTrailingNewline: true
+                        }),
                         body: [swift.Statement.expressionStatement(swift.Expression.reference("handleB"))]
                     },
                     {
-                        condition: swift.Statement.constantDeclaration("c", swift.Expression.reference("getC()")),
+                        condition: swift.Statement.constantDeclaration({
+                            unsafeName: "c",
+                            value: swift.Expression.reference("getC()"),
+                            noTrailingNewline: true
+                        }),
                         body: [swift.Statement.expressionStatement(swift.Expression.reference("handleC"))]
                     }
                 ],
@@ -90,20 +118,31 @@ describe("Statement.if", () => {
 
         it("should write if statement with multiple statements per block", () => {
             const ifStatement = swift.Statement.if({
-                condition: swift.Statement.constantDeclaration("value", swift.Expression.reference("getValue()")),
+                condition: swift.Statement.constantDeclaration({
+                    unsafeName: "value",
+                    value: swift.Expression.reference("getValue()"),
+                    noTrailingNewline: true
+                }),
                 body: [
-                    swift.Statement.constantDeclaration("result", swift.Expression.reference("value")),
+                    swift.Statement.constantDeclaration({
+                        unsafeName: "result",
+                        value: swift.Expression.reference("value"),
+                        noTrailingNewline: true
+                    }),
                     swift.Statement.expressionStatement(swift.Expression.reference("print(result)"))
                 ],
                 elseIfs: [
                     {
-                        condition: swift.Statement.constantDeclaration(
-                            "backup",
-                            swift.Expression.reference("getBackup()")
-                        ),
+                        condition: swift.Statement.constantDeclaration({
+                            unsafeName: "backup",
+                            value: swift.Expression.reference("getBackup()"),
+                            noTrailingNewline: true
+                        }),
                         body: [
-                            swift.Statement.variableDeclaration("temp", swift.Expression.reference("backup")),
-                            swift.Statement.expressionStatement(swift.Expression.reference("useTemp"))
+                            swift.Statement.variableDeclaration({
+                                unsafeName: "temp",
+                                value: swift.Expression.reference("backup")
+                            })
                         ]
                     }
                 ],
@@ -115,11 +154,9 @@ describe("Statement.if", () => {
 
             expect(ifStatement.toString()).toMatchInlineSnapshot(`
               "if let value = getValue() {
-                  let result = value
-                  print(result)
+                  let result = valueprint(result)
               } else if let backup = getBackup() {
                   var temp = backup
-                  useTemp
               } else {
                   print(message)
                   return false

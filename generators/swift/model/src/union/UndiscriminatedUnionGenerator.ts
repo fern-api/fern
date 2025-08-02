@@ -90,13 +90,13 @@ export class UndiscriminatedUnionGenerator {
             throws: true,
             returnType: swift.Type.void(),
             body: swift.CodeBlock.withStatements([
-                swift.Statement.variableDeclaration(
-                    "container",
-                    swift.Expression.methodCall({
+                swift.Statement.variableDeclaration({
+                    unsafeName: "container",
+                    value: swift.Expression.methodCall({
                         target: swift.Expression.reference("encoder"),
                         methodName: "singleValueContainer"
                     })
-                ),
+                }),
                 swift.Statement.switch({
                     target: swift.Expression.rawValue("self"),
                     cases: this.typeDeclaration.members.map((member) => {

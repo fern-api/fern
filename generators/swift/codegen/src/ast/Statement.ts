@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 
+import { CodeBlock } from "./CodeBlock";
 import { AstNode, Writer } from "./core";
 import { DeclarationType } from "./DeclarationType";
 import { Expression } from "./Expression";
@@ -10,12 +11,14 @@ type ConstantDeclaration = {
     type: "constant-declaration";
     unsafeName: string;
     value: Expression;
+    noTrailingNewline?: true;
 };
 
 type VariableDeclaration = {
     type: "variable-declaration";
     unsafeName: string;
     value: Expression;
+    noTrailingNewline?: true;
 };
 
 type VariableAssignment = {
@@ -105,6 +108,9 @@ export class Statement extends AstNode {
                 writer.write(escapeReservedKeyword(this.internalStatement.unsafeName));
                 writer.write(" = ");
                 this.internalStatement.value.write(writer);
+                if (!this.internalStatement.noTrailingNewline) {
+                    writer.newLine();
+                }
                 break;
             case "variable-declaration":
                 writer.write(DeclarationType.Var);
@@ -112,36 +118,46 @@ export class Statement extends AstNode {
                 writer.write(escapeReservedKeyword(this.internalStatement.unsafeName));
                 writer.write(" = ");
                 this.internalStatement.value.write(writer);
+                if (!this.internalStatement.noTrailingNewline) {
+                    writer.newLine();
+                }
                 break;
             case "variable-assignment":
                 writer.write(escapeReservedKeyword(this.internalStatement.unsafeName));
                 writer.write(" = ");
                 this.internalStatement.value.write(writer);
+                writer.newLine();
                 break;
             case "self-assignment":
                 writer.write("self = ");
                 writer.write(this.internalStatement.value.toString());
+                writer.newLine();
                 break;
             case "property-assignment":
                 writer.write("self.");
                 writer.write(this.internalStatement.unsafeName);
                 writer.write(" = ");
                 this.internalStatement.value.write(writer);
+                writer.newLine();
                 break;
             case "return":
                 writer.write("return ");
                 this.internalStatement.expression.write(writer);
+                writer.newLine();
                 break;
             case "throw":
                 writer.write("throw ");
                 this.internalStatement.expression.write(writer);
+                writer.newLine();
                 break;
             case "expression-statement":
                 this.internalStatement.expression.write(writer);
+                writer.newLine();
                 break;
             case "import":
                 writer.write("import ");
                 writer.write(this.internalStatement.moduleName);
+                writer.newLine();
                 break;
             case "switch":
                 writer.write("switch ");
@@ -173,68 +189,39 @@ export class Statement extends AstNode {
                     }
                 }
                 writer.write("}");
+                writer.newLine();
                 break;
             case "if": {
                 writer.write("if ");
-                const conditionWriter = new Writer();
-                this.internalStatement.condition.write(conditionWriter);
-                writer.write(conditionWriter.toString().trimEnd());
-                writer.write(" {");
-                writer.newLine();
-                if (this.internalStatement.body.length > 0) {
-                    writer.indent();
-                    for (const statement of this.internalStatement.body) {
-                        statement.write(writer);
-                    }
-                    writer.dedent();
-                }
-                writer.write("}");
-
+                this.internalStatement.condition.write(writer);
+                writer.write(" ");
+                CodeBlock.withStatements(this.internalStatement.body).write(writer);
                 if (this.internalStatement.elseIfs) {
                     for (const elseIf of this.internalStatement.elseIfs) {
                         writer.write(" else if ");
-                        const elseIfConditionWriter = new Writer();
-                        elseIf.condition.write(elseIfConditionWriter);
-                        writer.write(elseIfConditionWriter.toString().trimEnd());
-                        writer.write(" {");
-                        writer.newLine();
-                        if (elseIf.body.length > 0) {
-                            writer.indent();
-                            for (const statement of elseIf.body) {
-                                statement.write(writer);
-                            }
-                            writer.dedent();
-                        }
-                        writer.write("}");
+                        elseIf.condition.write(writer);
+                        writer.write(" ");
+                        CodeBlock.withStatements(elseIf.body).write(writer);
                     }
                 }
-
                 if (this.internalStatement.elseBody) {
-                    writer.write(" else {");
-                    writer.newLine();
-                    if (this.internalStatement.elseBody.length > 0) {
-                        writer.indent();
-                        for (const statement of this.internalStatement.elseBody) {
-                            statement.write(writer);
-                        }
-                        writer.dedent();
-                    }
-                    writer.write("}");
+                    writer.write(" else ");
+                    CodeBlock.withStatements(this.internalStatement.elseBody).write(writer);
                 }
+                writer.newLine();
                 break;
             }
             default:
                 assertNever(this.internalStatement);
         }
-        writer.newLine();
     }
 
-    public static constantDeclaration(unsafeName: string, value: Expression): Statement {
-        return new this({ type: "constant-declaration", unsafeName, value });
+    public static constantDeclaration(params: Omit<ConstantDeclaration, "type">): Statement {
+        return new this({ type: "constant-declaration", ...params });
     }
 
-    public static variableDeclaration(unsafeName: string, value: Expression): Statement {
-        return new this({ type: "variable-declaration", unsafeName, value });
+    public static variableDeclaration(params: Omit<VariableDeclaration, "type">): Statement {
+        return new this({ type: "variable-declaration", ...params });
     }
 
     public static variableAssignment(unsafeName: string, value: Expression): Statement {
