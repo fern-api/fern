@@ -10,7 +10,7 @@ export class ObjectGenerator {
     private readonly name: string;
     private readonly directory: RelativeFilePath;
     private readonly properties: (ObjectProperty | InlinedRequestBodyProperty)[];
-    private readonly extendedProperties?: ObjectProperty[];
+    private readonly extendedProperties: ObjectProperty[];
 
     public constructor(
         name: string,
@@ -21,7 +21,7 @@ export class ObjectGenerator {
         this.name = name;
         this.directory = directory;
         this.properties = properties;
-        this.extendedProperties = extendedProperties;
+        this.extendedProperties = extendedProperties ?? [];
     }
 
     private get filename(): string {
@@ -41,7 +41,7 @@ export class ObjectGenerator {
         return new StructGenerator({
             name: this.name,
             constantPropertyDefinitions: [],
-            dataPropertyDefinitions: this.properties.map((p) => ({
+            dataPropertyDefinitions: [...this.extendedProperties, ...this.properties].map((p) => ({
                 unsafeName: p.name.name.camelCase.unsafeName,
                 rawName: p.name.wireValue,
                 type: getSwiftTypeForTypeReference(p.valueType)

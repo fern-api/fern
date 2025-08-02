@@ -63,19 +63,23 @@ public enum UnionWithSubTypes: Codable, Hashable, Sendable {
 
     public struct FooExtended: Codable, Hashable, Sendable {
         public let type: String = "fooExtended"
+        public let name: String
         public let age: Int
         public let additionalProperties: [String: JSONValue]
 
         public init(
+            name: String,
             age: Int,
             additionalProperties: [String: JSONValue] = .init()
         ) {
+            self.name = name
             self.age = age
             self.additionalProperties = additionalProperties
         }
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
+            self.name = try container.decode(String.self, forKey: .name)
             self.age = try container.decode(Int.self, forKey: .age)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
@@ -84,11 +88,13 @@ public enum UnionWithSubTypes: Codable, Hashable, Sendable {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
             try container.encode(self.type, forKey: .type)
+            try container.encode(self.name, forKey: .name)
             try container.encode(self.age, forKey: .age)
         }
 
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
+            case name
             case age
         }
     }
