@@ -9,6 +9,21 @@ public enum MyUnion: Codable, Hashable, Sendable {
     public init() throws {
     }
 
-    public func encode() throws -> Void {
+    public func encode(to encoder: Encoder) throws -> Void {
+        var container = encoder.singleValueContainer()
+        switch self {
+        case .string(let value):
+            try container.encode(value)
+        case .stringArray(let value):
+            try container.encode(value)
+        case .int(let value):
+            try container.encode(value)
+        case .intArray(let value):
+            try container.encode(value)
+        case .intArrayArray(let value):
+            try container.encode(value)
+        case .json(let value):
+            try container.encode(value)
+        }
     }
 }

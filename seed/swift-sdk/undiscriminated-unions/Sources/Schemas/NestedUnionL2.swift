@@ -6,6 +6,15 @@ public enum NestedUnionL2: Codable, Hashable, Sendable {
     public init() throws {
     }
 
-    public func encode() throws -> Void {
+    public func encode(to encoder: Encoder) throws -> Void {
+        var container = encoder.singleValueContainer()
+        switch self {
+        case .bool(let value):
+            try container.encode(value)
+        case .json(let value):
+            try container.encode(value)
+        case .stringArray(let value):
+            try container.encode(value)
+        }
     }
 }

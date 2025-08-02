@@ -7,6 +7,17 @@ public enum ResourceList: Codable, Hashable, Sendable {
     public init() throws {
     }
 
-    public func encode() throws -> Void {
+    public func encode(to encoder: Encoder) throws -> Void {
+        var container = encoder.singleValueContainer()
+        switch self {
+        case .account(let value):
+            try container.encode(value)
+        case .patient(let value):
+            try container.encode(value)
+        case .practitioner(let value):
+            try container.encode(value)
+        case .script(let value):
+            try container.encode(value)
+        }
     }
 }
