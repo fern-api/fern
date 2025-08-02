@@ -1,26 +1,26 @@
-import { assertNever, noop } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
+import { getSwiftTypeForTypeReference } from "../converters";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 export class UndiscriminatedUnionGenerator {
     private readonly name: string;
     private readonly directory: RelativeFilePath;
-    private readonly unionTypeDeclaration: UndiscriminatedUnionTypeDeclaration;
+    private readonly typeDeclaration: UndiscriminatedUnionTypeDeclaration;
     private readonly context: ModelGeneratorContext;
 
     public constructor(
         name: string,
         directory: RelativeFilePath,
-        unionTypeDeclaration: UndiscriminatedUnionTypeDeclaration,
+        typeDeclaration: UndiscriminatedUnionTypeDeclaration,
         context: ModelGeneratorContext
     ) {
         this.name = name;
         this.directory = directory;
-        this.unionTypeDeclaration = unionTypeDeclaration;
+        this.typeDeclaration = typeDeclaration;
         this.context = context;
     }
 
@@ -78,7 +78,13 @@ export class UndiscriminatedUnionGenerator {
     }
 
     private generateCasesForTypeDeclaration(): swift.EnumWithAssociatedValues.Case[] {
-        return [];
+        return this.typeDeclaration.members.map((member, memberIdx) => {
+            const swiftType = getSwiftTypeForTypeReference(member.type);
+            return {
+                unsafeName: swiftType.toCaseName(),
+                associatedValue: [swiftType]
+            };
+        });
     }
 
     private generateNestedTypesForTypeDeclaration(): (swift.Struct | swift.EnumWithRawValues)[] {
