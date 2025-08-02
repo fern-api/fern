@@ -51,6 +51,15 @@ export class DiscriminatedUnionGenerator {
         });
     }
 
+    private generateCasesForTypeDeclaration(): swift.EnumWithAssociatedValues.Case[] {
+        return this.unionTypeDeclaration.types.map((singleUnionType) => {
+            return {
+                unsafeName: singleUnionType.discriminantValue.name.camelCase.unsafeName,
+                associatedValue: [swift.Type.custom(singleUnionType.discriminantValue.name.pascalCase.unsafeName)]
+            };
+        });
+    }
+
     private generateInitializers(): swift.Initializer[] {
         return [this.generateInitializerForDecoder()];
     }
@@ -221,15 +230,6 @@ export class DiscriminatedUnionGenerator {
                     })
                 })
             ])
-        });
-    }
-
-    private generateCasesForTypeDeclaration(): swift.EnumWithAssociatedValues.Case[] {
-        return this.unionTypeDeclaration.types.map((singleUnionType) => {
-            return {
-                unsafeName: singleUnionType.discriminantValue.name.camelCase.unsafeName,
-                associatedValue: [swift.Type.custom(singleUnionType.discriminantValue.name.pascalCase.unsafeName)]
-            };
         });
     }
 

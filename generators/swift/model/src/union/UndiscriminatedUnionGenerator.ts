@@ -49,6 +49,16 @@ export class UndiscriminatedUnionGenerator {
         });
     }
 
+    private generateCasesForTypeDeclaration(): swift.EnumWithAssociatedValues.Case[] {
+        return this.typeDeclaration.members.map((member) => {
+            const swiftType = getSwiftTypeForTypeReference(member.type);
+            return {
+                unsafeName: swiftType.toCaseName(),
+                associatedValue: [swiftType]
+            };
+        });
+    }
+
     private generateInitializers(): swift.Initializer[] {
         return [this.generateInitializerForDecoder()];
     }
@@ -70,20 +80,52 @@ export class UndiscriminatedUnionGenerator {
         return swift.method({
             unsafeName: "encode",
             accessLevel: swift.AccessLevel.Public,
-            parameters: [],
+            parameters: [
+                swift.functionParameter({
+                    argumentLabel: "to",
+                    unsafeName: "encoder",
+                    type: swift.Type.custom("Encoder")
+                })
+            ],
             throws: true,
             returnType: swift.Type.void(),
-            body: swift.CodeBlock.withStatements([])
-        });
-    }
-
-    private generateCasesForTypeDeclaration(): swift.EnumWithAssociatedValues.Case[] {
-        return this.typeDeclaration.members.map((member, memberIdx) => {
-            const swiftType = getSwiftTypeForTypeReference(member.type);
-            return {
-                unsafeName: swiftType.toCaseName(),
-                associatedValue: [swiftType]
-            };
+            body: swift.CodeBlock.withStatements([
+                swift.Statement.variableDeclaration(
+                    "container",
+                    swift.Expression.methodCall({
+                        target: swift.Expression.reference("encoder"),
+                        methodName: "singleValueContainer"
+                    })
+                ),
+                swift.Statement.switch({
+                    target: swift.Expression.rawValue("self"),
+                    cases: this.typeDeclaration.members.map((member) => {
+                        const swiftType = getSwiftTypeForTypeReference(member.type);
+                        return {
+                            pattern: swift.Pattern.enumCaseValueBinding({
+                                caseName: swiftType.toCaseName(),
+                                referenceName: "value",
+                                declarationType: swift.DeclarationType.Let
+                            }),
+                            body: [
+                                swift.Statement.expressionStatement(
+                                    swift.Expression.try(
+                                        swift.Expression.methodCall({
+                                            target: swift.Expression.reference("container"),
+                                            methodName: "encode",
+                                            arguments_: [
+                                                swift.functionArgument({
+                                                    value: swift.Expression.reference("value")
+                                                })
+                                            ]
+                                        })
+                                    )
+                                )
+                            ]
+                        };
+                    })
+                })
+            ])
         });
     }
 
