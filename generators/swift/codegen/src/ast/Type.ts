@@ -1,4 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
+import { camelCase, lowerFirst, upperFirst } from "lodash-es";
 
 import { AstNode, Writer } from "./core";
 
@@ -147,6 +148,78 @@ export class Type extends AstNode {
         return this.internalType.type === "optional";
     }
 
+    /**
+     * Generates a unique, camelCase identifier suitable for use as an enum case name.
+     * This method creates descriptive names that help differentiate between similar types
+     * when used as associated values in Swift enums, particularly for undiscriminated unions.
+     *
+     * Examples:
+     * - `string` → "string"
+     * - `[String]` → "stringArray"
+     * - `[String: Int]` → "stringToIntDictionary"
+     * - `(String, Int, Bool)` → "tupleStringAndIntAndBool"
+     * - `String?` → "optionalString"
+     *
+     * @returns A camelCase string suitable for use as a Swift enum case name
+     */
+    public toCaseName(): string {
+        return Type.toCaseName(this);
+    }
+
+    public static toCaseName(type: Type): string {
+        switch (type.internalType.type) {
+            case "string":
+                return "string";
+            case "bool":
+                return "bool";
+            case "int":
+                return "int";
+            case "uint":
+                return "uint";
+            case "uint64":
+                return "uint64";
+            case "int64":
+                return "int64";
+            case "float":
+                return "float";
+            case "double":
+                return "double";
+            case "data":
+                return "data";
+            case "date":
+                return "date";
+            case "uuid":
+                return "uuid";
+            case "tuple": {
+                const memberDescriptionsJoined = type.internalType.elements
+                    .map((element) => Type.toCaseName(element))
+                    .join("And");
+                return `tuple${upperFirst(memberDescriptionsJoined)}`;
+            }
+            case "array":
+                return `${lowerFirst(Type.toCaseName(type.internalType.elementType))}Array`;
+            case "dictionary": {
+                const keyDescription = lowerFirst(Type.toCaseName(type.internalType.keyType));
+                const valueDescription = upperFirst(Type.toCaseName(type.internalType.valueType));
+                return `${keyDescription}To${valueDescription}Dictionary`;
+            }
+            case "optional":
+                return `optional${upperFirst(Type.toCaseName(type.internalType.valueType))}`;
+            case "custom":
+                return camelCase(type.internalType.name);
+            case "void":
+                return "void";
+            case "any":
+                return "any";
+            case "existential-any":
+                return `any${upperFirst(type.internalType.protocolName)}`;
+            case "json-value":
+                return "json";
+            default:
+                assertNever(type.internalType);
+        }
+    }
+
     public write(writer: Writer): void {
         switch (this.internalType.type) {
             case "string":
@@ -209,7 +282,6 @@ export class Type extends AstNode {
                 writer.write("?");
                 break;
             case "custom":
-                // TODO(kafkas): We may need to escape reserved words here. Confirm this.
                 writer.write(this.internalType.name);
                 break;
             case "void":
