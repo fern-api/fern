@@ -67,9 +67,94 @@ export class UndiscriminatedUnionGenerator {
         return swift.initializer({
             accessLevel: swift.AccessLevel.Public,
             throws: true,
-            parameters: [],
-            body: swift.CodeBlock.withStatements([])
+            parameters: [
+                swift.functionParameter({
+                    argumentLabel: "from",
+                    unsafeName: "decoder",
+                    type: swift.Type.custom("Decoder")
+                })
+            ],
+            body: swift.CodeBlock.withStatements([
+                swift.Statement.constantDeclaration({
+                    unsafeName: "container",
+                    value: swift.Expression.try(
+                        swift.Expression.methodCall({
+                            target: swift.Expression.reference("decoder"),
+                            methodName: "singleValueContainer"
+                        })
+                    )
+                }),
+                this.generateIfStatementForDecodingAttempts()
+            ])
         });
+    }
+
+    private generateIfStatementForDecodingAttempts(): swift.Statement {
+        const memberDecodeAttempts = this.typeDeclaration.members.map((member) => {
+            const swiftType = getSwiftTypeForTypeReference(member.type);
+            const decodeStatement = swift.Statement.constantDeclaration({
+                unsafeName: "value",
+                value: swift.Expression.optionalTry(
+                    swift.Expression.methodCall({
+                        target: swift.Expression.reference("container"),
+                        methodName: "decode",
+                        arguments_: [
+                            swift.functionArgument({
+                                value: swift.Expression.memberAccess({
+                                    target: swiftType,
+                                    memberName: "self"
+                                })
+                            })
+                        ]
+                    })
+                ),
+                noTrailingNewline: true
+            });
+            const selfAssignment = swift.Statement.selfAssignment(
+                swift.Expression.contextualMethodCall({
+                    methodName: swiftType.toCaseName(),
+                    arguments_: [
+                        swift.functionArgument({
+                            value: swift.Expression.reference("value")
+                        })
+                    ]
+                })
+            );
+            return { swiftType, decodeStatement, selfAssignment };
+        });
+        const throwDecodingErrorStatement = swift.Statement.throw(
+            swift.Expression.methodCall({
+                target: swift.Expression.reference("DecodingError"),
+                methodName: "dataCorruptedError",
+                arguments_: [
+                    swift.functionArgument({
+                        label: "in",
+                        value: swift.Expression.reference("container")
+                    }),
+                    swift.functionArgument({
+                        label: "debugDescription",
+                        value: swift.Expression.rawStringValue(`Unexpected value.`) // TODO(kafkas): Add more descriptive error message
+                    })
+                ],
+                multiline: true
+            })
+        );
+
+        const [firstAttempt, ...remainingAttempts] = memberDecodeAttempts;
+
+        if (firstAttempt) {
+            return swift.Statement.if({
+                condition: firstAttempt.decodeStatement,
+                body: [firstAttempt.selfAssignment],
+                elseIfs: remainingAttempts.map((attempt) => ({
+                    condition: attempt.decodeStatement,
+                    body: [attempt.selfAssignment]
+                })),
+                else: [throwDecodingErrorStatement]
+            });
+        } else {
+            throw new Error("Cannot generate undiscriminated union decoder body because there are no members.");
+        }
     }
 
     private generateMethods(): swift.Method[] {
