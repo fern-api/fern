@@ -133,7 +133,8 @@ export class UndiscriminatedUnionGenerator {
                     }),
                     swift.functionArgument({
                         label: "debugDescription",
-                        value: swift.Expression.rawStringValue(`Unexpected value.`) // TODO(kafkas): Add more descriptive error message
+                        // TODO(kafkas): Add more descriptive error message. We can perhaps try to decode as JSONValue and add the result to the error message.
+                        value: swift.Expression.rawStringValue(`Unexpected value.`)
                     })
                 ],
                 multiline: true
