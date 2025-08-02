@@ -29,8 +29,7 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
                 new UndiscriminatedUnionGenerator(
                     typeDeclaration.name.name.pascalCase.unsafeName,
                     context.schemasDirectory,
-                    uutd,
-                    context
+                    uutd
                 ).generate(),
             union: (utd) =>
                 new DiscriminatedUnionGenerator(

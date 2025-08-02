@@ -4,24 +4,20 @@ import { swift } from "@fern-api/swift-codegen";
 import { UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { getSwiftTypeForTypeReference } from "../converters";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 export class UndiscriminatedUnionGenerator {
     private readonly name: string;
     private readonly directory: RelativeFilePath;
     private readonly typeDeclaration: UndiscriminatedUnionTypeDeclaration;
-    private readonly context: ModelGeneratorContext;
 
     public constructor(
         name: string,
         directory: RelativeFilePath,
-        typeDeclaration: UndiscriminatedUnionTypeDeclaration,
-        context: ModelGeneratorContext
+        typeDeclaration: UndiscriminatedUnionTypeDeclaration
     ) {
         this.name = name;
         this.directory = directory;
         this.typeDeclaration = typeDeclaration;
-        this.context = context;
     }
 
     private get filename(): string {
