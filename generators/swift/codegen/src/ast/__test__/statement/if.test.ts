@@ -11,7 +11,7 @@ describe("Statement.if", () => {
                     value: swift.Expression.reference("optionalValue"),
                     noTrailingNewline: true
                 }),
-                body: [swift.Statement.expressionStatement(swift.Expression.reference("doSomething"))]
+                body: [swift.Statement.raw("doSomething")]
             });
 
             expect(ifStatement.toString()).toMatchInlineSnapshot(`
@@ -29,8 +29,8 @@ describe("Statement.if", () => {
                     value: swift.Expression.reference("optionalValue"),
                     noTrailingNewline: true
                 }),
-                body: [swift.Statement.expressionStatement(swift.Expression.reference("handleValue"))],
-                elseBody: [swift.Statement.expressionStatement(swift.Expression.reference("handleDefault"))]
+                body: [swift.Statement.raw("handleValue")],
+                else: [swift.Statement.raw("handleDefault")]
             });
 
             expect(ifStatement.toString()).toMatchInlineSnapshot(`
@@ -58,7 +58,7 @@ describe("Statement.if", () => {
                             value: swift.Expression.reference("getY()"),
                             noTrailingNewline: true
                         }),
-                        body: [swift.Statement.expressionStatement(swift.Expression.reference("handleY"))]
+                        body: [swift.Statement.raw("handleY")]
                     }
                 ]
             });
@@ -96,10 +96,10 @@ describe("Statement.if", () => {
                             value: swift.Expression.reference("getC()"),
                             noTrailingNewline: true
                         }),
-                        body: [swift.Statement.expressionStatement(swift.Expression.reference("handleC"))]
+                        body: [swift.Statement.raw("handleC")]
                     }
                 ],
-                elseBody: [swift.Statement.expressionStatement(swift.Expression.reference("handleDefault"))]
+                else: [swift.Statement.raw("handleDefault")]
             });
 
             expect(ifStatement.toString()).toMatchInlineSnapshot(`
@@ -123,14 +123,7 @@ describe("Statement.if", () => {
                     value: swift.Expression.reference("getValue()"),
                     noTrailingNewline: true
                 }),
-                body: [
-                    swift.Statement.constantDeclaration({
-                        unsafeName: "result",
-                        value: swift.Expression.reference("value"),
-                        noTrailingNewline: true
-                    }),
-                    swift.Statement.expressionStatement(swift.Expression.reference("print(result)"))
-                ],
+                body: [swift.Statement.raw("print(result)")],
                 elseIfs: [
                     {
                         condition: swift.Statement.constantDeclaration({
@@ -146,15 +139,12 @@ describe("Statement.if", () => {
                         ]
                     }
                 ],
-                elseBody: [
-                    swift.Statement.expressionStatement(swift.Expression.reference("print(message)")),
-                    swift.Statement.return(swift.Expression.rawValue("false"))
-                ]
+                else: [swift.Statement.raw("print(message)"), swift.Statement.raw("return false")]
             });
 
             expect(ifStatement.toString()).toMatchInlineSnapshot(`
               "if let value = getValue() {
-                  let result = valueprint(result)
+                  print(result)
               } else if let backup = getBackup() {
                   var temp = backup
               } else {

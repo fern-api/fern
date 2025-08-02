@@ -76,7 +76,12 @@ type If = {
         condition: Statement;
         body: Statement[];
     }[];
-    elseBody?: Statement[];
+    else?: Statement[];
+};
+
+type Raw = {
+    type: "raw";
+    content: string;
 };
 
 type InternalStatement =
@@ -90,7 +95,8 @@ type InternalStatement =
     | ExpressionStatement
     | ImportStatement
     | Switch
-    | If;
+    | If
+    | Raw;
 
 export class Statement extends AstNode {
     private internalStatement: InternalStatement;
@@ -196,21 +202,23 @@ export class Statement extends AstNode {
                 this.internalStatement.condition.write(writer);
                 writer.write(" ");
                 CodeBlock.withStatements(this.internalStatement.body).write(writer);
-                if (this.internalStatement.elseIfs) {
-                    for (const elseIf of this.internalStatement.elseIfs) {
-                        writer.write(" else if ");
-                        elseIf.condition.write(writer);
-                        writer.write(" ");
-                        CodeBlock.withStatements(elseIf.body).write(writer);
-                    }
+                for (const elseIf of this.internalStatement.elseIfs ?? []) {
+                    writer.write(" else if ");
+                    elseIf.condition.write(writer);
+                    writer.write(" ");
+                    CodeBlock.withStatements(elseIf.body).write(writer);
                 }
-                if (this.internalStatement.elseBody) {
+                if (this.internalStatement.else) {
                     writer.write(" else ");
-                    CodeBlock.withStatements(this.internalStatement.elseBody).write(writer);
+                    CodeBlock.withStatements(this.internalStatement.else).write(writer);
                 }
                 writer.newLine();
                 break;
             }
+            case "raw":
+                writer.write(this.internalStatement.content);
+                writer.newLine();
+                break;
             default:
                 assertNever(this.internalStatement);
         }
@@ -258,5 +266,12 @@ export class Statement extends AstNode {
 
     public static if(params: Omit<If, "type">): Statement {
         return new this({ type: "if", ...params });
+    }
+
+    /**
+     * Escape hatch for writing raw Swift code. Intended for use in tests.
+     */
+    public static raw(content: string): Statement {
+        return new this({ type: "raw", content });
     }
 }
