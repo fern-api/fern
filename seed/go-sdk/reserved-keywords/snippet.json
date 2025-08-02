@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_package.test"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/reserved-keywords/fern\"\n\tfernclient \"github.com/reserved-keywords/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Package.Test(\n\tcontext.TODO(),\n\t\u0026fern.TestRequest{\n\t\tFor: \"for\",\n\t},\n)\n"
+            }
+        }
+    ]
+}
