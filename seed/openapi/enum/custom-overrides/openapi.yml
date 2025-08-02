@@ -195,6 +195,12 @@ components:
       oneOf:
         - $ref: '#/components/schemas/Color'
         - $ref: '#/components/schemas/Operand'
+    EnumWithSpecialCharacters:
+      title: EnumWithSpecialCharacters
+      type: string
+      enum:
+        - \$bla
+        - \$yo
     EnumWithCustom:
       title: EnumWithCustom
       type: string
