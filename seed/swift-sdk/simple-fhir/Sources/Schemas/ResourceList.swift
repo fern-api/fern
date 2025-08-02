@@ -4,7 +4,22 @@ public enum ResourceList: Codable, Hashable, Sendable {
     case practitioner(Practitioner)
     case script(Script)
 
-    public init() throws {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let value = try? container.decode(Account.self) {
+            self = .account(value)
+        } else if let value = try? container.decode(Patient.self) {
+            self = .patient(value)
+        } else if let value = try? container.decode(Practitioner.self) {
+            self = .practitioner(value)
+        } else if let value = try? container.decode(Script.self) {
+            self = .script(value)
+        } else {
+            throw DecodingError.dataCorruptedError(
+                in: container,
+                debugDescription: "Unexpected value."
+            )
+        }
     }
 
     public func encode(to encoder: Encoder) throws -> Void {

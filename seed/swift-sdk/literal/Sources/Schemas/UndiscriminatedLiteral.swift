@@ -6,7 +6,26 @@ public enum UndiscriminatedLiteral: Codable, Hashable, Sendable {
     case json(JSONValue)
     case bool(Bool)
 
-    public init() throws {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let value = try? container.decode(String.self) {
+            self = .string(value)
+        } else if let value = try? container.decode(JSONValue.self) {
+            self = .json(value)
+        } else if let value = try? container.decode(JSONValue.self) {
+            self = .json(value)
+        } else if let value = try? container.decode(JSONValue.self) {
+            self = .json(value)
+        } else if let value = try? container.decode(JSONValue.self) {
+            self = .json(value)
+        } else if let value = try? container.decode(Bool.self) {
+            self = .bool(value)
+        } else {
+            throw DecodingError.dataCorruptedError(
+                in: container,
+                debugDescription: "Unexpected value."
+            )
+        }
     }
 
     public func encode(to encoder: Encoder) throws -> Void {

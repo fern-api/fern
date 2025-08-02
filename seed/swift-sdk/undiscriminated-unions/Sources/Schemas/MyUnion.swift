@@ -6,7 +6,26 @@ public enum MyUnion: Codable, Hashable, Sendable {
     case intArrayArray([[Int]])
     case json(JSONValue)
 
-    public init() throws {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let value = try? container.decode(String.self) {
+            self = .string(value)
+        } else if let value = try? container.decode([String].self) {
+            self = .stringArray(value)
+        } else if let value = try? container.decode(Int.self) {
+            self = .int(value)
+        } else if let value = try? container.decode([Int].self) {
+            self = .intArray(value)
+        } else if let value = try? container.decode([[Int]].self) {
+            self = .intArrayArray(value)
+        } else if let value = try? container.decode(JSONValue.self) {
+            self = .json(value)
+        } else {
+            throw DecodingError.dataCorruptedError(
+                in: container,
+                debugDescription: "Unexpected value."
+            )
+        }
     }
 
     public func encode(to encoder: Encoder) throws -> Void {

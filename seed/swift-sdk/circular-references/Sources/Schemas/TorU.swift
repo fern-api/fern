@@ -2,7 +2,18 @@ public enum TorU: Codable, Hashable, Sendable {
     case t(T)
     case u(U)
 
-    public init() throws {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let value = try? container.decode(T.self) {
+            self = .t(value)
+        } else if let value = try? container.decode(U.self) {
+            self = .u(value)
+        } else {
+            throw DecodingError.dataCorruptedError(
+                in: container,
+                debugDescription: "Unexpected value."
+            )
+        }
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
