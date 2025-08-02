@@ -34,9 +34,18 @@ function createErrorDeclaration(name: string, statusCode: number, type: "text" |
             },
             name: {
                 originalName: name,
-                camelCase: { unsafeName: name.toLowerCase(), safeName: name.toLowerCase() },
-                snakeCase: { unsafeName: name.toLowerCase(), safeName: name.toLowerCase() },
-                screamingSnakeCase: { unsafeName: name.toUpperCase(), safeName: name.toUpperCase() },
+                camelCase: {
+                    unsafeName: name.toLowerCase(),
+                    safeName: name.toLowerCase()
+                },
+                snakeCase: {
+                    unsafeName: name.toLowerCase(),
+                    safeName: name.toLowerCase()
+                },
+                screamingSnakeCase: {
+                    unsafeName: name.toUpperCase(),
+                    safeName: name.toUpperCase()
+                },
                 pascalCase: { unsafeName: name, safeName: name }
             }
         },

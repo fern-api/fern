@@ -140,8 +140,14 @@ export class ErrorGenerator {
             name: "from_response",
             visibility: PUBLIC,
             parameters: [
-                { name: "status_code", parameterType: Type.primitive(PrimitiveType.U16) },
-                { name: "body", parameterType: Type.option(Type.reference(new Reference({ name: "&str" }))) }
+                {
+                    name: "status_code",
+                    parameterType: Type.primitive(PrimitiveType.U16)
+                },
+                {
+                    name: "body",
+                    parameterType: Type.option(Type.reference(new Reference({ name: "&str" })))
+                }
             ],
             returnType: Type.reference(new Reference({ name: "Self" })),
             body

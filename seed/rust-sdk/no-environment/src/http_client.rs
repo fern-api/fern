@@ -26,13 +26,19 @@ impl HttpClient {
         method: Method,
         path: &str,
         body: Option<serde_json::Value>,
+        query_params: Option<Vec<(String, String)>>,
         options: Option<RequestOptions>,
     ) -> Result<T, ClientError>
     where
         T: DeserializeOwned,
     {
-        let url = format!("{}{}", self.config.base_url, path);
+        let url = format!("{}/{}", self.config.base_url.trim_end_matches('/'), path);
         let mut request = self.client.request(method, &url);
+        
+        // Apply query parameters if provided
+        if let Some(params) = query_params {
+            request = request.query(&params);
+        }
         
         // Apply body if provided
         if let Some(body) = body {

@@ -192,7 +192,13 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             clientExports.push(subClientName);
         });
 
-        useStatements.push(new UseStatement({ path: "client", items: clientExports, isPublic: true }));
+        useStatements.push(
+            new UseStatement({
+                path: "client",
+                items: clientExports,
+                isPublic: true
+            })
+        );
         useStatements.push(new UseStatement({ path: "error", items: ["ApiError"], isPublic: true }));
 
         if (hasTypes) {
@@ -201,9 +207,21 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
         // Add re-exports
         useStatements.push(new UseStatement({ path: "client_config", items: ["*"], isPublic: true }));
-        useStatements.push(new UseStatement({ path: "api_client_builder", items: ["*"], isPublic: true }));
+        useStatements.push(
+            new UseStatement({
+                path: "api_client_builder",
+                items: ["*"],
+                isPublic: true
+            })
+        );
         useStatements.push(new UseStatement({ path: "http_client", items: ["*"], isPublic: true }));
-        useStatements.push(new UseStatement({ path: "request_options", items: ["*"], isPublic: true }));
+        useStatements.push(
+            new UseStatement({
+                path: "request_options",
+                items: ["*"],
+                isPublic: true
+            })
+        );
         useStatements.push(new UseStatement({ path: "client_error", items: ["*"], isPublic: true }));
 
         return new Module({
@@ -222,7 +240,13 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             const rawModuleName = typeDeclaration.name.name.snakeCase.unsafeName;
             const escapedModuleName = context.configManager.escapeRustKeyword(rawModuleName);
             moduleDeclarations.push(new ModuleDeclaration({ name: escapedModuleName, isPublic: true }));
-            useStatements.push(new UseStatement({ path: escapedModuleName, items: ["*"], isPublic: true }));
+            useStatements.push(
+                new UseStatement({
+                    path: escapedModuleName,
+                    items: ["*"],
+                    isPublic: true
+                })
+            );
         }
 
         return new Module({

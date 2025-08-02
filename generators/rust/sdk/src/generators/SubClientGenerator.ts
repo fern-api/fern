@@ -3,7 +3,16 @@ import { RustFile } from "@fern-api/rust-base";
 import { UseStatement, rust } from "@fern-api/rust-codegen";
 import { generateRustTypeForTypeReference } from "@fern-api/rust-model";
 
-import { HttpEndpoint, HttpService, PrimitiveTypeV1, Subpackage, TypeReference } from "@fern-fern/ir-sdk/api";
+import {
+    ApiAuth,
+    AuthScheme,
+    HttpEndpoint,
+    HttpService,
+    PrimitiveTypeV1,
+    QueryParameter,
+    Subpackage,
+    TypeReference
+} from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -18,11 +27,13 @@ export class SubClientGenerator {
     private readonly context: SdkGeneratorContext;
     private readonly subpackage: Subpackage;
     private readonly service?: HttpService;
+    private readonly auth: ApiAuth;
 
     constructor(context: SdkGeneratorContext, subpackage: Subpackage) {
         this.context = context;
         this.subpackage = subpackage;
         this.service = subpackage.service ? this.context.getHttpServiceOrThrow(subpackage.service) : undefined;
+        this.auth = context.ir.auth;
     }
 
     // =============================================================================
@@ -84,28 +95,70 @@ export class SubClientGenerator {
     }
 
     private generateFields(): rust.Client.Field[] {
-        return [
+        const fields: rust.Client.Field[] = [
             {
                 name: "http_client",
                 type: rust.Type.reference(rust.reference({ name: "HttpClient" })).toString(),
                 visibility: "pub"
             }
         ];
+
+        // Always add standard auth fields for consistent API
+        fields.push(
+            {
+                name: "api_key",
+                type: "Option<String>",
+                visibility: "pub"
+            },
+            {
+                name: "bearer_token",
+                type: "Option<String>",
+                visibility: "pub"
+            },
+            {
+                name: "username",
+                type: "Option<String>",
+                visibility: "pub"
+            },
+            {
+                name: "password",
+                type: "Option<String>",
+                visibility: "pub"
+            }
+        );
+
+        return fields;
     }
 
     private generateConstructor(): rust.Client.SimpleMethod {
-        const configType = rust.Type.reference(rust.reference({ name: "ClientConfig" }));
         const selfType = rust.Type.reference(rust.reference({ name: "Self" }));
         const errorType = rust.Type.reference(rust.reference({ name: "ClientError" }));
         const returnType = rust.Type.result(selfType, errorType);
 
+        // Use consistent parameter signature for all auth types
+        const parameters = [
+            "config: ClientConfig",
+            "api_key: Option<String>",
+            "bearer_token: Option<String>",
+            "username: Option<String>",
+            "password: Option<String>"
+        ];
+
+        const constructorBody = `let http_client = HttpClient::new(config)?;
+        Ok(Self { 
+            http_client, 
+            api_key, 
+            bearer_token, 
+            username, 
+            password 
+        })`;
+
         return {
             name: "new",
-            parameters: [`config: ${configType.toString()}`],
+            parameters,
             returnType: returnType.toString(),
             isAsync: false,
-            body: `let http_client = HttpClient::new(config)?;
-        Ok(Self { http_client })`
+            body: constructorBody
         };
     }
 
@@ -123,6 +176,7 @@ export class SubClientGenerator {
         const httpMethod = this.getHttpMethod(endpoint);
         const pathExpression = this.getPathExpression(endpoint);
         const requestBody = this.getRequestBody(endpoint, params);
+        // Remove this line as we're now handling query params separately
 
         const returnType = rust.Type.result(
             this.getReturnType(endpoint),
@@ -138,6 +192,7 @@ export class SubClientGenerator {
             Method::${httpMethod},
             ${pathExpression},
             ${requestBody},
+            ${this.buildQueryParameters(endpoint)},
             options,
         ).await`
         };
@@ -349,6 +404,42 @@ export class SubClientGenerator {
             return "Some(serde_json::to_value(request).unwrap_or_default())";
         }
         return "None";
+    }
+
+    private buildQueryParameters(endpoint: HttpEndpoint): string {
+        const queryParams = endpoint.queryParameters;
+        if (queryParams.length === 0) {
+            return "None";
+        }
+
+        // Generate code to build Vec<(String, String)> with query parameters
+        const queryParamStatements = queryParams.map((queryParam) => {
+            const paramName = queryParam.name.name.snakeCase.safeName;
+            const wireValue = queryParam.name.wireValue;
+            return `if let Some(value) = ${paramName} {
+                query_params.push(("${wireValue}".to_string(), ${this.getQueryParameterConversion(queryParam, paramName)}));
+            }`;
+        });
+
+        return `{
+            let mut query_params = Vec::new();
+            ${queryParamStatements.join("\n            ")}
+            Some(query_params)
+        }`;
+    }
+
+    private hasQueryParameters(endpoint: HttpEndpoint): boolean {
+        return endpoint.queryParameters.length > 0;
+    }
+
+    private getQueryParameterConversion(queryParam: QueryParameter, paramName: string): string {
+        // Handle different types of query parameters
+        return "value.to_string()";
+    }
+
+    private getQueryParameterValue(queryParam: QueryParameter, paramName: string): string {
+        // For now, assume all query parameters are optional strings or can be converted to strings
+        return paramName;
     }
 
     // =============================================================================
