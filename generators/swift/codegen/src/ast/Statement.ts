@@ -65,6 +65,17 @@ type Switch = {
     defaultCase?: Statement[];
 };
 
+type If = {
+    type: "if";
+    condition: Statement;
+    body: Statement[];
+    elseIfs?: {
+        condition: Statement;
+        body: Statement[];
+    }[];
+    elseBody?: Statement[];
+};
+
 type InternalStatement =
     | ConstantDeclaration
     | VariableDeclaration
@@ -75,7 +86,8 @@ type InternalStatement =
     | Throw
     | ExpressionStatement
     | ImportStatement
-    | Switch;
+    | Switch
+    | If;
 
 export class Statement extends AstNode {
     private internalStatement: InternalStatement;
@@ -162,6 +174,55 @@ export class Statement extends AstNode {
                 }
                 writer.write("}");
                 break;
+            case "if": {
+                writer.write("if ");
+                const conditionWriter = new Writer();
+                this.internalStatement.condition.write(conditionWriter);
+                writer.write(conditionWriter.toString().trimEnd());
+                writer.write(" {");
+                writer.newLine();
+                if (this.internalStatement.body.length > 0) {
+                    writer.indent();
+                    for (const statement of this.internalStatement.body) {
+                        statement.write(writer);
+                    }
+                    writer.dedent();
+                }
+                writer.write("}");
+
+                if (this.internalStatement.elseIfs) {
+                    for (const elseIf of this.internalStatement.elseIfs) {
+                        writer.write(" else if ");
+                        const elseIfConditionWriter = new Writer();
+                        elseIf.condition.write(elseIfConditionWriter);
+                        writer.write(elseIfConditionWriter.toString().trimEnd());
+                        writer.write(" {");
+                        writer.newLine();
+                        if (elseIf.body.length > 0) {
+                            writer.indent();
+                            for (const statement of elseIf.body) {
+                                statement.write(writer);
+                            }
+                            writer.dedent();
+                        }
+                        writer.write("}");
+                    }
+                }
+
+                if (this.internalStatement.elseBody) {
+                    writer.write(" else {");
+                    writer.newLine();
+                    if (this.internalStatement.elseBody.length > 0) {
+                        writer.indent();
+                        for (const statement of this.internalStatement.elseBody) {
+                            statement.write(writer);
+                        }
+                        writer.dedent();
+                    }
+                    writer.write("}");
+                }
+                break;
+            }
             default:
                 assertNever(this.internalStatement);
         }
@@ -206,5 +267,9 @@ export class Statement extends AstNode {
 
     public static switch(params: Omit<Switch, "type">): Statement {
         return new this({ type: "switch", ...params });
+    }
+
+    public static if(params: Omit<If, "type">): Statement {
+        return new this({ type: "if", ...params });
     }
 }
