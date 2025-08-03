@@ -22,49 +22,39 @@ impl ProblemClient {
         })
     }
 
-    pub async fn get_lightweight_problems(&self, options: Option<RequestOptions>) -> Result<Vec<LightweightProblemInfoV2>, ClientError> {
+    pub async fn create_problem(&self, request: &CreateProblemRequest, options: Option<RequestOptions>) -> Result<CreateProblemResponse, ClientError> {
         self.http_client.execute_request(
-            Method::GET,
-            "/problems-v2/lightweight-problem-info",
+            Method::POST,
+            "/problem-crud/create",
+            Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
+            options,
+        ).await
+    }
+
+    pub async fn update_problem(&self, problem_id: &ProblemId, request: &CreateProblemRequest, options: Option<RequestOptions>) -> Result<UpdateProblemResponse, ClientError> {
+        self.http_client.execute_request(
+            Method::POST,
+            &format!("/problem-crud/update/{}", problem_id.0),
+            Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
+            options,
+        ).await
+    }
+
+    pub async fn delete_problem(&self, problem_id: &ProblemId, options: Option<RequestOptions>) -> Result<(), ClientError> {
+        self.http_client.execute_request(
+            Method::DELETE,
+            &format!("/problem-crud/delete/{}", problem_id.0),
             None,
             None,
             options,
         ).await
     }
 
-    pub async fn get_problems(&self, options: Option<RequestOptions>) -> Result<Vec<ProblemInfoV2>, ClientError> {
+    pub async fn get_default_starter_files(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<GetDefaultStarterFilesResponse, ClientError> {
         self.http_client.execute_request(
-            Method::GET,
-            "/problems-v2/problem-info",
-            None,
-            None,
-            options,
-        ).await
-    }
-
-    pub async fn get_latest_problem(&self, problem_id: &ProblemId, options: Option<RequestOptions>) -> Result<ProblemInfoV2, ClientError> {
-        self.http_client.execute_request(
-            Method::GET,
-            &format!("/problems-v2/problem-info/{}", problem_id.0),
-            None,
-            None,
-            options,
-        ).await
-    }
-
-    pub async fn get_problem_version(&self, problem_id: &ProblemId, problem_version: i32, options: Option<RequestOptions>) -> Result<ProblemInfoV2, ClientError> {
-        self.http_client.execute_request(
-            Method::GET,
-            &format!("/problems-v2/problem-info/{}{}", problem_id.0, problem_version),
-            None,
-            None,
-            options,
-        ).await
-    }
-
-}
-
-ST,
+            Method::POST,
             "/problem-crud/default-starter-files",
             Some(serde_json::to_value(request).unwrap_or_default()),
             None,

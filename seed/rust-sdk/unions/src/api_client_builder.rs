@@ -16,13 +16,6 @@ impl ApiClientBuilder {
         Self { config }
     }
     
-    /// Create a builder from environment variables
-    pub fn from_env() -> Self {
-        Self {
-            config: ClientConfig::from_env(),
-        }
-    }
-    
     /// Set the API key for authentication
     pub fn api_key(mut self, key: impl Into<String>) -> Self {
         self.config.api_key = Some(key.into());
@@ -78,16 +71,8 @@ impl ApiClientBuilder {
     }
     
     /// Build the client with validation
-    pub fn build(self) -> Result<UnionsClient, ClientError> {
-        self.config.validate().map_err(ClientError::ConfigError)?;
-        
-        // Extract auth parameters from config
-        let api_key = self.config.api_key.clone();
-        let bearer_token = self.config.bearer_token.clone();
-        let username = self.config.username.clone();
-        let password = self.config.password.clone();
-        
+    pub fn build(self) -> Result<UnionsClient, ClientError> {  
         // Call the client constructor with all authentication parameters
-        UnionsClient::new(self.config, api_key, bearer_token, username, password)
+        UnionsClient::new(self.config)
     }
 }
