@@ -1,7 +1,9 @@
+import { assertDefined } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { uniqWith } from "lodash-es";
 
 import { getSwiftTypeForTypeReference } from "../converters";
 
@@ -40,14 +42,12 @@ export class UndiscriminatedUnionGenerator {
             conformances: [swift.Protocol.Codable, swift.Protocol.Hashable, swift.Protocol.Sendable],
             cases: this.generateCasesForTypeDeclaration(),
             initializers: this.generateInitializers(),
-            methods: this.generateMethods(),
-            nestedTypes: this.generateNestedTypesForTypeDeclaration()
+            methods: this.generateMethods()
         });
     }
 
     private generateCasesForTypeDeclaration(): swift.EnumWithAssociatedValues.Case[] {
-        return this.typeDeclaration.members.map((member) => {
-            const swiftType = getSwiftTypeForTypeReference(member.type);
+        return this.getDistinctMemberTypes().map((swiftType) => {
             return {
                 unsafeName: swiftType.toCaseName(),
                 associatedValue: [swiftType]
@@ -86,8 +86,8 @@ export class UndiscriminatedUnionGenerator {
     }
 
     private generateIfStatementForDecodingAttempts(): swift.Statement {
-        const memberDecodeAttempts = this.typeDeclaration.members.map((member) => {
-            const swiftType = getSwiftTypeForTypeReference(member.type);
+        const distinctMemberTypes = this.getDistinctMemberTypes();
+        const memberDecodeAttempts = distinctMemberTypes.map((swiftType) => {
             const decodeStatement = swift.Statement.constantDeclaration({
                 unsafeName: "value",
                 value: swift.Expression.optionalTry(
@@ -116,7 +116,7 @@ export class UndiscriminatedUnionGenerator {
                     ]
                 })
             );
-            return { swiftType, decodeStatement, selfAssignment };
+            return { decodeStatement, selfAssignment };
         });
         const throwDecodingErrorStatement = swift.Statement.throw(
             swift.Expression.methodCall({
@@ -139,19 +139,17 @@ export class UndiscriminatedUnionGenerator {
 
         const [firstAttempt, ...remainingAttempts] = memberDecodeAttempts;
 
-        if (firstAttempt) {
-            return swift.Statement.if({
-                condition: firstAttempt.decodeStatement,
-                body: [firstAttempt.selfAssignment],
-                elseIfs: remainingAttempts.map((attempt) => ({
-                    condition: attempt.decodeStatement,
-                    body: [attempt.selfAssignment]
-                })),
-                else: [throwDecodingErrorStatement]
-            });
-        } else {
-            throw new Error("Cannot generate undiscriminated union decoder body because there are no members.");
-        }
+        assertDefined(firstAttempt, "Cannot generate undiscriminated union decoder body because there are no members.");
+
+        return swift.Statement.if({
+            condition: firstAttempt.decodeStatement,
+            body: [firstAttempt.selfAssignment],
+            elseIfs: remainingAttempts.map((attempt) => ({
+                condition: attempt.decodeStatement,
+                body: [attempt.selfAssignment]
+            })),
+            else: [throwDecodingErrorStatement]
+        });
     }
 
     private generateMethods(): swift.Method[] {
@@ -159,6 +157,7 @@ export class UndiscriminatedUnionGenerator {
     }
 
     private generateEncodeMethod(): swift.Method {
+        const distinctMemberTypes = this.getDistinctMemberTypes();
         return swift.method({
             unsafeName: "encode",
             accessLevel: swift.AccessLevel.Public,
@@ -181,8 +180,7 @@ export class UndiscriminatedUnionGenerator {
                 }),
                 swift.Statement.switch({
                     target: swift.Expression.rawValue("self"),
-                    cases: this.typeDeclaration.members.map((member) => {
-                        const swiftType = getSwiftTypeForTypeReference(member.type);
+                    cases: distinctMemberTypes.map((swiftType) => {
                         return {
                             pattern: swift.Pattern.enumCaseValueBinding({
                                 caseName: swiftType.toCaseName(),
@@ -211,7 +209,8 @@ export class UndiscriminatedUnionGenerator {
         });
     }
 
-    private generateNestedTypesForTypeDeclaration(): (swift.Struct | swift.EnumWithRawValues)[] {
-        return [];
+    private getDistinctMemberTypes(): swift.Type[] {
+        const swiftTypes = this.typeDeclaration.members.map((member) => getSwiftTypeForTypeReference(member.type));
+        return uniqWith(swiftTypes, (a, b) => a.equals(b));
     }
 }

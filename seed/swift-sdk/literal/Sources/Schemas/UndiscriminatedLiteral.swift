@@ -1,21 +1,12 @@
 public enum UndiscriminatedLiteral: Codable, Hashable, Sendable {
     case string(String)
     case json(JSONValue)
-    case json(JSONValue)
-    case json(JSONValue)
-    case json(JSONValue)
     case bool(Bool)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let value = try? container.decode(String.self) {
             self = .string(value)
-        } else if let value = try? container.decode(JSONValue.self) {
-            self = .json(value)
-        } else if let value = try? container.decode(JSONValue.self) {
-            self = .json(value)
-        } else if let value = try? container.decode(JSONValue.self) {
-            self = .json(value)
         } else if let value = try? container.decode(JSONValue.self) {
             self = .json(value)
         } else if let value = try? container.decode(Bool.self) {
@@ -32,12 +23,6 @@ public enum UndiscriminatedLiteral: Codable, Hashable, Sendable {
         var container = encoder.singleValueContainer()
         switch self {
         case .string(let value):
-            try container.encode(value)
-        case .json(let value):
-            try container.encode(value)
-        case .json(let value):
-            try container.encode(value)
-        case .json(let value):
             try container.encode(value)
         case .json(let value):
             try container.encode(value)
