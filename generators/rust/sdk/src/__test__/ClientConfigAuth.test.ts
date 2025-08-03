@@ -1,6 +1,8 @@
 import { describe, it, expect } from "vitest";
 import * as fs from "fs";
 import * as path from "path";
+import { ClientConfigGenerator } from "../generators/ClientConfigGenerator";
+import { createSampleGeneratorContext } from "./util/createSampleGeneratorContext";
 
 // Helper function to read AsIs files
 function readAsIsFile(fileName: string): string {
@@ -8,8 +10,12 @@ function readAsIsFile(fileName: string): string {
     return fs.readFileSync(asIsPath, "utf-8");
 }
 
+// Generate ClientConfig for testing using the generator
+const context = createSampleGeneratorContext();
+const clientConfigGenerator = new ClientConfigGenerator(context);
+const CLIENT_CONFIG = clientConfigGenerator.generate().fileContents;
+
 // Read AsIs files for testing
-const CLIENT_CONFIG = readAsIsFile("client_config.rs");
 const API_CLIENT_BUILDER = readAsIsFile("api_client_builder.rs");
 const HTTP_CLIENT = readAsIsFile("http_client.rs");
 const CLIENT_ERROR = readAsIsFile("client_error.rs");
