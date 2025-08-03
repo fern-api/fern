@@ -4,12 +4,22 @@ use crate::{types::*};
 
 pub struct ProblemClient {
     pub http_client: HttpClient,
+    pub api_key: Option<String>,
+    pub bearer_token: Option<String>,
+    pub username: Option<String>,
+    pub password: Option<String>,
 }
 
 impl ProblemClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig, api_key: Option<String>, bearer_token: Option<String>, username: Option<String>, password: Option<String>) -> Result<Self, ClientError> {
         let http_client = HttpClient::new(config)?;
-        Ok(Self { http_client })
+        Ok(Self { 
+            http_client, 
+            api_key, 
+            bearer_token, 
+            username, 
+            password 
+        })
     }
 
     pub async fn create_problem(&self, request: &CreateProblemRequest, options: Option<RequestOptions>) -> Result<CreateProblemResponse, ClientError> {
@@ -17,6 +27,7 @@ impl ProblemClient {
             Method::POST,
             "/problem-crud/create",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -26,6 +37,7 @@ impl ProblemClient {
             Method::POST,
             &format!("/problem-crud/update/{}", problem_id.0),
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -34,6 +46,7 @@ impl ProblemClient {
         self.http_client.execute_request(
             Method::DELETE,
             &format!("/problem-crud/delete/{}", problem_id.0),
+            None,
             None,
             options,
         ).await
@@ -44,6 +57,7 @@ impl ProblemClient {
             Method::POST,
             "/problem-crud/default-starter-files",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }

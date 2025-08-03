@@ -10,6 +10,8 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { ErrorGenerator } from "./error/ErrorGenerator";
+import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
+import { ClientConfigGenerator } from "./generators/ClientConfigGenerator";
 import { RootClientGenerator } from "./generators/RootClientGenerator";
 import { SubClientGenerator } from "./generators/SubClientGenerator";
 
@@ -53,17 +55,27 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     // ===========================
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
-        const projectFiles = this.generateProjectFiles(context);
+        const projectFiles = await this.generateProjectFiles(context);
         context.project.addSourceFiles(...projectFiles);
         await context.project.persist();
     }
 
-    private generateProjectFiles(context: SdkGeneratorContext): RustFile[] {
+    private async generateProjectFiles(context: SdkGeneratorContext): Promise<RustFile[]> {
         const files: RustFile[] = [];
 
         // Core files
         files.push(this.generateLibFile(context));
         files.push(this.generateErrorFile(context));
+
+        // Environment.rs (if environments are defined)
+        const environmentFile = await this.generateEnvironmentFile(context);
+        if (environmentFile) {
+            files.push(environmentFile);
+        }
+
+        // ClientConfig.rs and ApiClientBuilder.rs (always generate with conditional template processing)
+        const clientConfigGenerator = new ClientConfigGenerator(context);
+        files.push(clientConfigGenerator.generate());
 
         // Client.rs
         const rootClientGenerator = new RootClientGenerator(context);
@@ -104,6 +116,11 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             directory: RelativeFilePath.of("src"),
             fileContents: errorGenerator.generateErrorRs()
         });
+    }
+
+    private async generateEnvironmentFile(context: SdkGeneratorContext): Promise<RustFile | null> {
+        const environmentGenerator = new EnvironmentGenerator({ context });
+        return environmentGenerator.generate();
     }
 
     private generateSubClientFiles(context: SdkGeneratorContext, files: RustFile[]): void {
@@ -171,6 +188,10 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         moduleDeclarations.push(new ModuleDeclaration({ name: "request_options", isPublic: true }));
         moduleDeclarations.push(new ModuleDeclaration({ name: "client_error", isPublic: true }));
 
+        if (this.hasEnvironments(context)) {
+            moduleDeclarations.push(new ModuleDeclaration({ name: "environment", isPublic: true }));
+        }
+
         if (hasTypes) {
             moduleDeclarations.push(new ModuleDeclaration({ name: "types", isPublic: true }));
         }
@@ -192,8 +213,18 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             clientExports.push(subClientName);
         });
 
-        useStatements.push(new UseStatement({ path: "client", items: clientExports, isPublic: true }));
+        useStatements.push(
+            new UseStatement({
+                path: "client",
+                items: clientExports,
+                isPublic: true
+            })
+        );
         useStatements.push(new UseStatement({ path: "error", items: ["ApiError"], isPublic: true }));
+
+        if (this.hasEnvironments(context)) {
+            useStatements.push(new UseStatement({ path: "environment", items: ["*"], isPublic: true }));
+        }
 
         if (hasTypes) {
             useStatements.push(new UseStatement({ path: "types", items: ["*"], isPublic: true }));
@@ -201,9 +232,21 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
         // Add re-exports
         useStatements.push(new UseStatement({ path: "client_config", items: ["*"], isPublic: true }));
-        useStatements.push(new UseStatement({ path: "api_client_builder", items: ["*"], isPublic: true }));
+        useStatements.push(
+            new UseStatement({
+                path: "api_client_builder",
+                items: ["*"],
+                isPublic: true
+            })
+        );
         useStatements.push(new UseStatement({ path: "http_client", items: ["*"], isPublic: true }));
-        useStatements.push(new UseStatement({ path: "request_options", items: ["*"], isPublic: true }));
+        useStatements.push(
+            new UseStatement({
+                path: "request_options",
+                items: ["*"],
+                isPublic: true
+            })
+        );
         useStatements.push(new UseStatement({ path: "client_error", items: ["*"], isPublic: true }));
 
         return new Module({
@@ -222,7 +265,13 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             const rawModuleName = typeDeclaration.name.name.snakeCase.unsafeName;
             const escapedModuleName = context.configManager.escapeRustKeyword(rawModuleName);
             moduleDeclarations.push(new ModuleDeclaration({ name: escapedModuleName, isPublic: true }));
-            useStatements.push(new UseStatement({ path: escapedModuleName, items: ["*"], isPublic: true }));
+            useStatements.push(
+                new UseStatement({
+                    path: escapedModuleName,
+                    items: ["*"],
+                    isPublic: true
+                })
+            );
         }
 
         return new Module({
@@ -238,6 +287,10 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
     private hasTypes(context: SdkGeneratorContext): boolean {
         return Object.keys(context.ir.types).length > 0;
+    }
+
+    private hasEnvironments(context: SdkGeneratorContext): boolean {
+        return context.ir.environments?.environments != null;
     }
 
     private getFileContents(file: RustFile): string {

@@ -16,13 +16,6 @@ impl ApiClientBuilder {
         Self { config }
     }
     
-    /// Create a builder from environment variables
-    pub fn from_env() -> Self {
-        Self {
-            config: ClientConfig::from_env(),
-        }
-    }
-    
     /// Set the API key for authentication
     pub fn api_key(mut self, key: impl Into<String>) -> Self {
         self.config.api_key = Some(key.into());
@@ -32,6 +25,18 @@ impl ApiClientBuilder {
     /// Set the bearer token for authentication
     pub fn bearer_token(mut self, token: impl Into<String>) -> Self {
         self.config.bearer_token = Some(token.into());
+        self
+    }
+    
+    /// Set the username for basic authentication
+    pub fn username(mut self, username: impl Into<String>) -> Self {
+        self.config.username = Some(username.into());
+        self
+    }
+    
+    /// Set the password for basic authentication
+    pub fn password(mut self, password: impl Into<String>) -> Self {
+        self.config.password = Some(password.into());
         self
     }
     
@@ -66,8 +71,8 @@ impl ApiClientBuilder {
     }
     
     /// Build the client with validation
-    pub fn build(self) -> Result<LicenseClient, ClientError> {
-        self.config.validate().map_err(ClientError::ConfigError)?;
+    pub fn build(self) -> Result<LicenseClient, ClientError> {  
+        // Call the client constructor with all authentication parameters
         LicenseClient::new(self.config)
     }
 }
