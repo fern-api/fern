@@ -1,28 +1,23 @@
+import { AbstractProject } from "@fern-api/base-generator";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { BaseSwiftCustomConfigSchema } from "@fern-api/swift-codegen";
 import { mkdir } from "fs/promises";
 
-import { AbstractProject } from "@fern-api/base-generator";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
-import { BaseSwiftCustomConfigSchema } from "@fern-api/swift-codegen";
-
-import { AbstractSwiftGeneratorContext } from "../context/AbstractSwiftGeneratorContext";
+import { AbstractSwiftGeneratorContext } from "../context";
 import { SwiftFile } from "./SwiftFile";
 
 export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<BaseSwiftCustomConfigSchema>> {
-    private readonly name: string;
     /** Files stored in the the project root. */
     private readonly rootFiles: SwiftFile[] = [];
     /** Files stored in the `Sources` directory. */
     private readonly srcFiles: SwiftFile[] = [];
 
     public constructor({
-        context,
-        name
+        context
     }: {
         context: AbstractSwiftGeneratorContext<BaseSwiftCustomConfigSchema>;
-        name: string;
     }) {
         super(context);
-        this.name = name;
     }
 
     private get srcDirectory(): RelativeFilePath {

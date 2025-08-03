@@ -29,10 +29,7 @@ export abstract class AbstractSwiftGeneratorContext<
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(config, generatorNotificationService);
-        this.project = new SwiftProject({
-            context: this,
-            name: this.ir.apiName.pascalCase.unsafeName
-        });
+        this.project = new SwiftProject({ context: this });
     }
 
     public get packageName(): string {
