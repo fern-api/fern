@@ -13,13 +13,13 @@ let package = Package(
     products: [
         .library(
             name: "BearerTokenEnvironmentVariable",
-            targets: ["BearerTokenEnvironmentVariableTarget"]
+            targets: ["BearerTokenEnvironmentVariable"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "BearerTokenEnvironmentVariableTarget",
+            name: "BearerTokenEnvironmentVariable",
             path: "Sources"
         )
     ]

@@ -13,13 +13,13 @@ let package = Package(
     products: [
         .library(
             name: "MixedFileDirectory",
-            targets: ["MixedFileDirectoryTarget"]
+            targets: ["MixedFileDirectory"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "MixedFileDirectoryTarget",
+            name: "MixedFileDirectory",
             path: "Sources"
         )
     ]

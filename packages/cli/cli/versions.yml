@@ -1,6 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Escape $ signs when converting from OpenAPI -> Fern Definition (for enums), because the Fern Definition treats 
+        $ sign examples as references. 
+      type: feat
+  irVersion: 58
+  createdAt: "2025-08-01"
+  version: 0.65.44
+
+- changelogEntry:
+    - summary: |
         Cache buf.lock contents to prevent BSR rate limiting during `buf dep update`.
       type: feat
   irVersion: 58

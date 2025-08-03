@@ -1,9 +1,10 @@
 import { assertNever } from "@fern-api/core-utils";
 
+import { AstNode, Writer } from "./core";
 import { DeclarationType } from "./DeclarationType";
 import { Expression } from "./Expression";
-import { AstNode, Writer } from "./core";
-import { escapeReservedKeyword } from "./syntax/reserved-keywords";
+import { Pattern } from "./Pattern";
+import { escapeReservedKeyword } from "./syntax";
 
 type ConstantDeclaration = {
     type: "constant-declaration";
@@ -23,6 +24,11 @@ type VariableAssignment = {
     value: Expression;
 };
 
+type SelfAssignment = {
+    type: "self-assignment";
+    value: Expression;
+};
+
 type PropertyAssignment = {
     type: "property-assignment";
     unsafeName: string;
@@ -31,6 +37,11 @@ type PropertyAssignment = {
 
 type Return = {
     type: "return";
+    expression: Expression;
+};
+
+type Throw = {
+    type: "throw";
     expression: Expression;
 };
 
@@ -44,14 +55,27 @@ type ImportStatement = {
     moduleName: string;
 };
 
+type Switch = {
+    type: "switch";
+    target: Expression;
+    cases: {
+        pattern: Expression | Pattern;
+        body: Statement[];
+    }[];
+    defaultCase?: Statement[];
+};
+
 type InternalStatement =
     | ConstantDeclaration
     | VariableDeclaration
     | VariableAssignment
+    | SelfAssignment
     | PropertyAssignment
     | Return
+    | Throw
     | ExpressionStatement
-    | ImportStatement;
+    | ImportStatement
+    | Switch;
 
 export class Statement extends AstNode {
     private internalStatement: InternalStatement;
@@ -69,7 +93,6 @@ export class Statement extends AstNode {
                 writer.write(escapeReservedKeyword(this.internalStatement.unsafeName));
                 writer.write(" = ");
                 this.internalStatement.value.write(writer);
-                writer.newLine();
                 break;
             case "variable-declaration":
                 writer.write(DeclarationType.Var);
@@ -77,38 +100,72 @@ export class Statement extends AstNode {
                 writer.write(escapeReservedKeyword(this.internalStatement.unsafeName));
                 writer.write(" = ");
                 this.internalStatement.value.write(writer);
-                writer.newLine();
                 break;
             case "variable-assignment":
                 writer.write(escapeReservedKeyword(this.internalStatement.unsafeName));
                 writer.write(" = ");
                 this.internalStatement.value.write(writer);
-                writer.newLine();
+                break;
+            case "self-assignment":
+                writer.write("self = ");
+                writer.write(this.internalStatement.value.toString());
                 break;
             case "property-assignment":
                 writer.write("self.");
                 writer.write(this.internalStatement.unsafeName);
                 writer.write(" = ");
                 this.internalStatement.value.write(writer);
-                writer.newLine();
                 break;
             case "return":
                 writer.write("return ");
                 this.internalStatement.expression.write(writer);
-                writer.newLine();
+                break;
+            case "throw":
+                writer.write("throw ");
+                this.internalStatement.expression.write(writer);
                 break;
             case "expression-statement":
                 this.internalStatement.expression.write(writer);
-                writer.newLine();
                 break;
             case "import":
                 writer.write("import ");
                 writer.write(this.internalStatement.moduleName);
+                break;
+            case "switch":
+                writer.write("switch ");
+                this.internalStatement.target.write(writer);
+                writer.write(" {");
                 writer.newLine();
+                for (const switchCase of this.internalStatement.cases) {
+                    writer.write("case ");
+                    switchCase.pattern.write(writer);
+                    writer.write(":");
+                    writer.newLine();
+                    if (switchCase.body.length > 0) {
+                        writer.indent();
+                        for (const statement of switchCase.body) {
+                            statement.write(writer);
+                        }
+                        writer.dedent();
+                    }
+                }
+                if (this.internalStatement.defaultCase) {
+                    writer.write("default:");
+                    writer.newLine();
+                    if (this.internalStatement.defaultCase.length > 0) {
+                        writer.indent();
+                        for (const statement of this.internalStatement.defaultCase) {
+                            statement.write(writer);
+                        }
+                        writer.dedent();
+                    }
+                }
+                writer.write("}");
                 break;
             default:
                 assertNever(this.internalStatement);
         }
+        writer.newLine();
     }
 
     public static constantDeclaration(unsafeName: string, value: Expression): Statement {
@@ -123,6 +180,10 @@ export class Statement extends AstNode {
         return new this({ type: "variable-assignment", unsafeName, value });
     }
 
+    public static selfAssignment(value: Expression): Statement {
+        return new this({ type: "self-assignment", value });
+    }
+
     public static propertyAssignment(unsafeName: string, value: Expression): Statement {
         return new this({ type: "property-assignment", unsafeName, value });
     }
@@ -131,11 +192,19 @@ export class Statement extends AstNode {
         return new this({ type: "return", expression });
     }
 
+    public static throw(expression: Expression): Statement {
+        return new this({ type: "throw", expression });
+    }
+
     public static expressionStatement(expression: Expression): Statement {
         return new this({ type: "expression-statement", expression });
     }
 
     public static import(moduleName: string): Statement {
         return new this({ type: "import", moduleName });
+    }
+
+    public static switch(params: Omit<Switch, "type">): Statement {
+        return new this({ type: "switch", ...params });
     }
 }

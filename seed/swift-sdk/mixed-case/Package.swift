@@ -13,13 +13,13 @@ let package = Package(
     products: [
         .library(
             name: "MixedCase",
-            targets: ["MixedCaseTarget"]
+            targets: ["MixedCase"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "MixedCaseTarget",
+            name: "MixedCase",
             path: "Sources"
         )
     ]

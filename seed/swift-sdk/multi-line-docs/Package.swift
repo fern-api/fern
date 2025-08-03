@@ -13,13 +13,13 @@ let package = Package(
     products: [
         .library(
             name: "MultiLineDocs",
-            targets: ["MultiLineDocsTarget"]
+            targets: ["MultiLineDocs"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "MultiLineDocsTarget",
+            name: "MultiLineDocs",
             path: "Sources"
         )
     ]

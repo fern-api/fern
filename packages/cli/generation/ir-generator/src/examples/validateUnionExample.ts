@@ -51,7 +51,12 @@ export function validateUnionExample({
         return getViolationsForMisshapenExample(discriminantValue, "a string");
     }
 
-    const singleUnionTypeDefinition = rawUnion.union[discriminantValue];
+    let singleUnionTypeDefinition = rawUnion.union[discriminantValue];
+
+    if (discriminantValue.startsWith("\\$")) {
+        singleUnionTypeDefinition = rawUnion.union[discriminantValue.slice(1)];
+    }
+
     if (singleUnionTypeDefinition == null) {
         return [
             {

@@ -10,7 +10,7 @@ export function generateInlinedRequestModels({ context }: { context: ModelGenera
             if (endpoint.requestBody?.type === "inlinedRequestBody") {
                 const generator = new ObjectGenerator(
                     endpoint.requestBody.name.pascalCase.unsafeName,
-                    "inlined-request",
+                    context.requestsDirectory,
                     endpoint.requestBody.properties,
                     endpoint.requestBody.extendedProperties
                 );

@@ -12,6 +12,7 @@ export { FunctionParameter } from "./FunctionParameter";
 export { Initializer } from "./Initializer";
 export { LineBreak } from "./LineBreak";
 export { Method } from "./Method";
+export { Pattern } from "./Pattern";
 export { Property } from "./Property";
 export { Protocol } from "./Protocol";
 export { Statement } from "./Statement";

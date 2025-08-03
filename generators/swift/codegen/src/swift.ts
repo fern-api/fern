@@ -7,7 +7,6 @@ import {
     FunctionArgument,
     FunctionParameter,
     Initializer,
-    LineBreak,
     Method,
     Property,
     Struct
