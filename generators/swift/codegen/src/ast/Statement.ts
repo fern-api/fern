@@ -1,11 +1,20 @@
 import { assertNever } from "@fern-api/core-utils";
 
+import { AccessLevel } from "./AccessLevel";
 import { CodeBlock } from "./CodeBlock";
 import { AstNode, Writer } from "./core";
 import { DeclarationType } from "./DeclarationType";
 import { Expression } from "./Expression";
 import { Pattern } from "./Pattern";
 import { escapeReservedKeyword } from "./syntax";
+import { Type } from "./Type";
+
+type TypealiasDeclaration = {
+    type: "typealias-declaration";
+    accessLevel?: AccessLevel;
+    unsafeName: string;
+    aliasedType: Type;
+};
 
 type ConstantDeclaration = {
     type: "constant-declaration";
@@ -85,6 +94,7 @@ type Raw = {
 };
 
 type InternalStatement =
+    | TypealiasDeclaration
     | ConstantDeclaration
     | VariableDeclaration
     | VariableAssignment
@@ -108,6 +118,17 @@ export class Statement extends AstNode {
 
     public write(writer: Writer): void {
         switch (this.internalStatement.type) {
+            case "typealias-declaration":
+                if (this.internalStatement.accessLevel) {
+                    writer.write(this.internalStatement.accessLevel);
+                    writer.write(" ");
+                }
+                writer.write("typealias ");
+                writer.write(this.internalStatement.unsafeName);
+                writer.write(" = ");
+                this.internalStatement.aliasedType.write(writer);
+                writer.newLine();
+                break;
             case "constant-declaration":
                 writer.write(DeclarationType.Let);
                 writer.write(" ");
@@ -222,6 +243,10 @@ export class Statement extends AstNode {
             default:
                 assertNever(this.internalStatement);
         }
+    }
+
+    public static typealiasDeclaration(params: Omit<TypealiasDeclaration, "type">): Statement {
+        return new this({ type: "typealias-declaration", ...params });
     }
 
     public static constantDeclaration(params: Omit<ConstantDeclaration, "type">): Statement {
