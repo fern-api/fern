@@ -11,17 +11,20 @@ import { EndpointMethodGenerator } from "./EndpointMethodGenerator";
 
 export declare namespace RootClientGenerator {
     interface Args {
+        clientName: string;
         package_: Package;
         sdkGeneratorContext: SdkGeneratorContext;
     }
 }
 
 export class RootClientGenerator {
+    private readonly clientName: string;
     private readonly package_: Package;
     private readonly sdkGeneratorContext: SdkGeneratorContext;
     private readonly clientGeneratorContext: ClientGeneratorContext;
 
-    public constructor({ package_, sdkGeneratorContext }: RootClientGenerator.Args) {
+    public constructor({ clientName, package_, sdkGeneratorContext }: RootClientGenerator.Args) {
+        this.clientName = clientName;
         this.package_ = package_;
         this.sdkGeneratorContext = sdkGeneratorContext;
         this.clientGeneratorContext = new ClientGeneratorContext({
@@ -38,7 +41,7 @@ export class RootClientGenerator {
 
     public generate(): SwiftFile {
         const swiftClass = swift.class_({
-            name: this.sdkGeneratorContext.rootClientName,
+            name: this.clientName,
             final: true,
             accessLevel: swift.AccessLevel.Public,
             conformances: [swift.Protocol.Sendable],
@@ -51,7 +54,7 @@ export class RootClientGenerator {
         });
         const fileContents = swiftClass.toString();
         return new SwiftFile({
-            filename: `${this.sdkGeneratorContext.rootClientName}.swift`,
+            filename: `${this.clientName}.swift`,
             directory: RelativeFilePath.of(""),
             fileContents
         });
@@ -70,7 +73,9 @@ export class RootClientGenerator {
                 );
                 if (defaultEnvironment != null) {
                     defaultBaseUrlValue = swift.Expression.memberAccess({
-                        target: swift.Expression.reference(this.sdkGeneratorContext.environmentEnumName),
+                        target: swift.Expression.reference(
+                            this.sdkGeneratorContext.project.symbolRegistry.getEnvironmentSymbolOrThrow()
+                        ),
                         memberName: `${defaultEnvironment.name.camelCase.unsafeName}.rawValue`
                     });
                 }

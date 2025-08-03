@@ -1,10 +1,11 @@
+import { mkdir } from "node:fs/promises";
 import { AbstractProject } from "@fern-api/base-generator";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseSwiftCustomConfigSchema } from "@fern-api/swift-codegen";
-import { mkdir } from "fs/promises";
 
 import { AbstractSwiftGeneratorContext } from "../context";
 import { SwiftFile } from "./SwiftFile";
+import { SymbolRegistry } from "./SymbolRegistry";
 
 export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<BaseSwiftCustomConfigSchema>> {
     /** Files stored in the the project root. */
@@ -12,12 +13,15 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
     /** Files stored in the `Sources` directory. */
     private readonly srcFiles: SwiftFile[] = [];
 
+    public readonly symbolRegistry: SymbolRegistry;
+
     public constructor({
         context
     }: {
         context: AbstractSwiftGeneratorContext<BaseSwiftCustomConfigSchema>;
     }) {
         super(context);
+        this.symbolRegistry = SymbolRegistry.create();
     }
 
     private get srcDirectory(): RelativeFilePath {

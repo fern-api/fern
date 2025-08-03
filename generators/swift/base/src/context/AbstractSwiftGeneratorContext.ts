@@ -44,24 +44,12 @@ export abstract class AbstractSwiftGeneratorContext<
         return this.ir.apiName.pascalCase.unsafeName;
     }
 
-    public get rootClientName(): string {
-        return `${this.ir.apiName.pascalCase.unsafeName}Client`;
-    }
-
-    public get environmentEnumName(): string {
-        return `${this.ir.apiName.pascalCase.unsafeName}Environment`;
-    }
-
     public get schemasDirectory(): RelativeFilePath {
         return RelativeFilePath.of("Schemas");
     }
 
     public get requestsDirectory(): RelativeFilePath {
         return RelativeFilePath.of("Requests");
-    }
-
-    public getSubClientName(subpackage: Subpackage): string {
-        return `${subpackage.name.pascalCase.unsafeName}Client`;
     }
 
     public getTypeDeclarationOrThrow(typeId: TypeId): TypeDeclaration {
@@ -76,9 +64,9 @@ export abstract class AbstractSwiftGeneratorContext<
         return service;
     }
 
-    public getSubpackagesOrThrow(packageOrSubpackage: Package | Subpackage): Subpackage[] {
+    public getSubpackagesOrThrow(packageOrSubpackage: Package | Subpackage): [string, Subpackage][] {
         return packageOrSubpackage.subpackages.map((subpackageId) => {
-            return this.getSubpackageOrThrow(subpackageId);
+            return [subpackageId, this.getSubpackageOrThrow(subpackageId)];
         });
     }
 

@@ -8,37 +8,37 @@ import { DiscriminatedUnionGenerator, UndiscriminatedUnionGenerator } from "./un
 
 export function generateModels({ context }: { context: ModelGeneratorContext }): SwiftFile[] {
     const files: SwiftFile[] = [];
-    for (const [_typeId, typeDeclaration] of Object.entries(context.ir.types)) {
+    for (const [typeId, typeDeclaration] of Object.entries(context.ir.types)) {
         const file = typeDeclaration.shape._visit<SwiftFile | undefined>({
             alias: (atd) =>
                 new AliasGenerator(
-                    typeDeclaration.name.name.pascalCase.unsafeName,
+                    context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
                     context.schemasDirectory,
                     atd
                 ).generate(),
             enum: (etd) =>
                 new StringEnumGenerator(
-                    typeDeclaration.name.name.pascalCase.unsafeName,
+                    context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
                     context.schemasDirectory,
                     typeDeclaration,
                     etd
                 ).generate(),
             object: (otd) =>
                 new ObjectGenerator(
-                    typeDeclaration.name.name.pascalCase.unsafeName,
+                    context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
                     context.schemasDirectory,
                     otd.properties,
                     otd.extendedProperties
                 ).generate(),
             undiscriminatedUnion: (uutd) =>
                 new UndiscriminatedUnionGenerator(
-                    typeDeclaration.name.name.pascalCase.unsafeName,
+                    context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
                     context.schemasDirectory,
                     uutd
                 ).generate(),
             union: (utd) =>
                 new DiscriminatedUnionGenerator(
-                    typeDeclaration.name.name.pascalCase.unsafeName,
+                    context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
                     context.schemasDirectory,
                     utd,
                     context

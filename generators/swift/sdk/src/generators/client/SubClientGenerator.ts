@@ -10,27 +10,26 @@ import { EndpointMethodGenerator } from "./EndpointMethodGenerator";
 
 export declare namespace SubClientGenerator {
     interface Args {
+        clientName: string;
         subpackage: Subpackage;
         sdkGeneratorContext: SdkGeneratorContext;
     }
 }
 
 export class SubClientGenerator {
+    private readonly clientName: string;
     private readonly subpackage: Subpackage;
     private readonly sdkGeneratorContext: SdkGeneratorContext;
     private readonly clientGeneratorContext: ClientGeneratorContext;
 
-    public constructor({ subpackage, sdkGeneratorContext }: SubClientGenerator.Args) {
+    public constructor({ clientName, subpackage, sdkGeneratorContext }: SubClientGenerator.Args) {
+        this.clientName = clientName;
         this.subpackage = subpackage;
         this.sdkGeneratorContext = sdkGeneratorContext;
         this.clientGeneratorContext = new ClientGeneratorContext({
             packageOrSubpackage: subpackage,
             sdkGeneratorContext
         });
-    }
-
-    private get clientName() {
-        return this.sdkGeneratorContext.getSubClientName(this.subpackage);
     }
 
     private get service() {

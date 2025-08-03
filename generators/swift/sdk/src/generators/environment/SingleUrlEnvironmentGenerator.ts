@@ -8,23 +8,26 @@ import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 
 export declare namespace SingleUrlEnvironmentGenerator {
     interface Args {
+        enumName: string;
         environments: SingleBaseUrlEnvironments;
         sdkGeneratorContext: SdkGeneratorContext;
     }
 }
 
 export class SingleUrlEnvironmentGenerator {
+    private readonly enumName: string;
     private readonly environments: SingleBaseUrlEnvironments;
     private readonly sdkGeneratorContext: SdkGeneratorContext;
 
-    public constructor({ environments, sdkGeneratorContext }: SingleUrlEnvironmentGenerator.Args) {
+    public constructor({ enumName, environments, sdkGeneratorContext }: SingleUrlEnvironmentGenerator.Args) {
+        this.enumName = enumName;
         this.environments = environments;
         this.sdkGeneratorContext = sdkGeneratorContext;
     }
 
     public generate(): SwiftFile {
         const swiftEnum = swift.enumWithRawValues({
-            name: this.sdkGeneratorContext.environmentEnumName,
+            name: this.enumName,
             accessLevel: swift.AccessLevel.Public,
             conformances: ["String", swift.Protocol.CaseIterable],
             cases: this.environments.environments.map((e) => ({
@@ -34,7 +37,7 @@ export class SingleUrlEnvironmentGenerator {
         });
         const fileContents = swiftEnum.toString();
         return new SwiftFile({
-            filename: `${this.sdkGeneratorContext.environmentEnumName}.swift`,
+            filename: `${this.enumName}.swift`,
             directory: RelativeFilePath.of(""),
             fileContents
         });

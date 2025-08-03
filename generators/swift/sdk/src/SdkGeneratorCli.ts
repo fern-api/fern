@@ -54,6 +54,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
+        this.registerSymbols(context);
         const [rootFiles, sourceFiles] = await Promise.all([
             this.generateRootFiles(context),
             this.generateSourceFiles(context)
@@ -61,6 +62,39 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         context.project.addRootFiles(...rootFiles);
         context.project.addSourceFiles(...sourceFiles);
         await context.project.persist();
+    }
+
+    private registerSymbols(context: SdkGeneratorContext): void {
+        context.project.symbolRegistry.registerRootClientSymbol(`${context.ir.apiName.pascalCase.unsafeName}Client`);
+
+        context.project.symbolRegistry.registerEnvironmentSymbol(
+            `${context.ir.apiName.pascalCase.unsafeName}Environment`
+        );
+
+        Object.entries(context.ir.subpackages).forEach(([subpackageId, subpackage]) => {
+            context.project.symbolRegistry.registerSubClientSymbol(
+                subpackageId,
+                `${subpackage.name.pascalCase.unsafeName}Client`
+            );
+        });
+
+        Object.entries(context.ir.types).forEach(([typeId, typeDeclaration]) => {
+            context.project.symbolRegistry.registerSchemaTypeSymbol(
+                typeId,
+                typeDeclaration.name.name.pascalCase.unsafeName
+            );
+        });
+
+        Object.entries(context.ir.services).forEach(([_, service]) => {
+            service.endpoints.forEach((endpoint) => {
+                if (endpoint.requestBody?.type === "inlinedRequestBody") {
+                    context.project.symbolRegistry.registerRequestSymbol(
+                        endpoint.requestBody.name.pascalCase.unsafeName,
+                        endpoint.requestBody.name.pascalCase.unsafeName
+                    );
+                }
+            });
+        });
     }
 
     private async generateRootFiles(context: SdkGeneratorContext): Promise<SwiftFile[]> {
@@ -76,8 +110,9 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         const files: SwiftFile[] = [];
 
         // Resources/**/*.swift
-        Object.entries(context.ir.subpackages).forEach(([_, subpackage]) => {
+        Object.entries(context.ir.subpackages).forEach(([subpackageId, subpackage]) => {
             const subclientGenerator = new SubClientGenerator({
+                clientName: context.project.symbolRegistry.getSubClientSymbolOrThrow(subpackageId),
                 subpackage,
                 sdkGeneratorContext: context
             });
@@ -94,6 +129,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
 
         // {ProjectName}Client.swift
         const rootClientGenerator = new RootClientGenerator({
+            clientName: context.project.symbolRegistry.getRootClientSymbolOrThrow(),
             package_: context.ir.rootPackage,
             sdkGeneratorContext: context
         });
@@ -102,6 +138,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         // {ProjectName}Environment.swift
         if (context.ir.environments && context.ir.environments.environments.type === "singleBaseUrl") {
             const environmentGenerator = new SingleUrlEnvironmentGenerator({
+                enumName: context.project.symbolRegistry.getEnvironmentSymbolOrThrow(),
                 environments: context.ir.environments.environments,
                 sdkGeneratorContext: context
             });
