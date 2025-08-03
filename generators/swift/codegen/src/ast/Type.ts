@@ -148,6 +148,67 @@ export class Type extends AstNode {
         return this.internalType.type === "optional";
     }
 
+    public equals(other: Type): boolean {
+        switch (this.internalType.type) {
+            case "string":
+            case "bool":
+            case "int":
+            case "uint":
+            case "uint64":
+            case "int64":
+            case "float":
+            case "double":
+            case "data":
+            case "date":
+            case "uuid":
+            case "void":
+            case "any":
+            case "json-value":
+                return this.internalType.type === other.internalType.type;
+            case "tuple": {
+                if (
+                    other.internalType.type !== "tuple" ||
+                    this.internalType.elements.length !== other.internalType.elements.length
+                ) {
+                    return false;
+                }
+                for (let i = 0; i < this.internalType.elements.length; i++) {
+                    const thisElement = this.internalType.elements[i];
+                    const otherElement = other.internalType.elements[i];
+                    if (!thisElement || !otherElement || !thisElement.equals(otherElement)) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            case "array":
+                return (
+                    other.internalType.type === "array" &&
+                    this.internalType.elementType.equals(other.internalType.elementType)
+                );
+            case "dictionary":
+                return (
+                    other.internalType.type === "dictionary" &&
+                    this.internalType.keyType.equals(other.internalType.keyType) &&
+                    this.internalType.valueType.equals(other.internalType.valueType)
+                );
+            case "optional":
+                return (
+                    other.internalType.type == "optional" &&
+                    this.internalType.valueType.equals(other.internalType.valueType)
+                );
+            case "custom":
+                return other.internalType.type === "custom" && this.internalType.name === other.internalType.name;
+            case "existential-any":
+                return (
+                    other.internalType.type === "existential-any" &&
+                    this.internalType.protocolName === other.internalType.protocolName
+                );
+            default:
+                assertNever(this.internalType);
+        }
+    }
+
     /**
      * Generates a unique, camelCase identifier suitable for use as an enum case name.
      * This method creates descriptive names that help differentiate between similar types
