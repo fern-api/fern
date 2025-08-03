@@ -15,6 +15,7 @@ export class SymbolRegistry {
     }
 
     private rootClientSymbol: string | null;
+    private environmentSymbol: string | null;
     private subClientSymbols: Map<string, string>;
     private schemaTypeSymbols: Map<string, string>;
     private requestSymbols: Map<string, string>;
@@ -23,6 +24,7 @@ export class SymbolRegistry {
 
     private constructor(symbols: string[]) {
         this.rootClientSymbol = null;
+        this.environmentSymbol = null;
         this.subClientSymbols = new Map();
         this.schemaTypeSymbols = new Map();
         this.requestSymbols = new Map();
@@ -33,6 +35,14 @@ export class SymbolRegistry {
         const symbol = this.rootClientSymbol;
         if (symbol == null) {
             throw new Error("Root client symbol not found.");
+        }
+        return symbol;
+    }
+
+    public getEnvironmentSymbolOrThrow(): string {
+        const symbol = this.environmentSymbol;
+        if (symbol == null) {
+            throw new Error("Environment symbol not found.");
         }
         return symbol;
     }
@@ -70,6 +80,13 @@ export class SymbolRegistry {
     public registerRootClientSymbol(symbolName: string): string {
         symbolName = this.getAvailableSymbolName(symbolName);
         this.rootClientSymbol = symbolName;
+        this.symbolSet.add(symbolName);
+        return symbolName;
+    }
+
+    public registerEnvironmentSymbol(symbolName: string): string {
+        symbolName = this.getAvailableSymbolName(symbolName);
+        this.environmentSymbol = symbolName;
         this.symbolSet.add(symbolName);
         return symbolName;
     }
