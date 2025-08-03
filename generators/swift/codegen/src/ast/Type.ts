@@ -148,7 +148,7 @@ export class Type extends AstNode {
         return this.internalType.type === "optional";
     }
 
-    public equals(other: Type): boolean {
+    public equals(that: Type): boolean {
         switch (this.internalType.type) {
             case "string":
             case "bool":
@@ -164,18 +164,18 @@ export class Type extends AstNode {
             case "void":
             case "any":
             case "json-value":
-                return this.internalType.type === other.internalType.type;
+                return this.internalType.type === that.internalType.type;
             case "tuple": {
                 if (
-                    other.internalType.type !== "tuple" ||
-                    this.internalType.elements.length !== other.internalType.elements.length
+                    that.internalType.type !== "tuple" ||
+                    this.internalType.elements.length !== that.internalType.elements.length
                 ) {
                     return false;
                 }
                 for (let i = 0; i < this.internalType.elements.length; i++) {
                     const thisElement = this.internalType.elements[i];
-                    const otherElement = other.internalType.elements[i];
-                    if (!thisElement || !otherElement || !thisElement.equals(otherElement)) {
+                    const thatElement = that.internalType.elements[i];
+                    if (!thisElement || !thatElement || !thisElement.equals(thatElement)) {
                         return false;
                     }
                 }
@@ -183,26 +183,26 @@ export class Type extends AstNode {
             }
             case "array":
                 return (
-                    other.internalType.type === "array" &&
-                    this.internalType.elementType.equals(other.internalType.elementType)
+                    that.internalType.type === "array" &&
+                    this.internalType.elementType.equals(that.internalType.elementType)
                 );
             case "dictionary":
                 return (
-                    other.internalType.type === "dictionary" &&
-                    this.internalType.keyType.equals(other.internalType.keyType) &&
-                    this.internalType.valueType.equals(other.internalType.valueType)
+                    that.internalType.type === "dictionary" &&
+                    this.internalType.keyType.equals(that.internalType.keyType) &&
+                    this.internalType.valueType.equals(that.internalType.valueType)
                 );
             case "optional":
                 return (
-                    other.internalType.type == "optional" &&
-                    this.internalType.valueType.equals(other.internalType.valueType)
+                    that.internalType.type == "optional" &&
+                    this.internalType.valueType.equals(that.internalType.valueType)
                 );
             case "custom":
-                return other.internalType.type === "custom" && this.internalType.name === other.internalType.name;
+                return that.internalType.type === "custom" && this.internalType.name === that.internalType.name;
             case "existential-any":
                 return (
-                    other.internalType.type === "existential-any" &&
-                    this.internalType.protocolName === other.internalType.protocolName
+                    that.internalType.type === "existential-any" &&
+                    this.internalType.protocolName === that.internalType.protocolName
                 );
             default:
                 assertNever(this.internalType);
