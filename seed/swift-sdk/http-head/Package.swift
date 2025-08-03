@@ -13,13 +13,13 @@ let package = Package(
     products: [
         .library(
             name: "HttpHead",
-            targets: ["HttpHeadTarget"]
+            targets: ["HttpHead"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "HttpHeadTarget",
+            name: "HttpHead",
             path: "Sources"
         )
     ]

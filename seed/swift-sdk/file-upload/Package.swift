@@ -13,13 +13,13 @@ let package = Package(
     products: [
         .library(
             name: "FileUpload",
-            targets: ["FileUploadTarget"]
+            targets: ["FileUpload"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "FileUploadTarget",
+            name: "FileUpload",
             path: "Sources"
         )
     ]

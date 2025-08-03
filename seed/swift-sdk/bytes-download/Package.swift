@@ -13,13 +13,13 @@ let package = Package(
     products: [
         .library(
             name: "BytesDownload",
-            targets: ["BytesDownloadTarget"]
+            targets: ["BytesDownload"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "BytesDownloadTarget",
+            name: "BytesDownload",
             path: "Sources"
         )
     ]

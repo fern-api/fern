@@ -13,13 +13,13 @@ let package = Package(
     products: [
         .library(
             name: "ErrorProperty",
-            targets: ["ErrorPropertyTarget"]
+            targets: ["ErrorProperty"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "ErrorPropertyTarget",
+            name: "ErrorProperty",
             path: "Sources"
         )
     ]

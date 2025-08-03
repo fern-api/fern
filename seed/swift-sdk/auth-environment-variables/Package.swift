@@ -13,13 +13,13 @@ let package = Package(
     products: [
         .library(
             name: "AuthEnvironmentVariables",
-            targets: ["AuthEnvironmentVariablesTarget"]
+            targets: ["AuthEnvironmentVariables"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "AuthEnvironmentVariablesTarget",
+            name: "AuthEnvironmentVariables",
             path: "Sources"
         )
     ]
