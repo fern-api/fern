@@ -4,22 +4,22 @@ import { entries } from "@fern-api/core-utils";
 import { getFilename, RelativeFilePath } from "@fern-api/fs-utils";
 
 /**
- * Configuration for a static Swift file that gets included as-is in the generated SDK.
- * This serves as the source definition that gets transformed into AsIsFileDefinition.
+ * Configuration specification for a static Swift file that gets included as-is in the generated SDK.
+ * This serves as the raw configuration that gets transformed into a fully resolved {@link AsIsFileDefinition}
+ * during the build process.
  */
 interface AsIsFileSpec {
-    /**
-     * Relative path where the file should be placed in the generated project.
-     */
     relativePath: string;
-
-    /**
-     * The names of the non-private nodes (classes, structs, enums, etc.) that this file introduces to
-     * the project namespace. Used for name collision handling.
-     */
     nodeNames?: string[];
 }
 
+/**
+ * Registry of all static Swift file specifications.
+ *
+ * This constant defines the complete catalog of pre-written Swift files that can be
+ * included in generated SDKs. Each entry maps a unique identifier to a file specification
+ * containing the file's intended path and exported symbols.
+ */
 const AsIsFileSpecs = {
     // Core/Networking
     Http: {
@@ -82,21 +82,76 @@ const AsIsFileSpecs = {
     }
 } satisfies Record<string, AsIsFileSpec>;
 
+/**
+ * A fully resolved definition of a static Swift file, ready for use in codegen.
+ */
 export interface AsIsFileDefinition {
+    /**
+     * The filename (without directory path) of the Swift file.
+     *
+     * @example "HTTP.swift"
+     */
     filename: string;
+
+    /**
+     * The relative directory path where this file should be placed in the generated project.
+     *
+     * @example RelativeFilePath.of("Core/Networking")
+     */
     directory: RelativeFilePath;
+
+    /**
+     * The names of public Swift symbols (classes, structs, enums, protocols, etc.)
+     * that this file introduces to the project namespace.
+     */
     nodeNames: string[];
+
+    /**
+     * Asynchronously loads the contents of the Swift file from disk.
+     *
+     * @returns Promise that resolves to the raw Swift source code as a string
+     */
     loadContents: () => Promise<string>;
 }
 
+/**
+ * Union type of all available static file identifiers.
+ */
 export type AsIsFileId = keyof typeof AsIsFileSpecs;
 
+/**
+ * Mapped type that provides strongly-typed access to all static file definitions.
+ *
+ * Each key corresponds to an {@link AsIsFileId} and maps to its resolved
+ * {@link AsIsFileDefinition}.
+ */
 export type AsIsFileDefinitionsById = {
     [K in AsIsFileId]: AsIsFileDefinition;
 };
 
+/**
+ * Registry of all static Swift files available for inclusion in generated SDKs.
+ *
+ * This constant provides access to resolved file definitions that can be used
+ * by code generators to include pre-written Swift files in the output.
+ *
+ * @example
+ * ```typescript
+ * // Access a specific file
+ * const httpFile = AsIsFiles.Http;
+ * const content = await httpFile.loadContents();
+ *
+ * // Iterate over all files
+ * for (const [id, definition] of Object.entries(AsIsFiles)) {
+ *   console.log(`${id}: ${definition.filename}`);
+ * }
+ * ```
+ */
 export const AsIsFiles = createAsIsFiles();
 
+/**
+ * Transforms the raw file specifications into fully resolved file definitions.
+ */
 function createAsIsFiles(): AsIsFileDefinitionsById {
     const result = {} as AsIsFileDefinitionsById;
 
