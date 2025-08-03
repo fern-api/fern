@@ -5727,7 +5727,7 @@ or overwritten with default values.",
                             "text": "AI's don't have a favorite color.... Yet.",
                           },
                         ],
-                        "key": "chat_history",
+                        "key": "\$chat_history",
                         "type": "CHAT_HISTORY",
                       },
                     ],
@@ -5904,7 +5904,7 @@ service:
           request:
             label: Scenario 2
             inputs:
-              - key: chat_history
+              - key: \$chat_history
                 type: CHAT_HISTORY
                 chat_history:
                   - text: What's your favorite color?

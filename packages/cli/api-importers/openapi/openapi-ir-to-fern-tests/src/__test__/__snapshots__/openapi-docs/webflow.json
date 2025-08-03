@@ -18516,7 +18516,7 @@ Required scope | `ecommerce:read`
                         },
                       ],
                       "applicationFee": {
-                        "string": " 2.37 USD",
+                        "string": "\$ 2.37 USD",
                         "unit": "USD",
                         "value": "5892",
                       },
@@ -18542,7 +18542,7 @@ Required scope | `ecommerce:read`
                         "fullName": "Arthur Dent",
                       },
                       "customerPaid": {
-                        "string": " 118.73 USD",
+                        "string": "\$ 118.73 USD",
                         "unit": "USD",
                         "value": "5892",
                       },
@@ -18564,7 +18564,7 @@ Required scope | `ecommerce:read`
                         "isBuyNow": false,
                       },
                       "netAmount": {
-                        "string": " 112.62 USD",
+                        "string": "\$ 112.62 USD",
                         "unit": "USD",
                         "value": "5892",
                       },
@@ -18580,7 +18580,7 @@ Required scope | `ecommerce:read`
                           "productName": "Luxurious Fresh Ball",
                           "productSlug": "luxurious-fresh-ball",
                           "rowTotal": {
-                            "string": " 55.61 USD",
+                            "string": "\$ 55.61 USD",
                             "unit": "USD",
                             "value": "5892",
                           },
@@ -18590,7 +18590,7 @@ Required scope | `ecommerce:read`
                           },
                           "variantName": "Luxurious Fresh Ball Generic: Bronze, Practical: Plastic",
                           "variantPrice": {
-                            "string": " 55.61 USD",
+                            "string": "\$ 55.61 USD",
                             "unit": "USD",
                             "value": "5892",
                           },
@@ -18607,7 +18607,7 @@ Required scope | `ecommerce:read`
                           "productName": "Recycled Steel Gloves",
                           "productSlug": "recycled-steel-gloves",
                           "rowTotal": {
-                            "string": " 53.44 USD",
+                            "string": "\$ 53.44 USD",
                             "unit": "USD",
                             "value": "5892",
                           },
@@ -18617,7 +18617,7 @@ Required scope | `ecommerce:read`
                           },
                           "variantName": "Recycled Steel Gloves Electronic: Granite, Handcrafted: grey",
                           "variantPrice": {
-                            "string": " 53.44 USD",
+                            "string": "\$ 53.44 USD",
                             "unit": "USD",
                             "value": "5892",
                           },
@@ -18667,7 +18667,7 @@ Required scope | `ecommerce:read`
                             "description": "NY Taxes (4.00%)",
                             "name": "State Taxes",
                             "price": {
-                              "string": " 4.36 USD",
+                              "string": "\$ 4.36 USD",
                               "unit": "USD",
                               "value": "5892",
                             },
@@ -18677,7 +18677,7 @@ Required scope | `ecommerce:read`
                             "description": "NEW YORK Taxes (4.88%)",
                             "name": "City Taxes",
                             "price": {
-                              "string": " 5.32 USD",
+                              "string": "\$ 5.32 USD",
                               "unit": "USD",
                               "value": "5892",
                             },
@@ -18687,7 +18687,7 @@ Required scope | `ecommerce:read`
                             "description": "",
                             "name": "Flat",
                             "price": {
-                              "string": " 0.00 USD",
+                              "string": "\$ 0.00 USD",
                               "unit": "USD",
                               "value": "5892",
                             },
@@ -18695,12 +18695,12 @@ Required scope | `ecommerce:read`
                           },
                         ],
                         "subtotal": {
-                          "string": " 109.05 USD",
+                          "string": "\$ 109.05 USD",
                           "unit": "USD",
                           "value": "5892",
                         },
                         "total": {
-                          "string": " 118.73 USD",
+                          "string": "\$ 118.73 USD",
                           "unit": "USD",
                           "value": "5892",
                         },
@@ -18780,7 +18780,7 @@ Required scope | `ecommerce:read`
                             },
                           ],
                           "applicationFee": {
-                            "string": " 4.23 USD",
+                            "string": "\$ 4.23 USD",
                             "unit": "USD",
                             "value": "5892",
                           },
@@ -18805,7 +18805,7 @@ Required scope | `ecommerce:read`
                             "fullName": "Arthur Dent",
                           },
                           "customerPaid": {
-                            "string": " 211.55 USD",
+                            "string": "\$ 211.55 USD",
                             "unit": "USD",
                             "value": "5892",
                           },
@@ -18823,7 +18823,7 @@ Required scope | `ecommerce:read`
                             "isBuyNow": false,
                           },
                           "netAmount": {
-                            "string": " 200.89 USD",
+                            "string": "\$ 200.89 USD",
                             "unit": "USD",
                             "value": "5892",
                           },
@@ -18839,7 +18839,7 @@ Required scope | `ecommerce:read`
                               "productName": "Luxurious Fresh Ball",
                               "productSlug": "luxurious-fresh-ball",
                               "rowTotal": {
-                                "string": " 111.22 USD",
+                                "string": "\$ 111.22 USD",
                                 "unit": "USD",
                                 "value": "5892",
                               },
@@ -18849,7 +18849,7 @@ Required scope | `ecommerce:read`
                               },
                               "variantName": "Luxurious Fresh Ball Generic: Bronze, Practical: Plastic",
                               "variantPrice": {
-                                "string": " 55.61 USD",
+                                "string": "\$ 55.61 USD",
                                 "unit": "USD",
                                 "value": "5892",
                               },
@@ -18866,7 +18866,7 @@ Required scope | `ecommerce:read`
                               "productName": "Incredible Bronze Towels",
                               "productSlug": "incredible-bronze-towels",
                               "rowTotal": {
-                                "string": " 83.09 USD",
+                                "string": "\$ 83.09 USD",
                                 "unit": "USD",
                                 "value": "5892",
                               },
@@ -18876,7 +18876,7 @@ Required scope | `ecommerce:read`
                               },
                               "variantName": "Incredible Bronze Towels Sleek: Frozen, Incredible: Metal",
                               "variantPrice": {
-                                "string": " 83.09 USD",
+                                "string": "\$ 83.09 USD",
                                 "unit": "USD",
                                 "value": "5892",
                               },
@@ -18922,7 +18922,7 @@ Required scope | `ecommerce:read`
                                 "description": "CA Taxes (6.25%)",
                                 "name": "State Taxes",
                                 "price": {
-                                  "string": "3.44",
+                                  "string": "\$3.44",
                                   "unit": "USD",
                                   "value": "5892",
                                 },
@@ -18956,7 +18956,7 @@ Required scope | `ecommerce:read`
                             },
                           ],
                           "applicationFee": {
-                            "string": " 2.37 USD",
+                            "string": "\$ 2.37 USD",
                             "unit": "USD",
                             "value": "5892",
                           },
@@ -18981,7 +18981,7 @@ Required scope | `ecommerce:read`
                             "fullName": "Arthur Dent",
                           },
                           "customerPaid": {
-                            "string": " 118.73 USD",
+                            "string": "\$ 118.73 USD",
                             "unit": "USD",
                             "value": "5892",
                           },
@@ -18999,7 +18999,7 @@ Required scope | `ecommerce:read`
                             "isBuyNow": false,
                           },
                           "netAmount": {
-                            "string": " 112.62 USD",
+                            "string": "\$ 112.62 USD",
                             "unit": "USD",
                             "value": "5892",
                           },
@@ -19015,7 +19015,7 @@ Required scope | `ecommerce:read`
                               "productName": "Luxurious Fresh Ball",
                               "productSlug": "luxurious-fresh-ball",
                               "rowTotal": {
-                                "string": " 55.61 USD",
+                                "string": "\$ 55.61 USD",
                                 "unit": "USD",
                                 "value": "5892",
                               },
@@ -19025,7 +19025,7 @@ Required scope | `ecommerce:read`
                               },
                               "variantName": "Luxurious Fresh Ball Generic: Bronze, Practical: Plastic",
                               "variantPrice": {
-                                "string": " 55.61 USD",
+                                "string": "\$ 55.61 USD",
                                 "unit": "USD",
                                 "value": "5892",
                               },
@@ -19042,7 +19042,7 @@ Required scope | `ecommerce:read`
                               "productName": "Recycled Steel Gloves",
                               "productSlug": "recycled-steel-gloves",
                               "rowTotal": {
-                                "string": " 53.44 USD",
+                                "string": "\$ 53.44 USD",
                                 "unit": "USD",
                                 "value": "5892",
                               },
@@ -19052,7 +19052,7 @@ Required scope | `ecommerce:read`
                               },
                               "variantName": "Recycled Steel Gloves Electronic: Granite, Handcrafted: grey",
                               "variantPrice": {
-                                "string": " 53.44 USD",
+                                "string": "\$ 53.44 USD",
                                 "unit": "USD",
                                 "value": "5892",
                               },
@@ -19101,7 +19101,7 @@ Required scope | `ecommerce:read`
                                 "description": "NY Taxes (4.00%)",
                                 "name": "State Taxes",
                                 "price": {
-                                  "string": " 4.36 USD",
+                                  "string": "\$ 4.36 USD",
                                   "unit": "USD",
                                   "value": "5892",
                                 },
@@ -19111,7 +19111,7 @@ Required scope | `ecommerce:read`
                                 "description": "NEW YORK Taxes (4.88%)",
                                 "name": "City Taxes",
                                 "price": {
-                                  "string": " 5.32 USD",
+                                  "string": "\$ 5.32 USD",
                                   "unit": "USD",
                                   "value": "5892",
                                 },
@@ -19121,7 +19121,7 @@ Required scope | `ecommerce:read`
                                 "description": "",
                                 "name": "Flat",
                                 "price": {
-                                  "string": " 0.00 USD",
+                                  "string": "\$ 0.00 USD",
                                   "unit": "USD",
                                   "value": "5892",
                                 },
@@ -19129,12 +19129,12 @@ Required scope | `ecommerce:read`
                               },
                             ],
                             "subtotal": {
-                              "string": " 109.05 USD",
+                              "string": "\$ 109.05 USD",
                               "unit": "USD",
                               "value": "5892",
                             },
                             "total": {
-                              "string": " 118.73 USD",
+                              "string": "\$ 118.73 USD",
                               "unit": "USD",
                               "value": "5892",
                             },
@@ -19238,7 +19238,7 @@ Required scope | `ecommerce:write`
                         },
                       ],
                       "applicationFee": {
-                        "string": " 2.37 USD",
+                        "string": "\$ 2.37 USD",
                         "unit": "USD",
                         "value": "5892",
                       },
@@ -19264,7 +19264,7 @@ Required scope | `ecommerce:write`
                         "fullName": "Arthur Dent",
                       },
                       "customerPaid": {
-                        "string": " 118.73 USD",
+                        "string": "\$ 118.73 USD",
                         "unit": "USD",
                         "value": "5892",
                       },
@@ -19286,7 +19286,7 @@ Required scope | `ecommerce:write`
                         "isBuyNow": false,
                       },
                       "netAmount": {
-                        "string": " 112.62 USD",
+                        "string": "\$ 112.62 USD",
                         "unit": "USD",
                         "value": "5892",
                       },
@@ -19302,7 +19302,7 @@ Required scope | `ecommerce:write`
                           "productName": "Luxurious Fresh Ball",
                           "productSlug": "luxurious-fresh-ball",
                           "rowTotal": {
-                            "string": " 55.61 USD",
+                            "string": "\$ 55.61 USD",
                             "unit": "USD",
                             "value": "5892",
                           },
@@ -19312,7 +19312,7 @@ Required scope | `ecommerce:write`
                           },
                           "variantName": "Luxurious Fresh Ball Generic: Bronze, Practical: Plastic",
                           "variantPrice": {
-                            "string": " 55.61 USD",
+                            "string": "\$ 55.61 USD",
                             "unit": "USD",
                             "value": "5892",
                           },
@@ -19329,7 +19329,7 @@ Required scope | `ecommerce:write`
                           "productName": "Recycled Steel Gloves",
                           "productSlug": "recycled-steel-gloves",
                           "rowTotal": {
-                            "string": " 53.44 USD",
+                            "string": "\$ 53.44 USD",
                             "unit": "USD",
                             "value": "5892",
                           },
@@ -19339,7 +19339,7 @@ Required scope | `ecommerce:write`
                           },
                           "variantName": "Recycled Steel Gloves Electronic: Granite, Handcrafted: grey",
                           "variantPrice": {
-                            "string": " 53.44 USD",
+                            "string": "\$ 53.44 USD",
                             "unit": "USD",
                             "value": "5892",
                           },
@@ -19389,7 +19389,7 @@ Required scope | `ecommerce:write`
                             "description": "NY Taxes (4.00%)",
                             "name": "State Taxes",
                             "price": {
-                              "string": " 4.36 USD",
+                              "string": "\$ 4.36 USD",
                               "unit": "USD",
                               "value": "5892",
                             },
@@ -19399,7 +19399,7 @@ Required scope | `ecommerce:write`
                             "description": "NEW YORK Taxes (4.88%)",
                             "name": "City Taxes",
                             "price": {
-                              "string": " 5.32 USD",
+                              "string": "\$ 5.32 USD",
                               "unit": "USD",
                               "value": "5892",
                             },
@@ -19409,7 +19409,7 @@ Required scope | `ecommerce:write`
                             "description": "",
                             "name": "Flat",
                             "price": {
-                              "string": " 0.00 USD",
+                              "string": "\$ 0.00 USD",
                               "unit": "USD",
                               "value": "5892",
                             },
@@ -19417,12 +19417,12 @@ Required scope | `ecommerce:write`
                           },
                         ],
                         "subtotal": {
-                          "string": " 109.05 USD",
+                          "string": "\$ 109.05 USD",
                           "unit": "USD",
                           "value": "5892",
                         },
                         "total": {
-                          "string": " 118.73 USD",
+                          "string": "\$ 118.73 USD",
                           "unit": "USD",
                           "value": "5892",
                         },
@@ -19519,7 +19519,7 @@ Required scope | `ecommerce:write`
                         },
                       ],
                       "applicationFee": {
-                        "string": " 2.37 USD",
+                        "string": "\$ 2.37 USD",
                         "unit": "USD",
                         "value": "5892",
                       },
@@ -19545,7 +19545,7 @@ Required scope | `ecommerce:write`
                         "fullName": "Arthur Dent",
                       },
                       "customerPaid": {
-                        "string": " 118.73 USD",
+                        "string": "\$ 118.73 USD",
                         "unit": "USD",
                         "value": "5892",
                       },
@@ -19567,7 +19567,7 @@ Required scope | `ecommerce:write`
                         "isBuyNow": false,
                       },
                       "netAmount": {
-                        "string": " 112.62 USD",
+                        "string": "\$ 112.62 USD",
                         "unit": "USD",
                         "value": "5892",
                       },
@@ -19583,7 +19583,7 @@ Required scope | `ecommerce:write`
                           "productName": "Luxurious Fresh Ball",
                           "productSlug": "luxurious-fresh-ball",
                           "rowTotal": {
-                            "string": " 55.61 USD",
+                            "string": "\$ 55.61 USD",
                             "unit": "USD",
                             "value": "5892",
                           },
@@ -19593,7 +19593,7 @@ Required scope | `ecommerce:write`
                           },
                           "variantName": "Luxurious Fresh Ball Generic: Bronze, Practical: Plastic",
                           "variantPrice": {
-                            "string": " 55.61 USD",
+                            "string": "\$ 55.61 USD",
                             "unit": "USD",
                             "value": "5892",
                           },
@@ -19610,7 +19610,7 @@ Required scope | `ecommerce:write`
                           "productName": "Recycled Steel Gloves",
                           "productSlug": "recycled-steel-gloves",
                           "rowTotal": {
-                            "string": " 53.44 USD",
+                            "string": "\$ 53.44 USD",
                             "unit": "USD",
                             "value": "5892",
                           },
@@ -19620,7 +19620,7 @@ Required scope | `ecommerce:write`
                           },
                           "variantName": "Recycled Steel Gloves Electronic: Granite, Handcrafted: grey",
                           "variantPrice": {
-                            "string": " 53.44 USD",
+                            "string": "\$ 53.44 USD",
                             "unit": "USD",
                             "value": "5892",
                           },
@@ -19670,7 +19670,7 @@ Required scope | `ecommerce:write`
                             "description": "NY Taxes (4.00%)",
                             "name": "State Taxes",
                             "price": {
-                              "string": " 4.36 USD",
+                              "string": "\$ 4.36 USD",
                               "unit": "USD",
                               "value": "5892",
                             },
@@ -19680,7 +19680,7 @@ Required scope | `ecommerce:write`
                             "description": "NEW YORK Taxes (4.88%)",
                             "name": "City Taxes",
                             "price": {
-                              "string": " 5.32 USD",
+                              "string": "\$ 5.32 USD",
                               "unit": "USD",
                               "value": "5892",
                             },
@@ -19690,7 +19690,7 @@ Required scope | `ecommerce:write`
                             "description": "",
                             "name": "Flat",
                             "price": {
-                              "string": " 0.00 USD",
+                              "string": "\$ 0.00 USD",
                               "unit": "USD",
                               "value": "5892",
                             },
@@ -19698,12 +19698,12 @@ Required scope | `ecommerce:write`
                           },
                         ],
                         "subtotal": {
-                          "string": " 109.05 USD",
+                          "string": "\$ 109.05 USD",
                           "unit": "USD",
                           "value": "5892",
                         },
                         "total": {
-                          "string": " 118.73 USD",
+                          "string": "\$ 118.73 USD",
                           "unit": "USD",
                           "value": "5892",
                         },
@@ -19812,7 +19812,7 @@ Required scope | `ecommerce:write`
                         },
                       ],
                       "applicationFee": {
-                        "string": " 2.37 USD",
+                        "string": "\$ 2.37 USD",
                         "unit": "USD",
                         "value": "5892",
                       },
@@ -19838,7 +19838,7 @@ Required scope | `ecommerce:write`
                         "fullName": "Arthur Dent",
                       },
                       "customerPaid": {
-                        "string": " 118.73 USD",
+                        "string": "\$ 118.73 USD",
                         "unit": "USD",
                         "value": "5892",
                       },
@@ -19860,7 +19860,7 @@ Required scope | `ecommerce:write`
                         "isBuyNow": false,
                       },
                       "netAmount": {
-                        "string": " 112.62 USD",
+                        "string": "\$ 112.62 USD",
                         "unit": "USD",
                         "value": "5892",
                       },
@@ -19876,7 +19876,7 @@ Required scope | `ecommerce:write`
                           "productName": "Luxurious Fresh Ball",
                           "productSlug": "luxurious-fresh-ball",
                           "rowTotal": {
-                            "string": " 55.61 USD",
+                            "string": "\$ 55.61 USD",
                             "unit": "USD",
                             "value": "5892",
                           },
@@ -19886,7 +19886,7 @@ Required scope | `ecommerce:write`
                           },
                           "variantName": "Luxurious Fresh Ball Generic: Bronze, Practical: Plastic",
                           "variantPrice": {
-                            "string": " 55.61 USD",
+                            "string": "\$ 55.61 USD",
                             "unit": "USD",
                             "value": "5892",
                           },
@@ -19903,7 +19903,7 @@ Required scope | `ecommerce:write`
                           "productName": "Recycled Steel Gloves",
                           "productSlug": "recycled-steel-gloves",
                           "rowTotal": {
-                            "string": " 53.44 USD",
+                            "string": "\$ 53.44 USD",
                             "unit": "USD",
                             "value": "5892",
                           },
@@ -19913,7 +19913,7 @@ Required scope | `ecommerce:write`
                           },
                           "variantName": "Recycled Steel Gloves Electronic: Granite, Handcrafted: grey",
                           "variantPrice": {
-                            "string": " 53.44 USD",
+                            "string": "\$ 53.44 USD",
                             "unit": "USD",
                             "value": "5892",
                           },
@@ -19963,7 +19963,7 @@ Required scope | `ecommerce:write`
                             "description": "NY Taxes (4.00%)",
                             "name": "State Taxes",
                             "price": {
-                              "string": " 4.36 USD",
+                              "string": "\$ 4.36 USD",
                               "unit": "USD",
                               "value": "5892",
                             },
@@ -19973,7 +19973,7 @@ Required scope | `ecommerce:write`
                             "description": "NEW YORK Taxes (4.88%)",
                             "name": "City Taxes",
                             "price": {
-                              "string": " 5.32 USD",
+                              "string": "\$ 5.32 USD",
                               "unit": "USD",
                               "value": "5892",
                             },
@@ -19983,7 +19983,7 @@ Required scope | `ecommerce:write`
                             "description": "",
                             "name": "Flat",
                             "price": {
-                              "string": " 0.00 USD",
+                              "string": "\$ 0.00 USD",
                               "unit": "USD",
                               "value": "5892",
                             },
@@ -19991,12 +19991,12 @@ Required scope | `ecommerce:write`
                           },
                         ],
                         "subtotal": {
-                          "string": " 109.05 USD",
+                          "string": "\$ 109.05 USD",
                           "unit": "USD",
                           "value": "5892",
                         },
                         "total": {
-                          "string": " 118.73 USD",
+                          "string": "\$ 118.73 USD",
                           "unit": "USD",
                           "value": "5892",
                         },
@@ -20093,7 +20093,7 @@ Required scope | `ecommerce:write`
                         },
                       ],
                       "applicationFee": {
-                        "string": " 2.37 USD",
+                        "string": "\$ 2.37 USD",
                         "unit": "USD",
                         "value": "5892",
                       },
@@ -20119,7 +20119,7 @@ Required scope | `ecommerce:write`
                         "fullName": "Arthur Dent",
                       },
                       "customerPaid": {
-                        "string": " 118.73 USD",
+                        "string": "\$ 118.73 USD",
                         "unit": "USD",
                         "value": "5892",
                       },
@@ -20141,7 +20141,7 @@ Required scope | `ecommerce:write`
                         "isBuyNow": false,
                       },
                       "netAmount": {
-                        "string": " 112.62 USD",
+                        "string": "\$ 112.62 USD",
                         "unit": "USD",
                         "value": "5892",
                       },
@@ -20157,7 +20157,7 @@ Required scope | `ecommerce:write`
                           "productName": "Luxurious Fresh Ball",
                           "productSlug": "luxurious-fresh-ball",
                           "rowTotal": {
-                            "string": " 55.61 USD",
+                            "string": "\$ 55.61 USD",
                             "unit": "USD",
                             "value": "5892",
                           },
@@ -20167,7 +20167,7 @@ Required scope | `ecommerce:write`
                           },
                           "variantName": "Luxurious Fresh Ball Generic: Bronze, Practical: Plastic",
                           "variantPrice": {
-                            "string": " 55.61 USD",
+                            "string": "\$ 55.61 USD",
                             "unit": "USD",
                             "value": "5892",
                           },
@@ -20184,7 +20184,7 @@ Required scope | `ecommerce:write`
                           "productName": "Recycled Steel Gloves",
                           "productSlug": "recycled-steel-gloves",
                           "rowTotal": {
-                            "string": " 53.44 USD",
+                            "string": "\$ 53.44 USD",
                             "unit": "USD",
                             "value": "5892",
                           },
@@ -20194,7 +20194,7 @@ Required scope | `ecommerce:write`
                           },
                           "variantName": "Recycled Steel Gloves Electronic: Granite, Handcrafted: grey",
                           "variantPrice": {
-                            "string": " 53.44 USD",
+                            "string": "\$ 53.44 USD",
                             "unit": "USD",
                             "value": "5892",
                           },
@@ -20244,7 +20244,7 @@ Required scope | `ecommerce:write`
                             "description": "NY Taxes (4.00%)",
                             "name": "State Taxes",
                             "price": {
-                              "string": " 4.36 USD",
+                              "string": "\$ 4.36 USD",
                               "unit": "USD",
                               "value": "5892",
                             },
@@ -20254,7 +20254,7 @@ Required scope | `ecommerce:write`
                             "description": "NEW YORK Taxes (4.88%)",
                             "name": "City Taxes",
                             "price": {
-                              "string": " 5.32 USD",
+                              "string": "\$ 5.32 USD",
                               "unit": "USD",
                               "value": "5892",
                             },
@@ -20264,7 +20264,7 @@ Required scope | `ecommerce:write`
                             "description": "",
                             "name": "Flat",
                             "price": {
-                              "string": " 0.00 USD",
+                              "string": "\$ 0.00 USD",
                               "unit": "USD",
                               "value": "5892",
                             },
@@ -20272,12 +20272,12 @@ Required scope | `ecommerce:write`
                           },
                         ],
                         "subtotal": {
-                          "string": " 109.05 USD",
+                          "string": "\$ 109.05 USD",
                           "unit": "USD",
                           "value": "5892",
                         },
                         "total": {
-                          "string": " 118.73 USD",
+                          "string": "\$ 118.73 USD",
                           "unit": "USD",
                           "value": "5892",
                         },
@@ -28239,7 +28239,7 @@ Required scope | `ecommerce:write`
                     },
                   ],
                   "applicationFee": {
-                    "string": " 2.37 USD",
+                    "string": "\$ 2.37 USD",
                     "unit": "USD",
                     "value": "5892",
                   },
@@ -28264,7 +28264,7 @@ Required scope | `ecommerce:write`
                     "fullName": "Arthur Dent",
                   },
                   "customerPaid": {
-                    "string": " 118.73 USD",
+                    "string": "\$ 118.73 USD",
                     "unit": "USD",
                     "value": "5892",
                   },
@@ -28286,7 +28286,7 @@ Required scope | `ecommerce:write`
                     "isBuyNow": false,
                   },
                   "netAmount": {
-                    "string": " 112.62 USD",
+                    "string": "\$ 112.62 USD",
                     "unit": "USD",
                     "value": "5892",
                   },
@@ -28302,7 +28302,7 @@ Required scope | `ecommerce:write`
                       "productName": "Luxurious Fresh Ball",
                       "productSlug": "luxurious-fresh-ball",
                       "rowTotal": {
-                        "string": " 55.61 USD",
+                        "string": "\$ 55.61 USD",
                         "unit": "USD",
                         "value": "5892",
                       },
@@ -28312,7 +28312,7 @@ Required scope | `ecommerce:write`
                       },
                       "variantName": "Luxurious Fresh Ball Generic: Bronze, Practical: Plastic",
                       "variantPrice": {
-                        "string": " 55.61 USD",
+                        "string": "\$ 55.61 USD",
                         "unit": "USD",
                         "value": "5892",
                       },
@@ -28329,7 +28329,7 @@ Required scope | `ecommerce:write`
                       "productName": "Recycled Steel Gloves",
                       "productSlug": "recycled-steel-gloves",
                       "rowTotal": {
-                        "string": " 53.44 USD",
+                        "string": "\$ 53.44 USD",
                         "unit": "USD",
                         "value": "5892",
                       },
@@ -28339,7 +28339,7 @@ Required scope | `ecommerce:write`
                       },
                       "variantName": "Recycled Steel Gloves Electronic: Granite, Handcrafted: grey",
                       "variantPrice": {
-                        "string": " 53.44 USD",
+                        "string": "\$ 53.44 USD",
                         "unit": "USD",
                         "value": "5892",
                       },
@@ -28389,7 +28389,7 @@ Required scope | `ecommerce:write`
                         "description": "NY Taxes (4.00%)",
                         "name": "State Taxes",
                         "price": {
-                          "string": " 4.36 USD",
+                          "string": "\$ 4.36 USD",
                           "unit": "USD",
                           "value": "5892",
                         },
@@ -28399,7 +28399,7 @@ Required scope | `ecommerce:write`
                         "description": "NEW YORK Taxes (4.88%)",
                         "name": "City Taxes",
                         "price": {
-                          "string": " 5.32 USD",
+                          "string": "\$ 5.32 USD",
                           "unit": "USD",
                           "value": "5892",
                         },
@@ -28409,7 +28409,7 @@ Required scope | `ecommerce:write`
                         "description": "",
                         "name": "Flat",
                         "price": {
-                          "string": " 0.00 USD",
+                          "string": "\$ 0.00 USD",
                           "unit": "USD",
                           "value": "5892",
                         },
@@ -28417,12 +28417,12 @@ Required scope | `ecommerce:write`
                       },
                     ],
                     "subtotal": {
-                      "string": " 109.05 USD",
+                      "string": "\$ 109.05 USD",
                       "unit": "USD",
                       "value": "5892",
                     },
                     "total": {
-                      "string": " 118.73 USD",
+                      "string": "\$ 118.73 USD",
                       "unit": "USD",
                       "value": "5892",
                     },
@@ -28466,7 +28466,7 @@ Required scope | `ecommerce:write`
                     },
                   ],
                   "applicationFee": {
-                    "string": " 2.37 USD",
+                    "string": "\$ 2.37 USD",
                     "unit": "USD",
                     "value": "5892",
                   },
@@ -28491,7 +28491,7 @@ Required scope | `ecommerce:write`
                     "fullName": "Arthur Dent",
                   },
                   "customerPaid": {
-                    "string": " 118.73 USD",
+                    "string": "\$ 118.73 USD",
                     "unit": "USD",
                     "value": "5892",
                   },
@@ -28513,7 +28513,7 @@ Required scope | `ecommerce:write`
                     "isBuyNow": false,
                   },
                   "netAmount": {
-                    "string": " 112.62 USD",
+                    "string": "\$ 112.62 USD",
                     "unit": "USD",
                     "value": "5892",
                   },
@@ -28529,7 +28529,7 @@ Required scope | `ecommerce:write`
                       "productName": "Luxurious Fresh Ball",
                       "productSlug": "luxurious-fresh-ball",
                       "rowTotal": {
-                        "string": " 55.61 USD",
+                        "string": "\$ 55.61 USD",
                         "unit": "USD",
                         "value": "5892",
                       },
@@ -28539,7 +28539,7 @@ Required scope | `ecommerce:write`
                       },
                       "variantName": "Luxurious Fresh Ball Generic: Bronze, Practical: Plastic",
                       "variantPrice": {
-                        "string": " 55.61 USD",
+                        "string": "\$ 55.61 USD",
                         "unit": "USD",
                         "value": "5892",
                       },
@@ -28556,7 +28556,7 @@ Required scope | `ecommerce:write`
                       "productName": "Recycled Steel Gloves",
                       "productSlug": "recycled-steel-gloves",
                       "rowTotal": {
-                        "string": " 53.44 USD",
+                        "string": "\$ 53.44 USD",
                         "unit": "USD",
                         "value": "5892",
                       },
@@ -28566,7 +28566,7 @@ Required scope | `ecommerce:write`
                       },
                       "variantName": "Recycled Steel Gloves Electronic: Granite, Handcrafted: grey",
                       "variantPrice": {
-                        "string": " 53.44 USD",
+                        "string": "\$ 53.44 USD",
                         "unit": "USD",
                         "value": "5892",
                       },
@@ -28616,7 +28616,7 @@ Required scope | `ecommerce:write`
                         "description": "NY Taxes (4.00%)",
                         "name": "State Taxes",
                         "price": {
-                          "string": " 4.36 USD",
+                          "string": "\$ 4.36 USD",
                           "unit": "USD",
                           "value": "5892",
                         },
@@ -28626,7 +28626,7 @@ Required scope | `ecommerce:write`
                         "description": "NEW YORK Taxes (4.88%)",
                         "name": "City Taxes",
                         "price": {
-                          "string": " 5.32 USD",
+                          "string": "\$ 5.32 USD",
                           "unit": "USD",
                           "value": "5892",
                         },
@@ -28636,7 +28636,7 @@ Required scope | `ecommerce:write`
                         "description": "",
                         "name": "Flat",
                         "price": {
-                          "string": " 0.00 USD",
+                          "string": "\$ 0.00 USD",
                           "unit": "USD",
                           "value": "5892",
                         },
@@ -28644,12 +28644,12 @@ Required scope | `ecommerce:write`
                       },
                     ],
                     "subtotal": {
-                      "string": " 109.05 USD",
+                      "string": "\$ 109.05 USD",
                       "unit": "USD",
                       "value": "5892",
                     },
                     "total": {
-                      "string": " 118.73 USD",
+                      "string": "\$ 118.73 USD",
                       "unit": "USD",
                       "value": "5892",
                     },
@@ -34666,15 +34666,15 @@ service:
                   customerPaid:
                     unit: USD
                     value: '5892'
-                    string: ' 211.55 USD'
+                    string: \$ 211.55 USD
                   netAmount:
                     unit: USD
                     value: '5892'
-                    string: ' 200.89 USD'
+                    string: \$ 200.89 USD
                   applicationFee:
                     unit: USD
                     value: '5892'
-                    string: ' 4.23 USD'
+                    string: \$ 4.23 USD
                   allAddresses:
                     - type: billing
                       addressee: Arthur Dent
@@ -34722,7 +34722,7 @@ service:
                       rowTotal:
                         unit: USD
                         value: '5892'
-                        string: ' 111.22 USD'
+                        string: \$ 111.22 USD
                       productId: 66072fb61b89448912e26791
                       productName: Luxurious Fresh Ball
                       productSlug: luxurious-fresh-ball
@@ -34736,7 +34736,7 @@ service:
                       variantPrice:
                         unit: USD
                         value: '5892'
-                        string: ' 55.61 USD'
+                        string: \$ 55.61 USD
                       weight: 11
                       width: 82
                       height: 70
@@ -34745,7 +34745,7 @@ service:
                       rowTotal:
                         unit: USD
                         value: '5892'
-                        string: ' 83.09 USD'
+                        string: \$ 83.09 USD
                       productId: 66072fb61b89448912e2678b
                       productName: Incredible Bronze Towels
                       productSlug: incredible-bronze-towels
@@ -34761,7 +34761,7 @@ service:
                       variantPrice:
                         unit: USD
                         value: '5892'
-                        string: ' 83.09 USD'
+                        string: \$ 83.09 USD
                       width: 19
                       height: 72
                       length: 18
@@ -34794,7 +34794,7 @@ service:
                         price:
                           unit: USD
                           value: '5892'
-                          string: '3.44'
+                          string: \$3.44
                   downloadFiles:
                     - id: 5e9a5eba75e0ac242e1b6f64
                       name: The modern web design process - Webflow Ebook.pdf
@@ -34809,15 +34809,15 @@ service:
                   customerPaid:
                     unit: USD
                     value: '5892'
-                    string: ' 118.73 USD'
+                    string: \$ 118.73 USD
                   netAmount:
                     unit: USD
                     value: '5892'
-                    string: ' 112.62 USD'
+                    string: \$ 112.62 USD
                   applicationFee:
                     unit: USD
                     value: '5892'
-                    string: ' 2.37 USD'
+                    string: \$ 2.37 USD
                   allAddresses:
                     - type: billing
                       addressee: Arthur Dent
@@ -34864,7 +34864,7 @@ service:
                       rowTotal:
                         unit: USD
                         value: '5892'
-                        string: ' 55.61 USD'
+                        string: \$ 55.61 USD
                       productId: 66072fb61b89448912e26791
                       productName: Luxurious Fresh Ball
                       productSlug: luxurious-fresh-ball
@@ -34878,7 +34878,7 @@ service:
                       variantPrice:
                         unit: USD
                         value: '5892'
-                        string: ' 55.61 USD'
+                        string: \$ 55.61 USD
                       weight: 11
                       width: 82
                       height: 70
@@ -34887,7 +34887,7 @@ service:
                       rowTotal:
                         unit: USD
                         value: '5892'
-                        string: ' 53.44 USD'
+                        string: \$ 53.44 USD
                       productId: 66072fb61b89448912e26799
                       productName: Recycled Steel Gloves
                       productSlug: recycled-steel-gloves
@@ -34905,7 +34905,7 @@ service:
                       variantPrice:
                         unit: USD
                         value: '5892'
-                        string: ' 53.44 USD'
+                        string: \$ 53.44 USD
                       weight: 38
                       width: 76
                       height: 85
@@ -34937,7 +34937,7 @@ service:
                     subtotal:
                       unit: USD
                       value: '5892'
-                      string: ' 109.05 USD'
+                      string: \$ 109.05 USD
                     extras:
                       - type: tax
                         name: State Taxes
@@ -34945,25 +34945,25 @@ service:
                         price:
                           unit: USD
                           value: '5892'
-                          string: ' 4.36 USD'
+                          string: \$ 4.36 USD
                       - type: tax
                         name: City Taxes
                         description: NEW YORK Taxes (4.88%)
                         price:
                           unit: USD
                           value: '5892'
-                          string: ' 5.32 USD'
+                          string: \$ 5.32 USD
                       - type: shipping
                         name: Flat
                         description: ''
                         price:
                           unit: USD
                           value: '5892'
-                          string: ' 0.00 USD'
+                          string: \$ 0.00 USD
                     total:
                       unit: USD
                       value: '5892'
-                      string: ' 118.73 USD'
+                      string: \$ 118.73 USD
                   downloadFiles:
                     - id: 5e9a5eba75e0ac242e1b6f64
                       name: New product guide
@@ -35029,15 +35029,15 @@ service:
               customerPaid:
                 unit: USD
                 value: '5892'
-                string: ' 118.73 USD'
+                string: \$ 118.73 USD
               netAmount:
                 unit: USD
                 value: '5892'
-                string: ' 112.62 USD'
+                string: \$ 112.62 USD
               applicationFee:
                 unit: USD
                 value: '5892'
-                string: ' 2.37 USD'
+                string: \$ 2.37 USD
               allAddresses:
                 - type: billing
                   japanType: kana
@@ -35088,7 +35088,7 @@ service:
                   rowTotal:
                     unit: USD
                     value: '5892'
-                    string: ' 55.61 USD'
+                    string: \$ 55.61 USD
                   productId: 66072fb61b89448912e26791
                   productName: Luxurious Fresh Ball
                   productSlug: luxurious-fresh-ball
@@ -35102,7 +35102,7 @@ service:
                   variantPrice:
                     unit: USD
                     value: '5892'
-                    string: ' 55.61 USD'
+                    string: \$ 55.61 USD
                   weight: 11
                   width: 82
                   height: 70
@@ -35111,7 +35111,7 @@ service:
                   rowTotal:
                     unit: USD
                     value: '5892'
-                    string: ' 53.44 USD'
+                    string: \$ 53.44 USD
                   productId: 66072fb61b89448912e26799
                   productName: Recycled Steel Gloves
                   productSlug: recycled-steel-gloves
@@ -35125,7 +35125,7 @@ service:
                   variantPrice:
                     unit: USD
                     value: '5892'
-                    string: ' 53.44 USD'
+                    string: \$ 53.44 USD
                   weight: 38
                   width: 76
                   height: 85
@@ -35157,7 +35157,7 @@ service:
                 subtotal:
                   unit: USD
                   value: '5892'
-                  string: ' 109.05 USD'
+                  string: \$ 109.05 USD
                 extras:
                   - type: tax
                     name: State Taxes
@@ -35165,25 +35165,25 @@ service:
                     price:
                       unit: USD
                       value: '5892'
-                      string: ' 4.36 USD'
+                      string: \$ 4.36 USD
                   - type: tax
                     name: City Taxes
                     description: NEW YORK Taxes (4.88%)
                     price:
                       unit: USD
                       value: '5892'
-                      string: ' 5.32 USD'
+                      string: \$ 5.32 USD
                   - type: shipping
                     name: Flat
                     description: ''
                     price:
                       unit: USD
                       value: '5892'
-                      string: ' 0.00 USD'
+                      string: \$ 0.00 USD
                 total:
                   unit: USD
                   value: '5892'
-                  string: ' 118.73 USD'
+                  string: \$ 118.73 USD
               downloadFiles:
                 - id: 5e9a5eba75e0ac242e1b6f64
                   name: New product guide
@@ -35264,15 +35264,15 @@ service:
               customerPaid:
                 unit: USD
                 value: '5892'
-                string: ' 118.73 USD'
+                string: \$ 118.73 USD
               netAmount:
                 unit: USD
                 value: '5892'
-                string: ' 112.62 USD'
+                string: \$ 112.62 USD
               applicationFee:
                 unit: USD
                 value: '5892'
-                string: ' 2.37 USD'
+                string: \$ 2.37 USD
               allAddresses:
                 - type: billing
                   japanType: kana
@@ -35323,7 +35323,7 @@ service:
                   rowTotal:
                     unit: USD
                     value: '5892'
-                    string: ' 55.61 USD'
+                    string: \$ 55.61 USD
                   productId: 66072fb61b89448912e26791
                   productName: Luxurious Fresh Ball
                   productSlug: luxurious-fresh-ball
@@ -35337,7 +35337,7 @@ service:
                   variantPrice:
                     unit: USD
                     value: '5892'
-                    string: ' 55.61 USD'
+                    string: \$ 55.61 USD
                   weight: 11
                   width: 82
                   height: 70
@@ -35346,7 +35346,7 @@ service:
                   rowTotal:
                     unit: USD
                     value: '5892'
-                    string: ' 53.44 USD'
+                    string: \$ 53.44 USD
                   productId: 66072fb61b89448912e26799
                   productName: Recycled Steel Gloves
                   productSlug: recycled-steel-gloves
@@ -35360,7 +35360,7 @@ service:
                   variantPrice:
                     unit: USD
                     value: '5892'
-                    string: ' 53.44 USD'
+                    string: \$ 53.44 USD
                   weight: 38
                   width: 76
                   height: 85
@@ -35392,7 +35392,7 @@ service:
                 subtotal:
                   unit: USD
                   value: '5892'
-                  string: ' 109.05 USD'
+                  string: \$ 109.05 USD
                 extras:
                   - type: tax
                     name: State Taxes
@@ -35400,25 +35400,25 @@ service:
                     price:
                       unit: USD
                       value: '5892'
-                      string: ' 4.36 USD'
+                      string: \$ 4.36 USD
                   - type: tax
                     name: City Taxes
                     description: NEW YORK Taxes (4.88%)
                     price:
                       unit: USD
                       value: '5892'
-                      string: ' 5.32 USD'
+                      string: \$ 5.32 USD
                   - type: shipping
                     name: Flat
                     description: ''
                     price:
                       unit: USD
                       value: '5892'
-                      string: ' 0.00 USD'
+                      string: \$ 0.00 USD
                 total:
                   unit: USD
                   value: '5892'
-                  string: ' 118.73 USD'
+                  string: \$ 118.73 USD
               downloadFiles:
                 - id: 5e9a5eba75e0ac242e1b6f64
                   name: New product guide
@@ -35488,15 +35488,15 @@ service:
               customerPaid:
                 unit: USD
                 value: '5892'
-                string: ' 118.73 USD'
+                string: \$ 118.73 USD
               netAmount:
                 unit: USD
                 value: '5892'
-                string: ' 112.62 USD'
+                string: \$ 112.62 USD
               applicationFee:
                 unit: USD
                 value: '5892'
-                string: ' 2.37 USD'
+                string: \$ 2.37 USD
               allAddresses:
                 - type: billing
                   japanType: kana
@@ -35547,7 +35547,7 @@ service:
                   rowTotal:
                     unit: USD
                     value: '5892'
-                    string: ' 55.61 USD'
+                    string: \$ 55.61 USD
                   productId: 66072fb61b89448912e26791
                   productName: Luxurious Fresh Ball
                   productSlug: luxurious-fresh-ball
@@ -35561,7 +35561,7 @@ service:
                   variantPrice:
                     unit: USD
                     value: '5892'
-                    string: ' 55.61 USD'
+                    string: \$ 55.61 USD
                   weight: 11
                   width: 82
                   height: 70
@@ -35570,7 +35570,7 @@ service:
                   rowTotal:
                     unit: USD
                     value: '5892'
-                    string: ' 53.44 USD'
+                    string: \$ 53.44 USD
                   productId: 66072fb61b89448912e26799
                   productName: Recycled Steel Gloves
                   productSlug: recycled-steel-gloves
@@ -35584,7 +35584,7 @@ service:
                   variantPrice:
                     unit: USD
                     value: '5892'
-                    string: ' 53.44 USD'
+                    string: \$ 53.44 USD
                   weight: 38
                   width: 76
                   height: 85
@@ -35616,7 +35616,7 @@ service:
                 subtotal:
                   unit: USD
                   value: '5892'
-                  string: ' 109.05 USD'
+                  string: \$ 109.05 USD
                 extras:
                   - type: tax
                     name: State Taxes
@@ -35624,25 +35624,25 @@ service:
                     price:
                       unit: USD
                       value: '5892'
-                      string: ' 4.36 USD'
+                      string: \$ 4.36 USD
                   - type: tax
                     name: City Taxes
                     description: NEW YORK Taxes (4.88%)
                     price:
                       unit: USD
                       value: '5892'
-                      string: ' 5.32 USD'
+                      string: \$ 5.32 USD
                   - type: shipping
                     name: Flat
                     description: ''
                     price:
                       unit: USD
                       value: '5892'
-                      string: ' 0.00 USD'
+                      string: \$ 0.00 USD
                 total:
                   unit: USD
                   value: '5892'
-                  string: ' 118.73 USD'
+                  string: \$ 118.73 USD
               downloadFiles:
                 - id: 5e9a5eba75e0ac242e1b6f64
                   name: New product guide
@@ -35702,15 +35702,15 @@ service:
               customerPaid:
                 unit: USD
                 value: '5892'
-                string: ' 118.73 USD'
+                string: \$ 118.73 USD
               netAmount:
                 unit: USD
                 value: '5892'
-                string: ' 112.62 USD'
+                string: \$ 112.62 USD
               applicationFee:
                 unit: USD
                 value: '5892'
-                string: ' 2.37 USD'
+                string: \$ 2.37 USD
               allAddresses:
                 - type: billing
                   japanType: kana
@@ -35761,7 +35761,7 @@ service:
                   rowTotal:
                     unit: USD
                     value: '5892'
-                    string: ' 55.61 USD'
+                    string: \$ 55.61 USD
                   productId: 66072fb61b89448912e26791
                   productName: Luxurious Fresh Ball
                   productSlug: luxurious-fresh-ball
@@ -35775,7 +35775,7 @@ service:
                   variantPrice:
                     unit: USD
                     value: '5892'
-                    string: ' 55.61 USD'
+                    string: \$ 55.61 USD
                   weight: 11
                   width: 82
                   height: 70
@@ -35784,7 +35784,7 @@ service:
                   rowTotal:
                     unit: USD
                     value: '5892'
-                    string: ' 53.44 USD'
+                    string: \$ 53.44 USD
                   productId: 66072fb61b89448912e26799
                   productName: Recycled Steel Gloves
                   productSlug: recycled-steel-gloves
@@ -35798,7 +35798,7 @@ service:
                   variantPrice:
                     unit: USD
                     value: '5892'
-                    string: ' 53.44 USD'
+                    string: \$ 53.44 USD
                   weight: 38
                   width: 76
                   height: 85
@@ -35830,7 +35830,7 @@ service:
                 subtotal:
                   unit: USD
                   value: '5892'
-                  string: ' 109.05 USD'
+                  string: \$ 109.05 USD
                 extras:
                   - type: tax
                     name: State Taxes
@@ -35838,25 +35838,25 @@ service:
                     price:
                       unit: USD
                       value: '5892'
-                      string: ' 4.36 USD'
+                      string: \$ 4.36 USD
                   - type: tax
                     name: City Taxes
                     description: NEW YORK Taxes (4.88%)
                     price:
                       unit: USD
                       value: '5892'
-                      string: ' 5.32 USD'
+                      string: \$ 5.32 USD
                   - type: shipping
                     name: Flat
                     description: ''
                     price:
                       unit: USD
                       value: '5892'
-                      string: ' 0.00 USD'
+                      string: \$ 0.00 USD
                 total:
                   unit: USD
                   value: '5892'
-                  string: ' 118.73 USD'
+                  string: \$ 118.73 USD
               downloadFiles:
                 - id: 5e9a5eba75e0ac242e1b6f64
                   name: New product guide
@@ -35927,15 +35927,15 @@ service:
               customerPaid:
                 unit: USD
                 value: '5892'
-                string: ' 118.73 USD'
+                string: \$ 118.73 USD
               netAmount:
                 unit: USD
                 value: '5892'
-                string: ' 112.62 USD'
+                string: \$ 112.62 USD
               applicationFee:
                 unit: USD
                 value: '5892'
-                string: ' 2.37 USD'
+                string: \$ 2.37 USD
               allAddresses:
                 - type: billing
                   japanType: kana
@@ -35986,7 +35986,7 @@ service:
                   rowTotal:
                     unit: USD
                     value: '5892'
-                    string: ' 55.61 USD'
+                    string: \$ 55.61 USD
                   productId: 66072fb61b89448912e26791
                   productName: Luxurious Fresh Ball
                   productSlug: luxurious-fresh-ball
@@ -36000,7 +36000,7 @@ service:
                   variantPrice:
                     unit: USD
                     value: '5892'
-                    string: ' 55.61 USD'
+                    string: \$ 55.61 USD
                   weight: 11
                   width: 82
                   height: 70
@@ -36009,7 +36009,7 @@ service:
                   rowTotal:
                     unit: USD
                     value: '5892'
-                    string: ' 53.44 USD'
+                    string: \$ 53.44 USD
                   productId: 66072fb61b89448912e26799
                   productName: Recycled Steel Gloves
                   productSlug: recycled-steel-gloves
@@ -36023,7 +36023,7 @@ service:
                   variantPrice:
                     unit: USD
                     value: '5892'
-                    string: ' 53.44 USD'
+                    string: \$ 53.44 USD
                   weight: 38
                   width: 76
                   height: 85
@@ -36055,7 +36055,7 @@ service:
                 subtotal:
                   unit: USD
                   value: '5892'
-                  string: ' 109.05 USD'
+                  string: \$ 109.05 USD
                 extras:
                   - type: tax
                     name: State Taxes
@@ -36063,25 +36063,25 @@ service:
                     price:
                       unit: USD
                       value: '5892'
-                      string: ' 4.36 USD'
+                      string: \$ 4.36 USD
                   - type: tax
                     name: City Taxes
                     description: NEW YORK Taxes (4.88%)
                     price:
                       unit: USD
                       value: '5892'
-                      string: ' 5.32 USD'
+                      string: \$ 5.32 USD
                   - type: shipping
                     name: Flat
                     description: ''
                     price:
                       unit: USD
                       value: '5892'
-                      string: ' 0.00 USD'
+                      string: \$ 0.00 USD
                 total:
                   unit: USD
                   value: '5892'
-                  string: ' 118.73 USD'
+                  string: \$ 118.73 USD
               downloadFiles:
                 - id: 5e9a5eba75e0ac242e1b6f64
                   name: New product guide
@@ -36117,15 +36117,15 @@ webhooks:
           customerPaid:
             unit: USD
             value: '5892'
-            string: ' 118.73 USD'
+            string: \$ 118.73 USD
           netAmount:
             unit: USD
             value: '5892'
-            string: ' 112.62 USD'
+            string: \$ 112.62 USD
           applicationFee:
             unit: USD
             value: '5892'
-            string: ' 2.37 USD'
+            string: \$ 2.37 USD
           allAddresses:
             - type: billing
               addressee: Arthur Dent
@@ -36173,7 +36173,7 @@ webhooks:
               rowTotal:
                 unit: USD
                 value: '5892'
-                string: ' 55.61 USD'
+                string: \$ 55.61 USD
               productId: 66072fb61b89448912e26791
               productName: Luxurious Fresh Ball
               productSlug: luxurious-fresh-ball
@@ -36187,7 +36187,7 @@ webhooks:
               variantPrice:
                 unit: USD
                 value: '5892'
-                string: ' 55.61 USD'
+                string: \$ 55.61 USD
               weight: 11
               width: 82
               height: 70
@@ -36196,7 +36196,7 @@ webhooks:
               rowTotal:
                 unit: USD
                 value: '5892'
-                string: ' 53.44 USD'
+                string: \$ 53.44 USD
               productId: 66072fb61b89448912e26799
               productName: Recycled Steel Gloves
               productSlug: recycled-steel-gloves
@@ -36210,7 +36210,7 @@ webhooks:
               variantPrice:
                 unit: USD
                 value: '5892'
-                string: ' 53.44 USD'
+                string: \$ 53.44 USD
               weight: 38
               width: 76
               height: 85
@@ -36242,7 +36242,7 @@ webhooks:
             subtotal:
               unit: USD
               value: '5892'
-              string: ' 109.05 USD'
+              string: \$ 109.05 USD
             extras:
               - type: tax
                 name: State Taxes
@@ -36250,25 +36250,25 @@ webhooks:
                 price:
                   unit: USD
                   value: '5892'
-                  string: ' 4.36 USD'
+                  string: \$ 4.36 USD
               - type: tax
                 name: City Taxes
                 description: NEW YORK Taxes (4.88%)
                 price:
                   unit: USD
                   value: '5892'
-                  string: ' 5.32 USD'
+                  string: \$ 5.32 USD
               - type: shipping
                 name: Flat
                 description: ''
                 price:
                   unit: USD
                   value: '5892'
-                  string: ' 0.00 USD'
+                  string: \$ 0.00 USD
             total:
               unit: USD
               value: '5892'
-              string: ' 118.73 USD'
+              string: \$ 118.73 USD
           downloadFiles:
             - id: 5e9a5eba75e0ac242e1b6f64
               name: New product guide
@@ -36300,15 +36300,15 @@ webhooks:
           customerPaid:
             unit: USD
             value: '5892'
-            string: ' 118.73 USD'
+            string: \$ 118.73 USD
           netAmount:
             unit: USD
             value: '5892'
-            string: ' 112.62 USD'
+            string: \$ 112.62 USD
           applicationFee:
             unit: USD
             value: '5892'
-            string: ' 2.37 USD'
+            string: \$ 2.37 USD
           allAddresses:
             - type: billing
               addressee: Arthur Dent
@@ -36356,7 +36356,7 @@ webhooks:
               rowTotal:
                 unit: USD
                 value: '5892'
-                string: ' 55.61 USD'
+                string: \$ 55.61 USD
               productId: 66072fb61b89448912e26791
               productName: Luxurious Fresh Ball
               productSlug: luxurious-fresh-ball
@@ -36370,7 +36370,7 @@ webhooks:
               variantPrice:
                 unit: USD
                 value: '5892'
-                string: ' 55.61 USD'
+                string: \$ 55.61 USD
               weight: 11
               width: 82
               height: 70
@@ -36379,7 +36379,7 @@ webhooks:
               rowTotal:
                 unit: USD
                 value: '5892'
-                string: ' 53.44 USD'
+                string: \$ 53.44 USD
               productId: 66072fb61b89448912e26799
               productName: Recycled Steel Gloves
               productSlug: recycled-steel-gloves
@@ -36393,7 +36393,7 @@ webhooks:
               variantPrice:
                 unit: USD
                 value: '5892'
-                string: ' 53.44 USD'
+                string: \$ 53.44 USD
               weight: 38
               width: 76
               height: 85
@@ -36425,7 +36425,7 @@ webhooks:
             subtotal:
               unit: USD
               value: '5892'
-              string: ' 109.05 USD'
+              string: \$ 109.05 USD
             extras:
               - type: tax
                 name: State Taxes
@@ -36433,25 +36433,25 @@ webhooks:
                 price:
                   unit: USD
                   value: '5892'
-                  string: ' 4.36 USD'
+                  string: \$ 4.36 USD
               - type: tax
                 name: City Taxes
                 description: NEW YORK Taxes (4.88%)
                 price:
                   unit: USD
                   value: '5892'
-                  string: ' 5.32 USD'
+                  string: \$ 5.32 USD
               - type: shipping
                 name: Flat
                 description: ''
                 price:
                   unit: USD
                   value: '5892'
-                  string: ' 0.00 USD'
+                  string: \$ 0.00 USD
             total:
               unit: USD
               value: '5892'
-              string: ' 118.73 USD'
+              string: \$ 118.73 USD
           downloadFiles:
             - id: 5e9a5eba75e0ac242e1b6f64
               name: New product guide

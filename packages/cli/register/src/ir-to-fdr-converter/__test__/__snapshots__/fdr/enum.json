@@ -57,6 +57,20 @@
         ]
       }
     },
+    "type_:EnumWithSpecialCharacters": {
+      "name": "EnumWithSpecialCharacters",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "\\$bla"
+          },
+          {
+            "value": "\\$yo"
+          }
+        ]
+      }
+    },
     "type_:EnumWithCustom": {
       "name": "EnumWithCustom",
       "shape": {
@@ -628,6 +642,7 @@
       "type_:Operand",
       "type_:Color",
       "type_:ColorOrOperand",
+      "type_:EnumWithSpecialCharacters",
       "type_:EnumWithCustom",
       "type_:SpecialEnum"
     ],
