@@ -20,8 +20,7 @@ describe("fern generate", () => {
         expect(await doesPathExist(join(pathOfDirectory, RelativeFilePath.of("sdks/typescript")))).toBe(true);
     }, 180_000);
 
-    // biome-ignore lint/suspicious/noSkippedTests: Requires auth token
-    it.skip("ir contains fdr definitionid", async () => {
+    it("ir contains fdr definitionid", async () => {
         const { stdout, stderr } = await runFernCli(["generate", "--log-level", "debug"], {
             cwd: join(fixturesDir, RelativeFilePath.of("basic")),
             reject: false
