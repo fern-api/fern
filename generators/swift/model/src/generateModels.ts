@@ -4,6 +4,7 @@ import { StringEnumGenerator } from "./enum";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { ObjectGenerator } from "./object";
 import { DiscriminatedUnionGenerator } from "./union";
+import { UndiscriminatedUnionGenerator } from "./union/UndiscriminatedUnionGenerator";
 
 export function generateModels({ context }: { context: ModelGeneratorContext }): SwiftFile[] {
     const files: SwiftFile[] = [];
@@ -24,7 +25,12 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
                     otd.properties,
                     otd.extendedProperties
                 ).generate(),
-            undiscriminatedUnion: () => undefined,
+            undiscriminatedUnion: (uutd) =>
+                new UndiscriminatedUnionGenerator(
+                    typeDeclaration.name.name.pascalCase.unsafeName,
+                    context.schemasDirectory,
+                    uutd
+                ).generate(),
             union: (utd) =>
                 new DiscriminatedUnionGenerator(
                     typeDeclaration.name.name.pascalCase.unsafeName,

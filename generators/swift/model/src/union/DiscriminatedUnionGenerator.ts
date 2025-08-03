@@ -51,15 +51,24 @@ export class DiscriminatedUnionGenerator {
         });
     }
 
+    private generateCasesForTypeDeclaration(): swift.EnumWithAssociatedValues.Case[] {
+        return this.unionTypeDeclaration.types.map((singleUnionType) => {
+            return {
+                unsafeName: singleUnionType.discriminantValue.name.camelCase.unsafeName,
+                associatedValue: [swift.Type.custom(singleUnionType.discriminantValue.name.pascalCase.unsafeName)]
+            };
+        });
+    }
+
     private generateInitializers(): swift.Initializer[] {
         return [this.generateInitializerForDecoder()];
     }
 
     private generateInitializerForDecoder() {
         const bodyStatements: swift.Statement[] = [
-            swift.Statement.constantDeclaration(
-                "container",
-                swift.Expression.try(
+            swift.Statement.constantDeclaration({
+                unsafeName: "container",
+                value: swift.Expression.try(
                     swift.Expression.methodCall({
                         target: swift.Expression.reference("decoder"),
                         methodName: "container",
@@ -71,10 +80,10 @@ export class DiscriminatedUnionGenerator {
                         ]
                     })
                 )
-            ),
-            swift.Statement.constantDeclaration(
-                "discriminant",
-                swift.Expression.try(
+            }),
+            swift.Statement.constantDeclaration({
+                unsafeName: "discriminant",
+                value: swift.Expression.try(
                     swift.Expression.methodCall({
                         target: swift.Expression.reference("container"),
                         methodName: "decode",
@@ -94,7 +103,7 @@ export class DiscriminatedUnionGenerator {
                         ]
                     })
                 )
-            ),
+            }),
             swift.Statement.switch({
                 target: swift.Expression.reference("discriminant"),
                 cases: this.unionTypeDeclaration.types.map((singleUnionType) => {
@@ -221,15 +230,6 @@ export class DiscriminatedUnionGenerator {
                     })
                 })
             ])
-        });
-    }
-
-    private generateCasesForTypeDeclaration(): swift.EnumWithAssociatedValues.Case[] {
-        return this.unionTypeDeclaration.types.map((singleUnionType) => {
-            return {
-                unsafeName: singleUnionType.discriminantValue.name.camelCase.unsafeName,
-                associatedValue: [swift.Type.custom(singleUnionType.discriminantValue.name.pascalCase.unsafeName)]
-            };
         });
     }
 

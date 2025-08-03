@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 
+import { CodeBlock } from "./CodeBlock";
 import { AstNode, Writer } from "./core";
 import { DeclarationType } from "./DeclarationType";
 import { Expression } from "./Expression";
@@ -10,12 +11,14 @@ type ConstantDeclaration = {
     type: "constant-declaration";
     unsafeName: string;
     value: Expression;
+    noTrailingNewline?: true;
 };
 
 type VariableDeclaration = {
     type: "variable-declaration";
     unsafeName: string;
     value: Expression;
+    noTrailingNewline?: true;
 };
 
 type VariableAssignment = {
@@ -65,6 +68,22 @@ type Switch = {
     defaultCase?: Statement[];
 };
 
+type If = {
+    type: "if";
+    condition: Statement;
+    body: Statement[];
+    elseIfs?: {
+        condition: Statement;
+        body: Statement[];
+    }[];
+    else?: Statement[];
+};
+
+type Raw = {
+    type: "raw";
+    content: string;
+};
+
 type InternalStatement =
     | ConstantDeclaration
     | VariableDeclaration
@@ -75,7 +94,9 @@ type InternalStatement =
     | Throw
     | ExpressionStatement
     | ImportStatement
-    | Switch;
+    | Switch
+    | If
+    | Raw;
 
 export class Statement extends AstNode {
     private internalStatement: InternalStatement;
@@ -93,6 +114,9 @@ export class Statement extends AstNode {
                 writer.write(escapeReservedKeyword(this.internalStatement.unsafeName));
                 writer.write(" = ");
                 this.internalStatement.value.write(writer);
+                if (!this.internalStatement.noTrailingNewline) {
+                    writer.newLine();
+                }
                 break;
             case "variable-declaration":
                 writer.write(DeclarationType.Var);
@@ -100,36 +124,46 @@ export class Statement extends AstNode {
                 writer.write(escapeReservedKeyword(this.internalStatement.unsafeName));
                 writer.write(" = ");
                 this.internalStatement.value.write(writer);
+                if (!this.internalStatement.noTrailingNewline) {
+                    writer.newLine();
+                }
                 break;
             case "variable-assignment":
                 writer.write(escapeReservedKeyword(this.internalStatement.unsafeName));
                 writer.write(" = ");
                 this.internalStatement.value.write(writer);
+                writer.newLine();
                 break;
             case "self-assignment":
                 writer.write("self = ");
                 writer.write(this.internalStatement.value.toString());
+                writer.newLine();
                 break;
             case "property-assignment":
                 writer.write("self.");
                 writer.write(this.internalStatement.unsafeName);
                 writer.write(" = ");
                 this.internalStatement.value.write(writer);
+                writer.newLine();
                 break;
             case "return":
                 writer.write("return ");
                 this.internalStatement.expression.write(writer);
+                writer.newLine();
                 break;
             case "throw":
                 writer.write("throw ");
                 this.internalStatement.expression.write(writer);
+                writer.newLine();
                 break;
             case "expression-statement":
                 this.internalStatement.expression.write(writer);
+                writer.newLine();
                 break;
             case "import":
                 writer.write("import ");
                 writer.write(this.internalStatement.moduleName);
+                writer.newLine();
                 break;
             case "switch":
                 writer.write("switch ");
@@ -161,19 +195,41 @@ export class Statement extends AstNode {
                     }
                 }
                 writer.write("}");
+                writer.newLine();
+                break;
+            case "if": {
+                writer.write("if ");
+                this.internalStatement.condition.write(writer);
+                writer.write(" ");
+                CodeBlock.withStatements(this.internalStatement.body).write(writer);
+                for (const elseIf of this.internalStatement.elseIfs ?? []) {
+                    writer.write(" else if ");
+                    elseIf.condition.write(writer);
+                    writer.write(" ");
+                    CodeBlock.withStatements(elseIf.body).write(writer);
+                }
+                if (this.internalStatement.else) {
+                    writer.write(" else ");
+                    CodeBlock.withStatements(this.internalStatement.else).write(writer);
+                }
+                writer.newLine();
+                break;
+            }
+            case "raw":
+                writer.write(this.internalStatement.content);
+                writer.newLine();
                 break;
             default:
                 assertNever(this.internalStatement);
         }
-        writer.newLine();
     }
 
-    public static constantDeclaration(unsafeName: string, value: Expression): Statement {
-        return new this({ type: "constant-declaration", unsafeName, value });
+    public static constantDeclaration(params: Omit<ConstantDeclaration, "type">): Statement {
+        return new this({ type: "constant-declaration", ...params });
     }
 
-    public static variableDeclaration(unsafeName: string, value: Expression): Statement {
-        return new this({ type: "variable-declaration", unsafeName, value });
+    public static variableDeclaration(params: Omit<VariableDeclaration, "type">): Statement {
+        return new this({ type: "variable-declaration", ...params });
     }
 
     public static variableAssignment(unsafeName: string, value: Expression): Statement {
@@ -206,5 +262,16 @@ export class Statement extends AstNode {
 
     public static switch(params: Omit<Switch, "type">): Statement {
         return new this({ type: "switch", ...params });
+    }
+
+    public static if(params: Omit<If, "type">): Statement {
+        return new this({ type: "if", ...params });
+    }
+
+    /**
+     * Escape hatch for writing raw Swift code. Intended for use in tests.
+     */
+    public static raw(content: string): Statement {
+        return new this({ type: "raw", content });
     }
 }

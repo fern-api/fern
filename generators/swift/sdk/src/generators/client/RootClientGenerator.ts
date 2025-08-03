@@ -127,9 +127,9 @@ export class RootClientGenerator {
                 })
             ],
             body: swift.CodeBlock.withStatements([
-                swift.Statement.constantDeclaration(
-                    "config",
-                    swift.Expression.classInitialization({
+                swift.Statement.constantDeclaration({
+                    unsafeName: "config",
+                    value: swift.Expression.classInitialization({
                         unsafeName: "ClientConfig",
                         arguments_: [
                             swift.functionArgument({
@@ -159,7 +159,7 @@ export class RootClientGenerator {
                         ],
                         multiline: true
                     })
-                ),
+                }),
                 ...this.clientGeneratorContext.subClients.map(({ property, clientName }) =>
                     swift.Statement.propertyAssignment(
                         property.unsafeName,

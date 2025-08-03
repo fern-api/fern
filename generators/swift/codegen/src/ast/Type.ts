@@ -1,4 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
+import { camelCase, lowerFirst, upperFirst } from "lodash-es";
 
 import { AstNode, Writer } from "./core";
 
@@ -147,6 +148,139 @@ export class Type extends AstNode {
         return this.internalType.type === "optional";
     }
 
+    public equals(that: Type): boolean {
+        switch (this.internalType.type) {
+            case "string":
+            case "bool":
+            case "int":
+            case "uint":
+            case "uint64":
+            case "int64":
+            case "float":
+            case "double":
+            case "data":
+            case "date":
+            case "uuid":
+            case "void":
+            case "any":
+            case "json-value":
+                return this.internalType.type === that.internalType.type;
+            case "tuple": {
+                if (
+                    that.internalType.type !== "tuple" ||
+                    this.internalType.elements.length !== that.internalType.elements.length
+                ) {
+                    return false;
+                }
+                for (let i = 0; i < this.internalType.elements.length; i++) {
+                    const thisElement = this.internalType.elements[i];
+                    const thatElement = that.internalType.elements[i];
+                    if (!thisElement || !thatElement || !thisElement.equals(thatElement)) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            case "array":
+                return (
+                    that.internalType.type === "array" &&
+                    this.internalType.elementType.equals(that.internalType.elementType)
+                );
+            case "dictionary":
+                return (
+                    that.internalType.type === "dictionary" &&
+                    this.internalType.keyType.equals(that.internalType.keyType) &&
+                    this.internalType.valueType.equals(that.internalType.valueType)
+                );
+            case "optional":
+                return (
+                    that.internalType.type == "optional" &&
+                    this.internalType.valueType.equals(that.internalType.valueType)
+                );
+            case "custom":
+                return that.internalType.type === "custom" && this.internalType.name === that.internalType.name;
+            case "existential-any":
+                return (
+                    that.internalType.type === "existential-any" &&
+                    this.internalType.protocolName === that.internalType.protocolName
+                );
+            default:
+                assertNever(this.internalType);
+        }
+    }
+
+    /**
+     * Generates a unique, camelCase identifier suitable for use as an enum case name.
+     * This method creates descriptive names that help differentiate between similar types
+     * when used as associated values in Swift enums, particularly for undiscriminated unions.
+     *
+     * Examples:
+     * - `string` → "string"
+     * - `[String]` → "stringArray"
+     * - `[String: Int]` → "stringToIntDictionary"
+     * - `(String, Int, Bool)` → "tupleStringAndIntAndBool"
+     * - `String?` → "optionalString"
+     *
+     * @returns A camelCase string suitable for use as a Swift enum case name
+     */
+    public toCaseName(): string {
+        return Type.toCaseName(this);
+    }
+
+    public static toCaseName(type: Type): string {
+        switch (type.internalType.type) {
+            case "string":
+                return "string";
+            case "bool":
+                return "bool";
+            case "int":
+                return "int";
+            case "uint":
+                return "uint";
+            case "uint64":
+                return "uint64";
+            case "int64":
+                return "int64";
+            case "float":
+                return "float";
+            case "double":
+                return "double";
+            case "data":
+                return "data";
+            case "date":
+                return "date";
+            case "uuid":
+                return "uuid";
+            case "tuple": {
+                const memberDescriptionsJoined = type.internalType.elements
+                    .map((element) => Type.toCaseName(element))
+                    .join("And");
+                return `tuple${upperFirst(memberDescriptionsJoined)}`;
+            }
+            case "array":
+                return `${lowerFirst(Type.toCaseName(type.internalType.elementType))}Array`;
+            case "dictionary": {
+                const keyDescription = lowerFirst(Type.toCaseName(type.internalType.keyType));
+                const valueDescription = upperFirst(Type.toCaseName(type.internalType.valueType));
+                return `${keyDescription}To${valueDescription}Dictionary`;
+            }
+            case "optional":
+                return `optional${upperFirst(Type.toCaseName(type.internalType.valueType))}`;
+            case "custom":
+                return camelCase(type.internalType.name);
+            case "void":
+                return "void";
+            case "any":
+                return "any";
+            case "existential-any":
+                return `any${upperFirst(type.internalType.protocolName)}`;
+            case "json-value":
+                return "json";
+            default:
+                assertNever(type.internalType);
+        }
+    }
+
     public write(writer: Writer): void {
         switch (this.internalType.type) {
             case "string":
@@ -209,7 +343,6 @@ export class Type extends AstNode {
                 writer.write("?");
                 break;
             case "custom":
-                // TODO(kafkas): We may need to escape reserved words here. Confirm this.
                 writer.write(this.internalType.name);
                 break;
             case "void":

@@ -155,9 +155,9 @@ export class StructGenerator {
 
         if (dataProperties.length > 0) {
             bodyStatements.push(
-                swift.Statement.constantDeclaration(
-                    "container",
-                    swift.Expression.try(
+                swift.Statement.constantDeclaration({
+                    unsafeName: "container",
+                    value: swift.Expression.try(
                         swift.Expression.methodCall({
                             target: swift.Expression.reference("decoder"),
                             methodName: "container",
@@ -169,7 +169,7 @@ export class StructGenerator {
                             ]
                         })
                     )
-                )
+                })
             );
             dataProperties.forEach((p) => {
                 bodyStatements.push(
@@ -250,9 +250,9 @@ export class StructGenerator {
 
         if (dataProperties.length > 0) {
             bodyStatements.push(
-                swift.Statement.variableDeclaration(
-                    "container",
-                    swift.Expression.methodCall({
+                swift.Statement.variableDeclaration({
+                    unsafeName: "container",
+                    value: swift.Expression.methodCall({
                         target: swift.Expression.reference("encoder"),
                         methodName: "container",
                         arguments_: [
@@ -262,7 +262,7 @@ export class StructGenerator {
                             })
                         ]
                     })
-                )
+                })
             );
         }
 
