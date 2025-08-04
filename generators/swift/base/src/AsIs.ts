@@ -114,7 +114,7 @@ export interface AsIsFileDefinition {
     directory: RelativeFilePath;
 
     /**
-     * The names of public Swift symbols (classes, structs, enums, protocols, etc.)
+     * The names of Swift symbols (classes, structs, enums, protocols, etc.)
      * that this file introduces to the project namespace.
      */
     symbolNames: string[];

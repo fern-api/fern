@@ -11,6 +11,12 @@ export class SymbolRegistry {
         ...values(swift.Protocol)
     ];
 
+    /**
+     * Creates a new SymbolRegistry instance with reserved Swift/Foundation symbols
+     * and all AsIs file symbols pre-registered to avoid collisions.
+     *
+     * @returns A new SymbolRegistry instance ready for use
+     */
     public static create(): SymbolRegistry {
         const registry = new SymbolRegistry(SymbolRegistry.reservedSymbols);
         Object.values(AsIsFiles).forEach((definition) => {
@@ -38,6 +44,12 @@ export class SymbolRegistry {
         this.symbolSet = new Set(symbols);
     }
 
+    /**
+     * Retrieves the registered root client symbol name.
+     *
+     * @returns The root client symbol name
+     * @throws Error if no root client symbol has been registered
+     */
     public getRootClientSymbolOrThrow(): string {
         const symbol = this.rootClientSymbol;
         if (symbol == null) {
@@ -46,6 +58,12 @@ export class SymbolRegistry {
         return symbol;
     }
 
+    /**
+     * Retrieves the registered environment symbol name.
+     *
+     * @returns The environment symbol name
+     * @throws Error if no environment symbol has been registered
+     */
     public getEnvironmentSymbolOrThrow(): string {
         const symbol = this.environmentSymbol;
         if (symbol == null) {
@@ -54,6 +72,13 @@ export class SymbolRegistry {
         return symbol;
     }
 
+    /**
+     * Retrieves the registered sub-client symbol name for a given subpackage.
+     *
+     * @param subpackageId The unique identifier of the subpackage
+     * @returns The sub-client symbol name for the specified subpackage
+     * @throws Error if no sub-client symbol has been registered for the subpackage
+     */
     public getSubClientSymbolOrThrow(subpackageId: string): string {
         const symbol = this.subClientSymbols.get(subpackageId);
         if (symbol == null) {
@@ -62,6 +87,13 @@ export class SymbolRegistry {
         return symbol;
     }
 
+    /**
+     * Retrieves the registered schema type symbol name for a given type ID.
+     *
+     * @param typeId The unique identifier of the schema type
+     * @returns The schema type symbol name for the specified type
+     * @throws Error if no schema type symbol has been registered for the type ID
+     */
     public getSchemaTypeSymbolOrThrow(typeId: string): string {
         const symbol = this.schemaTypeSymbols.get(typeId);
         if (symbol == null) {
@@ -70,6 +102,14 @@ export class SymbolRegistry {
         return symbol;
     }
 
+    /**
+     * Retrieves the registered inline request type symbol name for a given endpoint and request.
+     *
+     * @param endpointId The unique identifier of the endpoint
+     * @param requestNamePascalCase The request name in PascalCase
+     * @returns The inline request type symbol name
+     * @throws Error if no inline request type symbol has been registered for the endpoint/request combination
+     */
     public getInlineRequestTypeSymbolOrThrow(endpointId: string, requestNamePascalCase: string): string {
         const id = this.getInlineRequestTypeSymbolId(endpointId, requestNamePascalCase);
         const symbol = this.inlineRequestTypeSymbols.get(id);
@@ -79,10 +119,23 @@ export class SymbolRegistry {
         return symbol;
     }
 
+    /**
+     * Registers an AsIs symbol to prevent collisions. AsIs symbols are pre-built
+     * Swift code files that are included in the generated SDK.
+     *
+     * @param symbolName The symbol name to reserve
+     */
     public registerAsIsSymbol(symbolName: string): void {
         this.symbolSet.add(symbolName);
     }
 
+    /**
+     * Registers and generates a unique symbol name for the root client class.
+     * Tries candidate names in order: {API}Client, {API}Api, {API}ApiClient, {API}HttpClient.
+     *
+     * @param apiNamePascalCase The API name in PascalCase
+     * @returns The generated unique root client symbol name
+     */
     public registerRootClientSymbol(apiNamePascalCase: string): string {
         const symbolName = this.getAvailableSymbolName([
             `${apiNamePascalCase}Client`,
@@ -95,6 +148,13 @@ export class SymbolRegistry {
         return symbolName;
     }
 
+    /**
+     * Registers and generates a unique symbol name for the environment enum.
+     * Tries candidate names in order: {API}Environment, {API}Environ, {API}Env.
+     *
+     * @param apiNamePascalCase The API name in PascalCase
+     * @returns The generated unique environment symbol name
+     */
     public registerEnvironmentSymbol(apiNamePascalCase: string): string {
         const symbolName = this.getAvailableSymbolName([
             `${apiNamePascalCase}Environment`,
@@ -106,6 +166,16 @@ export class SymbolRegistry {
         return symbolName;
     }
 
+    /**
+     * Registers and generates a unique symbol name for a sub-client class.
+     * Generates fallback candidates by combining filepath parts with the subpackage name
+     * to create unique identifiers when simple names collide.
+     *
+     * @param subpackageId The unique identifier of the subpackage
+     * @param fernFilepathPartNamesPascalCase Array of filepath parts in PascalCase
+     * @param subpackageNamePascalCase The subpackage name in PascalCase
+     * @returns The generated unique sub-client symbol name
+     */
     public registerSubClientSymbol(
         subpackageId: string,
         fernFilepathPartNamesPascalCase: string[],
@@ -128,6 +198,14 @@ export class SymbolRegistry {
         return symbolName;
     }
 
+    /**
+     * Registers and generates a unique symbol name for a schema type (struct, enum, union, etc.).
+     * Tries candidate names in order: {Type}, {Type}Type, {Type}Model, {Type}Schema.
+     *
+     * @param typeId The unique identifier of the type
+     * @param typeDeclarationNamePascalCase The type declaration name in PascalCase
+     * @returns The generated unique schema type symbol name
+     */
     public registerSchemaTypeSymbol(typeId: string, typeDeclarationNamePascalCase: string): string {
         const symbolName = this.getAvailableSymbolName([
             typeDeclarationNamePascalCase,
@@ -140,6 +218,14 @@ export class SymbolRegistry {
         return symbolName;
     }
 
+    /**
+     * Registers and generates a unique symbol name for an inline request type.
+     * Generates different fallback candidates based on whether the request name already ends with "Request".
+     *
+     * @param endpointId The unique identifier of the endpoint
+     * @param requestNamePascalCase The request name in PascalCase
+     * @returns The generated unique inline request type symbol name
+     */
     public registerInlineRequestTypeSymbol(endpointId: string, requestNamePascalCase: string): string {
         const id = this.getInlineRequestTypeSymbolId(endpointId, requestNamePascalCase);
         const fallbackCandidates: string[] = [`${requestNamePascalCase}Type`];
@@ -175,6 +261,12 @@ export class SymbolRegistry {
         return `${endpointId}_${requestNamePascalCase}`;
     }
 
+    /**
+     * Checks whether a symbol name is already registered or reserved.
+     *
+     * @param symbolName The symbol name to check
+     * @returns True if the symbol name is already taken, false otherwise
+     */
     public exists(symbolName: string): boolean {
         return this.symbolSet.has(symbolName);
     }
