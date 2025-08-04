@@ -1,6 +1,12 @@
 import { isNonNullish } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { EndpointExample, FullExample, PathParameterExample, PrimitiveExample } from "@fern-api/openapi-ir";
+import {
+    EndpointExample,
+    FullExample,
+    LiteralExample,
+    PathParameterExample,
+    PrimitiveExample
+} from "@fern-api/openapi-ir";
 import { Schema } from "@fern-api/openapi-ir";
 
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
@@ -35,24 +41,50 @@ export function buildEndpointExample({
     }
 
     const hasEndpointHeaders = endpointExample.headers != null && endpointExample.headers.length > 0;
-    const hasGlobalHeaders = Object.keys(context.builder.getGlobalHeaders()).length > 0;
+    const globalHeaders = context.builder.getGlobalHeaders();
+    const hasGlobalHeaders = Object.keys(globalHeaders).length > 0;
 
     const endpointHeaderNames = new Set(endpointExample.headers?.map((header) => header.name) ?? []);
 
+    // generate examples for headers, but ensure there are no duplicates from global and auth headers 
     if (hasEndpointHeaders || hasGlobalHeaders) {
-        const namedFullExamples: NamedFullExample[] = [
-            // ignore auth headers
-            ...(endpointExample.headers ?? []).filter((header) => header.name !== context.builder.getAuthHeaderName()),
+        const namedFullExamples: NamedFullExample[] = [];
 
-            // include global headers that are not already in the endpoint headers
-            ...(Object.entries(context.builder.getGlobalHeaders())
-                .filter(([header]) => !endpointHeaderNames.has(header))
-                .map(([header, _]) => ({
-                    name: header,
-                    value: FullExample.primitive(PrimitiveExample.string(header))
-                })) ?? [])
-        ];
-        // create examples for all headers
+        // ignore auth headers
+        if (endpointExample.headers != null) {
+            for (const header of endpointExample.headers) {
+                if (header.name !== context.builder.getAuthHeaderName()) {
+                    namedFullExamples.push(header);
+                }
+            }
+        }
+
+        // include global headers that are not already in the endpoint headers
+        for (const [header, info] of Object.entries(globalHeaders)) {
+            if (!endpointHeaderNames.has(header)) {
+                // get 'literal' headers and use the value as the example
+                if (typeof info === "object" && "type" in info && info.type.startsWith("literal")) {
+                    // Try to extract a string value from info
+                    let valueToUse = info.type;
+                    const literalMatch = /^literal<"(.*)">$/s.exec(info.type);
+                    if (literalMatch && literalMatch[1] !== undefined) {
+                        valueToUse = literalMatch[1];
+                    }
+                    namedFullExamples.push({
+                        name: header,
+                        value: FullExample.literal(LiteralExample.string(valueToUse as string))
+                    });
+                // otherwise, use the header name as the example
+                } else {
+                    namedFullExamples.push({
+                        name: header,
+                        value: FullExample.primitive(PrimitiveExample.string(header))
+                    });
+
+                }
+            }
+        }
+
         example.headers = convertHeaderExamples({
             context,
             namedFullExamples
