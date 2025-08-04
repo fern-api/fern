@@ -8,7 +8,7 @@ import com.seed.builderExtension.core.Environment;
 import java.util.Optional;
 import okhttp3.OkHttpClient;
 
-public class AsyncSeedBuilderExtensionClientBuilder {
+public abstract class AsyncSeedBuilderExtensionClientBuilder<T extends AsyncSeedBuilderExtensionClientBuilder<T>> {
     private Optional<Integer> timeout = Optional.empty();
 
     private Optional<Integer> maxRetries = Optional.empty();
@@ -19,46 +19,48 @@ public class AsyncSeedBuilderExtensionClientBuilder {
 
     private OkHttpClient httpClient;
 
+    protected abstract T self();
+
     /**
      * Sets token
      */
-    public AsyncSeedBuilderExtensionClientBuilder token(String token) {
+    public T token(String token) {
         this.token = token;
-        return this;
+        return self();
     }
 
-    public AsyncSeedBuilderExtensionClientBuilder environment(Environment environment) {
+    public T environment(Environment environment) {
         this.environment = environment;
-        return this;
+        return self();
     }
 
-    public AsyncSeedBuilderExtensionClientBuilder url(String url) {
+    public T url(String url) {
         this.environment = Environment.custom(url);
-        return this;
+        return self();
     }
 
     /**
      * Sets the timeout (in seconds) for the client. Defaults to 60 seconds.
      */
-    public AsyncSeedBuilderExtensionClientBuilder timeout(int timeout) {
+    public T timeout(int timeout) {
         this.timeout = Optional.of(timeout);
-        return this;
+        return self();
     }
 
     /**
      * Sets the maximum number of retries for the client. Defaults to 2 retries.
      */
-    public AsyncSeedBuilderExtensionClientBuilder maxRetries(int maxRetries) {
+    public T maxRetries(int maxRetries) {
         this.maxRetries = Optional.of(maxRetries);
-        return this;
+        return self();
     }
 
     /**
      * Sets the underlying OkHttp client
      */
-    public AsyncSeedBuilderExtensionClientBuilder httpClient(OkHttpClient httpClient) {
+    public T httpClient(OkHttpClient httpClient) {
         this.httpClient = httpClient;
-        return this;
+        return self();
     }
 
     protected ClientOptions buildClientOptions() {
@@ -181,5 +183,12 @@ public class AsyncSeedBuilderExtensionClientBuilder {
         }
         validateConfiguration();
         return new AsyncSeedBuilderExtensionClient(buildClientOptions());
+    }
+
+    public static final class Impl extends AsyncSeedBuilderExtensionClientBuilder<Impl> {
+        @Override
+        protected Impl self() {
+            return this;
+        }
     }
 }

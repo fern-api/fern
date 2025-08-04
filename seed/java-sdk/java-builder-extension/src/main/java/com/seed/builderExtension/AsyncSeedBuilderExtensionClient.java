@@ -22,7 +22,7 @@ public class AsyncSeedBuilderExtensionClient {
         return this.serviceClient.get();
     }
 
-    public static AsyncSeedBuilderExtensionClientBuilder builder() {
-        return new AsyncSeedBuilderExtensionClientBuilder();
+    public static AsyncSeedBuilderExtensionClientBuilder.Impl builder() {
+        return new AsyncSeedBuilderExtensionClientBuilder.Impl();
     }
 }

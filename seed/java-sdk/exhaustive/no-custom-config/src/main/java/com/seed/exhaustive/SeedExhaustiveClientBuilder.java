@@ -8,7 +8,7 @@ import com.seed.exhaustive.core.Environment;
 import java.util.Optional;
 import okhttp3.OkHttpClient;
 
-public class SeedExhaustiveClientBuilder {
+public abstract class SeedExhaustiveClientBuilder<T extends SeedExhaustiveClientBuilder<T>> {
     private Optional<Integer> timeout = Optional.empty();
 
     private Optional<Integer> maxRetries = Optional.empty();
@@ -19,41 +19,43 @@ public class SeedExhaustiveClientBuilder {
 
     private OkHttpClient httpClient;
 
+    protected abstract T self();
+
     /**
      * Sets token
      */
-    public SeedExhaustiveClientBuilder token(String token) {
+    public T token(String token) {
         this.token = token;
-        return this;
+        return self();
     }
 
-    public SeedExhaustiveClientBuilder url(String url) {
+    public T url(String url) {
         this.environment = Environment.custom(url);
-        return this;
+        return self();
     }
 
     /**
      * Sets the timeout (in seconds) for the client. Defaults to 60 seconds.
      */
-    public SeedExhaustiveClientBuilder timeout(int timeout) {
+    public T timeout(int timeout) {
         this.timeout = Optional.of(timeout);
-        return this;
+        return self();
     }
 
     /**
      * Sets the maximum number of retries for the client. Defaults to 2 retries.
      */
-    public SeedExhaustiveClientBuilder maxRetries(int maxRetries) {
+    public T maxRetries(int maxRetries) {
         this.maxRetries = Optional.of(maxRetries);
-        return this;
+        return self();
     }
 
     /**
      * Sets the underlying OkHttp client
      */
-    public SeedExhaustiveClientBuilder httpClient(OkHttpClient httpClient) {
+    public T httpClient(OkHttpClient httpClient) {
         this.httpClient = httpClient;
-        return this;
+        return self();
     }
 
     protected ClientOptions buildClientOptions() {
@@ -173,5 +175,12 @@ public class SeedExhaustiveClientBuilder {
     public SeedExhaustiveClient build() {
         validateConfiguration();
         return new SeedExhaustiveClient(buildClientOptions());
+    }
+
+    public static final class Impl extends SeedExhaustiveClientBuilder<Impl> {
+        @Override
+        protected Impl self() {
+            return this;
+        }
     }
 }
