@@ -63,11 +63,11 @@ public enum TestCaseImplementationDescriptionBoardType: Codable, Hashable, Senda
 
     public struct ParamId: Codable, Hashable, Sendable {
         public let type: String = "paramId"
-        public let value: ParameterId
+        public let value: ParameterIdType
         public let additionalProperties: [String: JSONValue]
 
         public init(
-            value: ParameterId,
+            value: ParameterIdType,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.value = value
@@ -76,7 +76,7 @@ public enum TestCaseImplementationDescriptionBoardType: Codable, Hashable, Senda
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.value = try container.decode(ParameterId.self, forKey: .value)
+            self.value = try container.decode(ParameterIdType.self, forKey: .value)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 

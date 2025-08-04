@@ -1,11 +1,11 @@
 public struct NonVoidFunctionDefinitionType: Codable, Hashable, Sendable {
-    public let signature: NonVoidFunctionSignature
-    public let code: FunctionImplementationForMultipleLanguages
+    public let signature: NonVoidFunctionSignatureType
+    public let code: FunctionImplementationForMultipleLanguagesType
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        signature: NonVoidFunctionSignature,
-        code: FunctionImplementationForMultipleLanguages,
+        signature: NonVoidFunctionSignatureType,
+        code: FunctionImplementationForMultipleLanguagesType,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.signature = signature
@@ -15,8 +15,8 @@ public struct NonVoidFunctionDefinitionType: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.signature = try container.decode(NonVoidFunctionSignature.self, forKey: .signature)
-        self.code = try container.decode(FunctionImplementationForMultipleLanguages.self, forKey: .code)
+        self.signature = try container.decode(NonVoidFunctionSignatureType.self, forKey: .signature)
+        self.code = try container.decode(FunctionImplementationForMultipleLanguagesType.self, forKey: .code)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

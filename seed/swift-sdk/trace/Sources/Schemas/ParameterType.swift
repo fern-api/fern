@@ -1,11 +1,11 @@
 public struct ParameterType: Codable, Hashable, Sendable {
-    public let parameterId: ParameterId
+    public let parameterId: ParameterIdType
     public let name: String
     public let variableType: VariableType
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        parameterId: ParameterId,
+        parameterId: ParameterIdType,
         name: String,
         variableType: VariableType,
         additionalProperties: [String: JSONValue] = .init()
@@ -18,7 +18,7 @@ public struct ParameterType: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.parameterId = try container.decode(ParameterId.self, forKey: .parameterId)
+        self.parameterId = try container.decode(ParameterIdType.self, forKey: .parameterId)
         self.name = try container.decode(String.self, forKey: .name)
         self.variableType = try container.decode(VariableType.self, forKey: .variableType)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)

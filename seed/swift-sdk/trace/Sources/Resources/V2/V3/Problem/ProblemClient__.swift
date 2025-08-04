@@ -5,39 +5,39 @@ public final class ProblemClient__: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getLightweightProblems(requestOptions: RequestOptions? = nil) async throws -> [LightweightProblemInfoV2] {
+    public func getLightweightProblems(requestOptions: RequestOptions? = nil) async throws -> [LightweightProblemInfoV2Type] {
         return try await httpClient.performRequest(
             method: .get,
             path: "/problems-v2/lightweight-problem-info",
             requestOptions: requestOptions,
-            responseType: [LightweightProblemInfoV2].self
+            responseType: [LightweightProblemInfoV2Type].self
         )
     }
 
-    public func getProblems(requestOptions: RequestOptions? = nil) async throws -> [ProblemInfoV2] {
+    public func getProblems(requestOptions: RequestOptions? = nil) async throws -> [ProblemInfoV2Type] {
         return try await httpClient.performRequest(
             method: .get,
             path: "/problems-v2/problem-info",
             requestOptions: requestOptions,
-            responseType: [ProblemInfoV2].self
+            responseType: [ProblemInfoV2Type].self
         )
     }
 
-    public func getLatestProblem(problemId: String, requestOptions: RequestOptions? = nil) async throws -> ProblemInfoV2 {
+    public func getLatestProblem(problemId: String, requestOptions: RequestOptions? = nil) async throws -> ProblemInfoV2Type {
         return try await httpClient.performRequest(
             method: .get,
             path: "/problems-v2/problem-info/\(problemId)",
             requestOptions: requestOptions,
-            responseType: ProblemInfoV2.self
+            responseType: ProblemInfoV2Type.self
         )
     }
 
-    public func getProblemVersion(problemId: String, problemVersion: String, requestOptions: RequestOptions? = nil) async throws -> ProblemInfoV2 {
+    public func getProblemVersion(problemId: String, problemVersion: String, requestOptions: RequestOptions? = nil) async throws -> ProblemInfoV2Type {
         return try await httpClient.performRequest(
             method: .get,
             path: "/problems-v2/problem-info/\(problemId)/version/\(problemVersion)",
             requestOptions: requestOptions,
-            responseType: ProblemInfoV2.self
+            responseType: ProblemInfoV2Type.self
         )
     }
 }

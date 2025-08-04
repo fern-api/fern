@@ -31,11 +31,11 @@ public enum TestCaseImplementationReferenceType: Codable, Hashable, Sendable {
 
     public struct TemplateId: Codable, Hashable, Sendable {
         public let type: String = "templateId"
-        public let value: TestCaseTemplateId
+        public let value: TestCaseTemplateIdType
         public let additionalProperties: [String: JSONValue]
 
         public init(
-            value: TestCaseTemplateId,
+            value: TestCaseTemplateIdType,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.value = value
@@ -44,7 +44,7 @@ public enum TestCaseImplementationReferenceType: Codable, Hashable, Sendable {
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.value = try container.decode(TestCaseTemplateId.self, forKey: .value)
+            self.value = try container.decode(TestCaseTemplateIdType.self, forKey: .value)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 
@@ -63,13 +63,13 @@ public enum TestCaseImplementationReferenceType: Codable, Hashable, Sendable {
 
     public struct Implementation: Codable, Hashable, Sendable {
         public let type: String = "implementation"
-        public let description: TestCaseImplementationDescription
-        public let function: TestCaseFunction
+        public let description: TestCaseImplementationDescriptionType
+        public let function: TestCaseFunctionType
         public let additionalProperties: [String: JSONValue]
 
         public init(
-            description: TestCaseImplementationDescription,
-            function: TestCaseFunction,
+            description: TestCaseImplementationDescriptionType,
+            function: TestCaseFunctionType,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.description = description
@@ -79,8 +79,8 @@ public enum TestCaseImplementationReferenceType: Codable, Hashable, Sendable {
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.description = try container.decode(TestCaseImplementationDescription.self, forKey: .description)
-            self.function = try container.decode(TestCaseFunction.self, forKey: .function)
+            self.description = try container.decode(TestCaseImplementationDescriptionType.self, forKey: .description)
+            self.function = try container.decode(TestCaseFunctionType.self, forKey: .function)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 

@@ -1,13 +1,13 @@
 public struct TestCaseTemplateType: Codable, Hashable, Sendable {
-    public let templateId: TestCaseTemplateId
+    public let templateId: TestCaseTemplateIdType
     public let name: String
-    public let implementation: TestCaseImplementation
+    public let implementation: TestCaseImplementationType
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        templateId: TestCaseTemplateId,
+        templateId: TestCaseTemplateIdType,
         name: String,
-        implementation: TestCaseImplementation,
+        implementation: TestCaseImplementationType,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.templateId = templateId
@@ -18,9 +18,9 @@ public struct TestCaseTemplateType: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.templateId = try container.decode(TestCaseTemplateId.self, forKey: .templateId)
+        self.templateId = try container.decode(TestCaseTemplateIdType.self, forKey: .templateId)
         self.name = try container.decode(String.self, forKey: .name)
-        self.implementation = try container.decode(TestCaseImplementation.self, forKey: .implementation)
+        self.implementation = try container.decode(TestCaseImplementationType.self, forKey: .implementation)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

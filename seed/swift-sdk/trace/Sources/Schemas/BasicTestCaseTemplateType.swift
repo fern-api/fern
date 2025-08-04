@@ -1,15 +1,15 @@
 public struct BasicTestCaseTemplateType: Codable, Hashable, Sendable {
-    public let templateId: TestCaseTemplateId
+    public let templateId: TestCaseTemplateIdType
     public let name: String
-    public let description: TestCaseImplementationDescription
-    public let expectedValueParameterId: ParameterId
+    public let description: TestCaseImplementationDescriptionType
+    public let expectedValueParameterId: ParameterIdType
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        templateId: TestCaseTemplateId,
+        templateId: TestCaseTemplateIdType,
         name: String,
-        description: TestCaseImplementationDescription,
-        expectedValueParameterId: ParameterId,
+        description: TestCaseImplementationDescriptionType,
+        expectedValueParameterId: ParameterIdType,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.templateId = templateId
@@ -21,10 +21,10 @@ public struct BasicTestCaseTemplateType: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.templateId = try container.decode(TestCaseTemplateId.self, forKey: .templateId)
+        self.templateId = try container.decode(TestCaseTemplateIdType.self, forKey: .templateId)
         self.name = try container.decode(String.self, forKey: .name)
-        self.description = try container.decode(TestCaseImplementationDescription.self, forKey: .description)
-        self.expectedValueParameterId = try container.decode(ParameterId.self, forKey: .expectedValueParameterId)
+        self.description = try container.decode(TestCaseImplementationDescriptionType.self, forKey: .description)
+        self.expectedValueParameterId = try container.decode(ParameterIdType.self, forKey: .expectedValueParameterId)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

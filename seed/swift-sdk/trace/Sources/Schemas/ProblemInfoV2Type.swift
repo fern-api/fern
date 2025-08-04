@@ -4,10 +4,10 @@ public struct ProblemInfoV2Type: Codable, Hashable, Sendable {
     public let problemName: String
     public let problemVersion: Int
     public let supportedLanguages: JSONValue
-    public let customFiles: CustomFiles
-    public let generatedFiles: GeneratedFiles
-    public let customTestCaseTemplates: [TestCaseTemplate]
-    public let testcases: [TestCaseV2]
+    public let customFiles: CustomFilesType
+    public let generatedFiles: GeneratedFilesType
+    public let customTestCaseTemplates: [TestCaseTemplateType]
+    public let testcases: [TestCaseV2Type]
     public let isPublic: Bool
     public let additionalProperties: [String: JSONValue]
 
@@ -17,10 +17,10 @@ public struct ProblemInfoV2Type: Codable, Hashable, Sendable {
         problemName: String,
         problemVersion: Int,
         supportedLanguages: JSONValue,
-        customFiles: CustomFiles,
-        generatedFiles: GeneratedFiles,
-        customTestCaseTemplates: [TestCaseTemplate],
-        testcases: [TestCaseV2],
+        customFiles: CustomFilesType,
+        generatedFiles: GeneratedFilesType,
+        customTestCaseTemplates: [TestCaseTemplateType],
+        testcases: [TestCaseV2Type],
         isPublic: Bool,
         additionalProperties: [String: JSONValue] = .init()
     ) {
@@ -44,10 +44,10 @@ public struct ProblemInfoV2Type: Codable, Hashable, Sendable {
         self.problemName = try container.decode(String.self, forKey: .problemName)
         self.problemVersion = try container.decode(Int.self, forKey: .problemVersion)
         self.supportedLanguages = try container.decode(JSONValue.self, forKey: .supportedLanguages)
-        self.customFiles = try container.decode(CustomFiles.self, forKey: .customFiles)
-        self.generatedFiles = try container.decode(GeneratedFiles.self, forKey: .generatedFiles)
-        self.customTestCaseTemplates = try container.decode([TestCaseTemplate].self, forKey: .customTestCaseTemplates)
-        self.testcases = try container.decode([TestCaseV2].self, forKey: .testcases)
+        self.customFiles = try container.decode(CustomFilesType.self, forKey: .customFiles)
+        self.generatedFiles = try container.decode(GeneratedFilesType.self, forKey: .generatedFiles)
+        self.customTestCaseTemplates = try container.decode([TestCaseTemplateType].self, forKey: .customTestCaseTemplates)
+        self.testcases = try container.decode([TestCaseV2Type].self, forKey: .testcases)
         self.isPublic = try container.decode(Bool.self, forKey: .isPublic)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }

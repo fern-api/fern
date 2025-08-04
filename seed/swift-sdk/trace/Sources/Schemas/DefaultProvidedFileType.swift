@@ -1,10 +1,10 @@
 public struct DefaultProvidedFileType: Codable, Hashable, Sendable {
-    public let file: FileInfoV2
+    public let file: FileInfoV2Type
     public let relatedTypes: [VariableType]
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        file: FileInfoV2,
+        file: FileInfoV2Type,
         relatedTypes: [VariableType],
         additionalProperties: [String: JSONValue] = .init()
     ) {
@@ -15,7 +15,7 @@ public struct DefaultProvidedFileType: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.file = try container.decode(FileInfoV2.self, forKey: .file)
+        self.file = try container.decode(FileInfoV2Type.self, forKey: .file)
         self.relatedTypes = try container.decode([VariableType].self, forKey: .relatedTypes)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }

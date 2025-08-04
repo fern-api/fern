@@ -1,9 +1,9 @@
 public struct GetFunctionSignatureRequestType: Codable, Hashable, Sendable {
-    public let functionSignature: FunctionSignature
+    public let functionSignature: FunctionSignatureType
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        functionSignature: FunctionSignature,
+        functionSignature: FunctionSignatureType,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.functionSignature = functionSignature
@@ -12,7 +12,7 @@ public struct GetFunctionSignatureRequestType: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.functionSignature = try container.decode(FunctionSignature.self, forKey: .functionSignature)
+        self.functionSignature = try container.decode(FunctionSignatureType.self, forKey: .functionSignature)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

@@ -31,13 +31,13 @@ public enum TestCaseFunctionType: Codable, Hashable, Sendable {
 
     public struct WithActualResult: Codable, Hashable, Sendable {
         public let type: String = "withActualResult"
-        public let getActualResult: NonVoidFunctionDefinition
-        public let assertCorrectnessCheck: AssertCorrectnessCheck
+        public let getActualResult: NonVoidFunctionDefinitionType
+        public let assertCorrectnessCheck: AssertCorrectnessCheckType
         public let additionalProperties: [String: JSONValue]
 
         public init(
-            getActualResult: NonVoidFunctionDefinition,
-            assertCorrectnessCheck: AssertCorrectnessCheck,
+            getActualResult: NonVoidFunctionDefinitionType,
+            assertCorrectnessCheck: AssertCorrectnessCheckType,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.getActualResult = getActualResult
@@ -47,8 +47,8 @@ public enum TestCaseFunctionType: Codable, Hashable, Sendable {
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.getActualResult = try container.decode(NonVoidFunctionDefinition.self, forKey: .getActualResult)
-            self.assertCorrectnessCheck = try container.decode(AssertCorrectnessCheck.self, forKey: .assertCorrectnessCheck)
+            self.getActualResult = try container.decode(NonVoidFunctionDefinitionType.self, forKey: .getActualResult)
+            self.assertCorrectnessCheck = try container.decode(AssertCorrectnessCheckType.self, forKey: .assertCorrectnessCheck)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 
@@ -69,13 +69,13 @@ public enum TestCaseFunctionType: Codable, Hashable, Sendable {
 
     public struct Custom: Codable, Hashable, Sendable {
         public let type: String = "custom"
-        public let parameters: [Parameter]
-        public let code: FunctionImplementationForMultipleLanguages
+        public let parameters: [ParameterType]
+        public let code: FunctionImplementationForMultipleLanguagesType
         public let additionalProperties: [String: JSONValue]
 
         public init(
-            parameters: [Parameter],
-            code: FunctionImplementationForMultipleLanguages,
+            parameters: [ParameterType],
+            code: FunctionImplementationForMultipleLanguagesType,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.parameters = parameters
@@ -85,8 +85,8 @@ public enum TestCaseFunctionType: Codable, Hashable, Sendable {
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.parameters = try container.decode([Parameter].self, forKey: .parameters)
-            self.code = try container.decode(FunctionImplementationForMultipleLanguages.self, forKey: .code)
+            self.parameters = try container.decode([ParameterType].self, forKey: .parameters)
+            self.code = try container.decode(FunctionImplementationForMultipleLanguagesType.self, forKey: .code)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 

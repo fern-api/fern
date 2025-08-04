@@ -36,11 +36,11 @@ public enum FunctionSignatureType: Codable, Hashable, Sendable {
 
     public struct Void: Codable, Hashable, Sendable {
         public let type: String = "void"
-        public let parameters: [Parameter]
+        public let parameters: [ParameterType]
         public let additionalProperties: [String: JSONValue]
 
         public init(
-            parameters: [Parameter],
+            parameters: [ParameterType],
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.parameters = parameters
@@ -49,7 +49,7 @@ public enum FunctionSignatureType: Codable, Hashable, Sendable {
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.parameters = try container.decode([Parameter].self, forKey: .parameters)
+            self.parameters = try container.decode([ParameterType].self, forKey: .parameters)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 
@@ -68,12 +68,12 @@ public enum FunctionSignatureType: Codable, Hashable, Sendable {
 
     public struct NonVoid: Codable, Hashable, Sendable {
         public let type: String = "nonVoid"
-        public let parameters: [Parameter]
+        public let parameters: [ParameterType]
         public let returnType: VariableType
         public let additionalProperties: [String: JSONValue]
 
         public init(
-            parameters: [Parameter],
+            parameters: [ParameterType],
             returnType: VariableType,
             additionalProperties: [String: JSONValue] = .init()
         ) {
@@ -84,7 +84,7 @@ public enum FunctionSignatureType: Codable, Hashable, Sendable {
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.parameters = try container.decode([Parameter].self, forKey: .parameters)
+            self.parameters = try container.decode([ParameterType].self, forKey: .parameters)
             self.returnType = try container.decode(VariableType.self, forKey: .returnType)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
@@ -106,12 +106,12 @@ public enum FunctionSignatureType: Codable, Hashable, Sendable {
 
     public struct VoidThatTakesActualResult: Codable, Hashable, Sendable {
         public let type: String = "voidThatTakesActualResult"
-        public let parameters: [Parameter]
+        public let parameters: [ParameterType]
         public let actualResultType: VariableType
         public let additionalProperties: [String: JSONValue]
 
         public init(
-            parameters: [Parameter],
+            parameters: [ParameterType],
             actualResultType: VariableType,
             additionalProperties: [String: JSONValue] = .init()
         ) {
@@ -122,7 +122,7 @@ public enum FunctionSignatureType: Codable, Hashable, Sendable {
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.parameters = try container.decode([Parameter].self, forKey: .parameters)
+            self.parameters = try container.decode([ParameterType].self, forKey: .parameters)
             self.actualResultType = try container.decode(VariableType.self, forKey: .actualResultType)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }

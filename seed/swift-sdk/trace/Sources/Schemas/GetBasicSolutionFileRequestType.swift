@@ -1,11 +1,11 @@
 public struct GetBasicSolutionFileRequestType: Codable, Hashable, Sendable {
     public let methodName: String
-    public let signature: NonVoidFunctionSignature
+    public let signature: NonVoidFunctionSignatureType
     public let additionalProperties: [String: JSONValue]
 
     public init(
         methodName: String,
-        signature: NonVoidFunctionSignature,
+        signature: NonVoidFunctionSignatureType,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.methodName = methodName
@@ -16,7 +16,7 @@ public struct GetBasicSolutionFileRequestType: Codable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.methodName = try container.decode(String.self, forKey: .methodName)
-        self.signature = try container.decode(NonVoidFunctionSignature.self, forKey: .signature)
+        self.signature = try container.decode(NonVoidFunctionSignatureType.self, forKey: .signature)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

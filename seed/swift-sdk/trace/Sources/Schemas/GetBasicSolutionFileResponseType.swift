@@ -1,9 +1,9 @@
 public struct GetBasicSolutionFileResponseType: Codable, Hashable, Sendable {
-    public let solutionFileByLanguage: [Language: FileInfoV2]
+    public let solutionFileByLanguage: [Language: FileInfoV2Type]
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        solutionFileByLanguage: [Language: FileInfoV2],
+        solutionFileByLanguage: [Language: FileInfoV2Type],
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.solutionFileByLanguage = solutionFileByLanguage
@@ -12,7 +12,7 @@ public struct GetBasicSolutionFileResponseType: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.solutionFileByLanguage = try container.decode([Language: FileInfoV2].self, forKey: .solutionFileByLanguage)
+        self.solutionFileByLanguage = try container.decode([Language: FileInfoV2Type].self, forKey: .solutionFileByLanguage)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

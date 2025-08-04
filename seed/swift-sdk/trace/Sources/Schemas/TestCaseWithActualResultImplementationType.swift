@@ -1,11 +1,11 @@
 public struct TestCaseWithActualResultImplementationType: Codable, Hashable, Sendable {
-    public let getActualResult: NonVoidFunctionDefinition
-    public let assertCorrectnessCheck: AssertCorrectnessCheck
+    public let getActualResult: NonVoidFunctionDefinitionType
+    public let assertCorrectnessCheck: AssertCorrectnessCheckType
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        getActualResult: NonVoidFunctionDefinition,
-        assertCorrectnessCheck: AssertCorrectnessCheck,
+        getActualResult: NonVoidFunctionDefinitionType,
+        assertCorrectnessCheck: AssertCorrectnessCheckType,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.getActualResult = getActualResult
@@ -15,8 +15,8 @@ public struct TestCaseWithActualResultImplementationType: Codable, Hashable, Sen
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.getActualResult = try container.decode(NonVoidFunctionDefinition.self, forKey: .getActualResult)
-        self.assertCorrectnessCheck = try container.decode(AssertCorrectnessCheck.self, forKey: .assertCorrectnessCheck)
+        self.getActualResult = try container.decode(NonVoidFunctionDefinitionType.self, forKey: .getActualResult)
+        self.assertCorrectnessCheck = try container.decode(AssertCorrectnessCheckType.self, forKey: .assertCorrectnessCheck)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

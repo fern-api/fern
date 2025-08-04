@@ -1,9 +1,9 @@
 public struct VoidFunctionSignatureType: Codable, Hashable, Sendable {
-    public let parameters: [Parameter]
+    public let parameters: [ParameterType]
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        parameters: [Parameter],
+        parameters: [ParameterType],
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.parameters = parameters
@@ -12,7 +12,7 @@ public struct VoidFunctionSignatureType: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.parameters = try container.decode([Parameter].self, forKey: .parameters)
+        self.parameters = try container.decode([ParameterType].self, forKey: .parameters)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

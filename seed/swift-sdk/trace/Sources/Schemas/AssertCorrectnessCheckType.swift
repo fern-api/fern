@@ -31,11 +31,11 @@ public enum AssertCorrectnessCheckType: Codable, Hashable, Sendable {
 
     public struct DeepEquality: Codable, Hashable, Sendable {
         public let type: String = "deepEquality"
-        public let expectedValueParameterId: ParameterId
+        public let expectedValueParameterId: ParameterIdType
         public let additionalProperties: [String: JSONValue]
 
         public init(
-            expectedValueParameterId: ParameterId,
+            expectedValueParameterId: ParameterIdType,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.expectedValueParameterId = expectedValueParameterId
@@ -44,7 +44,7 @@ public enum AssertCorrectnessCheckType: Codable, Hashable, Sendable {
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.expectedValueParameterId = try container.decode(ParameterId.self, forKey: .expectedValueParameterId)
+            self.expectedValueParameterId = try container.decode(ParameterIdType.self, forKey: .expectedValueParameterId)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 
@@ -63,13 +63,13 @@ public enum AssertCorrectnessCheckType: Codable, Hashable, Sendable {
 
     public struct Custom: Codable, Hashable, Sendable {
         public let type: String = "custom"
-        public let additionalParameters: [Parameter]
-        public let code: FunctionImplementationForMultipleLanguages
+        public let additionalParameters: [ParameterType]
+        public let code: FunctionImplementationForMultipleLanguagesType
         public let additionalProperties: [String: JSONValue]
 
         public init(
-            additionalParameters: [Parameter],
-            code: FunctionImplementationForMultipleLanguages,
+            additionalParameters: [ParameterType],
+            code: FunctionImplementationForMultipleLanguagesType,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.additionalParameters = additionalParameters
@@ -79,8 +79,8 @@ public enum AssertCorrectnessCheckType: Codable, Hashable, Sendable {
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.additionalParameters = try container.decode([Parameter].self, forKey: .additionalParameters)
-            self.code = try container.decode(FunctionImplementationForMultipleLanguages.self, forKey: .code)
+            self.additionalParameters = try container.decode([ParameterType].self, forKey: .additionalParameters)
+            self.code = try container.decode(FunctionImplementationForMultipleLanguagesType.self, forKey: .code)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 

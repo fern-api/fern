@@ -1,9 +1,9 @@
 public struct CreateProblemRequestV2Type: Codable, Hashable, Sendable {
     public let problemName: String
     public let problemDescription: ProblemDescription
-    public let customFiles: CustomFiles
-    public let customTestCaseTemplates: [TestCaseTemplate]
-    public let testcases: [TestCaseV2]
+    public let customFiles: CustomFilesType
+    public let customTestCaseTemplates: [TestCaseTemplateType]
+    public let testcases: [TestCaseV2Type]
     public let supportedLanguages: JSONValue
     public let isPublic: Bool
     public let additionalProperties: [String: JSONValue]
@@ -11,9 +11,9 @@ public struct CreateProblemRequestV2Type: Codable, Hashable, Sendable {
     public init(
         problemName: String,
         problemDescription: ProblemDescription,
-        customFiles: CustomFiles,
-        customTestCaseTemplates: [TestCaseTemplate],
-        testcases: [TestCaseV2],
+        customFiles: CustomFilesType,
+        customTestCaseTemplates: [TestCaseTemplateType],
+        testcases: [TestCaseV2Type],
         supportedLanguages: JSONValue,
         isPublic: Bool,
         additionalProperties: [String: JSONValue] = .init()
@@ -32,9 +32,9 @@ public struct CreateProblemRequestV2Type: Codable, Hashable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.problemName = try container.decode(String.self, forKey: .problemName)
         self.problemDescription = try container.decode(ProblemDescription.self, forKey: .problemDescription)
-        self.customFiles = try container.decode(CustomFiles.self, forKey: .customFiles)
-        self.customTestCaseTemplates = try container.decode([TestCaseTemplate].self, forKey: .customTestCaseTemplates)
-        self.testcases = try container.decode([TestCaseV2].self, forKey: .testcases)
+        self.customFiles = try container.decode(CustomFilesType.self, forKey: .customFiles)
+        self.customTestCaseTemplates = try container.decode([TestCaseTemplateType].self, forKey: .customTestCaseTemplates)
+        self.testcases = try container.decode([TestCaseV2Type].self, forKey: .testcases)
         self.supportedLanguages = try container.decode(JSONValue.self, forKey: .supportedLanguages)
         self.isPublic = try container.decode(Bool.self, forKey: .isPublic)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)

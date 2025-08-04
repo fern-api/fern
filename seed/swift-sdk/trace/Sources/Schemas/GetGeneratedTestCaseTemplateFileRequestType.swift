@@ -1,9 +1,9 @@
 public struct GetGeneratedTestCaseTemplateFileRequestType: Codable, Hashable, Sendable {
-    public let template: TestCaseTemplate
+    public let template: TestCaseTemplateType
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        template: TestCaseTemplate,
+        template: TestCaseTemplateType,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.template = template
@@ -12,7 +12,7 @@ public struct GetGeneratedTestCaseTemplateFileRequestType: Codable, Hashable, Se
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.template = try container.decode(TestCaseTemplate.self, forKey: .template)
+        self.template = try container.decode(TestCaseTemplateType.self, forKey: .template)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

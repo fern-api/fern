@@ -1,9 +1,9 @@
 public struct FilesType: Codable, Hashable, Sendable {
-    public let files: [FileInfoV2]
+    public let files: [FileInfoV2Type]
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        files: [FileInfoV2],
+        files: [FileInfoV2Type],
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.files = files
@@ -12,7 +12,7 @@ public struct FilesType: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.files = try container.decode([FileInfoV2].self, forKey: .files)
+        self.files = try container.decode([FileInfoV2Type].self, forKey: .files)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

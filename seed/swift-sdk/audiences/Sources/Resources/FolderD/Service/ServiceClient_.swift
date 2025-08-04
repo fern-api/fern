@@ -5,12 +5,12 @@ public final class ServiceClient_: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getDirectThread(requestOptions: RequestOptions? = nil) async throws -> Response {
+    public func getDirectThread(requestOptions: RequestOptions? = nil) async throws -> ResponseType {
         return try await httpClient.performRequest(
             method: .get,
             path: "/partner-path",
             requestOptions: requestOptions,
-            responseType: Response.self
+            responseType: ResponseType.self
         )
     }
 }

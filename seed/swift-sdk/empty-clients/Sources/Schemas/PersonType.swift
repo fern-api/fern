@@ -1,11 +1,11 @@
 public struct PersonType: Codable, Hashable, Sendable {
     public let name: String
-    public let address: Address
+    public let address: AddressType
     public let additionalProperties: [String: JSONValue]
 
     public init(
         name: String,
-        address: Address,
+        address: AddressType,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.name = name
@@ -16,7 +16,7 @@ public struct PersonType: Codable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.name = try container.decode(String.self, forKey: .name)
-        self.address = try container.decode(Address.self, forKey: .address)
+        self.address = try container.decode(AddressType.self, forKey: .address)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

@@ -1,11 +1,11 @@
 public struct TestCaseImplementationType: Codable, Hashable, Sendable {
-    public let description: TestCaseImplementationDescription
-    public let function: TestCaseFunction
+    public let description: TestCaseImplementationDescriptionType
+    public let function: TestCaseFunctionType
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        description: TestCaseImplementationDescription,
-        function: TestCaseFunction,
+        description: TestCaseImplementationDescriptionType,
+        function: TestCaseFunctionType,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.description = description
@@ -15,8 +15,8 @@ public struct TestCaseImplementationType: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.description = try container.decode(TestCaseImplementationDescription.self, forKey: .description)
-        self.function = try container.decode(TestCaseFunction.self, forKey: .function)
+        self.description = try container.decode(TestCaseImplementationDescriptionType.self, forKey: .description)
+        self.function = try container.decode(TestCaseFunctionType.self, forKey: .function)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

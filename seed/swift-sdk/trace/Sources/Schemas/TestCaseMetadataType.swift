@@ -1,11 +1,11 @@
 public struct TestCaseMetadataType: Codable, Hashable, Sendable {
-    public let id: TestCaseId
+    public let id: TestCaseIdType
     public let name: String
     public let hidden: Bool
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        id: TestCaseId,
+        id: TestCaseIdType,
         name: String,
         hidden: Bool,
         additionalProperties: [String: JSONValue] = .init()
@@ -18,7 +18,7 @@ public struct TestCaseMetadataType: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.decode(TestCaseId.self, forKey: .id)
+        self.id = try container.decode(TestCaseIdType.self, forKey: .id)
         self.name = try container.decode(String.self, forKey: .name)
         self.hidden = try container.decode(Bool.self, forKey: .hidden)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)

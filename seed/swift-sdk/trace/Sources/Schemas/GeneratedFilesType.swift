@@ -1,13 +1,13 @@
 public struct GeneratedFilesType: Codable, Hashable, Sendable {
-    public let generatedTestCaseFiles: [Language: Files]
-    public let generatedTemplateFiles: [Language: Files]
-    public let other: [Language: Files]
+    public let generatedTestCaseFiles: [Language: FilesType]
+    public let generatedTemplateFiles: [Language: FilesType]
+    public let other: [Language: FilesType]
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        generatedTestCaseFiles: [Language: Files],
-        generatedTemplateFiles: [Language: Files],
-        other: [Language: Files],
+        generatedTestCaseFiles: [Language: FilesType],
+        generatedTemplateFiles: [Language: FilesType],
+        other: [Language: FilesType],
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.generatedTestCaseFiles = generatedTestCaseFiles
@@ -18,9 +18,9 @@ public struct GeneratedFilesType: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.generatedTestCaseFiles = try container.decode([Language: Files].self, forKey: .generatedTestCaseFiles)
-        self.generatedTemplateFiles = try container.decode([Language: Files].self, forKey: .generatedTemplateFiles)
-        self.other = try container.decode([Language: Files].self, forKey: .other)
+        self.generatedTestCaseFiles = try container.decode([Language: FilesType].self, forKey: .generatedTestCaseFiles)
+        self.generatedTemplateFiles = try container.decode([Language: FilesType].self, forKey: .generatedTemplateFiles)
+        self.other = try container.decode([Language: FilesType].self, forKey: .other)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

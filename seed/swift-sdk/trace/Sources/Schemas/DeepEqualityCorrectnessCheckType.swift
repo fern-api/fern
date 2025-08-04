@@ -1,9 +1,9 @@
 public struct DeepEqualityCorrectnessCheckType: Codable, Hashable, Sendable {
-    public let expectedValueParameterId: ParameterId
+    public let expectedValueParameterId: ParameterIdType
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        expectedValueParameterId: ParameterId,
+        expectedValueParameterId: ParameterIdType,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.expectedValueParameterId = expectedValueParameterId
@@ -12,7 +12,7 @@ public struct DeepEqualityCorrectnessCheckType: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.expectedValueParameterId = try container.decode(ParameterId.self, forKey: .expectedValueParameterId)
+        self.expectedValueParameterId = try container.decode(ParameterIdType.self, forKey: .expectedValueParameterId)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

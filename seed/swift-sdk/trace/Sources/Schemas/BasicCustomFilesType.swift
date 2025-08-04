@@ -1,15 +1,15 @@
 public struct BasicCustomFilesType: Codable, Hashable, Sendable {
     public let methodName: String
-    public let signature: NonVoidFunctionSignature
-    public let additionalFiles: [Language: Files]
-    public let basicTestCaseTemplate: BasicTestCaseTemplate
+    public let signature: NonVoidFunctionSignatureType
+    public let additionalFiles: [Language: FilesType]
+    public let basicTestCaseTemplate: BasicTestCaseTemplateType
     public let additionalProperties: [String: JSONValue]
 
     public init(
         methodName: String,
-        signature: NonVoidFunctionSignature,
-        additionalFiles: [Language: Files],
-        basicTestCaseTemplate: BasicTestCaseTemplate,
+        signature: NonVoidFunctionSignatureType,
+        additionalFiles: [Language: FilesType],
+        basicTestCaseTemplate: BasicTestCaseTemplateType,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.methodName = methodName
@@ -22,9 +22,9 @@ public struct BasicCustomFilesType: Codable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.methodName = try container.decode(String.self, forKey: .methodName)
-        self.signature = try container.decode(NonVoidFunctionSignature.self, forKey: .signature)
-        self.additionalFiles = try container.decode([Language: Files].self, forKey: .additionalFiles)
-        self.basicTestCaseTemplate = try container.decode(BasicTestCaseTemplate.self, forKey: .basicTestCaseTemplate)
+        self.signature = try container.decode(NonVoidFunctionSignatureType.self, forKey: .signature)
+        self.additionalFiles = try container.decode([Language: FilesType].self, forKey: .additionalFiles)
+        self.basicTestCaseTemplate = try container.decode(BasicTestCaseTemplateType.self, forKey: .basicTestCaseTemplate)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
