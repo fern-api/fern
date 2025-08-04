@@ -1084,16 +1084,16 @@ public class MultipartFormTests
         public int Count { get; set; } = 42;
         public char Initial { get; set; } = 'A';
         public IEnumerable<object> Values { get; set; } =
-            [
-                "data",
-                DateOnly.Parse("2023-10-01"),
-                TimeOnly.Parse("12:00:00"),
-                TimeSpan.FromHours(1),
-                Guid.Parse("1a1bb98f-47c6-407b-9481-78476affe52a"),
-                true,
-                42,
-                'A',
-            ];
+        [
+            "data",
+            DateOnly.Parse("2023-10-01"),
+            TimeOnly.Parse("12:00:00"),
+            TimeSpan.FromHours(1),
+            Guid.Parse("1a1bb98f-47c6-407b-9481-78476affe52a"),
+            true,
+            42,
+            'A',
+        ];
     }
 
     private class ComplexObject
