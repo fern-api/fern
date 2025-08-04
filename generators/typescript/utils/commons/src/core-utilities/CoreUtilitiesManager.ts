@@ -1,6 +1,6 @@
 import { cp, mkdir, readFile, writeFile } from "fs/promises";
 import { glob } from "glob";
-import path from "path";
+import path, { join } from "path";
 import { SourceFile } from "ts-morph";
 
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
@@ -36,7 +36,7 @@ export declare namespace CoreUtilitiesManager {
     }
 }
 
-const PATH_ON_CONTAINER = "/assets/core-utilities";
+const PATH_ON_CONTAINER = join(__dirname, "assets/core-utilities");
 
 const DEFAULT_PACKAGE_PATH = "src";
 const DEFAULT_TEST_PATH = "tests";

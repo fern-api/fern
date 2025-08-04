@@ -212,6 +212,81 @@
                 }
             ]
         },
+        "type_:EnumWithSpecialCharacters": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "EnumWithSpecialCharacters",
+                    "camelCase": {
+                        "unsafeName": "enumWithSpecialCharacters",
+                        "safeName": "enumWithSpecialCharacters"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "enum_with_special_characters",
+                        "safeName": "enum_with_special_characters"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ENUM_WITH_SPECIAL_CHARACTERS",
+                        "safeName": "ENUM_WITH_SPECIAL_CHARACTERS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "EnumWithSpecialCharacters",
+                        "safeName": "EnumWithSpecialCharacters"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "values": [
+                {
+                    "name": {
+                        "originalName": "bla",
+                        "camelCase": {
+                            "unsafeName": "bla",
+                            "safeName": "bla"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "bla",
+                            "safeName": "bla"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BLA",
+                            "safeName": "BLA"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Bla",
+                            "safeName": "Bla"
+                        }
+                    },
+                    "wireValue": "\\$bla"
+                },
+                {
+                    "name": {
+                        "originalName": "yo",
+                        "camelCase": {
+                            "unsafeName": "yo",
+                            "safeName": "yo"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "yo",
+                            "safeName": "yo"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "YO",
+                            "safeName": "YO"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Yo",
+                            "safeName": "Yo"
+                        }
+                    },
+                    "wireValue": "\\$yo"
+                }
+            ]
+        },
         "type_:EnumWithCustom": {
             "type": "enum",
             "declaration": {

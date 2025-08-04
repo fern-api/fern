@@ -1,6 +1,7 @@
 displayName: TypeScript SDK
 irVersion: v58
 image: fernapi/fern-typescript-sdk
+imageAliases: [fernapi/fern-typescript-node-sdk]
 changelogLocation: ../../generators/typescript/sdk/versions.yml
 publish:
   preBuildCommands:
@@ -19,7 +20,7 @@ test:
     workingDirectory: generators/typescript
     buildCommand:
       - pnpm --filter @fern-typescript/sdk-generator-cli dist:cli
-    runCommand: node --enable-source-maps sdk/cli/dist/nodeCli.cjs
+    runCommand: node --enable-source-maps sdk/cli/dist/cli.cjs {CONFIG_PATH}
     env:
       NODE_ENV: test
 

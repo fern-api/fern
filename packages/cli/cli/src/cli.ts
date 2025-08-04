@@ -549,6 +549,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     mode: argv.mode,
                     force: argv.force,
                     runner: argv.runner as ContainerRunner,
+                    inspect: false,
                     lfsOverride: argv.lfsOverride
                 });
             }
@@ -592,6 +593,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 mode: argv.mode,
                 force: argv.force,
                 runner: argv.runner as ContainerRunner,
+                inspect: false,
                 lfsOverride: argv.lfsOverride
             });
         }

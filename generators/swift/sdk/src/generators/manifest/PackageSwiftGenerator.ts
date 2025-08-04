@@ -26,9 +26,9 @@ export class PackageSwiftGenerator {
                 swift.LineBreak.single(),
                 swift.Statement.import("PackageDescription"),
                 swift.LineBreak.single(),
-                swift.Statement.constantDeclaration(
-                    "package",
-                    swift.Expression.classInitialization({
+                swift.Statement.constantDeclaration({
+                    unsafeName: "package",
+                    value: swift.Expression.classInitialization({
                         unsafeName: "Package",
                         arguments_: [
                             swift.functionArgument({
@@ -138,7 +138,7 @@ export class PackageSwiftGenerator {
                         ],
                         multiline: true
                     })
-                )
+                })
             ]
         });
     }

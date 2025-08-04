@@ -5,10 +5,17 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": [
-    "./src/**/*"
-  ],
+  "include": ["./src/**/*"],
   "references": [
+    {
+      "path": "../model"
+    },
+    {
+      "path": "../codegen"
+    },
+    {
+      "path": "../base"
+    },
     {
       "path": "../../../packages/cli/logger"
     },
@@ -17,12 +24,6 @@
     },
     {
       "path": "../../base"
-    },
-    {
-      "path": "../base"
-    },
-    {
-      "path": "../model"
     }
   ]
 }

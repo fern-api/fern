@@ -13,13 +13,13 @@ let package = Package(
     products: [
         .library(
             name: "Enum",
-            targets: ["EnumTarget"]
+            targets: ["Enum"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "EnumTarget",
+            name: "Enum",
             path: "Sources"
         )
     ]

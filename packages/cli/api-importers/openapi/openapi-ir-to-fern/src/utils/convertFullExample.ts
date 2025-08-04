@@ -22,6 +22,9 @@ export function convertFullExample(fullExample: FullExample): RawSchemas.Example
         case "oneOf":
             return convertOneOfExample(fullExample.value);
         case "enum":
+            if (typeof fullExample.value === "string" && fullExample.value.startsWith("$")) {
+                return `\\${fullExample.value}`;
+            }
             return fullExample.value;
         case "literal":
             return convertLiteralExample(fullExample.value);
@@ -72,7 +75,7 @@ function convertPrimitive(primitiveExample: PrimitiveExample): RawSchemas.Exampl
             return primitiveExample.value;
         case "string": {
             if (primitiveExample.value.startsWith("$")) {
-                return `${primitiveExample.value.slice(1)}`;
+                return `\\${primitiveExample.value}`;
             }
             return primitiveExample.value;
         }

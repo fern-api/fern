@@ -13,13 +13,13 @@ let package = Package(
     products: [
         .library(
             name: "MultiUrlEnvironment",
-            targets: ["MultiUrlEnvironmentTarget"]
+            targets: ["MultiUrlEnvironment"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "MultiUrlEnvironmentTarget",
+            name: "MultiUrlEnvironment",
             path: "Sources"
         )
     ]

@@ -1,3 +1,3 @@
 export * from "./SdkGeneratorCli";
-export * from "./nodeCli";
+export * from "./cli";
 export * from "./custom-config/index";

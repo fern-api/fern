@@ -1,9 +1,9 @@
 import { assertNever } from "@fern-api/core-utils";
 
-import { FunctionArgument } from "./FunctionArgument";
-import { Type } from "./Type";
 import { AstNode, Writer } from "./core";
-import { escapeReservedKeyword } from "./syntax/reserved-keywords";
+import { FunctionArgument } from "./FunctionArgument";
+import { escapeReservedKeyword } from "./syntax";
+import { Type } from "./Type";
 
 /**
  * A reference to a variable or constant.
@@ -87,6 +87,16 @@ type Try = {
     expression: Expression;
 };
 
+type OptionalTry = {
+    type: "optional-try";
+    expression: Expression;
+};
+
+type ForceTry = {
+    type: "force-try";
+    expression: Expression;
+};
+
 type Await = {
     type: "await";
     expression: Expression;
@@ -110,6 +120,8 @@ type InternalExpression =
     | MethodCallWithTrailingClosure
     | ContextualMethodCall
     | Try
+    | OptionalTry
+    | ForceTry
     | Await
     | RawValue;
 
@@ -201,6 +213,14 @@ export class Expression extends AstNode {
                 break;
             case "try":
                 writer.write("try ");
+                this.internalExpression.expression.write(writer);
+                break;
+            case "optional-try":
+                writer.write("try? ");
+                this.internalExpression.expression.write(writer);
+                break;
+            case "force-try":
+                writer.write("try! ");
                 this.internalExpression.expression.write(writer);
                 break;
             case "await":
@@ -344,6 +364,14 @@ export class Expression extends AstNode {
 
     public static try(expression: Expression): Expression {
         return new this({ type: "try", expression });
+    }
+
+    public static optionalTry(expression: Expression): Expression {
+        return new this({ type: "optional-try", expression });
+    }
+
+    public static forceTry(expression: Expression): Expression {
+        return new this({ type: "force-try", expression });
     }
 
     public static await(expression: Expression): Expression {

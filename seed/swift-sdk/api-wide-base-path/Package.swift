@@ -13,13 +13,13 @@ let package = Package(
     products: [
         .library(
             name: "ApiWideBasePath",
-            targets: ["ApiWideBasePathTarget"]
+            targets: ["ApiWideBasePath"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "ApiWideBasePathTarget",
+            name: "ApiWideBasePath",
             path: "Sources"
         )
     ]

@@ -27,6 +27,7 @@ export async function runLocalGenerationForWorkspace({
     generatorGroup,
     version,
     keepDocker,
+    inspect,
     context,
     runner
 }: {
@@ -38,6 +39,7 @@ export async function runLocalGenerationForWorkspace({
     keepDocker: boolean;
     context: TaskContext;
     runner: ContainerRunner | undefined;
+    inspect: boolean;
 }): Promise<void> {
     const workspaceTempDir = await getWorkspaceTempDir();
 
@@ -141,8 +143,10 @@ export async function runLocalGenerationForWorkspace({
                     writeUnitTests: organization.ok ? (organization?.body.snippetUnitTestsEnabled ?? false) : false,
                     generateOauthClients: organization.ok ? (organization?.body.oauthClientEnabled ?? false) : false,
                     generatePaginatedClients: organization.ok ? (organization?.body.paginationEnabled ?? false) : false,
-                    ir: intermediateRepresentation,
-                    runner
+                    includeOptionalRequestPropertyExamples: false,
+                    inspect,
+                    executionEnvironment: undefined, // This should use the Docker fallback with proper image name
+                    ir: intermediateRepresentation
                 });
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));

@@ -13,13 +13,13 @@ let package = Package(
     products: [
         .library(
             name: "QueryParameters",
-            targets: ["QueryParametersTarget"]
+            targets: ["QueryParameters"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "QueryParametersTarget",
+            name: "QueryParameters",
             path: "Sources"
         )
     ]

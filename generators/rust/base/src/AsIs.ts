@@ -6,7 +6,6 @@ import { RelativeFilePath, getFilename } from "@fern-api/fs-utils";
 
 export const AsIsFileNames = {
     // Core infrastructure templates
-    ClientConfig: "client_config.rs",
     ApiClientBuilder: "api_client_builder.rs",
     HttpClient: "http_client.rs",
     RequestOptions: "request_options.rs",
