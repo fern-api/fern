@@ -1,38 +1,30 @@
 import { assertDefined } from "@fern-api/core-utils";
-import { RelativeFilePath } from "@fern-api/fs-utils";
-import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { uniqWith } from "lodash-es";
+import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
-import { getSwiftTypeForTypeReference } from "../converters";
+export declare namespace UndiscriminatedUnionGenerator {
+    interface Args {
+        name: string;
+        typeDeclaration: UndiscriminatedUnionTypeDeclaration;
+        context: ModelGeneratorContext;
+    }
+}
 
 export class UndiscriminatedUnionGenerator {
     private readonly name: string;
-    private readonly directory: RelativeFilePath;
     private readonly typeDeclaration: UndiscriminatedUnionTypeDeclaration;
+    private readonly context: ModelGeneratorContext;
 
-    public constructor(
-        name: string,
-        directory: RelativeFilePath,
-        typeDeclaration: UndiscriminatedUnionTypeDeclaration
-    ) {
+    public constructor({ name, typeDeclaration, context }: UndiscriminatedUnionGenerator.Args) {
         this.name = name;
-        this.directory = directory;
         this.typeDeclaration = typeDeclaration;
+        this.context = context;
     }
 
-    private get filename(): string {
-        return this.name + ".swift";
-    }
-
-    public generate(): SwiftFile {
-        const swiftEnum = this.generateEnumForTypeDeclaration();
-        return new SwiftFile({
-            filename: this.filename,
-            directory: this.directory,
-            fileContents: [swiftEnum]
-        });
+    public generate(): swift.EnumWithAssociatedValues {
+        return this.generateEnumForTypeDeclaration();
     }
 
     private generateEnumForTypeDeclaration(): swift.EnumWithAssociatedValues {
@@ -210,7 +202,9 @@ export class UndiscriminatedUnionGenerator {
     }
 
     private getDistinctMemberTypes(): swift.Type[] {
-        const swiftTypes = this.typeDeclaration.members.map((member) => getSwiftTypeForTypeReference(member.type));
+        const swiftTypes = this.typeDeclaration.members.map((member) =>
+            this.context.getSwiftTypeForTypeReference(member.type)
+        );
         return uniqWith(swiftTypes, (a, b) => a.equals(b));
     }
 }

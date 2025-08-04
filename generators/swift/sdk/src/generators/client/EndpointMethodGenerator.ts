@@ -1,9 +1,8 @@
 import { assertNever } from "@fern-api/core-utils";
 import { swift } from "@fern-api/swift-codegen";
-import { getSwiftTypeForTypeReference } from "@fern-api/swift-model";
-
 import { HttpEndpoint, HttpMethod } from "@fern-fern/ir-sdk/api";
 
+import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { ClientGeneratorContext } from "./ClientGeneratorContext";
 import { formatEndpointPathForSwift } from "./util/format-endpoint-path-for-swift";
 import { getQueryParamCaseName } from "./util/get-query-param-case-name";
@@ -12,14 +11,17 @@ import { parseEndpointPath } from "./util/parse-endpoint-path";
 export declare namespace EndpointMethodGenerator {
     interface Args {
         clientGeneratorContext: ClientGeneratorContext;
+        sdkGeneratorContext: SdkGeneratorContext;
     }
 }
 
 export class EndpointMethodGenerator {
     private readonly clientGeneratorContext: ClientGeneratorContext;
+    private readonly sdkGeneratorContext: SdkGeneratorContext;
 
-    public constructor({ clientGeneratorContext }: EndpointMethodGenerator.Args) {
+    public constructor({ clientGeneratorContext, sdkGeneratorContext }: EndpointMethodGenerator.Args) {
         this.clientGeneratorContext = clientGeneratorContext;
+        this.sdkGeneratorContext = sdkGeneratorContext;
     }
 
     public generateMethod(endpoint: HttpEndpoint): swift.Method {
@@ -52,7 +54,7 @@ export class EndpointMethodGenerator {
         });
 
         endpoint.headers.forEach((header) => {
-            const swiftType = getSwiftTypeForTypeReference(header.valueType);
+            const swiftType = this.sdkGeneratorContext.getSwiftTypeForTypeReference(header.valueType);
             params.push(
                 swift.functionParameter({
                     argumentLabel: header.name.name.camelCase.unsafeName,
@@ -64,7 +66,7 @@ export class EndpointMethodGenerator {
         });
 
         endpoint.queryParameters.forEach((queryParam) => {
-            const swiftType = getSwiftTypeForTypeReference(queryParam.valueType);
+            const swiftType = this.sdkGeneratorContext.getSwiftTypeForTypeReference(queryParam.valueType);
             params.push(
                 swift.functionParameter({
                     argumentLabel: queryParam.name.name.camelCase.unsafeName,
@@ -81,7 +83,9 @@ export class EndpointMethodGenerator {
                     swift.functionParameter({
                         argumentLabel: "request",
                         unsafeName: "request",
-                        type: getSwiftTypeForTypeReference(endpoint.requestBody.requestBodyType)
+                        type: this.sdkGeneratorContext.getSwiftTypeForTypeReference(
+                            endpoint.requestBody.requestBodyType
+                        )
                     })
                 );
             } else if (endpoint.requestBody.type === "inlinedRequestBody") {
@@ -129,7 +133,7 @@ export class EndpointMethodGenerator {
             return swift.Type.void();
         }
         return endpoint.response.body._visit({
-            json: (resp) => getSwiftTypeForTypeReference(resp.responseBodyType),
+            json: (resp) => this.sdkGeneratorContext.getSwiftTypeForTypeReference(resp.responseBodyType),
             fileDownload: () => swift.Type.any(),
             text: () => swift.Type.any(),
             bytes: () => swift.Type.any(),
@@ -176,7 +180,9 @@ export class EndpointMethodGenerator {
                     value: swift.Expression.dictionaryLiteral({
                         entries: endpoint.queryParameters.map((queryParam) => {
                             const key = swift.Expression.rawStringValue(queryParam.name.name.originalName);
-                            const swiftType = getSwiftTypeForTypeReference(queryParam.valueType);
+                            const swiftType = this.sdkGeneratorContext.getSwiftTypeForTypeReference(
+                                queryParam.valueType
+                            );
                             if (swiftType.isOptional) {
                                 return [
                                     key,

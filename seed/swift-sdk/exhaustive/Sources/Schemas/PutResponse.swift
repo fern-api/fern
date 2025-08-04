@@ -1,9 +1,9 @@
 public struct PutResponse: Codable, Hashable, Sendable {
-    public let errors: [Error]?
+    public let errors: [ErrorType]?
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        errors: [Error]? = nil,
+        errors: [ErrorType]? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.errors = errors
@@ -12,7 +12,7 @@ public struct PutResponse: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.errors = try container.decodeIfPresent([Error].self, forKey: .errors)
+        self.errors = try container.decodeIfPresent([ErrorType].self, forKey: .errors)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
