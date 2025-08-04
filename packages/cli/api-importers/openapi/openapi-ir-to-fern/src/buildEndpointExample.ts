@@ -1,5 +1,8 @@
 import { isNonNullish } from "@fern-api/core-utils";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
+import {
+    RawSchemas,
+    recursivelyVisitRawTypeReference,
+} from "@fern-api/fern-definition-schema";
 import {
     EndpointExample,
     FullExample,
@@ -46,42 +49,61 @@ export function buildEndpointExample({
 
     const endpointHeaderNames = new Set(endpointExample.headers?.map((header) => header.name) ?? []);
 
-    // generate examples for headers, but ensure there are no duplicates from global and auth headers
+    // Generate examples for headers
     if (hasEndpointHeaders || hasGlobalHeaders) {
         const namedFullExamples: NamedFullExample[] = [];
 
-        // ignore auth headers
+        // Auth header handling
         if (endpointExample.headers != null) {
             for (const header of endpointExample.headers) {
+                // ignore auth headers for example generation 
                 if (header.name !== context.builder.getAuthHeaderName()) {
                     namedFullExamples.push(header);
                 }
             }
         }
 
-        // include global headers that are not already in the endpoint headers
+        // Global header handling
         for (const [header, info] of Object.entries(globalHeaders)) {
-            if (!endpointHeaderNames.has(header)) {
-                // get 'literal' headers and use the value as the example
-                if (typeof info === "object" && "type" in info && info.type.startsWith("literal")) {
-                    // Try to extract a string value from info
-                    let valueToUse = info.type;
-                    const literalMatch = /^literal<"(.*)">$/s.exec(info.type);
-                    if (literalMatch && literalMatch[1] !== undefined) {
-                        valueToUse = literalMatch[1];
-                    }
-                    namedFullExamples.push({
-                        name: header,
-                        value: FullExample.literal(LiteralExample.string(valueToUse as string))
-                    });
-                } else {
-                    // otherwise, use the header name as the example
-                    namedFullExamples.push({
-                        name: header,
-                        value: FullExample.primitive(PrimitiveExample.string(header))
-                    });
-                }
+            // ignore global headers that are already in the endpoint headers
+            if (endpointHeaderNames.has(header)) {
+                continue;
             }
+            
+            // set global header example value
+            if (info != null && typeof info === "object" && info.type != null) {
+                // handling literal header types
+                const valueToUse = recursivelyVisitRawTypeReference<any>({
+                    type: info.type,
+                    _default: undefined,
+                    validation: undefined,
+                    visitor: {  // generic visitor to extract the string value from the literal
+                        primitive: () => [],
+                        map: ({ keyType, valueType }) => [...keyType, ...valueType],
+                        list: (valueType) => valueType,
+                        optional: (valueType) => valueType,
+                        nullable: (valueType) => valueType,
+                        set: (valueType) => valueType,
+                        named: (name) => [name],
+                        literal: (name) => [name],
+                        unknown: () => []
+                    }
+                });
+
+                const exampleValue = valueToUse?.[0]?.string ?? 'default_example';
+                
+                namedFullExamples.push({
+                    name: header,
+                    value: FullExample.literal(LiteralExample.string(exampleValue))
+                });
+            } else {
+                // handling all other types
+                namedFullExamples.push({
+                    name: header,
+                    value: FullExample.primitive(PrimitiveExample.string(header))
+                });
+            }
+            
         }
 
         example.headers = convertHeaderExamples({
