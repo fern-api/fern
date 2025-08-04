@@ -54,10 +54,18 @@ export const V58_TO_V57_MIGRATION: IrMigration<
         return {
             ...v58,
             services: v58.services != null ? convertServicesIr(v58.services) : undefined,
-            dynamic: v58.dynamic != null ? convertDynamicIr(v58.dynamic) : undefined
+            dynamic: v58.dynamic != null ? convertDynamicIr(v58.dynamic) : undefined,
+            auth: v58.auth != null ? convertAuthIr(v58.auth) : undefined
         } as IrVersions.V57.ir.IntermediateRepresentation;
     }
 };
+
+function convertAuthIr(auth: IrVersions.V58.ApiAuth): IrVersions.V57.ApiAuth {
+    return {
+        ...auth,
+        schemes: auth.schemes.filter((scheme) => scheme.type !== "inferred") as IrVersions.V57.AuthScheme[]
+    };
+}
 
 function convertServicesIr(
     services: Record<string, IrVersions.V58.http.HttpService>

@@ -19,12 +19,46 @@ export namespace InferredAuthProvider {
 }
 
 export class InferredAuthProvider extends core.AbstractAuthProvider {
-    readonly client: SeedOauthClientCredentialsClient;
-    readonly authTokenParameters: InferredAuthProvider.AuthTokenParameters;
+    private readonly client: SeedOauthClientCredentialsClient;
+    private readonly authTokenParameters: InferredAuthProvider.AuthTokenParameters;
+    private expiresAt: Date | undefined;
+    private authRequestPromise: Promise<core.AuthRequest> | undefined;
 
     constructor(options: InferredAuthProvider.Options) {
         super();
         this.client = options.client;
         this.authTokenParameters = options.authTokenParameters;
+    }
+
+    private async getCachedAuthRequest(): Promise<core.AuthRequest> {
+        if (this.expiresAt && this.expiresAt <= new Date()) {
+            // If the token has expired, reset the auth request promise
+            this.authRequestPromise = undefined;
+        }
+
+        if (!this.authRequestPromise) {
+            this.authRequestPromise = this.getAuthRequestFromTokenEndpoint();
+        }
+
+        return this.authRequestPromise;
+    }
+
+    public async getAuthRequest(): Promise<core.AuthRequest> {
+        const authRequest = await this.getCachedAuthRequest();
+        return authRequest;
+    }
+
+    private async getAuthRequestFromTokenEndpoint(): Promise<core.AuthRequest> {
+        const response = await this.client.auth.getTokenWithClientCredentials({
+            client_id: await core.Supplier.get(this.authTokenParameters.clientId),
+            client_secret: await core.Supplier.get(this.authTokenParameters.clientSecret),
+            scope: await core.Supplier.get(this.authTokenParameters.scope),
+        });
+        this.expiresAt = new Date(Date.now() + response.expires_in * 1000);
+        return {
+            headers: {
+                Authorization: `Bearer ${response.access_token}`,
+            },
+        };
     }
 }

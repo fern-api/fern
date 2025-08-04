@@ -26,7 +26,7 @@ import {
     SdkClientClassGenerator,
     WebsocketClassGenerator
 } from "@fern-typescript/sdk-client-class-generator";
-import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator/src/oauth-generator/OAuthTokenProviderGenerator";
+import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator";
 import { SdkEndpointTypeSchemasGenerator } from "@fern-typescript/sdk-endpoint-type-schemas-generator";
 import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator";
 import { SdkErrorSchemaGenerator } from "@fern-typescript/sdk-error-schema-generator";

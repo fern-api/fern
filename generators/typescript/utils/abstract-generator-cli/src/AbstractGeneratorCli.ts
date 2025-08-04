@@ -12,7 +12,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER, LogLevel, Logger, createLogger } from "@fern-api/logger";
 
-import { AuthScheme, IntermediateRepresentation, serialization } from "@fern-fern/ir-sdk";
+import { AuthScheme, FernIr, IntermediateRepresentation, serialization } from "@fern-fern/ir-sdk";
 
 import { publishPackage } from "./publishPackage";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows";
@@ -103,8 +103,88 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                                 serviceId: "service_auth",
                                 subpackageId: "subpackage_auth"
                             },
-                            authenticatedRequestHeaders: [],
-                            expiryProperty: undefined
+                            authenticatedRequestHeaders: [
+                                {
+                                    headerName: "Authorization",
+                                    valuePrefix: "Bearer ",
+                                    responseProperty: {
+                                        property: {
+                                            name: {
+                                                name: {
+                                                    originalName: "access_token",
+                                                    camelCase: {
+                                                        safeName: "accessToken",
+                                                        unsafeName: "accessToken"
+                                                    },
+                                                    pascalCase: {
+                                                        safeName: "AccessToken",
+                                                        unsafeName: "AccessToken"
+                                                    },
+                                                    snakeCase: {
+                                                        safeName: "access_token",
+                                                        unsafeName: "access_token"
+                                                    },
+                                                    screamingSnakeCase: {
+                                                        safeName: "ACCESS_TOKEN",
+                                                        unsafeName: "ACCESS_TOKEN"
+                                                    }
+                                                },
+                                                wireValue: "access_token"
+                                            },
+                                            availability: undefined,
+                                            docs: undefined,
+                                            propertyAccess: undefined,
+                                            v2Examples: undefined,
+                                            valueType: FernIr.TypeReference.primitive({
+                                                v1: FernIr.PrimitiveTypeV1.String,
+                                                v2: FernIr.PrimitiveTypeV2.string({
+                                                    default: undefined,
+                                                    validation: undefined
+                                                })
+                                            })
+                                        },
+                                        propertyPath: undefined
+                                    },
+                                }
+                            ],
+                            expiryProperty: {
+                                property: {
+                                    name: {
+                                        name: {
+                                            originalName: "expires_in",
+                                            camelCase: {
+                                                safeName: "expiresIn",
+                                                unsafeName: "expiresIn"
+                                            },
+                                            pascalCase: {
+                                                safeName: "ExpiresIn",
+                                                unsafeName: "ExpiresIn"
+                                            },
+                                            snakeCase: {
+                                                safeName: "expires_in",
+                                                unsafeName: "expires_in"
+                                            },
+                                            screamingSnakeCase: {
+                                                safeName: "EXPIRES_IN",
+                                                unsafeName: "EXPIRES_IN"
+                                            }
+                                        },
+                                        wireValue: "expires_in"
+                                    },
+                                    availability: undefined,
+                                    docs: undefined,
+                                    propertyAccess: undefined,
+                                    v2Examples: undefined,
+                                    valueType: FernIr.TypeReference.primitive({
+                                        v1: FernIr.PrimitiveTypeV1.Integer,
+                                        v2: FernIr.PrimitiveTypeV2.integer({
+                                            default: undefined,
+                                            validation: undefined
+                                        })
+                                    })
+                                },
+                                propertyPath: undefined
+                            }
                         },
                         docs: undefined,
                         refreshEndpoint: undefined
