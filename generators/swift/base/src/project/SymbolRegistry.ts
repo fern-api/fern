@@ -1,32 +1,14 @@
+import { values } from "@fern-api/core-utils";
+import { swift } from "@fern-api/swift-codegen";
 import { AsIsFiles } from "../AsIs";
 
 export class SymbolRegistry {
-    /**
-     * The list of Swift symbols that the generator reserves. We only reserve the symbols that
-     * are used internally within the generated code. This means that when the user defines a
-     * `KeyPath` type (a built-in type), for example, it will be their responsibility to use
-     * `Swift.KeyPath` in their code to disambiguate it from the custom type.
-     */
-    private static readonly reservedSwiftSymbols = [
-        "Any",
-        "Bool",
-        "Double",
-        "Float",
-        "Int",
-        "Int64",
-        "String",
-        "UInt",
-        "UInt64",
-        "Void"
-    ];
-
-    private static readonly reservedFoundationSymbols = ["Data", "Date", "UUID"];
-
     private static readonly reservedSymbols = [
         "Swift",
         "Foundation",
-        ...SymbolRegistry.reservedSwiftSymbols,
-        ...SymbolRegistry.reservedFoundationSymbols
+        ...swift.Type.primitiveSymbolNames(),
+        ...swift.Type.foundationSymbolNames(),
+        ...values(swift.Protocol)
     ];
 
     public static create(): SymbolRegistry {
