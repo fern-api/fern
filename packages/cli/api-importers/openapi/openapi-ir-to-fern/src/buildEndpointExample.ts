@@ -90,7 +90,7 @@ export function buildEndpointExample({
                         literal: (literal) => {
                             if (literal.type === "string") {
                                 return literal.string;
-                            } else if (literal.type == "boolean") {
+                            } else if (literal.type === "boolean") {
                                 return literal.boolean.toString();
                             }
                             return undefined;
