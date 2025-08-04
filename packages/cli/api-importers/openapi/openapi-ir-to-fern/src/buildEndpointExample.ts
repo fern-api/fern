@@ -46,7 +46,7 @@ export function buildEndpointExample({
 
     const endpointHeaderNames = new Set(endpointExample.headers?.map((header) => header.name) ?? []);
 
-    // generate examples for headers, but ensure there are no duplicates from global and auth headers 
+    // generate examples for headers, but ensure there are no duplicates from global and auth headers
     if (hasEndpointHeaders || hasGlobalHeaders) {
         const namedFullExamples: NamedFullExample[] = [];
 
@@ -74,13 +74,12 @@ export function buildEndpointExample({
                         name: header,
                         value: FullExample.literal(LiteralExample.string(valueToUse as string))
                     });
-                // otherwise, use the header name as the example
+                    // otherwise, use the header name as the example
                 } else {
                     namedFullExamples.push({
                         name: header,
                         value: FullExample.primitive(PrimitiveExample.string(header))
                     });
-
                 }
             }
         }
