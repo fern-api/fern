@@ -32,7 +32,7 @@ export class SymbolRegistry {
     public static create(): SymbolRegistry {
         const registry = new SymbolRegistry(SymbolRegistry.reservedSymbols);
         Object.values(AsIsFiles).forEach((definition) => {
-            definition.nodeNames.forEach((symbolName) => {
+            definition.symbolNames.forEach((symbolName) => {
                 registry.registerAsIsSymbol(symbolName);
             });
         });
@@ -97,13 +97,12 @@ export class SymbolRegistry {
         return symbol;
     }
 
-    public registerAsIsSymbol(symbolName: string): string {
-        symbolName = this.getAvailableSymbolName(symbolName);
+    public registerAsIsSymbol(symbolName: string): void {
         this.symbolSet.add(symbolName);
-        return symbolName;
     }
 
     public registerRootClientSymbol(symbolName: string): string {
+        // TODO(kafkas): Use fallback candidates to produce better names
         symbolName = this.getAvailableSymbolName(symbolName);
         this.rootClientSymbol = symbolName;
         this.symbolSet.add(symbolName);
@@ -111,6 +110,7 @@ export class SymbolRegistry {
     }
 
     public registerEnvironmentSymbol(symbolName: string): string {
+        // TODO(kafkas): Use fallback candidates to produce better names
         symbolName = this.getAvailableSymbolName(symbolName);
         this.environmentSymbol = symbolName;
         this.symbolSet.add(symbolName);
@@ -118,6 +118,7 @@ export class SymbolRegistry {
     }
 
     public registerSubClientSymbol(subpackageId: string, symbolName: string): string {
+        // TODO(kafkas): Use fallback candidates to produce better names
         symbolName = this.getAvailableSymbolName(symbolName);
         this.subClientSymbols.set(subpackageId, symbolName);
         this.symbolSet.add(symbolName);
@@ -125,7 +126,7 @@ export class SymbolRegistry {
     }
 
     public registerSchemaTypeSymbol(typeId: string, symbolName: string): string {
-        symbolName = this.getAvailableSymbolName(symbolName);
+        symbolName = this.getAvailableSymbolName(symbolName, [`${symbolName}Type`, `${symbolName}Model`]);
         this.schemaTypeSymbols.set(typeId, symbolName);
         this.symbolSet.add(symbolName);
         return symbolName;
@@ -143,8 +144,13 @@ export class SymbolRegistry {
         return symbolName;
     }
 
-    private getAvailableSymbolName(candidate: string): string {
-        // TODO(kafkas): Improve this to produce better names
+    private getAvailableSymbolName(candidate: string, fallbackCandidates?: string[]): string {
+        const candidates = [candidate, ...(fallbackCandidates ?? [])];
+        for (const name of candidates) {
+            if (!this.exists(name)) {
+                return name;
+            }
+        }
         let name = candidate;
         while (this.exists(name)) {
             name += "_";

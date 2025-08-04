@@ -10,7 +10,7 @@ import { getFilename, RelativeFilePath } from "@fern-api/fs-utils";
  */
 interface AsIsFileSpec {
     relativePath: string;
-    nodeNames?: string[];
+    symbolNames?: string[];
 }
 
 /**
@@ -24,15 +24,15 @@ const AsIsFileSpecs = {
     // Core/Networking
     Http: {
         relativePath: "Core/Networking/HTTP.swift",
-        nodeNames: ["HTTP"]
+        symbolNames: ["HTTP"]
     },
     HttpClient: {
         relativePath: "Core/Networking/HTTPClient.swift",
-        nodeNames: ["HTTPClient"]
+        symbolNames: ["HTTPClient"]
     },
     QueryParameter: {
         relativePath: "Core/Networking/QueryParameter.swift",
-        nodeNames: ["QueryParameter"]
+        symbolNames: ["QueryParameter"]
     },
 
     // Core/Serde
@@ -44,11 +44,11 @@ const AsIsFileSpecs = {
     },
     Serde: {
         relativePath: "Core/Serde/Serde.swift",
-        nodeNames: ["Serde"]
+        symbolNames: ["Serde"]
     },
     StringKey: {
         relativePath: "Core/Serde/StringKey.swift",
-        nodeNames: ["StringKey"]
+        symbolNames: ["StringKey"]
     },
 
     // Core
@@ -62,23 +62,23 @@ const AsIsFileSpecs = {
     // Public
     APIErrorResponse: {
         relativePath: "Public/APIErrorResponse.swift",
-        nodeNames: ["APIErrorResponse"]
+        symbolNames: ["APIErrorResponse"]
     },
     ClientConfig: {
         relativePath: "Public/ClientConfig.swift",
-        nodeNames: ["ClientConfig"]
+        symbolNames: ["ClientConfig"]
     },
     ClientError: {
         relativePath: "Public/ClientError.swift",
-        nodeNames: ["ClientError"]
+        symbolNames: ["ClientError"]
     },
     JsonValue: {
         relativePath: "Public/JSONValue.swift",
-        nodeNames: ["JSONValue"]
+        symbolNames: ["JSONValue"]
     },
     RequestOptions: {
         relativePath: "Public/RequestOptions.swift",
-        nodeNames: ["RequestOptions"]
+        symbolNames: ["RequestOptions"]
     }
 } satisfies Record<string, AsIsFileSpec>;
 
@@ -104,7 +104,7 @@ export interface AsIsFileDefinition {
      * The names of public Swift symbols (classes, structs, enums, protocols, etc.)
      * that this file introduces to the project namespace.
      */
-    nodeNames: string[];
+    symbolNames: string[];
 
     /**
      * Asynchronously loads the contents of the Swift file from disk.
@@ -156,7 +156,7 @@ function createAsIsFiles(): AsIsFileDefinitionsById {
     const result = {} as AsIsFileDefinitionsById;
 
     for (const [key, spec] of entries(AsIsFileSpecs)) {
-        const { relativePath, nodeNames } = spec as AsIsFileSpec;
+        const { relativePath, symbolNames } = spec as AsIsFileSpec;
         const filename = getFilename(RelativeFilePath.of(relativePath));
         if (filename === undefined) {
             throw new Error(`Missing filename for as is file '${relativePath}'`);
@@ -164,7 +164,7 @@ function createAsIsFiles(): AsIsFileDefinitionsById {
         result[key] = {
             filename,
             directory: RelativeFilePath.of(dirname(spec.relativePath)),
-            nodeNames: nodeNames ?? [],
+            symbolNames: symbolNames ?? [],
             loadContents: () => {
                 const absolutePath = join(__dirname, "asIs", filename);
                 return readFile(absolutePath, "utf-8");
