@@ -65,17 +65,15 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     private registerSymbols(context: SdkGeneratorContext): void {
-        context.project.symbolRegistry.registerRootClientSymbol(`${context.ir.apiName.pascalCase.unsafeName}Client`);
+        context.project.symbolRegistry.registerRootClientSymbol(context.ir.apiName.pascalCase.unsafeName);
 
-        context.project.symbolRegistry.registerEnvironmentSymbol(
-            `${context.ir.apiName.pascalCase.unsafeName}Environment`
-        );
+        context.project.symbolRegistry.registerEnvironmentSymbol(context.ir.apiName.pascalCase.unsafeName);
 
         Object.entries(context.ir.subpackages).forEach(([subpackageId, subpackage]) => {
             context.project.symbolRegistry.registerSubClientSymbol(
                 subpackageId,
                 subpackage.fernFilepath.allParts.map((name) => name.pascalCase.unsafeName),
-                `${subpackage.name.pascalCase.unsafeName}Client`
+                subpackage.name.pascalCase.unsafeName
             );
         });
 
@@ -91,7 +89,6 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
                     context.project.symbolRegistry.registerInlineRequestTypeSymbol(
                         endpoint.id,
-                        endpoint.requestBody.name.pascalCase.unsafeName,
                         endpoint.requestBody.name.pascalCase.unsafeName
                     );
                 }

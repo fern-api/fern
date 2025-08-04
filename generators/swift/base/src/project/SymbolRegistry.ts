@@ -89,7 +89,7 @@ export class SymbolRegistry {
     }
 
     public getInlineRequestTypeSymbolOrThrow(endpointId: string, requestNamePascalCase: string): string {
-        const id = this.getRequestTypeSymbolId(endpointId, requestNamePascalCase);
+        const id = this.getInlineRequestTypeSymbolId(endpointId, requestNamePascalCase);
         const symbol = this.inlineRequestTypeSymbols.get(id);
         if (symbol == null) {
             throw new Error(`Request symbol not found for request ${requestNamePascalCase}`);
@@ -101,72 +101,95 @@ export class SymbolRegistry {
         this.symbolSet.add(symbolName);
     }
 
-    public registerRootClientSymbol(symbolName: string): string {
-        // TODO(kafkas): Use fallback candidates to produce better names
-        symbolName = this.getAvailableSymbolName(symbolName);
+    public registerRootClientSymbol(apiNamePascalCase: string): string {
+        const symbolName = this.getAvailableSymbolName([
+            `${apiNamePascalCase}Client`,
+            `${apiNamePascalCase}Api`,
+            `${apiNamePascalCase}ApiClient`,
+            `${apiNamePascalCase}HttpClient`
+        ]);
         this.rootClientSymbol = symbolName;
         this.symbolSet.add(symbolName);
         return symbolName;
     }
 
-    public registerEnvironmentSymbol(symbolName: string): string {
-        // TODO(kafkas): Use fallback candidates to produce better names
-        symbolName = this.getAvailableSymbolName(symbolName);
+    public registerEnvironmentSymbol(apiNamePascalCase: string): string {
+        const symbolName = this.getAvailableSymbolName([
+            `${apiNamePascalCase}Environment`,
+            `${apiNamePascalCase}Environ`,
+            `${apiNamePascalCase}Env`
+        ]);
         this.environmentSymbol = symbolName;
         this.symbolSet.add(symbolName);
         return symbolName;
     }
 
-    public registerSubClientSymbol(subpackageId: string, parentNames: string[], symbolName: string): string {
-        const reversedParts = parentNames.toReversed();
+    public registerSubClientSymbol(
+        subpackageId: string,
+        fernFilepathPartNamesPascalCase: string[],
+        subpackageNamePascalCase: string
+    ): string {
+        const reversedParts = fernFilepathPartNamesPascalCase.toReversed();
         reversedParts.shift();
         const fallbackCandidates = reversedParts.map(
             (_, partIdx) =>
                 reversedParts
                     .slice(0, partIdx + 1)
                     .reverse()
-                    .join("") + symbolName
+                    .join("") +
+                subpackageNamePascalCase +
+                "Client"
         );
-        symbolName = this.getAvailableSymbolName(symbolName, fallbackCandidates);
+        const symbolName = this.getAvailableSymbolName([`${subpackageNamePascalCase}Client`, ...fallbackCandidates]);
         this.subClientSymbols.set(subpackageId, symbolName);
         this.symbolSet.add(symbolName);
         return symbolName;
     }
 
-    public registerSchemaTypeSymbol(typeId: string, symbolName: string): string {
-        symbolName = this.getAvailableSymbolName(symbolName, [`${symbolName}Type`, `${symbolName}Model`]);
+    public registerSchemaTypeSymbol(typeId: string, typeDeclarationNamePascalCase: string): string {
+        const symbolName = this.getAvailableSymbolName([
+            typeDeclarationNamePascalCase,
+            `${typeDeclarationNamePascalCase}Type`,
+            `${typeDeclarationNamePascalCase}Model`,
+            `${typeDeclarationNamePascalCase}Schema`
+        ]);
         this.schemaTypeSymbols.set(typeId, symbolName);
         this.symbolSet.add(symbolName);
         return symbolName;
     }
 
-    public registerInlineRequestTypeSymbol(
-        endpointId: string,
-        requestNamePascalCase: string,
-        symbolName: string
-    ): string {
-        const id = this.getRequestTypeSymbolId(endpointId, requestNamePascalCase);
-        symbolName = this.getAvailableSymbolName(symbolName);
+    public registerInlineRequestTypeSymbol(endpointId: string, requestNamePascalCase: string): string {
+        const id = this.getInlineRequestTypeSymbolId(endpointId, requestNamePascalCase);
+        const fallbackCandidates: string[] = [`${requestNamePascalCase}Type`];
+        if (requestNamePascalCase.endsWith("Request")) {
+            fallbackCandidates.push(`${requestNamePascalCase}Body`, `${requestNamePascalCase}BodyType`);
+        } else {
+            fallbackCandidates.push(
+                `${requestNamePascalCase}Request`,
+                `${requestNamePascalCase}RequestBody`,
+                `${requestNamePascalCase}RequestBodyType`
+            );
+        }
+        const symbolName = this.getAvailableSymbolName([requestNamePascalCase, ...fallbackCandidates]);
         this.inlineRequestTypeSymbols.set(id, symbolName);
         this.symbolSet.add(symbolName);
         return symbolName;
     }
 
-    private getAvailableSymbolName(candidate: string, fallbackCandidates?: string[]): string {
-        const candidates = [candidate, ...(fallbackCandidates ?? [])];
+    private getAvailableSymbolName(candidates: [string, ...string[]]): string {
         for (const name of candidates) {
             if (!this.exists(name)) {
                 return name;
             }
         }
-        let name = candidate;
+        let name = candidates[0];
         while (this.exists(name)) {
             name += "_";
         }
         return name;
     }
 
-    private getRequestTypeSymbolId(endpointId: string, requestNamePascalCase: string): string {
+    private getInlineRequestTypeSymbolId(endpointId: string, requestNamePascalCase: string): string {
         return `${endpointId}_${requestNamePascalCase}`;
     }
 
