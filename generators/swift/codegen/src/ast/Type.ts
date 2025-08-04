@@ -454,7 +454,6 @@ export class Type extends AstNode {
      * Represents our custom `JSONValue` type.
      */
     public static jsonValue(): Type {
-        // TODO(kafkas): This needs to be removed since we are now using the symbol registry.
         return new this({ type: "json-value" });
     }
 }
