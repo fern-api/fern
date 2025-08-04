@@ -36,17 +36,19 @@ export abstract class AbstractSwiftGeneratorContext<
 
     private initProject(ir: IntermediateRepresentation): SwiftProject {
         const project = new SwiftProject({ context: this });
+        this.registerSymbols(project, ir);
+        return project;
+    }
 
-        // Register symbols
+    /**
+     * Register symbols in priority order - high-priority symbols first to avoid collisions.
+     * Root client and environment symbols are registered first as they're most critical,
+     * followed by schema types and inline request types which are commonly referenced, and
+     * finally subclient symbols last since they're unlikely to be used directly by end users.
+     */
+    private registerSymbols(project: SwiftProject, ir: IntermediateRepresentation) {
         project.symbolRegistry.registerRootClientSymbol(ir.apiName.pascalCase.unsafeName);
         project.symbolRegistry.registerEnvironmentSymbol(ir.apiName.pascalCase.unsafeName);
-        Object.entries(ir.subpackages).forEach(([subpackageId, subpackage]) => {
-            project.symbolRegistry.registerSubClientSymbol(
-                subpackageId,
-                subpackage.fernFilepath.allParts.map((name) => name.pascalCase.unsafeName),
-                subpackage.name.pascalCase.unsafeName
-            );
-        });
         Object.entries(ir.types).forEach(([typeId, typeDeclaration]) => {
             project.symbolRegistry.registerSchemaTypeSymbol(typeId, typeDeclaration.name.name.pascalCase.unsafeName);
         });
@@ -60,8 +62,13 @@ export abstract class AbstractSwiftGeneratorContext<
                 }
             });
         });
-
-        return project;
+        Object.entries(ir.subpackages).forEach(([subpackageId, subpackage]) => {
+            project.symbolRegistry.registerSubClientSymbol(
+                subpackageId,
+                subpackage.fernFilepath.allParts.map((name) => name.pascalCase.unsafeName),
+                subpackage.name.pascalCase.unsafeName
+            );
+        });
     }
 
     public get packageName(): string {
