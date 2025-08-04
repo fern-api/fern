@@ -74,8 +74,8 @@ export function buildEndpointExample({
                         name: header,
                         value: FullExample.literal(LiteralExample.string(valueToUse as string))
                     });
-                    // otherwise, use the header name as the example
                 } else {
+                    // otherwise, use the header name as the example
                     namedFullExamples.push({
                         name: header,
                         value: FullExample.primitive(PrimitiveExample.string(header))
