@@ -304,7 +304,6 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         QueryStringMapperTestGenerator queryStringMapperTestGenerator = new QueryStringMapperTestGenerator(context);
         this.addGeneratedFile(queryStringMapperTestGenerator.generateFile());
 
-        // Add JUnit dependencies since we're generating test files
         dependencies.add(ParsedGradleDependency.builder()
                 .type(GradleDependencyType.TEST_IMPLEMENTATION)
                 .group("org.junit.jupiter")
@@ -507,7 +506,6 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         SampleAppGenerator sampleAppGenerator = new SampleAppGenerator(context, generatedClientWrapper);
         sampleAppGenerator.generateFiles().forEach(this::addGeneratedFile);
         subprojects.add(SampleAppGenerator.SAMPLE_APP_DIRECTORY);
-        // JUnit dependencies are now added in generateClient() method when test files are generated
         TestGenerator testGenerator = new TestGenerator(context);
         this.addGeneratedFile(testGenerator.generateFile());
         StreamTestGenerator streamTestGenerator = new StreamTestGenerator(context);
