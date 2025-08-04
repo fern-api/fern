@@ -1,4 +1,4 @@
-public final class UnionClient_: Sendable {
+public final class TypesEnumClient: Sendable {
     private let httpClient: HTTPClient
 
     public init(config: ClientConfig) {

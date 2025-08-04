@@ -1,4 +1,4 @@
-public final class ObjectClient_: Sendable {
+public final class FolderCCommonClient: Sendable {
     private let httpClient: HTTPClient
 
     public init(config: ClientConfig) {

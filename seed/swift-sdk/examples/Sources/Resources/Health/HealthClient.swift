@@ -1,9 +1,9 @@
 public final class HealthClient: Sendable {
-    public let service: ServiceClient__
+    public let service: HealthServiceClient
     private let httpClient: HTTPClient
 
     public init(config: ClientConfig) {
-        self.service = ServiceClient__(config: config)
+        self.service = HealthServiceClient(config: config)
         self.httpClient = HTTPClient(config: config)
     }
 }

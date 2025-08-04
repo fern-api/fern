@@ -1,4 +1,4 @@
-public final class ProblemClient_: Sendable {
+public final class V2ProblemClient: Sendable {
     private let httpClient: HTTPClient
 
     public init(config: ClientConfig) {

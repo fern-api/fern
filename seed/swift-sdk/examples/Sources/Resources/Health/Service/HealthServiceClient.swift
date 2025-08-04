@@ -1,4 +1,4 @@
-public final class ServiceClient__: Sendable {
+public final class HealthServiceClient: Sendable {
     private let httpClient: HTTPClient
 
     public init(config: ClientConfig) {

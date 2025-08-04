@@ -1,4 +1,4 @@
-public final class ServiceClient_: Sendable {
+public final class FolderDServiceClient: Sendable {
     private let httpClient: HTTPClient
 
     public init(config: ClientConfig) {
@@ -8,7 +8,7 @@ public final class ServiceClient_: Sendable {
     public func getDirectThread(requestOptions: RequestOptions? = nil) async throws -> ResponseType {
         return try await httpClient.performRequest(
             method: .get,
-            path: "/",
+            path: "/partner-path",
             requestOptions: requestOptions,
             responseType: ResponseType.self
         )
