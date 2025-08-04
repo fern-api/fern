@@ -3,17 +3,28 @@ import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { AliasTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
-import { getSwiftTypeForTypeReference } from "../converters";
+import { ModelGeneratorContext } from "../ModelGeneratorContext";
+
+export declare namespace AliasGenerator {
+    interface Args {
+        name: string;
+        directory: RelativeFilePath;
+        typeDeclaration: AliasTypeDeclaration;
+        context: ModelGeneratorContext;
+    }
+}
 
 export class AliasGenerator {
     private readonly name: string;
     private readonly directory: RelativeFilePath;
     private readonly typeDeclaration: AliasTypeDeclaration;
+    private readonly context: ModelGeneratorContext;
 
-    public constructor(name: string, directory: RelativeFilePath, typeDeclaration: AliasTypeDeclaration) {
+    public constructor({ name, directory, typeDeclaration, context }: AliasGenerator.Args) {
         this.name = name;
         this.directory = directory;
         this.typeDeclaration = typeDeclaration;
+        this.context = context;
     }
 
     private get filename(): string {
@@ -33,7 +44,7 @@ export class AliasGenerator {
         return swift.Statement.typealiasDeclaration({
             unsafeName: this.name,
             accessLevel: swift.AccessLevel.Public,
-            aliasedType: getSwiftTypeForTypeReference(this.typeDeclaration.aliasOf)
+            aliasedType: this.context.getSwiftTypeForTypeReference(this.typeDeclaration.aliasOf)
         });
     }
 }

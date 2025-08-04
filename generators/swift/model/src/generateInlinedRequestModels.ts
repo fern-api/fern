@@ -8,15 +8,16 @@ export function generateInlinedRequestModels({ context }: { context: ModelGenera
     Object.entries(context.ir.services).forEach(([_, service]) => {
         service.endpoints.forEach((endpoint) => {
             if (endpoint.requestBody?.type === "inlinedRequestBody") {
-                const generator = new ObjectGenerator(
-                    context.project.symbolRegistry.getInlineRequestTypeSymbolOrThrow(
+                const generator = new ObjectGenerator({
+                    name: context.project.symbolRegistry.getInlineRequestTypeSymbolOrThrow(
                         endpoint.id,
                         endpoint.requestBody.name.pascalCase.unsafeName
                     ),
-                    context.requestsDirectory,
-                    endpoint.requestBody.properties,
-                    endpoint.requestBody.extendedProperties
-                );
+                    directory: context.requestsDirectory,
+                    properties: endpoint.requestBody.properties,
+                    extendedProperties: endpoint.requestBody.extendedProperties,
+                    context
+                });
                 files.push(generator.generate());
             }
         });

@@ -4,18 +4,22 @@ import { swift } from "@fern-api/swift-codegen";
 
 import { EnumTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
+export declare namespace StringEnumGenerator {
+    interface Args {
+        name: string;
+        directory: RelativeFilePath;
+        typeDeclaration: TypeDeclaration;
+        enumTypeDeclaration: EnumTypeDeclaration;
+    }
+}
+
 export class StringEnumGenerator {
     private readonly name: string;
     private readonly directory: RelativeFilePath;
     private readonly typeDeclaration: TypeDeclaration;
     private readonly enumTypeDeclaration: EnumTypeDeclaration;
 
-    public constructor(
-        name: string,
-        directory: RelativeFilePath,
-        typeDeclaration: TypeDeclaration,
-        enumTypeDeclaration: EnumTypeDeclaration
-    ) {
+    public constructor({ name, directory, typeDeclaration, enumTypeDeclaration }: StringEnumGenerator.Args) {
         this.name = name;
         this.directory = directory;
         this.typeDeclaration = typeDeclaration;

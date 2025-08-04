@@ -11,38 +11,41 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
     for (const [typeId, typeDeclaration] of Object.entries(context.ir.types)) {
         const file = typeDeclaration.shape._visit<SwiftFile | undefined>({
             alias: (atd) =>
-                new AliasGenerator(
-                    context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
-                    context.schemasDirectory,
-                    atd
-                ).generate(),
-            enum: (etd) =>
-                new StringEnumGenerator(
-                    context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
-                    context.schemasDirectory,
-                    typeDeclaration,
-                    etd
-                ).generate(),
-            object: (otd) =>
-                new ObjectGenerator(
-                    context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
-                    context.schemasDirectory,
-                    otd.properties,
-                    otd.extendedProperties
-                ).generate(),
-            undiscriminatedUnion: (uutd) =>
-                new UndiscriminatedUnionGenerator(
-                    context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
-                    context.schemasDirectory,
-                    uutd
-                ).generate(),
-            union: (utd) =>
-                new DiscriminatedUnionGenerator(
-                    context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
-                    context.schemasDirectory,
-                    utd,
+                new AliasGenerator({
+                    name: context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
+                    directory: context.schemasDirectory,
+                    typeDeclaration: atd,
                     context
-                ).generate(),
+                }).generate(),
+            enum: (etd) =>
+                new StringEnumGenerator({
+                    name: context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
+                    directory: context.schemasDirectory,
+                    typeDeclaration,
+                    enumTypeDeclaration: etd
+                }).generate(),
+            object: (otd) =>
+                new ObjectGenerator({
+                    name: context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
+                    directory: context.schemasDirectory,
+                    properties: otd.properties,
+                    extendedProperties: otd.extendedProperties,
+                    context
+                }).generate(),
+            undiscriminatedUnion: (uutd) =>
+                new UndiscriminatedUnionGenerator({
+                    name: context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
+                    directory: context.schemasDirectory,
+                    typeDeclaration: uutd,
+                    context
+                }).generate(),
+            union: (utd) =>
+                new DiscriminatedUnionGenerator({
+                    name: context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
+                    directory: context.schemasDirectory,
+                    unionTypeDeclaration: utd,
+                    context
+                }).generate(),
             _other: () => undefined
         });
         if (file != null) {

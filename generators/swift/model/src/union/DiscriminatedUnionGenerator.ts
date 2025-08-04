@@ -4,9 +4,17 @@ import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { ObjectProperty, TypeId, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
-import { getSwiftTypeForTypeReference } from "../converters";
 import { StructGenerator } from "../helpers";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
+
+export declare namespace DiscriminatedUnionGenerator {
+    interface Args {
+        name: string;
+        directory: RelativeFilePath;
+        unionTypeDeclaration: UnionTypeDeclaration;
+        context: ModelGeneratorContext;
+    }
+}
 
 export class DiscriminatedUnionGenerator {
     private readonly name: string;
@@ -14,12 +22,7 @@ export class DiscriminatedUnionGenerator {
     private readonly unionTypeDeclaration: UnionTypeDeclaration;
     private readonly context: ModelGeneratorContext;
 
-    public constructor(
-        name: string,
-        directory: RelativeFilePath,
-        unionTypeDeclaration: UnionTypeDeclaration,
-        context: ModelGeneratorContext
-    ) {
+    public constructor({ name, directory, unionTypeDeclaration, context }: DiscriminatedUnionGenerator.Args) {
         this.name = name;
         this.directory = directory;
         this.unionTypeDeclaration = unionTypeDeclaration;
@@ -239,7 +242,7 @@ export class DiscriminatedUnionGenerator {
             const dataPropertyDefinitions: StructGenerator.DataPropertyDefinition[] = [];
 
             if (singleUnionType.shape.propertiesType === "singleProperty") {
-                const swiftType = getSwiftTypeForTypeReference(singleUnionType.shape.type);
+                const swiftType = this.context.getSwiftTypeForTypeReference(singleUnionType.shape.type);
                 constantPropertyDefinitions.push({
                     unsafeName: this.unionTypeDeclaration.discriminant.name.camelCase.unsafeName,
                     rawName: this.unionTypeDeclaration.discriminant.wireValue,
@@ -263,7 +266,7 @@ export class DiscriminatedUnionGenerator {
                     ...variantProperties.map((p) => ({
                         unsafeName: p.name.name.camelCase.unsafeName,
                         rawName: p.name.wireValue,
-                        type: getSwiftTypeForTypeReference(p.valueType)
+                        type: this.context.getSwiftTypeForTypeReference(p.valueType)
                     }))
                 );
             } else if (singleUnionType.shape.propertiesType === "noProperties") {

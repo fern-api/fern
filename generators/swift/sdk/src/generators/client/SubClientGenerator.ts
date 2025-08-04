@@ -97,7 +97,8 @@ export class SubClientGenerator {
 
     private generateMethods(): swift.Method[] {
         const endpointMethodGenerator = new EndpointMethodGenerator({
-            clientGeneratorContext: this.clientGeneratorContext
+            clientGeneratorContext: this.clientGeneratorContext,
+            sdkGeneratorContext: this.sdkGeneratorContext
         });
         return (this.service?.endpoints ?? []).map((endpoint) => {
             return endpointMethodGenerator.generateMethod(endpoint);

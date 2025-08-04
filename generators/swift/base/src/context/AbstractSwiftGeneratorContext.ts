@@ -1,17 +1,19 @@
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
-import { assertDefined } from "@fern-api/core-utils";
+import { assertDefined, assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { BaseSwiftCustomConfigSchema } from "@fern-api/swift-codegen";
+import { BaseSwiftCustomConfigSchema, swift } from "@fern-api/swift-codegen";
 import {
     FernFilepath,
     HttpService,
     IntermediateRepresentation,
     Package,
+    PrimitiveTypeV1,
     ServiceId,
     Subpackage,
     SubpackageId,
     TypeDeclaration,
-    TypeId
+    TypeId,
+    TypeReference
 } from "@fern-fern/ir-sdk/api";
 
 import { AsIsFileDefinition, AsIsFiles } from "../AsIs";
@@ -82,5 +84,51 @@ export abstract class AbstractSwiftGeneratorContext<
 
     public getCoreAsIsFiles(): AsIsFileDefinition[] {
         return Object.values(AsIsFiles);
+    }
+
+    public getSwiftTypeForTypeReference(typeReference: TypeReference): swift.Type {
+        switch (typeReference.type) {
+            case "container":
+                return typeReference.container._visit({
+                    // TODO(kafkas): Handle these cases
+                    literal: () => swift.Type.jsonValue(),
+                    map: (type) =>
+                        swift.Type.dictionary(
+                            this.getSwiftTypeForTypeReference(type.keyType),
+                            this.getSwiftTypeForTypeReference(type.valueType)
+                        ),
+                    set: () => swift.Type.jsonValue(),
+                    nullable: () => swift.Type.jsonValue(),
+                    optional: (ref) => swift.Type.optional(this.getSwiftTypeForTypeReference(ref)),
+                    list: (ref) => swift.Type.array(this.getSwiftTypeForTypeReference(ref)),
+                    _other: () => swift.Type.jsonValue()
+                });
+            case "primitive":
+                return PrimitiveTypeV1._visit(typeReference.primitive.v1, {
+                    string: () => swift.Type.string(),
+                    boolean: () => swift.Type.bool(),
+                    integer: () => swift.Type.int(),
+                    uint: () => swift.Type.uint(),
+                    uint64: () => swift.Type.uint64(),
+                    long: () => swift.Type.int64(),
+                    float: () => swift.Type.float(),
+                    double: () => swift.Type.double(),
+                    // TODO(kafkas): We may need to implement our own value type for this
+                    bigInteger: () => swift.Type.string(),
+                    date: () => swift.Type.date(),
+                    dateTime: () => swift.Type.date(),
+                    base64: () => swift.Type.string(),
+                    uuid: () => swift.Type.uuid(),
+                    _other: () => swift.Type.jsonValue()
+                });
+            case "named": {
+                const symbolName = this.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeReference.typeId);
+                return swift.Type.custom(symbolName);
+            }
+            case "unknown":
+                return swift.Type.jsonValue();
+            default:
+                assertNever(typeReference);
+        }
     }
 }
