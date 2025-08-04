@@ -687,3 +687,43 @@ await client.Service.CreateBigEntityAsync(
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">RefreshTokenAsync</a>(RefreshTokenRequest? { ... })</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Service.RefreshTokenAsync(null);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `RefreshTokenRequest?` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
