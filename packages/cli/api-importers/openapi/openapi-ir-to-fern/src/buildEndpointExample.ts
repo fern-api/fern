@@ -1,4 +1,4 @@
-import { isNonNullish } from "@fern-api/core-utils";
+import { isNonNullish, noop } from "@fern-api/core-utils";
 import {
     RawSchemas,
     recursivelyVisitRawTypeReference,
@@ -73,29 +73,39 @@ export function buildEndpointExample({
             // set global header example value
             if (info != null && typeof info === "object" && info.type != null) {
                 // handling literal header types
-                const valueToUse = recursivelyVisitRawTypeReference<any>({
+                const valueToUse = recursivelyVisitRawTypeReference<void | string>({
                     type: info.type,
                     _default: undefined,
                     validation: undefined,
-                    visitor: {  // generic visitor to extract the string value from the literal
-                        primitive: () => [],
-                        map: ({ keyType, valueType }) => [...keyType, ...valueType],
-                        list: (valueType) => valueType,
-                        optional: (valueType) => valueType,
-                        nullable: (valueType) => valueType,
-                        set: (valueType) => valueType,
-                        named: (name) => [name],
-                        literal: (name) => [name],
-                        unknown: () => []
+                    // generic visitor to extract the string value from the literal
+                    // todo: add handling for other types in this visitor
+                    visitor: {  
+                        primitive: noop,  
+                        map: noop,
+                        list: noop,
+                        optional: noop,
+                        nullable: noop,
+                        set: noop,
+                        named: noop,
+                        literal: (literal) => {
+                            if (literal.type === "string") {
+                                return literal.string;
+                            } else if (literal.type == "boolean") {
+                                return literal.boolean.toString();
+                            }
+                            return undefined;
+                        },
+                        unknown: noop
                     }
                 });
 
-                const exampleValue = valueToUse?.[0]?.string ?? 'default_example';
-                
-                namedFullExamples.push({
-                    name: header,
-                    value: FullExample.literal(LiteralExample.string(exampleValue))
-                });
+                if (valueToUse != null) {
+                    namedFullExamples.push({
+                        name: header,
+                        value: FullExample.literal(LiteralExample.string(valueToUse))
+                    });
+                }
+
             } else {
                 // handling all other types
                 namedFullExamples.push({
