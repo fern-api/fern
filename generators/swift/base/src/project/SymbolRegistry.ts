@@ -249,7 +249,7 @@ export class SymbolRegistry {
                 return name;
             }
         }
-        let name = candidates[0];
+        let [name] = candidates;
         while (this.exists(name)) {
             name += "_";
         }
