@@ -20,6 +20,7 @@ from .moment import Moment
 from .movie import Movie
 from .movie_id import MovieId
 from .node import Node
+from .refresh_token_request import RefreshTokenRequest
 from .request import Request
 from .response import Response
 from .response_type import ResponseType
@@ -46,6 +47,7 @@ __all__ = [
     "Movie",
     "MovieId",
     "Node",
+    "RefreshTokenRequest",
     "Request",
     "Response",
     "ResponseType",

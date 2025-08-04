@@ -10,7 +10,7 @@ main();
 
 async function main() {
   await tsup.build({
-    entry: ["src/nodeCli.ts"],
+    entry: ["src/cli.ts"],
     format: ["cjs"],
     minify: false,
     outDir: "dist",

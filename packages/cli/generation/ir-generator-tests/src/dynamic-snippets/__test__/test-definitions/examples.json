@@ -5152,6 +5152,104 @@
                 }
             ],
             "additionalProperties": false
+        },
+        "type_types:RefreshTokenRequest": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "RefreshTokenRequest",
+                    "camelCase": {
+                        "unsafeName": "refreshTokenRequest",
+                        "safeName": "refreshTokenRequest"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "refresh_token_request",
+                        "safeName": "refresh_token_request"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "REFRESH_TOKEN_REQUEST",
+                        "safeName": "REFRESH_TOKEN_REQUEST"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "RefreshTokenRequest",
+                        "safeName": "RefreshTokenRequest"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "types",
+                            "camelCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TYPES",
+                                "safeName": "TYPES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Types",
+                                "safeName": "Types"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "types",
+                        "camelCase": {
+                            "unsafeName": "types",
+                            "safeName": "types"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "types",
+                            "safeName": "types"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TYPES",
+                            "safeName": "TYPES"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Types",
+                            "safeName": "Types"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "ttl",
+                            "camelCase": {
+                                "unsafeName": "ttl",
+                                "safeName": "ttl"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "ttl",
+                                "safeName": "ttl"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TTL",
+                                "safeName": "TTL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "TTL",
+                                "safeName": "TTL"
+                            }
+                        },
+                        "wireValue": "ttl"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "INTEGER"
+                    }
+                }
+            ],
+            "additionalProperties": false
         }
     },
     "headers": [],
@@ -6719,6 +6817,116 @@
                     "value": {
                         "type": "named",
                         "value": "type_types:BigEntity"
+                    }
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_service.refreshToken": {
+            "auth": {
+                "type": "bearer",
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                }
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "refreshToken",
+                    "camelCase": {
+                        "unsafeName": "refreshToken",
+                        "safeName": "refreshToken"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "refresh_token",
+                        "safeName": "refresh_token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "REFRESH_TOKEN",
+                        "safeName": "REFRESH_TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "RefreshToken",
+                        "safeName": "RefreshToken"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/refresh-token"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "optional",
+                        "value": {
+                            "type": "named",
+                            "value": "type_types:RefreshTokenRequest"
+                        }
                     }
                 }
             },

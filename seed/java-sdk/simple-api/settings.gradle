@@ -1,0 +1,3 @@
+rootProject.name = 'simple-api'
+
+include 'sample-app'

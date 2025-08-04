@@ -485,4 +485,14 @@ describe("Service", () => {
             ],
         });
     });
+
+    test("refreshToken", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedExamplesClient({ token: "test", environment: server.baseUrl });
+
+        server.mockEndpoint().post("/refresh-token").respondWith().statusCode(200).build();
+
+        const response = await client.service.refreshToken(undefined);
+        expect(response).toEqual(undefined);
+    });
 });

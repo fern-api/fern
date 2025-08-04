@@ -22,3 +22,4 @@ export * from "./Test";
 export * from "./Entity";
 export * from "./BigEntity";
 export * from "./CronJob";
+export * from "./RefreshTokenRequest";
