@@ -1,5 +1,3 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
-import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { InlinedRequestBodyProperty, ObjectProperty } from "@fern-fern/ir-sdk/api";
 
@@ -9,7 +7,6 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext";
 export declare namespace ObjectGenerator {
     interface Args {
         name: string;
-        directory: RelativeFilePath;
         properties: (ObjectProperty | InlinedRequestBodyProperty)[];
         extendedProperties?: ObjectProperty[];
         context: ModelGeneratorContext;
@@ -18,30 +15,19 @@ export declare namespace ObjectGenerator {
 
 export class ObjectGenerator {
     private readonly name: string;
-    private readonly directory: RelativeFilePath;
     private readonly properties: (ObjectProperty | InlinedRequestBodyProperty)[];
     private readonly extendedProperties: ObjectProperty[];
     private readonly context: ModelGeneratorContext;
 
-    public constructor({ name, directory, properties, extendedProperties, context }: ObjectGenerator.Args) {
+    public constructor({ name, properties, extendedProperties, context }: ObjectGenerator.Args) {
         this.name = name;
-        this.directory = directory;
         this.properties = properties;
         this.extendedProperties = extendedProperties ?? [];
         this.context = context;
     }
 
-    private get filename(): string {
-        return this.name + ".swift";
-    }
-
-    public generate(): SwiftFile {
-        const swiftStruct = this.generateStructForTypeDeclaration();
-        return new SwiftFile({
-            filename: this.filename,
-            directory: this.directory,
-            fileContents: [swiftStruct]
-        });
+    public generate(): swift.Struct {
+        return this.generateStructForTypeDeclaration();
     }
 
     public generateStructForTypeDeclaration(): swift.Struct {

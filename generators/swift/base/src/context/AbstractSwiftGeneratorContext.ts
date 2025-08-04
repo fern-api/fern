@@ -112,7 +112,7 @@ export abstract class AbstractSwiftGeneratorContext<
         return RelativeFilePath.of([...fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/"));
     }
 
-    public getCoreAsIsFiles(): AsIsFileDefinition[] {
+    public getSourceAsIsFiles(): AsIsFileDefinition[] {
         return Object.values(AsIsFiles);
     }
 

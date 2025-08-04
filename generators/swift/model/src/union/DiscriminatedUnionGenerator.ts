@@ -1,6 +1,4 @@
 import { assertNever, noop } from "@fern-api/core-utils";
-import { RelativeFilePath } from "@fern-api/fs-utils";
-import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { ObjectProperty, TypeId, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
@@ -10,7 +8,6 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext";
 export declare namespace DiscriminatedUnionGenerator {
     interface Args {
         name: string;
-        directory: RelativeFilePath;
         unionTypeDeclaration: UnionTypeDeclaration;
         context: ModelGeneratorContext;
     }
@@ -18,28 +15,17 @@ export declare namespace DiscriminatedUnionGenerator {
 
 export class DiscriminatedUnionGenerator {
     private readonly name: string;
-    private readonly directory: RelativeFilePath;
     private readonly unionTypeDeclaration: UnionTypeDeclaration;
     private readonly context: ModelGeneratorContext;
 
-    public constructor({ name, directory, unionTypeDeclaration, context }: DiscriminatedUnionGenerator.Args) {
+    public constructor({ name, unionTypeDeclaration, context }: DiscriminatedUnionGenerator.Args) {
         this.name = name;
-        this.directory = directory;
         this.unionTypeDeclaration = unionTypeDeclaration;
         this.context = context;
     }
 
-    private get filename(): string {
-        return this.name + ".swift";
-    }
-
-    public generate(): SwiftFile {
-        const swiftEnum = this.generateEnumForTypeDeclaration();
-        return new SwiftFile({
-            filename: this.filename,
-            directory: this.directory,
-            fileContents: [swiftEnum]
-        });
+    public generate(): swift.EnumWithAssociatedValues {
+        return this.generateEnumForTypeDeclaration();
     }
 
     private generateEnumForTypeDeclaration(): swift.EnumWithAssociatedValues {

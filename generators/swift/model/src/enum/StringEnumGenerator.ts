@@ -1,48 +1,30 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
-import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 
-import { EnumTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { EnumTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 export declare namespace StringEnumGenerator {
     interface Args {
         name: string;
-        directory: RelativeFilePath;
-        typeDeclaration: TypeDeclaration;
         enumTypeDeclaration: EnumTypeDeclaration;
     }
 }
 
 export class StringEnumGenerator {
     private readonly name: string;
-    private readonly directory: RelativeFilePath;
-    private readonly typeDeclaration: TypeDeclaration;
     private readonly enumTypeDeclaration: EnumTypeDeclaration;
 
-    public constructor({ name, directory, typeDeclaration, enumTypeDeclaration }: StringEnumGenerator.Args) {
+    public constructor({ name, enumTypeDeclaration }: StringEnumGenerator.Args) {
         this.name = name;
-        this.directory = directory;
-        this.typeDeclaration = typeDeclaration;
         this.enumTypeDeclaration = enumTypeDeclaration;
     }
 
-    private get filename(): string {
-        return this.name + ".swift";
-    }
-
-    public generate(): SwiftFile {
-        const swiftEnum = this.generateEnumForTypeDeclaration();
-        const fileContents = swiftEnum.toString();
-        return new SwiftFile({
-            filename: this.filename,
-            directory: this.directory,
-            fileContents
-        });
+    public generate(): swift.EnumWithRawValues {
+        return this.generateEnumForTypeDeclaration();
     }
 
     private generateEnumForTypeDeclaration(): swift.EnumWithRawValues {
         return swift.enumWithRawValues({
-            name: this.typeDeclaration.name.name.pascalCase.unsafeName,
+            name: this.name,
             accessLevel: swift.AccessLevel.Public,
             conformances: [
                 "String",

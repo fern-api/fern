@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
-import { dirname, join } from "node:path";
+import { join } from "node:path";
 import { entries } from "@fern-api/core-utils";
-import { getFilename, RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 
 /**
  * Configuration specification for a static Swift file that gets included as-is in the generated SDK.
@@ -9,7 +9,8 @@ import { getFilename, RelativeFilePath } from "@fern-api/fs-utils";
  * during the build process.
  */
 interface AsIsFileSpec {
-    relativePath: string;
+    relativePathToDir: string;
+    filenameWithoutExtension: string;
     symbolNames?: string[];
 }
 
@@ -23,61 +24,75 @@ interface AsIsFileSpec {
 const AsIsFileSpecs = {
     // Core/Networking
     Http: {
-        relativePath: "Core/Networking/HTTP.swift",
+        relativePathToDir: "Core/Networking",
+        filenameWithoutExtension: "HTTP",
         symbolNames: ["HTTP"]
     },
     HttpClient: {
-        relativePath: "Core/Networking/HTTPClient.swift",
+        relativePathToDir: "Core/Networking",
+        filenameWithoutExtension: "HTTPClient",
         symbolNames: ["HTTPClient"]
     },
     QueryParameter: {
-        relativePath: "Core/Networking/QueryParameter.swift",
+        relativePathToDir: "Core/Networking",
+        filenameWithoutExtension: "QueryParameter",
         symbolNames: ["QueryParameter"]
     },
 
     // Core/Serde
     DecoderPlusAdditionalProperties: {
-        relativePath: "Core/Serde/Decoder+AdditionalProperties.swift"
+        relativePathToDir: "Core/Serde",
+        filenameWithoutExtension: "Decoder+AdditionalProperties"
     },
     EncoderPlusAdditionalProperties: {
-        relativePath: "Core/Serde/Encoder+AdditionalProperties.swift"
+        relativePathToDir: "Core/Serde",
+        filenameWithoutExtension: "Encoder+AdditionalProperties"
     },
     Serde: {
-        relativePath: "Core/Serde/Serde.swift",
+        relativePathToDir: "Core/Serde",
+        filenameWithoutExtension: "Serde",
         symbolNames: ["Serde"]
     },
     StringKey: {
-        relativePath: "Core/Serde/StringKey.swift",
+        relativePathToDir: "Core/Serde",
+        filenameWithoutExtension: "StringKey",
         symbolNames: ["StringKey"]
     },
 
     // Core
     Prelude: {
-        relativePath: "Core/Prelude.swift"
+        relativePathToDir: "Core",
+        filenameWithoutExtension: "Prelude"
     },
     StringPlusUrlEncoding: {
-        relativePath: "Core/String+URLEncoding.swift"
+        relativePathToDir: "Core",
+        filenameWithoutExtension: "String+URLEncoding"
     },
 
     // Public
     APIErrorResponse: {
-        relativePath: "Public/APIErrorResponse.swift",
+        relativePathToDir: "Public",
+        filenameWithoutExtension: "APIErrorResponse",
         symbolNames: ["APIErrorResponse"]
     },
     ClientConfig: {
-        relativePath: "Public/ClientConfig.swift",
+        relativePathToDir: "Public",
+        filenameWithoutExtension: "ClientConfig",
         symbolNames: ["ClientConfig"]
     },
     ClientError: {
-        relativePath: "Public/ClientError.swift",
+        relativePathToDir: "Public",
+        filenameWithoutExtension: "ClientError",
         symbolNames: ["ClientError"]
     },
     JsonValue: {
-        relativePath: "Public/JSONValue.swift",
+        relativePathToDir: "Public",
+        filenameWithoutExtension: "JSONValue",
         symbolNames: ["JSONValue"]
     },
     RequestOptions: {
-        relativePath: "Public/RequestOptions.swift",
+        relativePathToDir: "Public",
+        filenameWithoutExtension: "RequestOptions",
         symbolNames: ["RequestOptions"]
     }
 } satisfies Record<string, AsIsFileSpec>;
@@ -88,10 +103,8 @@ const AsIsFileSpecs = {
 export interface AsIsFileDefinition {
     /**
      * The filename (without directory path) of the Swift file.
-     *
-     * @example "HTTP.swift"
      */
-    filename: string;
+    filenameWithoutExtension: string;
 
     /**
      * The relative directory path where this file should be placed in the generated project.
@@ -156,17 +169,13 @@ function createAsIsFiles(): AsIsFileDefinitionsById {
     const result = {} as AsIsFileDefinitionsById;
 
     for (const [key, spec] of entries(AsIsFileSpecs)) {
-        const { relativePath, symbolNames } = spec as AsIsFileSpec;
-        const filename = getFilename(RelativeFilePath.of(relativePath));
-        if (filename === undefined) {
-            throw new Error(`Missing filename for as is file '${relativePath}'`);
-        }
+        const { relativePathToDir, filenameWithoutExtension, symbolNames } = spec as AsIsFileSpec;
         result[key] = {
-            filename,
-            directory: RelativeFilePath.of(dirname(spec.relativePath)),
+            filenameWithoutExtension,
+            directory: RelativeFilePath.of(relativePathToDir),
             symbolNames: symbolNames ?? [],
             loadContents: () => {
-                const absolutePath = join(__dirname, "asIs", filename);
+                const absolutePath = join(__dirname, "asIs", filenameWithoutExtension + ".swift");
                 return readFile(absolutePath, "utf-8");
             }
         };

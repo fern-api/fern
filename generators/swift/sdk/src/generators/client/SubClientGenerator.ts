@@ -1,7 +1,4 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
-import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
-
 import { Subpackage } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
@@ -38,8 +35,8 @@ export class SubClientGenerator {
             : undefined;
     }
 
-    public generate(): SwiftFile {
-        const swiftClass = swift.class_({
+    public generate(): swift.Class {
+        return swift.class_({
             name: this.clientName,
             final: true,
             accessLevel: swift.AccessLevel.Public,
@@ -50,13 +47,6 @@ export class SubClientGenerator {
             ],
             initializers: [this.generateInitializer()],
             methods: this.generateMethods()
-        });
-        const fileContents = swiftClass.toString();
-        const fernFilepathDir = this.sdkGeneratorContext.getDirectoryForFernFilepath(this.subpackage.fernFilepath);
-        return new SwiftFile({
-            filename: `${this.clientName}.swift`,
-            directory: RelativeFilePath.of(`Resources/${fernFilepathDir}`),
-            fileContents
         });
     }
 

@@ -1,5 +1,3 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
-import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 
 import { SingleBaseUrlEnvironments } from "@fern-fern/ir-sdk/api";
@@ -25,8 +23,8 @@ export class SingleUrlEnvironmentGenerator {
         this.sdkGeneratorContext = sdkGeneratorContext;
     }
 
-    public generate(): SwiftFile {
-        const swiftEnum = swift.enumWithRawValues({
+    public generate(): swift.EnumWithRawValues {
+        return swift.enumWithRawValues({
             name: this.enumName,
             accessLevel: swift.AccessLevel.Public,
             conformances: ["String", swift.Protocol.CaseIterable],
@@ -34,12 +32,6 @@ export class SingleUrlEnvironmentGenerator {
                 unsafeName: e.name.camelCase.unsafeName,
                 rawValue: e.url
             }))
-        });
-        const fileContents = swiftEnum.toString();
-        return new SwiftFile({
-            filename: `${this.enumName}.swift`,
-            directory: RelativeFilePath.of(""),
-            fileContents
         });
     }
 }
