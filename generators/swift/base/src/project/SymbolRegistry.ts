@@ -140,8 +140,7 @@ export class SymbolRegistry {
         const symbolName = this.getAvailableSymbolName([
             `${apiNamePascalCase}Client`,
             `${apiNamePascalCase}Api`,
-            `${apiNamePascalCase}ApiClient`,
-            `${apiNamePascalCase}HttpClient`
+            `${apiNamePascalCase}ApiClient`
         ]);
         this.rootClientSymbol = symbolName;
         this.symbolSet.add(symbolName);
