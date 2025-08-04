@@ -102,7 +102,7 @@ export async function runLocalGenerationForWorkspace({
                 const publishConfig = getPublishConfig({
                     generatorInvocation,
                     org: organization.ok ? organization.body : undefined,
-                    version,
+                    version
                 });
                 if (publishConfig != null) {
                     intermediateRepresentation.publishConfig = publishConfig;
@@ -193,18 +193,17 @@ function getPublishConfig({
     }
 
     if (generatorInvocation.raw?.output?.location === "local-file-system") {
-
         let publishTarget: PublishTarget | undefined = undefined;
         if (generatorInvocation.language === "python") {
             publishTarget = PublishTarget.pypi({
                 version,
-                packageName: undefined,
-            })
+                packageName: undefined
+            });
         }
 
         return FernIr.PublishingConfig.filesystem({
             generateFullProject: org?.selfHostedSdKs ?? false,
-            publishTarget,
+            publishTarget
         });
     }
 
