@@ -1,8 +1,11 @@
-public struct WorkspaceSubmissionState: Codable, Hashable {
+public struct WorkspaceSubmissionState: Codable, Hashable, Sendable {
     public let status: WorkspaceSubmissionStatus
     public let additionalProperties: [String: JSONValue]
 
-    public init(status: WorkspaceSubmissionStatus, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        status: WorkspaceSubmissionStatus,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.status = status
         self.additionalProperties = additionalProperties
     }
@@ -14,7 +17,7 @@ public struct WorkspaceSubmissionState: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.status, forKey: .status)
     }

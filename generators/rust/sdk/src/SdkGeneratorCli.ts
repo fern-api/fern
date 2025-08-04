@@ -1,6 +1,8 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractRustGeneratorCli, RustFile } from "@fern-api/rust-base";
+import { Module, ModuleDeclaration, UseStatement } from "@fern-api/rust-codegen";
+import { generateModels } from "@fern-api/rust-model";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
@@ -8,8 +10,16 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { ErrorGenerator } from "./error/ErrorGenerator";
+import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
+import { ClientConfigGenerator } from "./generators/ClientConfigGenerator";
+import { RootClientGenerator } from "./generators/RootClientGenerator";
+import { SubClientGenerator } from "./generators/SubClientGenerator";
 
 export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
+    // ===========================
+    // LIFECYCLE METHODS
+    // ===========================
+
     protected constructContext({
         ir,
         customConfig,
@@ -25,210 +35,265 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     }
 
     protected parseCustomConfigOrThrow(customConfig: unknown): SdkCustomConfigSchema {
-        const parsed = customConfig != null ? SdkCustomConfigSchema.parse(customConfig) : undefined;
-        if (parsed != null) {
-            return parsed;
-        }
-        return SdkCustomConfigSchema.parse({});
+        return customConfig != null ? SdkCustomConfigSchema.parse(customConfig) : SdkCustomConfigSchema.parse({});
     }
 
-    protected publishPackage(context: SdkGeneratorContext): Promise<void> {
-        return this.generate(context);
+    protected async publishPackage(_context: SdkGeneratorContext): Promise<void> {
+        throw new Error("Method not implemented.");
     }
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
-        await this.generate(context);
-        if (context.ir.selfHosted) {
-            await this.generateGitHub({ context });
-        }
+        await this.writeForDownload(context);
     }
 
     protected async writeForDownload(context: SdkGeneratorContext): Promise<void> {
-        return await this.generate(context);
+        await this.generate(context);
     }
 
+    // ===========================
+    // MAIN GENERATION ORCHESTRATION
+    // ===========================
+
     protected async generate(context: SdkGeneratorContext): Promise<void> {
-        // Generate lib.rs
-        const libContent = this.generateLibRs(context);
-        const libFile = new RustFile({
-            filename: "lib.rs",
-            directory: RelativeFilePath.of("src"),
-            fileContents: libContent
-        });
-
-        // Generate client.rs
-        const clientContent = this.generateClientRs(context);
-        const clientFile = new RustFile({
-            filename: "client.rs",
-            directory: RelativeFilePath.of("src"),
-            fileContents: clientContent
-        });
-
-        // Generate error.rs
-        const errorContent = this.generateErrorRs(context);
-        const errorFile = new RustFile({
-            filename: "error.rs",
-            directory: RelativeFilePath.of("src"),
-            fileContents: errorContent
-        });
-
-        const files = [libFile, clientFile, errorFile];
-
-        // Generate types if they exist
-        if (Object.keys(context.ir.types).length > 0) {
-            const typesContent = this.generateTypesRs(context);
-            const typesFile = new RustFile({
-                filename: "types.rs",
-                directory: RelativeFilePath.of("src"),
-                fileContents: typesContent
-            });
-            files.push(typesFile);
-        }
-
-        // Generate services
-        for (const [serviceId, service] of Object.entries(context.ir.services)) {
-            const serviceName = service.name.fernFilepath.allParts
-                .map((part: { snakeCase: { safeName: string } }) => part.snakeCase.safeName)
-                .join("_");
-            const serviceContent = this.generateServiceRs(context, service);
-            const serviceFile = new RustFile({
-                filename: `${serviceName}.rs`,
-                directory: RelativeFilePath.of("src"),
-                fileContents: serviceContent
-            });
-            files.push(serviceFile);
-        }
-
-        context.project.addSourceFiles(...files);
+        const projectFiles = await this.generateProjectFiles(context);
+        context.project.addSourceFiles(...projectFiles);
         await context.project.persist();
     }
 
-    private generateLibRs(context: SdkGeneratorContext): string {
-        const hasTypes = Object.keys(context.ir.types).length > 0;
-        const services = Object.values(context.ir.services);
+    private async generateProjectFiles(context: SdkGeneratorContext): Promise<RustFile[]> {
+        const files: RustFile[] = [];
 
-        let modules = "pub mod client;\npub mod error;";
+        // Core files
+        files.push(this.generateLibFile(context));
+        files.push(this.generateErrorFile(context));
+
+        // Environment.rs (if environments are defined)
+        const environmentFile = await this.generateEnvironmentFile(context);
+        if (environmentFile) {
+            files.push(environmentFile);
+        }
+
+        // ClientConfig.rs and ApiClientBuilder.rs (always generate with conditional template processing)
+        const clientConfigGenerator = new ClientConfigGenerator(context);
+        files.push(clientConfigGenerator.generate());
+
+        // Client.rs
+        const rootClientGenerator = new RootClientGenerator(context);
+        files.push(rootClientGenerator.generate());
+
+        // Services/**/*.rs
+        this.generateSubClientFiles(context, files);
+
+        // Types/**/*.rs
+        if (this.hasTypes(context)) {
+            files.push(...this.generateTypeFiles(context));
+        }
+
+        return files;
+    }
+
+    // ===========================
+    // CORE FILE GENERATORS
+    // ===========================
+
+    private generateLibFile(context: SdkGeneratorContext): RustFile {
+        const hasTypes = this.hasTypes(context);
+        const clientName = context.getClientName();
+
+        const libModule = this.buildLibModule(context, hasTypes, clientName);
+
+        return new RustFile({
+            filename: "lib.rs",
+            directory: RelativeFilePath.of("src"),
+            fileContents: libModule.toString()
+        });
+    }
+
+    private generateErrorFile(context: SdkGeneratorContext): RustFile {
+        const errorGenerator = new ErrorGenerator(context);
+        return new RustFile({
+            filename: "error.rs",
+            directory: RelativeFilePath.of("src"),
+            fileContents: errorGenerator.generateErrorRs()
+        });
+    }
+
+    private async generateEnvironmentFile(context: SdkGeneratorContext): Promise<RustFile | null> {
+        const environmentGenerator = new EnvironmentGenerator({ context });
+        return environmentGenerator.generate();
+    }
+
+    private generateSubClientFiles(context: SdkGeneratorContext, files: RustFile[]): void {
+        Object.values(context.ir.subpackages).forEach((subpackage) => {
+            if (subpackage.service != null || subpackage.hasEndpointsInTree) {
+                const subClientGenerator = new SubClientGenerator(context, subpackage);
+                files.push(subClientGenerator.generate());
+            }
+        });
+    }
+
+    // ===========================
+    // TYPE FILE GENERATORS
+    // ===========================
+
+    private generateTypeFiles(context: SdkGeneratorContext): RustFile[] {
+        const files: RustFile[] = [];
+
+        // Generate model files
+        const modelFiles = this.generateModelFiles(context);
+        files.push(...modelFiles);
+
+        // Generate types module file
+        const typesModFile = this.generateTypesModFile(context);
+        files.push(typesModFile);
+
+        return files;
+    }
+
+    private generateModelFiles(context: SdkGeneratorContext): RustFile[] {
+        return generateModels({ context: context.toModelGeneratorContext() }).map(
+            (file) =>
+                new RustFile({
+                    filename: file.filename,
+                    directory: RelativeFilePath.of("src/types"),
+                    fileContents: this.getFileContents(file)
+                })
+        );
+    }
+
+    private generateTypesModFile(context: SdkGeneratorContext): RustFile {
+        const typesModule = this.buildTypesModule(context);
+        return new RustFile({
+            filename: "mod.rs",
+            directory: RelativeFilePath.of("src/types"),
+            fileContents: typesModule.toString()
+        });
+    }
+
+    // ===========================
+    // MODULE BUILDERS (AST-based)
+    // ===========================
+
+    private buildLibModule(context: SdkGeneratorContext, hasTypes: boolean, clientName: string): Module {
+        const moduleDeclarations: ModuleDeclaration[] = [];
+        const useStatements: UseStatement[] = [];
+        const rawDeclarations: string[] = [];
+
+        // Add module declarations
+        moduleDeclarations.push(new ModuleDeclaration({ name: "client", isPublic: true }));
+        moduleDeclarations.push(new ModuleDeclaration({ name: "error", isPublic: true }));
+        moduleDeclarations.push(new ModuleDeclaration({ name: "client_config", isPublic: true }));
+        moduleDeclarations.push(new ModuleDeclaration({ name: "api_client_builder", isPublic: true }));
+        moduleDeclarations.push(new ModuleDeclaration({ name: "http_client", isPublic: true }));
+        moduleDeclarations.push(new ModuleDeclaration({ name: "request_options", isPublic: true }));
+        moduleDeclarations.push(new ModuleDeclaration({ name: "client_error", isPublic: true }));
+
+        if (this.hasEnvironments(context)) {
+            moduleDeclarations.push(new ModuleDeclaration({ name: "environment", isPublic: true }));
+        }
 
         if (hasTypes) {
-            modules += "\npub mod types;";
+            moduleDeclarations.push(new ModuleDeclaration({ name: "types", isPublic: true }));
         }
 
-        for (const service of services) {
-            const serviceName = service.name.fernFilepath.allParts
-                .map((part: { snakeCase: { safeName: string } }) => part.snakeCase.safeName)
-                .join("_");
-            modules += `\npub mod ${serviceName};`;
+        // Add re-exports
+        const clientExports = [];
+        const subpackages = Object.values(context.ir.subpackages).filter(
+            (subpackage) => subpackage.service != null || subpackage.hasEndpointsInTree
+        );
+
+        // Only add root client if there are multiple services
+        if (subpackages.length > 1) {
+            clientExports.push(clientName);
         }
 
-        return `//! ${context.ir.apiName.pascalCase.safeName} SDK
-//!
-//! Generated by Fern
+        // Add all sub-clients
+        subpackages.forEach((subpackage) => {
+            const subClientName = `${subpackage.name.pascalCase.safeName}Client`;
+            clientExports.push(subClientName);
+        });
 
-${modules}
+        useStatements.push(
+            new UseStatement({
+                path: "client",
+                items: clientExports,
+                isPublic: true
+            })
+        );
+        useStatements.push(new UseStatement({ path: "error", items: ["ApiError"], isPublic: true }));
 
-pub use client::${context.getClientName()};
-pub use error::ApiError;
-${hasTypes ? "\npub use types::*;" : ""}
-`;
-    }
-
-    private generateClientRs(context: SdkGeneratorContext): string {
-        const clientName = context.getClientName();
-        return `use crate::error::ApiError;
-use reqwest::{Client, RequestBuilder};
-use serde::{Deserialize, Serialize};
-
-pub struct ${clientName} {
-    client: Client,
-    base_url: String,
-}
-
-impl ${clientName} {
-    pub fn new(base_url: impl Into<String>) -> Self {
-        Self {
-            client: Client::new(),
-            base_url: base_url.into(),
-        }
-    }
-
-    pub fn with_client(client: Client, base_url: impl Into<String>) -> Self {
-        Self {
-            client,
-            base_url: base_url.into(),
-        }
-    }
-
-    // TODO: Add API methods here
-}
-`;
-    }
-
-    private generateErrorRs(context: SdkGeneratorContext): string {
-        const errorGenerator = new ErrorGenerator(context);
-        return errorGenerator.generateErrorRs();
-    }
-
-    private async generateGitHub({ context }: { context: SdkGeneratorContext }): Promise<void> {
-        await context.generatorAgent.pushToGitHub({ context });
-    }
-
-    private generateTypesRs(context: SdkGeneratorContext): string {
-        let content = `use serde::{Deserialize, Serialize};
-
-`;
-
-        // Generate type aliases
-        for (const [typeId, type] of Object.entries(context.ir.types)) {
-            const typeName = type.name.name.pascalCase.safeName;
-
-            if (type.shape.type === "alias") {
-                // For now, just create a simple type alias
-                content += `pub type ${typeName} = String; // TODO: Implement proper type\n\n`;
-            } else if (type.shape.type === "enum") {
-                content += `#[derive(Debug, Clone, Serialize, Deserialize)]
-pub enum ${typeName} {
-`;
-                for (const value of type.shape.values) {
-                    content += `    ${value.name.name.pascalCase.safeName},\n`;
-                }
-                content += "}\n\n";
-            } else if (type.shape.type === "object") {
-                content += `#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct ${typeName} {
-`;
-                for (const property of type.shape.properties) {
-                    const fieldName = property.name.name.snakeCase.safeName;
-                    content += `    pub ${fieldName}: String, // TODO: Implement proper type\n`;
-                }
-                content += "}\n\n";
-            }
+        if (this.hasEnvironments(context)) {
+            useStatements.push(new UseStatement({ path: "environment", items: ["*"], isPublic: true }));
         }
 
-        return content;
+        if (hasTypes) {
+            useStatements.push(new UseStatement({ path: "types", items: ["*"], isPublic: true }));
+        }
+
+        // Add re-exports
+        useStatements.push(new UseStatement({ path: "client_config", items: ["*"], isPublic: true }));
+        useStatements.push(
+            new UseStatement({
+                path: "api_client_builder",
+                items: ["*"],
+                isPublic: true
+            })
+        );
+        useStatements.push(new UseStatement({ path: "http_client", items: ["*"], isPublic: true }));
+        useStatements.push(
+            new UseStatement({
+                path: "request_options",
+                items: ["*"],
+                isPublic: true
+            })
+        );
+        useStatements.push(new UseStatement({ path: "client_error", items: ["*"], isPublic: true }));
+
+        return new Module({
+            moduleDeclarations,
+            useStatements,
+            rawDeclarations
+        });
     }
 
-    private generateServiceRs(
-        context: SdkGeneratorContext,
-        service: {
-            displayName?: string;
-            name: { fernFilepath: { allParts: Array<{ pascalCase: { safeName: string } }> } };
+    private buildTypesModule(context: SdkGeneratorContext): Module {
+        const moduleDeclarations: ModuleDeclaration[] = [];
+        const useStatements: UseStatement[] = [];
+        const rawDeclarations: string[] = [];
+
+        for (const [_typeId, typeDeclaration] of Object.entries(context.ir.types)) {
+            const rawModuleName = typeDeclaration.name.name.snakeCase.unsafeName;
+            const escapedModuleName = context.configManager.escapeRustKeyword(rawModuleName);
+            moduleDeclarations.push(new ModuleDeclaration({ name: escapedModuleName, isPublic: true }));
+            useStatements.push(
+                new UseStatement({
+                    path: escapedModuleName,
+                    items: ["*"],
+                    isPublic: true
+                })
+            );
         }
-    ): string {
-        const clientName = context.getClientName();
-        const serviceName =
-            service.displayName ||
-            service.name.fernFilepath.allParts
-                .map((part: { pascalCase: { safeName: string } }) => part.pascalCase.safeName)
-                .join(" ");
 
-        return `use crate::client::${clientName};
-use crate::error::Error;
+        return new Module({
+            moduleDeclarations,
+            useStatements,
+            rawDeclarations
+        });
+    }
 
-impl ${clientName} {
-    // ${serviceName} methods
-    
-    // TODO: Generate actual service methods based on endpoints
-}
-`;
+    // ===========================
+    // UTILITY METHODS
+    // ===========================
+
+    private hasTypes(context: SdkGeneratorContext): boolean {
+        return Object.keys(context.ir.types).length > 0;
+    }
+
+    private hasEnvironments(context: SdkGeneratorContext): boolean {
+        return context.ir.environments?.environments != null;
+    }
+
+    private getFileContents(file: RustFile): string {
+        return typeof file.fileContents === "string" ? file.fileContents : file.fileContents.toString();
     }
 }

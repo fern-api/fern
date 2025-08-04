@@ -1,10 +1,10 @@
 import { AccessLevel } from "./AccessLevel";
+import { AstNode, Writer } from "./core";
 import type { EnumWithRawValues } from "./EnumWithRawValues";
 import { Initializer } from "./Initializer";
 import { Method } from "./Method";
 import { Property } from "./Property";
 import { Protocol } from "./Protocol";
-import { AstNode, Writer } from "./core";
 
 export declare namespace Struct {
     interface Args {
@@ -13,19 +13,19 @@ export declare namespace Struct {
         conformances?: Protocol[];
         properties: Property[];
         initializers?: Initializer[];
-        nestedTypes?: (Struct | EnumWithRawValues)[];
         methods?: Method[];
+        nestedTypes?: (Struct | EnumWithRawValues)[];
     }
 }
 
 export class Struct extends AstNode {
     public readonly name: string;
     public readonly accessLevel?: AccessLevel;
-    public readonly conformances?: string[];
+    public readonly conformances: string[];
     public readonly properties: Property[];
-    public readonly initializers?: Initializer[];
-    public readonly nestedTypes?: (Struct | EnumWithRawValues)[];
-    public readonly methods?: Method[];
+    public readonly initializers: Initializer[];
+    public readonly methods: Method[];
+    public readonly nestedTypes: (Struct | EnumWithRawValues)[];
 
     public constructor({
         accessLevel,
@@ -33,17 +33,17 @@ export class Struct extends AstNode {
         conformances,
         properties,
         initializers,
-        nestedTypes,
-        methods
+        methods,
+        nestedTypes
     }: Struct.Args) {
         super();
         this.name = name;
         this.accessLevel = accessLevel;
-        this.conformances = conformances;
+        this.conformances = conformances ?? [];
         this.properties = properties;
-        this.initializers = initializers;
-        this.nestedTypes = nestedTypes;
-        this.methods = methods;
+        this.initializers = initializers ?? [];
+        this.methods = methods ?? [];
+        this.nestedTypes = nestedTypes ?? [];
     }
 
     public write(writer: Writer): void {
@@ -52,7 +52,7 @@ export class Struct extends AstNode {
             writer.write(" ");
         }
         writer.write(`struct ${this.name}`);
-        this.conformances?.forEach((conformance, index) => {
+        this.conformances.forEach((conformance, index) => {
             if (index === 0) {
                 writer.write(": ");
             } else if (index > 0) {
@@ -67,7 +67,7 @@ export class Struct extends AstNode {
             property.write(writer);
             writer.newLine();
         });
-        if (this.initializers) {
+        if (this.initializers.length > 0) {
             writer.newLine();
             this.initializers.forEach((initializer, initializerIdx) => {
                 if (initializerIdx > 0) {
@@ -77,7 +77,7 @@ export class Struct extends AstNode {
                 writer.newLine();
             });
         }
-        if (this.methods) {
+        if (this.methods.length > 0) {
             writer.newLine();
             this.methods.forEach((method, methodIdx) => {
                 if (methodIdx > 0) {
@@ -87,7 +87,7 @@ export class Struct extends AstNode {
                 writer.newLine();
             });
         }
-        if (this.nestedTypes) {
+        if (this.nestedTypes.length > 0) {
             writer.newLine();
             this.nestedTypes.forEach((nestedType, nestedTypeIdx) => {
                 if (nestedTypeIdx > 0) {

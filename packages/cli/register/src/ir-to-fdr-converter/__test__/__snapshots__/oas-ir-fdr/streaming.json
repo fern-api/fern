@@ -241,6 +241,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "stream",
@@ -254,6 +255,21 @@
           },
           "statusCode": 200,
           "description": ""
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "User"
+                }
+              },
+              "statusCode": 200,
+              "description": ""
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [
@@ -291,6 +307,9 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {
+          "requests": []
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -301,6 +320,21 @@
           },
           "statusCode": 200,
           "description": ""
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "User"
+                }
+              },
+              "statusCode": 200,
+              "description": ""
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [
@@ -338,6 +372,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "stream",
@@ -351,6 +386,21 @@
           },
           "statusCode": 200,
           "description": ""
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "User-2"
+                }
+              },
+              "statusCode": 200,
+              "description": ""
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [
@@ -388,6 +438,9 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {
+          "requests": []
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -398,6 +451,21 @@
           },
           "statusCode": 200,
           "description": ""
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "User-2"
+                }
+              },
+              "statusCode": 200,
+              "description": ""
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [
@@ -435,6 +503,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "stream",
@@ -449,6 +518,21 @@
           "statusCode": 200,
           "description": ""
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "user_v3_Response_200"
+                }
+              },
+              "statusCode": 200,
+              "description": ""
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
@@ -458,17 +542,10 @@
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
-            "responseBody": [
-              {}
-            ],
+            "responseBody": {},
             "responseBodyV3": {
-              "type": "stream",
-              "value": [
-                {
-                  "type": "json",
-                  "value": {}
-                }
-              ]
+              "type": "json",
+              "value": {}
             }
           }
         ],
@@ -497,6 +574,9 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {
+          "requests": []
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -507,6 +587,21 @@
           },
           "statusCode": 200,
           "description": ""
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "user_v3_Response_200"
+                }
+              },
+              "statusCode": 200,
+              "description": ""
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [

@@ -80,6 +80,38 @@ export class Attribute extends AstNode {
             new Attribute({
                 name: "serde",
                 args: [`skip_serializing_if = ${condition}`]
+            }),
+
+        // Union-specific serde attributes
+        tag: (discriminant: string): Attribute =>
+            new Attribute({
+                name: "serde",
+                args: [`tag = "${discriminant}"`]
+            }),
+
+        untagged: (): Attribute =>
+            new Attribute({
+                name: "serde",
+                args: ["untagged"]
+            }),
+
+        flatten: (): Attribute =>
+            new Attribute({
+                name: "serde",
+                args: ["flatten"]
+            }),
+
+        content: (field: string): Attribute =>
+            new Attribute({
+                name: "serde",
+                args: [`content = "${field}"`]
+            }),
+
+        // For adjacently tagged unions
+        tagAndContent: (tag: string, content: string): Attribute =>
+            new Attribute({
+                name: "serde",
+                args: [`tag = "${tag}"`, `content = "${content}"`]
             })
     };
 }

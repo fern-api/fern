@@ -10,8 +10,17 @@ import {
     Enum,
     EnumVariant,
     NewtypeStruct,
+    Method,
+    ImplBlock,
+    Module,
+    Client,
     Visibility,
-    PUBLIC
+    PUBLIC,
+    Expression,
+    Statement,
+    CodeBlock,
+    Pattern,
+    MatchArm
 } from "./ast";
 
 // Factory functions for Type creation
@@ -69,6 +78,22 @@ export function newtypeStruct(args: NewtypeStruct.Args): NewtypeStruct {
     return new NewtypeStruct(args);
 }
 
+export function method(args: Method.Args): Method {
+    return new Method(args);
+}
+
+export function implBlock(args: ImplBlock.Args): ImplBlock {
+    return new ImplBlock(args);
+}
+
+export function module(args: Module.Args): Module {
+    return new Module(args);
+}
+
+export function client(args: Client.Args): Client {
+    return new Client(args);
+}
+
 // Factory function for Writer creation
 export function writer(): Writer {
     return new Writer();
@@ -84,12 +109,25 @@ export const rust = {
     Enum,
     EnumVariant,
     NewtypeStruct,
+    Method,
+    ImplBlock,
+    Module,
+    Client,
+    Expression,
+    Statement,
+    CodeBlock,
+    Pattern,
+    MatchArm,
     attribute,
     field,
     struct,
     enum_,
     enumVariant,
     newtypeStruct,
+    method,
+    implBlock,
+    module,
+    client,
     writer,
     visibility: {
         public: PUBLIC as Visibility,

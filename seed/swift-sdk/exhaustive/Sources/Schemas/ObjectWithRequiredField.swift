@@ -1,8 +1,11 @@
-public struct ObjectWithRequiredField: Codable, Hashable {
+public struct ObjectWithRequiredField: Codable, Hashable, Sendable {
     public let string: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(string: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        string: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.string = string
         self.additionalProperties = additionalProperties
     }
@@ -14,7 +17,7 @@ public struct ObjectWithRequiredField: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.string, forKey: .string)
     }

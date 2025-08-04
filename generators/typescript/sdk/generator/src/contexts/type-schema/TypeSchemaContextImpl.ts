@@ -1,7 +1,12 @@
-import { ExportsManager, ImportsManager, Reference, TypeReferenceNode, Zurg } from "@fern-typescript/commons";
-import { CoreUtilities } from "@fern-typescript/commons/src/core-utilities/CoreUtilities";
+import {
+    ExportsManager,
+    ImportsManager,
+    Reference,
+    TypeReferenceNode,
+    Zurg,
+    CoreUtilities
+} from "@fern-typescript/commons";
 import { BaseContext, GeneratedTypeSchema, TypeSchemaContext } from "@fern-typescript/contexts";
-import { TypeResolver } from "@fern-typescript/resolvers";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import {
     TypeReferenceToRawTypeNodeConverter,

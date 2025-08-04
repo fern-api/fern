@@ -142,6 +142,7 @@
             }
           }
         },
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "stream",
@@ -155,6 +156,21 @@
           },
           "statusCode": 200,
           "description": "A response to a chat request."
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "FullResponse"
+                }
+              },
+              "statusCode": 200,
+              "description": "A response to a chat request."
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [
@@ -242,6 +258,44 @@
             }
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "key": "query",
+                      "valueType": {
+                        "type": "optional",
+                        "itemType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "key": "stream_response",
+                      "valueType": {
+                        "type": "literal",
+                        "value": {
+                          "type": "booleanLiteral",
+                          "value": false
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -252,6 +306,21 @@
           },
           "statusCode": 200,
           "description": "A response to a chat request."
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "FullResponse"
+                }
+              },
+              "statusCode": 200,
+              "description": "A response to a chat request."
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [

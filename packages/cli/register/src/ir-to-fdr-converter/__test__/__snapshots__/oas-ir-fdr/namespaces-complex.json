@@ -428,6 +428,51 @@
         ]
       }
     },
+    "pet_deletePet_Response_200": {
+      "description": "Empty response body",
+      "name": "pet_deletePet_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "store_deleteOrder_Response_200": {
+      "description": "Empty response body",
+      "name": "store_deleteOrder_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "user_logoutUser_Response_200": {
+      "description": "Empty response body",
+      "name": "user_logoutUser_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "user_updateUser_Response_200": {
+      "description": "Empty response body",
+      "name": "user_updateUser_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "user_deleteUser_Response_200": {
+      "description": "Empty response body",
+      "name": "user_deleteUser_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "PetComplexFindByStatusGetParametersStatus": {
       "name": "PetComplexFindByStatusGetParametersStatus",
       "shape": {
@@ -527,6 +572,55 @@
             },
             "description": "Create a new pet in the store"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  },
+                  "description": "Create a new pet in the store"
+                },
+                "description": "Create a new pet in the store"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/xml",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  },
+                  "description": "Create a new pet in the store"
+                },
+                "description": "Create a new pet in the store"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/x-www-form-urlencoded",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  },
+                  "description": "Create a new pet in the store"
+                },
+                "description": "Create a new pet in the store"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -537,6 +631,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Pet"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -676,6 +785,55 @@
             },
             "description": "Update an existent pet in the store"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  },
+                  "description": "Update an existent pet in the store"
+                },
+                "description": "Update an existent pet in the store"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/xml",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  },
+                  "description": "Update an existent pet in the store"
+                },
+                "description": "Update an existent pet in the store"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/x-www-form-urlencoded",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  },
+                  "description": "Update an existent pet in the store"
+                },
+                "description": "Update an existent pet in the store"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -686,6 +844,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Pet"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -834,6 +1007,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -847,6 +1021,24 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -965,6 +1157,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -978,6 +1171,24 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -1098,6 +1309,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1108,6 +1320,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Pet"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -1265,6 +1492,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1275,6 +1503,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Pet"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -1407,6 +1650,33 @@
               }
             }
           ],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "pet_deletePet_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "Pet deleted"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "pet_deletePet_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Pet deleted"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -1430,7 +1700,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -1506,6 +1781,17 @@
               "contentType": "application/octet-stream"
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "bytes",
+                  "isOptional": false,
+                  "contentType": "application/octet-stream"
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -1516,6 +1802,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ApiResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -1612,6 +1913,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1633,6 +1935,32 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "map",
+                    "keyType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "valueType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -1696,6 +2024,49 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Order"
+                    }
+                  }
+                }
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/xml",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Order"
+                    }
+                  }
+                }
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/x-www-form-urlencoded",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Order"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -1706,6 +2077,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Order"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -1819,6 +2205,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1829,6 +2216,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Order"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -1939,6 +2341,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "store_deleteOrder_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "order deleted"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "store_deleteOrder_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "order deleted"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -1974,7 +2403,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -2036,6 +2470,55 @@
             },
             "description": "Created user object"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "User"
+                    }
+                  },
+                  "description": "Created user object"
+                },
+                "description": "Created user object"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/xml",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "User"
+                    }
+                  },
+                  "description": "Created user object"
+                },
+                "description": "Created user object"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/x-www-form-urlencoded",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "User"
+                    }
+                  },
+                  "description": "Created user object"
+                },
+                "description": "Created user object"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -2046,6 +2529,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "User"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -2135,6 +2633,26 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "list",
+                      "itemType": {
+                        "type": "id",
+                        "value": "User"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -2145,6 +2663,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "User"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -2249,6 +2782,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -2261,6 +2795,23 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -2324,6 +2875,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "user_logoutUser_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "user_logoutUser_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -2332,7 +2910,12 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -2387,6 +2970,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -2397,6 +2981,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "User"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -2526,6 +3125,81 @@
             },
             "description": "Update an existent user in the store"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "User"
+                    }
+                  },
+                  "description": "Update an existent user in the store"
+                },
+                "description": "Update an existent user in the store"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/xml",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "User"
+                    }
+                  },
+                  "description": "Update an existent user in the store"
+                },
+                "description": "Update an existent user in the store"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/x-www-form-urlencoded",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "User"
+                    }
+                  },
+                  "description": "Update an existent user in the store"
+                },
+                "description": "Update an existent user in the store"
+              }
+            ]
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "user_updateUser_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "user_updateUser_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -2566,7 +3240,12 @@
                 "type": "json",
                 "value": {}
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -2621,6 +3300,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "user_deleteUser_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "User deleted"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "user_deleteUser_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "User deleted"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -2656,7 +3362,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -2754,6 +3465,55 @@
             },
             "description": "Create a new pet in the store"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  },
+                  "description": "Create a new pet in the store"
+                },
+                "description": "Create a new pet in the store"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/xml",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  },
+                  "description": "Create a new pet in the store"
+                },
+                "description": "Create a new pet in the store"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/x-www-form-urlencoded",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  },
+                  "description": "Create a new pet in the store"
+                },
+                "description": "Create a new pet in the store"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -2764,6 +3524,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Pet"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -2903,6 +3678,55 @@
             },
             "description": "Update an existent pet in the store"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  },
+                  "description": "Update an existent pet in the store"
+                },
+                "description": "Update an existent pet in the store"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/xml",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  },
+                  "description": "Update an existent pet in the store"
+                },
+                "description": "Update an existent pet in the store"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/x-www-form-urlencoded",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  },
+                  "description": "Update an existent pet in the store"
+                },
+                "description": "Update an existent pet in the store"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -2913,6 +3737,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Pet"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -3061,6 +3900,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -3074,6 +3914,24 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -3192,6 +4050,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -3205,6 +4064,24 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -3325,6 +4202,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -3335,6 +4213,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Pet"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -3492,6 +4385,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -3502,6 +4396,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Pet"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -3634,6 +4543,33 @@
               }
             }
           ],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "pet_deletePet_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "Pet deleted"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "pet_deletePet_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Pet deleted"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -3657,7 +4593,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -3733,6 +4674,17 @@
               "contentType": "application/octet-stream"
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "bytes",
+                  "isOptional": false,
+                  "contentType": "application/octet-stream"
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -3743,6 +4695,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ApiResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -3843,6 +4810,55 @@
             },
             "description": "Create a new pet in the store"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  },
+                  "description": "Create a new pet in the store"
+                },
+                "description": "Create a new pet in the store"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/xml",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  },
+                  "description": "Create a new pet in the store"
+                },
+                "description": "Create a new pet in the store"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/x-www-form-urlencoded",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  },
+                  "description": "Create a new pet in the store"
+                },
+                "description": "Create a new pet in the store"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -3853,6 +4869,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Pet"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -3992,6 +5023,55 @@
             },
             "description": "Update an existent pet in the store"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  },
+                  "description": "Update an existent pet in the store"
+                },
+                "description": "Update an existent pet in the store"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/xml",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  },
+                  "description": "Update an existent pet in the store"
+                },
+                "description": "Update an existent pet in the store"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/x-www-form-urlencoded",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  },
+                  "description": "Update an existent pet in the store"
+                },
+                "description": "Update an existent pet in the store"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -4002,6 +5082,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Pet"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -4150,6 +5245,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4163,6 +5259,24 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -4281,6 +5395,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4294,6 +5409,24 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -4414,6 +5547,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4424,6 +5558,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Pet"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -4581,6 +5730,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4591,6 +5741,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Pet"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -4723,6 +5888,33 @@
               }
             }
           ],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "pet_deletePet_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "Pet deleted"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "pet_deletePet_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Pet deleted"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -4746,7 +5938,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -4822,6 +6019,17 @@
               "contentType": "application/octet-stream"
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "bytes",
+                  "isOptional": false,
+                  "contentType": "application/octet-stream"
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -4832,6 +6040,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ApiResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -4928,6 +6151,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4949,6 +6173,32 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "map",
+                    "keyType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "valueType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -5012,6 +6262,49 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Order"
+                    }
+                  }
+                }
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/xml",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Order"
+                    }
+                  }
+                }
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/x-www-form-urlencoded",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Order"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -5022,6 +6315,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Order"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -5135,6 +6443,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -5145,6 +6454,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Order"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -5255,6 +6579,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "store_deleteOrder_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "order deleted"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "store_deleteOrder_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "order deleted"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -5290,7 +6641,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -5352,6 +6708,55 @@
             },
             "description": "Created user object"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "User"
+                    }
+                  },
+                  "description": "Created user object"
+                },
+                "description": "Created user object"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/xml",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "User"
+                    }
+                  },
+                  "description": "Created user object"
+                },
+                "description": "Created user object"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/x-www-form-urlencoded",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "User"
+                    }
+                  },
+                  "description": "Created user object"
+                },
+                "description": "Created user object"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -5362,6 +6767,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "User"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -5451,6 +6871,26 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "list",
+                      "itemType": {
+                        "type": "id",
+                        "value": "User"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -5461,6 +6901,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "User"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -5565,6 +7020,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -5577,6 +7033,23 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -5640,6 +7113,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "user_logoutUser_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "user_logoutUser_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -5648,7 +7148,12 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -5703,6 +7208,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -5713,6 +7219,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "User"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -5842,6 +7363,81 @@
             },
             "description": "Update an existent user in the store"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "User"
+                    }
+                  },
+                  "description": "Update an existent user in the store"
+                },
+                "description": "Update an existent user in the store"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/xml",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "User"
+                    }
+                  },
+                  "description": "Update an existent user in the store"
+                },
+                "description": "Update an existent user in the store"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/x-www-form-urlencoded",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "User"
+                    }
+                  },
+                  "description": "Update an existent user in the store"
+                },
+                "description": "Update an existent user in the store"
+              }
+            ]
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "user_updateUser_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "user_updateUser_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -5882,7 +7478,12 @@
                 "type": "json",
                 "value": {}
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -5937,6 +7538,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "user_deleteUser_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "User deleted"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "user_deleteUser_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "User deleted"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -5972,7 +7600,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {

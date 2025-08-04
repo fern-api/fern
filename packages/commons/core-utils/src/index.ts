@@ -1,4 +1,5 @@
 export { addPrefixToString } from "./addPrefixToString";
+export { assertDefined } from "./assertDefined";
 export { assertNever, assertNeverNoThrow } from "./assertNever";
 export { assertVoidNoThrow } from "./assertVoidNoThrow";
 export { delay } from "./delay/delay";

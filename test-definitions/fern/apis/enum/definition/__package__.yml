@@ -36,6 +36,13 @@ types:
     examples:
       - name: Red
         value: "red"
+  
+  EnumWithSpecialCharacters: 
+    enum: 
+      - value: "\\$bla"
+        name: bla
+      - value: "\\$yo"
+        name: yo
 
   EnumWithCustom:
     enum:
@@ -81,7 +88,7 @@ types:
           Hello\vWorld
         name: K
       - value: |-
-          Hello\0World
+          Hello\x00World
         name: L
       - value: |-
           Hello\u0007World
@@ -105,7 +112,7 @@ types:
           Line 1\n"Quote"\tTab\\Backslash\r\nLine 2\0Null
         name: S
       - value: |-
-          \n\r\t\0\u0008\f\v\u0007
+          \n\r\t\x00\u0008\f\v\u0007
         name: T
       - value: |-
           Hello 世界

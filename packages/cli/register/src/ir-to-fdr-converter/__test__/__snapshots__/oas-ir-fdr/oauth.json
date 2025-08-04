@@ -190,6 +190,89 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "The type of grant to request",
+                        "key": "grant_type",
+                        "valueType": {
+                          "type": "id",
+                          "value": "OauthTokenPostRequestBodyContentApplicationJsonSchemaGrantType"
+                        }
+                      },
+                      {
+                        "description": "Required for password grant type",
+                        "key": "username",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Required for password grant type",
+                        "key": "password",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Required for refresh_token grant type",
+                        "key": "refresh_token",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "The client identifier",
+                        "key": "client_id",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "description": "The client secret",
+                        "key": "client_secret",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -200,6 +283,21 @@
             },
             "statusCode": 200,
             "description": "Successful token response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "auth_get-token_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful token response"
+              }
+            ]
           },
           "errorsV2": [
             {

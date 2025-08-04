@@ -1,0 +1,9 @@
+groups:
+  java-sdk:
+    generators:
+      - name: fernapi/fern-java-sdk
+        version: local
+        output:
+          location: local-file-system
+          path: ../../../../../../seed/java-sdk/simple-api
+          # Downloads SDK locally without full project scaffolding

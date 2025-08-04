@@ -7,6 +7,7 @@ import logging
 import typing
 
 import fastapi
+import starlette
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
@@ -14,6 +15,7 @@ from ...types.types.big_entity import BigEntity
 from ...types.types.metadata import Metadata
 from ...types.types.movie import Movie
 from ...types.types.movie_id import MovieId
+from ...types.types.refresh_token_request import RefreshTokenRequest
 from ...types.types.response import Response
 
 
@@ -44,6 +46,9 @@ class AbstractServiceService(AbstractFernService):
     @abc.abstractmethod
     def create_big_entity(self, *, body: BigEntity) -> Response: ...
 
+    @abc.abstractmethod
+    def refresh_token(self, *, body: typing.Optional[RefreshTokenRequest] = None) -> None: ...
+
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
@@ -55,6 +60,7 @@ class AbstractServiceService(AbstractFernService):
         cls.__init_create_movie(router=router)
         cls.__init_get_metadata(router=router)
         cls.__init_create_big_entity(router=router)
+        cls.__init_refresh_token(router=router)
 
     @classmethod
     def __init_get_movie(cls, router: fastapi.APIRouter) -> None:
@@ -202,4 +208,41 @@ class AbstractServiceService(AbstractFernService):
             response_model=Response,
             description=AbstractServiceService.create_big_entity.__doc__,
             **get_route_args(cls.create_big_entity, default_tag="service"),
+        )(wrapper)
+
+    @classmethod
+    def __init_refresh_token(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.refresh_token)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "body":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.refresh_token, "__signature__", endpoint_function.replace(parameters=new_parameters))
+
+        @functools.wraps(cls.refresh_token)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
+            try:
+                return cls.refresh_token(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'refresh_token' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.refresh_token.__globals__)
+
+        router.post(
+            path="/refresh-token",
+            response_model=None,
+            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            description=AbstractServiceService.refresh_token.__doc__,
+            **get_route_args(cls.refresh_token, default_tag="service"),
         )(wrapper)

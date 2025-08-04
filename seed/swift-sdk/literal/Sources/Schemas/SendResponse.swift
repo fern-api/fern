@@ -1,10 +1,15 @@
-public struct SendResponse: Codable, Hashable {
+public struct SendResponse: Codable, Hashable, Sendable {
     public let message: String
     public let status: Int
-    public let success: Any
+    public let success: JSONValue
     public let additionalProperties: [String: JSONValue]
 
-    public init(message: String, status: Int, success: Any, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        message: String,
+        status: Int,
+        success: JSONValue,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.message = message
         self.status = status
         self.success = success
@@ -15,12 +20,12 @@ public struct SendResponse: Codable, Hashable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.message = try container.decode(String.self, forKey: .message)
         self.status = try container.decode(Int.self, forKey: .status)
-        self.success = try container.decode(Any.self, forKey: .success)
+        self.success = try container.decode(JSONValue.self, forKey: .success)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.message, forKey: .message)
         try container.encode(self.status, forKey: .status)

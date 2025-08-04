@@ -1,5 +1,4 @@
-import { ExternalDependencies } from "@fern-typescript/commons";
-import { CoreUtilities } from "@fern-typescript/commons/src/core-utilities/CoreUtilities";
+import { ExternalDependencies, CoreUtilities } from "@fern-typescript/commons";
 import { SourceFile } from "ts-morph";
 
 import { Logger } from "@fern-api/logger";

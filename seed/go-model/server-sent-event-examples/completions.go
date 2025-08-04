@@ -12,7 +12,8 @@ type StreamedCompletion struct {
 	Delta  string `json:"delta" url:"delta"`
 	Tokens *int   `json:"tokens,omitempty" url:"tokens,omitempty"`
 
-	extraProperties map[string]interface{}
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
 func (s *StreamedCompletion) GetDelta() string {
@@ -29,11 +30,16 @@ func (s *StreamedCompletion) GetTokens() *int {
 	return s.Tokens
 }
 
-func (s *StreamedCompletion) GetExtraProperties() map[string]interface{} {
+func (s *StreamedCompletion) GetExtraProperties() map[string]any {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
-func (s *StreamedCompletion) UnmarshalJSON(data []byte) error {
+func (s *StreamedCompletion) UnmarshalJSON(
+	data []byte,
+) error {
 	type unmarshaler StreamedCompletion
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
@@ -45,10 +51,16 @@ func (s *StreamedCompletion) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (s *StreamedCompletion) String() string {
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}

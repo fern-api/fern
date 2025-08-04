@@ -1,4 +1,4 @@
-public enum SingleFilterSearchRequestOperator: String, Codable, Hashable, Sendable, CaseIterable {
+public enum SingleFilterSearchRequestOperator: String, Codable, Hashable, CaseIterable, Sendable {
     case equals = "="
     case notEquals = "!="
     case `in` = "IN"

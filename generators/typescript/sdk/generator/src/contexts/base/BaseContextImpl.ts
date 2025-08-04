@@ -4,9 +4,9 @@ import {
     ExportsManager,
     ExternalDependencies,
     ImportsManager,
-    createExternalDependencies
+    createExternalDependencies,
+    CoreUtilities
 } from "@fern-typescript/commons";
-import { CoreUtilities } from "@fern-typescript/commons/src/core-utilities/CoreUtilities";
 import { BaseContext, JsonContext, TypeContext, TypeSchemaContext } from "@fern-typescript/contexts";
 import { SourceFile } from "ts-morph";
 

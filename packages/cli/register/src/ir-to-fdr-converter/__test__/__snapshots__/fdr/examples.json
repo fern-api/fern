@@ -1156,6 +1156,24 @@
           }
         ]
       }
+    },
+    "type_types:RefreshTokenRequest": {
+      "name": "RefreshTokenRequest",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "ttl",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          }
+        ]
+      }
     }
   },
   "subpackages": {
@@ -1260,6 +1278,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1269,6 +1288,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -1368,6 +1388,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1377,6 +1398,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [
             {
               "type": {
@@ -1486,6 +1508,8 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -1542,6 +1566,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1553,6 +1578,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -1627,6 +1653,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1636,6 +1663,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -1740,6 +1768,7 @@
               }
             }
           },
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1749,6 +1778,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -1878,6 +1908,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1887,6 +1918,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -1974,6 +2006,7 @@
               }
             }
           },
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1983,6 +2016,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -2036,6 +2070,85 @@
               "codeSamples": []
             }
           ]
+        },
+        {
+          "auth": false,
+          "method": "POST",
+          "environments": [
+            {
+              "id": "Production",
+              "baseUrl": "https://production.com/api"
+            },
+            {
+              "id": "Staging",
+              "baseUrl": "https://staging.com/api"
+            }
+          ],
+          "id": "refreshToken",
+          "originalEndpointId": "endpoint_service.refreshToken",
+          "name": "Refresh Token",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/"
+              },
+              {
+                "type": "literal",
+                "value": "/refresh-token"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "id",
+                    "value": "type_types:RefreshTokenRequest"
+                  }
+                }
+              }
+            }
+          },
+          "requestsV2": {},
+          "responsesV2": {},
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/refresh-token",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBodyV3": {
+                "type": "json"
+              },
+              "responseStatusCode": 204
+            },
+            {
+              "path": "/refresh-token",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "ttl": 420
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "ttl": 420
+                }
+              },
+              "responseStatusCode": 204
+            }
+          ]
         }
       ],
       "webhooks": [],
@@ -2073,7 +2186,8 @@
         "type_types:Test",
         "type_types:Entity",
         "type_types:BigEntity",
-        "type_types:CronJob"
+        "type_types:CronJob",
+        "type_types:RefreshTokenRequest"
       ],
       "subpackages": []
     }
@@ -2126,6 +2240,7 @@
             }
           }
         },
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -2137,6 +2252,7 @@
             }
           }
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -2202,6 +2318,7 @@
             }
           }
         },
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -2211,6 +2328,7 @@
             }
           }
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {

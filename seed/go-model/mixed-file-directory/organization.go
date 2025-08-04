@@ -8,51 +8,13 @@ import (
 	internal "github.com/mixed-file-directory/fern/internal"
 )
 
-type CreateOrganizationRequest struct {
-	Name string `json:"name" url:"name"`
-
-	extraProperties map[string]interface{}
-}
-
-func (c *CreateOrganizationRequest) GetName() string {
-	if c == nil {
-		return ""
-	}
-	return c.Name
-}
-
-func (c *CreateOrganizationRequest) GetExtraProperties() map[string]interface{} {
-	return c.extraProperties
-}
-
-func (c *CreateOrganizationRequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateOrganizationRequest
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*c = CreateOrganizationRequest(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *c)
-	if err != nil {
-		return err
-	}
-	c.extraProperties = extraProperties
-	return nil
-}
-
-func (c *CreateOrganizationRequest) String() string {
-	if value, err := internal.StringifyJSON(c); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", c)
-}
-
 type Organization struct {
 	Id    Id      `json:"id" url:"id"`
 	Name  string  `json:"name" url:"name"`
 	Users []*User `json:"users" url:"users"`
 
-	extraProperties map[string]interface{}
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
 func (o *Organization) GetId() Id {
@@ -76,11 +38,16 @@ func (o *Organization) GetUsers() []*User {
 	return o.Users
 }
 
-func (o *Organization) GetExtraProperties() map[string]interface{} {
+func (o *Organization) GetExtraProperties() map[string]any {
+	if o == nil {
+		return nil
+	}
 	return o.extraProperties
 }
 
-func (o *Organization) UnmarshalJSON(data []byte) error {
+func (o *Organization) UnmarshalJSON(
+	data []byte,
+) error {
 	type unmarshaler Organization
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
@@ -92,12 +59,69 @@ func (o *Organization) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (o *Organization) String() string {
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(o); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", o)
+}
+
+type CreateOrganizationRequest struct {
+	Name string `json:"name" url:"name"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateOrganizationRequest) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateOrganizationRequest) GetExtraProperties() map[string]any {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateOrganizationRequest) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler CreateOrganizationRequest
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateOrganizationRequest(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateOrganizationRequest) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
 }

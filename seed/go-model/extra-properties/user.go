@@ -9,9 +9,10 @@ import (
 )
 
 type User struct {
-	Name string `json:"name" url:"name"`
+	Name            string         `json:"name" url:"name"`
+	ExtraProperties map[string]any `json:"-" url:"-"`
 
-	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+	rawJSON json.RawMessage
 }
 
 func (u *User) GetName() string {
@@ -21,11 +22,16 @@ func (u *User) GetName() string {
 	return u.Name
 }
 
-func (u *User) GetExtraProperties() map[string]interface{} {
+func (u *User) GetExtraProperties() map[string]any {
+	if u == nil {
+		return nil
+	}
 	return u.ExtraProperties
 }
 
-func (u *User) UnmarshalJSON(data []byte) error {
+func (u *User) UnmarshalJSON(
+	data []byte,
+) error {
 	type embed User
 	var unmarshaler = struct {
 		embed
@@ -41,6 +47,7 @@ func (u *User) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.ExtraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -55,6 +62,11 @@ func (u *User) MarshalJSON() ([]byte, error) {
 }
 
 func (u *User) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}

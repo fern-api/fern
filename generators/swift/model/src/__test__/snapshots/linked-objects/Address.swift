@@ -1,11 +1,17 @@
-public struct Address: Codable, Hashable {
+public struct Address: Codable, Hashable, Sendable {
     public let street: String
     public let city: String
     public let state: String
     public let zipCode: Int
     public let additionalProperties: [String: JSONValue]
 
-    public init(street: String, city: String, state: String, zipCode: Int, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        street: String,
+        city: String,
+        state: String,
+        zipCode: Int,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.street = street
         self.city = city
         self.state = state
@@ -23,7 +29,7 @@ public struct Address: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.street, forKey: .street)
         try container.encode(self.city, forKey: .city)

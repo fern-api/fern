@@ -1,9 +1,10 @@
-import { cp, writeFile } from "fs/promises";
+import { cp, readFile, readdir, unlink, writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 
 import { AbsoluteFilePath, RelativeFilePath, join, relative } from "@fern-api/fs-utils";
-import { createLoggingExecutable } from "@fern-api/logging-execa";
+import { createLoggingExecutable, runExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
+import { getProtobufYamlV1, getProtobufYamlV2 } from "./utils";
 
 const PROTOBUF_GENERATOR_CONFIG_FILENAME = "buf.gen.yaml";
 const PROTOBUF_GENERATOR_OUTPUT_PATH = "output";
@@ -20,18 +21,24 @@ export class ProtobufOpenAPIGenerator {
         absoluteFilepathToProtobufRoot,
         absoluteFilepathToProtobufTarget,
         relativeFilepathToProtobufRoot,
-        local
+        local,
+        deps,
+        existingBufLockContents
     }: {
         absoluteFilepathToProtobufRoot: AbsoluteFilePath;
         absoluteFilepathToProtobufTarget: AbsoluteFilePath;
         relativeFilepathToProtobufRoot: RelativeFilePath;
         local: boolean;
-    }): Promise<AbsoluteFilePath> {
+        deps: string[];
+        existingBufLockContents?: string;
+    }): Promise<{ absoluteFilepath: AbsoluteFilePath; bufLockContents: string | undefined }> {
         if (local) {
             return this.generateLocal({
                 absoluteFilepathToProtobufRoot,
                 absoluteFilepathToProtobufTarget,
-                relativeFilepathToProtobufRoot
+                relativeFilepathToProtobufRoot,
+                deps,
+                existingBufLockContents
             });
         }
         return this.generateRemote();
@@ -40,12 +47,16 @@ export class ProtobufOpenAPIGenerator {
     private async generateLocal({
         absoluteFilepathToProtobufRoot,
         absoluteFilepathToProtobufTarget,
-        relativeFilepathToProtobufRoot
+        relativeFilepathToProtobufRoot,
+        deps,
+        existingBufLockContents
     }: {
         absoluteFilepathToProtobufRoot: AbsoluteFilePath;
         absoluteFilepathToProtobufTarget: AbsoluteFilePath;
         relativeFilepathToProtobufRoot: RelativeFilePath;
-    }): Promise<AbsoluteFilePath> {
+        deps: string[];
+        existingBufLockContents?: string;
+    }): Promise<{ absoluteFilepath: AbsoluteFilePath; bufLockContents: string | undefined }> {
         const protobufGeneratorConfigPath = await this.setupProtobufGeneratorConfig({
             absoluteFilepathToProtobufRoot,
             relativeFilepathToProtobufRoot
@@ -53,7 +64,9 @@ export class ProtobufOpenAPIGenerator {
         const protoTargetRelativeFilePath = relative(absoluteFilepathToProtobufRoot, absoluteFilepathToProtobufTarget);
         return this.doGenerateLocal({
             cwd: protobufGeneratorConfigPath,
-            target: protoTargetRelativeFilePath
+            target: protoTargetRelativeFilePath,
+            deps,
+            existingBufLockContents
         });
     }
 
@@ -75,14 +88,21 @@ export class ProtobufOpenAPIGenerator {
 
     private async doGenerateLocal({
         cwd,
-        target
+        target,
+        deps,
+        existingBufLockContents
     }: {
         cwd: AbsoluteFilePath;
         target: RelativeFilePath;
-    }): Promise<AbsoluteFilePath> {
+        deps: string[];
+        existingBufLockContents?: string;
+    }): Promise<{ absoluteFilepath: AbsoluteFilePath; bufLockContents: string | undefined }> {
+        let bufLockContents: string | undefined = existingBufLockContents;
+
         const which = createLoggingExecutable("which", {
             cwd,
-            logger: this.context.logger
+            logger: undefined,
+            doNotPipeOutput: true
         });
 
         try {
@@ -101,16 +121,62 @@ export class ProtobufOpenAPIGenerator {
             );
         }
 
+        const bufYamlPath = join(cwd, RelativeFilePath.of("buf.yaml"));
+        const bufLockPath = join(cwd, RelativeFilePath.of("buf.lock"));
+        let cleanupBufLock = false;
+
+        const configContent = getProtobufYamlV1(deps);
+
         const buf = createLoggingExecutable("buf", {
             cwd,
-            logger: this.context.logger
+            logger: this.context.logger,
+            stdout: "ignore",
+            stderr: "pipe"
         });
-        await buf(["config", "init"]);
-        await buf(["generate", target]);
-        return join(cwd, RelativeFilePath.of(PROTOBUF_GENERATOR_OUTPUT_FILEPATH));
+
+        try {
+            await writeFile(bufYamlPath, configContent);
+
+            if (existingBufLockContents != null) {
+                await writeFile(bufLockPath, existingBufLockContents);
+                cleanupBufLock = true;
+            } else if (deps.length > 0) {
+                const bufDepUpdateResult = await buf(["dep", "update"]);
+                try {
+                    bufLockContents = await readFile(bufLockPath, "utf-8");
+                } catch (err) {
+                    bufLockContents = undefined;
+                }
+                if (bufDepUpdateResult.exitCode !== 0) {
+                    this.context.failAndThrow(bufDepUpdateResult.stderr);
+                }
+            }
+
+            const bufGenerateResult = await buf(["generate", target.toString()]);
+            if (bufGenerateResult.exitCode !== 0) {
+                this.context.failAndThrow(bufGenerateResult.stderr);
+            }
+            if (cleanupBufLock) {
+                await unlink(bufLockPath);
+            }
+            await unlink(bufYamlPath);
+        } catch (error) {
+            if (cleanupBufLock) {
+                await unlink(bufLockPath);
+            }
+            await unlink(bufYamlPath);
+            throw error;
+        }
+        return {
+            absoluteFilepath: join(cwd, RelativeFilePath.of(PROTOBUF_GENERATOR_OUTPUT_FILEPATH)),
+            bufLockContents
+        };
     }
 
-    private async generateRemote(): Promise<AbsoluteFilePath> {
+    private async generateRemote(): Promise<{
+        absoluteFilepath: AbsoluteFilePath;
+        bufLockContents: string | undefined;
+    }> {
         this.context.failAndThrow("Remote Protobuf generation is unimplemented.");
     }
 }

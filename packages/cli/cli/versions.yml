@@ -1,6 +1,201 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix in endpoint example gen: literal type headers should use the literal value for example
+      type: feat
+  irVersion: 58
+  createdAt: "2025-08-04"
+  version: 0.65.45
+
+- changelogEntry:
+    - summary: |
+        Escape $ signs when converting from OpenAPI -> Fern Definition (for enums), because the Fern Definition treats 
+        $ sign examples as references. 
+      type: feat
+  irVersion: 58
+  createdAt: "2025-08-01"
+  version: 0.65.44
+
+- changelogEntry:
+    - summary: |
+        Cache buf.lock contents to prevent BSR rate limiting during `buf dep update`.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-08-01"
+  version: 0.65.43
+  
+- changelogEntry:
+    - summary: |
+        Allows SDK generation to complete even if an example doesn't correctly generate as part of the IR. 
+      type: fix
+  irVersion: 58
+  createdAt: "2025-08-01"
+  version: 0.65.42
+
+- changelogEntry:
+    - summary: |
+        Add support for proxying IR generation from proto through protoc-gen-openapi.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-31"
+  version: 0.65.41
+
+- changelogEntry:
+    - summary: |
+        Add lfs-override param to override output mode.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-31"
+  version: 0.65.40
+
+- changelogEntry:
+    - summary: |
+        Fix snippet generation for local file system output mode. Snippets configured with `snippets.path` 
+        in generators.yml were not being generated when using `--local` flag due to missing Docker volume 
+        mounting for the downloadFiles output mode.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-31"
+  version: 0.65.39
+
+- changelogEntry:
+    - summary: |
+        IR parser: Extended the logic for flattening properties in oneOf schemas to anyOf schemas as well
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-30"
+  version: 0.65.38
+
+- changelogEntry:
+    - summary: |
+        Add support for snippet.json output as part of self hosted SDK generation. The following config in 
+        `generators.yml` will generate a `snippet.json` file in the relevant director: 
+        ```
+        groups: 
+          ts-sdk: 
+            - name: fernapi/fern-typescript-sdk
+              snippets: 
+                path: ../snippets.json
+        ```
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-30"
+  version: 0.65.37
+
+- changelogEntry:
+    - summary: |
+        Add support for multiple content types on requestBody
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-29"
+  version: 0.65.37-rc0
+
+- changelogEntry:
+    - summary: |
+        Add support for propertyAccess on inlined request body properties in IR.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-29"
+  version: 0.65.36
+
+- changelogEntry:
+    - summary: |
+        convertIrToFdrApi now passes the example name only when multiple examples with the same response status code are present.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-28"
+  version: 0.65.35
+
+- changelogEntry:
+    - summary: |
+        Patch support for RBAC roles across products.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-27"
+  version: 0.65.34
+
+- changelogEntry:
+    - summary: |
+        Support for `HEAD` operations in OpenAPI spec.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-26"
+  version: 0.65.33
+
+- changelogEntry:
+    - summary: |
+        Fallback to `https` if no schemes are specified in a Swagger 2.0 spec.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-25"
+  version: 0.65.32
+
+- changelogEntry:
+    - summary: |
+        Fix openapi importer for query parameters that are inline union types.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-25"
+  version: 0.65.31
+
+- changelogEntry:
+    - summary: |
+        Support example generation for multiple examples.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-24"
+  version: 0.65.30
+
+- changelogEntry:
+    - summary: |
+        Support multiple 2XX responses on http endpoints part 2.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-23"
+  version: 0.65.29
+        
+- changelogEntry:
+    - summary: |
+        endpoint example creation ignores global auth headers 
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-23"
+  version: 0.65.28
+
+- changelogEntry:
+    - summary: |
+        Support multiple 2XX responses on http endpoints.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-23"
+  version: 0.65.27
+
+- changelogEntry:
+    - summary: |
+        Support RBAC roles across products.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-22"
+  version: 0.65.26
+
+- changelogEntry:
+    - summary: |
+         IR gen fix: added default response example for 2xx status codes.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-22"
+  version: 0.65.25
+
+- changelogEntry:
+    - summary: |
+         improved grabbing of read only property of allOf schemas
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-22"
+  version: 0.65.24
+
+- changelogEntry:
+    - summary: |
         `fern docs dev` server connection should no longer require frequent refresh.
       type: fix
   irVersion: 58
@@ -772,14 +967,7 @@
 
 - changelogEntry:
     - summary: | 
-        The `<Code>` component now supports more flexible prop ordering and additional properties. You can now specify `maxLines` and `focus` props in any order relative to the `src` prop. For example:
-
-        ```mdx
-        <Code src="../snippets/example.ts" maxLines={20} focus={1-18} />
-        <Code maxLines={20} focus={1-18} src="../snippets/example.ts" />
-        ```
-
-        Both formats will work the same way, preserving the specified properties in the generated markdown. The component will automatically detect and include any additional props in the code block's metastring.
+        The `<Code>` component now supports more flexible prop ordering and additional properties. You can now specify `maxLines` and `focus` props in any order relative to the `src` prop. Regardless of order, formats will work the same way, preserving the specified properties in the generated markdown. The component will automatically detect and include any additional props in the code block's metastring.
       type: fix
   irVersion: 58
   createdAt: "2025-05-28"
@@ -1093,7 +1281,7 @@
 
 - changelogEntry:
     - summary: |
-        Add support for preserving `maxLines` and `focus` attributes when using `<Code src="..." />` components in docs. 
+        Add support for preserving `maxLines` and `focus` attributes when using `<Code>` components in docs. 
         These attributes are now properly carried over to the generated code blocks, allowing you to control 
         the display of referenced code snippets with features like line limits and syntax highlighting focus.
       type: fix
@@ -1954,7 +2142,7 @@
 
 - changelogEntry:
     - summary: |
-        Refactor out schema converter nodes into the `v2-importer-commons` package.
+        Refactor out schema converter nodes into the `v3-importer-commons` package.
       type: fix
   irVersion: 57
   version: 0.56.33
@@ -3660,7 +3848,7 @@
          specs:
            - openapi: ./path/to/openapi.yml
              settings:
-               object-query-paramaters: true
+               object-query-parameters: true
         ```
       type: fix
   irVersion: 53

@@ -1,9 +1,13 @@
-public struct PlaylistCreateRequest: Codable, Hashable {
+public struct PlaylistCreateRequest: Codable, Hashable, Sendable {
     public let name: String
     public let problems: [ProblemId]
     public let additionalProperties: [String: JSONValue]
 
-    public init(name: String, problems: [ProblemId], additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        name: String,
+        problems: [ProblemId],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.name = name
         self.problems = problems
         self.additionalProperties = additionalProperties
@@ -17,7 +21,7 @@ public struct PlaylistCreateRequest: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.name, forKey: .name)
         try container.encode(self.problems, forKey: .problems)

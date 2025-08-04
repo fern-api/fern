@@ -158,6 +158,23 @@
             }
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "testEndpoint_Request"
+                  }
+                }
+              }
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -168,6 +185,21 @@
           },
           "statusCode": 200,
           "description": "Success"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "testEndpoint_Response_200"
+                }
+              },
+              "statusCode": 200,
+              "description": "Success"
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [

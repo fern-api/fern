@@ -4,9 +4,9 @@ import {
     ExportsManager,
     ExternalDependencies,
     ImportsManager,
-    createExternalDependencies
+    createExternalDependencies,
+    CoreUtilities
 } from "@fern-typescript/commons";
-import { CoreUtilities } from "@fern-typescript/commons/src/core-utilities/CoreUtilities";
 import {
     ExpressContext,
     ExpressErrorSchemaContext,

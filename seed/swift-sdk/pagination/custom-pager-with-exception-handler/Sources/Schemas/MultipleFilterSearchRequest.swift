@@ -1,9 +1,13 @@
-public struct MultipleFilterSearchRequest: Codable, Hashable {
+public struct MultipleFilterSearchRequest: Codable, Hashable, Sendable {
     public let `operator`: MultipleFilterSearchRequestOperator?
     public let value: MultipleFilterSearchRequestValue?
     public let additionalProperties: [String: JSONValue]
 
-    public init(operator: MultipleFilterSearchRequestOperator? = nil, value: MultipleFilterSearchRequestValue? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        operator: MultipleFilterSearchRequestOperator? = nil,
+        value: MultipleFilterSearchRequestValue? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.operator = `operator`
         self.value = value
         self.additionalProperties = additionalProperties
@@ -17,7 +21,7 @@ public struct MultipleFilterSearchRequest: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encodeIfPresent(self.operator, forKey: .operator)
         try container.encodeIfPresent(self.value, forKey: .value)

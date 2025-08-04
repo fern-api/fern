@@ -11,11 +11,11 @@ import (
 type Operand string
 
 const (
-	OperandGreaterThan Operand = ">"
-	OperandEqualTo     Operand = "="
+	OperandGreaterThan = ">"
+	OperandEqualTo     = "="
 	// The name and value should be similar
 	// are similar for less than.
-	OperandLessThan Operand = "less_than"
+	OperandLessThan = "less_than"
 )
 
 func NewOperandFromString(s string) (Operand, error) {

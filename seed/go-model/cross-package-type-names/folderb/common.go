@@ -12,7 +12,8 @@ import (
 type Foo struct {
 	Foo *folderc.Foo `json:"foo,omitempty" url:"foo,omitempty"`
 
-	extraProperties map[string]interface{}
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
 func (f *Foo) GetFoo() *folderc.Foo {
@@ -22,11 +23,16 @@ func (f *Foo) GetFoo() *folderc.Foo {
 	return f.Foo
 }
 
-func (f *Foo) GetExtraProperties() map[string]interface{} {
+func (f *Foo) GetExtraProperties() map[string]any {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
-func (f *Foo) UnmarshalJSON(data []byte) error {
+func (f *Foo) UnmarshalJSON(
+	data []byte,
+) error {
 	type unmarshaler Foo
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
@@ -38,10 +44,16 @@ func (f *Foo) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (f *Foo) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(f); err == nil {
 		return value
 	}

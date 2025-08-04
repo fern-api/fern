@@ -3,27 +3,37 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "lib",
-    "rootDir": "src"
+    "rootDir": "src",
+    "types": ["vitest/globals"]
   },
-  "include": [
-    "./src/**/*",
-    "./src/*.json"
-  ],
+  "include": ["./src/**/*", "./src/*.json"],
   "references": [
     {
-      "path": "../../../commons/core-utils"
+      "path": "../../../commons/casings-generator"
     },
     {
-      "path": "../../../commons/fs-utils"
+      "path": "../../api-importers/v3-importer-commons"
     },
     {
-      "path": "../../../commons/logging-execa"
+      "path": "../../api-importers/openrpc-to-ir"
     },
     {
-      "path": "../../../core"
+      "path": "../../api-importers/asyncapi-to-ir"
     },
     {
-      "path": "../../api-importers/conjure/conjure-to-fern"
+      "path": "../../../commons/ir-utils"
+    },
+    {
+      "path": "../../../ir-sdk"
+    },
+    {
+      "path": "../../api-importers/openapi-to-ir"
+    },
+    {
+      "path": "../../task-context"
+    },
+    {
+      "path": "../../semver-utils"
     },
     {
       "path": "../../api-importers/openapi/openapi-ir-parser"
@@ -32,46 +42,37 @@
       "path": "../../api-importers/openapi/openapi-ir"
     },
     {
-      "path": "../../configuration"
-    },
-    {
-      "path": "../../configuration-loader"
-    },
-    {
-      "path": "../../cli-logger"
+      "path": "../../../commons/logging-execa"
     },
     {
       "path": "../../logger"
     },
     {
-      "path": "../../semver-utils"
-    },
-    {
-      "path": "../../task-context"
+      "path": "../../../commons/fs-utils"
     },
     {
       "path": "../../fern-definition/schema"
     },
     {
+      "path": "../../../commons/core-utils"
+    },
+    {
+      "path": "../../../core"
+    },
+    {
+      "path": "../../api-importers/conjure/conjure-to-fern"
+    },
+    {
+      "path": "../../configuration-loader"
+    },
+    {
+      "path": "../../configuration"
+    },
+    {
+      "path": "../../cli-logger"
+    },
+    {
       "path": "../commons"
-    },
-    {
-      "path": "../../api-importers/openapi-to-ir"
-    },
-    {
-      "path": "../../api-importers/asyncapi-to-ir"
-    },
-    {
-      "path": "../../api-importers/v2-importer-commons"
-    },
-    {
-      "path": "../../../ir-sdk"
-    },
-    {
-      "path": "../../../commons/ir-utils"
-    },
-    {
-      "path": "../../api-importers/openrpc-to-ir"
-    },
+    }
   ]
 }

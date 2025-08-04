@@ -26,11 +26,8 @@ public partial class SeedErrorPropertyClient
             }
         }
         _client = new RawClient(clientOptions);
-        Errors = new ErrorsClient(_client);
         PropertyBasedError = new PropertyBasedErrorClient(_client);
     }
-
-    public ErrorsClient Errors { get; }
 
     public PropertyBasedErrorClient PropertyBasedError { get; }
 }

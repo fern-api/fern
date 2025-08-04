@@ -21,7 +21,7 @@ import {
     TypeId
 } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
-import { AbstractConverter, Converters, ServersConverter } from "@fern-api/v2-importer-commons";
+import { AbstractConverter, Converters, ServersConverter } from "@fern-api/v3-importer-commons";
 
 import { OpenRPCConverterContext3_1 } from "../OpenRPCConverterContext3_1";
 
@@ -111,7 +111,8 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                         wireValue: resolvedParam.name
                     }),
                     valueType: schema.type,
-                    v2Examples: schema.schema?.typeDeclaration.v2Examples
+                    v2Examples: schema.schema?.typeDeclaration.v2Examples,
+                    propertyAccess: undefined
                 });
                 inlinedTypes = {
                     ...schema.inlinedTypes,
@@ -188,11 +189,13 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                           v2Examples: undefined
                       })
                     : undefined,
+            v2RequestBodies: undefined,
             sdkRequest: undefined,
             response:
                 jsonResponseBody != null
                     ? { body: HttpResponseBody.json(JsonResponse.response(jsonResponseBody)), statusCode: undefined }
                     : undefined,
+            v2Responses: undefined,
             errors: [],
             idempotent: false,
             pagination: undefined,
@@ -310,6 +313,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
 
                 // Create the example with request and response
                 examples[exampleName] = {
+                    displayName: undefined,
                     request: {
                         docs: undefined,
                         endpoint: {

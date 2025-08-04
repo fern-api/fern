@@ -1,15 +1,25 @@
-public struct User: Codable, Hashable {
+public struct User: Codable, Hashable, Sendable {
     public let name: String
     public let id: UserId
-    public let tags: Any
-    public let metadata: Any?
+    public let tags: JSONValue
+    public let metadata: JSONValue?
     public let email: Email
     public let favoriteNumber: WeirdNumber
-    public let numbers: Any?
-    public let strings: Any?
+    public let numbers: JSONValue?
+    public let strings: JSONValue?
     public let additionalProperties: [String: JSONValue]
 
-    public init(name: String, id: UserId, tags: Any, metadata: Any? = nil, email: Email, favoriteNumber: WeirdNumber, numbers: Any? = nil, strings: Any? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        name: String,
+        id: UserId,
+        tags: JSONValue,
+        metadata: JSONValue? = nil,
+        email: Email,
+        favoriteNumber: WeirdNumber,
+        numbers: JSONValue? = nil,
+        strings: JSONValue? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.name = name
         self.id = id
         self.tags = tags
@@ -25,17 +35,17 @@ public struct User: Codable, Hashable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.name = try container.decode(String.self, forKey: .name)
         self.id = try container.decode(UserId.self, forKey: .id)
-        self.tags = try container.decode(Any.self, forKey: .tags)
-        self.metadata = try container.decodeIfPresent(Any.self, forKey: .metadata)
+        self.tags = try container.decode(JSONValue.self, forKey: .tags)
+        self.metadata = try container.decodeIfPresent(JSONValue.self, forKey: .metadata)
         self.email = try container.decode(Email.self, forKey: .email)
         self.favoriteNumber = try container.decode(WeirdNumber.self, forKey: .favoriteNumber)
-        self.numbers = try container.decodeIfPresent(Any.self, forKey: .numbers)
-        self.strings = try container.decodeIfPresent(Any.self, forKey: .strings)
+        self.numbers = try container.decodeIfPresent(JSONValue.self, forKey: .numbers)
+        self.strings = try container.decodeIfPresent(JSONValue.self, forKey: .strings)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.name, forKey: .name)
         try container.encode(self.id, forKey: .id)

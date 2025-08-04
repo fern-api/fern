@@ -1507,6 +1507,15 @@
         ]
       }
     },
+    "AppV1_DeleteApp_Response_204": {
+      "description": "Empty response body",
+      "name": "AppV1_DeleteApp_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "AuthV1_LoginAnonymous_Response_200": {
       "name": "AuthV1_LoginAnonymous_Response_200",
       "shape": {
@@ -1559,6 +1568,15 @@
             }
           }
         ]
+      }
+    },
+    "BuildV1_DeleteBuild_Response_204": {
+      "description": "Empty response body",
+      "name": "BuildV1_DeleteBuild_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "LobbyV2AppIdCreatePrivatePostRequestBodyContentApplicationJsonSchemaInitialConfig": {
@@ -1617,6 +1635,24 @@
         "extends": [],
         "properties": []
       }
+    },
+    "RoomV1_DestroyRoom_Response_204": {
+      "description": "Empty response body",
+      "name": "RoomV1_DestroyRoom_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "RoomV1_SuspendRoom_Response_204": {
+      "description": "Empty response body",
+      "name": "RoomV1_SuspendRoom_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
     }
   },
   "subpackages": {
@@ -1656,6 +1692,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1669,6 +1706,24 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "ApplicationWithDeployment"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -1809,6 +1864,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "AppConfig"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -1819,6 +1891,21 @@
             },
             "statusCode": 201,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Application"
+                  }
+                },
+                "statusCode": 201,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -1975,6 +2062,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "AppConfig"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -1985,6 +2089,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Application"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -2130,6 +2249,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -2140,6 +2260,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Application"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -2259,6 +2394,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "AppV1_DeleteApp_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No content"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AppV1_DeleteApp_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No content"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -2300,7 +2462,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -2365,6 +2532,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -2375,6 +2543,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AuthV1_LoginAnonymous_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -2487,6 +2670,31 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "key": "nickname",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -2497,6 +2705,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AuthV1_LoginNickname_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -2618,6 +2841,31 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "key": "idToken",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -2628,6 +2876,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AuthV1_LoginGoogle_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -2753,6 +3016,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -2766,6 +3030,24 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Build"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -2904,6 +3186,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -2914,6 +3197,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Build"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -3034,6 +3332,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -3044,6 +3343,21 @@
             },
             "statusCode": 201,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Build"
+                  }
+                },
+                "statusCode": 201,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -3228,6 +3542,30 @@
               "contentType": "multipart/form-data"
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "fileUpload",
+                  "value": {
+                    "name": "BuildV1_RunBuild_Request",
+                    "properties": [
+                      {
+                        "type": "file",
+                        "value": {
+                          "type": "file",
+                          "key": "file",
+                          "isOptional": false,
+                          "contentType": "multipart/form-data"
+                        }
+                      }
+                    ]
+                  },
+                  "contentType": "multipart/form-data"
+                }
+              }
+            ]
+          },
           "response": {
             "statusCode": 200,
             "type": {
@@ -3235,6 +3573,18 @@
               "extends": [],
               "properties": []
             }
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "statusCode": 200,
+                "type": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": []
+                }
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -3365,6 +3715,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "BuildV1_DeleteBuild_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No content"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BuildV1_DeleteBuild_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No content"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -3422,7 +3799,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -3487,6 +3869,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -3500,6 +3883,24 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Deployment"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -3642,6 +4043,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -3652,6 +4054,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Deployment"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -3804,6 +4221,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "DeploymentConfig"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -3814,6 +4248,21 @@
             },
             "statusCode": 201,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Deployment"
+                  }
+                },
+                "statusCode": 201,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -3989,6 +4438,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -3999,6 +4449,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "DiscoveryResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -4125,6 +4590,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4135,6 +4601,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RoomId"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -4319,6 +4800,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4329,6 +4811,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RoomId"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -4513,6 +5010,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4526,6 +5024,24 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Lobby"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -4712,6 +5228,36 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "key": "initialConfig",
+                        "valueType": {
+                          "type": "id",
+                          "value": "LobbyV2AppIdCreatePrivatePostRequestBodyContentApplicationJsonSchemaInitialConfig"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "valueType": {
+                          "type": "id",
+                          "value": "Region"
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -4722,6 +5268,21 @@
             },
             "statusCode": 201,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Lobby"
+                  }
+                },
+                "statusCode": 201,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -4950,6 +5511,36 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "key": "initialConfig",
+                        "valueType": {
+                          "type": "id",
+                          "value": "LobbyV2AppIdCreatePublicPostRequestBodyContentApplicationJsonSchemaInitialConfig"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "valueType": {
+                          "type": "id",
+                          "value": "Region"
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -4960,6 +5551,21 @@
             },
             "statusCode": 201,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Lobby"
+                  }
+                },
+                "statusCode": 201,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -5188,6 +5794,36 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "key": "initialConfig",
+                        "valueType": {
+                          "type": "id",
+                          "value": "LobbyV2AppIdCreateLocalPostRequestBodyContentApplicationJsonSchemaInitialConfig"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "valueType": {
+                          "type": "id",
+                          "value": "Region"
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -5198,6 +5834,21 @@
             },
             "statusCode": 201,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Lobby"
+                  }
+                },
+                "statusCode": 201,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -5432,6 +6083,43 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "key": "visibility",
+                        "valueType": {
+                          "type": "id",
+                          "value": "LobbyV2AppIdCreatePostRequestBodyContentApplicationJsonSchemaVisibility"
+                        }
+                      },
+                      {
+                        "key": "initialConfig",
+                        "valueType": {
+                          "type": "id",
+                          "value": "LobbyV2AppIdCreatePostRequestBodyContentApplicationJsonSchemaInitialConfig"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "valueType": {
+                          "type": "id",
+                          "value": "Region"
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -5442,6 +6130,21 @@
             },
             "statusCode": 201,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Lobby"
+                  }
+                },
+                "statusCode": 201,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -5635,6 +6338,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -5648,6 +6352,24 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Lobby"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -5758,6 +6480,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -5768,6 +6491,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Lobby"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -5910,6 +6648,29 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "key": "state",
+                        "valueType": {
+                          "type": "id",
+                          "value": "LobbyV2AppIdSetStateRoomIdPostRequestBodyContentApplicationJsonSchemaState"
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -5920,6 +6681,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Lobby"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -6096,6 +6872,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "statusCode": 200,
             "type": {
@@ -6103,6 +6880,18 @@
               "extends": [],
               "properties": []
             }
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "statusCode": 200,
+                "type": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": []
+                }
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -6229,6 +7018,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "statusCode": 200,
             "type": {
@@ -6236,6 +7026,18 @@
               "extends": [],
               "properties": []
             }
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "statusCode": 200,
+                "type": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": []
+                }
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -6363,6 +7165,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "statusCode": 200,
             "type": {
@@ -6370,6 +7173,18 @@
               "extends": [],
               "properties": []
             }
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "statusCode": 200,
+                "type": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": []
+                }
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -6529,6 +7344,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -6539,6 +7355,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "MetricsResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -6713,6 +7544,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -6726,6 +7558,24 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "ProcessWithRooms"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -6870,6 +7720,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -6883,6 +7734,24 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "Process"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -7023,6 +7892,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -7033,6 +7903,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Process"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -7184,6 +8069,29 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "key": "region",
+                        "valueType": {
+                          "type": "id",
+                          "value": "Region"
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -7194,6 +8102,21 @@
             },
             "statusCode": 201,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RoomId"
+                  }
+                },
+                "statusCode": 201,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -7320,6 +8243,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -7330,6 +8254,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Room"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -7469,6 +8408,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -7482,6 +8422,24 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "RoomWithoutAllocations"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -7589,6 +8547,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -7602,6 +8561,24 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "RoomWithoutAllocations"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -7709,6 +8686,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "RoomV1_DestroyRoom_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No content"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RoomV1_DestroyRoom_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No content"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -7751,7 +8755,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -7821,6 +8830,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "RoomV1_SuspendRoom_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No content"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RoomV1_SuspendRoom_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No content"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -7863,7 +8899,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -7933,6 +8974,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -7943,6 +8985,21 @@
             },
             "statusCode": 200,
             "description": "Ok"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ConnectionInfo"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ok"
+              }
+            ]
           },
           "errorsV2": [
             {

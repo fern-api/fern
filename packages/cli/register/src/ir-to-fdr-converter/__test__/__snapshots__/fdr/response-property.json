@@ -177,6 +177,7 @@
               }
             }
           },
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -186,6 +187,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -262,6 +264,7 @@
               }
             }
           },
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -271,6 +274,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -347,6 +351,7 @@
               }
             }
           },
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -356,6 +361,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -418,6 +424,7 @@
               }
             }
           },
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -427,6 +434,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -503,6 +511,7 @@
               }
             }
           },
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -515,6 +524,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -591,6 +601,7 @@
               }
             }
           },
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -600,6 +611,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -662,6 +674,7 @@
               }
             }
           },
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -671,6 +684,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {

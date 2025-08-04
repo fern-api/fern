@@ -111,6 +111,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -121,6 +122,21 @@
           },
           "statusCode": 200,
           "description": "Successful response"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "ExampleResponse"
+                }
+              },
+              "statusCode": 200,
+              "description": "Successful response"
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [

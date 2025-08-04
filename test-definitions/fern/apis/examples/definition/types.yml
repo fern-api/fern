@@ -320,3 +320,7 @@ types:
       - name: example1
         value: 
           expression: 0 */6 * * *
+
+  RefreshTokenRequest:
+    properties:
+      ttl: integer

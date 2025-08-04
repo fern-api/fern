@@ -29,6 +29,7 @@
               "request": {
                 "name": "SearchRequest",
                 "query-parameters": {
+                  "after": "optional<SearchRequestAfter>",
                   "filter": "optional<SearchRequestFilter>",
                   "limit": {
                     "type": "optional<integer>",
@@ -62,6 +63,27 @@
           },
         },
         "types": {
+          "SearchRequestAfter": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "integer",
+              {
+                "type": "string",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+            ],
+          },
           "SearchRequestFilter": {
             "docs": undefined,
             "inline": undefined,
@@ -148,6 +170,15 @@
       - desc
     source:
       openapi: ../openapi.yml
+  SearchRequestAfter:
+    discriminated: false
+    union:
+      - integer
+      - type: string
+        validation:
+          format: date
+    source:
+      openapi: ../openapi.yml
   SearchResponse:
     properties:
       results: optional<list<string>>
@@ -173,6 +204,7 @@ service:
             validation:
               min: 1
               max: 100
+          after: optional<SearchRequestAfter>
           tags:
             type: optional<string>
             allow-multiple: true

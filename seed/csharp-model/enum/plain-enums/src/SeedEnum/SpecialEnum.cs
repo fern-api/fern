@@ -37,7 +37,7 @@ public enum SpecialEnum
     [EnumMember(Value = "Hello\\vWorld")]
     K,
 
-    [EnumMember(Value = "Hello\\0World")]
+    [EnumMember(Value = "Hello\\x00World")]
     L,
 
     [EnumMember(Value = "Hello\\u0007World")]
@@ -61,7 +61,7 @@ public enum SpecialEnum
     [EnumMember(Value = "Line 1\\n\"Quote\"\\tTab\\\\Backslash\\r\\nLine 2\\0Null")]
     S,
 
-    [EnumMember(Value = "\\n\\r\\t\\0\\u0008\\f\\v\\u0007")]
+    [EnumMember(Value = "\\n\\r\\t\\x00\\u0008\\f\\v\\u0007")]
     T,
 
     [EnumMember(Value = "Hello 世界")]

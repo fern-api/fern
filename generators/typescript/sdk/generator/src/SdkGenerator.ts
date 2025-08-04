@@ -12,9 +12,9 @@ import {
     SimpleTypescriptProject,
     TypescriptProject,
     getFullPathForEndpoint,
-    getTextOfTsNode
+    getTextOfTsNode,
+    AsIsManager
 } from "@fern-typescript/commons";
-import { AsIsManager } from "@fern-typescript/commons/src/asIs/AsIsManager";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-union-generator";
 import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
@@ -473,7 +473,8 @@ export class SdkGenerator {
             config: this.rawConfig,
             readmeConfigBuilder: new ReadmeConfigBuilder({
                 endpointSnippets: this.endpointSnippets,
-                fileResponseType: this.config.fileResponseType
+                fileResponseType: this.config.fileResponseType,
+                fetchSupport: this.config.fetchSupport
             }),
             ir: intermediateRepresentation
         });

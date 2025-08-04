@@ -10,178 +10,6 @@ import (
 	time "time"
 )
 
-type DoubleOptional struct {
-	OptionalAlias *OptionalAlias `json:"optionalAlias,omitempty" url:"optionalAlias,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (d *DoubleOptional) GetOptionalAlias() *OptionalAlias {
-	if d == nil {
-		return nil
-	}
-	return d.OptionalAlias
-}
-
-func (d *DoubleOptional) GetExtraProperties() map[string]interface{} {
-	return d.extraProperties
-}
-
-func (d *DoubleOptional) UnmarshalJSON(data []byte) error {
-	type unmarshaler DoubleOptional
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*d = DoubleOptional(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *d)
-	if err != nil {
-		return err
-	}
-	d.extraProperties = extraProperties
-	return nil
-}
-
-func (d *DoubleOptional) String() string {
-	if value, err := internal.StringifyJSON(d); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", d)
-}
-
-type NestedObjectWithOptionalField struct {
-	String       *string                  `json:"string,omitempty" url:"string,omitempty"`
-	NestedObject *ObjectWithOptionalField `json:"NestedObject,omitempty" url:"NestedObject,omitempty"`
-
-	extraProperties map[string]interface{}
-}
-
-func (n *NestedObjectWithOptionalField) GetString() *string {
-	if n == nil {
-		return nil
-	}
-	return n.String
-}
-
-func (n *NestedObjectWithOptionalField) GetNestedObject() *ObjectWithOptionalField {
-	if n == nil {
-		return nil
-	}
-	return n.NestedObject
-}
-
-func (n *NestedObjectWithOptionalField) GetExtraProperties() map[string]interface{} {
-	return n.extraProperties
-}
-
-func (n *NestedObjectWithOptionalField) UnmarshalJSON(data []byte) error {
-	type unmarshaler NestedObjectWithOptionalField
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*n = NestedObjectWithOptionalField(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *n)
-	if err != nil {
-		return err
-	}
-	n.extraProperties = extraProperties
-	return nil
-}
-
-func (n *NestedObjectWithOptionalField) String() string {
-	if value, err := internal.StringifyJSON(n); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", n)
-}
-
-type NestedObjectWithRequiredField struct {
-	String       string                   `json:"string" url:"string"`
-	NestedObject *ObjectWithOptionalField `json:"NestedObject" url:"NestedObject"`
-
-	extraProperties map[string]interface{}
-}
-
-func (n *NestedObjectWithRequiredField) GetString() string {
-	if n == nil {
-		return ""
-	}
-	return n.String
-}
-
-func (n *NestedObjectWithRequiredField) GetNestedObject() *ObjectWithOptionalField {
-	if n == nil {
-		return nil
-	}
-	return n.NestedObject
-}
-
-func (n *NestedObjectWithRequiredField) GetExtraProperties() map[string]interface{} {
-	return n.extraProperties
-}
-
-func (n *NestedObjectWithRequiredField) UnmarshalJSON(data []byte) error {
-	type unmarshaler NestedObjectWithRequiredField
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*n = NestedObjectWithRequiredField(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *n)
-	if err != nil {
-		return err
-	}
-	n.extraProperties = extraProperties
-	return nil
-}
-
-func (n *NestedObjectWithRequiredField) String() string {
-	if value, err := internal.StringifyJSON(n); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", n)
-}
-
-type ObjectWithMapOfMap struct {
-	Map map[string]map[string]string `json:"map" url:"map"`
-
-	extraProperties map[string]interface{}
-}
-
-func (o *ObjectWithMapOfMap) GetMap() map[string]map[string]string {
-	if o == nil {
-		return nil
-	}
-	return o.Map
-}
-
-func (o *ObjectWithMapOfMap) GetExtraProperties() map[string]interface{} {
-	return o.extraProperties
-}
-
-func (o *ObjectWithMapOfMap) UnmarshalJSON(data []byte) error {
-	type unmarshaler ObjectWithMapOfMap
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*o = ObjectWithMapOfMap(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *o)
-	if err != nil {
-		return err
-	}
-	o.extraProperties = extraProperties
-	return nil
-}
-
-func (o *ObjectWithMapOfMap) String() string {
-	if value, err := internal.StringifyJSON(o); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", o)
-}
-
 type ObjectWithOptionalField struct {
 	// This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
 	String   *string        `json:"string,omitempty" url:"string,omitempty"`
@@ -190,15 +18,16 @@ type ObjectWithOptionalField struct {
 	Double   *float64       `json:"double,omitempty" url:"double,omitempty"`
 	Bool     *bool          `json:"bool,omitempty" url:"bool,omitempty"`
 	Datetime *time.Time     `json:"datetime,omitempty" url:"datetime,omitempty"`
-	Date     *time.Time     `json:"date,omitempty" url:"date,omitempty" format:"date"`
+	Date     *time.Time     `json:"date,omitempty" url:"date,omitempty"`
 	Uuid     *uuid.UUID     `json:"uuid,omitempty" url:"uuid,omitempty"`
-	Base64   *[]byte        `json:"base64,omitempty" url:"base64,omitempty"`
+	Base64   []byte         `json:"base64,omitempty" url:"base64,omitempty"`
 	List     []string       `json:"list,omitempty" url:"list,omitempty"`
 	Set      []string       `json:"set,omitempty" url:"set,omitempty"`
 	Map      map[int]string `json:"map,omitempty" url:"map,omitempty"`
 	Bigint   *string        `json:"bigint,omitempty" url:"bigint,omitempty"`
 
-	extraProperties map[string]interface{}
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
 func (o *ObjectWithOptionalField) GetString() *string {
@@ -257,7 +86,7 @@ func (o *ObjectWithOptionalField) GetUuid() *uuid.UUID {
 	return o.Uuid
 }
 
-func (o *ObjectWithOptionalField) GetBase64() *[]byte {
+func (o *ObjectWithOptionalField) GetBase64() []byte {
 	if o == nil {
 		return nil
 	}
@@ -292,16 +121,21 @@ func (o *ObjectWithOptionalField) GetBigint() *string {
 	return o.Bigint
 }
 
-func (o *ObjectWithOptionalField) GetExtraProperties() map[string]interface{} {
+func (o *ObjectWithOptionalField) GetExtraProperties() map[string]any {
+	if o == nil {
+		return nil
+	}
 	return o.extraProperties
 }
 
-func (o *ObjectWithOptionalField) UnmarshalJSON(data []byte) error {
+func (o *ObjectWithOptionalField) UnmarshalJSON(
+	data []byte,
+) error {
 	type embed ObjectWithOptionalField
 	var unmarshaler = struct {
 		embed
-		Datetime *internal.DateTime `json:"datetime,omitempty"`
-		Date     *internal.Date     `json:"date,omitempty"`
+		Datetime *internal.DateTime `json:"datetime"`
+		Date     *internal.Date     `json:"date"`
 	}{
 		embed: embed(*o),
 	}
@@ -316,6 +150,7 @@ func (o *ObjectWithOptionalField) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -323,8 +158,8 @@ func (o *ObjectWithOptionalField) MarshalJSON() ([]byte, error) {
 	type embed ObjectWithOptionalField
 	var marshaler = struct {
 		embed
-		Datetime *internal.DateTime `json:"datetime,omitempty"`
-		Date     *internal.Date     `json:"date,omitempty"`
+		Datetime *internal.DateTime `json:"datetime"`
+		Date     *internal.Date     `json:"date"`
 	}{
 		embed:    embed(*o),
 		Datetime: internal.NewOptionalDateTime(o.Datetime),
@@ -334,6 +169,11 @@ func (o *ObjectWithOptionalField) MarshalJSON() ([]byte, error) {
 }
 
 func (o *ObjectWithOptionalField) String() string {
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(o); err == nil {
 		return value
 	}
@@ -343,7 +183,8 @@ func (o *ObjectWithOptionalField) String() string {
 type ObjectWithRequiredField struct {
 	String string `json:"string" url:"string"`
 
-	extraProperties map[string]interface{}
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
 func (o *ObjectWithRequiredField) GetString() string {
@@ -353,11 +194,16 @@ func (o *ObjectWithRequiredField) GetString() string {
 	return o.String
 }
 
-func (o *ObjectWithRequiredField) GetExtraProperties() map[string]interface{} {
+func (o *ObjectWithRequiredField) GetExtraProperties() map[string]any {
+	if o == nil {
+		return nil
+	}
 	return o.extraProperties
 }
 
-func (o *ObjectWithRequiredField) UnmarshalJSON(data []byte) error {
+func (o *ObjectWithRequiredField) UnmarshalJSON(
+	data []byte,
+) error {
 	type unmarshaler ObjectWithRequiredField
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
@@ -369,14 +215,240 @@ func (o *ObjectWithRequiredField) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (o *ObjectWithRequiredField) String() string {
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(o); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", o)
+}
+
+type ObjectWithMapOfMap struct {
+	Map map[string]map[string]string `json:"map" url:"map"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (o *ObjectWithMapOfMap) GetMap() map[string]map[string]string {
+	if o == nil {
+		return nil
+	}
+	return o.Map
+}
+
+func (o *ObjectWithMapOfMap) GetExtraProperties() map[string]any {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *ObjectWithMapOfMap) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ObjectWithMapOfMap
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = ObjectWithMapOfMap(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *ObjectWithMapOfMap) String() string {
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+type NestedObjectWithOptionalField struct {
+	String       *string                  `json:"string,omitempty" url:"string,omitempty"`
+	NestedObject *ObjectWithOptionalField `json:"NestedObject,omitempty" url:"NestedObject,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (n *NestedObjectWithOptionalField) GetString() *string {
+	if n == nil {
+		return nil
+	}
+	return n.String
+}
+
+func (n *NestedObjectWithOptionalField) GetNestedObject() *ObjectWithOptionalField {
+	if n == nil {
+		return nil
+	}
+	return n.NestedObject
+}
+
+func (n *NestedObjectWithOptionalField) GetExtraProperties() map[string]any {
+	if n == nil {
+		return nil
+	}
+	return n.extraProperties
+}
+
+func (n *NestedObjectWithOptionalField) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler NestedObjectWithOptionalField
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = NestedObjectWithOptionalField(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+	n.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (n *NestedObjectWithOptionalField) String() string {
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(n); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", n)
+}
+
+type NestedObjectWithRequiredField struct {
+	String       string                   `json:"string" url:"string"`
+	NestedObject *ObjectWithOptionalField `json:"NestedObject" url:"NestedObject"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (n *NestedObjectWithRequiredField) GetString() string {
+	if n == nil {
+		return ""
+	}
+	return n.String
+}
+
+func (n *NestedObjectWithRequiredField) GetNestedObject() *ObjectWithOptionalField {
+	if n == nil {
+		return nil
+	}
+	return n.NestedObject
+}
+
+func (n *NestedObjectWithRequiredField) GetExtraProperties() map[string]any {
+	if n == nil {
+		return nil
+	}
+	return n.extraProperties
+}
+
+func (n *NestedObjectWithRequiredField) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler NestedObjectWithRequiredField
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = NestedObjectWithRequiredField(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+	n.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (n *NestedObjectWithRequiredField) String() string {
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(n); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", n)
+}
+
+type DoubleOptional struct {
+	OptionalAlias *OptionalAlias `json:"optionalAlias,omitempty" url:"optionalAlias,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (d *DoubleOptional) GetOptionalAlias() *OptionalAlias {
+	if d == nil {
+		return nil
+	}
+	return d.OptionalAlias
+}
+
+func (d *DoubleOptional) GetExtraProperties() map[string]any {
+	if d == nil {
+		return nil
+	}
+	return d.extraProperties
+}
+
+func (d *DoubleOptional) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler DoubleOptional
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*d = DoubleOptional(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
+	if err != nil {
+		return err
+	}
+	d.extraProperties = extraProperties
+	d.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (d *DoubleOptional) String() string {
+	if len(d.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(d); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", d)
 }
 
 type OptionalAlias = *string

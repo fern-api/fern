@@ -2620,6 +2620,93 @@
               "contentType": "multipart/form-data"
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "fileUpload",
+                  "value": {
+                    "name": "Upload_baseUpload_Request",
+                    "properties": [
+                      {
+                        "type": "bodyProperty",
+                        "key": "UPLOADCARE_PUB_KEY",
+                        "valueType": {
+                          "type": "id",
+                          "value": "projectPublicKeyType"
+                        },
+                        "contentType": "multipart/form-data",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "UPLOADCARE_STORE",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "storeType"
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "exploded": false
+                      },
+                      {
+                        "type": "file",
+                        "value": {
+                          "type": "fileArray",
+                          "key": "{filename}",
+                          "isOptional": false,
+                          "contentType": "multipart/form-data",
+                          "description": "File's content"
+                        }
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "metadata[{key}]",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "metadataValue"
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "signature",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "signatureType"
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "expire",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "expireType"
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "exploded": false
+                      }
+                    ]
+                  },
+                  "contentType": "multipart/form-data"
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -2631,10 +2718,24 @@
             "statusCode": 200,
             "description": "The file was uploaded successfully."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Upload_baseUpload_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "The file was uploaded successfully."
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
-              "name": "one-file",
               "description": "",
               "path": "/base/",
               "pathParameters": {},
@@ -2647,8 +2748,8 @@
                   "string"
                 ],
                 "my_file.jpg": "@my_file.jpg",
-                "metadata[subsystem]": "uploader",
-                "metadata[pet]": "cat"
+                "another_file.jpg": "@another_file.jpg",
+                "metadata[subsystem]": "uploader"
               },
               "requestBodyV3": {
                 "type": "form",
@@ -2690,7 +2791,6 @@
               }
             },
             {
-              "name": "two-files",
               "description": "",
               "path": "/base/",
               "pathParameters": {},
@@ -2703,8 +2803,8 @@
                   "string"
                 ],
                 "my_file.jpg": "@my_file.jpg",
-                "another_file.jpg": "@another_file.jpg",
-                "metadata[subsystem]": "uploader"
+                "metadata[subsystem]": "uploader",
+                "metadata[pet]": "cat"
               },
               "requestBodyV3": {
                 "type": "form",
@@ -2910,6 +3010,141 @@
               "contentType": "multipart/form-data"
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "fileUpload",
+                  "value": {
+                    "name": "Upload_multipartFileUploadStart_Request",
+                    "properties": [
+                      {
+                        "type": "bodyProperty",
+                        "key": "UPLOADCARE_PUB_KEY",
+                        "valueType": {
+                          "type": "id",
+                          "value": "projectPublicKeyType"
+                        },
+                        "contentType": "multipart/form-data",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "UPLOADCARE_STORE",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "storeType"
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "filename",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "description": "Original file name of the uploaded file",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "size",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "integer"
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "description": "Precise file size of the uploaded file (in bytes).\n**Note**: The size should not exceed max file size cap for your project.\n",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "part_size",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "integer",
+                              "minimum": 5242880,
+                              "maximum": 5368709120,
+                              "default": 5242880
+                            }
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "description": "Multipart Uploads expect that you will split the uploaded file into equally sized\nparts (except for the last part) and then will upload them to AWS S3 (possibly in parallel).\nBy default, we assume that you will upload the files in 5 megabyte chunks,\nso we return a list of presigned AWS S3 URLs accordingly.\nIf you intend to upload large files (for example, larger than a gigabyte),\nwe recommend to bump the part size and to pass the expected chunk size\nto us as a value of the `part_size` parameter (in bytes).\n",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "content_type",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "description": "File's MIME-type.",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "metadata[{key}]",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "metadataValue"
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "signature",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "signatureType"
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "expire",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "expireType"
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "exploded": false
+                      }
+                    ]
+                  },
+                  "contentType": "multipart/form-data"
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -2920,6 +3155,21 @@
             },
             "statusCode": 200,
             "description": "Multipart upload started successfully."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Upload_multipartFileUploadStart_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Multipart upload started successfully."
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -3041,6 +3291,18 @@
               "contentType": "application/octet-stream"
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "bytes",
+                  "isOptional": false,
+                  "contentType": "application/octet-stream"
+                }
+              }
+            ]
+          },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -3120,6 +3382,45 @@
               "contentType": "multipart/form-data"
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "fileUpload",
+                  "value": {
+                    "name": "Upload_multipartFileUploadComplete_Request",
+                    "properties": [
+                      {
+                        "type": "bodyProperty",
+                        "key": "UPLOADCARE_PUB_KEY",
+                        "valueType": {
+                          "type": "id",
+                          "value": "projectPublicKeyType"
+                        },
+                        "contentType": "multipart/form-data",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "uuid",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "format": "uuid"
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "description": "File's UUID from the `/multipart/start/` endpoint.",
+                        "exploded": false
+                      }
+                    ]
+                  },
+                  "contentType": "multipart/form-data"
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -3130,6 +3431,21 @@
             },
             "statusCode": 200,
             "description": "The file was uploaded successfully."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "fileUploadInfo"
+                  }
+                },
+                "statusCode": 200,
+                "description": "The file was uploaded successfully."
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -3444,6 +3760,141 @@
               "contentType": "multipart/form-data"
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "fileUpload",
+                  "value": {
+                    "name": "Upload_fromURLUpload_Request",
+                    "properties": [
+                      {
+                        "type": "bodyProperty",
+                        "key": "pub_key",
+                        "valueType": {
+                          "type": "id",
+                          "value": "projectPublicKeyType"
+                        },
+                        "contentType": "multipart/form-data",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "source_url",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "format": "uri"
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "description": "Source URL of the file to fetch and upload.\n\n**Note**: The URL should point to a resource publicly available via HTTP/HTTPS.\n",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "store",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "storeType"
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "filename",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "description": "Sets the file name of the resource fetched from the source URL.\nIf not defined, the file name is obtained from either HTTP\nresponse headers or the `source_url`'s path.\n\n**Note:** The filename will be sanitized to only contain the following symbols:\n`abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._`.\n",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "check_URL_duplicates",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "FromUrlPostRequestBodyContentMultipartFormDataSchemaCheckUrlDuplicates"
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "description": "If set to \"1\", enables the `source_url` duplicates prevention.\nSpecifically, if the `source_url` had already been fetched and uploaded previously,\nthis request will return information about the already uploaded file.\n",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "save_URL_duplicates",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "FromUrlPostRequestBodyContentMultipartFormDataSchemaSaveUrlDuplicates"
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "description": "Determines if the requested `source_url` should be kept in the history of\nfetched/uploaded URLs. If the value is not defined explicitly, it is set\nto the value of the `check_URL_duplicates` parameter.\n",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "metadata[{key}]",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "metadataValue"
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "signature",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "signatureType"
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "expire",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "expireType"
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "exploded": false
+                      }
+                    ]
+                  },
+                  "contentType": "multipart/form-data"
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -3455,57 +3906,23 @@
             "statusCode": 200,
             "description": "Status Token or File Info of an already downloaded file."
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Upload_fromURLUpload_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Status Token or File Info of an already downloaded file."
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
-            {
-              "name": "Upload_fromURLUpload_example",
-              "description": "",
-              "path": "/from_url/",
-              "pathParameters": {},
-              "queryParameters": {},
-              "headers": {},
-              "requestBody": {
-                "pub_key": "YOUR_PUBLIC_KEY",
-                "source_url": "https://source.unsplash.com/featured",
-                "metadata[subsystem]": "uploader",
-                "metadata[pet]": "cat"
-              },
-              "requestBodyV3": {
-                "type": "form",
-                "value": {
-                  "pub_key": {
-                    "type": "json",
-                    "value": "YOUR_PUBLIC_KEY"
-                  },
-                  "source_url": {
-                    "type": "json",
-                    "value": "https://source.unsplash.com/featured"
-                  },
-                  "store": {
-                    "type": "json"
-                  },
-                  "filename": {
-                    "type": "json"
-                  },
-                  "check_URL_duplicates": {
-                    "type": "json"
-                  },
-                  "save_URL_duplicates": {
-                    "type": "json"
-                  },
-                  "metadata[{key}]": {
-                    "type": "json"
-                  },
-                  "signature": {
-                    "type": "json"
-                  },
-                  "expire": {
-                    "type": "json"
-                  }
-                }
-              },
-              "responseStatusCode": 200
-            },
             {
               "name": "type-token",
               "description": "",
@@ -3661,6 +4078,66 @@
                   "is_ready": true
                 }
               }
+            },
+            {
+              "name": "Upload_fromURLUpload_example",
+              "description": "",
+              "path": "/from_url/",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "pub_key": "YOUR_PUBLIC_KEY",
+                "source_url": "https://source.unsplash.com/featured",
+                "metadata[subsystem]": "uploader",
+                "metadata[pet]": "cat"
+              },
+              "requestBodyV3": {
+                "type": "form",
+                "value": {
+                  "pub_key": {
+                    "type": "json",
+                    "value": "YOUR_PUBLIC_KEY"
+                  },
+                  "source_url": {
+                    "type": "json",
+                    "value": "https://source.unsplash.com/featured"
+                  },
+                  "store": {
+                    "type": "json"
+                  },
+                  "filename": {
+                    "type": "json"
+                  },
+                  "check_URL_duplicates": {
+                    "type": "json"
+                  },
+                  "save_URL_duplicates": {
+                    "type": "json"
+                  },
+                  "metadata[{key}]": {
+                    "type": "json"
+                  },
+                  "signature": {
+                    "type": "json"
+                  },
+                  "expire": {
+                    "type": "json"
+                  }
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "token",
+                "token": "945ebb27-1fd6-46c6-a859-b9893712d650"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "token",
+                  "token": "945ebb27-1fd6-46c6-a859-b9893712d650"
+                }
+              }
             }
           ],
           "protocol": {
@@ -3708,6 +4185,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -3718,6 +4196,21 @@
             },
             "statusCode": 200,
             "description": "Request was processed successfully.\n"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Upload_fromURLUploadStatus_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Request was processed successfully.\n"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -3992,6 +4485,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4002,6 +4496,21 @@
             },
             "statusCode": 200,
             "description": "File information was retrieved successfully."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "fileUploadInfo"
+                  }
+                },
+                "statusCode": 200,
+                "description": "File information was retrieved successfully."
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -4244,6 +4753,73 @@
               "contentType": "multipart/form-data"
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "fileUpload",
+                  "value": {
+                    "name": "Groups_createFilesGroup_Request",
+                    "properties": [
+                      {
+                        "type": "bodyProperty",
+                        "key": "pub_key",
+                        "valueType": {
+                          "type": "id",
+                          "value": "projectPublicKeyType"
+                        },
+                        "contentType": "multipart/form-data",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "files[]",
+                        "valueType": {
+                          "type": "list",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "description": "Set of files you want to add to the group.\nEach element can be a file UUID with or without the applied image\nprocessing operations.\n",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "signature",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "signatureType"
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "expire",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "expireType"
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "exploded": false
+                      }
+                    ]
+                  },
+                  "contentType": "multipart/form-data"
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -4254,6 +4830,21 @@
             },
             "statusCode": 200,
             "description": "The group was created successfully."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "groupInfo"
+                  }
+                },
+                "statusCode": 200,
+                "description": "The group was created successfully."
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -4371,6 +4962,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4381,6 +4973,21 @@
             },
             "statusCode": 200,
             "description": "File group information was retrieved successfully."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "groupInfo"
+                  }
+                },
+                "statusCode": 200,
+                "description": "File group information was retrieved successfully."
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [

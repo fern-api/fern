@@ -1,9 +1,9 @@
 import { assertNever } from "@fern-api/core-utils";
 
-import { FunctionArgument } from "./FunctionArgument";
-import { Type } from "./Type";
 import { AstNode, Writer } from "./core";
-import { escapeReservedKeyword } from "./syntax/reserved-keywords";
+import { FunctionArgument } from "./FunctionArgument";
+import { escapeReservedKeyword } from "./syntax";
+import { Type } from "./Type";
 
 /**
  * A reference to a variable or constant.
@@ -54,6 +54,12 @@ type DictionaryLiteral = {
     multiline?: true;
 };
 
+type ArrayLiteral = {
+    type: "array-literal";
+    elements?: Expression[];
+    multiline?: true;
+};
+
 type MethodCall = {
     type: "method-call";
     target: Expression;
@@ -81,6 +87,16 @@ type Try = {
     expression: Expression;
 };
 
+type OptionalTry = {
+    type: "optional-try";
+    expression: Expression;
+};
+
+type ForceTry = {
+    type: "force-try";
+    expression: Expression;
+};
+
 type Await = {
     type: "await";
     expression: Expression;
@@ -99,10 +115,13 @@ type InternalExpression =
     | StructInitialization
     | ClassInitialization
     | DictionaryLiteral
+    | ArrayLiteral
     | MethodCall
     | MethodCallWithTrailingClosure
     | ContextualMethodCall
     | Try
+    | OptionalTry
+    | ForceTry
     | Await
     | RawValue;
 
@@ -162,6 +181,9 @@ export class Expression extends AstNode {
             case "dictionary-literal":
                 this.writeDictionaryLiteral(writer, this.internalExpression);
                 break;
+            case "array-literal":
+                this.writeArrayLiteral(writer, this.internalExpression);
+                break;
             case "method-call":
                 this.internalExpression.target.write(writer);
                 writer.write(".");
@@ -191,6 +213,14 @@ export class Expression extends AstNode {
                 break;
             case "try":
                 writer.write("try ");
+                this.internalExpression.expression.write(writer);
+                break;
+            case "optional-try":
+                writer.write("try? ");
+                this.internalExpression.expression.write(writer);
+                break;
+            case "force-try":
+                writer.write("try! ");
                 this.internalExpression.expression.write(writer);
                 break;
             case "await":
@@ -259,6 +289,35 @@ export class Expression extends AstNode {
         writer.write("]");
     }
 
+    private writeArrayLiteral(writer: Writer, arrayLiteral: ArrayLiteral): void {
+        if (!arrayLiteral.elements || arrayLiteral.elements.length === 0) {
+            writer.write("[]");
+            return;
+        }
+        writer.write("[");
+        const multiline = !!arrayLiteral.multiline;
+        if (multiline) {
+            writer.newLine();
+            writer.indent();
+        }
+        arrayLiteral.elements?.forEach((element, elementIdx) => {
+            if (elementIdx > 0) {
+                writer.write(",");
+                if (multiline) {
+                    writer.newLine();
+                } else {
+                    writer.write(" ");
+                }
+            }
+            element.write(writer);
+        });
+        if (multiline) {
+            writer.newLine();
+            writer.dedent();
+        }
+        writer.write("]");
+    }
+
     public static reference(unsafeName: string): Expression {
         return new this({ type: "reference", unsafeName });
     }
@@ -287,6 +346,10 @@ export class Expression extends AstNode {
         return new this({ type: "dictionary-literal", ...params });
     }
 
+    public static arrayLiteral(params: Omit<ArrayLiteral, "type">): Expression {
+        return new this({ type: "array-literal", ...params });
+    }
+
     public static methodCall(params: Omit<MethodCall, "type">): Expression {
         return new this({ type: "method-call", ...params });
     }
@@ -301,6 +364,14 @@ export class Expression extends AstNode {
 
     public static try(expression: Expression): Expression {
         return new this({ type: "try", expression });
+    }
+
+    public static optionalTry(expression: Expression): Expression {
+        return new this({ type: "optional-try", expression });
+    }
+
+    public static forceTry(expression: Expression): Expression {
+        return new this({ type: "force-try", expression });
     }
 
     public static await(expression: Expression): Expression {

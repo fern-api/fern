@@ -1,11 +1,17 @@
-public struct TestCaseV2: Codable, Hashable {
+public struct TestCaseV2: Codable, Hashable, Sendable {
     public let metadata: TestCaseMetadata
     public let implementation: TestCaseImplementationReference
-    public let arguments: Any
+    public let arguments: [ParameterId: VariableValue]
     public let expects: TestCaseExpects?
     public let additionalProperties: [String: JSONValue]
 
-    public init(metadata: TestCaseMetadata, implementation: TestCaseImplementationReference, arguments: Any, expects: TestCaseExpects? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        metadata: TestCaseMetadata,
+        implementation: TestCaseImplementationReference,
+        arguments: [ParameterId: VariableValue],
+        expects: TestCaseExpects? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.metadata = metadata
         self.implementation = implementation
         self.arguments = arguments
@@ -17,13 +23,13 @@ public struct TestCaseV2: Codable, Hashable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.metadata = try container.decode(TestCaseMetadata.self, forKey: .metadata)
         self.implementation = try container.decode(TestCaseImplementationReference.self, forKey: .implementation)
-        self.arguments = try container.decode(Any.self, forKey: .arguments)
+        self.arguments = try container.decode([ParameterId: VariableValue].self, forKey: .arguments)
         self.expects = try container.decodeIfPresent(TestCaseExpects.self, forKey: .expects)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.metadata, forKey: .metadata)
         try container.encode(self.implementation, forKey: .implementation)

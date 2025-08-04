@@ -1,8 +1,11 @@
-public struct DebugMapValue: Codable, Hashable {
+public struct DebugMapValue: Codable, Hashable, Sendable {
     public let keyValuePairs: [DebugKeyValuePairs]
     public let additionalProperties: [String: JSONValue]
 
-    public init(keyValuePairs: [DebugKeyValuePairs], additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        keyValuePairs: [DebugKeyValuePairs],
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.keyValuePairs = keyValuePairs
         self.additionalProperties = additionalProperties
     }
@@ -14,7 +17,7 @@ public struct DebugMapValue: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.keyValuePairs, forKey: .keyValuePairs)
     }

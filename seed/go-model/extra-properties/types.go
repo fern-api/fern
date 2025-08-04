@@ -9,20 +9,29 @@ import (
 )
 
 type Failure struct {
-	status string
+	ExtraProperties map[string]any `json:"-" url:"-"`
 
-	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+	status  string
+	rawJSON json.RawMessage
 }
 
-func (f *Failure) Status() string {
+func (f *Failure) GetStatus() string {
+	if f == nil {
+		return ""
+	}
 	return f.status
 }
 
-func (f *Failure) GetExtraProperties() map[string]interface{} {
+func (f *Failure) GetExtraProperties() map[string]any {
+	if f == nil {
+		return nil
+	}
 	return f.ExtraProperties
 }
 
-func (f *Failure) UnmarshalJSON(data []byte) error {
+func (f *Failure) UnmarshalJSON(
+	data []byte,
+) error {
 	type embed Failure
 	var unmarshaler = struct {
 		embed
@@ -43,6 +52,7 @@ func (f *Failure) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	f.ExtraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -59,6 +69,11 @@ func (f *Failure) MarshalJSON() ([]byte, error) {
 }
 
 func (f *Failure) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(f); err == nil {
 		return value
 	}

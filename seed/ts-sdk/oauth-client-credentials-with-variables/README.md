@@ -26,6 +26,7 @@ const client = new SeedOauthClientCredentialsWithVariablesClient({
     environment: "YOUR_BASE_URL",
     clientId: "YOUR_CLIENT_ID",
     clientSecret: "YOUR_CLIENT_SECRET",
+    rootVariable: "YOUR_ROOT_VARIABLE",
 });
 await client.auth.getTokenWithClientCredentials({
     client_id: "client_id",
@@ -77,6 +78,18 @@ If you would like to send additional headers as part of the request, use the `he
 const response = await client.auth.getTokenWithClientCredentials(..., {
     headers: {
         'X-Custom-Header': 'custom value'
+    }
+});
+```
+
+### Additional Query String Parameters
+
+If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
+
+```typescript
+const response = await client.auth.getTokenWithClientCredentials(..., {
+    queryParams: {
+        'customQueryParamKey': 'custom query param value'
     }
 });
 ```
@@ -137,8 +150,7 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
-The SDK defaults to `node-fetch` but will use the global fetch client if present. The SDK works in the following
-runtimes:
+The SDK works in the following runtimes:
 
 - Node.js 18+
 - Vercel

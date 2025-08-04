@@ -13,6 +13,7 @@ from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from .requests.my_alias_object import MyAliasObjectParams
 from .requests.my_collection_alias_object import MyCollectionAliasObjectParams
+from .requests.my_inline_type import MyInlineTypeParams
 from .requests.my_object import MyObjectParams
 from .requests.my_object_with_optional import MyObjectWithOptionalParams
 from .types.id import Id
@@ -453,6 +454,52 @@ class RawServiceClient:
                     if request is not OMIT
                     else {}
                 ),
+            },
+            request_options=request_options,
+            omit=OMIT,
+            force_multipart=True,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    str,
+                    parse_obj_as(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def with_inline_type(
+        self, *, file: core.File, request: MyInlineTypeParams, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[str]:
+        """
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        request : MyInlineTypeParams
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[str]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "inline-type",
+            method="POST",
+            data={
+                "request": request,
+            },
+            files={
+                "file": file,
             },
             request_options=request_options,
             omit=OMIT,
@@ -929,6 +976,52 @@ class AsyncRawServiceClient:
                     if request is not OMIT
                     else {}
                 ),
+            },
+            request_options=request_options,
+            omit=OMIT,
+            force_multipart=True,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    str,
+                    parse_obj_as(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def with_inline_type(
+        self, *, file: core.File, request: MyInlineTypeParams, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[str]:
+        """
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        request : MyInlineTypeParams
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[str]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "inline-type",
+            method="POST",
+            data={
+                "request": request,
+            },
+            files={
+                "file": file,
             },
             request_options=request_options,
             omit=OMIT,

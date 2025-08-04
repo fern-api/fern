@@ -33,7 +33,7 @@ test:
       - poetry config virtualenvs.in-project true
       - poetry install
     # The envvar is needed to trick the generator to look in the right place for the core_utils files
-    runCommand: poetry run python -m src.fern_python.generators.sdk.cli
+    runCommand: poetry run python -m src.fern_python.generators.sdk.cli {CONFIG_PATH}
     env:
       PYTEST_CURRENT_TEST: "some value"
 
@@ -265,6 +265,15 @@ fixtures:
     - customConfig:
         use_inheritance_for_extended_models: false
       outputFolder: no-inheritance-for-extended-models
+  query-parameters:
+    - customConfig: null
+      outputFolder: no-custom-config
+  query-parameters-openapi:
+    - customConfig: null
+      outputFolder: no-custom-config
+  query-parameters-openapi-as-objects:
+    - customConfig: null
+      outputFolder: no-custom-config
   simple-fhir:
     - customConfig:
         use_inheritance_for_extended_models: false

@@ -9,10 +9,10 @@ import (
 type WeatherReport string
 
 const (
-	WeatherReportSunny   WeatherReport = "SUNNY"
-	WeatherReportCloudy  WeatherReport = "CLOUDY"
-	WeatherReportRaining WeatherReport = "RAINING"
-	WeatherReportSnowing WeatherReport = "SNOWING"
+	WeatherReportSunny   = "SUNNY"
+	WeatherReportCloudy  = "CLOUDY"
+	WeatherReportRaining = "RAINING"
+	WeatherReportSnowing = "SNOWING"
 )
 
 func NewWeatherReportFromString(s string) (WeatherReport, error) {

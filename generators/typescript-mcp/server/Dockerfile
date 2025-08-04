@@ -1,4 +1,4 @@
-FROM node:20.18-alpine3.20
+FROM node:22.12-alpine3.20
 
 RUN apk --no-cache add git zip
 RUN git config --global user.name "fern" && git config --global user.email "hey@buildwithfern.com"
@@ -16,7 +16,7 @@ RUN yarn add \
   url-join@^5.0.0 \
   readable-stream@^4.6.0 \
   @types/readable-stream@^4.0.18 \
-  form-data@^4.0.0 \
+  form-data@^4.0.4 \
   formdata-node@^6.0.3 \
   jest-environment-jsdom@^29.7.0 \
   js-base64@^3.7.7 \
@@ -33,4 +33,4 @@ COPY generators/typescript/utils/core-utilities/ /assets/core-utilities/
 COPY generators/typescript/sdk/features.yml /assets/features.yml
 COPY generators/typescript-mcp/server/dist /dist
 
-ENTRYPOINT ["node", "/dist/cli.cjs"]
+ENTRYPOINT ["node", "--enable-source-maps", "/dist/cli.cjs"]

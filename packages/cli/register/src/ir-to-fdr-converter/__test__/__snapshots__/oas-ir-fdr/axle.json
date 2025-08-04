@@ -1297,6 +1297,70 @@
             },
             "description": ""
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "The URI we should direct the user to after authenticating successfully.",
+                        "key": "redirectUri",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "The URI we should send updates about this session or the resulting account to.",
+                        "key": "webhookUri",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "key": "user",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "User"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Optional object to store ephermeral information about the session, such as `reservationTime`. Will be returned in webhook events.",
+                        "key": "metadata",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "IgnitionPostRequestBodyContentApplicationJsonSchemaMetadata"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "description": ""
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -1307,6 +1371,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Ignition_StartIgnition_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -1441,6 +1520,33 @@
             },
             "description": ""
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "The authorization code obtained after a user successfully links their account via Ignition. Returned as a query parameter at the redirectUri.",
+                        "key": "authCode",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "description": ""
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -1451,6 +1557,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Tokens_ExchangeToken_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -1598,6 +1719,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1608,6 +1730,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Accounts_GetAccount_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -1762,6 +1899,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1772,6 +1910,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Policies_GetPolicy_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -2028,6 +2181,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -2038,6 +2192,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Carriers_GetCarrier_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -2154,6 +2323,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -2164,6 +2334,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Carriers_GetCarriers_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [

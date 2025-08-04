@@ -1,5 +1,4 @@
-import { ExportsManager, ImportsManager, Reference, Zurg } from "@fern-typescript/commons";
-import { CoreUtilities } from "@fern-typescript/commons/src/core-utilities/CoreUtilities";
+import { CoreUtilities, ExportsManager, ImportsManager, Reference, Zurg } from "@fern-typescript/commons";
 import { GeneratedSdkErrorSchema, SdkErrorSchemaContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { SdkErrorSchemaGenerator } from "@fern-typescript/sdk-error-schema-generator";

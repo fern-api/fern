@@ -33,6 +33,8 @@
               "contentType": "application/octet-stream"
             }
           },
+          "requestsV2": {},
+          "responsesV2": {},
           "errorsV2": [],
           "examples": []
         }

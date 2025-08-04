@@ -11,7 +11,8 @@ import (
 type A struct {
 	S string `json:"s" url:"s"`
 
-	extraProperties map[string]interface{}
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
 func (a *A) GetS() string {
@@ -21,11 +22,16 @@ func (a *A) GetS() string {
 	return a.S
 }
 
-func (a *A) GetExtraProperties() map[string]interface{} {
+func (a *A) GetExtraProperties() map[string]any {
+	if a == nil {
+		return nil
+	}
 	return a.extraProperties
 }
 
-func (a *A) UnmarshalJSON(data []byte) error {
+func (a *A) UnmarshalJSON(
+	data []byte,
+) error {
 	type unmarshaler A
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
@@ -37,10 +43,16 @@ func (a *A) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (a *A) String() string {
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(a); err == nil {
 		return value
 	}

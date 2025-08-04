@@ -172,8 +172,7 @@
             "valueType": {
               "type": "id",
               "value": "fullAccountPermissions"
-            },
-            "propertyAccess": "READ_ONLY"
+            }
           },
           {
             "description": "If `true`, the customer has opted in to receive account statements electronically.",
@@ -444,8 +443,7 @@
                 "type": "id",
                 "value": "readOnlyResourceId"
               }
-            },
-            "propertyAccess": "READ_ONLY"
+            }
           },
           {
             "description": "The URL of the next page of accounts. If this URL is omitted, there are no more accounts.",
@@ -791,8 +789,7 @@
             "valueType": {
               "type": "id",
               "value": "readOnlyResourceId"
-            },
-            "propertyAccess": "READ_ONLY"
+            }
           },
           {
             "description": "The available balance: the funds available for use. This is the string representation of the exact decimal amount.",
@@ -803,8 +800,7 @@
                 "type": "id",
                 "value": "creditOrDebitValue"
               }
-            },
-            "propertyAccess": "READ_ONLY"
+            }
           },
           {
             "description": "The current balance. This is the balance at the end of the previous business day. This is the string representation of the exact decimal amount.",
@@ -815,8 +811,7 @@
                 "type": "id",
                 "value": "creditOrDebitValue"
               }
-            },
-            "propertyAccess": "READ_ONLY"
+            }
           },
           {
             "description": "The time when the balance values were last updated from the banking core.",
@@ -839,8 +834,7 @@
                 "type": "id",
                 "value": "creditOrDebitValue"
               }
-            },
-            "propertyAccess": "READ_ONLY"
+            }
           },
           {
             "description": "If `true`, the response is incomplete and the client may retry the operation after the `Retry-After` time in order to fetch balances for any incomplete accounts in the `items`. The retry operation should only pass in accounts that are `incomplete`.",
@@ -869,8 +863,7 @@
             "valueType": {
               "type": "id",
               "value": "readOnlyResourceId"
-            },
-            "propertyAccess": "READ_ONLY"
+            }
           },
           {
             "description": "The full name of the joint owner.",
@@ -1023,8 +1016,7 @@
             "valueType": {
               "type": "id",
               "value": "readOnlyResourceId"
-            },
-            "propertyAccess": "READ_ONLY"
+            }
           }
         ]
       }
@@ -2412,8 +2404,7 @@
             "valueType": {
               "type": "id",
               "value": "transferState"
-            },
-            "propertyAccess": "READ_ONLY"
+            }
           },
           {
             "description": "The date/time the transfer was processed.",
@@ -3012,8 +3003,7 @@
                 "type": "id",
                 "value": "readOnlyResourceId"
               }
-            },
-            "propertyAccess": "READ_ONLY"
+            }
           },
           {
             "description": "The timestamp when the problem occurred, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time `YYYY-MM-DDThh:mm:ss.sssZ` format, UTC.",
@@ -3147,8 +3137,7 @@
             "valueType": {
               "type": "id",
               "value": "readOnlyResourceId"
-            },
-            "propertyAccess": "READ_ONLY"
+            }
           },
           {
             "description": "The unique ID of this challenge instance. This is an opaque string. This is passed when starting a challenge factor or when validating the identity challenge responses.",
@@ -3156,8 +3145,7 @@
             "valueType": {
               "type": "id",
               "value": "readOnlyResourceId"
-            },
-            "propertyAccess": "READ_ONLY"
+            }
           },
           {
             "description": "A list of challenge factors. The user must complete one of these challenge factors. The `labels` in each factor identify one or more channels the user may use, such as a list of email addresses the system may use to send a one-time passcode to the user. ***Note**: The same channel may be used by multiple factors in the array of factors. For example, the user's primary mobile phone number may be used for both an `sms` factor and a `voice` factor.",
@@ -3416,6 +3404,15 @@
           }
         ]
       }
+    },
+    "transfers_deleteTransfer_Response_204": {
+      "description": "Empty response body",
+      "name": "transfers_deleteTransfer_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
     }
   },
   "subpackages": {
@@ -3524,6 +3521,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -3534,6 +3532,21 @@
             },
             "statusCode": 200,
             "description": "OK. A page from the full list of the customer's accounts. This list contains only accounts that the customer is entitled to access. While the `nextPage_url` property is present in the response, the client can fetch the next page of accounts by performing a `GET` on that URL."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "accounts"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK. A page from the full list of the customer's accounts. This list contains only accounts that the customer is entitled to access. While the `nextPage_url` property is present in the response, the client can fetch the next page of accounts by performing a `GET` on that URL."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -3755,6 +3768,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -3765,6 +3779,21 @@
             },
             "statusCode": 200,
             "description": "OK. The response is a representation of the customer's account."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "account"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK. The response is a representation of the customer's account."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -3932,6 +3961,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -3942,6 +3972,32 @@
             },
             "statusCode": 200,
             "description": "OK. The response contains the balances for all the accounts in the `?accounts=` query parameter."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "accountBalances"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK. The response contains the balances for all the accounts in the `?accounts=` query parameter."
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "incompleteAccountBalances"
+                  }
+                },
+                "statusCode": 202,
+                "description": "Accepted. The service accepted the request but could not provide balances for all the requested accounts and returned an incomplete response. Try the call again after the time in the `Retry-After` response header has passed, and request only those accounts which are `incomplete`. If there is no `Retry-After` response header, the client has reached its maximum number of tries and should not retry the operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -4061,6 +4117,93 @@
                   ]
                 }
               }
+            },
+            {
+              "description": "",
+              "path": "/accountBalances",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 202,
+              "responseBody": {
+                "items": [
+                  {
+                    "id": "05d00d7d-d630",
+                    "available": "3208.20",
+                    "current": "3448.72",
+                    "updatedAt": "2022-05-02T06:51:19.375Z",
+                    "currentWithPending": "3448.72",
+                    "incomplete": false
+                  },
+                  {
+                    "id": "cb5d67ea-a5c3",
+                    "available": "1750.80",
+                    "current": "1956.19",
+                    "updatedAt": "2022-05-02T06:51:19.375Z",
+                    "currentWithPending": "1956.19",
+                    "incomplete": false
+                  },
+                  {
+                    "id": "b5a4f178-2baf",
+                    "incomplete": true
+                  },
+                  {
+                    "id": "959908db-fd40",
+                    "incomplete": true
+                  },
+                  {
+                    "id": "97e6166a-2a4c",
+                    "incomplete": true
+                  }
+                ],
+                "incompleteAccounts": [
+                  "b5a4f178-2baf",
+                  "959908db-fd40",
+                  "97e6166a-2a4c"
+                ],
+                "retryCount": 1
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "items": [
+                    {
+                      "id": "05d00d7d-d630",
+                      "available": "3208.20",
+                      "current": "3448.72",
+                      "updatedAt": "2022-05-02T06:51:19.375Z",
+                      "currentWithPending": "3448.72",
+                      "incomplete": false
+                    },
+                    {
+                      "id": "cb5d67ea-a5c3",
+                      "available": "1750.80",
+                      "current": "1956.19",
+                      "updatedAt": "2022-05-02T06:51:19.375Z",
+                      "currentWithPending": "1956.19",
+                      "incomplete": false
+                    },
+                    {
+                      "id": "b5a4f178-2baf",
+                      "incomplete": true
+                    },
+                    {
+                      "id": "959908db-fd40",
+                      "incomplete": true
+                    },
+                    {
+                      "id": "97e6166a-2a4c",
+                      "incomplete": true
+                    }
+                  ],
+                  "incompleteAccounts": [
+                    "b5a4f178-2baf",
+                    "959908db-fd40",
+                    "97e6166a-2a4c"
+                  ],
+                  "retryCount": 1
+                }
+              }
             }
           ],
           "protocol": {
@@ -4158,6 +4301,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4168,6 +4312,21 @@
             },
             "statusCode": 200,
             "description": "OK. A page from the full list of the customer's ACH-eligible accounts. This list contains only accounts that the customer is entitled to access. While the `nextPage_url` property is present in the response, the client can fetch the next page of accounts by performing a `GET` on that URL."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "accounts"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK. A page from the full list of the customer's ACH-eligible accounts. This list contains only accounts that the customer is entitled to access. While the `nextPage_url` property is present in the response, the client can fetch the next page of accounts by performing a `GET` on that URL."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -4404,6 +4563,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4414,6 +4574,21 @@
             },
             "statusCode": 200,
             "description": "OK."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "accountJointOwners"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -4601,6 +4776,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4611,6 +4787,21 @@
             },
             "statusCode": 200,
             "description": "OK. A page from the full list of the customer's eligible overdraft accounts. This list contains only accounts that the customer is entitled to access. While the `nextPage_url` property is present in the response, the client can fetch the next page of accounts by performing a `GET` on that URL."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "eligibleOverdraftAccounts"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK. A page from the full list of the customer's eligible overdraft accounts. This list contains only accounts that the customer is entitled to access. While the `nextPage_url` property is present in the response, the client can fetch the next page of accounts by performing a `GET` on that URL."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -4757,6 +4948,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4767,6 +4959,21 @@
             },
             "statusCode": 200,
             "description": "OK."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "overdraftProtection"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -4920,6 +5127,25 @@
             },
             "description": "The replacement overdraft accounts."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "overdraftProtectionPatch"
+                    }
+                  },
+                  "description": "The replacement overdraft accounts."
+                },
+                "description": "The replacement overdraft accounts."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -4930,6 +5156,21 @@
             },
             "statusCode": 200,
             "description": "OK."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "overdraftProtection"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -5150,6 +5391,25 @@
             },
             "description": "Data necessary to invite a joint owner."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "newJointOwnerInvitation"
+                    }
+                  },
+                  "description": "Data necessary to invite a joint owner."
+                },
+                "description": "Data necessary to invite a joint owner."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -5160,6 +5420,21 @@
             },
             "statusCode": 200,
             "description": "OK."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "jointOwnerInvitation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -5369,6 +5644,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -5379,6 +5655,21 @@
             },
             "statusCode": 200,
             "description": "OK."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "institutionLookupResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -5589,6 +5880,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -5599,6 +5891,21 @@
             },
             "statusCode": 200,
             "description": "OK."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "transferSchedules"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -5819,6 +6126,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -5829,6 +6137,21 @@
             },
             "statusCode": 200,
             "description": "OK."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "cutoffTimes"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -6068,6 +6391,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -6078,6 +6402,21 @@
             },
             "statusCode": 200,
             "description": "OK."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "transferDateRestrictions"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -6523,6 +6862,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -6533,6 +6873,32 @@
             },
             "statusCode": 200,
             "description": "OK."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "transactions"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK."
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "incompleteTransactions"
+                  }
+                },
+                "statusCode": 202,
+                "description": "Accepted. The service accepted the request but could not list the transactions for the date range in a reasonable amount of time. The system continues fetching the transactions so that they are available after one or more retries. Try the call again after the time in the `Retry-After` response header has passed, passing the value of the `retryCount` from the [`incompleteTransactions`](#schema-incompleteTransactions) response as `retryCount` query parameter with. If there is no `Retry-After` response header, the client has reached its maximum number of tries and should not retry the operation. If the system is unable to fetch the transactions after several attempts, the call returns 504 Gateway Timeout."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -6722,6 +7088,25 @@
                   ]
                 }
               }
+            },
+            {
+              "description": "",
+              "path": "/accounts/accountId/transactions",
+              "pathParameters": {
+                "accountId": "accountId"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 202,
+              "responseBody": {
+                "retryCount": 1
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "retryCount": 1
+                }
+              }
             }
           ],
           "protocol": {
@@ -6782,6 +7167,7 @@
               }
             }
           ],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -6792,6 +7178,21 @@
             },
             "statusCode": 200,
             "description": "OK."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "transactionCategories"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -7020,6 +7421,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -7030,6 +7432,21 @@
             },
             "statusCode": 200,
             "description": "OK."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "transfers"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -7274,6 +7691,25 @@
             },
             "description": "The data necessary to create a new transfer."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "newTransfer"
+                    }
+                  },
+                  "description": "The data necessary to create a new transfer."
+                },
+                "description": "The data necessary to create a new transfer."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -7284,6 +7720,21 @@
             },
             "statusCode": 201,
             "description": "Created."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "transfer"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -7486,6 +7937,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -7496,6 +7948,21 @@
             },
             "statusCode": 200,
             "description": "OK."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "transfer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -7652,6 +8119,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "transfers_deleteTransfer_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No Content. The operation succeeded but returned no response body."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "transfers_deleteTransfer_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No Content. The operation succeeded but returned no response body."
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -7715,7 +8209,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -7796,6 +8295,40 @@
             },
             "description": "The fields to update within the transfer."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/merge-patch+json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "transferPatch"
+                    }
+                  },
+                  "description": "The fields to update within the transfer."
+                },
+                "description": "The fields to update within the transfer."
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "transferPatch"
+                    }
+                  },
+                  "description": "The fields to update within the transfer."
+                },
+                "description": "The fields to update within the transfer."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -7806,6 +8339,21 @@
             },
             "statusCode": 200,
             "description": "OK."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "transfer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK."
+              }
+            ]
           },
           "errorsV2": [
             {

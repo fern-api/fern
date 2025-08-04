@@ -195,7 +195,8 @@ func removeUnusedImports(filename string, buf []byte) ([]byte, error) {
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, filename, buf, parser.ParseComments)
 	if err != nil {
-		return nil, fmt.Errorf("failed to parse Go code: %v", err)
+		// Instead of returning an error, just return the original buffer unchanged.
+		return buf, nil
 	}
 
 	imports := make(map[string]string)

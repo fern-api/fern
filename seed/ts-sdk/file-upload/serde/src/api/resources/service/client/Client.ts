@@ -25,6 +25,8 @@ export declare namespace Service {
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional query string parameters to include in the request. */
+        queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
         headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
@@ -160,6 +162,7 @@ export class Service {
                 mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
                 requestOptions?.headers,
             ),
+            queryParameters: requestOptions?.queryParams,
             requestType: "file",
             duplex: _maybeEncodedRequest.duplex,
             body: _maybeEncodedRequest.body,
@@ -226,6 +229,7 @@ export class Service {
                 mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
                 requestOptions?.headers,
             ),
+            queryParameters: requestOptions?.queryParams,
             requestType: "file",
             duplex: _maybeEncodedRequest.duplex,
             body: _maybeEncodedRequest.body,
@@ -316,7 +320,7 @@ export class Service {
                 mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
                 requestOptions?.headers,
             ),
-            queryParameters: _queryParams,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             requestType: "file",
             duplex: _maybeEncodedRequest.duplex,
             body: _maybeEncodedRequest.body,
@@ -391,6 +395,7 @@ export class Service {
                 mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
                 requestOptions?.headers,
             ),
+            queryParameters: requestOptions?.queryParams,
             requestType: "file",
             duplex: _maybeEncodedRequest.duplex,
             body: _maybeEncodedRequest.body,
@@ -465,6 +470,7 @@ export class Service {
                 mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
                 requestOptions?.headers,
             ),
+            queryParameters: requestOptions?.queryParams,
             requestType: "file",
             duplex: _maybeEncodedRequest.duplex,
             body: _maybeEncodedRequest.body,
@@ -623,6 +629,7 @@ export class Service {
                 mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
                 requestOptions?.headers,
             ),
+            queryParameters: requestOptions?.queryParams,
             requestType: "file",
             duplex: _maybeEncodedRequest.duplex,
             body: _maybeEncodedRequest.body,
@@ -696,6 +703,7 @@ export class Service {
                 mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
                 requestOptions?.headers,
             ),
+            queryParameters: requestOptions?.queryParams,
             requestType: "file",
             duplex: _maybeEncodedRequest.duplex,
             body: _maybeEncodedRequest.body,
@@ -742,6 +750,91 @@ export class Service {
     }
 
     /**
+     * @param {SeedFileUpload.InlineTypeRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     */
+    public withInlineType(
+        request: SeedFileUpload.InlineTypeRequest,
+        requestOptions?: Service.RequestOptions,
+    ): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__withInlineType(request, requestOptions));
+    }
+
+    private async __withInlineType(
+        request: SeedFileUpload.InlineTypeRequest,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
+        const _request = await core.newFormData();
+        await _request.appendFile("file", request.file);
+        _request.append(
+            "request",
+            toJson(
+                serializers.MyInlineType.jsonOrThrow(request.request, {
+                    unrecognizedObjectKeys: "strip",
+                    omitUndefined: true,
+                }),
+            ),
+        );
+        const _maybeEncodedRequest = await _request.getRequest();
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/inline-type",
+            ),
+            method: "POST",
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
+                requestOptions?.headers,
+            ),
+            queryParameters: requestOptions?.queryParams,
+            requestType: "file",
+            duplex: _maybeEncodedRequest.duplex,
+            body: _maybeEncodedRequest.body,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.service.withInlineType.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedFileUploadError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedFileUploadError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /inline-type.");
+            case "unknown":
+                throw new errors.SeedFileUploadError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -760,6 +853,7 @@ export class Service {
             ),
             method: "POST",
             headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
+            queryParameters: requestOptions?.queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

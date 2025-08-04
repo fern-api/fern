@@ -142,6 +142,7 @@
                         "v2Examples": null,
                         "contentType": "application/octet-stream"
                     },
+                    "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "justRequestBody",
@@ -178,6 +179,7 @@
                         "body": null,
                         "status-code": null
                     },
+                    "v2Responses": null,
                     "errors": [],
                     "userSpecifiedExamples": [
                         {

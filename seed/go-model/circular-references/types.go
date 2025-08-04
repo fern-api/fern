@@ -11,7 +11,8 @@ import (
 type ImportingA struct {
 	A *A `json:"a,omitempty" url:"a,omitempty"`
 
-	extraProperties map[string]interface{}
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
 func (i *ImportingA) GetA() *A {
@@ -21,11 +22,16 @@ func (i *ImportingA) GetA() *A {
 	return i.A
 }
 
-func (i *ImportingA) GetExtraProperties() map[string]interface{} {
+func (i *ImportingA) GetExtraProperties() map[string]any {
+	if i == nil {
+		return nil
+	}
 	return i.extraProperties
 }
 
-func (i *ImportingA) UnmarshalJSON(data []byte) error {
+func (i *ImportingA) UnmarshalJSON(
+	data []byte,
+) error {
 	type unmarshaler ImportingA
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
@@ -37,10 +43,16 @@ func (i *ImportingA) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	i.extraProperties = extraProperties
+	i.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (i *ImportingA) String() string {
+	if len(i.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(i.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(i); err == nil {
 		return value
 	}
@@ -50,7 +62,8 @@ func (i *ImportingA) String() string {
 type RootType struct {
 	S string `json:"s" url:"s"`
 
-	extraProperties map[string]interface{}
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
 func (r *RootType) GetS() string {
@@ -60,11 +73,16 @@ func (r *RootType) GetS() string {
 	return r.S
 }
 
-func (r *RootType) GetExtraProperties() map[string]interface{} {
+func (r *RootType) GetExtraProperties() map[string]any {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
-func (r *RootType) UnmarshalJSON(data []byte) error {
+func (r *RootType) UnmarshalJSON(
+	data []byte,
+) error {
 	type unmarshaler RootType
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
@@ -76,10 +94,16 @@ func (r *RootType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (r *RootType) String() string {
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(r); err == nil {
 		return value
 	}

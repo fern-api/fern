@@ -1029,3 +1029,64 @@ client.service.create_big_entity(
 </dl>
 </details>
 
+<details><summary><code>client.service.<a href="src/seed/service/client.py">refresh_token</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedExhaustive
+from seed.environment import SeedExhaustiveEnvironment
+from seed.types import RefreshTokenRequest
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    environment=SeedExhaustiveEnvironment.PRODUCTION,
+)
+client.service.refresh_token(
+    request=RefreshTokenRequest(
+        ttl=420,
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `typing.Optional[RefreshTokenRequest]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+

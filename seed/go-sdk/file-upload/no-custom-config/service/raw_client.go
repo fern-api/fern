@@ -93,7 +93,7 @@ func (r *RawClient) Post(
 		}
 	}
 	if request.OptionalObjectType != nil {
-		if err := writer.WriteJSON("optional_object_type", *request.OptionalObjectType); err != nil {
+		if err := writer.WriteJSON("optional_object_type", string(*request.OptionalObjectType)); err != nil {
 			return nil, err
 		}
 	}
@@ -421,7 +421,7 @@ func (r *RawClient) WithFormEncodedContainers(
 		}
 	}
 	if request.OptionalObjectType != nil {
-		if err := writer.WriteJSON("optional_object_type", *request.OptionalObjectType); err != nil {
+		if err := writer.WriteJSON("optional_object_type", string(*request.OptionalObjectType)); err != nil {
 			return nil, err
 		}
 	}
@@ -500,6 +500,59 @@ func (r *RawClient) OptionalArgs(
 		if err := writer.WriteJSON("request", request.Request, internal.WithDefaultContentType("application/json; charset=utf-8")); err != nil {
 			return nil, err
 		}
+	}
+	if err := writer.Close(); err != nil {
+		return nil, err
+	}
+	headers.Set("Content-Type", writer.ContentType())
+
+	var response string
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         writer.Buffer(),
+			Response:        &response,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[string]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
+func (r *RawClient) WithInlineType(
+	ctx context.Context,
+	request *fern.InlineTypeRequest,
+	opts ...option.RequestOption,
+) (*core.Response[string], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/inline-type"
+	headers := internal.MergeHeaders(
+		r.header.Clone(),
+		options.ToHeader(),
+	)
+	writer := internal.NewMultipartWriter()
+	if err := writer.WriteFile("file", request.File); err != nil {
+		return nil, err
+	}
+	if err := writer.WriteJSON("request", request.Request); err != nil {
+		return nil, err
 	}
 	if err := writer.Close(); err != nil {
 		return nil, err

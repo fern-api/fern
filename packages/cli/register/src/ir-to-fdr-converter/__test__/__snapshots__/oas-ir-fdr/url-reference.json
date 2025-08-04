@@ -1293,6 +1293,106 @@
             },
             "description": "Pet object that needs to be added to the store"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "key": "id",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "long"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "A category for a pet",
+                        "key": "category",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "PetPutRequestBodyContentApplicationJsonSchemaCategory"
+                          }
+                        }
+                      },
+                      {
+                        "key": "name",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "key": "photoUrls",
+                        "valueType": {
+                          "type": "list",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "key": "tags",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "list",
+                            "itemType": {
+                              "type": "id",
+                              "value": "PetPutRequestBodyContentApplicationJsonSchemaTagsItems"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "pet status in the store",
+                        "key": "status",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "PetPutRequestBodyContentApplicationJsonSchemaStatus"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "description": "Pet object that needs to be added to the store"
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/xml",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Pet"
+                    }
+                  },
+                  "description": "Pet object that needs to be added to the store"
+                },
+                "description": "Pet object that needs to be added to the store"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -1303,6 +1403,21 @@
             },
             "statusCode": 200,
             "description": "A list of pets"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Pet"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A list of pets"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -1460,6 +1575,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1470,6 +1586,21 @@
             },
             "statusCode": 200,
             "description": "An order object"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Order"
+                  }
+                },
+                "statusCode": 200,
+                "description": "An order object"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [

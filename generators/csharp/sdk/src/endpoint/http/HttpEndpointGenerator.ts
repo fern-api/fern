@@ -129,10 +129,23 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const body = csharp.codeblock((writer) => {
             this.writeUnpagedMethodBody(endpointSignatureInfo, writer, rawClient, endpoint, rawClientReference);
         });
+
+        const isAsyncEnumerable =
+            endpoint.response?.body?._visit({
+                streaming: () => true,
+                json: () => false,
+                fileDownload: () => false,
+                text: () => false,
+                bytes: () => false,
+                streamParameter: () => false,
+                _other: () => false
+            }) ?? false;
+
         return csharp.method({
             name: this.getUnpagedEndpointMethodName(endpoint),
             access: this.hasPagination(endpoint) ? csharp.Access.Private : csharp.Access.Public,
             isAsync: true,
+            isAsyncEnumerable,
             parameters,
             summary: endpoint.docs,
             return_,
@@ -296,7 +309,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         return csharp.codeblock((writer) => {
             body._visit({
                 streamParameter: () => this.context.logger.error("Stream parameters not supported"),
-                fileDownload: () => this.context.logger.error("File download not supported"),
+                fileDownload: (value) => {
+                    writer.writeLine(`if (${RESPONSE_VARIABLE_NAME}.StatusCode is >= 200 and < 400) {`);
+                    writer.writeNewLineIfLastLineNot();
+                    writer.indent();
+                    writer.writeTextStatement(`return await ${RESPONSE_VARIABLE_NAME}.Raw.Content.ReadAsStreamAsync()`);
+                    writer.dedent();
+                    writer.writeLine("}");
+                },
                 json: (reference) => {
                     const astType = this.context.csharpTypeMapper.convert({ reference: reference.responseBodyType });
                     writer.writeLine(`if (${RESPONSE_VARIABLE_NAME}.StatusCode is >= 200 and < 400) {`);
@@ -333,7 +353,66 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeLine("}");
                     writer.writeLine();
                 },
-                streaming: () => this.context.logger.error("Streaming not supported"),
+                streaming: (value) => {
+                    writer.writeLine(`if (${RESPONSE_VARIABLE_NAME}.StatusCode is >= 200 and < 400) {`);
+                    writer.writeNewLineIfLastLineNot();
+                    writer.indent();
+
+                    writer.writeTextStatement(`string? line`);
+                    writer.writeTextStatement(
+                        `using var reader = new StreamReader(await ${RESPONSE_VARIABLE_NAME}.Raw.Content.ReadAsStreamAsync())`
+                    );
+                    writer.writeLine("while (!string.IsNullOrEmpty(line = await reader.ReadLineAsync())) {");
+                    writer.indent();
+
+                    const payloadType = value._visit({
+                        json: (jsonChunk) => {
+                            return this.context.csharpTypeMapper.convert({ reference: jsonChunk.payload });
+                        },
+                        text: () => {
+                            return csharp.Type.string();
+                        },
+                        sse: (sseChunk) => {
+                            return this.context.csharpTypeMapper.convert({ reference: sseChunk.payload });
+                        },
+                        _other: () => csharp.Type.object()
+                    });
+
+                    writer.write("var chunk = (");
+                    writer.writeNode(payloadType);
+                    writer.writeTextStatement("?)null");
+                    writer.writeLine("try");
+                    writer.writeLine("{");
+                    writer.indent();
+
+                    writer.write("chunk = ");
+                    writer.writeNode(this.context.getJsonUtilsClassReference());
+                    writer.write(".Deserialize<");
+                    writer.writeNode(payloadType);
+                    writer.writeTextStatement(">(line)");
+                    writer.dedent();
+                    writer.writeLine("}");
+                    writer.writeLine("catch (JsonException)");
+                    writer.writeLine("{");
+                    writer.indent();
+                    writer.write("throw new ");
+                    writer.writeNode(this.context.getBaseExceptionClassReference());
+                    writer.writeTextStatement(`($"Unable to deserialize JSON response '{line}'")`);
+
+                    writer.dedent();
+                    writer.writeLine("}");
+                    writer.writeLine("if (chunk is not null)");
+                    writer.writeLine("{");
+                    writer.indent();
+                    writer.writeTextStatement(`yield return chunk`);
+                    writer.dedent();
+                    writer.writeLine("}");
+                    writer.dedent();
+                    writer.writeLine("}");
+                    writer.writeLine("yield break;");
+                    writer.dedent();
+                    writer.writeLine("}");
+                },
                 text: () => {
                     writer.writeLine(`if (${RESPONSE_VARIABLE_NAME}.StatusCode is >= 200 and < 400) {`);
                     writer.writeNewLineIfLastLineNot();

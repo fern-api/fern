@@ -54,6 +54,15 @@
           }
         ]
       }
+    },
+    "headMethodsShouldNotDefineAResponseBody_Response_200": {
+      "description": "Empty response body",
+      "name": "headMethodsShouldNotDefineAResponseBody_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
     }
   },
   "subpackages": {},
@@ -93,6 +102,7 @@
           }
         ],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -103,6 +113,21 @@
           },
           "statusCode": 200,
           "description": "User retrieved successfully"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "listUsers_Response_200"
+                }
+              },
+              "statusCode": 200,
+              "description": "User retrieved successfully"
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [
@@ -140,7 +165,7 @@
       },
       {
         "auth": false,
-        "method": "GET",
+        "method": "HEAD",
         "id": "headMethodsShouldNotDefineAResponseBody",
         "originalEndpointId": "endpoint_.headMethodsShouldNotDefineAResponseBody",
         "name": "HEAD methods should not define a response body.",
@@ -159,6 +184,33 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "id",
+              "value": "headMethodsShouldNotDefineAResponseBody_Response_200"
+            }
+          },
+          "statusCode": 200,
+          "description": "User retrieved successfully"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "headMethodsShouldNotDefineAResponseBody_Response_200"
+                }
+              },
+              "statusCode": 200,
+              "description": "User retrieved successfully"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
           {
@@ -167,7 +219,12 @@
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "responseStatusCode": 200
+            "responseStatusCode": 200,
+            "responseBody": {},
+            "responseBodyV3": {
+              "type": "json",
+              "value": {}
+            }
           }
         ],
         "protocol": {

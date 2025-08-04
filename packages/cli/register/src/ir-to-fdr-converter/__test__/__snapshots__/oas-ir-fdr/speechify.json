@@ -1308,6 +1308,24 @@
         ]
       }
     },
+    "audio_ExperimentalStreamCreate_Response_200": {
+      "description": "Empty response body",
+      "name": "audio_ExperimentalStreamCreate_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "audio_GetSpeech_Response_200": {
+      "description": "Empty response body",
+      "name": "audio_GetSpeech_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "V1AudioStreamPostParametersAccept": {
       "name": "V1AudioStreamPostParametersAccept",
       "shape": {
@@ -1323,6 +1341,87 @@
             "value": "audio/aac"
           }
         ]
+      }
+    },
+    "audio_GetStream_Response_200": {
+      "description": "Empty response body",
+      "name": "audio_GetStream_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "auth_CreateAccessToken_Response_200": {
+      "description": "Empty response body",
+      "name": "auth_CreateAccessToken_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "apikey_ListAPIKeys_Response_200": {
+      "description": "Empty response body",
+      "name": "apikey_ListAPIKeys_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "apikey_CreateAPIKey_Response_200": {
+      "description": "Empty response body",
+      "name": "apikey_CreateAPIKey_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "apikey_DeleteAPIKey_Response_200": {
+      "description": "Empty response body",
+      "name": "apikey_DeleteAPIKey_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "apikey_UpdateApiKey_Response_200": {
+      "description": "Empty response body",
+      "name": "apikey_UpdateApiKey_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "voices_GetVoices_Response_200": {
+      "description": "Empty response body",
+      "name": "voices_GetVoices_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "voices_CreateVoice_Response_200": {
+      "description": "Empty response body",
+      "name": "voices_CreateVoice_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "voices_DeleteVoice_Response_204": {
+      "description": "Empty response body",
+      "name": "voices_DeleteVoice_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     }
   },
@@ -1373,6 +1472,49 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ExperimentalStreamRequest"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "audio_ExperimentalStreamCreate_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "audio_ExperimentalStreamCreate_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -1442,7 +1584,12 @@
                   "voice_id": "string"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -1490,6 +1637,49 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "GetSpeechRequest"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "audio_GetSpeech_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "audio_GetSpeech_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -1559,7 +1749,12 @@
                   "voice_id": "string"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -1615,6 +1810,49 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "GetStreamRequest"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "audio_GetStream_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "audio_GetStream_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -1686,7 +1924,12 @@
                   "voice_id": "string"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -1736,7 +1979,7 @@
           "request": {
             "type": {
               "type": "json",
-              "contentType": "application/json",
+              "contentType": "application/x-www-form-urlencoded",
               "shape": {
                 "type": "reference",
                 "value": {
@@ -1745,6 +1988,62 @@
                 }
               }
             }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/x-www-form-urlencoded",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "CreateAccessTokenRequest"
+                    }
+                  }
+                }
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "CreateAccessTokenRequest"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "auth_CreateAccessToken_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "Contains the details of the token which can be used by the user to access the API"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "auth_CreateAccessToken_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Contains the details of the token which can be used by the user to access the API"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -1763,7 +2062,12 @@
                   "grant_type": "client_credentials"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -1810,6 +2114,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "apikey_ListAPIKeys_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "An array of all API keys for the user for the given request"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "apikey_ListAPIKeys_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "An array of all API keys for the user for the given request"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -1818,7 +2149,12 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -1854,6 +2190,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "apikey_CreateAPIKey_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "APIKeyResponseWrapper contains the details of the API key which can be used by the user to access the API"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "apikey_CreateAPIKey_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "APIKeyResponseWrapper contains the details of the API key which can be used by the user to access the API"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -1862,7 +2225,12 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -1917,6 +2285,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "apikey_DeleteAPIKey_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "API key deleted successfully"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "apikey_DeleteAPIKey_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "API key deleted successfully"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -1927,7 +2322,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -1997,6 +2397,51 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "apikey_UpdateApiKey_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "APIKeyResponseWrapper contains the details of the API key which can be used by the user to access the API"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "apikey_UpdateApiKey_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "APIKeyResponseWrapper contains the details of the API key which can be used by the user to access the API"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -2012,7 +2457,12 @@
                 "type": "json",
                 "value": "string"
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -2059,6 +2509,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "voices_GetVoices_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "A list of voices"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "voices_GetVoices_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A list of voices"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -2092,7 +2569,12 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -2175,6 +2657,83 @@
               "contentType": "multipart/form-data"
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "fileUpload",
+                  "value": {
+                    "name": "voices_CreateVoice_Request",
+                    "properties": [
+                      {
+                        "type": "bodyProperty",
+                        "key": "name",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "description": "Name of the personal voice",
+                        "exploded": false
+                      },
+                      {
+                        "type": "file",
+                        "value": {
+                          "type": "file",
+                          "key": "sample",
+                          "isOptional": false,
+                          "contentType": "multipart/form-data",
+                          "description": "Audio sample file"
+                        }
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "consent",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "description": "User consent information in JSON format: {\"fullName\": \"\", \"email\": \"\"}\nFor example, {\"fullName\": \"John Doe\", \"email\": \"john@example.com\"}\nThis should include the fullName and email of the consenting individual.",
+                        "exploded": false
+                      }
+                    ]
+                  },
+                  "contentType": "multipart/form-data"
+                }
+              }
+            ]
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "voices_CreateVoice_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "A created voice"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "voices_CreateVoice_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A created voice"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -2242,7 +2801,12 @@
                   }
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -2297,6 +2861,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "voices_DeleteVoice_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Voice deleted successfully"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "voices_DeleteVoice_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Voice deleted successfully"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -2344,7 +2935,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {

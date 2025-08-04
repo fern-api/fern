@@ -11,7 +11,8 @@ import (
 type BadObjectRequestInfo struct {
 	Message string `json:"message" url:"message"`
 
-	extraProperties map[string]interface{}
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
 func (b *BadObjectRequestInfo) GetMessage() string {
@@ -21,11 +22,16 @@ func (b *BadObjectRequestInfo) GetMessage() string {
 	return b.Message
 }
 
-func (b *BadObjectRequestInfo) GetExtraProperties() map[string]interface{} {
+func (b *BadObjectRequestInfo) GetExtraProperties() map[string]any {
+	if b == nil {
+		return nil
+	}
 	return b.extraProperties
 }
 
-func (b *BadObjectRequestInfo) UnmarshalJSON(data []byte) error {
+func (b *BadObjectRequestInfo) UnmarshalJSON(
+	data []byte,
+) error {
 	type unmarshaler BadObjectRequestInfo
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
@@ -37,10 +43,16 @@ func (b *BadObjectRequestInfo) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	b.extraProperties = extraProperties
+	b.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (b *BadObjectRequestInfo) String() string {
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(b); err == nil {
 		return value
 	}

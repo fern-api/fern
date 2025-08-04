@@ -11,4 +11,8 @@ export interface ProtobufDefinitionSchema {
     overrides?: string;
     /** Whether to compile the `.proto` files locally. By default, we generate remotely. */
     "local-generation"?: boolean;
+    /** Whether to convert to OpenAPI before generating */
+    "from-openapi"?: boolean;
+    /** Dependencies to use for generation. */
+    dependencies?: string[];
 }

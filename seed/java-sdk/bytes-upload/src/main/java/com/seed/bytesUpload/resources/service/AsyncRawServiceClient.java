@@ -43,7 +43,7 @@ public class AsyncRawServiceClient {
                 .newBuilder()
                 .addPathSegments("upload-content")
                 .build();
-        RequestBody body = new InputStreamRequestBody(request, MediaType.parse("application/octet-stream"));
+        RequestBody body = new InputStreamRequestBody(MediaType.parse("application/octet-stream"), request);
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("POST", body)

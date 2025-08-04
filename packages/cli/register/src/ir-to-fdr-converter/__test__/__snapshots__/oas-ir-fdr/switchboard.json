@@ -1745,6 +1745,33 @@
         ]
       }
     },
+    "Auth_andRedirect_Response_204": {
+      "description": "Empty response body",
+      "name": "Auth_andRedirect_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Extensions_delete_Response_204": {
+      "description": "Empty response body",
+      "name": "Extensions_delete_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Profiles_delete_Response_204": {
+      "description": "Empty response body",
+      "name": "Profiles_delete_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "SessionsGetParametersStatus": {
       "description": "status of the session to get",
       "name": "SessionsGetParametersStatus",
@@ -1764,6 +1791,15 @@
             "value": "ended"
           }
         ]
+      }
+    },
+    "Sessions_terminate_Response_204": {
+      "description": "Empty response body",
+      "name": "Sessions_terminate_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "SessionsEventsResponse2000": {
@@ -1962,6 +1998,33 @@
               }
             }
           ],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Auth_andRedirect_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No Content"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Auth_andRedirect_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No Content"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -1970,7 +2033,12 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -2030,6 +2098,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -2040,6 +2109,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ListExtensionV1EnvelopeDefaultMetaWrapper"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -2156,6 +2240,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Extensions-postRequest"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -2166,6 +2267,21 @@
             },
             "statusCode": 201,
             "description": "Created"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ExtensionV1EnvelopeDefaultMetaWrapper"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -2287,6 +2403,33 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Extensions_delete_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No Content"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Extensions_delete_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No Content"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -2297,7 +2440,12 @@
                 "name": "Widget"
               },
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -2353,6 +2501,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -2363,6 +2512,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ExtensionV1EnvelopeDefaultMetaWrapper"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -2543,6 +2707,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -2553,6 +2718,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ListProfileV1EnvelopeDefaultMetaWrapper"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -2679,6 +2859,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ProfileInput"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -2689,6 +2886,21 @@
             },
             "statusCode": 201,
             "description": "Created"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ProfileV1EnvelopeDefaultMetaWrapper"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -2832,6 +3044,33 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Profiles_delete_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No Content"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Profiles_delete_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No Content"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -2846,7 +3085,12 @@
                 ]
               },
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -2901,6 +3145,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -2911,6 +3156,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ProfileV1EnvelopeDefaultMetaWrapper"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -3123,6 +3383,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -3133,6 +3394,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SessionsWithPaginationEnvelopeDefaultMetaWrapper"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -3355,6 +3631,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "SessionRestInputV1"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -3365,6 +3658,21 @@
             },
             "statusCode": 201,
             "description": "Created"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SessionWithConnectionInfoEnvelopeDefaultMetaWrapper"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -3524,6 +3832,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -3534,6 +3843,21 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SessionWithConnectionInfoEnvelopeDefaultMetaWrapper"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -3729,6 +4053,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Sessions_terminate_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No Content"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Sessions_terminate_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No Content"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -3739,7 +4090,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -3794,6 +4150,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "stream",
@@ -3807,6 +4164,24 @@
             },
             "statusCode": 200,
             "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "stream",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Sessions_events_Response_200"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -3981,6 +4356,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -3991,6 +4367,21 @@
             },
             "statusCode": 201,
             "description": "Created"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "WindowEnvelopeDefaultMetaWrapper"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -4143,6 +4534,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Prompt-contentRequest"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -4153,6 +4561,21 @@
             },
             "statusCode": 201,
             "description": "Created"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ModelResponseExternalSessionAiResponseMetadataWrapper"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -4313,6 +4736,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4323,6 +4747,21 @@
             },
             "statusCode": 201,
             "description": "Created"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ScrapeModelResponseExternalSessionAiResponseMetadataWrapper"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -4501,6 +4940,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Summarize-contentRequest"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -4511,6 +4967,21 @@
             },
             "statusCode": 201,
             "description": "Created"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ModelResponseExternalSessionAiResponseMetadataWrapper"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Created"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [

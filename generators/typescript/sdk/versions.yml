@@ -1,4 +1,78 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.6.7
+  changelogEntry:
+    - summary: Improve logging inside of wire tests for when a JSON body fails to parse to JSON.
+      type: feat
+  createdAt: "2025-08-01"
+  irVersion: 58
+  
+- version: 2.6.6
+  changelogEntry:
+    - summary: Requests and responses with no body should not be asserted as JSON in wire tests.
+      type: fix
+  createdAt: "2025-08-04"
+  irVersion: 58
+
+- version: 2.6.5
+  changelogEntry:
+    - summary: If an enum wire value is not found, use the first enum value as a fallback.
+      type: fix
+  createdAt: "2025-08-01"
+  irVersion: 58
+
+- version: 2.6.4
+  changelogEntry:
+    - summary: Fix inline types inside of multipart-form requests
+      type: fix
+  createdAt: "2025-07-30"
+  irVersion: 58
+
+- version: 2.6.3
+  changelogEntry:
+    - summary: |
+        Include root variables in code snippet generation for client instantiation.
+      type: fix
+  createdAt: "2025-07-25"
+  irVersion: 58
+
+- version: 2.6.2
+  changelogEntry:
+    - summary: |
+        Update form-data version to 4.0.4 to avoid vulnerability.
+      type: chore
+  createdAt: "2025-07-24"
+  irVersion: 58
+
+- version: 2.6.1
+  changelogEntry:
+    - summary: |
+        Add additional query string parameters section to the generated README.md file.
+      type: chore
+  createdAt: "2025-07-23"
+  irVersion: 58
+
+- version: 2.6.0
+  changelogEntry:
+    - summary: |
+        Users can now pass in `queryParams` as part of the request options.
+        ```ts
+        await client.foo.bar(..., {
+          queryParams: {
+            foo: "bar"
+          }
+        });
+        ```
+      type: feat
+  createdAt: "2025-07-23"
+  irVersion: 58
+
+- version: 2.5.1
+  changelogEntry:
+    - summary: Update README.md generation to be more accurate
+      type: chore
+  createdAt: "2025-07-22"
+  irVersion: 58
+
 - version: 2.5.0
   changelogEntry:
     - summary: |
@@ -10,7 +84,7 @@
         Users can configure metadata when uploading a file to a binary upload endpoint using the `Uploadable.WithMetadata` type:
         ```typescript
         import { createReadStream } from "fs";
-        
+
         await client.upload({
             data: createReadStream("path/to/file"),
             filename: "my-file",
@@ -34,13 +108,13 @@
         For example, `fs.ReadStream` has a `path` property which the SDK uses to retrieve the file size from the filesystem without loading it into memory:
         ```typescript
         import { createReadStream } from "fs";
-        
+
         await client.upload(createReadStream("path/to/file"));
         ```
       type: feat
   createdAt: "2025-07-17"
   irVersion: 58
-  
+
 - version: 2.4.11
   changelogEntry:
     - summary: Bump the docker image for the generator to node:22.12-alpine3.20

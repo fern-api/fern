@@ -38,7 +38,7 @@
       "endpoints": [
         {
           "auth": false,
-          "method": "GET",
+          "method": "HEAD",
           "id": "head",
           "originalEndpointId": "endpoint_user.head",
           "name": "Head",
@@ -57,6 +57,8 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -100,6 +102,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -112,6 +115,7 @@
               }
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {

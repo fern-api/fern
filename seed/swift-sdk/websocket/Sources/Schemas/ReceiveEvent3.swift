@@ -1,8 +1,11 @@
-public struct ReceiveEvent3: Codable, Hashable {
+public struct ReceiveEvent3: Codable, Hashable, Sendable {
     public let receiveText3: String
     public let additionalProperties: [String: JSONValue]
 
-    public init(receiveText3: String, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        receiveText3: String,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.receiveText3 = receiveText3
         self.additionalProperties = additionalProperties
     }
@@ -14,7 +17,7 @@ public struct ReceiveEvent3: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.receiveText3, forKey: .receiveText3)
     }

@@ -112,6 +112,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "CreateCompletionRequest"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "stream",
@@ -127,6 +144,26 @@
             },
             "statusCode": 200,
             "description": "Success!"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "stream",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Success!"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [

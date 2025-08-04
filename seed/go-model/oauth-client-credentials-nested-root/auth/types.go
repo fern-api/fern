@@ -14,7 +14,8 @@ type TokenResponse struct {
 	ExpiresIn    int     `json:"expires_in" url:"expires_in"`
 	RefreshToken *string `json:"refresh_token,omitempty" url:"refresh_token,omitempty"`
 
-	extraProperties map[string]interface{}
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
 func (t *TokenResponse) GetAccessToken() string {
@@ -38,11 +39,16 @@ func (t *TokenResponse) GetRefreshToken() *string {
 	return t.RefreshToken
 }
 
-func (t *TokenResponse) GetExtraProperties() map[string]interface{} {
+func (t *TokenResponse) GetExtraProperties() map[string]any {
+	if t == nil {
+		return nil
+	}
 	return t.extraProperties
 }
 
-func (t *TokenResponse) UnmarshalJSON(data []byte) error {
+func (t *TokenResponse) UnmarshalJSON(
+	data []byte,
+) error {
 	type unmarshaler TokenResponse
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
@@ -54,10 +60,16 @@ func (t *TokenResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (t *TokenResponse) String() string {
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(t); err == nil {
 		return value
 	}

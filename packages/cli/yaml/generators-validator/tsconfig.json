@@ -3,15 +3,13 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "lib",
-    "rootDir": "src"
+    "rootDir": "src",
+    "types": ["vitest/globals"]
   },
   "include": [
     "./src/**/*"
   ],
   "references": [
-    {
-      "path": "../../../core"
-    },
     {
       "path": "../../../commons/core-utils"
     },
@@ -19,10 +17,19 @@
       "path": "../../../commons/fs-utils"
     },
     {
+      "path": "../../../core"
+    },
+    {
       "path": "../../configuration-loader"
     },
     {
+      "path": "../../fern-definition/schema"
+    },
+    {
       "path": "../../logger"
+    },
+    {
+      "path": "../../semver-utils"
     },
     {
       "path": "../../task-context"
@@ -31,13 +38,10 @@
       "path": "../../workspace/commons"
     },
     {
+      "path": "../../workspace/lazy-fern-workspace"
+    },
+    {
       "path": "../../workspace/loader"
-    },
-    {
-      "path": "../../fern-definition/schema"
-    },
-    {
-      "path": "../../semver-utils"
     }
   ]
 }

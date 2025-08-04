@@ -99,7 +99,7 @@ public final class ClientOptions {
         return new Builder();
     }
 
-    public static final class Builder {
+    public static class Builder {
         private Environment environment;
 
         private final Map<String, String> headers = new HashMap<>();
@@ -189,6 +189,18 @@ public final class ClientOptions {
             this.timeout = Optional.of(httpClient.callTimeoutMillis() / 1000);
 
             return new ClientOptions(environment, headers, headerSuppliers, httpClient, this.timeout.get(), version);
+        }
+
+        /**
+         * Create a new Builder initialized with values from an existing ClientOptions
+         */
+        public static Builder from(ClientOptions clientOptions) {
+            Builder builder = new Builder();
+            builder.environment = clientOptions.environment();
+            builder.timeout = Optional.of(clientOptions.timeout(null));
+            builder.httpClient = clientOptions.httpClient();
+            if (clientOptions.version != null) builder.version = clientOptions.version;
+            return builder;
         }
     }
 }

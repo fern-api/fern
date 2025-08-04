@@ -97,3 +97,19 @@ func (c *Client) CreateBigEntity(
 	}
 	return response.Body, nil
 }
+
+func (c *Client) RefreshToken(
+	ctx context.Context,
+	request *fern.RefreshTokenRequest,
+	opts ...option.RequestOption,
+) error {
+	_, err := c.WithRawResponse.RefreshToken(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}

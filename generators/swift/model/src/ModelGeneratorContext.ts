@@ -1,6 +1,5 @@
 import { FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractSwiftGeneratorContext } from "@fern-api/swift-base";
-
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";

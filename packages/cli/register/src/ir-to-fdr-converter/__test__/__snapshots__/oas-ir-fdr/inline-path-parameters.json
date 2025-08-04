@@ -141,6 +141,33 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Access level",
+                        "key": "access",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "OrganizationsOrganizationIdSearchPostRequestBodyContentApplicationJsonSchemaAccess"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -151,6 +178,21 @@
             },
             "statusCode": 200,
             "description": "Successful response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Organizations_Search_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful response"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -237,6 +279,8 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -321,6 +365,7 @@
           }
         ],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -331,6 +376,21 @@
           },
           "statusCode": 200,
           "description": "Successful response"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "GetOrganizationUser_Response_200"
+                }
+              },
+              "statusCode": 200,
+              "description": "Successful response"
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [

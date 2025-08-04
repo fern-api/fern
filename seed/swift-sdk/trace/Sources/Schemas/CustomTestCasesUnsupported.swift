@@ -1,9 +1,13 @@
-public struct CustomTestCasesUnsupported: Codable, Hashable {
+public struct CustomTestCasesUnsupported: Codable, Hashable, Sendable {
     public let problemId: ProblemId
     public let submissionId: SubmissionId
     public let additionalProperties: [String: JSONValue]
 
-    public init(problemId: ProblemId, submissionId: SubmissionId, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        problemId: ProblemId,
+        submissionId: SubmissionId,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.problemId = problemId
         self.submissionId = submissionId
         self.additionalProperties = additionalProperties
@@ -17,7 +21,7 @@ public struct CustomTestCasesUnsupported: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.problemId, forKey: .problemId)
         try container.encode(self.submissionId, forKey: .submissionId)

@@ -3,6 +3,37 @@ info:
   title: enum
   version: ''
 paths:
+  /headers:
+    post:
+      operationId: headers_send
+      tags:
+        - Headers
+      parameters:
+        - name: operand
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/Operand'
+        - name: maybeOperand
+          in: header
+          required: false
+          schema:
+            $ref: '#/components/schemas/Operand'
+            nullable: true
+        - name: operandOrColor
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/ColorOrOperand'
+        - name: maybeOperandOrColor
+          in: header
+          required: false
+          schema:
+            $ref: '#/components/schemas/ColorOrOperand'
+            nullable: true
+      responses:
+        '204':
+          description: ''
   /inlined:
     post:
       operationId: inlinedRequest_send
@@ -164,6 +195,12 @@ components:
       oneOf:
         - $ref: '#/components/schemas/Color'
         - $ref: '#/components/schemas/Operand'
+    EnumWithSpecialCharacters:
+      title: EnumWithSpecialCharacters
+      type: string
+      enum:
+        - \$bla
+        - \$yo
     EnumWithCustom:
       title: EnumWithCustom
       type: string
@@ -184,7 +221,7 @@ components:
         - Hello\fWorld
         - Hello\u0008World
         - Hello\vWorld
-        - Hello\0World
+        - Hello\x00World
         - Hello\u0007World
         - Hello\u0001World
         - Hello\u0002World
@@ -192,7 +229,7 @@ components:
         - Hello\u007FWorld
         - Hello\u009FWorld
         - Line 1\n"Quote"\tTab\\Backslash\r\nLine 2\0Null
-        - \n\r\t\0\u0008\f\v\u0007
+        - \n\r\t\x00\u0008\f\v\u0007
         - Hello 世界
         - café
         - 🚀

@@ -129,10 +129,13 @@ export async function runAppPreviewServer({
         NEXT_DISABLE_CACHE: "1",
         NODE_ENV: "production",
         NODE_PATH: bundleRoot,
-        NODE_OPTIONS: "--max-old-space-size=2048"
+        NODE_OPTIONS: "--max-old-space-size=2048 --enable-source-maps"
     };
 
-    const serverProcess = runExeca(context.logger, "node", [serverPath], { env, doNotPipeOutput: true });
+    const serverProcess = runExeca(context.logger, "node", [serverPath], {
+        env,
+        doNotPipeOutput: true
+    });
 
     serverProcess.stdout?.on("data", (data) => {
         context.logger.debug(`[Next.js] ${data.toString()}`);

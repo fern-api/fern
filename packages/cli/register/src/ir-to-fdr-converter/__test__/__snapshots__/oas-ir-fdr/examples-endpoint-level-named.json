@@ -236,6 +236,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -249,6 +250,24 @@
           },
           "statusCode": 200,
           "description": "List of trees"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "Tree"
+                  }
+                }
+              },
+              "statusCode": 200,
+              "description": "List of trees"
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [
@@ -350,6 +369,23 @@
             }
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TreeCreate"
+                  }
+                }
+              }
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -361,63 +397,23 @@
           "statusCode": 201,
           "description": "Tree created successfully"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "Tree"
+                }
+              },
+              "statusCode": 201,
+              "description": "Tree created successfully"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
-          {
-            "name": "maple",
-            "description": "",
-            "path": "/trees",
-            "pathParameters": {},
-            "queryParameters": {},
-            "headers": {},
-            "requestBody": {
-              "species": "(maple request) Acer saccharum",
-              "height": 18.3,
-              "age": 35,
-              "location": {
-                "latitude": 42.3601,
-                "longitude": -71.0589
-              }
-            },
-            "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "species": "(maple request) Acer saccharum",
-                "height": 18.3,
-                "age": 35,
-                "location": {
-                  "latitude": 42.3601,
-                  "longitude": -71.0589
-                }
-              }
-            },
-            "responseStatusCode": 201,
-            "responseBody": {
-              "species": "(maple response) Acer saccharum",
-              "height": 18.3,
-              "age": 35,
-              "location": {
-                "latitude": 42.3601,
-                "longitude": -71.0589
-              },
-              "id": "987fcdeb-51a2-43d7-9012-345678901234",
-              "plantedDate": "2018-03-15T00:00:00Z"
-            },
-            "responseBodyV3": {
-              "type": "json",
-              "value": {
-                "species": "(maple response) Acer saccharum",
-                "height": 18.3,
-                "age": 35,
-                "location": {
-                  "latitude": 42.3601,
-                  "longitude": -71.0589
-                },
-                "id": "987fcdeb-51a2-43d7-9012-345678901234",
-                "plantedDate": "2018-03-15T00:00:00Z"
-              }
-            }
-          },
           {
             "name": "oak",
             "description": "",
@@ -472,6 +468,61 @@
                 "plantedDate": "2020-01-01T00:00:00Z"
               }
             }
+          },
+          {
+            "name": "maple",
+            "description": "",
+            "path": "/trees",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "species": "(maple request) Acer saccharum",
+              "height": 18.3,
+              "age": 35,
+              "location": {
+                "latitude": 42.3601,
+                "longitude": -71.0589
+              }
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "species": "(maple request) Acer saccharum",
+                "height": 18.3,
+                "age": 35,
+                "location": {
+                  "latitude": 42.3601,
+                  "longitude": -71.0589
+                }
+              }
+            },
+            "responseStatusCode": 201,
+            "responseBody": {
+              "species": "(maple response) Acer saccharum",
+              "height": 18.3,
+              "age": 35,
+              "location": {
+                "latitude": 42.3601,
+                "longitude": -71.0589
+              },
+              "id": "987fcdeb-51a2-43d7-9012-345678901234",
+              "plantedDate": "2018-03-15T00:00:00Z"
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "species": "(maple response) Acer saccharum",
+                "height": 18.3,
+                "age": 35,
+                "location": {
+                  "latitude": 42.3601,
+                  "longitude": -71.0589
+                },
+                "id": "987fcdeb-51a2-43d7-9012-345678901234",
+                "plantedDate": "2018-03-15T00:00:00Z"
+              }
+            }
           }
         ],
         "protocol": {
@@ -518,6 +569,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -528,6 +580,21 @@
           },
           "statusCode": 200,
           "description": "Tree details"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "Tree"
+                }
+              },
+              "statusCode": 200,
+              "description": "Tree details"
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [
@@ -628,6 +695,46 @@
             }
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "key": "color",
+                      "valueType": {
+                        "type": "optional",
+                        "itemType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "key": "name",
+                      "valueType": {
+                        "type": "optional",
+                        "itemType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -639,48 +746,23 @@
           "statusCode": 201,
           "description": "Fern created successfully"
         },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "createFern_Response_201"
+                }
+              },
+              "statusCode": 201,
+              "description": "Fern created successfully"
+            }
+          ]
+        },
         "errorsV2": [],
         "examples": [
-          {
-            "name": "fernRequestExample",
-            "description": "",
-            "path": "/ferns",
-            "pathParameters": {},
-            "queryParameters": {},
-            "headers": {},
-            "requestBody": {
-              "color": "red",
-              "name": "RedFern"
-            },
-            "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "color": "red",
-                "name": "RedFern"
-              }
-            },
-            "responseStatusCode": 201
-          },
-          {
-            "name": "fernRequestExample2",
-            "description": "",
-            "path": "/ferns",
-            "pathParameters": {},
-            "queryParameters": {},
-            "headers": {},
-            "requestBody": {
-              "color": "green",
-              "name": "GreenFern"
-            },
-            "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "color": "green",
-                "name": "GreenFern"
-              }
-            },
-            "responseStatusCode": 201
-          },
           {
             "name": "fernResponseExample2",
             "description": "",
@@ -724,6 +806,68 @@
               "value": {
                 "message": "RedFern created",
                 "code": 42
+              }
+            }
+          },
+          {
+            "name": "fernRequestExample",
+            "description": "",
+            "path": "/ferns",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "color": "red",
+              "name": "RedFern"
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "color": "red",
+                "name": "RedFern"
+              }
+            },
+            "responseStatusCode": 201,
+            "responseBody": {
+              "message": "GreenFern created",
+              "code": 84
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "message": "GreenFern created",
+                "code": 84
+              }
+            }
+          },
+          {
+            "name": "fernRequestExample2",
+            "description": "",
+            "path": "/ferns",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "color": "green",
+              "name": "GreenFern"
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "color": "green",
+                "name": "GreenFern"
+              }
+            },
+            "responseStatusCode": 201,
+            "responseBody": {
+              "message": "GreenFern created",
+              "code": 84
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "message": "GreenFern created",
+                "code": 84
               }
             }
           }
@@ -772,6 +916,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -782,6 +927,21 @@
           },
           "statusCode": 200,
           "description": "Fern details"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "getFern_Response_200"
+                }
+              },
+              "statusCode": 200,
+              "description": "Fern details"
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [
@@ -874,6 +1034,59 @@
             }
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "key": "annual",
+                      "valueType": {
+                        "type": "optional",
+                        "itemType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "key": "foo",
+                      "valueType": {
+                        "type": "optional",
+                        "itemType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "key": "bar",
+                      "valueType": {
+                        "type": "optional",
+                        "itemType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "double"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -945,6 +1158,32 @@
             }
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "key": "succulents",
+                      "valueType": {
+                        "type": "list",
+                        "itemType": {
+                          "type": "id",
+                          "value": "SucculentsPostRequestBodyContentApplicationJsonSchemaSucculentsItems"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -955,6 +1194,21 @@
           },
           "statusCode": 201,
           "description": "Succulents created successfully"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "createSucculents_Response_201"
+                }
+              },
+              "statusCode": 201,
+              "description": "Succulents created successfully"
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [

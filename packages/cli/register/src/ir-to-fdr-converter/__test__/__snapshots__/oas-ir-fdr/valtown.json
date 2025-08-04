@@ -1671,6 +1671,24 @@
         ]
       }
     },
+    "blobs_store_Response_201": {
+      "description": "Empty response body",
+      "name": "blobs_store_Response_201",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "blobs_delete_Response_204": {
+      "description": "Empty response body",
+      "name": "blobs_delete_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "users_vals_Response_200": {
       "description": "A paginated result set",
       "name": "users_vals_Response_200",
@@ -2266,6 +2284,24 @@
             }
           }
         ]
+      }
+    },
+    "vals_runGet_Response_200": {
+      "description": "Empty response body",
+      "name": "vals_runGet_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "vals_runPost_Response_200": {
+      "description": "Empty response body",
+      "name": "vals_runPost_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaFrom1": {
@@ -3027,6 +3063,15 @@
         ]
       }
     },
+    "vals_put_Response_200": {
+      "description": "Empty response body",
+      "name": "vals_put_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "V1ValsValIdPutRequestBodyContentApplicationJsonSchemaPrivacy": {
       "description": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
       "name": "V1ValsValIdPutRequestBodyContentApplicationJsonSchemaPrivacy",
@@ -3061,6 +3106,24 @@
             "value": "email"
           }
         ]
+      }
+    },
+    "vals_update_Response_204": {
+      "description": "Empty response body",
+      "name": "vals_update_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "vals_delete_Response_204": {
+      "description": "Empty response body",
+      "name": "vals_delete_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "V1ValsValIdVersionsGetResponsesContentApplicationJsonSchemaDataItems": {
@@ -3168,6 +3231,15 @@
         ]
       }
     },
+    "vals_deleteVersion_Response_204": {
+      "description": "Empty response body",
+      "name": "vals_deleteVersion_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "vals_cancel_Response_200": {
       "description": "The evaluation_id was successfully searched for and the evaluation was either already done or now has been cancelled",
       "name": "vals_cancel_Response_200",
@@ -3262,6 +3334,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -3272,6 +3345,21 @@
             },
             "statusCode": 200,
             "description": "A paginated result set"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "search_vals_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A paginated result set"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -3412,6 +3500,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -3422,6 +3511,21 @@
             },
             "statusCode": 200,
             "description": "Default Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "User"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Default Response"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -3529,6 +3633,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -3539,6 +3644,21 @@
             },
             "statusCode": 200,
             "description": "A Val"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "alias_val_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A Val"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -3647,6 +3767,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -3657,6 +3778,21 @@
             },
             "statusCode": 200,
             "description": "Your user information, with tier and email included"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "me_get_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Your user information, with tier and email included"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -3755,6 +3891,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -3765,6 +3902,21 @@
             },
             "statusCode": 200,
             "description": "A paginated result set"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "me_likes_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A paginated result set"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -3936,6 +4088,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -3946,6 +4099,21 @@
             },
             "statusCode": 200,
             "description": "A paginated result set"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "me_comments_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A paginated result set"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -4108,6 +4276,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4118,6 +4287,21 @@
             },
             "statusCode": 200,
             "description": "A paginated result set"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "me_references_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A paginated result set"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -4242,6 +4426,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4255,6 +4440,24 @@
             },
             "statusCode": 200,
             "description": "List of blobs that you’ve stored"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "V1BlobGetResponsesContentApplicationJsonSchemaItems"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of blobs that you’ve stored"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -4338,12 +4541,24 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "fileDownload"
             },
             "statusCode": 200,
             "description": "Binary contents of the returned file"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "fileDownload"
+                },
+                "statusCode": 200,
+                "description": "Binary contents of the returned file"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -4430,6 +4645,54 @@
             },
             "description": "Binary input data"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "format": "binary"
+                      }
+                    }
+                  },
+                  "description": "Binary input data"
+                },
+                "description": "Binary input data"
+              }
+            ]
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "blobs_store_Response_201"
+              }
+            },
+            "statusCode": 201,
+            "description": "Successfully stored as blob"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "blobs_store_Response_201"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successfully stored as blob"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -4445,7 +4708,12 @@
                 "type": "json",
                 "value": "string"
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 201,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -4502,6 +4770,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "blobs_delete_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Blob successfully deleted"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "blobs_delete_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Blob successfully deleted"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -4512,7 +4807,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -4578,6 +4878,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4588,6 +4889,21 @@
             },
             "statusCode": 200,
             "description": "Default Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "User"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Default Response"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -4703,6 +5019,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -4713,6 +5030,21 @@
             },
             "statusCode": 200,
             "description": "A paginated result set"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "users_vals_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A paginated result set"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -4855,6 +5187,30 @@
             },
             "description": "A single statement to run"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "key": "statement",
+                        "valueType": {
+                          "type": "id",
+                          "value": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatement"
+                        }
+                      }
+                    ]
+                  }
+                },
+                "description": "A single statement to run"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -4866,22 +5222,46 @@
             "statusCode": 200,
             "description": "Default Response"
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ResultSet"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Default Response"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
-              "name": "example1",
               "description": "",
               "path": "/v1/sqlite/execute",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "statement": "SELECT 1;"
+                "statement": {
+                  "sql": "SELECT * FROM table WHERE column = ?;",
+                  "args": [
+                    1
+                  ]
+                }
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "statement": "SELECT 1;"
+                  "statement": {
+                    "sql": "SELECT * FROM table WHERE column = ?;",
+                    "args": [
+                      1
+                    ]
+                  }
                 }
               },
               "responseStatusCode": 200,
@@ -4920,29 +5300,18 @@
               }
             },
             {
-              "name": "example2",
               "description": "",
               "path": "/v1/sqlite/execute",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "statement": {
-                  "sql": "SELECT * FROM table WHERE column = ?;",
-                  "args": [
-                    1
-                  ]
-                }
+                "statement": "SELECT 1;"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "statement": {
-                    "sql": "SELECT * FROM table WHERE column = ?;",
-                    "args": [
-                      1
-                    ]
-                  }
+                  "statement": "SELECT 1;"
                 }
               },
               "responseStatusCode": 200,
@@ -5047,6 +5416,43 @@
             },
             "description": "A set of statements to be run in a single batch"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "key": "statements",
+                        "valueType": {
+                          "type": "list",
+                          "itemType": {
+                            "type": "id",
+                            "value": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItems"
+                          }
+                        }
+                      },
+                      {
+                        "key": "mode",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaMode"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "description": "A set of statements to be run in a single batch"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -5060,6 +5466,24 @@
             },
             "statusCode": 200,
             "description": "Array of results from the statements executed"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "ResultSet"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Array of results from the statements executed"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -5204,6 +5628,46 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "TypeScript source code",
+                        "key": "code",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "maxLength": 8192
+                          }
+                        }
+                      },
+                      {
+                        "description": "Array of arguments passed to the given function. If this is present, the default export should be a function and will be called with these arguments, and the function result will be returned. If `args` is not present, no function calls are made, but you can still return a value using `export default myVariable`.",
+                        "key": "args",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "list",
+                            "itemType": {
+                              "type": "unknown"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -5217,6 +5681,24 @@
             },
             "statusCode": 200,
             "description": "Default Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "nullable",
+                    "itemType": {
+                      "type": "id",
+                      "value": "V1EvalPostResponsesContentApplicationJsonSchema"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Default Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -5235,30 +5717,6 @@
           ],
           "examples": [
             {
-              "name": "example1",
-              "description": "",
-              "path": "/v1/eval",
-              "pathParameters": {},
-              "queryParameters": {},
-              "headers": {},
-              "requestBody": {
-                "code": "export default 1"
-              },
-              "requestBodyV3": {
-                "type": "json",
-                "value": {
-                  "code": "export default 1"
-                }
-              },
-              "responseStatusCode": 200,
-              "responseBody": {},
-              "responseBodyV3": {
-                "type": "json",
-                "value": {}
-              }
-            },
-            {
-              "name": "example2",
               "description": "",
               "path": "/v1/eval",
               "pathParameters": {},
@@ -5277,6 +5735,28 @@
                   "args": [
                     1
                   ]
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "description": "",
+              "path": "/v1/eval",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "code": "export default 1"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "code": "export default 1"
                 }
               },
               "responseStatusCode": 200,
@@ -5353,6 +5833,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -5366,6 +5847,24 @@
             },
             "statusCode": 200,
             "description": "Default Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "nullable",
+                    "itemType": {
+                      "type": "id",
+                      "value": "V1EvalCodeGetResponsesContentApplicationJsonSchema"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Default Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -5467,6 +5966,33 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "vals_runGet_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "Default Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "vals_runGet_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Default Response"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -5477,7 +6003,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -5559,6 +6090,61 @@
             },
             "description": "Arguments to call the method with"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "key": "args",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "list",
+                            "itemType": {
+                              "type": "unknown"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "description": "Arguments to call the method with"
+              }
+            ]
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "vals_runPost_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "Default Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "vals_runPost_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Default Response"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -5582,7 +6168,12 @@
                   ]
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -5694,6 +6285,86 @@
             },
             "description": "Val information provided to create a new val"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Val source code as TypeScript",
+                        "key": "code",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 256000
+                          }
+                        }
+                      },
+                      {
+                        "description": "This val’s name",
+                        "key": "name",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 48
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Readme contents, as Markdown",
+                        "key": "readme",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "maxLength": 8192
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
+                        "key": "privacy",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "V1ValsPostRequestBodyContentApplicationJsonSchemaPrivacy"
+                          }
+                        }
+                      },
+                      {
+                        "description": "The type of the val you want to create. Note that this does not include interval vals, because they cannot be created through the API yet.",
+                        "key": "type",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "V1ValsPostRequestBodyContentApplicationJsonSchemaType"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "description": "Val information provided to create a new val"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -5704,6 +6375,21 @@
             },
             "statusCode": 200,
             "description": "Default Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ExtendedVal"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Default Response"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -5852,6 +6538,73 @@
             },
             "description": "Create a new val, or version of a val, with new code"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Val source code as TypeScript",
+                        "key": "code",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 256000
+                          }
+                        }
+                      },
+                      {
+                        "description": "This val’s name",
+                        "key": "name",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 48
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "description": "Create a new val, or version of a val, with new code"
+              }
+            ]
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "vals_put_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "Default Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "vals_put_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Default Response"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -5871,7 +6624,12 @@
                   "name": "myVal"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -5927,6 +6685,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -5937,6 +6696,21 @@
             },
             "statusCode": 200,
             "description": "Default Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ExtendedVal"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Default Response"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -6117,10 +6891,127 @@
             },
             "description": "Note: you must supply at least one of the keys in this object in order to update a val"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "This val’s name",
+                        "key": "name",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 48
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Readme contents, as Markdown",
+                        "key": "readme",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "maxLength": 8192
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
+                        "key": "privacy",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "V1ValsValIdPutRequestBodyContentApplicationJsonSchemaPrivacy"
+                          }
+                        }
+                      },
+                      {
+                        "description": "The type of the val you want to update. Note that this does not include interval vals, because they cannot be created through the API yet.",
+                        "key": "type",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "V1ValsValIdPutRequestBodyContentApplicationJsonSchemaType"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "description": "Note: you must supply at least one of the keys in this object in order to update a val"
+              }
+            ]
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "vals_update_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Val successfully updated"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "vals_update_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Val successfully updated"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
-              "name": "example1",
+              "description": "",
+              "path": "/v1/vals/val_id",
+              "pathParameters": {
+                "val_id": "val_id"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "type": "http"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "http"
+                }
+              },
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
               "description": "",
               "path": "/v1/vals/val_id",
               "pathParameters": {
@@ -6139,27 +7030,12 @@
                   "readme": "# Updated readme"
                 }
               },
-              "responseStatusCode": 200
-            },
-            {
-              "name": "example2",
-              "description": "",
-              "path": "/v1/vals/val_id",
-              "pathParameters": {
-                "val_id": "val_id"
-              },
-              "queryParameters": {},
-              "headers": {},
-              "requestBody": {
-                "type": "http"
-              },
-              "requestBodyV3": {
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
                 "type": "json",
-                "value": {
-                  "type": "http"
-                }
-              },
-              "responseStatusCode": 200
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -6215,6 +7091,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "vals_delete_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Val successfully deleted"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "vals_delete_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Val successfully deleted"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -6238,7 +7141,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -6320,6 +7228,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -6330,6 +7239,21 @@
             },
             "statusCode": 200,
             "description": "A paginated result set"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "vals_list_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A paginated result set"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -6507,6 +7431,86 @@
             },
             "description": "Val information provided to create a new val"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Val source code as TypeScript",
+                        "key": "code",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 256000
+                          }
+                        }
+                      },
+                      {
+                        "description": "This val’s name",
+                        "key": "name",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 48
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Readme contents, as Markdown",
+                        "key": "readme",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "maxLength": 8192
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
+                        "key": "privacy",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "V1ValsValIdVersionsPostRequestBodyContentApplicationJsonSchemaPrivacy"
+                          }
+                        }
+                      },
+                      {
+                        "description": "The type of the val you want to create. Note that this does not include interval vals, because they cannot be created through the API yet.",
+                        "key": "type",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "V1ValsValIdVersionsPostRequestBodyContentApplicationJsonSchemaType"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "description": "Val information provided to create a new val"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -6517,6 +7521,21 @@
             },
             "statusCode": 201,
             "description": "Default Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ExtendedVal"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Default Response"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -6695,6 +7714,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -6705,6 +7725,21 @@
             },
             "statusCode": 200,
             "description": "Default Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ExtendedVal"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Default Response"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -6844,6 +7879,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "vals_deleteVersion_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Version successfully deleted"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "vals_deleteVersion_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Version successfully deleted"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -6868,7 +7930,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -6943,6 +8010,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -6953,6 +8021,21 @@
             },
             "statusCode": 200,
             "description": "The evaluation_id was successfully searched for and the evaluation was either already done or now has been cancelled"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "vals_cancel_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "The evaluation_id was successfully searched for and the evaluation was either already done or now has been cancelled"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -7157,6 +8240,130 @@
             },
             "description": "Fields for an email to be sent"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "The subject line of the email",
+                        "key": "subject",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "key": "from",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaFrom"
+                          }
+                        }
+                      },
+                      {
+                        "description": "A single email or list of emails for one of the address fields",
+                        "key": "to",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo"
+                          }
+                        }
+                      },
+                      {
+                        "description": "A single email or list of emails for one of the address fields",
+                        "key": "cc",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc"
+                          }
+                        }
+                      },
+                      {
+                        "description": "A single email or list of emails for one of the address fields",
+                        "key": "bcc",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Text content of the email, for email clients that may not support HTML",
+                        "key": "text",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "HTML content of the email. Can be specified alongside text",
+                        "key": "html",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "A list of attachments to add to the email",
+                        "key": "attachments",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "list",
+                            "itemType": {
+                              "type": "id",
+                              "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaAttachmentsItems"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "A reply-to list of email addresses",
+                        "key": "replyToList",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "description": "Fields for an email to be sent"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -7167,6 +8374,21 @@
             },
             "statusCode": 200,
             "description": "Successfully sent email"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "emails_send_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successfully sent email"
+              }
+            ]
           },
           "errorsV2": [
             {

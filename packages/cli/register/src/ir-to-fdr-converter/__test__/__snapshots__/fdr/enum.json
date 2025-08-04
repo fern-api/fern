@@ -57,6 +57,20 @@
         ]
       }
     },
+    "type_:EnumWithSpecialCharacters": {
+      "name": "EnumWithSpecialCharacters",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "\\$bla"
+          },
+          {
+            "value": "\\$yo"
+          }
+        ]
+      }
+    },
     "type_:EnumWithCustom": {
       "name": "EnumWithCustom",
       "shape": {
@@ -107,7 +121,7 @@
             "value": "Hello\\vWorld"
           },
           {
-            "value": "Hello\\0World"
+            "value": "Hello\\x00World"
           },
           {
             "value": "Hello\\u0007World"
@@ -131,7 +145,7 @@
             "value": "Line 1\\n\"Quote\"\\tTab\\\\Backslash\\r\\nLine 2\\0Null"
           },
           {
-            "value": "\\n\\r\\t\\0\\u0008\\f\\v\\u0007"
+            "value": "\\n\\r\\t\\x00\\u0008\\f\\v\\u0007"
           },
           {
             "value": "Hello 世界"
@@ -191,6 +205,89 @@
     }
   },
   "subpackages": {
+    "subpackage_headers": {
+      "subpackageId": "subpackage_headers",
+      "name": "headers",
+      "endpoints": [
+        {
+          "auth": false,
+          "method": "POST",
+          "id": "send",
+          "originalEndpointId": "endpoint_headers.send",
+          "name": "Send",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/headers"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [
+            {
+              "key": "operand",
+              "type": {
+                "type": "id",
+                "value": "type_:Operand"
+              }
+            },
+            {
+              "key": "maybeOperand",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_:Operand"
+                }
+              }
+            },
+            {
+              "key": "operandOrColor",
+              "type": {
+                "type": "id",
+                "value": "type_:ColorOrOperand"
+              }
+            },
+            {
+              "key": "maybeOperandOrColor",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_:ColorOrOperand"
+                }
+              }
+            }
+          ],
+          "requestsV2": {},
+          "responsesV2": {},
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/headers",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {
+                "operand": ">",
+                "operandOrColor": "red"
+              },
+              "responseStatusCode": 204,
+              "codeSamples": []
+            }
+          ]
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    },
     "subpackage_inlined-request": {
       "subpackageId": "subpackage_inlined-request",
       "name": "inlined-request",
@@ -262,6 +359,8 @@
               }
             }
           },
+          "requestsV2": {},
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -346,6 +445,8 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -426,6 +527,8 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -496,6 +599,8 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -537,10 +642,12 @@
       "type_:Operand",
       "type_:Color",
       "type_:ColorOrOperand",
+      "type_:EnumWithSpecialCharacters",
       "type_:EnumWithCustom",
       "type_:SpecialEnum"
     ],
     "subpackages": [
+      "subpackage_headers",
       "subpackage_inlined-request",
       "subpackage_path-param",
       "subpackage_query-param",

@@ -1,8 +1,11 @@
-public struct TypeWithOptionalUnion: Codable, Hashable {
+public struct TypeWithOptionalUnion: Codable, Hashable, Sendable {
     public let myUnion: MyUnion?
     public let additionalProperties: [String: JSONValue]
 
-    public init(myUnion: MyUnion? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        myUnion: MyUnion? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.myUnion = myUnion
         self.additionalProperties = additionalProperties
     }
@@ -14,7 +17,7 @@ public struct TypeWithOptionalUnion: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encodeIfPresent(self.myUnion, forKey: .myUnion)
     }

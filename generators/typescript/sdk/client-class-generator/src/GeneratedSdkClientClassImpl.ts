@@ -65,6 +65,7 @@ import { GeneratedNonThrowingEndpointResponse } from "./endpoints/default/endpoi
 import { GeneratedThrowingEndpointResponse } from "./endpoints/default/endpoint-response/GeneratedThrowingEndpointResponse";
 import { getNonVariablePathParameters } from "./endpoints/utils/getNonVariablePathParameters";
 import { getLiteralValueForHeader, isLiteralHeader } from "./endpoints/utils/isLiteralHeader";
+import { REQUEST_OPTIONS_ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME } from "./endpoints/utils/requestOptionsParameter";
 import { OAuthTokenProviderGenerator } from "./oauth-generator/OAuthTokenProviderGenerator";
 import { GeneratedDefaultWebsocketImplementation } from "./websocket/GeneratedDefaultWebsocketImplementation";
 
@@ -1194,6 +1195,12 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     };
                 }),
                 {
+                    name: REQUEST_OPTIONS_ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME,
+                    type: "Record<string, unknown>",
+                    hasQuestionToken: true,
+                    docs: ["Additional query string parameters to include in the request."]
+                },
+                {
                     name: "headers",
                     type: "Record<string, string | core.Supplier<string | undefined> | undefined>",
                     hasQuestionToken: true,
@@ -1323,6 +1330,18 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     )
                 );
             }
+        }
+
+        for (const variable of this.intermediateRepresentation.variables) {
+            if (variable.type.type === "container" && variable.type.container.type === "literal") {
+                continue;
+            }
+            properties.push(
+                ts.factory.createPropertyAssignment(
+                    getPropertyKey(this.getOptionNameForVariable(variable)),
+                    ts.factory.createStringLiteral(`YOUR_${variable.name.screamingSnakeCase.unsafeName}`)
+                )
+            );
         }
 
         const generatedVersion = context.versionContext.getGeneratedVersion();

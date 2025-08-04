@@ -29,7 +29,7 @@ test:
     workingDirectory: generators/csharp
     buildCommand:
       - pnpm --filter @fern-api/fern-csharp-sdk dist:cli
-    runCommand: node sdk/dist/cli.cjs
+    runCommand: node --enable-source-maps sdk/dist/cli.cjs {CONFIG_PATH}
 
 language: csharp
 generatorType: SDK

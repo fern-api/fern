@@ -8,58 +8,12 @@ import (
 	internal "github.com/query-parameters/fern/internal"
 )
 
-type NestedUser struct {
-	Name string `json:"name" url:"name"`
-	User *User  `json:"user" url:"user"`
-
-	extraProperties map[string]interface{}
-}
-
-func (n *NestedUser) GetName() string {
-	if n == nil {
-		return ""
-	}
-	return n.Name
-}
-
-func (n *NestedUser) GetUser() *User {
-	if n == nil {
-		return nil
-	}
-	return n.User
-}
-
-func (n *NestedUser) GetExtraProperties() map[string]interface{} {
-	return n.extraProperties
-}
-
-func (n *NestedUser) UnmarshalJSON(data []byte) error {
-	type unmarshaler NestedUser
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*n = NestedUser(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *n)
-	if err != nil {
-		return err
-	}
-	n.extraProperties = extraProperties
-	return nil
-}
-
-func (n *NestedUser) String() string {
-	if value, err := internal.StringifyJSON(n); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", n)
-}
-
 type User struct {
 	Name string   `json:"name" url:"name"`
 	Tags []string `json:"tags" url:"tags"`
 
-	extraProperties map[string]interface{}
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
 func (u *User) GetName() string {
@@ -76,11 +30,16 @@ func (u *User) GetTags() []string {
 	return u.Tags
 }
 
-func (u *User) GetExtraProperties() map[string]interface{} {
+func (u *User) GetExtraProperties() map[string]any {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
-func (u *User) UnmarshalJSON(data []byte) error {
+func (u *User) UnmarshalJSON(
+	data []byte,
+) error {
 	type unmarshaler User
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
@@ -92,12 +51,77 @@ func (u *User) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (u *User) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
+}
+
+type NestedUser struct {
+	Name string `json:"name" url:"name"`
+	User *User  `json:"user" url:"user"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (n *NestedUser) GetName() string {
+	if n == nil {
+		return ""
+	}
+	return n.Name
+}
+
+func (n *NestedUser) GetUser() *User {
+	if n == nil {
+		return nil
+	}
+	return n.User
+}
+
+func (n *NestedUser) GetExtraProperties() map[string]any {
+	if n == nil {
+		return nil
+	}
+	return n.extraProperties
+}
+
+func (n *NestedUser) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler NestedUser
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = NestedUser(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+	n.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (n *NestedUser) String() string {
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(n); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", n)
 }

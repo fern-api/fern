@@ -25566,6 +25566,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -25576,6 +25577,21 @@
             },
             "statusCode": 200,
             "description": "List of issue triggers"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "IssueTriggerPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of issue triggers"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -25792,6 +25808,61 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "key": "type",
+                        "valueType": {
+                          "type": "id",
+                          "value": "IssueType"
+                        }
+                      },
+                      {
+                        "description": "Configuration object for the specific issue type selected",
+                        "key": "configs",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "IssueTriggersPostRequestBodyContentApplicationJsonSchemaConfigs"
+                          }
+                        }
+                      },
+                      {
+                        "key": "channels",
+                        "valueType": {
+                          "type": "id",
+                          "value": "IssueTriggerChannels"
+                        }
+                      },
+                      {
+                        "description": "Optional unique name to use as reference when using the API",
+                        "key": "name",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "maxLength": 255
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -25802,6 +25873,21 @@
             },
             "statusCode": 200,
             "description": "A single issue trigger"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "IssueTrigger"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single issue trigger"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -26002,6 +26088,58 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "key": "type",
+                        "valueType": {
+                          "type": "id",
+                          "value": "IssueType"
+                        }
+                      },
+                      {
+                        "description": "Configuration object for the specific issue type selected",
+                        "key": "configs",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "IssueTriggersPutRequestBodyContentApplicationJsonSchemaConfigs"
+                          }
+                        }
+                      },
+                      {
+                        "key": "channels",
+                        "valueType": {
+                          "type": "id",
+                          "value": "IssueTriggerChannels"
+                        }
+                      },
+                      {
+                        "description": "Required unique name to use as reference when using the API",
+                        "key": "name",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "maxLength": 255
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -26012,6 +26150,21 @@
             },
             "statusCode": 200,
             "description": "A single issue trigger"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "IssueTrigger"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single issue trigger"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -26184,6 +26337,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -26194,6 +26348,21 @@
             },
             "statusCode": 200,
             "description": "A single issue trigger"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "IssueTrigger"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single issue trigger"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -26406,6 +26575,74 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Configuration object for the specific issue type selected",
+                        "key": "configs",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "IssueTriggersIdPutRequestBodyContentApplicationJsonSchemaConfigs"
+                          }
+                        }
+                      },
+                      {
+                        "key": "channels",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "IssueTriggerChannels"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Date when the issue trigger was disabled",
+                        "key": "disabled_at",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "format": "date-time"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Optional unique name to use as reference when using the API",
+                        "key": "name",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "maxLength": 255
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -26416,6 +26653,21 @@
             },
             "statusCode": 200,
             "description": "A single issue trigger"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "IssueTrigger"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single issue trigger"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -26582,6 +26834,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -26592,6 +26845,21 @@
             },
             "statusCode": 200,
             "description": "An object with deleted issue trigger's id"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "DeletedIssueTriggerResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "An object with deleted issue trigger's id"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -26704,6 +26972,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -26714,6 +26983,21 @@
             },
             "statusCode": 200,
             "description": "A single issue trigger"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "IssueTrigger"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single issue trigger"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -26862,6 +27146,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -26872,6 +27157,21 @@
             },
             "statusCode": 200,
             "description": "A single issue trigger"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "IssueTrigger"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single issue trigger"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -27083,6 +27383,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -27093,6 +27394,21 @@
             },
             "statusCode": 200,
             "description": "List of attempts"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EventAttemptPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of attempts"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -27280,6 +27596,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -27290,6 +27607,21 @@
             },
             "statusCode": 200,
             "description": "A single attempt"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EventAttempt"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single attempt"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -27555,6 +27887,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -27565,6 +27898,21 @@
             },
             "statusCode": 200,
             "description": "List of bookmarks"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BookmarkPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of bookmarks"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -27786,6 +28134,70 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "ID of the event data to bookmark",
+                        "key": "event_data_id",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "maxLength": 255
+                          }
+                        }
+                      },
+                      {
+                        "description": "ID of the associated connection",
+                        "key": "webhook_id",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "maxLength": 255
+                          }
+                        }
+                      },
+                      {
+                        "description": "Descriptive name of the bookmark",
+                        "key": "label",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "maxLength": 255
+                          }
+                        }
+                      },
+                      {
+                        "description": "A unique, human-friendly name for the bookmark",
+                        "key": "name",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "regex": "^[A-z0-9-_]+$",
+                              "maxLength": 155
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -27796,6 +28208,21 @@
             },
             "statusCode": 200,
             "description": "A single bookmark"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Bookmark"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single bookmark"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -27964,6 +28391,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -27974,6 +28402,21 @@
             },
             "statusCode": 200,
             "description": "A single bookmark"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Bookmark"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single bookmark"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -28187,6 +28630,79 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "ID of the event data to bookmark",
+                        "key": "event_data_id",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "maxLength": 255
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "ID of the associated connection",
+                        "key": "webhook_id",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "maxLength": 255
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Descriptive name of the bookmark",
+                        "key": "label",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "maxLength": 255
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "A unique, human-friendly name for the bookmark",
+                        "key": "name",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "regex": "^[A-z0-9-_]+$",
+                              "maxLength": 155
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -28197,6 +28713,21 @@
             },
             "statusCode": 200,
             "description": "A single bookmark"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Bookmark"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single bookmark"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -28372,6 +28903,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -28382,6 +28914,21 @@
             },
             "statusCode": 200,
             "description": "An object with deleted bookmark's id"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "DeletedBookmarkResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "An object with deleted bookmark's id"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -28517,6 +29064,33 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Bookmark target",
+                        "key": "target",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "BookmarksIdTriggerPostRequestBodyContentApplicationJsonSchemaTarget"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -28527,6 +29101,21 @@
             },
             "statusCode": 200,
             "description": "Array of created events"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EventArray"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Array of created events"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -28839,6 +29428,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -28849,6 +29439,21 @@
             },
             "statusCode": 200,
             "description": "List of destinations"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "DestinationPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of destinations"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -29094,6 +29699,106 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Name for the destination",
+                        "key": "name",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "regex": "^[A-z0-9-_]+$",
+                            "maxLength": 155
+                          }
+                        }
+                      },
+                      {
+                        "description": "Endpoint of the destination",
+                        "key": "url",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "format": "URL"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Path for the CLI destination",
+                        "key": "cli_path",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Period to rate limit attempts",
+                        "key": "rate_limit_period",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "DestinationsPostRequestBodyContentApplicationJsonSchemaRateLimitPeriod"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Limit event attempts to receive per period",
+                        "key": "rate_limit",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "integer"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "key": "path_forwarding_disabled",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -29104,6 +29809,21 @@
             },
             "statusCode": 200,
             "description": "A single destination"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Destination"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single destination"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -29334,6 +30054,106 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Name for the destination",
+                        "key": "name",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "regex": "^[A-z0-9-_]+$",
+                            "maxLength": 155
+                          }
+                        }
+                      },
+                      {
+                        "description": "Endpoint of the destination",
+                        "key": "url",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "format": "URL"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Path for the CLI destination",
+                        "key": "cli_path",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Period to rate limit attempts",
+                        "key": "rate_limit_period",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "DestinationsPutRequestBodyContentApplicationJsonSchemaRateLimitPeriod"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Limit event attempts to receive per period",
+                        "key": "rate_limit",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "integer"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "key": "path_forwarding_disabled",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -29344,6 +30164,21 @@
             },
             "statusCode": 200,
             "description": "A single destination"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Destination"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single destination"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -29496,6 +30331,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -29506,6 +30342,21 @@
             },
             "statusCode": 200,
             "description": "A single destination"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Destination"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single destination"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -29751,6 +30602,123 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Name for the destination",
+                        "key": "name",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "regex": "^[A-z0-9-_]+$",
+                            "maxLength": 155
+                          }
+                        }
+                      },
+                      {
+                        "description": "Endpoint of the destination",
+                        "key": "url",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "format": "URL"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Path for the CLI destination",
+                        "key": "cli_path",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Period to rate limit attempts",
+                        "key": "rate_limit_period",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "DestinationsIdPutRequestBodyContentApplicationJsonSchemaRateLimitPeriod"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Limit event attempts to receive per period",
+                        "key": "rate_limit",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "integer"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Date the destination was archived",
+                        "key": "archived_at",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "format": "date-time"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "key": "path_forwarding_disabled",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -29761,6 +30729,21 @@
             },
             "statusCode": 200,
             "description": "A single destination"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Destination"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single destination"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -29928,6 +30911,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -29938,6 +30922,21 @@
             },
             "statusCode": 200,
             "description": "A single destination"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Destination"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single destination"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -30070,6 +31069,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -30080,6 +31080,21 @@
             },
             "statusCode": 200,
             "description": "A single destination"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Destination"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single destination"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -30477,6 +31492,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -30487,6 +31503,21 @@
             },
             "statusCode": 200,
             "description": "List of events"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EventPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of events"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -30684,6 +31715,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -30694,6 +31726,21 @@
             },
             "statusCode": 200,
             "description": "A single event"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Event"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single event"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -30856,6 +31903,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -30866,6 +31914,21 @@
             },
             "statusCode": 200,
             "description": "A request raw body data"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RawBody"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A request raw body data"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -30978,6 +32041,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -30988,6 +32052,21 @@
             },
             "statusCode": 200,
             "description": "Retried event with event attempt"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RetriedEvent"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Retried event with event attempt"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -31200,6 +32279,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -31210,6 +32290,21 @@
             },
             "statusCode": 200,
             "description": "A single event"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Event"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single event"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -31499,6 +32594,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -31509,6 +32605,21 @@
             },
             "statusCode": 200,
             "description": "List of events bulk retries"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BatchOperationPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of events bulk retries"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -31689,6 +32800,33 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Filter properties for the events to be included in the bulk retry",
+                        "key": "query",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQuery"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -31699,6 +32837,21 @@
             },
             "statusCode": 200,
             "description": "A single events bulk retry"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BatchOperation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single events bulk retry"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -31848,6 +33001,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -31858,6 +33012,21 @@
             },
             "statusCode": 200,
             "description": "Events bulk retry plan"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BatchOperationPlan"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Events bulk retry plan"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -31985,6 +33154,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -31995,6 +33165,21 @@
             },
             "statusCode": 200,
             "description": "A single events bulk retry"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BatchOperation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single events bulk retry"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -32135,6 +33320,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -32145,6 +33331,21 @@
             },
             "statusCode": 200,
             "description": "A single events bulk retry"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BatchOperation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single events bulk retry"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -32412,6 +33613,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -32422,6 +33624,21 @@
             },
             "statusCode": 200,
             "description": "List of ignored events bulk retries"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BatchOperationPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of ignored events bulk retries"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -32602,6 +33819,33 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Filter by the bulk retry ignored event query object",
+                        "key": "query",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "BulkIgnoredEventsRetryPostRequestBodyContentApplicationJsonSchemaQuery"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -32612,6 +33856,21 @@
             },
             "statusCode": 200,
             "description": "A single ignored events bulk retry"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BatchOperation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single ignored events bulk retry"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -32761,6 +34020,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -32771,6 +34031,21 @@
             },
             "statusCode": 200,
             "description": "Ignored events bulk retry plan"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BatchOperationPlan"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Ignored events bulk retry plan"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -32898,6 +34173,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -32908,6 +34184,21 @@
             },
             "statusCode": 200,
             "description": "A single ignored events bulk retry"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BatchOperation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single ignored events bulk retry"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -33048,6 +34339,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -33058,6 +34350,21 @@
             },
             "statusCode": 200,
             "description": "A single ignored events bulk retry"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BatchOperation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single ignored events bulk retry"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -33213,6 +34520,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -33223,6 +34531,21 @@
             },
             "statusCode": 200,
             "description": "List of integrations"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "IntegrationPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of integrations"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -33434,6 +34757,58 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Label of the integration",
+                        "key": "label",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Decrypted Key/Value object of the associated configuration for that provider",
+                        "key": "configs",
+                        "valueType": {
+                          "type": "id",
+                          "value": "IntegrationsPostRequestBodyContentApplicationJsonSchemaConfigs"
+                        }
+                      },
+                      {
+                        "key": "provider",
+                        "valueType": {
+                          "type": "id",
+                          "value": "IntegrationProvider"
+                        }
+                      },
+                      {
+                        "description": "List of features to enable (see features list above)",
+                        "key": "features",
+                        "valueType": {
+                          "type": "list",
+                          "itemType": {
+                            "type": "id",
+                            "value": "IntegrationFeature"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -33444,6 +34819,21 @@
             },
             "statusCode": 200,
             "description": "A single integration"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Integration"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single integration"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -33630,6 +35020,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -33640,6 +35031,21 @@
             },
             "statusCode": 200,
             "description": "A single integration"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Integration"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single integration"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -33846,6 +35252,70 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Label of the integration",
+                        "key": "label",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Decrypted Key/Value object of the associated configuration for that provider",
+                        "key": "configs",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "IntegrationsIdPutRequestBodyContentApplicationJsonSchemaConfigs"
+                          }
+                        }
+                      },
+                      {
+                        "key": "provider",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "IntegrationProvider"
+                          }
+                        }
+                      },
+                      {
+                        "description": "List of features to enable (see features list above)",
+                        "key": "features",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "list",
+                            "itemType": {
+                              "type": "id",
+                              "value": "IntegrationFeature"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -33856,6 +35326,21 @@
             },
             "statusCode": 200,
             "description": "A single integration"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Integration"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single integration"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -34033,6 +35518,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -34043,6 +35529,21 @@
             },
             "statusCode": 200,
             "description": "An object with deleted integration id"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "DeletedIntegration"
+                  }
+                },
+                "statusCode": 200,
+                "description": "An object with deleted integration id"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -34172,6 +35673,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -34182,6 +35684,21 @@
             },
             "statusCode": 200,
             "description": "Attach operation success status"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AttachedIntegrationToSource"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Attach operation success status"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -34325,6 +35842,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -34335,6 +35853,21 @@
             },
             "statusCode": 200,
             "description": "Detach operation success status"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "DetachedIntegrationFromSource"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Detach operation success status"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -34610,6 +36143,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -34620,6 +36154,21 @@
             },
             "statusCode": 200,
             "description": "List of issues"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "IssueWithDataPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of issues"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -35070,6 +36619,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -35080,6 +36630,21 @@
             },
             "statusCode": 200,
             "description": "Issue count"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "IssueCount"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Issue count"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -35190,6 +36755,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -35200,6 +36766,21 @@
             },
             "statusCode": 200,
             "description": "A single issue"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "IssueWithData"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single issue"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -35492,6 +37073,30 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "New status",
+                        "key": "status",
+                        "valueType": {
+                          "type": "id",
+                          "value": "IssuesIdPutRequestBodyContentApplicationJsonSchemaStatus"
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -35502,6 +37107,21 @@
             },
             "statusCode": 200,
             "description": "Updated issue"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Issue"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Updated issue"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -35690,6 +37310,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -35700,6 +37321,21 @@
             },
             "statusCode": 200,
             "description": "Dismissed issue"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Issue"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Dismissed issue"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -36073,6 +37709,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -36083,6 +37720,21 @@
             },
             "statusCode": 200,
             "description": "List of requests"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RequestPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of requests"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -36276,6 +37928,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -36286,6 +37939,21 @@
             },
             "statusCode": 200,
             "description": "A single request"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Request"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single request"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -36444,6 +38112,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -36454,6 +38123,21 @@
             },
             "statusCode": 200,
             "description": "A request raw body data"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RawBody"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A request raw body data"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -36592,6 +38276,36 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Subset of webhook_ids to re-run the event logic on. Useful to retry only specific ignored_events",
+                        "key": "webhook_ids",
+                        "valueType": {
+                          "type": "list",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "maxLength": 255
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -36602,6 +38316,21 @@
             },
             "statusCode": 200,
             "description": "Retry request operation result"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RetryRequest"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Retry request operation result"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -37136,6 +38865,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -37146,6 +38876,21 @@
             },
             "statusCode": 200,
             "description": "List of events"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EventPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of events"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -37429,6 +39174,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -37439,6 +39185,21 @@
             },
             "statusCode": 200,
             "description": "List of ignored events"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "IgnoredEventPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of ignored events"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -37742,6 +39503,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -37752,6 +39514,21 @@
             },
             "statusCode": 200,
             "description": "List of request bulk retries"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BatchOperationPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of request bulk retries"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -37932,6 +39709,33 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Filter properties for the events to be included in the bulk retry, use query parameters of [Requests](#requests)",
+                        "key": "query",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQuery"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -37942,6 +39746,21 @@
             },
             "statusCode": 200,
             "description": "A single requests bulk retry"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BatchOperation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single requests bulk retry"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -38091,6 +39910,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -38101,6 +39921,21 @@
             },
             "statusCode": 200,
             "description": "Requests bulk retry plan"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BatchOperationPlan"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Requests bulk retry plan"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -38228,6 +40063,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -38238,6 +40074,21 @@
             },
             "statusCode": 200,
             "description": "A single requests bulk retry"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BatchOperation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single requests bulk retry"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -38378,6 +40229,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -38388,6 +40240,21 @@
             },
             "statusCode": 200,
             "description": "A single requests bulk retry"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BatchOperation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single requests bulk retry"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -38623,6 +40490,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -38633,6 +40501,21 @@
             },
             "statusCode": 200,
             "description": "List of rulesets"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RulesetPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of rulesets"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -38840,6 +40723,60 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Name for the ruleset",
+                        "key": "name",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "regex": "^[A-z0-9-_]+$",
+                            "maxLength": 155
+                          }
+                        }
+                      },
+                      {
+                        "description": "Array of rules to apply",
+                        "key": "rules",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "list",
+                            "itemType": {
+                              "type": "id",
+                              "value": "Rule"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "key": "is_team_default",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -38850,6 +40787,21 @@
             },
             "statusCode": 200,
             "description": "A single ruleset"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Ruleset"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single ruleset"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -39042,6 +40994,60 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Name for the ruleset",
+                        "key": "name",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "regex": "^[A-z0-9-_]+$",
+                            "maxLength": 155
+                          }
+                        }
+                      },
+                      {
+                        "description": "Array of rules to apply",
+                        "key": "rules",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "list",
+                            "itemType": {
+                              "type": "id",
+                              "value": "Rule"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "key": "is_team_default",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -39052,6 +41058,21 @@
             },
             "statusCode": 200,
             "description": "A single ruleset"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Ruleset"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single ruleset"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -39212,6 +41233,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -39222,6 +41244,21 @@
             },
             "statusCode": 200,
             "description": "A single ruleset"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Ruleset"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single ruleset"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -39432,6 +41469,80 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Name for the ruleset",
+                        "key": "name",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "regex": "^[A-z0-9-_]+$",
+                              "maxLength": 155
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Date the ruleset was archived",
+                        "key": "archived_at",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "format": "date-time"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Array of rules to apply",
+                        "key": "rules",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "list",
+                            "itemType": {
+                              "type": "id",
+                              "value": "Rule"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "key": "is_team_default",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -39442,6 +41553,21 @@
             },
             "statusCode": 200,
             "description": "A single ruleset"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Ruleset"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single ruleset"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -39613,6 +41739,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -39623,6 +41750,21 @@
             },
             "statusCode": 200,
             "description": "A single ruleset"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Ruleset"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single ruleset"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -39763,6 +41905,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -39773,6 +41916,21 @@
             },
             "statusCode": 200,
             "description": "A single ruleset"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Ruleset"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single ruleset"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -40018,6 +42176,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -40028,6 +42187,21 @@
             },
             "statusCode": 200,
             "description": "List of sources"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SourcePaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of sources"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -40211,6 +42385,34 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "A unique name for the source",
+                        "key": "name",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "regex": "^[A-z0-9-_]+$",
+                            "maxLength": 155
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -40221,6 +42423,21 @@
             },
             "statusCode": 200,
             "description": "A single source"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Source"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single source"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -40389,6 +42606,34 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "A unique name for the source",
+                        "key": "name",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "regex": "^[A-z0-9-_]+$",
+                            "maxLength": 155
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -40399,6 +42644,21 @@
             },
             "statusCode": 200,
             "description": "A single source"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Source"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single source"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -40561,6 +42821,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -40571,6 +42832,21 @@
             },
             "statusCode": 200,
             "description": "A single source"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Source"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single source"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -40757,6 +43033,54 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "A unique name for the source",
+                        "key": "name",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "regex": "^[A-z0-9-_]+$",
+                              "maxLength": 155
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Date the source was archived",
+                        "key": "archived_at",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "format": "date-time"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -40767,6 +43091,21 @@
             },
             "statusCode": 200,
             "description": "A single source"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Source"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single source"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -40940,6 +43279,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -40950,6 +43290,21 @@
             },
             "statusCode": 200,
             "description": "A single source"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Source"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single source"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -41092,6 +43447,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -41102,6 +43458,21 @@
             },
             "statusCode": 200,
             "description": "A single source"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Source"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single source"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -41288,6 +43659,62 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Enable or disable webhook notifications on the workspace",
+                        "key": "enabled",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "List of topics to send notifications for",
+                        "key": "topics",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "list",
+                            "itemType": {
+                              "type": "id",
+                              "value": "TopicsValue"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "The Hookdeck Source to send the webhook to",
+                        "key": "source_id",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -41298,6 +43725,21 @@
             },
             "statusCode": 200,
             "description": "Toggle operation status response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ToggleWebhookNotifications"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Toggle operation status response"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -41480,6 +43922,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -41490,6 +43933,21 @@
             },
             "statusCode": 200,
             "description": "List of transformations"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TransformationPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of transformations"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -41680,6 +44138,55 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "A unique, human-friendly name for the transformation",
+                        "key": "name",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "regex": "^[A-z0-9-_]+$",
+                            "maxLength": 155
+                          }
+                        }
+                      },
+                      {
+                        "description": "JavaScript code to be executed",
+                        "key": "code",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Key-value environment variables to be passed to the transformation",
+                        "key": "env",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "TransformationsPostRequestBodyContentApplicationJsonSchemaEnv"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -41690,6 +44197,21 @@
             },
             "statusCode": 200,
             "description": "A single transformation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Transformation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single transformation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -41867,6 +44389,55 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "A unique, human-friendly name for the transformation",
+                        "key": "name",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "regex": "^[A-z0-9-_]+$",
+                            "maxLength": 155
+                          }
+                        }
+                      },
+                      {
+                        "description": "JavaScript code to be executed",
+                        "key": "code",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Key-value environment variables to be passed to the transformation",
+                        "key": "env",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "TransformationsPutRequestBodyContentApplicationJsonSchemaEnv"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -41877,6 +44448,21 @@
             },
             "statusCode": 200,
             "description": "A single transformation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Transformation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single transformation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -42027,6 +44613,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -42037,6 +44624,21 @@
             },
             "statusCode": 200,
             "description": "A single transformation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Transformation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single transformation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -42216,6 +44818,61 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "A unique, human-friendly name for the transformation",
+                        "key": "name",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "regex": "^[A-z0-9-_]+$",
+                              "maxLength": 155
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "JavaScript code to be executed",
+                        "key": "code",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Key-value environment variables to be passed to the transformation",
+                        "key": "env",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "TransformationsIdPutRequestBodyContentApplicationJsonSchemaEnv"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -42226,6 +44883,21 @@
             },
             "statusCode": 200,
             "description": "A single transformation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Transformation"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single transformation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -42452,6 +45124,95 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Key-value environment variables to be passed to the transformation",
+                        "key": "env",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "TransformationsRunPutRequestBodyContentApplicationJsonSchemaEnv"
+                          }
+                        }
+                      },
+                      {
+                        "description": "ID of the connection to use for the execution `context`",
+                        "key": "webhook_id",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "JavaScript code to be executed",
+                        "key": "code",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Transformation ID",
+                        "key": "transformation_id",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Request input to use for the transformation execution",
+                        "key": "request",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "TransformationsRunPutRequestBodyContentApplicationJsonSchemaRequest"
+                          }
+                        }
+                      },
+                      {
+                        "key": "event_id",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -42462,6 +45223,21 @@
             },
             "statusCode": 200,
             "description": "Transformation run output"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TransformationExecutorOutput"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Transformation run output"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -42723,6 +45499,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -42733,6 +45510,21 @@
             },
             "statusCode": 200,
             "description": "List of transformation executions"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TransformationExecutionPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of transformation executions"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -42961,6 +45753,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -42971,6 +45764,21 @@
             },
             "statusCode": 200,
             "description": "A single transformation execution"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TransformationExecution"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single transformation execution"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -43285,6 +46093,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -43295,6 +46104,21 @@
             },
             "statusCode": 200,
             "description": "List of connections"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ConnectionPaginatedResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "List of connections"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -43686,6 +46510,132 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "A unique name of the connection for the source",
+                        "key": "name",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "regex": "^[A-z0-9-_]+$",
+                            "maxLength": 155
+                          }
+                        }
+                      },
+                      {
+                        "description": "ID of a destination to bind to the connection",
+                        "key": "destination_id",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "maxLength": 255
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "ID of a source to bind to the connection",
+                        "key": "source_id",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "maxLength": 255
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Destination input object",
+                        "key": "destination",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "WebhooksPostRequestBodyContentApplicationJsonSchemaDestination"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Source input object",
+                        "key": "source",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "WebhooksPostRequestBodyContentApplicationJsonSchemaSource"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Ruleset input object",
+                        "key": "ruleset",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "WebhooksPostRequestBodyContentApplicationJsonSchemaRuleset"
+                          }
+                        }
+                      },
+                      {
+                        "description": "ID of a rule to bind to the connection. Default to the Workspace default ruleset",
+                        "key": "ruleset_id",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "maxLength": 255
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Array of rules to apply",
+                        "key": "rules",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "list",
+                            "itemType": {
+                              "type": "id",
+                              "value": "Rule"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -43696,6 +46646,21 @@
             },
             "statusCode": 200,
             "description": "A single connection"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Connection"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single connection"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -44072,6 +47037,132 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "A unique name of the connection for the source",
+                        "key": "name",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "regex": "^[A-z0-9-_]+$",
+                            "maxLength": 155
+                          }
+                        }
+                      },
+                      {
+                        "description": "ID of a destination to bind to the connection",
+                        "key": "destination_id",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "maxLength": 255
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "ID of a source to bind to the connection",
+                        "key": "source_id",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "maxLength": 255
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Destination input object",
+                        "key": "destination",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "WebhooksPutRequestBodyContentApplicationJsonSchemaDestination"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Source input object",
+                        "key": "source",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "WebhooksPutRequestBodyContentApplicationJsonSchemaSource"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Ruleset input object",
+                        "key": "ruleset",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "WebhooksPutRequestBodyContentApplicationJsonSchemaRuleset"
+                          }
+                        }
+                      },
+                      {
+                        "description": "ID of a rule to bind to the connection. Default to the Workspace default ruleset",
+                        "key": "ruleset_id",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "maxLength": 255
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Array of rules to apply",
+                        "key": "rules",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "list",
+                            "itemType": {
+                              "type": "id",
+                              "value": "Rule"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -44082,6 +47173,21 @@
             },
             "statusCode": 200,
             "description": "A single connection"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Connection"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single connection"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -44354,6 +47460,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -44364,6 +47471,21 @@
             },
             "statusCode": 200,
             "description": "A single connection"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Connection"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single connection"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -44685,6 +47807,79 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Unique name of the connection for the source",
+                        "key": "name",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "regex": "^[A-z0-9-_]+$",
+                              "maxLength": 155
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Ruleset input object",
+                        "key": "ruleset",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "id",
+                            "value": "WebhooksIdPutRequestBodyContentApplicationJsonSchemaRuleset"
+                          }
+                        }
+                      },
+                      {
+                        "description": "ID of a rule to bind to the connection. Default to the Workspace default ruleset",
+                        "key": "ruleset_id",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "maxLength": 255
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Array of rules to apply",
+                        "key": "rules",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "list",
+                            "itemType": {
+                              "type": "id",
+                              "value": "Rule"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -44695,6 +47890,21 @@
             },
             "statusCode": 200,
             "description": "A single connection"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Connection"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single connection"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -44978,6 +48188,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -44988,6 +48199,21 @@
             },
             "statusCode": 200,
             "description": "A single connection"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Connection"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single connection"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -45240,6 +48466,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -45250,6 +48477,21 @@
             },
             "statusCode": 200,
             "description": "A single connection"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Connection"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single connection"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -45502,6 +48744,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -45512,6 +48755,21 @@
             },
             "statusCode": 200,
             "description": "A single connection"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Connection"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single connection"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -45764,6 +49022,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -45774,6 +49033,21 @@
             },
             "statusCode": 200,
             "description": "A single connection"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Connection"
+                  }
+                },
+                "statusCode": 200,
+                "description": "A single connection"
+              }
+            ]
           },
           "errorsV2": [
             {

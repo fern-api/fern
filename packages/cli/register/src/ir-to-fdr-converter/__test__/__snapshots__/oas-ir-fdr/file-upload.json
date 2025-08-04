@@ -86,6 +86,42 @@
             "contentType": "multipart/form-data"
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "fileUpload",
+                "value": {
+                  "name": "upload-file_Request",
+                  "properties": [
+                    {
+                      "type": "file",
+                      "value": {
+                        "type": "file",
+                        "key": "file",
+                        "isOptional": false,
+                        "contentType": "multipart/form-data",
+                        "description": "The file to upload"
+                      }
+                    },
+                    {
+                      "type": "file",
+                      "value": {
+                        "type": "file",
+                        "key": "maybe_file",
+                        "isOptional": true,
+                        "contentType": "multipart/form-data",
+                        "description": "An optional file to upload"
+                      }
+                    }
+                  ]
+                },
+                "contentType": "multipart/form-data"
+              }
+            }
+          ]
+        },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -167,6 +203,40 @@
             "contentType": "multipart/form-data"
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "fileUpload",
+                "value": {
+                  "name": "upload-list_Request",
+                  "properties": [
+                    {
+                      "type": "file",
+                      "value": {
+                        "type": "fileArray",
+                        "key": "list_file",
+                        "isOptional": false,
+                        "contentType": "multipart/form-data"
+                      }
+                    },
+                    {
+                      "type": "file",
+                      "value": {
+                        "type": "fileArray",
+                        "key": "maybe_list_file",
+                        "isOptional": true,
+                        "contentType": "multipart/form-data"
+                      }
+                    }
+                  ]
+                },
+                "contentType": "multipart/form-data"
+              }
+            }
+          ]
+        },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -281,6 +351,69 @@
             "contentType": "multipart/form-data"
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "fileUpload",
+                "value": {
+                  "name": "upload-with-content-type_Request",
+                  "properties": [
+                    {
+                      "type": "file",
+                      "value": {
+                        "type": "file",
+                        "key": "file",
+                        "isOptional": false,
+                        "contentType": "multipart/form-data",
+                        "description": "The file to upload"
+                      }
+                    },
+                    {
+                      "type": "file",
+                      "value": {
+                        "type": "file",
+                        "key": "maybe_file",
+                        "isOptional": true,
+                        "contentType": "multipart/form-data",
+                        "description": "An optional file to upload"
+                      }
+                    },
+                    {
+                      "type": "bodyProperty",
+                      "key": "metadata",
+                      "valueType": {
+                        "type": "optional",
+                        "itemType": {
+                          "type": "id",
+                          "value": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaMetadata"
+                        }
+                      },
+                      "contentType": "application/json",
+                      "description": "This is a metadata field",
+                      "exploded": false
+                    },
+                    {
+                      "type": "bodyProperty",
+                      "key": "data",
+                      "valueType": {
+                        "type": "optional",
+                        "itemType": {
+                          "type": "id",
+                          "value": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaData"
+                        }
+                      },
+                      "contentType": "multipart/form-data",
+                      "exploded": true
+                    }
+                  ]
+                },
+                "contentType": "multipart/form-data"
+              }
+            }
+          ]
+        },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {

@@ -17610,6 +17610,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -17620,6 +17621,21 @@
             },
             "statusCode": 200,
             "description": "Returns the list of all NFTs owned by the given address and satisfying the given input parameters."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "NFT Ownership Endpoints_getNFTsForOwner-v3_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Returns the list of all NFTs owned by the given address and satisfying the given input parameters."
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -18495,6 +18511,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -18505,6 +18522,21 @@
             },
             "statusCode": 200,
             "description": "Returns the owner(s) of the specified NFT."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "NFT Ownership Endpoints_getOwnersForNFT-v3_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Returns the owner(s) of the specified NFT."
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -18760,6 +18792,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -18770,6 +18803,21 @@
             },
             "statusCode": 200,
             "description": "Returns a list of all owners for the specified contract."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "NFT Ownership Endpoints_getOwnersForContract-v3_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Returns a list of all owners for the specified contract."
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -19022,6 +19070,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -19032,6 +19081,21 @@
             },
             "statusCode": 200,
             "description": "Returns whether the specified wallet holds any NFT from the given contract."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "NFT Ownership Endpoints_isHolderOfContract-v3_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Returns whether the specified wallet holds any NFT from the given contract."
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -19345,6 +19409,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -19355,6 +19420,21 @@
             },
             "statusCode": 200,
             "description": "Returns a list of NFT contracts held by the specified owner address."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "NFT Ownership Endpoints_getContractsForOwner-v3_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Returns a list of NFT contracts held by the specified owner address."
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -19792,6 +19872,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -19802,6 +19883,21 @@
             },
             "statusCode": 200,
             "description": "Returns a list of NFT collections held by the specified owner address."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "NFT Ownership Endpoints_getCollectionsForOwner-v3_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Returns a list of NFT collections held by the specified owner address."
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -20209,6 +20305,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -20219,6 +20316,21 @@
             },
             "statusCode": 200,
             "description": "Returns a list of NFTs associated with the specified contract address."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "NFT Metadata Endpoints_getNFTsForContract-v3_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Returns a list of NFTs associated with the specified contract address."
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -20644,6 +20756,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -20654,6 +20767,21 @@
             },
             "statusCode": 200,
             "description": "Returns a list of NFTs associated with the specified collection."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "NFT Metadata Endpoints_getNFTsForCollection-v3_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Returns a list of NFTs associated with the specified collection."
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -21036,6 +21164,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -21046,6 +21175,21 @@
             },
             "statusCode": 200,
             "description": "Returns the metadata of the specified NFT."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "NFT Metadata Endpoints_getNFTMetadata-v3_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Returns the metadata of the specified NFT."
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -21431,6 +21575,61 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "List of token objects to batch request NFT metadata for. Maximum 100.",
+                        "key": "tokens",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "list",
+                            "itemType": {
+                              "type": "id",
+                              "value": "V3ApiKeyGetNftMetadataBatchPostRequestBodyContentApplicationJsonSchemaTokensItems"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "key": "tokenUriTimeoutInMs",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "key": "refreshCache",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "default": false
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -21444,6 +21643,24 @@
             },
             "statusCode": 200,
             "description": "Returns an array of NFT metadata corresponding to the batch query."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "V3ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItems"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Returns an array of NFT metadata corresponding to the batch query."
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -21796,6 +22013,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -21806,6 +22024,21 @@
             },
             "statusCode": 200,
             "description": "Returns the contract metadata for the specified address."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "NFT Metadata Endpoints_getContractMetadata-v3_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Returns the contract metadata for the specified address."
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -22061,6 +22294,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -22071,6 +22305,21 @@
             },
             "statusCode": 200,
             "description": "Returns the collection metadata for the specified slug."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "NFT Metadata Endpoints_getCollectionMetadata-v3_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Returns the collection metadata for the specified slug."
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -22312,6 +22561,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -22322,6 +22572,21 @@
             },
             "statusCode": 200,
             "description": "Returns confirmation of cache invalidation along with the number of tokens invalidated."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "NFT Metadata Endpoints_invalidateContract-v3_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Returns confirmation of cache invalidation along with the number of tokens invalidated."
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -22562,6 +22827,39 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "List of contract addresses to batch metadata requests for.",
+                        "key": "contractAddresses",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "list",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "default": "0xe785E82358879F061BC3dcAC6f0444462D4b5330"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -22575,6 +22873,24 @@
             },
             "statusCode": 200,
             "description": "Returns an array of contract metadata corresponding to the batch query."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "V3ApiKeyGetContractMetadataBatchPostResponsesContentApplicationJsonSchemaItems"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Returns an array of contract metadata corresponding to the batch query."
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -22837,6 +23153,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -22847,6 +23164,21 @@
             },
             "statusCode": 200,
             "description": "Returns a summary of attribute prevalence for the specified NFT collection."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "NFT Metadata Endpoints_summarizeNFTAttributes-v3_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Returns a summary of attribute prevalence for the specified NFT collection."
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -23496,6 +23828,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -23509,6 +23842,24 @@
             },
             "statusCode": 200,
             "description": "Returns the list of NFT contracts where the metadata has one or more keywords from the search string."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "V3ApiKeySearchContractMetadataGetResponsesContentApplicationJsonSchemaItems"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Returns the list of NFT contracts where the metadata has one or more keywords from the search string."
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -23779,6 +24130,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -23789,6 +24141,21 @@
             },
             "statusCode": 200,
             "description": "Returns the rarity information for each attribute of the specified NFT."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "NFT Metadata Endpoints_computeRarity-v3_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Returns the rarity information for each attribute of the specified NFT."
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -24051,6 +24418,50 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Contract address of the token you want to refresh.",
+                        "key": "contractAddress",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "default": "0xe785E82358879F061BC3dcAC6f0444462D4b5330"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "description": "Token ID of the token you want to refresh. Must belong to the contract address.",
+                        "key": "tokenId",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "default": "44"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -24061,6 +24472,21 @@
             },
             "statusCode": 200,
             "description": "Returns the status of the refresh request along with the estimated time to complete."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "NFT Metadata Endpoints_refreshNftMetadata-v3_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Returns the status of the refresh request along with the estimated time to complete."
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -24285,6 +24711,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -24295,6 +24722,21 @@
             },
             "statusCode": 200,
             "description": "Returns a list of all spam contracts marked by Alchemy."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "NFT Spam Endpoints_getSpamContracts-v3_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Returns a list of all spam contracts marked by Alchemy."
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -24518,6 +24960,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -24528,6 +24971,21 @@
             },
             "statusCode": 200,
             "description": "Returns whether the specified contract is marked as spam."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "NFT Spam Endpoints_isSpamContract-v3_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Returns whether the specified contract is marked as spam."
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -24760,6 +25218,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -24770,6 +25229,21 @@
             },
             "statusCode": 200,
             "description": "Returns whether the specified token is marked as an airdrop."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "NFT Spam Endpoints_isAirdropNFT-v3_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Returns whether the specified token is marked as an airdrop."
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -24992,6 +25466,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -25004,6 +25479,23 @@
             },
             "statusCode": 200,
             "description": "Returns a confirmation message if the address was successfully reported as spam."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Returns a confirmation message if the address was successfully reported as spam."
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -25248,6 +25740,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -25258,6 +25751,21 @@
             },
             "statusCode": 200,
             "description": "Returns the floor prices of the specified NFT collection across different marketplaces."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "NFT Sales Endpoints_getFloorPrice-v3_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Returns the floor prices of the specified NFT collection across different marketplaces."
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -25619,6 +26127,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -25629,6 +26138,21 @@
             },
             "statusCode": 200,
             "description": "Returns a list of NFT sales that match the query parameters."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "NFT Sales Endpoints_getNFTSales-v3_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Returns a list of NFT sales that match the query parameters."
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -26104,6 +26628,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -26114,6 +26639,21 @@
             },
             "statusCode": 200,
             "description": "Returns the list of all NFTs owned by the given address and satisfying the given input parameters."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "NFT API V2 Methods (Older Version)_getNFTs_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Returns the list of all NFTs owned by the given address and satisfying the given input parameters."
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -26905,6 +27445,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -26915,6 +27456,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "NFT API V2 Methods (Older Version)_getNFTMetadata_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -27326,6 +27882,61 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "List of token objects to batch request NFT metadata for. Maximum 100.",
+                        "key": "tokens",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "list",
+                            "itemType": {
+                              "type": "id",
+                              "value": "V2ApiKeyGetNftMetadataBatchPostRequestBodyContentApplicationJsonSchemaTokensItems"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "key": "tokenUriTimeoutInMs",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "key": "refreshCache",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "default": false
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -27339,6 +27950,24 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItems"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -27717,6 +28346,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -27727,6 +28357,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "NFT API V2 Methods (Older Version)_getContractMetadata_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -28003,6 +28648,39 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "list of contract addresses to batch metadata requests for",
+                        "key": "contractAddresses",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "list",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "default": "0xe785E82358879F061BC3dcAC6f0444462D4b5330"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -28016,6 +28694,24 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "V2ApiKeyGetContractMetadataBatchPostResponsesContentApplicationJsonSchemaItems"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -28380,6 +29076,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -28390,6 +29087,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "NFT API V2 Methods (Older Version)_getNFTsForCollection_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -28758,6 +29470,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -28768,6 +29481,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "NFT API V2 Methods (Older Version)_getOwnersForToken_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -29021,6 +29749,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -29036,6 +29765,26 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -29245,6 +29994,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -29255,6 +30005,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "NFT API V2 Methods (Older Version)_getSpamContracts_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -29478,6 +30243,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -29490,6 +30256,23 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -29718,6 +30501,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -29730,6 +30514,23 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -29948,6 +30749,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -29958,6 +30760,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "NFT API V2 Methods (Older Version)_invalidateContract_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -30181,6 +30998,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -30191,6 +31009,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "NFT API V2 Methods (Older Version)_getFloorPrice_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -30435,6 +31268,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -30445,6 +31279,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "NFT API V2 Methods (Older Version)_computeRarity_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -30679,6 +31528,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -30692,6 +31542,24 @@
             },
             "statusCode": 200,
             "description": "Returns the list of NFT contracts where the metadata has one or more keywords from the search string."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "V2ApiKeySearchContractMetadataGetResponsesContentApplicationJsonSchemaItems"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Returns the list of NFT contracts where the metadata has one or more keywords from the search string."
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -30955,6 +31823,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -30965,6 +31834,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "NFT API V2 Methods (Older Version)_summarizeNFTAttributes_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -31201,6 +32085,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -31211,6 +32096,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "NFT API V2 Methods (Older Version)_isHolderOfCollection_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -31563,6 +32463,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -31573,6 +32474,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "NFT API V2 Methods (Older Version)_getNFTSales_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -32009,6 +32925,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -32019,6 +32936,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "NFT API V2 Methods (Older Version)_getContractsForOwner_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -32387,6 +33319,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -32399,6 +33332,23 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [

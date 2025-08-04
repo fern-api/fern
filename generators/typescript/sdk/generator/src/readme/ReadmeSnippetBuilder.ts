@@ -10,6 +10,7 @@ import { isNonNullish } from "@fern-api/core-utils";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { EndpointId, FeatureId, FernFilepath, HttpEndpoint, SdkRequestWrapper } from "@fern-fern/ir-sdk";
+import { join } from "path";
 
 interface EndpointWithFilepath {
     endpoint: HttpEndpoint;
@@ -31,6 +32,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static readonly PAGINATION_FEATURE_ID: FernGeneratorCli.FeatureId = "PAGINATION";
     private static readonly RAW_RESPONSES_FEATURE_ID: FernGeneratorCli.FeatureId = "ACCESS_RAW_RESPONSE_DATA";
     private static readonly ADDITIONAL_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_HEADERS";
+    private static readonly ADDITIONAL_QUERY_STRING_PARAMETERS_FEATURE_ID: FernGeneratorCli.FeatureId =
+        "ADDITIONAL_QUERY_STRING_PARAMETERS";
     public static readonly BINARY_RESPONSE_FEATURE_ID: FernGeneratorCli.FeatureId = "BINARY_RESPONSE";
     public static readonly FILE_UPLOAD_REQUEST_FEATURE_ID: FernGeneratorCli.FeatureId = "FILE_UPLOADS";
 
@@ -85,6 +88,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[ReadmeSnippetBuilder.BINARY_RESPONSE_FEATURE_ID] = this.buildBinaryResponseSnippet();
         snippets[ReadmeSnippetBuilder.RAW_RESPONSES_FEATURE_ID] = this.buildRawResponseSnippets();
         snippets[ReadmeSnippetBuilder.ADDITIONAL_HEADERS_FEATURE_ID] = this.buildAdditionalHeadersSnippets();
+        snippets[ReadmeSnippetBuilder.ADDITIONAL_QUERY_STRING_PARAMETERS_FEATURE_ID] =
+            this.buildAdditionalQueryStringParametersSnippets();
 
         if (this.isPaginationEnabled) {
             snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets();
@@ -227,6 +232,23 @@ const response = await ${this.getMethodCall(headerEndpoint)}(..., {
         );
     }
 
+    private buildAdditionalQueryStringParametersSnippets(): string[] {
+        const queryStringEndpoints = this.getEndpointsForFeature(
+            ReadmeSnippetBuilder.ADDITIONAL_QUERY_STRING_PARAMETERS_FEATURE_ID
+        );
+        return queryStringEndpoints.map((queryStringEndpoint) =>
+            this.writeCode(
+                code`
+const response = await ${this.getMethodCall(queryStringEndpoint)}(..., {
+    queryParams: {
+        'customQueryParamKey': 'custom query param value'
+    }
+});
+`
+            )
+        );
+    }
+
     private buildFileUploadRequestSnippet(): string[] {
         const binaryRequestEndpoints = Object.values(this.context.ir.services).flatMap((service) =>
             service.endpoints
@@ -308,7 +330,7 @@ const bodyUsed = response.bodyUsed;
         }
         const binaryResponseEndpoint = binaryResponseEndpoints[0] as EndpointWithFilepath;
 
-        const templateFile = readFileSync("/assets/readme/binary-response-addendum.md", "utf-8");
+        const templateFile = readFileSync(join(__dirname, "assets/readme/binary-response-addendum.md"), "utf-8");
         const compileTemplate = template(templateFile);
         return compileTemplate({
             snippet: this.writeCode(code`const response = await ${this.getMethodCall(binaryResponseEndpoint)}(...);`)

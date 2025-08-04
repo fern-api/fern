@@ -284,6 +284,23 @@
             }
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "UserCreate"
+                  }
+                }
+              }
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -294,6 +311,21 @@
           },
           "statusCode": 200,
           "description": "User created successfully"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "User"
+                }
+              },
+              "statusCode": 200,
+              "description": "User created successfully"
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [
@@ -385,6 +417,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -395,6 +428,21 @@
           },
           "statusCode": 200,
           "description": "User retrieved successfully"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "User"
+                }
+              },
+              "statusCode": 200,
+              "description": "User retrieved successfully"
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [

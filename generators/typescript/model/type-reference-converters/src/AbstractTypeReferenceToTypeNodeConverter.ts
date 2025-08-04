@@ -1,5 +1,5 @@
 import { TypeReferenceNode } from "@fern-typescript/commons";
-import { InlineConsts } from "@fern-typescript/commons/src/codegen-utils/inlineConsts";
+import { InlineConsts } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 
 import { assertNever } from "@fern-api/core-utils";

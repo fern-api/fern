@@ -10,11 +10,63 @@ import (
 
 type AliasType = *Parent
 
+type Parent struct {
+	Parent string `json:"parent" url:"parent"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (p *Parent) GetParent() string {
+	if p == nil {
+		return ""
+	}
+	return p.Parent
+}
+
+func (p *Parent) GetExtraProperties() map[string]any {
+	if p == nil {
+		return nil
+	}
+	return p.extraProperties
+}
+
+func (p *Parent) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Parent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*p = Parent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (p *Parent) String() string {
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
+}
+
 type Child struct {
 	Parent string `json:"parent" url:"parent"`
 	Child  string `json:"child" url:"child"`
 
-	extraProperties map[string]interface{}
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
 func (c *Child) GetParent() string {
@@ -31,11 +83,16 @@ func (c *Child) GetChild() string {
 	return c.Child
 }
 
-func (c *Child) GetExtraProperties() map[string]interface{} {
+func (c *Child) GetExtraProperties() map[string]any {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
-func (c *Child) UnmarshalJSON(data []byte) error {
+func (c *Child) UnmarshalJSON(
+	data []byte,
+) error {
 	type unmarshaler Child
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
@@ -47,51 +104,18 @@ func (c *Child) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (c *Child) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(c); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", c)
-}
-
-type Parent struct {
-	Parent string `json:"parent" url:"parent"`
-
-	extraProperties map[string]interface{}
-}
-
-func (p *Parent) GetParent() string {
-	if p == nil {
-		return ""
-	}
-	return p.Parent
-}
-
-func (p *Parent) GetExtraProperties() map[string]interface{} {
-	return p.extraProperties
-}
-
-func (p *Parent) UnmarshalJSON(data []byte) error {
-	type unmarshaler Parent
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*p = Parent(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *p)
-	if err != nil {
-		return err
-	}
-	p.extraProperties = extraProperties
-	return nil
-}
-
-func (p *Parent) String() string {
-	if value, err := internal.StringifyJSON(p); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", p)
 }

@@ -7,6 +7,7 @@ import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { NameAndWireValue } from "../../commons/types/NameAndWireValue";
 import { V2SchemaExamples } from "../../examples/types/V2SchemaExamples";
+import { ObjectPropertyAccess } from "../../types/types/ObjectPropertyAccess";
 import { WithDocsAndAvailability } from "../../commons/types/WithDocsAndAvailability";
 
 export const InlinedRequestBodyProperty: core.serialization.ObjectSchema<
@@ -17,6 +18,7 @@ export const InlinedRequestBodyProperty: core.serialization.ObjectSchema<
         name: NameAndWireValue,
         valueType: core.serialization.lazy(() => serializers.TypeReference),
         v2Examples: V2SchemaExamples.optional(),
+        propertyAccess: ObjectPropertyAccess.optional(),
     })
     .extend(WithDocsAndAvailability);
 
@@ -25,5 +27,6 @@ export declare namespace InlinedRequestBodyProperty {
         name: NameAndWireValue.Raw;
         valueType: serializers.TypeReference.Raw;
         v2Examples?: V2SchemaExamples.Raw | null;
+        propertyAccess?: ObjectPropertyAccess.Raw | null;
     }
 }

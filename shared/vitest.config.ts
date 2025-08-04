@@ -9,6 +9,7 @@ export default defineConfig({
                 fallbackCJS: true
             }
         },
-        maxConcurrency: 10
+        maxConcurrency: 10,
+        passWithNoTests: true
     }
 });

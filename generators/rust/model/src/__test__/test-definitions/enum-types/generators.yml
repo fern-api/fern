@@ -1,0 +1,9 @@
+default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-rust-model
+        version: 0.0.0
+        output:
+          location: local-file-system
+          path: ./generated 

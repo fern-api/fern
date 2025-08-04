@@ -1,6 +1,6 @@
 import { cp, mkdir, readFile, writeFile } from "fs/promises";
 import { glob } from "glob";
-import path from "path";
+import path, { join } from "path";
 import { SourceFile } from "ts-morph";
 
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
@@ -36,7 +36,7 @@ export declare namespace CoreUtilitiesManager {
     }
 }
 
-const PATH_ON_CONTAINER = "/assets/core-utilities";
+const UTILITIES_PATH = join(__dirname, "assets/core-utilities");
 
 const DEFAULT_PACKAGE_PATH = "src";
 const DEFAULT_TEST_PATH = "tests";
@@ -139,7 +139,7 @@ export class CoreUtilitiesManager {
 
                     const foundFiles = await glob(patterns, {
                         ignore,
-                        cwd: PATH_ON_CONTAINER,
+                        cwd: UTILITIES_PATH,
                         nodir: true
                     });
                     return foundFiles;
@@ -168,7 +168,7 @@ export class CoreUtilitiesManager {
                     }
                 }
 
-                const sourcePath = path.join(PATH_ON_CONTAINER, file);
+                const sourcePath = path.join(UTILITIES_PATH, file);
                 const destPath = path.join(pathToRoot, destinationFile);
 
                 // Ensure the destination directory exists

@@ -11,7 +11,8 @@ import (
 type Response struct {
 	Foo string `json:"foo" url:"foo"`
 
-	extraProperties map[string]interface{}
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
 func (r *Response) GetFoo() string {
@@ -21,11 +22,16 @@ func (r *Response) GetFoo() string {
 	return r.Foo
 }
 
-func (r *Response) GetExtraProperties() map[string]interface{} {
+func (r *Response) GetExtraProperties() map[string]any {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
-func (r *Response) UnmarshalJSON(data []byte) error {
+func (r *Response) UnmarshalJSON(
+	data []byte,
+) error {
 	type unmarshaler Response
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
@@ -37,10 +43,16 @@ func (r *Response) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (r *Response) String() string {
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(r); err == nil {
 		return value
 	}

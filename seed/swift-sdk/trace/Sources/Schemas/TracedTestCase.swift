@@ -1,9 +1,13 @@
-public struct TracedTestCase: Codable, Hashable {
+public struct TracedTestCase: Codable, Hashable, Sendable {
     public let result: TestCaseResultWithStdout
     public let traceResponsesSize: Int
     public let additionalProperties: [String: JSONValue]
 
-    public init(result: TestCaseResultWithStdout, traceResponsesSize: Int, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        result: TestCaseResultWithStdout,
+        traceResponsesSize: Int,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.result = result
         self.traceResponsesSize = traceResponsesSize
         self.additionalProperties = additionalProperties
@@ -17,7 +21,7 @@ public struct TracedTestCase: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.result, forKey: .result)
         try container.encode(self.traceResponsesSize, forKey: .traceResponsesSize)

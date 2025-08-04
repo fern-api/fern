@@ -8,49 +8,11 @@ import (
 	internal "github.com/unions/fern/internal"
 )
 
-type Circle struct {
-	Radius float64 `json:"radius" url:"radius"`
-
-	extraProperties map[string]interface{}
-}
-
-func (c *Circle) GetRadius() float64 {
-	if c == nil {
-		return 0
-	}
-	return c.Radius
-}
-
-func (c *Circle) GetExtraProperties() map[string]interface{} {
-	return c.extraProperties
-}
-
-func (c *Circle) UnmarshalJSON(data []byte) error {
-	type unmarshaler Circle
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*c = Circle(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *c)
-	if err != nil {
-		return err
-	}
-	c.extraProperties = extraProperties
-	return nil
-}
-
-func (c *Circle) String() string {
-	if value, err := internal.StringifyJSON(c); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", c)
-}
-
 type GetShapeRequest struct {
 	Id string `json:"id" url:"id"`
 
-	extraProperties map[string]interface{}
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
 func (g *GetShapeRequest) GetId() string {
@@ -60,11 +22,16 @@ func (g *GetShapeRequest) GetId() string {
 	return g.Id
 }
 
-func (g *GetShapeRequest) GetExtraProperties() map[string]interface{} {
+func (g *GetShapeRequest) GetExtraProperties() map[string]any {
+	if g == nil {
+		return nil
+	}
 	return g.extraProperties
 }
 
-func (g *GetShapeRequest) UnmarshalJSON(data []byte) error {
+func (g *GetShapeRequest) UnmarshalJSON(
+	data []byte,
+) error {
 	type unmarshaler GetShapeRequest
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
@@ -76,10 +43,16 @@ func (g *GetShapeRequest) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (g *GetShapeRequest) String() string {
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(g); err == nil {
 		return value
 	}
@@ -89,134 +62,66 @@ func (g *GetShapeRequest) String() string {
 type Shape struct {
 	Type   string
 	Id     string
-	Circle *Circle
-	Square *Square
+	Circle Circle
+	Square Square
 }
 
-func (s *Shape) GetType() string {
-	if s == nil {
-		return ""
+type Circle struct {
+	Radius float64 `json:"radius" url:"radius"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (c *Circle) GetRadius() float64 {
+	if c == nil {
+		return 0
 	}
-	return s.Type
+	return c.Radius
 }
 
-func (s *Shape) GetId() string {
-	if s == nil {
-		return ""
-	}
-	return s.Id
-}
-
-func (s *Shape) GetCircle() *Circle {
-	if s == nil {
+func (c *Circle) GetExtraProperties() map[string]any {
+	if c == nil {
 		return nil
 	}
-	return s.Circle
+	return c.extraProperties
 }
 
-func (s *Shape) GetSquare() *Square {
-	if s == nil {
-		return nil
-	}
-	return s.Square
-}
-
-func (s *Shape) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
-		Id   string `json:"id"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+func (c *Circle) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Circle
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	s.Type = unmarshaler.Type
-	s.Id = unmarshaler.Id
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", s)
+	*c = Circle(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
 	}
-	switch unmarshaler.Type {
-	case "circle":
-		value := new(Circle)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		s.Circle = value
-	case "square":
-		value := new(Square)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		s.Square = value
-	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
 	return nil
 }
 
-func (s Shape) MarshalJSON() ([]byte, error) {
-	if err := s.validate(); err != nil {
-		return nil, err
-	}
-	if s.Circle != nil {
-		return internal.MarshalJSONWithExtraProperty(s.Circle, "type", "circle")
-	}
-	if s.Square != nil {
-		return internal.MarshalJSONWithExtraProperty(s.Square, "type", "square")
-	}
-	return nil, fmt.Errorf("type %T does not define a non-empty union type", s)
-}
-
-type ShapeVisitor interface {
-	VisitCircle(*Circle) error
-	VisitSquare(*Square) error
-}
-
-func (s *Shape) Accept(visitor ShapeVisitor) error {
-	if s.Circle != nil {
-		return visitor.VisitCircle(s.Circle)
-	}
-	if s.Square != nil {
-		return visitor.VisitSquare(s.Square)
-	}
-	return fmt.Errorf("type %T does not define a non-empty union type", s)
-}
-
-func (s *Shape) validate() error {
-	if s == nil {
-		return fmt.Errorf("type %T is nil", s)
-	}
-	var fields []string
-	if s.Circle != nil {
-		fields = append(fields, "circle")
-	}
-	if s.Square != nil {
-		fields = append(fields, "square")
-	}
-	if len(fields) == 0 {
-		if s.Type != "" {
-			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.Type)
-		}
-		return fmt.Errorf("type %T is empty", s)
-	}
-	if len(fields) > 1 {
-		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", s, fields)
-	}
-	if s.Type != "" {
-		field := fields[0]
-		if s.Type != field {
-			return fmt.Errorf(
-				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
-				s,
-				s.Type,
-				s,
-			)
+func (c *Circle) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
 		}
 	}
-	return nil
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
 }
 
 type Square struct {
 	Length float64 `json:"length" url:"length"`
 
-	extraProperties map[string]interface{}
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
 func (s *Square) GetLength() float64 {
@@ -226,11 +131,16 @@ func (s *Square) GetLength() float64 {
 	return s.Length
 }
 
-func (s *Square) GetExtraProperties() map[string]interface{} {
+func (s *Square) GetExtraProperties() map[string]any {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
-func (s *Square) UnmarshalJSON(data []byte) error {
+func (s *Square) UnmarshalJSON(
+	data []byte,
+) error {
 	type unmarshaler Square
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
@@ -242,10 +152,16 @@ func (s *Square) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (s *Square) String() string {
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}

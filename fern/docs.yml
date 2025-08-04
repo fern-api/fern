@@ -111,8 +111,9 @@ navigation:
           - page: Overlay Customizations
             icon: fa-regular fa-shuffle
             path: ./pages/api-definition/openapi/overrides.mdx
-          - page: Automatic Updates
+          - page: Sync your OpenAPI Specification
             icon: fa-regular fa-arrows-rotate
+            slug: sync-specification
             path: ./pages/api-definition/openapi/automation.mdx            
           - section: Integrate your Server Framework
             icon: fa-regular fa-server
@@ -596,9 +597,10 @@ navigation:
             slug: postman
             path: ./pages/docs/integrations/postman.mdx
             icon: fa-solid fa-user-astronaut
-          - page: Feature Flags
+          - page: LaunchDarkly
             path: ./pages/docs/integrations/launchdarkly.mdx
             icon: fa-regular fa-flag
+            slug: launchdarkly
 
       - section: Developer Tools
         contents:
@@ -841,4 +843,7 @@ redirects:
     permanent: true
   - source: /learn/docs/writing-content/visual-editor-beta
     destination: /learn/docs/writing-content/visual-editor
+    permanent: true
+  - source: /learn/api-definition/openapi/automatic-updates
+    destination: /learn/api-definition/openapi/sync-specification
     permanent: true

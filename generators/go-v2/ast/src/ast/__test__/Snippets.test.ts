@@ -7,6 +7,7 @@ import { Type } from "../Type";
 import { TypeInstantiation } from "../TypeInstantiation";
 import { AstNode } from "../core/AstNode";
 import { GoFile } from "../core/GoFile";
+import { MultiNode } from "../MultiNode";
 
 interface TestCase {
     description: string;
@@ -289,8 +290,7 @@ describe("file", () => {
     it("import collision", () => {
         const file = new File();
         const foo = new Struct({
-            name: "Foo",
-            importPath: "github.com/acme/acme-go"
+            name: "Foo"
         });
         foo.addField(
             new Field({
@@ -304,8 +304,7 @@ describe("file", () => {
             })
         );
         const bar = new Struct({
-            name: "Bar",
-            importPath: "github.com/acme/acme-go"
+            name: "Bar"
         });
         bar.addField(
             new Field({
@@ -318,7 +317,7 @@ describe("file", () => {
                 )
             })
         );
-        file.add(foo, bar);
+        file.add(new MultiNode({ nodes: [foo, bar] }));
         const content = file.toString({
             packageName: "example",
             rootImportPath: "github.com/acme/acme-go",

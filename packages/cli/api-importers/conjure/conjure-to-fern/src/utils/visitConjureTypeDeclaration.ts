@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api//core-utils";
+import { assertNever } from "@fern-api/core-utils";
 import {
     ConjureAliasDeclaration,
     ConjureEnumDeclaration,

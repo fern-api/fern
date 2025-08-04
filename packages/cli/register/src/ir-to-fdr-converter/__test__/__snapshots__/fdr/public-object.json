@@ -26,11 +26,13 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "fileDownload"
             }
           },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {

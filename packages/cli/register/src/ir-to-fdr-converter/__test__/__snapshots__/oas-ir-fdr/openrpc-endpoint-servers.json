@@ -1256,6 +1256,7 @@
             }
           }
         },
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -1266,6 +1267,7 @@
           },
           "description": "The transformed response object that wraps the original gas and paymaster response. It includes an array of asset change objects, a gasUsed field, and an error field."
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {
@@ -1430,6 +1432,7 @@
             }
           }
         },
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -1440,6 +1443,7 @@
           },
           "description": "Object containing the **fully-signed** transaction ready for `sendRawTransaction`.\n"
         },
+        "responsesV2": {},
         "errorsV2": [],
         "examples": [
           {

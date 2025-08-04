@@ -118,6 +118,45 @@
             }
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "key": "limit",
+                      "valueType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "integer",
+                          "default": 10
+                        }
+                      }
+                    },
+                    {
+                      "key": "offset",
+                      "valueType": {
+                        "type": "optional",
+                        "itemType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "integer",
+                            "default": 0
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -130,6 +169,23 @@
           },
           "statusCode": 200,
           "description": "A response"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 200,
+              "description": "A response"
+            }
+          ]
         },
         "errorsV2": [
           {
@@ -236,6 +292,31 @@
             }
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "key": "name",
+                      "valueType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -248,6 +329,23 @@
           },
           "statusCode": 200,
           "description": "A response"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 200,
+              "description": "A response"
+            }
+          ]
         },
         "errorsV2": [
           {

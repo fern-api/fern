@@ -56,8 +56,10 @@ types:
       allPathParameters: list<PathParameter>
       queryParameters: list<QueryParameter>
       requestBody: optional<HttpRequestBody>
+      v2RequestBodies: optional<V2HttpRequestBodies>
       sdkRequest: optional<SdkRequest>
       response: optional<HttpResponse>
+      v2Responses: optional<V2HttpResponses>
       errors: ResponseErrors
       auth: boolean
       idempotent: boolean
@@ -138,6 +140,10 @@ types:
       fileUpload: FileUploadRequest
       bytes: BytesRequest
 
+  V2HttpRequestBodies:
+    properties:
+      requestBodies: optional<list<HttpRequestBody>>
+
   InlinedRequestBody:
     extends: 
       - commons.WithDocs
@@ -160,6 +166,7 @@ types:
       name: commons.NameAndWireValue
       valueType: types.TypeReference
       v2Examples: optional<examples.V2SchemaExamples>
+      propertyAccess: optional<types.ObjectPropertyAccess>
 
   FileUploadRequest:
     extends: 
@@ -253,6 +260,10 @@ types:
     properties:
       status-code: optional<integer>
       body: optional<HttpResponseBody>
+
+  V2HttpResponses:
+    properties:
+      responses: optional<list<HttpResponse>>
 
   NonStreamHttpResponseBody:
     union:

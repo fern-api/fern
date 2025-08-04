@@ -109,6 +109,83 @@
           },
           "description": "Test request body\n"
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "fileUpload",
+                "value": {
+                  "name": "testUpload_Request",
+                  "properties": [
+                    {
+                      "type": "bodyProperty",
+                      "key": "metadata",
+                      "valueType": {
+                        "type": "optional",
+                        "itemType": {
+                          "type": "map",
+                          "keyType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          },
+                          "valueType": {
+                            "type": "unknown"
+                          }
+                        }
+                      },
+                      "contentType": "multipart/form-data",
+                      "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
+                      "exploded": false
+                    },
+                    {
+                      "type": "bodyProperty",
+                      "key": "chunking_strategy",
+                      "valueType": {
+                        "type": "optional",
+                        "itemType": {
+                          "type": "unknown"
+                        }
+                      },
+                      "contentType": "multipart/form-data",
+                      "exploded": false
+                    },
+                    {
+                      "type": "bodyProperty",
+                      "key": "filename",
+                      "valueType": {
+                        "type": "optional",
+                        "itemType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "contentType": "multipart/form-data",
+                      "description": "Optional multipart section to override the filename.",
+                      "exploded": false
+                    },
+                    {
+                      "type": "file",
+                      "value": {
+                        "type": "file",
+                        "key": "file",
+                        "isOptional": false,
+                        "contentType": "multipart/form-data",
+                        "description": "Binary file contents. The file name of the file will be used as the document ID."
+                      }
+                    }
+                  ]
+                },
+                "contentType": "multipart/form-data",
+                "description": "Test request body\n"
+              },
+              "description": "Test request body\n"
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -121,6 +198,23 @@
           },
           "statusCode": 201,
           "description": "The sample response"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 201,
+              "description": "The sample response"
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [
@@ -230,6 +324,74 @@
           },
           "description": "Test request body\n"
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
+                      "key": "metadata",
+                      "valueType": {
+                        "type": "optional",
+                        "itemType": {
+                          "type": "map",
+                          "keyType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          },
+                          "valueType": {
+                            "type": "unknown"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "description": "Test request body\n"
+            },
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/x-www-form-urlencoded",
+                "shape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
+                      "key": "metadata",
+                      "valueType": {
+                        "type": "optional",
+                        "itemType": {
+                          "type": "map",
+                          "keyType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          },
+                          "valueType": {
+                            "type": "unknown"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "description": "Test request body\n"
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -242,6 +404,23 @@
           },
           "statusCode": 201,
           "description": "The sample response"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 201,
+              "description": "The sample response"
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [

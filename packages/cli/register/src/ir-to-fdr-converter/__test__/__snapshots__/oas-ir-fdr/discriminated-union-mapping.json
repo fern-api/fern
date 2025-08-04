@@ -134,6 +134,25 @@
           },
           "description": "A simple API request."
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RequestOne"
+                  }
+                },
+                "description": "A simple API request."
+              },
+              "description": "A simple API request."
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -146,6 +165,23 @@
           },
           "statusCode": 200,
           "description": "A simple API response."
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 200,
+              "description": "A simple API response."
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [
@@ -208,6 +244,25 @@
           },
           "description": "A simple API request."
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SampleUnion"
+                  }
+                },
+                "description": "A simple API request."
+              },
+              "description": "A simple API request."
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -220,6 +275,23 @@
           },
           "statusCode": 200,
           "description": "A simple API response."
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 200,
+              "description": "A simple API response."
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [

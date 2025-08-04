@@ -6862,6 +6862,33 @@
         ]
       }
     },
+    "Organizations_delete_organization_Response_204": {
+      "description": "Empty response body",
+      "name": "Organizations_delete_organization_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Projects_delete_project_Response_204": {
+      "description": "Empty response body",
+      "name": "Projects_delete_project_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Environments_delete_environment_Response_204": {
+      "description": "Empty response body",
+      "name": "Environments_delete_environment_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "ResourcesListResourcesResponse2001": {
       "name": "ResourcesListResourcesResponse2001",
       "shape": {
@@ -6898,6 +6925,60 @@
             "displayName": "ResourcesListResourcesResponse2001"
           }
         ]
+      }
+    },
+    "Resources_delete_resource_Response_204": {
+      "description": "Empty response body",
+      "name": "Resources_delete_resource_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Resource Actions_delete_resource_action_Response_204": {
+      "description": "Empty response body",
+      "name": "Resource Actions_delete_resource_action_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Resource Action Groups_delete_resource_action_group_Response_204": {
+      "description": "Empty response body",
+      "name": "Resource Action Groups_delete_resource_action_group_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Resource Roles_delete_resource_role_Response_204": {
+      "description": "Empty response body",
+      "name": "Resource Roles_delete_resource_role_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Resource Attributes_delete_resource_attribute_Response_204": {
+      "description": "Empty response body",
+      "name": "Resource Attributes_delete_resource_attribute_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "User Attributes_delete_user_attribute_Response_204": {
+      "description": "Empty response body",
+      "name": "User Attributes_delete_user_attribute_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "RolesListRolesResponse2001": {
@@ -6938,6 +7019,15 @@
         ]
       }
     },
+    "Roles_delete_role_Response_204": {
+      "description": "Empty response body",
+      "name": "Roles_delete_role_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "ConditionSetsListConditionSetsResponse2001": {
       "name": "ConditionSetsListConditionSetsResponse2001",
       "shape": {
@@ -6976,6 +7066,33 @@
         ]
       }
     },
+    "Condition Sets_delete_condition_set_Response_204": {
+      "description": "Empty response body",
+      "name": "Condition Sets_delete_condition_set_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Users_delete_user_Response_204": {
+      "description": "Empty response body",
+      "name": "Users_delete_user_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Users_unassign_role_from_user_Response_204": {
+      "description": "Empty response body",
+      "name": "Users_unassign_role_from_user_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "TenantsListTenantsResponse2001": {
       "name": "TenantsListTenantsResponse2001",
       "shape": {
@@ -7012,6 +7129,51 @@
             "displayName": "TenantsListTenantsResponse2001"
           }
         ]
+      }
+    },
+    "Tenants_delete_tenant_Response_204": {
+      "description": "Empty response body",
+      "name": "Tenants_delete_tenant_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Tenants_delete_tenant_user_Response_204": {
+      "description": "Empty response body",
+      "name": "Tenants_delete_tenant_user_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Role Assignments_unassign_role_Response_204": {
+      "description": "Empty response body",
+      "name": "Role Assignments_unassign_role_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Condition Set Rules_unassign_set_permissions_Response_204": {
+      "description": "Empty response body",
+      "name": "Condition Set Rules_unassign_set_permissions_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Resource Instances_delete_resource_instance_Response_204": {
+      "description": "Empty response body",
+      "name": "Resource Instances_delete_resource_instance_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     }
   },
@@ -7081,6 +7243,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -7094,6 +7257,24 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "OrganizationRead"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -7191,6 +7372,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "OrganizationCreate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -7201,6 +7399,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "OrganizationReadWithAPIKey"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -7315,6 +7528,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -7325,6 +7539,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "OrganizationRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -7426,6 +7655,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Organizations_delete_organization_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Organizations_delete_organization_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Successful Response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -7450,7 +7706,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -7518,6 +7779,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "OrganizationUpdate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -7528,6 +7806,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "OrganizationRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -7615,6 +7908,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -7625,6 +7919,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "OrganizationRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -7747,6 +8056,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -7760,6 +8070,24 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "ProjectRead"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -7863,6 +8191,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ProjectCreate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -7873,6 +8218,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ProjectRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -7989,6 +8349,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -7999,6 +8360,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ProjectRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -8106,6 +8482,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Projects_delete_project_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Projects_delete_project_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Successful Response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -8130,7 +8533,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -8198,6 +8606,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ProjectUpdate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -8208,6 +8633,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ProjectRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -8347,6 +8787,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -8357,6 +8798,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EnvironmentStats"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -8653,6 +9109,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -8666,6 +9123,24 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "EnvironmentRead"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -8800,6 +9275,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "EnvironmentCreate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -8810,6 +9302,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EnvironmentRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -8956,6 +9463,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -8966,6 +9474,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EnvironmentRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -9102,6 +9625,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Environments_delete_environment_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Environments_delete_environment_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Successful Response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -9127,7 +9677,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -9213,6 +9768,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "EnvironmentUpdate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -9223,6 +9795,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EnvironmentRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -9377,6 +9964,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "EnvironmentCopy"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -9387,6 +9991,21 @@
             },
             "statusCode": 201,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EnvironmentRead"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -9615,6 +10234,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -9625,6 +10245,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Resources_list_resources_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -9782,6 +10417,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ResourceCreate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -9792,6 +10444,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ResourceRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -10023,6 +10690,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -10033,6 +10701,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ResourceRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -10237,6 +10920,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ResourceReplace"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -10247,6 +10947,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ResourceRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -10449,6 +11164,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Resources_delete_resource_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Resources_delete_resource_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Successful Response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -10475,7 +11217,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -10579,6 +11326,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ResourceUpdate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -10589,6 +11353,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ResourceRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -10827,6 +11606,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -10840,6 +11620,24 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "ResourceActionRead"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -11006,6 +11804,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ResourceActionCreate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -11016,6 +11831,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ResourceActionRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -11194,6 +12024,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -11204,6 +12035,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ResourceActionRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -11370,6 +12216,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Resource Actions_delete_resource_action_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Resource Actions_delete_resource_action_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Successful Response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -11397,7 +12270,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -11519,6 +12397,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ResourceActionUpdate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -11529,6 +12424,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ResourceActionRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -11728,6 +12638,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -11741,6 +12652,24 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "ResourceActionGroupRead"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -11911,6 +12840,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ResourceActionGroupCreate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -11921,6 +12867,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ResourceActionGroupRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -12113,6 +13074,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -12123,6 +13085,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ResourceActionGroupRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -12295,6 +13272,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Resource Action Groups_delete_resource_action_group_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Resource Action Groups_delete_resource_action_group_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Successful Response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -12322,7 +13326,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -12444,6 +13453,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ResourceActionGroupUpdate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -12454,6 +13480,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ResourceActionGroupRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -12655,6 +13696,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -12668,6 +13710,24 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "ResourceRoleRead"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -12844,6 +13904,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ResourceRoleCreate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -12854,6 +13931,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ResourceRoleRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -13054,6 +14146,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -13064,6 +14157,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ResourceRoleRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -13240,6 +14348,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Resource Roles_delete_resource_role_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Resource Roles_delete_resource_role_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Successful Response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -13267,7 +14402,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -13389,6 +14529,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ResourceRoleUpdate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -13399,6 +14556,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ResourceRoleRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -13603,6 +14775,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "AddRolePermissions"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -13613,6 +14802,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ResourceRoleRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -13815,6 +15019,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "RemoveRolePermissions"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -13825,6 +15046,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ResourceRoleRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -14013,6 +15249,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -14023,6 +15260,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ResourceRoleList"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -14208,6 +15460,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -14218,6 +15471,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ResourceRoleList"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -14428,6 +15696,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -14441,6 +15710,24 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "ResourceAttributeRead"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -14607,6 +15894,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ResourceAttributeCreate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -14617,6 +15921,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ResourceAttributeRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -14797,6 +16116,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -14807,6 +16127,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ResourceAttributeRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -15007,6 +16342,33 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Resource Attributes_delete_resource_attribute_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Resource Attributes_delete_resource_attribute_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Successful Response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -15034,7 +16396,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -15156,6 +16523,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ResourceAttributeUpdate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -15166,6 +16550,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ResourceAttributeRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -15362,6 +16761,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -15375,6 +16775,24 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "ResourceAttributeRead"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -15536,6 +16954,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ResourceAttributeCreate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -15546,6 +16981,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ResourceAttributeRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -15721,6 +17171,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -15731,6 +17182,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ResourceAttributeRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -15925,6 +17391,33 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "User Attributes_delete_user_attribute_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "User Attributes_delete_user_attribute_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Successful Response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -15951,7 +17444,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -16069,6 +17567,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ResourceAttributeUpdate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -16079,6 +17594,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ResourceAttributeRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -16288,6 +17818,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -16298,6 +17829,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Roles_list_roles_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -16461,6 +18007,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "RoleCreate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -16471,6 +18034,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RoleRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -16650,6 +18228,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -16660,6 +18239,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RoleRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -16815,6 +18409,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Roles_delete_role_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Roles_delete_role_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Successful Response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -16841,7 +18462,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -16945,6 +18571,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "RoleUpdate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -16955,6 +18598,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RoleRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -17138,6 +18796,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "AddRolePermissions"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -17148,6 +18823,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RoleRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -17329,6 +19019,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "RemoveRolePermissions"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -17339,6 +19046,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RoleRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -17506,6 +19228,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -17516,6 +19239,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RoleList"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -17680,6 +19418,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -17690,6 +19429,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RoleList"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -17917,6 +19671,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -17927,6 +19682,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Condition Sets_list_condition_sets_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -18116,6 +19886,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ConditionSetCreate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -18126,6 +19913,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ConditionSetRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -18355,6 +20157,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -18365,6 +20168,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ConditionSetRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -18548,6 +20366,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Condition Sets_delete_condition_set_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Condition Sets_delete_condition_set_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Successful Response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -18574,7 +20419,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -18678,6 +20528,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ConditionSetUpdate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -18688,6 +20555,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ConditionSetRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -18944,6 +20826,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -18957,6 +20840,24 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "ConditionSetRead"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -19176,6 +21077,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -19189,6 +21091,24 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "ConditionSetRead"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -19426,6 +21346,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -19436,6 +21357,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PaginatedResult_UserRead_"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -19615,6 +21551,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UserCreate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -19625,6 +21578,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "UserRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -19864,6 +21832,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -19874,6 +21843,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "UserRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -20095,6 +22079,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UserCreate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -20105,6 +22106,32 @@
             },
             "statusCode": 200,
             "description": "An existing user was replaced"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "UserRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "An existing user was replaced"
+              },
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "UserRead"
+                  }
+                },
+                "statusCode": 201,
+                "description": "An new user was created"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -20164,6 +22191,140 @@
                 }
               },
               "responseStatusCode": 200,
+              "responseBody": {
+                "key": "user|892179821739812389327",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "associated_tenants": [
+                  {
+                    "tenant": "stripe-inc",
+                    "roles": [
+                      "admin"
+                    ],
+                    "status": "active"
+                  },
+                  {
+                    "tenant": "othercompany.com",
+                    "roles": [
+                      "viewer"
+                    ],
+                    "status": "pending"
+                  }
+                ],
+                "roles": [
+                  {
+                    "role": "admin",
+                    "tenant": "stripe-inc"
+                  },
+                  {
+                    "role": "viewer",
+                    "tenant": "othercompany.com"
+                  }
+                ],
+                "email": "jane@coolcompany.com",
+                "first_name": "Jane",
+                "last_name": "Doe",
+                "attributes": {
+                  "department": "marketing",
+                  "age": 30,
+                  "subscription": {
+                    "tier": "pro",
+                    "expired": false
+                  }
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "key": "user|892179821739812389327",
+                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                  "associated_tenants": [
+                    {
+                      "tenant": "stripe-inc",
+                      "roles": [
+                        "admin"
+                      ],
+                      "status": "active"
+                    },
+                    {
+                      "tenant": "othercompany.com",
+                      "roles": [
+                        "viewer"
+                      ],
+                      "status": "pending"
+                    }
+                  ],
+                  "roles": [
+                    {
+                      "role": "admin",
+                      "tenant": "stripe-inc"
+                    },
+                    {
+                      "role": "viewer",
+                      "tenant": "othercompany.com"
+                    }
+                  ],
+                  "email": "jane@coolcompany.com",
+                  "first_name": "Jane",
+                  "last_name": "Doe",
+                  "attributes": {
+                    "department": "marketing",
+                    "age": 30,
+                    "subscription": {
+                      "tier": "pro",
+                      "expired": false
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "description": "",
+              "path": "/v2/facts/proj_id/env_id/users/user_id",
+              "pathParameters": {
+                "proj_id": "proj_id",
+                "env_id": "env_id",
+                "user_id": "user_id"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "key": "user|892179821739812389327",
+                "email": "jane@coolcompany.com",
+                "first_name": "Jane",
+                "last_name": "Doe",
+                "attributes": {
+                  "department": "marketing",
+                  "age": 30,
+                  "subscription": {
+                    "tier": "pro",
+                    "expired": false
+                  }
+                }
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "key": "user|892179821739812389327",
+                  "email": "jane@coolcompany.com",
+                  "first_name": "Jane",
+                  "last_name": "Doe",
+                  "attributes": {
+                    "department": "marketing",
+                    "age": 30,
+                    "subscription": {
+                      "tier": "pro",
+                      "expired": false
+                    }
+                  }
+                }
+              },
+              "responseStatusCode": 201,
               "responseBody": {
                 "key": "user|892179821739812389327",
                 "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
@@ -20345,6 +22506,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Users_delete_user_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Users_delete_user_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Successful Response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -20371,7 +22559,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -20475,6 +22668,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UserUpdate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -20485,6 +22695,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "UserRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -20712,6 +22937,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UserRoleCreate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -20722,6 +22964,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RoleAssignmentRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -20893,6 +23150,49 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UserRoleRemove"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Users_unassign_role_from_user_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Users_unassign_role_from_user_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Successful Response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -20930,7 +23230,12 @@
                   "tenant": "google-inc"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -21088,6 +23393,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -21098,6 +23404,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PaginatedResult_UserRead_"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -21324,6 +23645,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -21334,6 +23656,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Tenants_list_tenants_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -21487,6 +23824,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "TenantCreate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -21497,6 +23851,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TenantRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -21674,6 +24043,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -21684,6 +24054,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TenantRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -21839,6 +24224,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Tenants_delete_tenant_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Tenants_delete_tenant_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Successful Response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -21865,7 +24277,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -21969,6 +24386,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "TenantUpdate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -21979,6 +24413,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TenantRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -22157,6 +24606,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Tenants_delete_tenant_user_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Tenants_delete_tenant_user_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Successful Response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -22184,7 +24660,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -22338,6 +24819,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -22351,6 +24833,24 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "RoleAssignmentRead"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -22496,6 +24996,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "RoleAssignmentCreate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -22506,6 +25023,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RoleAssignmentRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -22660,6 +25192,49 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "RoleAssignmentRemove"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Role Assignments_unassign_role_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Role Assignments_unassign_role_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Successful Response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -22698,7 +25273,12 @@
                   "user": "jane@coolcompany.com"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -22786,6 +25366,26 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "list",
+                      "itemType": {
+                        "type": "id",
+                        "value": "RoleAssignmentCreate"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -22796,6 +25396,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BulkRoleAssignmentReport"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -22936,6 +25551,26 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "list",
+                      "itemType": {
+                        "type": "id",
+                        "value": "RoleAssignmentRemove"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -22946,6 +25581,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "BulkRoleUnAssignmentReport"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -23152,6 +25802,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -23165,6 +25816,24 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "ConditionSetRuleRead"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -23308,6 +25977,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ConditionSetRuleCreate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -23321,6 +26007,24 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "ConditionSetRuleRead"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -23477,6 +26181,49 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ConditionSetRuleRemove"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Condition Set Rules_unassign_set_permissions_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Condition Set Rules_unassign_set_permissions_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Successful Response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -23515,7 +26262,12 @@
                   "resource_set": "private_repos"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -23630,6 +26382,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -23643,6 +26396,24 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "ResourceInstanceRead"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -23790,6 +26561,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ResourceInstanceCreate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -23800,6 +26588,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ResourceInstanceRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -23975,6 +26778,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -23985,6 +26789,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ResourceInstanceRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -24140,6 +26959,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Resource Instances_delete_resource_instance_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Resource Instances_delete_resource_instance_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Successful Response"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -24166,7 +27012,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -24270,6 +27121,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ResourceInstanceUpdate"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -24280,6 +27148,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ResourceInstanceRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -24454,6 +27337,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UserCreateBulkOperation"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -24464,6 +27364,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "UserCreateBulkOperationResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -24597,6 +27512,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UserReplaceBulkOperation"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -24607,6 +27539,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "UserReplaceBulkOperationResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -24740,6 +27687,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UserDeleteBulkOperation"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -24750,6 +27714,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "UserDeleteBulkOperationResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -24879,6 +27858,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "TenantCreateBulkOperation"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -24889,6 +27885,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TenantCreateBulkOperationResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -25024,6 +28035,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "TenantDeleteBulkOperation"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -25034,6 +28062,21 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TenantDeleteBulkOperationResult"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {

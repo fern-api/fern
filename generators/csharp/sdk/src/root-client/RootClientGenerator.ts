@@ -107,6 +107,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         class_.addConstructor(this.getConstructorMethod());
 
         for (const subpackage of this.getSubpackages()) {
+            // skip subpackages that have no endpoints (recursively)
+            if (!this.context.subPackageHasEndpoints(subpackage)) {
+                continue;
+            }
             class_.addField(
                 csharp.field({
                     access: csharp.Access.Public,
@@ -332,6 +336,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                 }
                 const arguments_ = [csharp.codeblock("_client")];
                 for (const subpackage of this.getSubpackages()) {
+                    // skip subpackages that have no endpoints (recursively)
+                    if (!this.context.subPackageHasEndpoints(subpackage)) {
+                        continue;
+                    }
                     writer.writeLine(`${subpackage.name.pascalCase.safeName} = `);
                     writer.writeNodeStatement(
                         csharp.instantiateClass({

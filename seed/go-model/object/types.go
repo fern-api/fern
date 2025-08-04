@@ -10,53 +10,6 @@ import (
 	time "time"
 )
 
-type Name struct {
-	Id    string `json:"id" url:"id"`
-	Value string `json:"value" url:"value"`
-
-	extraProperties map[string]interface{}
-}
-
-func (n *Name) GetId() string {
-	if n == nil {
-		return ""
-	}
-	return n.Id
-}
-
-func (n *Name) GetValue() string {
-	if n == nil {
-		return ""
-	}
-	return n.Value
-}
-
-func (n *Name) GetExtraProperties() map[string]interface{} {
-	return n.extraProperties
-}
-
-func (n *Name) UnmarshalJSON(data []byte) error {
-	type unmarshaler Name
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*n = Name(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *n)
-	if err != nil {
-		return err
-	}
-	n.extraProperties = extraProperties
-	return nil
-}
-
-func (n *Name) String() string {
-	if value, err := internal.StringifyJSON(n); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", n)
-}
-
 // Exercises all of the built-in types.
 type Type struct {
 	One         int              `json:"one" url:"one"`
@@ -65,14 +18,14 @@ type Type struct {
 	Four        bool             `json:"four" url:"four"`
 	Five        int64            `json:"five" url:"five"`
 	Six         time.Time        `json:"six" url:"six"`
-	Seven       time.Time        `json:"seven" url:"seven" format:"date"`
+	Seven       time.Time        `json:"seven" url:"seven"`
 	Eight       uuid.UUID        `json:"eight" url:"eight"`
 	Nine        []byte           `json:"nine" url:"nine"`
 	Ten         []int            `json:"ten" url:"ten"`
 	Eleven      []float64        `json:"eleven" url:"eleven"`
 	Twelve      map[string]bool  `json:"twelve" url:"twelve"`
 	Thirteen    *int64           `json:"thirteen,omitempty" url:"thirteen,omitempty"`
-	Fourteen    interface{}      `json:"fourteen" url:"fourteen"`
+	Fourteen    any              `json:"fourteen" url:"fourteen"`
 	Fifteen     [][]int          `json:"fifteen" url:"fifteen"`
 	Sixteen     []map[string]int `json:"sixteen" url:"sixteen"`
 	Seventeen   []*uuid.UUID     `json:"seventeen" url:"seventeen"`
@@ -82,10 +35,11 @@ type Type struct {
 	Twentytwo   float64          `json:"twentytwo" url:"twentytwo"`
 	Twentythree string           `json:"twentythree" url:"twentythree"`
 	Twentyfour  *time.Time       `json:"twentyfour,omitempty" url:"twentyfour,omitempty"`
-	Twentyfive  *time.Time       `json:"twentyfive,omitempty" url:"twentyfive,omitempty" format:"date"`
-	eighteen    string
+	Twentyfive  *time.Time       `json:"twentyfive,omitempty" url:"twentyfive,omitempty"`
 
-	extraProperties map[string]interface{}
+	eighteen        string
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
 func (t *Type) GetOne() int {
@@ -139,7 +93,7 @@ func (t *Type) GetSeven() time.Time {
 
 func (t *Type) GetEight() uuid.UUID {
 	if t == nil {
-		return uuid.Nil
+		return uuid.UUID{}
 	}
 	return t.Eight
 }
@@ -179,7 +133,7 @@ func (t *Type) GetThirteen() *int64 {
 	return t.Thirteen
 }
 
-func (t *Type) GetFourteen() interface{} {
+func (t *Type) GetFourteen() any {
 	if t == nil {
 		return nil
 	}
@@ -205,6 +159,13 @@ func (t *Type) GetSeventeen() []*uuid.UUID {
 		return nil
 	}
 	return t.Seventeen
+}
+
+func (t *Type) GetEighteen() string {
+	if t == nil {
+		return ""
+	}
+	return t.eighteen
 }
 
 func (t *Type) GetNineteen() *Name {
@@ -256,23 +217,24 @@ func (t *Type) GetTwentyfive() *time.Time {
 	return t.Twentyfive
 }
 
-func (t *Type) Eighteen() string {
-	return t.eighteen
-}
-
-func (t *Type) GetExtraProperties() map[string]interface{} {
+func (t *Type) GetExtraProperties() map[string]any {
+	if t == nil {
+		return nil
+	}
 	return t.extraProperties
 }
 
-func (t *Type) UnmarshalJSON(data []byte) error {
+func (t *Type) UnmarshalJSON(
+	data []byte,
+) error {
 	type embed Type
 	var unmarshaler = struct {
 		embed
 		Six        *internal.DateTime `json:"six"`
 		Seven      *internal.Date     `json:"seven"`
-		Twentyfour *internal.DateTime `json:"twentyfour,omitempty"`
-		Twentyfive *internal.Date     `json:"twentyfive,omitempty"`
 		Eighteen   string             `json:"eighteen"`
+		Twentyfour *internal.DateTime `json:"twentyfour"`
+		Twentyfive *internal.Date     `json:"twentyfive"`
 	}{
 		embed: embed(*t),
 	}
@@ -282,17 +244,18 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 	*t = Type(unmarshaler.embed)
 	t.Six = unmarshaler.Six.Time()
 	t.Seven = unmarshaler.Seven.Time()
-	t.Twentyfour = unmarshaler.Twentyfour.TimePtr()
-	t.Twentyfive = unmarshaler.Twentyfive.TimePtr()
 	if unmarshaler.Eighteen != "eighteen" {
 		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", t, "eighteen", unmarshaler.Eighteen)
 	}
 	t.eighteen = unmarshaler.Eighteen
+	t.Twentyfour = unmarshaler.Twentyfour.TimePtr()
+	t.Twentyfive = unmarshaler.Twentyfive.TimePtr()
 	extraProperties, err := internal.ExtractExtraProperties(data, *t, "eighteen")
 	if err != nil {
 		return err
 	}
 	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -302,23 +265,87 @@ func (t *Type) MarshalJSON() ([]byte, error) {
 		embed
 		Six        *internal.DateTime `json:"six"`
 		Seven      *internal.Date     `json:"seven"`
-		Twentyfour *internal.DateTime `json:"twentyfour,omitempty"`
-		Twentyfive *internal.Date     `json:"twentyfive,omitempty"`
 		Eighteen   string             `json:"eighteen"`
+		Twentyfour *internal.DateTime `json:"twentyfour"`
+		Twentyfive *internal.Date     `json:"twentyfive"`
 	}{
 		embed:      embed(*t),
 		Six:        internal.NewDateTime(t.Six),
 		Seven:      internal.NewDate(t.Seven),
+		Eighteen:   "eighteen",
 		Twentyfour: internal.NewOptionalDateTime(t.Twentyfour),
 		Twentyfive: internal.NewOptionalDate(t.Twentyfive),
-		Eighteen:   "eighteen",
 	}
 	return json.Marshal(marshaler)
 }
 
 func (t *Type) String() string {
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(t); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", t)
+}
+
+type Name struct {
+	Id    string `json:"id" url:"id"`
+	Value string `json:"value" url:"value"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (n *Name) GetId() string {
+	if n == nil {
+		return ""
+	}
+	return n.Id
+}
+
+func (n *Name) GetValue() string {
+	if n == nil {
+		return ""
+	}
+	return n.Value
+}
+
+func (n *Name) GetExtraProperties() map[string]any {
+	if n == nil {
+		return nil
+	}
+	return n.extraProperties
+}
+
+func (n *Name) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Name
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = Name(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+	n.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (n *Name) String() string {
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(n); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", n)
 }

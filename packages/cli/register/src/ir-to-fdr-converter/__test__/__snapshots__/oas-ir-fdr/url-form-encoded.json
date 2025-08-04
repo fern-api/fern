@@ -91,6 +91,43 @@
             }
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/x-www-form-urlencoded",
+                "shape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "description": "The user's username",
+                      "key": "username",
+                      "valueType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    {
+                      "description": "The user's email address",
+                      "key": "email",
+                      "valueType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "format": "email"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -101,6 +138,21 @@
           },
           "statusCode": 200,
           "description": "Successful operation"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "submitFormData_Response_200"
+                }
+              },
+              "statusCode": 200,
+              "description": "Successful operation"
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [

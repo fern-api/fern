@@ -28,5 +28,7 @@ export interface ProtobufSpec {
     absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
     relativeFilepathToProtobufRoot: RelativeFilePath;
     generateLocally: boolean;
+    fromOpenAPI: boolean;
+    dependencies: string[];
     settings?: ParseOpenAPIOptions;
 }

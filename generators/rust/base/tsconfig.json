@@ -5,11 +5,18 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": ["./src/**/*"],
+  "include": [
+    "./src/**/*"
+  ],
   "references": [
-    { "path": "../../../packages/commons/core-utils" },
-    { "path": "../../../packages/commons/fs-utils" },
-    { "path": "../../base" },
-    { "path": "../codegen" }
+    {
+      "path": "../../../packages/commons/fs-utils"
+    },
+    {
+      "path": "../../../packages/commons/core-utils"
+    },
+    {
+      "path": "../../base"
+    }
   ]
-} 
+}

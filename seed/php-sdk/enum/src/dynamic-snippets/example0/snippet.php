@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\InlinedRequest\Requests\SendEnumInlinedRequest;
+use Seed\Headers\Requests\SendEnumAsHeaderRequest;
 use Seed\Types\Operand;
 use Seed\Types\Color;
 
@@ -12,9 +12,10 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->inlinedRequest->send(
-    new SendEnumInlinedRequest([
+$client->headers->send(
+    new SendEnumAsHeaderRequest([
         'operand' => Operand::GreaterThan->value,
+        'maybeOperand' => Operand::GreaterThan->value,
         'operandOrColor' => Color::Red->value,
     ]),
 );

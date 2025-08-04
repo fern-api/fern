@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedVariablesClient } from "@fern/variables";
 
-const client = new SeedVariablesClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedVariablesClient({ environment: "YOUR_BASE_URL", rootVariable: "YOUR_ROOT_VARIABLE" });
 await client.service.post();
 ```
 
@@ -56,6 +56,18 @@ If you would like to send additional headers as part of the request, use the `he
 const response = await client.service.post(..., {
     headers: {
         'X-Custom-Header': 'custom value'
+    }
+});
+```
+
+### Additional Query String Parameters
+
+If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
+
+```typescript
+const response = await client.service.post(..., {
+    queryParams: {
+        'customQueryParamKey': 'custom query param value'
     }
 });
 ```
@@ -116,8 +128,7 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
-The SDK defaults to `node-fetch` but will use the global fetch client if present. The SDK works in the following
-runtimes:
+The SDK works in the following runtimes:
 
 - Node.js 18+
 - Vercel

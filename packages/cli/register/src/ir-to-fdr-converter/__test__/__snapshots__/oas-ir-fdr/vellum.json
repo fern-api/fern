@@ -6299,6 +6299,33 @@
           }
         ]
       }
+    },
+    "sandboxes_delete_sandbox_scenario_Response_204": {
+      "description": "Empty response body",
+      "name": "sandboxes_delete_sandbox_scenario_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "submit-completion-actuals_Response_200": {
+      "description": "Empty response body",
+      "name": "submit-completion-actuals_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "test-suites_delete_test_suite_test_case_Response_204": {
+      "description": "Empty response body",
+      "name": "test-suites_delete_test_suite_test_case_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
     }
   },
   "subpackages": {
@@ -6355,6 +6382,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -6365,6 +6393,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "DeploymentRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -6465,6 +6508,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "DocumentIndexCreateRequest"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -6476,85 +6536,23 @@
             "statusCode": 201,
             "description": ""
           },
-          "errorsV2": [],
-          "examples": [
-            {
-              "name": "Index Using Instructor Model",
-              "description": "",
-              "path": "/v1/document-indexes",
-              "pathParameters": {},
-              "queryParameters": {},
-              "headers": {},
-              "requestBody": {
-                "label": "My Document Index",
-                "name": "my-document-index",
-                "indexing_config": {
-                  "chunking": {
-                    "chunker_name": "sentence-chunker",
-                    "chunker_config": {
-                      "character_limit": 1000,
-                      "min_overlap_ratio": 0.5
-                    }
-                  },
-                  "vectorizer": {
-                    "model_name": "hkunlp/instructor-xl",
-                    "config": {
-                      "instruction_domain": "",
-                      "instruction_document_text_type": "plain_text",
-                      "instruction_query_text_type": "plain_text"
-                    }
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "DocumentIndexRead"
                   }
                 },
-                "copy_documents_from_index_id": {}
-              },
-              "requestBodyV3": {
-                "type": "json",
-                "value": {
-                  "label": "My Document Index",
-                  "name": "my-document-index",
-                  "indexing_config": {
-                    "chunking": {
-                      "chunker_name": "sentence-chunker",
-                      "chunker_config": {
-                        "character_limit": 1000,
-                        "min_overlap_ratio": 0.5
-                      }
-                    },
-                    "vectorizer": {
-                      "model_name": "hkunlp/instructor-xl",
-                      "config": {
-                        "instruction_domain": "",
-                        "instruction_document_text_type": "plain_text",
-                        "instruction_query_text_type": "plain_text"
-                      }
-                    }
-                  },
-                  "copy_documents_from_index_id": {}
-                }
-              },
-              "responseStatusCode": 201,
-              "responseBody": {
-                "id": "string",
-                "created": "2024-01-15T09:30:00Z",
-                "label": "string",
-                "name": "string",
-                "status": "ACTIVE",
-                "environment": "DEVELOPMENT",
-                "indexing_config": {}
-              },
-              "responseBodyV3": {
-                "type": "json",
-                "value": {
-                  "id": "string",
-                  "created": "2024-01-15T09:30:00Z",
-                  "label": "string",
-                  "name": "string",
-                  "status": "ACTIVE",
-                  "environment": "DEVELOPMENT",
-                  "indexing_config": {}
-                }
+                "statusCode": 201,
+                "description": ""
               }
-            },
+            ]
+          },
+          "errorsV2": [],
+          "examples": [
             {
               "name": "Index Using a Sentence Transformers Model",
               "description": "",
@@ -6696,6 +6694,82 @@
                   "indexing_config": {}
                 }
               }
+            },
+            {
+              "description": "",
+              "path": "/v1/document-indexes",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "label": "My Document Index",
+                "name": "my-document-index",
+                "indexing_config": {
+                  "chunking": {
+                    "chunker_name": "sentence-chunker",
+                    "chunker_config": {
+                      "character_limit": 1000,
+                      "min_overlap_ratio": 0.5
+                    }
+                  },
+                  "vectorizer": {
+                    "model_name": "hkunlp/instructor-xl",
+                    "config": {
+                      "instruction_domain": "",
+                      "instruction_document_text_type": "plain_text",
+                      "instruction_query_text_type": "plain_text"
+                    }
+                  }
+                },
+                "copy_documents_from_index_id": {}
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "label": "My Document Index",
+                  "name": "my-document-index",
+                  "indexing_config": {
+                    "chunking": {
+                      "chunker_name": "sentence-chunker",
+                      "chunker_config": {
+                        "character_limit": 1000,
+                        "min_overlap_ratio": 0.5
+                      }
+                    },
+                    "vectorizer": {
+                      "model_name": "hkunlp/instructor-xl",
+                      "config": {
+                        "instruction_domain": "",
+                        "instruction_document_text_type": "plain_text",
+                        "instruction_query_text_type": "plain_text"
+                      }
+                    }
+                  },
+                  "copy_documents_from_index_id": {}
+                }
+              },
+              "responseStatusCode": 201,
+              "responseBody": {
+                "id": "string",
+                "created": "2024-01-15T09:30:00Z",
+                "label": "string",
+                "name": "string",
+                "status": "ACTIVE",
+                "environment": "DEVELOPMENT",
+                "indexing_config": {}
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "id": "string",
+                  "created": "2024-01-15T09:30:00Z",
+                  "label": "string",
+                  "name": "string",
+                  "status": "ACTIVE",
+                  "environment": "DEVELOPMENT",
+                  "indexing_config": {}
+                }
+              }
             }
           ],
           "protocol": {
@@ -6796,6 +6870,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -6806,6 +6881,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PaginatedSlimDocumentList"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -6908,16 +6998,222 @@
           "headers": [],
           "request": {
             "type": {
-              "type": "json",
-              "contentType": "application/json",
-              "shape": {
-                "type": "reference",
-                "value": {
-                  "type": "id",
-                  "value": "UploadDocumentBodyRequest"
+              "type": "fileUpload",
+              "value": {
+                "name": "documents_upload_Request",
+                "properties": [
+                  {
+                    "type": "bodyProperty",
+                    "key": "add_to_index_names",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "nullable",
+                        "itemType": {
+                          "type": "list",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "contentType": "multipart/form-data",
+                    "description": "Optionally include the names of all indexes that you'd like this document to be included in",
+                    "exploded": false
+                  },
+                  {
+                    "type": "bodyProperty",
+                    "key": "external_id",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "nullable",
+                        "itemType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        }
+                      }
+                    },
+                    "contentType": "multipart/form-data",
+                    "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
+                    "exploded": false
+                  },
+                  {
+                    "type": "bodyProperty",
+                    "key": "label",
+                    "valueType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "contentType": "multipart/form-data",
+                    "description": "A human-friendly name for this document. Typically the filename.",
+                    "exploded": false
+                  },
+                  {
+                    "type": "file",
+                    "value": {
+                      "type": "file",
+                      "key": "contents",
+                      "isOptional": false,
+                      "contentType": "multipart/form-data",
+                      "description": "The file contents of the document."
+                    }
+                  },
+                  {
+                    "type": "bodyProperty",
+                    "key": "keywords",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "nullable",
+                        "itemType": {
+                          "type": "list",
+                          "itemType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "contentType": "multipart/form-data",
+                    "description": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
+                    "exploded": false
+                  }
+                ]
+              },
+              "contentType": "multipart/form-data"
+            }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "fileUpload",
+                  "value": {
+                    "name": "documents_upload_Request",
+                    "properties": [
+                      {
+                        "type": "bodyProperty",
+                        "key": "add_to_index_names",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "list",
+                              "itemType": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "description": "Optionally include the names of all indexes that you'd like this document to be included in",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "external_id",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            }
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
+                        "exploded": false
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "label",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "description": "A human-friendly name for this document. Typically the filename.",
+                        "exploded": false
+                      },
+                      {
+                        "type": "file",
+                        "value": {
+                          "type": "file",
+                          "key": "contents",
+                          "isOptional": false,
+                          "contentType": "multipart/form-data",
+                          "description": "The file contents of the document."
+                        }
+                      },
+                      {
+                        "type": "bodyProperty",
+                        "key": "keywords",
+                        "valueType": {
+                          "type": "optional",
+                          "itemType": {
+                            "type": "nullable",
+                            "itemType": {
+                              "type": "list",
+                              "itemType": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "contentType": "multipart/form-data",
+                        "description": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
+                        "exploded": false
+                      }
+                    ]
+                  },
+                  "contentType": "multipart/form-data"
+                }
+              },
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UploadDocumentBodyRequest"
+                    }
+                  }
                 }
               }
-            }
+            ]
           },
           "response": {
             "type": {
@@ -6929,6 +7225,21 @@
             },
             "statusCode": 201,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "UploadDocumentResponse"
+                  }
+                },
+                "statusCode": 201,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -6983,10 +7294,25 @@
                 "contents": "string"
               },
               "requestBodyV3": {
-                "type": "json",
+                "type": "form",
                 "value": {
-                  "label": "string",
-                  "contents": "string"
+                  "add_to_index_names": {
+                    "type": "json"
+                  },
+                  "external_id": {
+                    "type": "json"
+                  },
+                  "label": {
+                    "type": "json",
+                    "value": "string"
+                  },
+                  "contents": {
+                    "type": "filename",
+                    "value": "string"
+                  },
+                  "keywords": {
+                    "type": "json"
+                  }
                 }
               },
               "responseStatusCode": 201,
@@ -7065,6 +7391,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -7075,6 +7402,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ModelVersionRead"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -7278,6 +7620,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ModelVersionCompilePromptRequestRequest"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -7288,6 +7647,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ModelVersionCompilePromptResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -7383,6 +7757,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "RegisterPromptRequestRequest"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -7393,6 +7784,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "RegisterPromptResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -7612,6 +8018,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "UpsertSandboxScenarioRequestRequest"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -7623,109 +8046,24 @@
             "statusCode": 200,
             "description": ""
           },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SandboxScenario"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
-              "name": "Basic Example",
-              "description": "",
-              "path": "/v1/sandboxes/id/scenarios",
-              "pathParameters": {
-                "id": "id"
-              },
-              "queryParameters": {},
-              "headers": {},
-              "requestBody": {
-                "label": "Scenario 1",
-                "inputs": [
-                  {
-                    "key": "var_1",
-                    "type": "TEXT",
-                    "value": "Hello, world!"
-                  },
-                  {
-                    "key": "var_2",
-                    "type": "TEXT",
-                    "value": "Why hello, there!"
-                  }
-                ],
-                "metric_input_params": {
-                  "params": {}
-                },
-                "id": "3ee58bf2-1e5c-415e-8b6c-02ca8b77f29d"
-              },
-              "requestBodyV3": {
-                "type": "json",
-                "value": {
-                  "label": "Scenario 1",
-                  "inputs": [
-                    {
-                      "key": "var_1",
-                      "type": "TEXT",
-                      "value": "Hello, world!"
-                    },
-                    {
-                      "key": "var_2",
-                      "type": "TEXT",
-                      "value": "Why hello, there!"
-                    }
-                  ],
-                  "metric_input_params": {
-                    "params": {}
-                  },
-                  "id": "3ee58bf2-1e5c-415e-8b6c-02ca8b77f29d"
-                }
-              },
-              "responseStatusCode": 200,
-              "responseBody": {
-                "label": "Untitled Scenario",
-                "inputs": [
-                  {
-                    "key": "string",
-                    "type": "TEXT",
-                    "value": "string",
-                    "chat_history": [
-                      {
-                        "text": "string",
-                        "role": "SYSTEM"
-                      }
-                    ]
-                  }
-                ],
-                "id": "string",
-                "metric_input_params": {
-                  "params": {
-                    "target": "string"
-                  }
-                }
-              },
-              "responseBodyV3": {
-                "type": "json",
-                "value": {
-                  "label": "Untitled Scenario",
-                  "inputs": [
-                    {
-                      "key": "string",
-                      "type": "TEXT",
-                      "value": "string",
-                      "chat_history": [
-                        {
-                          "text": "string",
-                          "role": "SYSTEM"
-                        }
-                      ]
-                    }
-                  ],
-                  "id": "string",
-                  "metric_input_params": {
-                    "params": {
-                      "target": "string"
-                    }
-                  }
-                }
-              }
-            },
-            {
-              "name": "Chat History Example",
               "description": "",
               "path": "/v1/sandboxes/id/scenarios",
               "pathParameters": {
@@ -7780,6 +8118,104 @@
                     "params": {}
                   },
                   "id": "50c55d1d-4c37-4c83-afc1-9d895f286320"
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "label": "Untitled Scenario",
+                "inputs": [
+                  {
+                    "key": "string",
+                    "type": "TEXT",
+                    "value": "string",
+                    "chat_history": [
+                      {
+                        "text": "string",
+                        "role": "SYSTEM"
+                      }
+                    ]
+                  }
+                ],
+                "id": "string",
+                "metric_input_params": {
+                  "params": {
+                    "target": "string"
+                  }
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "label": "Untitled Scenario",
+                  "inputs": [
+                    {
+                      "key": "string",
+                      "type": "TEXT",
+                      "value": "string",
+                      "chat_history": [
+                        {
+                          "text": "string",
+                          "role": "SYSTEM"
+                        }
+                      ]
+                    }
+                  ],
+                  "id": "string",
+                  "metric_input_params": {
+                    "params": {
+                      "target": "string"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "description": "",
+              "path": "/v1/sandboxes/id/scenarios",
+              "pathParameters": {
+                "id": "id"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "label": "Scenario 1",
+                "inputs": [
+                  {
+                    "key": "var_1",
+                    "type": "TEXT",
+                    "value": "Hello, world!"
+                  },
+                  {
+                    "key": "var_2",
+                    "type": "TEXT",
+                    "value": "Why hello, there!"
+                  }
+                ],
+                "metric_input_params": {
+                  "params": {}
+                },
+                "id": "3ee58bf2-1e5c-415e-8b6c-02ca8b77f29d"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "label": "Scenario 1",
+                  "inputs": [
+                    {
+                      "key": "var_1",
+                      "type": "TEXT",
+                      "value": "Hello, world!"
+                    },
+                    {
+                      "key": "var_2",
+                      "type": "TEXT",
+                      "value": "Why hello, there!"
+                    }
+                  ],
+                  "metric_input_params": {
+                    "params": {}
+                  },
+                  "id": "3ee58bf2-1e5c-415e-8b6c-02ca8b77f29d"
                 }
               },
               "responseStatusCode": 200,
@@ -7903,6 +8339,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "sandboxes_delete_sandbox_scenario_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No response body"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "sandboxes_delete_sandbox_scenario_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No response body"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -7914,7 +8377,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -7994,6 +8462,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "TestSuiteTestCaseRequest"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -8004,6 +8489,21 @@
             },
             "statusCode": 200,
             "description": ""
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TestSuiteTestCase"
+                  }
+                },
+                "statusCode": 200,
+                "description": ""
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -8119,6 +8619,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "test-suites_delete_test_suite_test_case_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "No response body"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "test-suites_delete_test_suite_test_case_Response_204"
+                  }
+                },
+                "statusCode": 204,
+                "description": "No response body"
+              }
+            ]
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -8130,7 +8657,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -8189,6 +8721,23 @@
             }
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ExecutePromptStreamRequest"
+                  }
+                }
+              }
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "stream",
@@ -8202,6 +8751,24 @@
           },
           "statusCode": 200,
           "description": ""
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "stream",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ExecutePromptEvent"
+                  }
+                }
+              },
+              "statusCode": 200,
+              "description": ""
+            }
+          ]
         },
         "errorsV2": [
           {
@@ -8356,6 +8923,23 @@
             }
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ExecuteWorkflowStreamRequest"
+                  }
+                }
+              }
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "stream",
@@ -8369,6 +8953,24 @@
           },
           "statusCode": 200,
           "description": ""
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "stream",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "WorkflowStreamEvent"
+                  }
+                }
+              },
+              "statusCode": 200,
+              "description": ""
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [
@@ -8500,6 +9102,23 @@
             }
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenerateBodyRequest"
+                  }
+                }
+              }
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -8510,6 +9129,21 @@
           },
           "statusCode": 200,
           "description": ""
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "GenerateResponse"
+                }
+              },
+              "statusCode": 200,
+              "description": ""
+            }
+          ]
         },
         "errorsV2": [
           {
@@ -8705,6 +9339,23 @@
             }
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenerateStreamBodyRequest"
+                  }
+                }
+              }
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "stream",
@@ -8718,6 +9369,24 @@
           },
           "statusCode": 200,
           "description": ""
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "stream",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenerateStreamResponse"
+                  }
+                }
+              },
+              "statusCode": 200,
+              "description": ""
+            }
+          ]
         },
         "errorsV2": [
           {
@@ -8916,6 +9585,23 @@
             }
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SearchRequestBodyRequest"
+                  }
+                }
+              }
+            }
+          ]
+        },
         "response": {
           "type": {
             "type": "reference",
@@ -8926,6 +9612,21 @@
           },
           "statusCode": 200,
           "description": ""
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "SearchResponse"
+                }
+              },
+              "statusCode": 200,
+              "description": ""
+            }
+          ]
         },
         "errorsV2": [
           {
@@ -9068,6 +9769,49 @@
             }
           }
         },
+        "requestsV2": {
+          "requests": [
+            {
+              "type": {
+                "type": "json",
+                "contentType": "application/json",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SubmitCompletionActualsRequest"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "id",
+              "value": "submit-completion-actuals_Response_200"
+            }
+          },
+          "statusCode": 200,
+          "description": "No response body"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "submit-completion-actuals_Response_200"
+                }
+              },
+              "statusCode": 200,
+              "description": "No response body"
+            }
+          ]
+        },
         "errorsV2": [
           {
             "type": {
@@ -9129,7 +9873,12 @@
                 ]
               }
             },
-            "responseStatusCode": 200
+            "responseStatusCode": 200,
+            "responseBody": {},
+            "responseBodyV3": {
+              "type": "json",
+              "value": {}
+            }
           }
         ],
         "protocol": {

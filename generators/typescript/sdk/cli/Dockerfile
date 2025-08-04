@@ -13,7 +13,7 @@ RUN yarn add \
   @types/node@^18.19.70 \
   readable-stream@^4.6.0 \
   @types/readable-stream@^4.0.18 \
-  form-data@^4.0.0 \
+  form-data@^4.0.4 \
   formdata-node@^6.0.3 \
   jest-environment-jsdom@^29.7.0 \
   prettier@^3.4.2 \
@@ -24,12 +24,8 @@ RUN yarn add \
   webpack@^5.97.1 \
   fetch-mock-jest@^1.5.1
 
-COPY generators/typescript/sdk/features.yml /assets/features.yml
-COPY generators/typescript/asIs/readme/binary-response-addendum.md /assets/readme/binary-response-addendum.md
-COPY generators/typescript/asIs/ /assets/asIs
-COPY generators/typescript/utils/core-utilities/ /assets/core-utilities
-COPY generators/typescript/sdk/cli/dist/nodeCli.cjs /nodeCli.cjs
+COPY generators/typescript/sdk/cli/dist/ /
 
 RUN npm install -f -g @fern-api/generator-cli
 
-ENTRYPOINT ["node", "/nodeCli.cjs"]
+ENTRYPOINT ["node", "--enable-source-maps", "/cli.cjs"]

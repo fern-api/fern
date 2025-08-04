@@ -199,6 +199,7 @@
         },
         "queryParameters": [],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -209,6 +210,21 @@
           },
           "statusCode": 200,
           "description": "A list of workspace audit logs"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "getWorkspaceAuditLogs_Response_200"
+                }
+              },
+              "statusCode": 200,
+              "description": "A list of workspace audit logs"
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [

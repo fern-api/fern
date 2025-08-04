@@ -144,7 +144,7 @@ describe("Method", () => {
                         type: Type.optional(Type.bool())
                     })
                 ],
-                returnType: Type.custom("User?")
+                returnType: Type.optional(Type.custom("User"))
             });
 
             expect(method.toString()).toMatchInlineSnapshot(
@@ -321,7 +321,10 @@ describe("Method", () => {
                 unsafeName: "getUserName",
                 returnType: Type.string(),
                 body: swift.CodeBlock.withStatements([
-                    swift.Statement.constantDeclaration("name", swift.Expression.rawStringValue("John Appleseed")),
+                    swift.Statement.constantDeclaration({
+                        unsafeName: "name",
+                        value: swift.Expression.rawStringValue("John Appleseed")
+                    }),
                     swift.Statement.return(swift.Expression.rawValue("name"))
                 ])
             });

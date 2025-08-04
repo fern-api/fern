@@ -38,7 +38,7 @@ public class RawServiceClient {
                 .newBuilder()
                 .addPathSegments("upload-content")
                 .build();
-        RequestBody body = new InputStreamRequestBody(request, MediaType.parse("application/octet-stream"));
+        RequestBody body = new InputStreamRequestBody(MediaType.parse("application/octet-stream"), request);
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("POST", body)
@@ -65,10 +65,10 @@ public class RawServiceClient {
     }
 
     public SeedBytesUploadHttpResponse<Void> upload(byte[] request) {
-        upload(new ByteArrayInputStream(request));
+        return upload(new ByteArrayInputStream(request));
     }
 
     public SeedBytesUploadHttpResponse<Void> upload(byte[] request, RequestOptions requestOptions) {
-        upload(new ByteArrayInputStream(request), requestOptions);
+        return upload(new ByteArrayInputStream(request), requestOptions);
     }
 }

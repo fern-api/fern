@@ -8,16 +8,19 @@ export function getSwiftTypeForTypeReference(typeReference: TypeReference): swif
         case "container":
             return typeReference.container._visit({
                 // TODO(kafkas): Handle these cases
-                literal: () => swift.Type.any(),
-                map: () => swift.Type.any(),
-                set: () => swift.Type.any(),
-                nullable: () => swift.Type.any(),
+                literal: () => swift.Type.jsonValue(),
+                map: (type) =>
+                    swift.Type.dictionary(
+                        getSwiftTypeForTypeReference(type.keyType),
+                        getSwiftTypeForTypeReference(type.valueType)
+                    ),
+                set: () => swift.Type.jsonValue(),
+                nullable: () => swift.Type.jsonValue(),
                 optional: (ref) => swift.Type.optional(getSwiftTypeForTypeReference(ref)),
                 list: (ref) => swift.Type.array(getSwiftTypeForTypeReference(ref)),
-                _other: () => swift.Type.any()
+                _other: () => swift.Type.jsonValue()
             });
         case "primitive":
-            // TODO(kafkas): Do we not look at typeReference.primitive.v2?
             return PrimitiveTypeV1._visit(typeReference.primitive.v1, {
                 string: () => swift.Type.string(),
                 boolean: () => swift.Type.bool(),
@@ -33,12 +36,12 @@ export function getSwiftTypeForTypeReference(typeReference: TypeReference): swif
                 dateTime: () => swift.Type.date(),
                 base64: () => swift.Type.string(),
                 uuid: () => swift.Type.uuid(),
-                _other: () => swift.Type.any()
+                _other: () => swift.Type.jsonValue()
             });
         case "named":
             return swift.Type.custom(typeReference.name.pascalCase.unsafeName);
         case "unknown":
-            return swift.Type.any();
+            return swift.Type.jsonValue();
         default:
             assertNever(typeReference);
     }

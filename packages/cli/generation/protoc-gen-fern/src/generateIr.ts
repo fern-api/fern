@@ -6,7 +6,7 @@ import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { serialization } from "@fern-api/ir-sdk";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
-import { ErrorCollector } from "@fern-api/v2-importer-commons";
+import { ErrorCollector } from "@fern-api/v3-importer-commons";
 
 import { Logger } from "./commons/logging";
 import { ProtofileConverter } from "./converters/ProtofileConverter";

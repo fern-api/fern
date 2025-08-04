@@ -1,13 +1,34 @@
 {
   "extends": "@fern-api/configs/tsconfig/main.json",
-  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
-  "include": ["./src/**/*"],
-  "exclude": ["./src/asIs/**/*"],
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src"
+  },
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "./src/asIs/**/*"
+  ],
   "references": [
-    { "path": "../../../packages/commons/core-utils" },
-    { "path": "../../../packages/commons/fs-utils" },
-    { "path": "../../../packages/commons/logging-execa" },
-    { "path": "../../base" },
-    { "path": "../../typescript-v2/ast" }
+    {
+      "path": "../../../packages/cli/logger"
+    },
+    {
+      "path": "../../../packages/commons/fs-utils"
+    },
+    {
+      "path": "../../../packages/commons/logging-execa"
+    },
+    {
+      "path": "../../base"
+    },
+    {
+      "path": "../../typescript-v2/ast"
+    },
+    {
+      "path": "../../typescript-v2/formatter"
+    }
   ]
 }

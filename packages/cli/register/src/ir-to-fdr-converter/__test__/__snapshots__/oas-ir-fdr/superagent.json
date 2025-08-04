@@ -521,6 +521,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -530,6 +531,20 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -581,6 +596,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Agent"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -590,6 +622,20 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -671,6 +717,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -680,6 +727,20 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -752,6 +813,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -761,6 +823,20 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -844,6 +920,21 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": []
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -853,6 +944,20 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -943,6 +1048,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "PredictAgent"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -952,6 +1074,20 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -1037,6 +1173,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "SignIn"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -1046,6 +1199,20 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -1121,6 +1288,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "SignUp"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -1130,6 +1314,20 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -1202,6 +1400,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1211,6 +1410,20 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -1266,6 +1479,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1275,6 +1489,20 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -1339,6 +1567,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1348,6 +1577,20 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -1399,6 +1642,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ApiToken"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -1408,6 +1668,20 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -1487,6 +1761,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1496,6 +1771,20 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -1568,6 +1857,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1577,6 +1867,20 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -1641,6 +1945,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1650,6 +1955,20 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -1701,6 +2020,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Document"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -1710,6 +2046,20 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -1793,6 +2143,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1802,6 +2153,20 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -1874,6 +2239,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1883,6 +2249,20 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -1947,6 +2327,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -1956,6 +2337,20 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -2007,6 +2402,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Prompt"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -2016,6 +2428,20 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -2103,6 +2529,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -2112,6 +2539,20 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -2184,6 +2625,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -2193,6 +2635,20 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -2276,6 +2732,21 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": []
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -2285,6 +2756,20 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -2354,6 +2839,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -2363,6 +2849,20 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -2414,6 +2914,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "Tool"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -2423,6 +2940,20 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -2504,6 +3035,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -2513,6 +3045,20 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -2585,6 +3131,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -2594,6 +3141,20 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -2658,6 +3219,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -2667,6 +3229,20 @@
             },
             "statusCode": 200,
             "description": "Successful Response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "unknown"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful Response"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [

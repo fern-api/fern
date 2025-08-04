@@ -15,9 +15,7 @@ public class Example1
         await client.InlinedRequest.SendAsync(
             new SendEnumInlinedRequest{
                 Operand = Operand.GreaterThan,
-                MaybeOperand = Operand.GreaterThan,
-                OperandOrColor = Color.Red,
-                MaybeOperandOrColor = Color.Red
+                OperandOrColor = Color.Red
             }
         );
     }

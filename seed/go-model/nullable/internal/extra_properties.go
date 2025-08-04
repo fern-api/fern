@@ -9,12 +9,12 @@ import (
 )
 
 // MarshalJSONWithExtraProperty marshals the given value to JSON, including the extra property.
-func MarshalJSONWithExtraProperty(marshaler interface{}, key string, value interface{}) ([]byte, error) {
-	return MarshalJSONWithExtraProperties(marshaler, map[string]interface{}{key: value})
+func MarshalJSONWithExtraProperty(marshaler any, key string, value any) ([]byte, error) {
+	return MarshalJSONWithExtraProperties(marshaler, map[string]any{key: value})
 }
 
 // MarshalJSONWithExtraProperties marshals the given value to JSON, including any extra properties.
-func MarshalJSONWithExtraProperties(marshaler interface{}, extraProperties map[string]interface{}) ([]byte, error) {
+func MarshalJSONWithExtraProperties(marshaler any, extraProperties map[string]any) ([]byte, error) {
 	bytes, err := json.Marshal(marshaler)
 	if err != nil {
 		return nil, err
@@ -49,7 +49,7 @@ func MarshalJSONWithExtraProperties(marshaler interface{}, extraProperties map[s
 }
 
 // ExtractExtraProperties extracts any extra properties from the given value.
-func ExtractExtraProperties(bytes []byte, value interface{}, exclude ...string) (map[string]interface{}, error) {
+func ExtractExtraProperties(bytes []byte, value any, exclude ...string) (map[string]any, error) {
 	val := reflect.ValueOf(value)
 	for val.Kind() == reflect.Ptr {
 		if val.IsNil() {
@@ -60,7 +60,7 @@ func ExtractExtraProperties(bytes []byte, value interface{}, exclude ...string) 
 	if err := json.Unmarshal(bytes, &value); err != nil {
 		return nil, err
 	}
-	var extraProperties map[string]interface{}
+	var extraProperties map[string]any
 	if err := json.Unmarshal(bytes, &extraProperties); err != nil {
 		return nil, err
 	}
@@ -82,7 +82,7 @@ func ExtractExtraProperties(bytes []byte, value interface{}, exclude ...string) 
 
 // getKeys returns the keys associated with the given value. The value must be a
 // a struct or a map with string keys.
-func getKeys(value interface{}) ([]string, error) {
+func getKeys(value any) ([]string, error) {
 	val := reflect.ValueOf(value)
 	if val.Kind() == reflect.Ptr {
 		val = val.Elem()

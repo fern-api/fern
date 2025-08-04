@@ -7,10 +7,23 @@
   },
   "include": ["./src/**/*"],
   "references": [
-    { "path": "../../../packages/commons/core-utils" },
-    { "path": "../../../packages/commons/fs-utils" },
-    { "path": "../../base" },
-    { "path": "../codegen" },
-    { "path": "../base" }
+    {
+      "path": "../model"
+    },
+    {
+      "path": "../codegen"
+    },
+    {
+      "path": "../base"
+    },
+    {
+      "path": "../../../packages/cli/logger"
+    },
+    {
+      "path": "../../../packages/commons/fs-utils"
+    },
+    {
+      "path": "../../base"
+    }
   ]
-} 
+}

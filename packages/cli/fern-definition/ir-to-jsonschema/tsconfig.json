@@ -5,33 +5,28 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": [
-    "./src/**/*"
-  ],
+  "include": ["./src/**/*"],
   "references": [
     {
-      "path": "../../../commons/core-utils"
-    },
-    {
-      "path": "../../../commons/fs-utils"
-    },
-    {
-      "path": "../../../ir-sdk"
-    },
-    {
-      "path": "../../cli-source-resolver"
-    },
-    {
-      "path": "../../generation/ir-generator"
+      "path": "../../task-context"
     },
     {
       "path": "../../project-loader"
     },
     {
-      "path": "../../task-context"
+      "path": "../../../ir-sdk"
     },
     {
-      "path": "../../workspace/loader"
+      "path": "../../generation/ir-generator"
     },
+    {
+      "path": "../../../commons/fs-utils"
+    },
+    {
+      "path": "../../../commons/core-utils"
+    },
+    {
+      "path": "../../cli-source-resolver"
+    }
   ]
 }

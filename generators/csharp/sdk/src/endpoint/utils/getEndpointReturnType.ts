@@ -20,11 +20,51 @@ export function getEndpointReturnType({
     }
     return endpoint.response.body._visit({
         streamParameter: () => undefined,
-        fileDownload: () => undefined,
+        fileDownload: () =>
+            csharp.Type.reference(
+                csharp.classReference({
+                    name: "Stream",
+                    namespace: "System.IO",
+                    fullyQualified: true
+                })
+            ),
         json: (reference) => {
             return context.csharpTypeMapper.convert({ reference: reference.responseBodyType });
         },
-        streaming: () => undefined,
+        streaming: (reference) => {
+            return reference._visit({
+                json: (jsonChunk) => {
+                    const payloadType = context.csharpTypeMapper.convert({ reference: jsonChunk.payload });
+                    return csharp.Type.reference(
+                        csharp.classReference({
+                            name: "IAsyncEnumerable",
+                            namespace: "System.Collections.Generic",
+                            generics: [payloadType]
+                        })
+                    );
+                },
+                text: () => {
+                    return csharp.Type.reference(
+                        csharp.classReference({
+                            name: "IAsyncEnumerable",
+                            namespace: "System.Collections.Generic",
+                            generics: [csharp.Type.string()]
+                        })
+                    );
+                },
+                sse: (sseChunk) => {
+                    const payloadType = context.csharpTypeMapper.convert({ reference: sseChunk.payload });
+                    return csharp.Type.reference(
+                        csharp.classReference({
+                            name: "IAsyncEnumerable",
+                            namespace: "System.Collections.Generic",
+                            generics: [payloadType]
+                        })
+                    );
+                },
+                _other: () => undefined
+            });
+        },
         text: () => csharp.Type.string(),
         bytes: () => undefined,
         _other: () => undefined

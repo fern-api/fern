@@ -16366,6 +16366,15 @@
           }
         ]
       }
+    },
+    "Webhooks_WebhookController_deleteById_Response_200": {
+      "description": "Empty response body",
+      "name": "Webhooks_WebhookController_deleteById_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
     }
   },
   "subpackages": {
@@ -16420,6 +16429,25 @@
             },
             "description": "Hris direct employee object that will be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "HrisDirectEmployee"
+                    }
+                  },
+                  "description": "Hris direct employee object that will be created"
+                },
+                "description": "Hris direct employee object that will be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -16430,6 +16458,21 @@
             },
             "statusCode": 201,
             "description": "Hris direct employee object that was created or edited"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "HrisDirectEmployeeContainer"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Hris direct employee object that was created or edited"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -16722,6 +16765,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -16732,6 +16776,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EorCountryValidationsContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -17008,6 +17067,25 @@
             },
             "description": "Employee (eor) contract object that needs to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "EorContractToCreateContainer"
+                    }
+                  },
+                  "description": "Employee (eor) contract object that needs to be created"
+                },
+                "description": "Employee (eor) contract object that needs to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -17018,6 +17096,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EorContractCreatedContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -17260,6 +17353,25 @@
             },
             "description": "Contract object that needs to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ContractToCreateContainer_pay_as_you_go_time_based"
+                    }
+                  },
+                  "description": "Contract object that needs to be created"
+                },
+                "description": "Contract object that needs to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -17270,6 +17382,21 @@
             },
             "statusCode": 201,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContractContainer_pay_as_you_go_time_based"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -17687,6 +17814,25 @@
             },
             "description": "Contract object that needs to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ContractToCreateContainer_payg_tasks"
+                    }
+                  },
+                  "description": "Contract object that needs to be created"
+                },
+                "description": "Contract object that needs to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -17697,6 +17843,21 @@
             },
             "statusCode": 201,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContractContainer_payg_tasks"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -18110,6 +18271,25 @@
             },
             "description": "Contract object that needs to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ContractToCreateContainer_payg_milestones"
+                    }
+                  },
+                  "description": "Contract object that needs to be created"
+                },
+                "description": "Contract object that needs to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -18120,6 +18300,21 @@
             },
             "statusCode": 201,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContractContainer_payg_milestones"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -18533,6 +18728,25 @@
             },
             "description": "Contract object that needs to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ContractToCreateContainer_ongoing_time_based"
+                    }
+                  },
+                  "description": "Contract object that needs to be created"
+                },
+                "description": "Contract object that needs to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -18543,6 +18757,21 @@
             },
             "statusCode": 201,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContractContainer_ongoing_time_based"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -18961,6 +19190,25 @@
             },
             "description": "Contract object that needs to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ContractToCreateContainer"
+                    }
+                  },
+                  "description": "Contract object that needs to be created"
+                },
+                "description": "Contract object that needs to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -18971,6 +19219,21 @@
             },
             "statusCode": 201,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContractContainer"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -19407,6 +19670,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "statusCode": 200,
             "type": {
@@ -19414,6 +19678,18 @@
               "extends": [],
               "properties": []
             }
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "statusCode": 200,
+                "type": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": []
+                }
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -19596,6 +19872,25 @@
             },
             "description": "Contract object that needs to be amended"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ContractToAmendDetailsContainer"
+                    }
+                  },
+                  "description": "Contract object that needs to be amended"
+                },
+                "description": "Contract object that needs to be amended"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -19606,6 +19901,21 @@
             },
             "statusCode": 201,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultCreated"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -19805,6 +20115,25 @@
             },
             "description": "Contract that needs to be terminated and when."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ContractToTerminateContainer"
+                    }
+                  },
+                  "description": "Contract that needs to be terminated and when."
+                },
+                "description": "Contract that needs to be terminated and when."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -19815,6 +20144,21 @@
             },
             "statusCode": 201,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContractTerminationResultContainer"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -20016,6 +20360,25 @@
             },
             "description": "Answers for assessment in order to find eligibility for Deel Premium."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "PremiumToAddContainer"
+                    }
+                  },
+                  "description": "Answers for assessment in order to find eligibility for Deel Premium."
+                },
+                "description": "Answers for assessment in order to find eligibility for Deel Premium."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -20026,6 +20389,21 @@
             },
             "statusCode": 201,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PremiumResultAddedContainer"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -20217,6 +20595,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -20227,6 +20606,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultDeleted"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -20527,6 +20921,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -20537,6 +20932,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContractListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -20796,6 +21206,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -20806,6 +21217,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContractContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -21186,6 +21612,25 @@
             },
             "description": "Contract object that needs to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "InputToPatchContractExternalId"
+                    }
+                  },
+                  "description": "Contract object that needs to be created"
+                },
+                "description": "Contract object that needs to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -21196,6 +21641,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultCreated"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -21407,6 +21867,33 @@
             },
             "description": "A form to attach a file to contract document."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "fileUpload",
+                  "value": {
+                    "name": "Contracts_addContractDocument_Request",
+                    "properties": [
+                      {
+                        "type": "file",
+                        "value": {
+                          "type": "file",
+                          "key": "file",
+                          "isOptional": true,
+                          "contentType": "multipart/form-data",
+                          "description": "Upload the file you want to attach to this entry."
+                        }
+                      }
+                    ]
+                  },
+                  "contentType": "multipart/form-data",
+                  "description": "A form to attach a file to contract document."
+                },
+                "description": "A form to attach a file to contract document."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -21417,6 +21904,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContractDocumentContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -21627,6 +22129,33 @@
             },
             "description": "A form to attach a file to contract document."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "fileUpload",
+                  "value": {
+                    "name": "Contracts_editContractDocument_Request",
+                    "properties": [
+                      {
+                        "type": "file",
+                        "value": {
+                          "type": "file",
+                          "key": "file",
+                          "isOptional": true,
+                          "contentType": "multipart/form-data",
+                          "description": "Upload the file you want to attach to this entry."
+                        }
+                      }
+                    ]
+                  },
+                  "contentType": "multipart/form-data",
+                  "description": "A form to attach a file to contract document."
+                },
+                "description": "A form to attach a file to contract document."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -21637,6 +22166,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContractDocumentContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -21824,6 +22368,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -21834,6 +22379,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AlternateEmailList"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -22000,6 +22560,25 @@
             },
             "description": "Contract signature object that needs to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ContractSignatureToCreateContainer"
+                    }
+                  },
+                  "description": "Contract signature object that needs to be created"
+                },
+                "description": "Contract signature object that needs to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -22010,6 +22589,21 @@
             },
             "statusCode": 201,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultCreated"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -22198,6 +22792,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -22208,6 +22803,21 @@
             },
             "statusCode": 204,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultUpdated"
+                  }
+                },
+                "statusCode": 204,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -22372,6 +22982,25 @@
             },
             "description": "Contract invitation object that needs to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "ContractInvitationToCreateContainer"
+                    }
+                  },
+                  "description": "Contract invitation object that needs to be created"
+                },
+                "description": "Contract invitation object that needs to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -22382,6 +23011,21 @@
             },
             "statusCode": 201,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultCreated"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -22572,6 +23216,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -22582,6 +23227,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultDeleted"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -22806,6 +23466,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -22816,6 +23477,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "FinalPaymentCalculatedContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -22968,6 +23644,25 @@
             },
             "description": "Pro-rata payment object that needs to estimated payment"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "EstimateFirstPaymentContainer"
+                    }
+                  },
+                  "description": "Pro-rata payment object that needs to estimated payment"
+                },
+                "description": "Pro-rata payment object that needs to estimated payment"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -22978,6 +23673,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ResponseEstimateFirstPaymentContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -23142,6 +23852,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -23152,6 +23863,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ContractTemplateListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -23328,6 +24054,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -23338,6 +24065,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TaskListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -23548,6 +24290,25 @@
             },
             "description": "Contract object that needs to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "InputToCreatePgoTask"
+                    }
+                  },
+                  "description": "Contract object that needs to be created"
+                },
+                "description": "Contract object that needs to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -23558,6 +24319,21 @@
             },
             "statusCode": 201,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultCreated"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -23765,6 +24541,25 @@
             },
             "description": "Timesheet review objects that need to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "RequestBodyToCreatePgoTaskReviewsReviewsContainer"
+                    }
+                  },
+                  "description": "Timesheet review objects that need to be created"
+                },
+                "description": "Timesheet review objects that need to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -23775,6 +24570,21 @@
             },
             "statusCode": 201,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TaskListContainer"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -24024,6 +24834,25 @@
             },
             "description": "Timesheet review objects that need to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "RequestBodyToCreatePgoTaskReviewsByIdReviewsContainer"
+                    }
+                  },
+                  "description": "Timesheet review objects that need to be created"
+                },
+                "description": "Timesheet review objects that need to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -24034,6 +24863,21 @@
             },
             "statusCode": 201,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TaskListContainer"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -24275,6 +25119,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -24285,6 +25130,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultDeleted"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -24557,6 +25417,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -24567,6 +25428,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TimesheetListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -24921,6 +25797,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -24931,6 +25808,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TimesheetListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -25199,6 +26091,25 @@
             },
             "description": "Timesheet object that needs to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "TimesheetToCreateContainer"
+                    }
+                  },
+                  "description": "Timesheet object that needs to be created"
+                },
+                "description": "Timesheet object that needs to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -25209,6 +26120,21 @@
             },
             "statusCode": 201,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "InvoiceAdjustmentCreatedContainer"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -25415,6 +26341,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -25425,6 +26352,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TimesheetContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -25714,6 +26656,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -25724,6 +26667,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultDeleted"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -25914,6 +26872,25 @@
             },
             "description": "Timesheet object that needs to be updated"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "TimesheetToUpdateContainer"
+                    }
+                  },
+                  "description": "Timesheet object that needs to be updated"
+                },
+                "description": "Timesheet object that needs to be updated"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -25924,6 +26901,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultUpdated"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -26129,6 +27121,25 @@
             },
             "description": "Timesheet review object that need to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "TimesheetReviewToCreateContainer"
+                    }
+                  },
+                  "description": "Timesheet review object that need to be created"
+                },
+                "description": "Timesheet review object that need to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -26139,6 +27150,21 @@
             },
             "statusCode": 201,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultCreated"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -26323,6 +27349,25 @@
             },
             "description": "Timesheet review objects that need to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "TimesheetReviewsToCreateContainer"
+                    }
+                  },
+                  "description": "Timesheet review objects that need to be created"
+                },
+                "description": "Timesheet review objects that need to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -26333,6 +27378,21 @@
             },
             "statusCode": 201,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultCreated"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -26535,6 +27595,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -26545,6 +27606,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "MilestoneListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -26767,6 +27843,37 @@
             },
             "description": "Milestone object that needs to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "MilestoneToCreateContainer"
+                    }
+                  },
+                  "description": "Milestone object that needs to be created"
+                },
+                "description": "Milestone object that needs to be created"
+              },
+              {
+                "type": {
+                  "type": "fileUpload",
+                  "value": {
+                    "name": "Milestones_createMilestone_Request",
+                    "properties": []
+                  },
+                  "contentType": "multipart/form-data",
+                  "description": "Milestone object that needs to be created"
+                },
+                "description": "Milestone object that needs to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -26777,6 +27884,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultCreated"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -26987,6 +28109,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -26997,6 +28120,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "MilestoneContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -27219,6 +28357,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -27229,6 +28368,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultDeleted"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -27438,6 +28592,25 @@
             },
             "description": "Milestone review object that need to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "MilestoneReviewToCreateContainer"
+                    }
+                  },
+                  "description": "Milestone review object that need to be created"
+                },
+                "description": "Milestone review object that need to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -27448,6 +28621,21 @@
             },
             "statusCode": 201,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultCreated"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -27652,6 +28840,25 @@
             },
             "description": "Milestone review objects that need to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "MilestoneReviewsToCreateContainer"
+                    }
+                  },
+                  "description": "Milestone review objects that need to be created"
+                },
+                "description": "Milestone review objects that need to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -27662,6 +28869,21 @@
             },
             "statusCode": 201,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultCreated"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -27866,6 +29088,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -27876,6 +29099,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "OffCyclePaymentListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -28110,6 +29348,25 @@
             },
             "description": "Off-cycle payment object that needs to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "OffCyclePaymentToCreateContainer"
+                    }
+                  },
+                  "description": "Off-cycle payment object that needs to be created"
+                },
+                "description": "Off-cycle payment object that needs to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -28120,6 +29377,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultCreated"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -28328,6 +29600,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -28338,6 +29611,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "OffCyclePaymentContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -28564,6 +29852,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -28574,6 +29863,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EorTimeoffsContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -28971,6 +30275,25 @@
             },
             "description": "Detail of the time off that will be registered to the contract."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "CreateTimeoffContainer"
+                    }
+                  },
+                  "description": "Detail of the time off that will be registered to the contract."
+                },
+                "description": "Detail of the time off that will be registered to the contract."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -28981,6 +30304,21 @@
             },
             "statusCode": 201,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EorTimeoffsItemContainer"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -29407,6 +30745,25 @@
             },
             "description": "Detail of the time off that will be registered to the contract."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "CreateTimeoffContainer"
+                    }
+                  },
+                  "description": "Detail of the time off that will be registered to the contract."
+                },
+                "description": "Detail of the time off that will be registered to the contract."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -29417,6 +30774,21 @@
             },
             "statusCode": 201,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EorTimeoffsItemContainer"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -29829,6 +31201,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -29839,6 +31212,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultDeleted"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -29976,6 +31364,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -29986,6 +31375,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EorEntitlementsContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -30143,6 +31547,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -30153,6 +31558,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "EorClientTimeoffsContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -31136,6 +32556,25 @@
             },
             "description": "Timeoff acceptance approve or decline."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "TimeoffToReviewContainer"
+                    }
+                  },
+                  "description": "Timeoff acceptance approve or decline."
+                },
+                "description": "Timeoff acceptance approve or decline."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -31146,6 +32585,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultUpdated"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -31456,6 +32910,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -31466,6 +32921,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "InvoiceAdjustmentListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -31847,6 +33317,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -31857,6 +33328,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "InvoiceAdjustmentListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -32126,6 +33612,37 @@
             },
             "description": "InvoiceAdjustment object that needs to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "InvoiceAdjustmentToCreateContainer"
+                    }
+                  },
+                  "description": "InvoiceAdjustment object that needs to be created"
+                },
+                "description": "InvoiceAdjustment object that needs to be created"
+              },
+              {
+                "type": {
+                  "type": "fileUpload",
+                  "value": {
+                    "name": "Invoices_createInvoiceAdjustment_Request",
+                    "properties": []
+                  },
+                  "contentType": "multipart/form-data",
+                  "description": "InvoiceAdjustment object that needs to be created"
+                },
+                "description": "InvoiceAdjustment object that needs to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -32136,6 +33653,21 @@
             },
             "statusCode": 201,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "InvoiceAdjustmentCreatedContainer"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -32356,6 +33888,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -32366,6 +33899,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultDeleted"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -32556,6 +34104,25 @@
             },
             "description": "InvoiceAdjustment object that needs to be updated"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "InvoiceAdjustmentToUpdateContainer"
+                    }
+                  },
+                  "description": "InvoiceAdjustment object that needs to be updated"
+                },
+                "description": "InvoiceAdjustment object that needs to be updated"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -32566,6 +34133,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultUpdated"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -32769,6 +34351,25 @@
             },
             "description": "InvoiceAdjustment review object that need to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "InvoiceAdjustmentReviewToCreateContainer"
+                    }
+                  },
+                  "description": "InvoiceAdjustment review object that need to be created"
+                },
+                "description": "InvoiceAdjustment review object that need to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -32779,6 +34380,21 @@
             },
             "statusCode": 201,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultCreated"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -32963,6 +34579,25 @@
             },
             "description": "InvoiceAdjustment review objects that need to be created"
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "InvoiceAdjustmentReviewsToCreateContainer"
+                    }
+                  },
+                  "description": "InvoiceAdjustment review objects that need to be created"
+                },
+                "description": "InvoiceAdjustment review objects that need to be created"
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -32973,6 +34608,21 @@
             },
             "statusCode": 201,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "GenericResultCreated"
+                  }
+                },
+                "statusCode": 201,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -33156,6 +34806,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -33166,6 +34817,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "LegalEntityListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -33330,6 +34996,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -33340,6 +35007,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "OrganizationListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -33500,6 +35182,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -33510,6 +35193,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TeamListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -33706,6 +35404,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -33716,6 +35415,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "AgreementListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -33907,6 +35621,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -33917,6 +35632,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "CountryListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -34095,6 +35825,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -34105,6 +35836,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "CurrencyListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -34293,6 +36039,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -34303,6 +36050,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "JobTitleListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -34484,6 +36246,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -34494,6 +36257,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "SeniorityListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -34656,6 +36434,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -34666,6 +36445,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "TimeoffTypeListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -34849,6 +36643,25 @@
             },
             "description": "File info object that needs to be created."
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "InputToCreateFileRef"
+                    }
+                  },
+                  "description": "File info object that needs to be created."
+                },
+                "description": "File info object that needs to be created."
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -34859,6 +36672,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "OutputToCreateFileRefContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -35074,6 +36902,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -35084,6 +36913,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "InvoiceListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -35287,6 +37131,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -35297,6 +37142,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "InvoiceDownloadContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -35476,6 +37336,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -35486,6 +37347,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "InvoiceDownloadContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -35702,6 +37578,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -35712,6 +37589,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PaymentListContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -35903,6 +37795,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -35913,6 +37806,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PaymentBreakDownContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -36166,6 +38074,7 @@
             }
           ],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -36176,6 +38085,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PeopleContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -36521,6 +38445,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -36531,6 +38456,21 @@
             },
             "statusCode": 200,
             "description": "Successful operation."
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "PeopleMeContainer"
+                  }
+                },
+                "statusCode": 200,
+                "description": "Successful operation."
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -36721,6 +38661,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -36731,6 +38672,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "WebhookListResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -36926,6 +38882,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "CreateWebhookRequest"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -36936,6 +38909,21 @@
             },
             "statusCode": 201,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "WebhookItemResponse"
+                  }
+                },
+                "statusCode": 201,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -37157,6 +39145,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -37167,6 +39156,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "WebhookItemResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {
@@ -37365,6 +39369,33 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Webhooks_WebhookController_deleteById_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "Webhooks_WebhookController_deleteById_Response_200"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
+          },
           "errorsV2": [
             {
               "type": {
@@ -37467,7 +39498,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -37538,6 +39574,23 @@
               }
             }
           },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "PatchWebhookRequest"
+                    }
+                  }
+                }
+              }
+            ]
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -37548,6 +39601,21 @@
             },
             "statusCode": 200,
             "description": "successful operation"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "WebhookItemResponse"
+                  }
+                },
+                "statusCode": 200,
+                "description": "successful operation"
+              }
+            ]
           },
           "errorsV2": [
             {

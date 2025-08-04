@@ -1,20 +1,23 @@
-public struct ANestedLiteral: Codable, Hashable {
-    public let myLiteral: Any
+public struct ANestedLiteral: Codable, Hashable, Sendable {
+    public let myLiteral: JSONValue
     public let additionalProperties: [String: JSONValue]
 
-    public init(myLiteral: Any, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        myLiteral: JSONValue,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.myLiteral = myLiteral
         self.additionalProperties = additionalProperties
     }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.myLiteral = try container.decode(Any.self, forKey: .myLiteral)
+        self.myLiteral = try container.decode(JSONValue.self, forKey: .myLiteral)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.myLiteral, forKey: .myLiteral)
     }

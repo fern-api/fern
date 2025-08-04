@@ -9,24 +9,25 @@ import (
 )
 
 type Error struct {
-	Category ErrorCategory `json:"category" url:"category"`
-	Code     ErrorCode     `json:"code" url:"code"`
-	Detail   *string       `json:"detail,omitempty" url:"detail,omitempty"`
-	Field    *string       `json:"field,omitempty" url:"field,omitempty"`
+	Category *ErrorCategory `json:"category" url:"category"`
+	Code     *ErrorCode     `json:"code" url:"code"`
+	Detail   *string        `json:"detail,omitempty" url:"detail,omitempty"`
+	Field    *string        `json:"field,omitempty" url:"field,omitempty"`
 
-	extraProperties map[string]interface{}
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
-func (e *Error) GetCategory() ErrorCategory {
+func (e *Error) GetCategory() *ErrorCategory {
 	if e == nil {
-		return ""
+		return nil
 	}
 	return e.Category
 }
 
-func (e *Error) GetCode() ErrorCode {
+func (e *Error) GetCode() *ErrorCode {
 	if e == nil {
-		return ""
+		return nil
 	}
 	return e.Code
 }
@@ -45,11 +46,16 @@ func (e *Error) GetField() *string {
 	return e.Field
 }
 
-func (e *Error) GetExtraProperties() map[string]interface{} {
+func (e *Error) GetExtraProperties() map[string]any {
+	if e == nil {
+		return nil
+	}
 	return e.extraProperties
 }
 
-func (e *Error) UnmarshalJSON(data []byte) error {
+func (e *Error) UnmarshalJSON(
+	data []byte,
+) error {
 	type unmarshaler Error
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
@@ -61,10 +67,16 @@ func (e *Error) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	e.extraProperties = extraProperties
+	e.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (e *Error) String() string {
+	if len(e.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
@@ -74,9 +86,9 @@ func (e *Error) String() string {
 type ErrorCategory string
 
 const (
-	ErrorCategoryApiError            ErrorCategory = "API_ERROR"
-	ErrorCategoryAuthenticationError ErrorCategory = "AUTHENTICATION_ERROR"
-	ErrorCategoryInvalidRequestError ErrorCategory = "INVALID_REQUEST_ERROR"
+	ErrorCategoryApiError            = "API_ERROR"
+	ErrorCategoryAuthenticationError = "AUTHENTICATION_ERROR"
+	ErrorCategoryInvalidRequestError = "INVALID_REQUEST_ERROR"
 )
 
 func NewErrorCategoryFromString(s string) (ErrorCategory, error) {
@@ -99,17 +111,17 @@ func (e ErrorCategory) Ptr() *ErrorCategory {
 type ErrorCode string
 
 const (
-	ErrorCodeInternalServerError ErrorCode = "INTERNAL_SERVER_ERROR"
-	ErrorCodeUnauthorized        ErrorCode = "UNAUTHORIZED"
-	ErrorCodeForbidden           ErrorCode = "FORBIDDEN"
-	ErrorCodeBadRequest          ErrorCode = "BAD_REQUEST"
-	ErrorCodeConflict            ErrorCode = "CONFLICT"
-	ErrorCodeGone                ErrorCode = "GONE"
-	ErrorCodeUnprocessableEntity ErrorCode = "UNPROCESSABLE_ENTITY"
-	ErrorCodeNotImplemented      ErrorCode = "NOT_IMPLEMENTED"
-	ErrorCodeBadGateway          ErrorCode = "BAD_GATEWAY"
-	ErrorCodeServiceUnavailable  ErrorCode = "SERVICE_UNAVAILABLE"
-	ErrorCodeUnknown             ErrorCode = "Unknown"
+	ErrorCodeInternalServerError = "INTERNAL_SERVER_ERROR"
+	ErrorCodeUnauthorized        = "UNAUTHORIZED"
+	ErrorCodeForbidden           = "FORBIDDEN"
+	ErrorCodeBadRequest          = "BAD_REQUEST"
+	ErrorCodeConflict            = "CONFLICT"
+	ErrorCodeGone                = "GONE"
+	ErrorCodeUnprocessableEntity = "UNPROCESSABLE_ENTITY"
+	ErrorCodeNotImplemented      = "NOT_IMPLEMENTED"
+	ErrorCodeBadGateway          = "BAD_GATEWAY"
+	ErrorCodeServiceUnavailable  = "SERVICE_UNAVAILABLE"
+	ErrorCodeUnknown             = "Unknown"
 )
 
 func NewErrorCodeFromString(s string) (ErrorCode, error) {
@@ -148,7 +160,8 @@ func (e ErrorCode) Ptr() *ErrorCode {
 type PutResponse struct {
 	Errors []*Error `json:"errors,omitempty" url:"errors,omitempty"`
 
-	extraProperties map[string]interface{}
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
 func (p *PutResponse) GetErrors() []*Error {
@@ -158,11 +171,16 @@ func (p *PutResponse) GetErrors() []*Error {
 	return p.Errors
 }
 
-func (p *PutResponse) GetExtraProperties() map[string]interface{} {
+func (p *PutResponse) GetExtraProperties() map[string]any {
+	if p == nil {
+		return nil
+	}
 	return p.extraProperties
 }
 
-func (p *PutResponse) UnmarshalJSON(data []byte) error {
+func (p *PutResponse) UnmarshalJSON(
+	data []byte,
+) error {
 	type unmarshaler PutResponse
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
@@ -174,10 +192,16 @@ func (p *PutResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	p.extraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (p *PutResponse) String() string {
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(p); err == nil {
 		return value
 	}

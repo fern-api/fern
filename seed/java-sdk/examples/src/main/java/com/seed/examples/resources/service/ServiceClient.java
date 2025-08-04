@@ -9,7 +9,9 @@ import com.seed.examples.resources.service.requests.GetMetadataRequest;
 import com.seed.examples.resources.types.types.BigEntity;
 import com.seed.examples.resources.types.types.Metadata;
 import com.seed.examples.resources.types.types.Movie;
+import com.seed.examples.resources.types.types.RefreshTokenRequest;
 import com.seed.examples.resources.types.types.Response;
+import java.util.Optional;
 
 public class ServiceClient {
     protected final ClientOptions clientOptions;
@@ -62,5 +64,17 @@ public class ServiceClient {
 
     public Response createBigEntity(BigEntity request, RequestOptions requestOptions) {
         return this.rawClient.createBigEntity(request, requestOptions).body();
+    }
+
+    public void refreshToken() {
+        this.rawClient.refreshToken().body();
+    }
+
+    public void refreshToken(Optional<RefreshTokenRequest> request) {
+        this.rawClient.refreshToken(request).body();
+    }
+
+    public void refreshToken(Optional<RefreshTokenRequest> request, RequestOptions requestOptions) {
+        this.rawClient.refreshToken(request, requestOptions).body();
     }
 }

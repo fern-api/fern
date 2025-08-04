@@ -4,6 +4,7 @@
 
 import * as core from "./core/index.js";
 import { mergeHeaders } from "./core/headers.js";
+import { Headers } from "./api/resources/headers/client/Client.js";
 import { InlinedRequest } from "./api/resources/inlinedRequest/client/Client.js";
 import { PathParam } from "./api/resources/pathParam/client/Client.js";
 import { QueryParam } from "./api/resources/queryParam/client/Client.js";
@@ -24,6 +25,8 @@ export declare namespace SeedEnumClient {
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional query string parameters to include in the request. */
+        queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
         headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
@@ -31,6 +34,7 @@ export declare namespace SeedEnumClient {
 
 export class SeedEnumClient {
     protected readonly _options: SeedEnumClient.Options;
+    protected _headers: Headers | undefined;
     protected _inlinedRequest: InlinedRequest | undefined;
     protected _pathParam: PathParam | undefined;
     protected _queryParam: QueryParam | undefined;
@@ -50,6 +54,10 @@ export class SeedEnumClient {
                 _options?.headers,
             ),
         };
+    }
+
+    public get headers(): Headers {
+        return (this._headers ??= new Headers(this._options));
     }
 
     public get inlinedRequest(): InlinedRequest {

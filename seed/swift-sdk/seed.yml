@@ -19,7 +19,7 @@ test:
     workingDirectory: generators/swift
     buildCommand:
       - pnpm --filter @fern-api/swift-sdk dist:cli
-    runCommand: node sdk/dist/cli.cjs
+    runCommand: node --enable-source-maps sdk/dist/cli.cjs {CONFIG_PATH}
 
 language: swift
 generatorType: SDK

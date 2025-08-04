@@ -4,7 +4,34 @@
     "composite": true,
     "outDir": "lib",
     "rootDir": "src",
-    "types": ["vitest/globals"]
+    "types": [
+      "vitest/globals"
+    ]
   },
-  "include": ["./src/**/*"]
+  "include": [
+    "./src/**/*"
+  ],
+  "references": [
+    {
+      "path": "../../ir-sdk"
+    },
+    {
+      "path": "../../cli/workspace/loader"
+    },
+    {
+      "path": "../../cli/task-context"
+    },
+    {
+      "path": "../../cli/generation/ir-generator"
+    },
+    {
+      "path": "../fs-utils"
+    },
+    {
+      "path": "../../cli/configuration"
+    },
+    {
+      "path": "../../cli/cli-source-resolver"
+    }
+  ]
 }

@@ -33,6 +33,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -45,6 +46,23 @@
             },
             "statusCode": 200,
             "description": "A response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "A response"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -104,6 +122,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -116,6 +135,23 @@
             },
             "statusCode": 200,
             "description": "A response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "A response"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -175,6 +211,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -187,6 +224,23 @@
             },
             "statusCode": 200,
             "description": "A response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "A response"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -246,6 +300,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -258,6 +313,23 @@
             },
             "statusCode": 200,
             "description": "A response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "A response"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -317,6 +389,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -329,6 +402,23 @@
             },
             "statusCode": 200,
             "description": "A response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "A response"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -388,6 +478,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -400,6 +491,23 @@
             },
             "statusCode": 200,
             "description": "A response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "A response"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -459,6 +567,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -471,6 +580,23 @@
             },
             "statusCode": 200,
             "description": "A response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "A response"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [
@@ -530,6 +656,7 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -542,6 +669,23 @@
             },
             "statusCode": 200,
             "description": "A response"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "statusCode": 200,
+                "description": "A response"
+              }
+            ]
           },
           "errorsV2": [],
           "examples": [

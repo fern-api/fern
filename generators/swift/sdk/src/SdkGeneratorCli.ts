@@ -1,14 +1,18 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractSwiftGeneratorCli, SwiftFile } from "@fern-api/swift-base";
-import { generateModels } from "@fern-api/swift-model";
+import { generateInlinedRequestModels, generateModels } from "@fern-api/swift-model";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
-import { RootClientGenerator, SubClientGenerator } from "./generators";
+import {
+    PackageSwiftGenerator,
+    RootClientGenerator,
+    SingleUrlEnvironmentGenerator,
+    SubClientGenerator
+} from "./generators";
 
 export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -50,37 +54,61 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
-        const projectFiles = this.generateProjectFiles(context);
-        context.project.addSourceFiles(...projectFiles);
+        const [rootFiles, sourceFiles] = await Promise.all([
+            this.generateRootFiles(context),
+            this.generateSourceFiles(context)
+        ]);
+        context.project.addRootFiles(...rootFiles);
+        context.project.addSourceFiles(...sourceFiles);
         await context.project.persist();
     }
 
-    private generateProjectFiles(context: SdkGeneratorContext): SwiftFile[] {
+    private async generateRootFiles(context: SdkGeneratorContext): Promise<SwiftFile[]> {
         const files: SwiftFile[] = [];
-
-        // Client.swift
-        const rootClientGenerator = new RootClientGenerator({
-            projectNamePascalCase: context.ir.apiName.pascalCase.unsafeName,
-            package_: context.ir.rootPackage,
-            context
+        const packageSwiftGenerator = new PackageSwiftGenerator({
+            sdkGeneratorContext: context
         });
-        files.push(rootClientGenerator.generate());
+        files.push(packageSwiftGenerator.generate());
+        return files;
+    }
+
+    private async generateSourceFiles(context: SdkGeneratorContext): Promise<SwiftFile[]> {
+        const files: SwiftFile[] = [];
 
         // Resources/**/*.swift
         Object.entries(context.ir.subpackages).forEach(([_, subpackage]) => {
-            const service = subpackage.service != null ? context.getHttpServiceOrThrow(subpackage.service) : undefined;
             const subclientGenerator = new SubClientGenerator({
-                context,
                 subpackage,
-                serviceId: subpackage.service,
-                service
+                sdkGeneratorContext: context
             });
             files.push(subclientGenerator.generate());
         });
 
+        // Requests/**/*.swift
+        const inlinedRequestFiles = generateInlinedRequestModels({ context });
+        files.push(...inlinedRequestFiles);
+
         // Schemas/**/*.swift
         const modelFiles = generateModels({ context });
         files.push(...modelFiles);
+
+        // {ProjectName}Client.swift
+        const rootClientGenerator = new RootClientGenerator({
+            package_: context.ir.rootPackage,
+            sdkGeneratorContext: context
+        });
+        files.push(rootClientGenerator.generate());
+
+        // {ProjectName}Environment.swift
+        if (context.ir.environments && context.ir.environments.environments.type === "singleBaseUrl") {
+            const environmentGenerator = new SingleUrlEnvironmentGenerator({
+                environments: context.ir.environments.environments,
+                sdkGeneratorContext: context
+            });
+            files.push(environmentGenerator.generate());
+        } else {
+            // TODO(kafkas): Handle multiple environments
+        }
 
         return files;
     }

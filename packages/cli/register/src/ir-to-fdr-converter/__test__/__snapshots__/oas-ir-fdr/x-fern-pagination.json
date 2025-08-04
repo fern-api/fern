@@ -150,6 +150,7 @@
           }
         ],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -160,6 +161,21 @@
           },
           "statusCode": 200,
           "description": "Success"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "UsersResponse"
+                }
+              },
+              "statusCode": 200,
+              "description": "Success"
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [
@@ -252,6 +268,7 @@
           }
         ],
         "headers": [],
+        "requestsV2": {},
         "response": {
           "type": {
             "type": "reference",
@@ -262,6 +279,21 @@
           },
           "statusCode": 200,
           "description": "Success"
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "UsersResponse"
+                }
+              },
+              "statusCode": 200,
+              "description": "Success"
+            }
+          ]
         },
         "errorsV2": [],
         "examples": [

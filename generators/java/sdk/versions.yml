@@ -1,3 +1,71 @@
+- version: 2.39.4
+  changelogEntry:
+    - summary: |
+        Ensure JUnit dependencies are always added when test files are generated
+      type: fix
+  createdAt: '2025-08-04'
+  irVersion: 58
+
+- version: 2.39.3
+  changelogEntry:
+    - summary: |
+        Fix compilation error when using boolean path parameters by properly handling primitive boolean to String conversion
+      type: fix
+  createdAt: '2025-08-04'
+  irVersion: 58
+
+- version: 2.39.2
+  changelogEntry:
+    - summary: |
+        Fix javadoc compilation errors by using HTML entities for special characters in builder examples
+      type: fix
+  createdAt: '2025-07-31'
+  irVersion: 58
+
+- version: 2.39.1
+  changelogEntry:
+    - summary: |
+        Refactor builder extension pattern to use Template Method with dynamic generation. Configuration methods 
+        are only generated based on API spec (auth, headers, variables). All methods are protected for override.
+      type: fix
+  createdAt: '2025-07-25'
+  irVersion: 58
+
+- version: 2.39.0
+  changelogEntry:
+    - summary: |
+        Enable builder extensibility for generated SDK clients. Builders are no longer marked as final, allowing users to extend them 
+        and customize client behavior. Added protected buildClientOptions() method for customization hooks and static from() method 
+        to ClientOptions.Builder for copying existing configurations. This enables use cases like environment variable expansion 
+        in URLs and custom authentication methods.
+      type: feat
+  createdAt: '2025-07-24'
+  irVersion: 58
+
+- version: 2.38.8
+  changelogEntry:
+    - summary: |
+        Fix byte array convenience methods to include all parameters when delegating to InputStream methods.
+      type: fix
+  createdAt: '2025-07-23'
+  irVersion: 58
+
+- version: 2.38.7
+  changelogEntry:
+    - summary: |
+        Swap InputStreamRequestBody arguments to match constructor.
+      type: fix
+  createdAt: '2025-07-23'
+  irVersion: 58
+
+- version: 2.38.6
+  changelogEntry:
+    - summary: |
+        Add explicit type to pagination lambda parameters.
+      type: fix
+  createdAt: '2025-07-21'
+  irVersion: 58
+  
 - version: 2.38.5
   changelogEntry:
     - summary: |

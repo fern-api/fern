@@ -10,7 +10,7 @@ import {
     getTextOfTsNode
 } from "@fern-typescript/commons";
 import { GeneratedSdkClientClass, SdkContext } from "@fern-typescript/contexts";
-import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator/src/oauth-generator/OAuthTokenProviderGenerator";
+import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator";
 import path from "path";
 import { Directory, ts } from "ts-morph";
 import { Code, arrayOf, code, literalOf } from "ts-poet";
@@ -526,7 +526,7 @@ describe("${serviceName}", () => {
         if (!request) {
             return undefined;
         }
-        return request._visit({
+        const requestExample = request._visit({
             inlinedRequestBody: (value) => {
                 return code`${literalOf(
                     Object.fromEntries(
@@ -539,6 +539,11 @@ describe("${serviceName}", () => {
             reference: (value) => this.createRawJsonExample(value),
             _other: () => code`${literalOf(request.jsonExample)}`
         });
+        const rawCode = requestExample.toString().trim();
+        if (rawCode === "undefined") {
+            return undefined;
+        }
+        return requestExample;
     }
 
     getResponseExample(response: IR.ExampleResponse | undefined): Code | undefined {
@@ -546,7 +551,7 @@ describe("${serviceName}", () => {
             return undefined;
         }
         const createRawJsonExample = this.createRawJsonExample.bind(this);
-        return response._visit<Code | undefined>({
+        const responseExample = response._visit<Code | undefined>({
             ok: (value) => {
                 return value._visit({
                     body: (value) => {
@@ -576,6 +581,14 @@ describe("${serviceName}", () => {
                 throw new Error("Unsupported response type");
             }
         });
+        if (responseExample === undefined) {
+            return undefined;
+        }
+        const rawCode = responseExample.toString().trim();
+        if (rawCode === "undefined") {
+            return undefined;
+        }
+        return responseExample;
     }
 
     createRawJsonExample({ shape, jsonExample }: IR.ExampleTypeReference): Code {

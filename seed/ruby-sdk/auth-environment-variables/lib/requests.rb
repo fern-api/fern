@@ -48,7 +48,7 @@ module SeedAuthEnvironmentVariablesClient
         "X-Fern-SDK-Name": "fern_auth_environment_variables",
         "X-Fern-SDK-Version": "0.0.1"
       }
-      headers["X-FERN-API-KEY"] = (@api_key.is_a?(Method) ? @api_key.call : @api_key) unless @api_key.nil?
+      headers["X-FERN-API-KEY"] = ((@api_key.is_a? Method) ? @api_key.call : @api_key) unless @api_key.nil?
       headers
     end
   end
@@ -97,7 +97,7 @@ module SeedAuthEnvironmentVariablesClient
         "X-Fern-SDK-Name": "fern_auth_environment_variables",
         "X-Fern-SDK-Version": "0.0.1"
       }
-      headers["X-FERN-API-KEY"] = (@api_key.is_a?(Method) ? @api_key.call : @api_key) unless @api_key.nil?
+      headers["X-FERN-API-KEY"] = ((@api_key.is_a? Method) ? @api_key.call : @api_key) unless @api_key.nil?
       headers
     end
   end

@@ -96,6 +96,24 @@
           }
         ]
       }
+    },
+    "type_service:MyInlineType": {
+      "name": "MyInlineType",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "bar",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
     }
   },
   "subpackages": {
@@ -299,6 +317,8 @@
               }
             }
           },
+          "requestsV2": {},
+          "responsesV2": {},
           "errorsV2": [],
           "examples": []
         },
@@ -341,6 +361,8 @@
               }
             }
           },
+          "requestsV2": {},
+          "responsesV2": {},
           "errorsV2": [],
           "examples": []
         },
@@ -438,6 +460,8 @@
               }
             }
           },
+          "requestsV2": {},
+          "responsesV2": {},
           "errorsV2": [],
           "examples": []
         },
@@ -515,6 +539,8 @@
               }
             }
           },
+          "requestsV2": {},
+          "responsesV2": {},
           "errorsV2": [],
           "examples": []
         },
@@ -578,6 +604,8 @@
               }
             }
           },
+          "requestsV2": {},
+          "responsesV2": {},
           "errorsV2": [],
           "examples": []
         },
@@ -789,6 +817,8 @@
               }
             }
           },
+          "requestsV2": {},
+          "responsesV2": {},
           "errorsV2": [],
           "examples": []
         },
@@ -845,6 +875,7 @@
               "contentType": "multipart/form-data"
             }
           },
+          "requestsV2": {},
           "response": {
             "type": {
               "type": "reference",
@@ -857,6 +888,73 @@
             },
             "statusCode": 200
           },
+          "responsesV2": {},
+          "errorsV2": [],
+          "examples": []
+        },
+        {
+          "auth": false,
+          "method": "POST",
+          "id": "withInlineType",
+          "originalEndpointId": "endpoint_service.withInlineType",
+          "name": "With Inline Type",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/"
+              },
+              {
+                "type": "literal",
+                "value": "/inline-type"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "fileUpload",
+              "value": {
+                "name": "InlineTypeRequest",
+                "properties": [
+                  {
+                    "type": "file",
+                    "value": {
+                      "type": "file",
+                      "key": "file",
+                      "isOptional": false
+                    }
+                  },
+                  {
+                    "type": "bodyProperty",
+                    "key": "request",
+                    "valueType": {
+                      "type": "id",
+                      "value": "type_service:MyInlineType"
+                    },
+                    "exploded": false
+                  }
+                ]
+              },
+              "contentType": "multipart/form-data"
+            }
+          },
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "statusCode": 200
+          },
+          "responsesV2": {},
           "errorsV2": [],
           "examples": []
         },
@@ -881,6 +979,8 @@
           },
           "queryParameters": [],
           "headers": [],
+          "requestsV2": {},
+          "responsesV2": {},
           "errorsV2": [],
           "examples": [
             {
@@ -902,7 +1002,8 @@
         "type_service:MyAliasObject",
         "type_service:MyCollectionAliasObject",
         "type_service:MyObject",
-        "type_service:ObjectType"
+        "type_service:ObjectType",
+        "type_service:MyInlineType"
       ],
       "subpackages": []
     }

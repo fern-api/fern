@@ -1,9 +1,9 @@
-public struct ProblemInfoV2: Codable, Hashable {
+public struct ProblemInfoV2: Codable, Hashable, Sendable {
     public let problemId: ProblemId
     public let problemDescription: ProblemDescription
     public let problemName: String
     public let problemVersion: Int
-    public let supportedLanguages: Any
+    public let supportedLanguages: JSONValue
     public let customFiles: CustomFiles
     public let generatedFiles: GeneratedFiles
     public let customTestCaseTemplates: [TestCaseTemplate]
@@ -11,7 +11,19 @@ public struct ProblemInfoV2: Codable, Hashable {
     public let isPublic: Bool
     public let additionalProperties: [String: JSONValue]
 
-    public init(problemId: ProblemId, problemDescription: ProblemDescription, problemName: String, problemVersion: Int, supportedLanguages: Any, customFiles: CustomFiles, generatedFiles: GeneratedFiles, customTestCaseTemplates: [TestCaseTemplate], testcases: [TestCaseV2], isPublic: Bool, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        problemId: ProblemId,
+        problemDescription: ProblemDescription,
+        problemName: String,
+        problemVersion: Int,
+        supportedLanguages: JSONValue,
+        customFiles: CustomFiles,
+        generatedFiles: GeneratedFiles,
+        customTestCaseTemplates: [TestCaseTemplate],
+        testcases: [TestCaseV2],
+        isPublic: Bool,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.problemId = problemId
         self.problemDescription = problemDescription
         self.problemName = problemName
@@ -31,7 +43,7 @@ public struct ProblemInfoV2: Codable, Hashable {
         self.problemDescription = try container.decode(ProblemDescription.self, forKey: .problemDescription)
         self.problemName = try container.decode(String.self, forKey: .problemName)
         self.problemVersion = try container.decode(Int.self, forKey: .problemVersion)
-        self.supportedLanguages = try container.decode(Any.self, forKey: .supportedLanguages)
+        self.supportedLanguages = try container.decode(JSONValue.self, forKey: .supportedLanguages)
         self.customFiles = try container.decode(CustomFiles.self, forKey: .customFiles)
         self.generatedFiles = try container.decode(GeneratedFiles.self, forKey: .generatedFiles)
         self.customTestCaseTemplates = try container.decode([TestCaseTemplate].self, forKey: .customTestCaseTemplates)
@@ -41,7 +53,7 @@ public struct ProblemInfoV2: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.problemId, forKey: .problemId)
         try container.encode(self.problemDescription, forKey: .problemDescription)

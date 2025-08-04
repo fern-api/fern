@@ -1,9 +1,13 @@
-public struct TokenResponse: Codable, Hashable {
+public struct TokenResponse: Codable, Hashable, Sendable {
     public let accessToken: String
     public let expiresIn: Int
     public let additionalProperties: [String: JSONValue]
 
-    public init(accessToken: String, expiresIn: Int, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        accessToken: String,
+        expiresIn: Int,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.accessToken = accessToken
         self.expiresIn = expiresIn
         self.additionalProperties = additionalProperties
@@ -17,7 +21,7 @@ public struct TokenResponse: Codable, Hashable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.accessToken, forKey: .accessToken)
         try container.encode(self.expiresIn, forKey: .expiresIn)

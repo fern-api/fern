@@ -2,6 +2,6 @@
 
 # isort: skip_file
 
-from .resources import SendEnumInlinedRequest, Status, inlined_request, unknown
+from .resources import Status, unknown
 from .types import Color, ColorOrOperand, EnumWithCustom, Operand, SpecialEnum
-__all__ = ["Color", "ColorOrOperand", "EnumWithCustom", "Operand", "SendEnumInlinedRequest", "SpecialEnum", "Status", "inlined_request", "unknown"]
+__all__ = ["Color", "ColorOrOperand", "EnumWithCustom", "Operand", "SpecialEnum", "Status", "unknown"]

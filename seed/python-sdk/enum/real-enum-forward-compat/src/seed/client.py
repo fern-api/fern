@@ -4,6 +4,7 @@ import typing
 
 import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from .headers.client import AsyncHeadersClient, HeadersClient
 from .inlined_request.client import AsyncInlinedRequestClient, InlinedRequestClient
 from .path_param.client import AsyncPathParamClient, PathParamClient
 from .query_param.client import AsyncQueryParamClient, QueryParamClient
@@ -42,6 +43,7 @@ class SeedEnum:
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         self._client_wrapper = SyncClientWrapper(base_url=base_url, headers=headers, httpx_client=httpx_client if httpx_client is not None else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects) if follow_redirects is not None else httpx.Client(timeout=_defaulted_timeout)
         , timeout=_defaulted_timeout)
+        self.headers = HeadersClient(client_wrapper=self._client_wrapper)
         self.inlined_request = InlinedRequestClient(client_wrapper=self._client_wrapper)
         self.path_param = PathParamClient(client_wrapper=self._client_wrapper)
         self.query_param = QueryParamClient(client_wrapper=self._client_wrapper)
@@ -78,6 +80,7 @@ class AsyncSeedEnum:
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         self._client_wrapper = AsyncClientWrapper(base_url=base_url, headers=headers, httpx_client=httpx_client if httpx_client is not None else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects) if follow_redirects is not None else httpx.AsyncClient(timeout=_defaulted_timeout)
         , timeout=_defaulted_timeout)
+        self.headers = AsyncHeadersClient(client_wrapper=self._client_wrapper)
         self.inlined_request = AsyncInlinedRequestClient(client_wrapper=self._client_wrapper)
         self.path_param = AsyncPathParamClient(client_wrapper=self._client_wrapper)
         self.query_param = AsyncQueryParamClient(client_wrapper=self._client_wrapper)

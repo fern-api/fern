@@ -2,8 +2,8 @@
 
 # isort: skip_file
 
-from .types import Color, ColorOrOperand, EnumWithCustom, Operand, SpecialEnum
-from . import inlined_request, path_param, query_param, unknown
+from .types import Color, ColorOrOperand, EnumWithCustom, EnumWithSpecialCharacters, Operand, SpecialEnum
+from . import headers, inlined_request, path_param, query_param, unknown
 from .client import AsyncSeedEnum, SeedEnum
 from .unknown import Status
 from .version import __version__
@@ -13,11 +13,13 @@ __all__ = [
     "Color",
     "ColorOrOperand",
     "EnumWithCustom",
+    "EnumWithSpecialCharacters",
     "Operand",
     "SeedEnum",
     "SpecialEnum",
     "Status",
     "__version__",
+    "headers",
     "inlined_request",
     "path_param",
     "query_param",

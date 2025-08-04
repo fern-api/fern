@@ -1,12 +1,19 @@
-public struct CursorPages: Codable, Hashable {
+public struct CursorPages: Codable, Hashable, Sendable {
     public let next: StartingAfterPaging?
     public let page: Int?
     public let perPage: Int?
     public let totalPages: Int?
-    public let type: Any
+    public let type: JSONValue
     public let additionalProperties: [String: JSONValue]
 
-    public init(next: StartingAfterPaging? = nil, page: Int? = nil, perPage: Int? = nil, totalPages: Int? = nil, type: Any, additionalProperties: [String: JSONValue] = .init()) {
+    public init(
+        next: StartingAfterPaging? = nil,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        totalPages: Int? = nil,
+        type: JSONValue,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
         self.next = next
         self.page = page
         self.perPage = perPage
@@ -21,12 +28,12 @@ public struct CursorPages: Codable, Hashable {
         self.page = try container.decodeIfPresent(Int.self, forKey: .page)
         self.perPage = try container.decodeIfPresent(Int.self, forKey: .perPage)
         self.totalPages = try container.decodeIfPresent(Int.self, forKey: .totalPages)
-        self.type = try container.decode(Any.self, forKey: .type)
+        self.type = try container.decode(JSONValue.self, forKey: .type)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encodeIfPresent(self.next, forKey: .next)
         try container.encodeIfPresent(self.page, forKey: .page)

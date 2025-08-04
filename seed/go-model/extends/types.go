@@ -8,50 +8,12 @@ import (
 	internal "github.com/extends/fern/internal"
 )
 
-type Docs struct {
-	Docs string `json:"docs" url:"docs"`
-
-	extraProperties map[string]interface{}
-}
-
-func (d *Docs) GetDocs() string {
-	if d == nil {
-		return ""
-	}
-	return d.Docs
-}
-
-func (d *Docs) GetExtraProperties() map[string]interface{} {
-	return d.extraProperties
-}
-
-func (d *Docs) UnmarshalJSON(data []byte) error {
-	type unmarshaler Docs
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*d = Docs(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *d)
-	if err != nil {
-		return err
-	}
-	d.extraProperties = extraProperties
-	return nil
-}
-
-func (d *Docs) String() string {
-	if value, err := internal.StringifyJSON(d); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", d)
-}
-
 type ExampleType struct {
 	Docs string `json:"docs" url:"docs"`
 	Name string `json:"name" url:"name"`
 
-	extraProperties map[string]interface{}
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
 func (e *ExampleType) GetDocs() string {
@@ -68,11 +30,16 @@ func (e *ExampleType) GetName() string {
 	return e.Name
 }
 
-func (e *ExampleType) GetExtraProperties() map[string]interface{} {
+func (e *ExampleType) GetExtraProperties() map[string]any {
+	if e == nil {
+		return nil
+	}
 	return e.extraProperties
 }
 
-func (e *ExampleType) UnmarshalJSON(data []byte) error {
+func (e *ExampleType) UnmarshalJSON(
+	data []byte,
+) error {
 	type unmarshaler ExampleType
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
@@ -84,21 +51,146 @@ func (e *ExampleType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	e.extraProperties = extraProperties
+	e.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (e *ExampleType) String() string {
+	if len(e.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
 }
 
+type NestedType struct {
+	Raw  string `json:"raw" url:"raw"`
+	Docs string `json:"docs" url:"docs"`
+	Name string `json:"name" url:"name"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (n *NestedType) GetRaw() string {
+	if n == nil {
+		return ""
+	}
+	return n.Raw
+}
+
+func (n *NestedType) GetDocs() string {
+	if n == nil {
+		return ""
+	}
+	return n.Docs
+}
+
+func (n *NestedType) GetName() string {
+	if n == nil {
+		return ""
+	}
+	return n.Name
+}
+
+func (n *NestedType) GetExtraProperties() map[string]any {
+	if n == nil {
+		return nil
+	}
+	return n.extraProperties
+}
+
+func (n *NestedType) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler NestedType
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = NestedType(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+	n.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (n *NestedType) String() string {
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(n); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", n)
+}
+
+type Docs struct {
+	Docs string `json:"docs" url:"docs"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (d *Docs) GetDocs() string {
+	if d == nil {
+		return ""
+	}
+	return d.Docs
+}
+
+func (d *Docs) GetExtraProperties() map[string]any {
+	if d == nil {
+		return nil
+	}
+	return d.extraProperties
+}
+
+func (d *Docs) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler Docs
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*d = Docs(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
+	if err != nil {
+		return err
+	}
+	d.extraProperties = extraProperties
+	d.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (d *Docs) String() string {
+	if len(d.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(d); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", d)
+}
+
 type Json struct {
 	Docs string `json:"docs" url:"docs"`
 	Raw  string `json:"raw" url:"raw"`
 
-	extraProperties map[string]interface{}
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
 func (j *Json) GetDocs() string {
@@ -115,11 +207,16 @@ func (j *Json) GetRaw() string {
 	return j.Raw
 }
 
-func (j *Json) GetExtraProperties() map[string]interface{} {
+func (j *Json) GetExtraProperties() map[string]any {
+	if j == nil {
+		return nil
+	}
 	return j.extraProperties
 }
 
-func (j *Json) UnmarshalJSON(data []byte) error {
+func (j *Json) UnmarshalJSON(
+	data []byte,
+) error {
 	type unmarshaler Json
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
@@ -131,67 +228,18 @@ func (j *Json) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	j.extraProperties = extraProperties
+	j.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (j *Json) String() string {
+	if len(j.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(j.rawJSON); err == nil {
+			return value
+		}
+	}
 	if value, err := internal.StringifyJSON(j); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", j)
-}
-
-type NestedType struct {
-	Docs string `json:"docs" url:"docs"`
-	Raw  string `json:"raw" url:"raw"`
-	Name string `json:"name" url:"name"`
-
-	extraProperties map[string]interface{}
-}
-
-func (n *NestedType) GetDocs() string {
-	if n == nil {
-		return ""
-	}
-	return n.Docs
-}
-
-func (n *NestedType) GetRaw() string {
-	if n == nil {
-		return ""
-	}
-	return n.Raw
-}
-
-func (n *NestedType) GetName() string {
-	if n == nil {
-		return ""
-	}
-	return n.Name
-}
-
-func (n *NestedType) GetExtraProperties() map[string]interface{} {
-	return n.extraProperties
-}
-
-func (n *NestedType) UnmarshalJSON(data []byte) error {
-	type unmarshaler NestedType
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*n = NestedType(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *n)
-	if err != nil {
-		return err
-	}
-	n.extraProperties = extraProperties
-	return nil
-}
-
-func (n *NestedType) String() string {
-	if value, err := internal.StringifyJSON(n); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", n)
 }

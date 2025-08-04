@@ -1,4 +1,4 @@
-import { AbstractExtension } from "@fern-api/v2-importer-commons";
+import { AbstractExtension } from "@fern-api/v3-importer-commons";
 
 export declare namespace FernGlobalHeadersExtension {
     export interface Args extends AbstractExtension.Args {

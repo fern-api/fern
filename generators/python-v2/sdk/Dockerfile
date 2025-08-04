@@ -4,4 +4,4 @@ RUN curl -LsSf https://astral.sh/ruff/install.sh | sh
 ENV PATH="/root/.cargo/bin:${PATH}"
 # RUN ruff --version
 COPY generators/python-v2/sdk/dist /dist
-ENTRYPOINT ["node", "/dist/cli.cjs"]
+ENTRYPOINT ["node", "--enable-source-maps", "/dist/cli.cjs"]

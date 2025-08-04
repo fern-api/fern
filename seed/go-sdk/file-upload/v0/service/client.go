@@ -171,6 +171,24 @@ func (c *Client) OptionalArgs(
 	return response.Body, nil
 }
 
+func (c *Client) WithInlineType(
+	ctx context.Context,
+	file io.Reader,
+	request *fern.InlineTypeRequest,
+	opts ...option.RequestOption,
+) (string, error) {
+	response, err := c.WithRawResponse.WithInlineType(
+		ctx,
+		file,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return "", err
+	}
+	return response.Body, nil
+}
+
 func (c *Client) Simple(
 	ctx context.Context,
 	opts ...option.RequestOption,
