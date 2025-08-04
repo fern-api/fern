@@ -1,8 +1,5 @@
 import { isNonNullish, noop } from "@fern-api/core-utils";
-import {
-    RawSchemas,
-    recursivelyVisitRawTypeReference,
-} from "@fern-api/fern-definition-schema";
+import { RawSchemas, recursivelyVisitRawTypeReference } from "@fern-api/fern-definition-schema";
 import {
     EndpointExample,
     FullExample,
@@ -56,7 +53,7 @@ export function buildEndpointExample({
         // Auth header handling
         if (endpointExample.headers != null) {
             for (const header of endpointExample.headers) {
-                // ignore auth headers for example generation 
+                // ignore auth headers for example generation
                 if (header.name !== context.builder.getAuthHeaderName()) {
                     namedFullExamples.push(header);
                 }
@@ -69,7 +66,7 @@ export function buildEndpointExample({
             if (endpointHeaderNames.has(header)) {
                 continue;
             }
-            
+
             // set global header example value
             if (info != null && typeof info === "object" && info.type != null) {
                 // handling literal header types
@@ -79,8 +76,8 @@ export function buildEndpointExample({
                     validation: undefined,
                     // generic visitor to extract the string value from the literal
                     // todo: add handling for other types in this visitor
-                    visitor: {  
-                        primitive: noop,  
+                    visitor: {
+                        primitive: noop,
                         map: noop,
                         list: noop,
                         optional: noop,
@@ -105,7 +102,6 @@ export function buildEndpointExample({
                         value: FullExample.literal(LiteralExample.string(valueToUse))
                     });
                 }
-
             } else {
                 // handling all other types
                 namedFullExamples.push({
@@ -113,7 +109,6 @@ export function buildEndpointExample({
                     value: FullExample.primitive(PrimitiveExample.string(header))
                 });
             }
-            
         }
 
         example.headers = convertHeaderExamples({
