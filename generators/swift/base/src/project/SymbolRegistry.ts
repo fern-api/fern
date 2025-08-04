@@ -117,9 +117,17 @@ export class SymbolRegistry {
         return symbolName;
     }
 
-    public registerSubClientSymbol(subpackageId: string, symbolName: string): string {
-        // TODO(kafkas): Use fallback candidates to produce better names
-        symbolName = this.getAvailableSymbolName(symbolName);
+    public registerSubClientSymbol(subpackageId: string, parentNames: string[], symbolName: string): string {
+        const reversedParts = parentNames.toReversed();
+        reversedParts.shift();
+        const fallbackCandidates = reversedParts.map(
+            (_, partIdx) =>
+                reversedParts
+                    .slice(0, partIdx + 1)
+                    .reverse()
+                    .join("") + symbolName
+        );
+        symbolName = this.getAvailableSymbolName(symbolName, fallbackCandidates);
         this.subClientSymbols.set(subpackageId, symbolName);
         this.symbolSet.add(symbolName);
         return symbolName;

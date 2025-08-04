@@ -74,6 +74,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         Object.entries(context.ir.subpackages).forEach(([subpackageId, subpackage]) => {
             context.project.symbolRegistry.registerSubClientSymbol(
                 subpackageId,
+                subpackage.fernFilepath.allParts.map((name) => name.pascalCase.unsafeName),
                 `${subpackage.name.pascalCase.unsafeName}Client`
             );
         });
