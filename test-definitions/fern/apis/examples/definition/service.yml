@@ -54,3 +54,12 @@ service:
       path: /big-entity
       request: types.BigEntity
       response: types.Response
+
+    refreshToken:
+      method: POST
+      path: /refresh-token
+      request: optional<types.RefreshTokenRequest>
+      examples:
+        - {}
+        - request:
+           ttl: 420
