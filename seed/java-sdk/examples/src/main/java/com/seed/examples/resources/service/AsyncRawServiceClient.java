@@ -16,7 +16,9 @@ import com.seed.examples.resources.service.requests.GetMetadataRequest;
 import com.seed.examples.resources.types.types.BigEntity;
 import com.seed.examples.resources.types.types.Metadata;
 import com.seed.examples.resources.types.types.Movie;
+import com.seed.examples.resources.types.types.RefreshTokenRequest;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -246,6 +248,69 @@ public class AsyncRawServiceClient {
                                 ObjectMappers.JSON_MAPPER.readValue(
                                         responseBody.string(), com.seed.examples.resources.types.types.Response.class),
                                 response));
+                        return;
+                    }
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    future.completeExceptionally(new SeedExamplesApiException(
+                            "Error with status code " + response.code(),
+                            response.code(),
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(new SeedExamplesException("Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(new SeedExamplesException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<SeedExamplesHttpResponse<Void>> refreshToken() {
+        return refreshToken(Optional.empty());
+    }
+
+    public CompletableFuture<SeedExamplesHttpResponse<Void>> refreshToken(Optional<RefreshTokenRequest> request) {
+        return refreshToken(request, null);
+    }
+
+    public CompletableFuture<SeedExamplesHttpResponse<Void>> refreshToken(
+            Optional<RefreshTokenRequest> request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("refresh-token")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create("", null);
+            if (request.isPresent()) {
+                body = RequestBody.create(
+                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+            }
+        } catch (JsonProcessingException e) {
+            throw new SeedExamplesException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<SeedExamplesHttpResponse<Void>> future = new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (response.isSuccessful()) {
+                        future.complete(new SeedExamplesHttpResponse<>(null, response));
                         return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
