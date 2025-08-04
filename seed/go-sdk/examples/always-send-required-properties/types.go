@@ -1591,6 +1591,52 @@ func (n *Node) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
+type RefreshTokenRequest struct {
+	Ttl int `json:"ttl" url:"ttl"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (r *RefreshTokenRequest) GetTtl() int {
+	if r == nil {
+		return 0
+	}
+	return r.Ttl
+}
+
+func (r *RefreshTokenRequest) GetExtraProperties() map[string]interface{} {
+	return r.extraProperties
+}
+
+func (r *RefreshTokenRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler RefreshTokenRequest
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = RefreshTokenRequest(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *RefreshTokenRequest) String() string {
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
 type Request struct {
 	Request interface{} `json:"request" url:"request"`
 
