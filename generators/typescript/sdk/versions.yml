@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.6.6
+  changelogEntry:
+    - summary: Requests and responses with no body should not be asserted as JSON in wire tests.
+      type: fix
+  createdAt: "2025-08-04"
+  irVersion: 58
+
 - version: 2.6.5
   changelogEntry:
     - summary: If an enum wire value is not found, use the first enum value as a fallback.

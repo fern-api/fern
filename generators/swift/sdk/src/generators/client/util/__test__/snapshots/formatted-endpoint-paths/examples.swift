@@ -17,3 +17,4 @@
 "/movie"
 "/metadata"
 "/big-entity"
+"/refresh-token"
