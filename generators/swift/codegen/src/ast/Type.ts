@@ -15,16 +15,16 @@ type Int = {
     type: "int";
 };
 
+type Int64 = {
+    type: "int64";
+};
+
 type UInt = {
     type: "uint";
 };
 
 type UInt64 = {
     type: "uint64";
-};
-
-type Int64 = {
-    type: "int64";
 };
 
 type Float = {
@@ -153,9 +153,9 @@ export class Type extends AstNode {
             case "string":
             case "bool":
             case "int":
+            case "int64":
             case "uint":
             case "uint64":
-            case "int64":
             case "float":
             case "double":
             case "data":
@@ -235,12 +235,12 @@ export class Type extends AstNode {
                 return "bool";
             case "int":
                 return "int";
+            case "int64":
+                return "int64";
             case "uint":
                 return "uint";
             case "uint64":
                 return "uint64";
-            case "int64":
-                return "int64";
             case "float":
                 return "float";
             case "double":
@@ -292,14 +292,14 @@ export class Type extends AstNode {
             case "int":
                 writer.write("Int");
                 break;
+            case "int64":
+                writer.write("Int64");
+                break;
             case "uint":
                 writer.write("UInt");
                 break;
             case "uint64":
                 writer.write("UInt64");
-                break;
-            case "int64":
-                writer.write("Int64");
                 break;
             case "float":
                 writer.write("Float");
@@ -416,7 +416,6 @@ export class Type extends AstNode {
     }
 
     public static dictionary(keyType: Type, valueType: Type): Type {
-        // TODO(kafkas): keyType needs to conform to Hashable. We may want to enforce this as a constraint.
         return new this({ type: "dictionary", keyType, valueType });
     }
 

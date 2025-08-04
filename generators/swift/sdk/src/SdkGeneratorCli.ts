@@ -88,7 +88,8 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         Object.entries(context.ir.services).forEach(([_, service]) => {
             service.endpoints.forEach((endpoint) => {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
-                    context.project.symbolRegistry.registerRequestSymbol(
+                    context.project.symbolRegistry.registerInlineRequestTypeSymbol(
+                        endpoint.id,
                         endpoint.requestBody.name.pascalCase.unsafeName,
                         endpoint.requestBody.name.pascalCase.unsafeName
                     );

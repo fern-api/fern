@@ -9,7 +9,8 @@ export function generateInlinedRequestModels({ context }: { context: ModelGenera
         service.endpoints.forEach((endpoint) => {
             if (endpoint.requestBody?.type === "inlinedRequestBody") {
                 const generator = new ObjectGenerator(
-                    context.project.symbolRegistry.getRequestSymbolOrThrow(
+                    context.project.symbolRegistry.getInlineRequestTypeSymbolOrThrow(
+                        endpoint.id,
                         endpoint.requestBody.name.pascalCase.unsafeName
                     ),
                     context.requestsDirectory,

@@ -1,8 +1,33 @@
 import { AsIsFiles } from "../AsIs";
 
 export class SymbolRegistry {
-    // Foundation and Swift symbols
-    private static readonly reservedSymbols = ["String"];
+    /**
+     * The list of Swift symbols that the generator reserves. We only reserve the symbols that
+     * are used internally within the generated code. This means that when the user defines a
+     * `KeyPath` type (a built-in type), for example, it will be their responsibility to use
+     * `Swift.KeyPath` in their code to disambiguate it from the custom type.
+     */
+    private static readonly reservedSwiftSymbols = [
+        "Any",
+        "Bool",
+        "Double",
+        "Float",
+        "Int",
+        "Int64",
+        "String",
+        "UInt",
+        "UInt64",
+        "Void"
+    ];
+
+    private static readonly reservedFoundationSymbols = ["Data", "Date", "UUID"];
+
+    private static readonly reservedSymbols = [
+        "Swift",
+        "Foundation",
+        ...SymbolRegistry.reservedSwiftSymbols,
+        ...SymbolRegistry.reservedFoundationSymbols
+    ];
 
     public static create(): SymbolRegistry {
         const registry = new SymbolRegistry(SymbolRegistry.reservedSymbols);
@@ -18,7 +43,7 @@ export class SymbolRegistry {
     private environmentSymbol: string | null;
     private subClientSymbols: Map<string, string>;
     private schemaTypeSymbols: Map<string, string>;
-    private requestSymbols: Map<string, string>;
+    private inlineRequestTypeSymbols: Map<string, string>;
 
     private readonly symbolSet: Set<string>;
 
@@ -27,7 +52,7 @@ export class SymbolRegistry {
         this.environmentSymbol = null;
         this.subClientSymbols = new Map();
         this.schemaTypeSymbols = new Map();
-        this.requestSymbols = new Map();
+        this.inlineRequestTypeSymbols = new Map();
         this.symbolSet = new Set(symbols);
     }
 
@@ -63,8 +88,9 @@ export class SymbolRegistry {
         return symbol;
     }
 
-    public getRequestSymbolOrThrow(requestNamePascalCase: string): string {
-        const symbol = this.requestSymbols.get(requestNamePascalCase);
+    public getInlineRequestTypeSymbolOrThrow(endpointId: string, requestNamePascalCase: string): string {
+        const id = this.getRequestTypeSymbolId(endpointId, requestNamePascalCase);
+        const symbol = this.inlineRequestTypeSymbols.get(id);
         if (symbol == null) {
             throw new Error(`Request symbol not found for request ${requestNamePascalCase}`);
         }
@@ -105,10 +131,14 @@ export class SymbolRegistry {
         return symbolName;
     }
 
-    public registerRequestSymbol(requestNamePascalCase: string, symbolName: string): string {
-        // TODO(kafkas): Confirm if we can use request name as ID
+    public registerInlineRequestTypeSymbol(
+        endpointId: string,
+        requestNamePascalCase: string,
+        symbolName: string
+    ): string {
+        const id = this.getRequestTypeSymbolId(endpointId, requestNamePascalCase);
         symbolName = this.getAvailableSymbolName(symbolName);
-        this.requestSymbols.set(requestNamePascalCase, symbolName);
+        this.inlineRequestTypeSymbols.set(id, symbolName);
         this.symbolSet.add(symbolName);
         return symbolName;
     }
@@ -120,6 +150,10 @@ export class SymbolRegistry {
             name += "_";
         }
         return name;
+    }
+
+    private getRequestTypeSymbolId(endpointId: string, requestNamePascalCase: string): string {
+        return `${endpointId}_${requestNamePascalCase}`;
     }
 
     public exists(symbolName: string): boolean {

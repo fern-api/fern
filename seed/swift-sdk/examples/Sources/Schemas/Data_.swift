@@ -1,4 +1,4 @@
-public enum Data: Codable, Hashable, Sendable {
+public enum Data_: Codable, Hashable, Sendable {
     case string(String)
     case base64(Base64)
 
