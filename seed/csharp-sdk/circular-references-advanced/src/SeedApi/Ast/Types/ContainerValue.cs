@@ -176,13 +176,15 @@ public record ContainerValue
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value = discriminator switch
-            {
-                "list" => json.GetProperty("value").Deserialize<IEnumerable<FieldValue>>(options)
-                    ?? throw new JsonException("Failed to deserialize IEnumerable<FieldValue>"),
-                "optional" => json.GetProperty("value").Deserialize<FieldValue?>(options),
-                _ => json.Deserialize<object?>(options),
-            };
+            var value =
+                discriminator switch
+                {
+                    "list" => json.GetProperty("value")
+                        .Deserialize<IEnumerable<FieldValue>>(options),
+                    "optional" => json.GetProperty("value").Deserialize<FieldValue?>(options),
+                    _ => json.Deserialize<object?>(options),
+                }
+                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
             return new ContainerValue(discriminator, value);
         }
 
@@ -224,8 +226,6 @@ public record ContainerValue
         internal IEnumerable<FieldValue> Value { get; set; } = new List<FieldValue>();
 
         public override string ToString() => Value.ToString();
-
-        public static implicit operator List(IEnumerable<FieldValue> value) => new(value);
     }
 
     /// <summary>

@@ -687,44 +687,30 @@ public record DebugVariableValue
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value = discriminator switch
-            {
-                "integerValue" => json.GetProperty("value").Deserialize<int>(options),
-                "booleanValue" => json.GetProperty("value").Deserialize<bool>(options),
-                "doubleValue" => json.GetProperty("value").Deserialize<double>(options),
-                "stringValue" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
-                "charValue" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
-                "mapValue" => json.Deserialize<SeedTrace.DebugMapValue>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.DebugMapValue"),
-                "listValue" => json.GetProperty("value")
-                    .Deserialize<IEnumerable<DebugVariableValue>>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize IEnumerable<DebugVariableValue>"
+            var value =
+                discriminator switch
+                {
+                    "integerValue" => json.GetProperty("value").Deserialize<int>(options),
+                    "booleanValue" => json.GetProperty("value").Deserialize<bool>(options),
+                    "doubleValue" => json.GetProperty("value").Deserialize<double>(options),
+                    "stringValue" => json.GetProperty("value").Deserialize<string>(options),
+                    "charValue" => json.GetProperty("value").Deserialize<string>(options),
+                    "mapValue" => json.Deserialize<SeedTrace.DebugMapValue>(options),
+                    "listValue" => json.GetProperty("value")
+                        .Deserialize<IEnumerable<DebugVariableValue>>(options),
+                    "binaryTreeNodeValue" => json.Deserialize<SeedTrace.BinaryTreeNodeAndTreeValue>(
+                        options
                     ),
-                "binaryTreeNodeValue" => json.Deserialize<SeedTrace.BinaryTreeNodeAndTreeValue>(
-                    options
-                )
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.BinaryTreeNodeAndTreeValue"
-                    ),
-                "singlyLinkedListNodeValue" =>
-                    json.Deserialize<SeedTrace.SinglyLinkedListNodeAndListValue>(options)
-                        ?? throw new JsonException(
-                            "Failed to deserialize SeedTrace.SinglyLinkedListNodeAndListValue"
-                        ),
-                "doublyLinkedListNodeValue" =>
-                    json.Deserialize<SeedTrace.DoublyLinkedListNodeAndListValue>(options)
-                        ?? throw new JsonException(
-                            "Failed to deserialize SeedTrace.DoublyLinkedListNodeAndListValue"
-                        ),
-                "undefinedValue" => new { },
-                "nullValue" => new { },
-                "genericValue" => json.Deserialize<SeedTrace.GenericValue>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.GenericValue"),
-                _ => json.Deserialize<object?>(options),
-            };
+                    "singlyLinkedListNodeValue" =>
+                        json.Deserialize<SeedTrace.SinglyLinkedListNodeAndListValue>(options),
+                    "doublyLinkedListNodeValue" =>
+                        json.Deserialize<SeedTrace.DoublyLinkedListNodeAndListValue>(options),
+                    "undefinedValue" => new { },
+                    "nullValue" => new { },
+                    "genericValue" => json.Deserialize<SeedTrace.GenericValue>(options),
+                    _ => json.Deserialize<object?>(options),
+                }
+                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
             return new DebugVariableValue(discriminator, value);
         }
 
@@ -904,9 +890,6 @@ public record DebugVariableValue
             new List<DebugVariableValue>();
 
         public override string ToString() => Value.ToString();
-
-        public static implicit operator ListValue(IEnumerable<DebugVariableValue> value) =>
-            new(value);
     }
 
     /// <summary>

@@ -132,14 +132,13 @@ public record CreateProblemError
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property '_type' is null");
 
-            var value = discriminator switch
-            {
-                "generic" => json.Deserialize<SeedTrace.GenericCreateProblemError>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.GenericCreateProblemError"
-                    ),
-                _ => json.Deserialize<object?>(options),
-            };
+            var value =
+                discriminator switch
+                {
+                    "generic" => json.Deserialize<SeedTrace.GenericCreateProblemError>(options),
+                    _ => json.Deserialize<object?>(options),
+                }
+                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
             return new CreateProblemError(discriminator, value);
         }
 

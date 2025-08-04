@@ -129,13 +129,19 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): csharp.MethodInvocation {
+        // if the example has *any* sample with stream set to true, then the method is an async enumerable
+        const isAsyncEnumerable = endpoint.examples?.some(
+            // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
+            (example: Record<string, any>) => example.requestBody?.stream && example.requestBody?.stream === true
+        );
         return csharp.invokeMethod({
             on: csharp.codeblock(CLIENT_VAR_NAME),
             method: this.getMethod({ endpoint }),
             arguments_: this.getMethodArgs({ endpoint, snippet }),
             async: true,
             configureAwait: true,
-            multiline: true
+            multiline: true,
+            isAsyncEnumerable
         });
     }
 
@@ -696,13 +702,15 @@ export class EndpointSnippetGenerator {
     }
 
     private getBytesBodyRequestArg({ value }: { value: unknown }): csharp.TypeLiteral {
-        const str = this.context.getValueAsString({ value });
+        let str = this.context.getValueAsString({ value });
         if (str == null) {
             this.context.errors.add({
                 severity: Severity.Critical,
                 message: "The bytes request body must be provided in string format"
             });
-            return csharp.TypeLiteral.nop();
+
+            // if there is no value, then let's just use a random string
+            str = "Some random text to upload";
         }
         return csharp.TypeLiteral.reference(this.context.getMemoryStreamForString(str));
     }
@@ -743,6 +751,7 @@ export class EndpointSnippetGenerator {
                 .map((val) => this.context.getClassName(val))
                 .join(".")}.${this.context.getMethodName(endpoint.declaration.name)}`;
         }
+
         return this.context.getMethodName(endpoint.declaration.name);
     }
 

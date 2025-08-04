@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.1.7
+  changelogEntry:
+    - type: fix
+      summary: |
+        Improve generation so that all expected tests/samples correctly
+        generate and compile. 
+       
+  createdAt: '2025-08-04'
+  irVersion: 58
+
 - version: 2.1.6
   changelogEntry:
     - type: feat

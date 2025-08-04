@@ -178,14 +178,14 @@ public record UnionWithDuplicateTypes
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value = discriminator switch
-            {
-                "foo1" => json.Deserialize<SeedUnions.Foo>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedUnions.Foo"),
-                "foo2" => json.Deserialize<SeedUnions.Foo>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedUnions.Foo"),
-                _ => json.Deserialize<object?>(options),
-            };
+            var value =
+                discriminator switch
+                {
+                    "foo1" => json.Deserialize<SeedUnions.Foo>(options),
+                    "foo2" => json.Deserialize<SeedUnions.Foo>(options),
+                    _ => json.Deserialize<object?>(options),
+                }
+                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
             return new UnionWithDuplicateTypes(discriminator, value);
         }
 

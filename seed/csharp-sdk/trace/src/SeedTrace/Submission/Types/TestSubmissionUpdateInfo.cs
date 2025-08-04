@@ -358,27 +358,22 @@ public record TestSubmissionUpdateInfo
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value = discriminator switch
-            {
-                "running" => json.GetProperty("value")
-                    .Deserialize<SeedTrace.RunningSubmissionState>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.RunningSubmissionState"
+            var value =
+                discriminator switch
+                {
+                    "running" => json.GetProperty("value")
+                        .Deserialize<SeedTrace.RunningSubmissionState>(options),
+                    "stopped" => new { },
+                    "errored" => json.GetProperty("value")
+                        .Deserialize<SeedTrace.ErrorInfo>(options),
+                    "gradedTestCase" => json.Deserialize<SeedTrace.GradedTestCaseUpdate>(options),
+                    "recordedTestCase" => json.Deserialize<SeedTrace.RecordedTestCaseUpdate>(
+                        options
                     ),
-                "stopped" => new { },
-                "errored" => json.GetProperty("value").Deserialize<SeedTrace.ErrorInfo>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.ErrorInfo"),
-                "gradedTestCase" => json.Deserialize<SeedTrace.GradedTestCaseUpdate>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.GradedTestCaseUpdate"
-                    ),
-                "recordedTestCase" => json.Deserialize<SeedTrace.RecordedTestCaseUpdate>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.RecordedTestCaseUpdate"
-                    ),
-                "finished" => new { },
-                _ => json.Deserialize<object?>(options),
-            };
+                    "finished" => new { },
+                    _ => json.Deserialize<object?>(options),
+                }
+                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
             return new TestSubmissionUpdateInfo(discriminator, value);
         }
 

@@ -178,18 +178,14 @@ public record SubmissionTypeState
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value = discriminator switch
-            {
-                "test" => json.Deserialize<SeedTrace.TestSubmissionState>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.TestSubmissionState"
-                    ),
-                "workspace" => json.Deserialize<SeedTrace.WorkspaceSubmissionState>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.WorkspaceSubmissionState"
-                    ),
-                _ => json.Deserialize<object?>(options),
-            };
+            var value =
+                discriminator switch
+                {
+                    "test" => json.Deserialize<SeedTrace.TestSubmissionState>(options),
+                    "workspace" => json.Deserialize<SeedTrace.WorkspaceSubmissionState>(options),
+                    _ => json.Deserialize<object?>(options),
+                }
+                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
             return new SubmissionTypeState(discriminator, value);
         }
 

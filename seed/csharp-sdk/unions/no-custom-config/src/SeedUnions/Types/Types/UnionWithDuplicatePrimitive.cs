@@ -274,16 +274,16 @@ public record UnionWithDuplicatePrimitive
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value = discriminator switch
-            {
-                "integer1" => json.GetProperty("value").Deserialize<int>(options),
-                "integer2" => json.GetProperty("value").Deserialize<int>(options),
-                "string1" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
-                "string2" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
-                _ => json.Deserialize<object?>(options),
-            };
+            var value =
+                discriminator switch
+                {
+                    "integer1" => json.GetProperty("value").Deserialize<int>(options),
+                    "integer2" => json.GetProperty("value").Deserialize<int>(options),
+                    "string1" => json.GetProperty("value").Deserialize<string>(options),
+                    "string2" => json.GetProperty("value").Deserialize<string>(options),
+                    _ => json.Deserialize<object?>(options),
+                }
+                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
             return new UnionWithDuplicatePrimitive(discriminator, value);
         }
 

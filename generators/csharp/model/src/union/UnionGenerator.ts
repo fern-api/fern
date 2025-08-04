@@ -30,15 +30,20 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
         super(context);
         this.discriminantPropertyName = unionDeclaration.discriminant.name.pascalCase.safeName;
         const basePropNames = unionDeclaration.baseProperties.map((p) => p.name.name.pascalCase.safeName);
-        if (basePropNames.includes(this.discriminantPropertyName)) {
-            this.discriminantPropertyName = `_${this.discriminantPropertyName}`;
-        }
 
         if (basePropNames.includes(this.valuePropertyName)) {
             this.valuePropertyName = `_${this.valuePropertyName}`;
         }
         this.typeDeclaration = typeDeclaration;
         this.classReference = this.context.csharpTypeMapper.convertToClassReference(this.typeDeclaration.name);
+
+        if (
+            basePropNames.includes(this.discriminantPropertyName) ||
+            this.classReference.name === this.discriminantPropertyName
+        ) {
+            this.discriminantPropertyName = `_${this.discriminantPropertyName}`;
+        }
+
         this.exampleGenerator = new ExampleGenerator(context);
         this.unionMemberTypeMap = new Map(
             unionDeclaration.types.map((type) => this.getCsharpTypeMapEntry(type, context))
@@ -64,6 +69,8 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
             access: csharp.Access.Public,
             type: csharp.Class.ClassType.Record
         });
+
+        this.discriminantPropertyName;
 
         class_.addField(
             csharp.field({
@@ -472,8 +479,8 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                         )
                     })
                 );
-
-                if (memberType.unwrapIfOptional().internalType.type !== "object") {
+                // we can't have an implicit cast from object or (IEnumerable<T>)
+                if (!["object", "list"].includes(memberType.unwrapIfOptional().internalType.type)) {
                     unionTypeClass.addOperator({
                         type: csharp.Class.CastOperator.Type.Implicit,
                         parameter: csharp.parameter({
@@ -661,22 +668,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                             writer.write(".Deserialize<");
                             writer.writeNode(csharpType);
                             writer.write(">(options)");
-                            if (csharpType.isOptional()) {
-                                writer.writeLine(",");
-                            } else {
-                                const isReferenceType = csharpType.isReferenceType();
-                                if (
-                                    isReferenceType === true ||
-                                    csharpType.internalType.type === "reference" ||
-                                    csharpType.internalType.type === "coreReference"
-                                ) {
-                                    writer.write(' ?? throw new JsonException("Failed to deserialize ');
-                                    writer.writeNode(csharpType);
-                                    writer.writeLine('"),');
-                                } else {
-                                    writer.writeLine(",");
-                                }
-                            }
+                            writer.writeLine(",");
                         }
 
                         switch (type.shape.propertiesType) {
@@ -696,7 +688,10 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                     });
                     writer.writeLine("_ => json.Deserialize<object?>(options)");
                     writer.dedent();
-                    writer.writeTextStatement("}");
+                    // it's a bit better if we place the null check at the end - one of the inner types could be a readonly record struct, and can't be ??'d in the switch
+                    writer.writeTextStatement(
+                        '} ?? throw new JsonException($"Failed to deserialize union value of {discriminator}")'
+                    );
 
                     if (baseProperties.length > 0) {
                         writer.write("var baseProperties = json.Deserialize<");

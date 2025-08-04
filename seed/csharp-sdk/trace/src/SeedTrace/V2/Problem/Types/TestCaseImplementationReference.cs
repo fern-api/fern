@@ -180,16 +180,16 @@ public record TestCaseImplementationReference
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value = discriminator switch
-            {
-                "templateId" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
-                "implementation" => json.Deserialize<SeedTrace.V2.TestCaseImplementation>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.V2.TestCaseImplementation"
+            var value =
+                discriminator switch
+                {
+                    "templateId" => json.GetProperty("value").Deserialize<string>(options),
+                    "implementation" => json.Deserialize<SeedTrace.V2.TestCaseImplementation>(
+                        options
                     ),
-                _ => json.Deserialize<object?>(options),
-            };
+                    _ => json.Deserialize<object?>(options),
+                }
+                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
             return new TestCaseImplementationReference(discriminator, value);
         }
 

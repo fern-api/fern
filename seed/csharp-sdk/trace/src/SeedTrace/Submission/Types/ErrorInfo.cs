@@ -221,16 +221,15 @@ public record ErrorInfo
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value = discriminator switch
-            {
-                "compileError" => json.Deserialize<SeedTrace.CompileError>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.CompileError"),
-                "runtimeError" => json.Deserialize<SeedTrace.RuntimeError>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.RuntimeError"),
-                "internalError" => json.Deserialize<SeedTrace.InternalError>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.InternalError"),
-                _ => json.Deserialize<object?>(options),
-            };
+            var value =
+                discriminator switch
+                {
+                    "compileError" => json.Deserialize<SeedTrace.CompileError>(options),
+                    "runtimeError" => json.Deserialize<SeedTrace.RuntimeError>(options),
+                    "internalError" => json.Deserialize<SeedTrace.InternalError>(options),
+                    _ => json.Deserialize<object?>(options),
+                }
+                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
             return new ErrorInfo(discriminator, value);
         }
 

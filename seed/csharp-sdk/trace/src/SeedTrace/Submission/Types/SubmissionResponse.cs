@@ -358,25 +358,19 @@ public record SubmissionResponse
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value = discriminator switch
-            {
-                "serverInitialized" => new { },
-                "problemInitialized" => json.GetProperty("value").Deserialize<string>(options)
-                    ?? throw new JsonException("Failed to deserialize string"),
-                "workspaceInitialized" => new { },
-                "serverErrored" => json.Deserialize<SeedTrace.ExceptionInfo>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.ExceptionInfo"),
-                "codeExecutionUpdate" => json.GetProperty("value")
-                    .Deserialize<SeedTrace.CodeExecutionUpdate>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.CodeExecutionUpdate"
-                    ),
-                "terminated" => json.Deserialize<SeedTrace.TerminatedResponse>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.TerminatedResponse"
-                    ),
-                _ => json.Deserialize<object?>(options),
-            };
+            var value =
+                discriminator switch
+                {
+                    "serverInitialized" => new { },
+                    "problemInitialized" => json.GetProperty("value").Deserialize<string>(options),
+                    "workspaceInitialized" => new { },
+                    "serverErrored" => json.Deserialize<SeedTrace.ExceptionInfo>(options),
+                    "codeExecutionUpdate" => json.GetProperty("value")
+                        .Deserialize<SeedTrace.CodeExecutionUpdate>(options),
+                    "terminated" => json.Deserialize<SeedTrace.TerminatedResponse>(options),
+                    _ => json.Deserialize<object?>(options),
+                }
+                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
             return new SubmissionResponse(discriminator, value);
         }
 

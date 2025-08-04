@@ -231,25 +231,18 @@ public record FunctionSignature
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value = discriminator switch
-            {
-                "void" => json.Deserialize<SeedTrace.V2.VoidFunctionSignature>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.V2.VoidFunctionSignature"
-                    ),
-                "nonVoid" => json.Deserialize<SeedTrace.V2.NonVoidFunctionSignature>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.V2.NonVoidFunctionSignature"
-                    ),
-                "voidThatTakesActualResult" =>
-                    json.Deserialize<SeedTrace.V2.VoidFunctionSignatureThatTakesActualResult>(
-                        options
-                    )
-                        ?? throw new JsonException(
-                            "Failed to deserialize SeedTrace.V2.VoidFunctionSignatureThatTakesActualResult"
+            var value =
+                discriminator switch
+                {
+                    "void" => json.Deserialize<SeedTrace.V2.VoidFunctionSignature>(options),
+                    "nonVoid" => json.Deserialize<SeedTrace.V2.NonVoidFunctionSignature>(options),
+                    "voidThatTakesActualResult" =>
+                        json.Deserialize<SeedTrace.V2.VoidFunctionSignatureThatTakesActualResult>(
+                            options
                         ),
-                _ => json.Deserialize<object?>(options),
-            };
+                    _ => json.Deserialize<object?>(options),
+                }
+                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
             return new FunctionSignature(discriminator, value);
         }
 

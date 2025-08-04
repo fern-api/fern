@@ -1,5 +1,7 @@
 using global::System.Threading.Tasks;
 using SeedBytesUpload;
+using System.IO;
+using System.Text;
 
 namespace Usage;
 
@@ -13,7 +15,7 @@ public class Example0
         );
 
         await client.Service.UploadAsync(
-
+            new MemoryStream(Encoding.UTF8.GetBytes("Some random text to upload"))
         );
     }
 

@@ -181,14 +181,14 @@ public record Shape
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value = discriminator switch
-            {
-                "circle" => json.Deserialize<SeedUnions.Circle>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedUnions.Circle"),
-                "square" => json.Deserialize<SeedUnions.Square>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedUnions.Square"),
-                _ => json.Deserialize<object?>(options),
-            };
+            var value =
+                discriminator switch
+                {
+                    "circle" => json.Deserialize<SeedUnions.Circle>(options),
+                    "square" => json.Deserialize<SeedUnions.Square>(options),
+                    _ => json.Deserialize<object?>(options),
+                }
+                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
             var baseProperties =
                 json.Deserialize<Shape.BaseProperties>(options)
                 ?? throw new JsonException("Failed to deserialize Shape.BaseProperties");
