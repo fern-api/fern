@@ -2,7 +2,7 @@
 
 # isort: skip_file
 
-from .types import Color, ColorOrOperand, EnumWithCustom, Operand, SpecialEnum
+from .types import Color, ColorOrOperand, EnumWithCustom, EnumWithSpecialCharacters, Operand, SpecialEnum
 from . import headers, inlined_request, path_param, query_param, unknown
 from .client import AsyncSeedEnum, SeedEnum
 from .unknown import Status
@@ -13,6 +13,7 @@ __all__ = [
     "Color",
     "ColorOrOperand",
     "EnumWithCustom",
+    "EnumWithSpecialCharacters",
     "Operand",
     "SeedEnum",
     "SpecialEnum",
