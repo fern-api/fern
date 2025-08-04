@@ -1,0 +1,17 @@
+service:
+  auth: true
+  base-path: /users
+  endpoints:
+    get:
+      method: GET
+      path: /{id}
+      path-parameters:
+        id: string
+      response: User
+
+types:
+  User:
+    properties:
+      id: string
+      name: string
+      email: string

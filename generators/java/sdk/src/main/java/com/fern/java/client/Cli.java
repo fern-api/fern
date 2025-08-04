@@ -304,6 +304,25 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         QueryStringMapperTestGenerator queryStringMapperTestGenerator = new QueryStringMapperTestGenerator(context);
         this.addGeneratedFile(queryStringMapperTestGenerator.generateFile());
 
+        dependencies.add(ParsedGradleDependency.builder()
+                .type(GradleDependencyType.TEST_IMPLEMENTATION)
+                .group("org.junit.jupiter")
+                .artifact("junit-jupiter-api")
+                .version(ParsedGradleDependency.JUNIT_DEPENDENCY)
+                .build());
+        dependencies.add(ParsedGradleDependency.builder()
+                .type(GradleDependencyType.TEST_IMPLEMENTATION)
+                .group("org.junit.jupiter")
+                .artifact("junit-jupiter-engine")
+                .version(ParsedGradleDependency.JUNIT_DEPENDENCY)
+                .build());
+        dependencies.add(ParsedGradleDependency.builder()
+                .type(GradleDependencyType.TEST_IMPLEMENTATION)
+                .group("org.junit.jupiter")
+                .artifact("junit-jupiter-params")
+                .version(ParsedGradleDependency.JUNIT_DEPENDENCY)
+                .build());
+
         SuppliersGenerator suppliersGenerator = new SuppliersGenerator(context);
         GeneratedJavaFile generatedSuppliersFile = suppliersGenerator.generateFile();
         this.addGeneratedFile(generatedSuppliersFile);
@@ -487,18 +506,6 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         SampleAppGenerator sampleAppGenerator = new SampleAppGenerator(context, generatedClientWrapper);
         sampleAppGenerator.generateFiles().forEach(this::addGeneratedFile);
         subprojects.add(SampleAppGenerator.SAMPLE_APP_DIRECTORY);
-        dependencies.add(ParsedGradleDependency.builder()
-                .type(GradleDependencyType.TEST_IMPLEMENTATION)
-                .group("org.junit.jupiter")
-                .artifact("junit-jupiter-api")
-                .version(ParsedGradleDependency.JUNIT_DEPENDENCY)
-                .build());
-        dependencies.add(ParsedGradleDependency.builder()
-                .type(GradleDependencyType.TEST_IMPLEMENTATION)
-                .group("org.junit.jupiter")
-                .artifact("junit-jupiter-engine")
-                .version(ParsedGradleDependency.JUNIT_DEPENDENCY)
-                .build());
         TestGenerator testGenerator = new TestGenerator(context);
         this.addGeneratedFile(testGenerator.generateFile());
         StreamTestGenerator streamTestGenerator = new StreamTestGenerator(context);
