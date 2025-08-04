@@ -2,8 +2,8 @@ public final class ExamplesClient: Sendable {
     public let commons: CommonsClient
     public let file: FileClient
     public let health: HealthClient
-    public let service: ServiceClient
-    public let types: TypesClient
+    public let service: ServiceClient_
+    public let types: TypesClient_
     private let httpClient: HTTPClient
 
     public init(
@@ -26,8 +26,8 @@ public final class ExamplesClient: Sendable {
         self.commons = CommonsClient(config: config)
         self.file = FileClient(config: config)
         self.health = HealthClient(config: config)
-        self.service = ServiceClient(config: config)
-        self.types = TypesClient(config: config)
+        self.service = ServiceClient_(config: config)
+        self.types = TypesClient_(config: config)
         self.httpClient = HTTPClient(config: config)
     }
 

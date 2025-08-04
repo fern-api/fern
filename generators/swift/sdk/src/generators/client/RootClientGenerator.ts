@@ -1,8 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { RelativeFilePath } from "@fern-api/fs-utils";
-import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
-
 import { Package } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
@@ -11,17 +8,20 @@ import { EndpointMethodGenerator } from "./EndpointMethodGenerator";
 
 export declare namespace RootClientGenerator {
     interface Args {
+        clientName: string;
         package_: Package;
         sdkGeneratorContext: SdkGeneratorContext;
     }
 }
 
 export class RootClientGenerator {
+    private readonly clientName: string;
     private readonly package_: Package;
     private readonly sdkGeneratorContext: SdkGeneratorContext;
     private readonly clientGeneratorContext: ClientGeneratorContext;
 
-    public constructor({ package_, sdkGeneratorContext }: RootClientGenerator.Args) {
+    public constructor({ clientName, package_, sdkGeneratorContext }: RootClientGenerator.Args) {
+        this.clientName = clientName;
         this.package_ = package_;
         this.sdkGeneratorContext = sdkGeneratorContext;
         this.clientGeneratorContext = new ClientGeneratorContext({
@@ -36,9 +36,9 @@ export class RootClientGenerator {
             : undefined;
     }
 
-    public generate(): SwiftFile {
-        const swiftClass = swift.class_({
-            name: this.sdkGeneratorContext.rootClientName,
+    public generate(): swift.Class {
+        return swift.class_({
+            name: this.clientName,
             final: true,
             accessLevel: swift.AccessLevel.Public,
             conformances: [swift.Protocol.Sendable],
@@ -48,12 +48,6 @@ export class RootClientGenerator {
             ],
             initializers: [this.generateInitializer()],
             methods: this.generateMethods()
-        });
-        const fileContents = swiftClass.toString();
-        return new SwiftFile({
-            filename: `${this.sdkGeneratorContext.rootClientName}.swift`,
-            directory: RelativeFilePath.of(""),
-            fileContents
         });
     }
 
@@ -70,7 +64,9 @@ export class RootClientGenerator {
                 );
                 if (defaultEnvironment != null) {
                     defaultBaseUrlValue = swift.Expression.memberAccess({
-                        target: swift.Expression.reference(this.sdkGeneratorContext.environmentEnumName),
+                        target: swift.Expression.reference(
+                            this.sdkGeneratorContext.project.symbolRegistry.getEnvironmentSymbolOrThrow()
+                        ),
                         memberName: `${defaultEnvironment.name.camelCase.unsafeName}.rawValue`
                     });
                 }
@@ -187,7 +183,8 @@ export class RootClientGenerator {
 
     private generateMethods(): swift.Method[] {
         const endpointMethodGenerator = new EndpointMethodGenerator({
-            clientGeneratorContext: this.clientGeneratorContext
+            clientGeneratorContext: this.clientGeneratorContext,
+            sdkGeneratorContext: this.sdkGeneratorContext
         });
         return (this.service?.endpoints ?? []).map((endpoint) => {
             return endpointMethodGenerator.generateMethod(endpoint);

@@ -1,5 +1,5 @@
 public final class CustomAuthClient: Sendable {
-    public let customAuth: CustomAuthClient
+    public let customAuth: CustomAuthClient_
     public let errors: ErrorsClient
     private let httpClient: HTTPClient
 
@@ -20,7 +20,7 @@ public final class CustomAuthClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
-        self.customAuth = CustomAuthClient(config: config)
+        self.customAuth = CustomAuthClient_(config: config)
         self.errors = ErrorsClient(config: config)
         self.httpClient = HTTPClient(config: config)
     }
