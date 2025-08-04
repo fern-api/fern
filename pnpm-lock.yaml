@@ -7496,16 +7496,6 @@ importers:
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../../cli/workspace/loader
-<<<<<<< HEAD
-      '@fern-fern/ir-sdk':
-        specifier: file:/Users/niels/fern/packages/ir-sdk
-        version: link:../../ir-sdk
-    devDependencies:
-      '@trivago/prettier-plugin-sort-imports':
-        specifier: ^5.2.1
-        version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
-=======
->>>>>>> 166b3c7b79cbbdc93c02ee9c624e884ae5cd2c44
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
