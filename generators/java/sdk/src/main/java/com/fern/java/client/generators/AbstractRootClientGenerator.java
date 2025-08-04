@@ -48,6 +48,7 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
+import com.squareup.javapoet.TypeVariableName;
 import java.util.Base64;
 import java.util.Map;
 import java.util.Optional;
@@ -115,11 +116,13 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
         TypeSpec builderTypeSpec = getClientBuilder();
 
+        // Create the builder() method that returns the concrete implementation
+        ClassName implClassName = builderName.nestedClass("Impl");
         result.getClientImpl()
                 .addMethod(MethodSpec.methodBuilder("builder")
                         .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-                        .returns(builderName)
-                        .addStatement("return new $T()", builderName)
+                        .returns(implClassName)
+                        .addStatement("return new $T()", implClassName)
                         .build());
 
         return GeneratedRootClient.builder()
@@ -142,7 +145,18 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
     }
 
     private TypeSpec getClientBuilder() {
-        TypeSpec.Builder clientBuilder = TypeSpec.classBuilder(builderName).addModifiers(Modifier.PUBLIC);
+        TypeSpec.Builder clientBuilder = TypeSpec.classBuilder(builderName)
+                .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+                .addTypeVariable(
+                        TypeVariableName.get("T", ParameterizedTypeName.get(builderName, TypeVariableName.get("T"))));
+
+        // Add abstract self() method
+        MethodSpec selfMethod = MethodSpec.methodBuilder("self")
+                .addModifiers(Modifier.PROTECTED, Modifier.ABSTRACT)
+                .returns(TypeVariableName.get("T"))
+                .build();
+        clientBuilder.addMethod(selfMethod);
+
         MethodSpec.Builder buildMethod =
                 MethodSpec.methodBuilder("build").addModifiers(Modifier.PUBLIC).returns(className());
 
@@ -238,11 +252,11 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             MethodSpec environmentMethod = MethodSpec.methodBuilder("environment")
                     .addModifiers(Modifier.PUBLIC)
                     .addParameter(generatedEnvironmentsClass.getClassName(), "environment")
-                    .returns(builderName)
+                    .returns(TypeVariableName.get("T"))
                     .build();
             clientBuilder.addMethod(environmentMethod.toBuilder()
                     .addStatement("this.$L = $L", ENVIRONMENT_FIELD_NAME, "environment")
-                    .addStatement("return this")
+                    .addStatement("return self()")
                     .build());
         }
 
@@ -255,7 +269,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             MethodSpec urlMethod = MethodSpec.methodBuilder("url")
                     .addModifiers(Modifier.PUBLIC)
                     .addParameter(String.class, "url")
-                    .returns(builderName)
+                    .returns(TypeVariableName.get("T"))
                     .build();
             clientBuilder.addMethod(urlMethod.toBuilder()
                     .addStatement(
@@ -264,7 +278,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                             generatedEnvironmentsClass.getClassName(),
                             singleUrlEnvironmentClass.getCustomMethod(),
                             "url")
-                    .addStatement("return this")
+                    .addStatement("return self()")
                     .build());
         }
 
@@ -272,18 +286,18 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .addModifiers(Modifier.PUBLIC)
                 .addJavadoc("Sets the timeout (in seconds) for the client. Defaults to 60 seconds.")
                 .addParameter(int.class, "timeout")
-                .returns(builderName)
+                .returns(TypeVariableName.get("T"))
                 .addStatement("this.timeout = $T.of(timeout)", Optional.class)
-                .addStatement("return this")
+                .addStatement("return self()")
                 .build());
 
         clientBuilder.addMethod(MethodSpec.methodBuilder("maxRetries")
                 .addModifiers(Modifier.PUBLIC)
                 .addJavadoc("Sets the maximum number of retries for the client. Defaults to 2 retries.")
                 .addParameter(int.class, "maxRetries")
-                .returns(builderName)
+                .returns(TypeVariableName.get("T"))
                 .addStatement("this.maxRetries = $T.of(maxRetries)", Optional.class)
-                .addStatement("return this")
+                .addStatement("return self()")
                 .build());
 
         clientBuilder.addField(FieldSpec.builder(OkHttpClient.class, "httpClient")
@@ -293,10 +307,10 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         clientBuilder.addMethod(MethodSpec.methodBuilder("httpClient")
                 .addModifiers(Modifier.PUBLIC)
                 .addJavadoc("Sets the underlying OkHttp client")
-                .returns(builderName)
+                .returns(TypeVariableName.get("T"))
                 .addParameter(OkHttpClient.class, "httpClient")
                 .addStatement("this.httpClient = httpClient")
-                .addStatement("return this")
+                .addStatement("return self()")
                 .build());
 
         generatorContext.getIr().getVariables().stream()
@@ -305,7 +319,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                             variableDeclaration.getName().getCamelCase().getSafeName();
                     return MethodSpec.methodBuilder(variableName)
                             .addModifiers(Modifier.PUBLIC)
-                            .returns(builderName)
+                            .returns(TypeVariableName.get("T"))
                             .addParameter(
                                     generatorContext
                                             .getPoetTypeNameMapper()
@@ -316,7 +330,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                                     CLIENT_OPTIONS_BUILDER_NAME,
                                     generatedClientOptions.variableGetters().get(variableDeclaration.getId()),
                                     variableName)
-                            .addStatement("return this")
+                            .addStatement("return self()")
                             .build();
                 })
                 .forEach(clientBuilder::addMethod);
@@ -469,6 +483,20 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .addStatement("return new $T(buildClientOptions())", className())
                 .build());
 
+        // Add concrete implementation as static nested class
+        ClassName implClassName = builderName.nestedClass("Impl");
+        TypeSpec.Builder implBuilder = TypeSpec.classBuilder("Impl")
+                .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
+                .superclass(ParameterizedTypeName.get(builderName, implClassName))
+                .addMethod(MethodSpec.methodBuilder("self")
+                        .addAnnotation(Override.class)
+                        .addModifiers(Modifier.PROTECTED)
+                        .returns(implClassName)
+                        .addStatement("return this")
+                        .build());
+
+        clientBuilder.addType(implBuilder.build());
+
         return clientBuilder.build();
     }
 
@@ -566,8 +594,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     .addParameter(passwordParam)
                     .addStatement("this.$L = $L", usernameFieldName, usernameFieldName)
                     .addStatement("this.$L = $L", passwordFieldName, passwordFieldName)
-                    .addStatement("return this")
-                    .returns(builderName)
+                    .addStatement("return self()")
+                    .returns(TypeVariableName.get("T"))
                     .build());
 
             if (isMandatory) {
@@ -760,10 +788,10 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             MethodSpec.Builder setter = MethodSpec.methodBuilder(fieldName)
                     .addModifiers(Modifier.PUBLIC)
                     .addParameter(String.class, fieldName)
-                    .returns(builderName)
+                    .returns(TypeVariableName.get("T"))
                     .addJavadoc("Sets $L", fieldName)
                     .addStatement("this.$L = $L", fieldName, fieldName)
-                    .addStatement("return this");
+                    .addStatement("return self()");
             if (environmentVariable.isPresent()) {
                 setter.addJavadoc(
                         ".\nDefaults to the $L environment variable.",

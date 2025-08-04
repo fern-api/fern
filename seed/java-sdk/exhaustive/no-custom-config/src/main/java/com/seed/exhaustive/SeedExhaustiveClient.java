@@ -54,7 +54,7 @@ public class SeedExhaustiveClient {
         return this.reqWithHeadersClient.get();
     }
 
-    public static SeedExhaustiveClientBuilder builder() {
-        return new SeedExhaustiveClientBuilder();
+    public static SeedExhaustiveClientBuilder.Impl builder() {
+        return new SeedExhaustiveClientBuilder.Impl();
     }
 }
