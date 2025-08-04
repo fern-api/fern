@@ -37,6 +37,8 @@ public final class PoetTypeNameStringifier {
             return CodeBlock.of("$T.toString($L)", Double.class, reference);
         } else if (typeName.equals(TypeName.INT)) {
             return CodeBlock.of("$T.toString($L)", Integer.class, reference);
+        } else if (typeName.equals(TypeName.BOOLEAN)) {
+            return CodeBlock.of("$T.toString($L)", Boolean.class, reference);
         } else {
             return CodeBlock.of("$L.toString()", reference);
         }
