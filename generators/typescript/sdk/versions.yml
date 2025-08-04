@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.6.7
+  changelogEntry:
+    - summary: Improve logging inside of wire tests for when a JSON body fails to parse to JSON.
+      type: feat
+  createdAt: "2025-08-01"
+  irVersion: 58
+
 - version: 2.6.5
   changelogEntry:
     - summary: If an enum wire value is not found, use the first enum value as a fallback.
