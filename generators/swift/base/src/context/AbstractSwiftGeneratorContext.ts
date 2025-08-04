@@ -31,7 +31,37 @@ export abstract class AbstractSwiftGeneratorContext<
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(config, generatorNotificationService);
-        this.project = new SwiftProject({ context: this });
+        this.project = this.initProject(ir);
+    }
+
+    private initProject(ir: IntermediateRepresentation): SwiftProject {
+        const project = new SwiftProject({ context: this });
+
+        // Register symbols
+        project.symbolRegistry.registerRootClientSymbol(ir.apiName.pascalCase.unsafeName);
+        project.symbolRegistry.registerEnvironmentSymbol(ir.apiName.pascalCase.unsafeName);
+        Object.entries(ir.subpackages).forEach(([subpackageId, subpackage]) => {
+            project.symbolRegistry.registerSubClientSymbol(
+                subpackageId,
+                subpackage.fernFilepath.allParts.map((name) => name.pascalCase.unsafeName),
+                subpackage.name.pascalCase.unsafeName
+            );
+        });
+        Object.entries(ir.types).forEach(([typeId, typeDeclaration]) => {
+            project.symbolRegistry.registerSchemaTypeSymbol(typeId, typeDeclaration.name.name.pascalCase.unsafeName);
+        });
+        Object.entries(ir.services).forEach(([_, service]) => {
+            service.endpoints.forEach((endpoint) => {
+                if (endpoint.requestBody?.type === "inlinedRequestBody") {
+                    project.symbolRegistry.registerInlineRequestTypeSymbol(
+                        endpoint.id,
+                        endpoint.requestBody.name.pascalCase.unsafeName
+                    );
+                }
+            });
+        });
+
+        return project;
     }
 
     public get packageName(): string {

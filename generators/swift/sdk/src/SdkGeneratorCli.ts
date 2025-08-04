@@ -1,7 +1,6 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractSwiftGeneratorCli, SwiftFile } from "@fern-api/swift-base";
 import { generateInlinedRequestModels, generateModels } from "@fern-api/swift-model";
-
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
@@ -54,7 +53,6 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
-        this.registerSymbols(context);
         const [rootFiles, sourceFiles] = await Promise.all([
             this.generateRootFiles(context),
             this.generateSourceFiles(context)
@@ -62,38 +60,6 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         context.project.addRootFiles(...rootFiles);
         context.project.addSourceFiles(...sourceFiles);
         await context.project.persist();
-    }
-
-    private registerSymbols(context: SdkGeneratorContext): void {
-        context.project.symbolRegistry.registerRootClientSymbol(context.ir.apiName.pascalCase.unsafeName);
-
-        context.project.symbolRegistry.registerEnvironmentSymbol(context.ir.apiName.pascalCase.unsafeName);
-
-        Object.entries(context.ir.subpackages).forEach(([subpackageId, subpackage]) => {
-            context.project.symbolRegistry.registerSubClientSymbol(
-                subpackageId,
-                subpackage.fernFilepath.allParts.map((name) => name.pascalCase.unsafeName),
-                subpackage.name.pascalCase.unsafeName
-            );
-        });
-
-        Object.entries(context.ir.types).forEach(([typeId, typeDeclaration]) => {
-            context.project.symbolRegistry.registerSchemaTypeSymbol(
-                typeId,
-                typeDeclaration.name.name.pascalCase.unsafeName
-            );
-        });
-
-        Object.entries(context.ir.services).forEach(([_, service]) => {
-            service.endpoints.forEach((endpoint) => {
-                if (endpoint.requestBody?.type === "inlinedRequestBody") {
-                    context.project.symbolRegistry.registerInlineRequestTypeSymbol(
-                        endpoint.id,
-                        endpoint.requestBody.name.pascalCase.unsafeName
-                    );
-                }
-            });
-        });
     }
 
     private async generateRootFiles(context: SdkGeneratorContext): Promise<SwiftFile[]> {
