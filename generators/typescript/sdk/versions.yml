@@ -5,6 +5,13 @@
       type: feat
   createdAt: "2025-08-01"
   irVersion: 58
+  
+- version: 2.6.6
+  changelogEntry:
+    - summary: Requests and responses with no body should not be asserted as JSON in wire tests.
+      type: fix
+  createdAt: "2025-08-04"
+  irVersion: 58
 
 - version: 2.6.5
   changelogEntry:

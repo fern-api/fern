@@ -22,3 +22,4 @@ export * from "./Test.js";
 export * from "./Entity.js";
 export * from "./BigEntity.js";
 export * from "./CronJob.js";
+export * from "./RefreshTokenRequest.js";

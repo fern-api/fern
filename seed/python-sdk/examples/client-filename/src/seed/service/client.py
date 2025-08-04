@@ -19,6 +19,7 @@ from ..types.types.moment import Moment
 from ..types.types.movie import Movie
 from ..types.types.movie_id import MovieId
 from ..types.types.node import Node
+from ..types.types.refresh_token_request import RefreshTokenRequest
 from ..types.types.response import Response
 from ..types.types.test import Test
 from .raw_client import AsyncRawServiceClient, RawServiceClient
@@ -495,6 +496,38 @@ class ServiceClient:
             moment=moment,
             request_options=request_options,
         )
+        return _response.data
+
+    def refresh_token(
+        self,
+        *,
+        request: typing.Optional[RefreshTokenRequest] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Parameters
+        ----------
+        request : typing.Optional[RefreshTokenRequest]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from seed import SeedExhaustive
+        from seed.environment import SeedExhaustiveEnvironment
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            environment=SeedExhaustiveEnvironment.PRODUCTION,
+        )
+        client.service.refresh_token()
+        """
+        _response = self._raw_client.refresh_token(request=request, request_options=request_options)
         return _response.data
 
 
@@ -997,4 +1030,44 @@ class AsyncServiceClient:
             moment=moment,
             request_options=request_options,
         )
+        return _response.data
+
+    async def refresh_token(
+        self,
+        *,
+        request: typing.Optional[RefreshTokenRequest] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Parameters
+        ----------
+        request : typing.Optional[RefreshTokenRequest]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedExhaustive
+        from seed.environment import SeedExhaustiveEnvironment
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            environment=SeedExhaustiveEnvironment.PRODUCTION,
+        )
+
+
+        async def main() -> None:
+            await client.service.refresh_token()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.refresh_token(request=request, request_options=request_options)
         return _response.data
