@@ -43,8 +43,8 @@ class AbstractGenerator(ABC):
             ir_publish_config = ir.publish_config.get_as_union()
             if ir_publish_config.type == "filesystem" and ir_publish_config.generate_full_project:
                 project_config = ProjectConfig(
-                    package_name='default_package_name', 
-                    package_version=ir_publish_config.version
+                    package_name='default_package_name', # ir_publish_config.publish_target.package_version, 
+                    package_version=ir_publish_config.publish_target.version
                 )
         maybe_github_output_mode = generator_config.output.mode.visit(
             download_files=lambda: None,
