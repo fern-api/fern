@@ -18,6 +18,7 @@ export const BaseJavaCustomConfigSchema = z.object({
     "enable-public-constructors": z.boolean().optional(),
     "generate-unknown-as-json-node": z.boolean().optional(),
     "json-include": z.enum(["non-absent", "non-empty"]).optional(),
+    "enable-extensible-builders": z.boolean().optional(),
 
     // Deprecated.
     "wrapped-aliases": z.boolean().optional()

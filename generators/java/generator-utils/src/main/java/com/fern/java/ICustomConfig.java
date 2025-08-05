@@ -71,6 +71,12 @@ public interface ICustomConfig {
         return false;
     }
 
+    @Value.Default
+    @JsonProperty("enable-extensible-builders")
+    default Boolean enableExtensibleBuilders() {
+        return false;
+    }
+
     @JsonProperty("package-prefix")
     Optional<String> packagePrefix();
 

@@ -481,7 +481,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         if (generatorConfig.getCustomConfig().isPresent()) {
             JsonNode node = ObjectMappers.JSON_MAPPER.valueToTree(
                     generatorConfig.getCustomConfig().get());
-            return ObjectMappers.JSON_MAPPER.convertValue(node, JavaSdkCustomConfig.class);
+            JavaSdkCustomConfig config = ObjectMappers.JSON_MAPPER.convertValue(node, JavaSdkCustomConfig.class);
+            return config;
         }
         return JavaSdkCustomConfig.builder().build();
     }
