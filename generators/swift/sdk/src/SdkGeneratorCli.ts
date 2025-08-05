@@ -18,6 +18,7 @@ import {
     PackageSwiftGenerator,
     RootClientGenerator,
     SingleUrlEnvironmentGenerator,
+    SnippetJsonGenerator,
     SubClientGenerator
 } from "./generators";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
@@ -84,14 +85,22 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     private async generateReadme(context: SdkGeneratorContext): Promise<void> {
-        // TODO(kafkas): Generate readme
-        context.project.addRootFiles(
-            new SwiftFile({
-                filename: "README.md",
-                fileContents: "# Swift SDK",
-                directory: RelativeFilePath.of("")
-            })
-        );
+        try {
+            const snippets = await new SnippetJsonGenerator({ context }).generate();
+            const content = await context.generatorAgent.generateReadme({
+                context,
+                endpointSnippets: snippets.endpoints
+            });
+            context.project.addRootFiles(
+                new SwiftFile({
+                    filename: "README.md",
+                    fileContents: content,
+                    directory: RelativeFilePath.of("")
+                })
+            );
+        } catch (e) {
+            context.logger.warn("Failed to generate README.md, this is OK.");
+        }
     }
 
     private async generateSourceFiles(context: SdkGeneratorContext): Promise<void> {
