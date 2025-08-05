@@ -72,8 +72,8 @@ public interface ICustomConfig {
     }
 
     @Value.Default
-    @JsonProperty("extend")
-    default Boolean extend() {
+    @JsonProperty("enable-extensible-builders")
+    default Boolean enableExtensibleBuilders() {
         return false;
     }
 

@@ -160,8 +160,8 @@ fixtures:
       outputFolder: base-client
     - customConfig:
         client-class-name: BaseClient
-        extend: true
-      outputFolder: extend-true
+        enable-extensible-builders: true
+      outputFolder: extensible-builders
 scripts:
   - docker: fernapi/java-seed
     commands:

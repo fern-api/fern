@@ -116,7 +116,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
         TypeSpec builderTypeSpec = getClientBuilder();
 
-        boolean isExtensible = clientGeneratorContext.getCustomConfig().extend();
+        boolean isExtensible = clientGeneratorContext.getCustomConfig().enableExtensibleBuilders();
 
         if (isExtensible) {
             ClassName implClassName = builderName.nestedClass("Impl");
@@ -155,7 +155,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
     }
 
     private TypeSpec getClientBuilder() {
-        boolean isExtensible = clientGeneratorContext.getCustomConfig().extend();
+        boolean isExtensible = clientGeneratorContext.getCustomConfig().enableExtensibleBuilders();
 
         TypeSpec.Builder clientBuilder;
         if (isExtensible) {
