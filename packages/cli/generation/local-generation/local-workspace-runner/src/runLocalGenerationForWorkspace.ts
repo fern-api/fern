@@ -5,7 +5,7 @@ import tmp from "tmp-promise";
 
 import { FernToken, getAccessToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
-import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
+import { fernConfigJson, GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
 import { createVenusService } from "@fern-api/core";
 import { ContainerRunner, replaceEnvVariables } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
@@ -101,9 +101,7 @@ export async function runLocalGenerationForWorkspace({
                 // Set the publish config on the intermediateRepresentation if available
 
                 // grabs generator.yml > config > package_name
-                const packageName =typeof generatorInvocation.raw?.config === "object" && generatorInvocation.raw?.config !== null
-                ? (generatorInvocation.raw.config as { package_name?: string }).package_name
-                : undefined  
+                const packageName = getPackageNameFromGeneratorConfig(generatorInvocation);
 
                 const publishConfig = getPublishConfig({
                     generatorInvocation,
@@ -166,6 +164,12 @@ export async function runLocalGenerationForWorkspace({
     if (results.some((didSucceed) => !didSucceed)) {
         context.failAndThrow();
     }
+}
+
+function getPackageNameFromGeneratorConfig(generatorInvocation: GeneratorInvocation): string | undefined {
+    return typeof generatorInvocation.raw?.config === "object" && generatorInvocation.raw?.config !== null
+        ? (generatorInvocation.raw.config as { package_name?: string }).package_name
+        : undefined;
 }
 
 export async function getWorkspaceTempDir(): Promise<tmp.DirectoryResult> {
