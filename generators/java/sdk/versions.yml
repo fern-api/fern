@@ -1,3 +1,11 @@
+- version: 2.39.5
+  changelogEntry:
+    - summary: |
+        Fix undiscriminated union deserialization to catch all RuntimeException types instead of just IllegalArgumentException.
+      type: fix
+  createdAt: '2025-08-05'
+  irVersion: 58
+
 - version: 2.39.4
   changelogEntry:
     - summary: |
