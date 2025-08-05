@@ -1,17 +1,19 @@
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
-import { assertDefined } from "@fern-api/core-utils";
+import { assertDefined, assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { BaseSwiftCustomConfigSchema } from "@fern-api/swift-codegen";
+import { BaseSwiftCustomConfigSchema, swift } from "@fern-api/swift-codegen";
 import {
     FernFilepath,
     HttpService,
     IntermediateRepresentation,
     Package,
+    PrimitiveTypeV1,
     ServiceId,
     Subpackage,
     SubpackageId,
     TypeDeclaration,
-    TypeId
+    TypeId,
+    TypeReference
 } from "@fern-fern/ir-sdk/api";
 
 import { AsIsFileDefinition, AsIsFiles } from "../AsIs";
@@ -29,9 +31,43 @@ export abstract class AbstractSwiftGeneratorContext<
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(config, generatorNotificationService);
-        this.project = new SwiftProject({
-            context: this,
-            name: this.ir.apiName.pascalCase.unsafeName
+        this.project = this.initProject(ir);
+    }
+
+    private initProject(ir: IntermediateRepresentation): SwiftProject {
+        const project = new SwiftProject({ context: this });
+        this.registerSymbols(project, ir);
+        return project;
+    }
+
+    /**
+     * Register symbols in priority order - high-priority symbols first to avoid collisions.
+     * Root client and environment symbols are registered first as they're most critical,
+     * followed by schema types and inline request types which are commonly referenced, and
+     * finally subclient symbols last since they're unlikely to be used directly by end users.
+     */
+    private registerSymbols(project: SwiftProject, ir: IntermediateRepresentation) {
+        project.symbolRegistry.registerRootClientSymbol(ir.apiName.pascalCase.unsafeName);
+        project.symbolRegistry.registerEnvironmentSymbol(ir.apiName.pascalCase.unsafeName);
+        Object.entries(ir.types).forEach(([typeId, typeDeclaration]) => {
+            project.symbolRegistry.registerSchemaTypeSymbol(typeId, typeDeclaration.name.name.pascalCase.unsafeName);
+        });
+        Object.entries(ir.services).forEach(([_, service]) => {
+            service.endpoints.forEach((endpoint) => {
+                if (endpoint.requestBody?.type === "inlinedRequestBody") {
+                    project.symbolRegistry.registerInlineRequestTypeSymbol(
+                        endpoint.id,
+                        endpoint.requestBody.name.pascalCase.unsafeName
+                    );
+                }
+            });
+        });
+        Object.entries(ir.subpackages).forEach(([subpackageId, subpackage]) => {
+            project.symbolRegistry.registerSubClientSymbol(
+                subpackageId,
+                subpackage.fernFilepath.allParts.map((name) => name.pascalCase.unsafeName),
+                subpackage.name.pascalCase.unsafeName
+            );
         });
     }
 
@@ -47,24 +83,12 @@ export abstract class AbstractSwiftGeneratorContext<
         return this.ir.apiName.pascalCase.unsafeName;
     }
 
-    public get rootClientName(): string {
-        return `${this.ir.apiName.pascalCase.unsafeName}Client`;
-    }
-
-    public get environmentEnumName(): string {
-        return `${this.ir.apiName.pascalCase.unsafeName}Environment`;
-    }
-
     public get schemasDirectory(): RelativeFilePath {
         return RelativeFilePath.of("Schemas");
     }
 
     public get requestsDirectory(): RelativeFilePath {
         return RelativeFilePath.of("Requests");
-    }
-
-    public getSubClientName(subpackage: Subpackage): string {
-        return `${subpackage.name.pascalCase.unsafeName}Client`;
     }
 
     public getTypeDeclarationOrThrow(typeId: TypeId): TypeDeclaration {
@@ -79,9 +103,9 @@ export abstract class AbstractSwiftGeneratorContext<
         return service;
     }
 
-    public getSubpackagesOrThrow(packageOrSubpackage: Package | Subpackage): Subpackage[] {
+    public getSubpackagesOrThrow(packageOrSubpackage: Package | Subpackage): [string, Subpackage][] {
         return packageOrSubpackage.subpackages.map((subpackageId) => {
-            return this.getSubpackageOrThrow(subpackageId);
+            return [subpackageId, this.getSubpackageOrThrow(subpackageId)];
         });
     }
 
@@ -95,7 +119,53 @@ export abstract class AbstractSwiftGeneratorContext<
         return RelativeFilePath.of([...fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/"));
     }
 
-    public getCoreAsIsFiles(): AsIsFileDefinition[] {
+    public getSourceAsIsFiles(): AsIsFileDefinition[] {
         return Object.values(AsIsFiles);
+    }
+
+    public getSwiftTypeForTypeReference(typeReference: TypeReference): swift.Type {
+        switch (typeReference.type) {
+            case "container":
+                return typeReference.container._visit({
+                    // TODO(kafkas): Handle these cases
+                    literal: () => swift.Type.jsonValue(),
+                    map: (type) =>
+                        swift.Type.dictionary(
+                            this.getSwiftTypeForTypeReference(type.keyType),
+                            this.getSwiftTypeForTypeReference(type.valueType)
+                        ),
+                    set: () => swift.Type.jsonValue(),
+                    nullable: () => swift.Type.jsonValue(),
+                    optional: (ref) => swift.Type.optional(this.getSwiftTypeForTypeReference(ref)),
+                    list: (ref) => swift.Type.array(this.getSwiftTypeForTypeReference(ref)),
+                    _other: () => swift.Type.jsonValue()
+                });
+            case "primitive":
+                return PrimitiveTypeV1._visit(typeReference.primitive.v1, {
+                    string: () => swift.Type.string(),
+                    boolean: () => swift.Type.bool(),
+                    integer: () => swift.Type.int(),
+                    uint: () => swift.Type.uint(),
+                    uint64: () => swift.Type.uint64(),
+                    long: () => swift.Type.int64(),
+                    float: () => swift.Type.float(),
+                    double: () => swift.Type.double(),
+                    // TODO(kafkas): We may need to implement our own value type for this
+                    bigInteger: () => swift.Type.string(),
+                    date: () => swift.Type.date(),
+                    dateTime: () => swift.Type.date(),
+                    base64: () => swift.Type.string(),
+                    uuid: () => swift.Type.uuid(),
+                    _other: () => swift.Type.jsonValue()
+                });
+            case "named": {
+                const symbolName = this.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeReference.typeId);
+                return swift.Type.custom(symbolName);
+            }
+            case "unknown":
+                return swift.Type.jsonValue();
+            default:
+                assertNever(typeReference);
+        }
     }
 }

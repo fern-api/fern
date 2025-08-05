@@ -10,7 +10,7 @@ import { createVenusService } from "@fern-api/core";
 import { ContainerRunner, replaceEnvVariables } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
-import { FernIr } from "@fern-api/ir-sdk";
+import { FernIr, PublishTarget } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
 import {
@@ -25,6 +25,7 @@ export async function runLocalGenerationForWorkspace({
     projectConfig,
     workspace,
     generatorGroup,
+    version,
     keepDocker,
     inspect,
     context,
@@ -34,6 +35,7 @@ export async function runLocalGenerationForWorkspace({
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: AbstractAPIWorkspace<unknown>;
     generatorGroup: generatorsYml.GeneratorGroup;
+    version: string | undefined;
     keepDocker: boolean;
     context: TaskContext;
     runner: ContainerRunner | undefined;
@@ -65,7 +67,7 @@ export async function runLocalGenerationForWorkspace({
                         disabled: generatorInvocation.disableExamples
                     },
                     readme: generatorInvocation.readme,
-                    version: undefined,
+                    version: version,
                     packageName: generatorsYml.getPackageName({ generatorInvocation }),
                     context,
                     sourceResolver: new SourceResolverImpl(context, fernWorkspace)
@@ -99,7 +101,8 @@ export async function runLocalGenerationForWorkspace({
                 // Set the publish config on the intermediateRepresentation if available
                 const publishConfig = getPublishConfig({
                     generatorInvocation,
-                    org: organization.ok ? organization.body : undefined
+                    org: organization.ok ? organization.body : undefined,
+                    version
                 });
                 if (publishConfig != null) {
                     intermediateRepresentation.publishConfig = publishConfig;
@@ -131,6 +134,7 @@ export async function runLocalGenerationForWorkspace({
                     absolutePathToLocalOutput,
                     absolutePathToLocalSnippetJSON,
                     absolutePathToLocalSnippetTemplateJSON: undefined,
+                    version,
                     audiences: generatorGroup.audiences,
                     workspaceTempDir,
                     keepDocker,
@@ -167,10 +171,12 @@ export async function getWorkspaceTempDir(): Promise<tmp.DirectoryResult> {
 
 function getPublishConfig({
     generatorInvocation,
-    org
+    org,
+    version
 }: {
     generatorInvocation: generatorsYml.GeneratorInvocation;
     org?: FernVenusApi.Organization;
+    version?: string;
 }): FernIr.PublishingConfig | undefined {
     if (generatorInvocation.raw?.github != null && isGithubSelfhosted(generatorInvocation.raw.github)) {
         return FernIr.PublishingConfig.github({
@@ -187,9 +193,17 @@ function getPublishConfig({
     }
 
     if (generatorInvocation.raw?.output?.location === "local-file-system") {
+        let publishTarget: PublishTarget | undefined = undefined;
+        if (generatorInvocation.language === "python") {
+            publishTarget = PublishTarget.pypi({
+                version,
+                packageName: undefined
+            });
+        }
+
         return FernIr.PublishingConfig.filesystem({
             generateFullProject: org?.selfHostedSdKs ?? false,
-            publishTarget: undefined
+            publishTarget
         });
     }
 

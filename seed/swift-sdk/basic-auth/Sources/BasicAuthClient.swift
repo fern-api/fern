@@ -1,5 +1,5 @@
 public final class BasicAuthClient: Sendable {
-    public let basicAuth: BasicAuthClient
+    public let basicAuth: BasicAuthClient_
     public let errors: ErrorsClient
     private let httpClient: HTTPClient
 
@@ -20,7 +20,7 @@ public final class BasicAuthClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
-        self.basicAuth = BasicAuthClient(config: config)
+        self.basicAuth = BasicAuthClient_(config: config)
         self.errors = ErrorsClient(config: config)
         self.httpClient = HTTPClient(config: config)
     }

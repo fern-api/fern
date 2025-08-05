@@ -1,18 +1,25 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { noop } from "@fern-api/core-utils";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractSwiftGeneratorCli, SwiftFile } from "@fern-api/swift-base";
-import { generateInlinedRequestModels, generateModels } from "@fern-api/swift-model";
-
+import {
+    AliasGenerator,
+    DiscriminatedUnionGenerator,
+    ObjectGenerator,
+    StringEnumGenerator,
+    UndiscriminatedUnionGenerator
+} from "@fern-api/swift-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
-import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import {
     PackageSwiftGenerator,
     RootClientGenerator,
     SingleUrlEnvironmentGenerator,
     SubClientGenerator
 } from "./generators";
+import { SdkCustomConfigSchema } from "./SdkCustomConfig";
+import { SdkGeneratorContext } from "./SdkGeneratorContext";
 
 export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -54,62 +61,186 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
-        const [rootFiles, sourceFiles] = await Promise.all([
-            this.generateRootFiles(context),
-            this.generateSourceFiles(context)
-        ]);
-        context.project.addRootFiles(...rootFiles);
-        context.project.addSourceFiles(...sourceFiles);
+        this.generateRootFiles(context);
+        await this.generateSourceFiles(context);
         await context.project.persist();
     }
 
-    private async generateRootFiles(context: SdkGeneratorContext): Promise<SwiftFile[]> {
+    private generateRootFiles(context: SdkGeneratorContext): void {
         const files: SwiftFile[] = [];
         const packageSwiftGenerator = new PackageSwiftGenerator({
             sdkGeneratorContext: context
         });
         files.push(packageSwiftGenerator.generate());
-        return files;
+        context.project.addRootFiles(...files);
     }
 
-    private async generateSourceFiles(context: SdkGeneratorContext): Promise<SwiftFile[]> {
-        const files: SwiftFile[] = [];
+    private async generateSourceFiles(context: SdkGeneratorContext): Promise<void> {
+        // Generation order determines priority when resolving duplicate file names
+        await this.generateSourceAsIsFiles(context);
+        this.generateSourceSubClientFiles(context);
+        this.generateSourceRequestFiles(context);
+        this.generateSourceSchemaFiles(context);
+        this.generateSourceRootClientFile(context);
+        this.generateSourceEnvironmentFile(context);
+    }
 
-        // Resources/**/*.swift
-        Object.entries(context.ir.subpackages).forEach(([_, subpackage]) => {
+    private async generateSourceAsIsFiles(context: SdkGeneratorContext): Promise<void> {
+        await Promise.all(
+            context.getSourceAsIsFiles().map(async (def) => {
+                context.project.addSourceFile({
+                    nameCandidateWithoutExtension: def.filenameWithoutExtension,
+                    directory: def.directory,
+                    fileContents: await def.loadContents()
+                });
+            })
+        );
+    }
+
+    private generateSourceSubClientFiles(context: SdkGeneratorContext): void {
+        Object.entries(context.ir.subpackages).forEach(([subpackageId, subpackage]) => {
             const subclientGenerator = new SubClientGenerator({
+                clientName: context.project.symbolRegistry.getSubClientSymbolOrThrow(subpackageId),
                 subpackage,
                 sdkGeneratorContext: context
             });
-            files.push(subclientGenerator.generate());
+            const class_ = subclientGenerator.generate();
+            const fernFilepathDir = context.getDirectoryForFernFilepath(subpackage.fernFilepath);
+            context.project.addSourceFile({
+                nameCandidateWithoutExtension: class_.name,
+                directory: RelativeFilePath.of(`Resources/${fernFilepathDir}`),
+                fileContents: [class_]
+            });
         });
+    }
 
-        // Requests/**/*.swift
-        const inlinedRequestFiles = generateInlinedRequestModels({ context });
-        files.push(...inlinedRequestFiles);
+    private generateSourceRequestFiles(context: SdkGeneratorContext): void {
+        Object.entries(context.ir.services).forEach(([_, service]) => {
+            service.endpoints.forEach((endpoint) => {
+                if (endpoint.requestBody?.type === "inlinedRequestBody") {
+                    const generator = new ObjectGenerator({
+                        name: context.project.symbolRegistry.getInlineRequestTypeSymbolOrThrow(
+                            endpoint.id,
+                            endpoint.requestBody.name.pascalCase.unsafeName
+                        ),
+                        properties: endpoint.requestBody.properties,
+                        extendedProperties: endpoint.requestBody.extendedProperties,
+                        context
+                    });
+                    const struct = generator.generate();
+                    context.project.addSourceFile({
+                        nameCandidateWithoutExtension: struct.name,
+                        directory: context.requestsDirectory,
+                        fileContents: [struct]
+                    });
+                }
+            });
+        });
+    }
 
-        // Schemas/**/*.swift
-        const modelFiles = generateModels({ context });
-        files.push(...modelFiles);
+    private generateSourceSchemaFiles(context: SdkGeneratorContext): void {
+        for (const [typeId, typeDeclaration] of Object.entries(context.ir.types)) {
+            typeDeclaration.shape._visit({
+                alias: (atd) => {
+                    const name = context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId);
+                    const generator = new AliasGenerator({
+                        name: name,
+                        typeDeclaration: atd,
+                        context
+                    });
+                    const declaration = generator.generate();
+                    context.project.addSourceFile({
+                        nameCandidateWithoutExtension: name,
+                        directory: context.schemasDirectory,
+                        fileContents: [declaration]
+                    });
+                },
+                enum: (etd) => {
+                    const generator = new StringEnumGenerator({
+                        name: context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
+                        enumTypeDeclaration: etd
+                    });
+                    const enum_ = generator.generate();
+                    context.project.addSourceFile({
+                        nameCandidateWithoutExtension: enum_.name,
+                        directory: context.schemasDirectory,
+                        fileContents: [enum_]
+                    });
+                },
+                object: (otd) => {
+                    const generator = new ObjectGenerator({
+                        name: context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
+                        properties: otd.properties,
+                        extendedProperties: otd.extendedProperties,
+                        context
+                    });
+                    const struct = generator.generate();
+                    context.project.addSourceFile({
+                        nameCandidateWithoutExtension: struct.name,
+                        directory: context.schemasDirectory,
+                        fileContents: [struct]
+                    });
+                },
+                undiscriminatedUnion: (uutd) => {
+                    const generator = new UndiscriminatedUnionGenerator({
+                        name: context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
+                        typeDeclaration: uutd,
+                        context
+                    });
+                    const enum_ = generator.generate();
+                    context.project.addSourceFile({
+                        nameCandidateWithoutExtension: enum_.name,
+                        directory: context.schemasDirectory,
+                        fileContents: [enum_]
+                    });
+                },
+                union: (utd) => {
+                    const generator = new DiscriminatedUnionGenerator({
+                        name: context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
+                        unionTypeDeclaration: utd,
+                        context
+                    });
+                    const enum_ = generator.generate();
+                    context.project.addSourceFile({
+                        nameCandidateWithoutExtension: enum_.name,
+                        directory: context.schemasDirectory,
+                        fileContents: [enum_]
+                    });
+                },
+                _other: noop
+            });
+        }
+    }
 
-        // {ProjectName}Client.swift
+    private generateSourceRootClientFile(context: SdkGeneratorContext): void {
         const rootClientGenerator = new RootClientGenerator({
+            clientName: context.project.symbolRegistry.getRootClientSymbolOrThrow(),
             package_: context.ir.rootPackage,
             sdkGeneratorContext: context
         });
-        files.push(rootClientGenerator.generate());
+        const rootClientClass = rootClientGenerator.generate();
+        context.project.addSourceFile({
+            nameCandidateWithoutExtension: rootClientClass.name,
+            directory: RelativeFilePath.of(""),
+            fileContents: [rootClientClass]
+        });
+    }
 
-        // {ProjectName}Environment.swift
+    private generateSourceEnvironmentFile(context: SdkGeneratorContext): void {
         if (context.ir.environments && context.ir.environments.environments.type === "singleBaseUrl") {
             const environmentGenerator = new SingleUrlEnvironmentGenerator({
+                enumName: context.project.symbolRegistry.getEnvironmentSymbolOrThrow(),
                 environments: context.ir.environments.environments,
                 sdkGeneratorContext: context
             });
-            files.push(environmentGenerator.generate());
+            const environmentEnum = environmentGenerator.generate();
+            context.project.addSourceFile({
+                nameCandidateWithoutExtension: environmentEnum.name,
+                directory: RelativeFilePath.of(""),
+                fileContents: [environmentEnum]
+            });
         } else {
             // TODO(kafkas): Handle multiple environments
         }
-
-        return files;
     }
 }

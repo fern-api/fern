@@ -1,7 +1,4 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
-import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
-
 import { Subpackage } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
@@ -10,17 +7,20 @@ import { EndpointMethodGenerator } from "./EndpointMethodGenerator";
 
 export declare namespace SubClientGenerator {
     interface Args {
+        clientName: string;
         subpackage: Subpackage;
         sdkGeneratorContext: SdkGeneratorContext;
     }
 }
 
 export class SubClientGenerator {
+    private readonly clientName: string;
     private readonly subpackage: Subpackage;
     private readonly sdkGeneratorContext: SdkGeneratorContext;
     private readonly clientGeneratorContext: ClientGeneratorContext;
 
-    public constructor({ subpackage, sdkGeneratorContext }: SubClientGenerator.Args) {
+    public constructor({ clientName, subpackage, sdkGeneratorContext }: SubClientGenerator.Args) {
+        this.clientName = clientName;
         this.subpackage = subpackage;
         this.sdkGeneratorContext = sdkGeneratorContext;
         this.clientGeneratorContext = new ClientGeneratorContext({
@@ -29,18 +29,14 @@ export class SubClientGenerator {
         });
     }
 
-    private get clientName() {
-        return this.sdkGeneratorContext.getSubClientName(this.subpackage);
-    }
-
     private get service() {
         return this.subpackage.service != null
             ? this.sdkGeneratorContext.getHttpServiceOrThrow(this.subpackage.service)
             : undefined;
     }
 
-    public generate(): SwiftFile {
-        const swiftClass = swift.class_({
+    public generate(): swift.Class {
+        return swift.class_({
             name: this.clientName,
             final: true,
             accessLevel: swift.AccessLevel.Public,
@@ -51,13 +47,6 @@ export class SubClientGenerator {
             ],
             initializers: [this.generateInitializer()],
             methods: this.generateMethods()
-        });
-        const fileContents = swiftClass.toString();
-        const fernFilepathDir = this.sdkGeneratorContext.getDirectoryForFernFilepath(this.subpackage.fernFilepath);
-        return new SwiftFile({
-            filename: `${this.clientName}.swift`,
-            directory: RelativeFilePath.of(`Resources/${fernFilepathDir}`),
-            fileContents
         });
     }
 
@@ -98,7 +87,8 @@ export class SubClientGenerator {
 
     private generateMethods(): swift.Method[] {
         const endpointMethodGenerator = new EndpointMethodGenerator({
-            clientGeneratorContext: this.clientGeneratorContext
+            clientGeneratorContext: this.clientGeneratorContext,
+            sdkGeneratorContext: this.sdkGeneratorContext
         });
         return (this.service?.endpoints ?? []).map((endpoint) => {
             return endpointMethodGenerator.generateMethod(endpoint);
