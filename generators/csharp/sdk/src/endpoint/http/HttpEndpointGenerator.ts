@@ -1,6 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
 import { csharp } from "@fern-api/csharp-codegen";
-import { ClassReference } from "@fern-api/csharp-codegen/src/csharp";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
@@ -134,7 +133,15 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         // is the endpoint is streaming or has a stream parameter (ie, determined at runtime)
         // we need to return an async enumerable regardless.
         const isAsyncEnumerable =
-            endpoint.response?.body?.type === "streaming" || endpoint.response?.body?.type === "streamParameter";
+            endpoint.response?.body?._visit({
+                streaming: () => true,
+                streamParameter: () => true,
+                json: () => false,
+                fileDownload: () => false,
+                text: () => false,
+                bytes: () => false,
+                _other: () => false
+            }) ?? false;
 
         return csharp.method({
             name: this.getUnpagedEndpointMethodName(endpoint),
@@ -330,7 +337,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 function deserializeJsonChunk(
                     payloadType: csharp.Type,
                     jsonUtils: csharp.ClassReference,
-                    exceptionClass: ClassReference
+                    exceptionClass: csharp.ClassReference
                 ) {
                     writer.write("var chunk = (");
                     writer.writeNode(payloadType);

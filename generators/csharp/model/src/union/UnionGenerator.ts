@@ -32,7 +32,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
         const basePropNames = unionDeclaration.baseProperties.map((p) => p.name.name.pascalCase.safeName);
 
         if (basePropNames.includes(this.valuePropertyName)) {
-            this.valuePropertyName = `_${this.valuePropertyName}`;
+            this.valuePropertyName = `${this.valuePropertyName}_`;
         }
         this.typeDeclaration = typeDeclaration;
         this.classReference = this.context.csharpTypeMapper.convertToClassReference(this.typeDeclaration.name);
@@ -41,7 +41,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
             basePropNames.includes(this.discriminantPropertyName) ||
             this.classReference.name === this.discriminantPropertyName
         ) {
-            this.discriminantPropertyName = `_${this.discriminantPropertyName}`;
+            this.discriminantPropertyName = `${this.discriminantPropertyName}_`;
         }
 
         this.exampleGenerator = new ExampleGenerator(context);
@@ -646,6 +646,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                     writer.writeLine("var value = discriminator switch");
                     writer.writeLine("{");
                     writer.indent();
+                    let areAnyOptional = false;
                     this.unionDeclaration.types.forEach((type) => {
                         const csharpType = this.getCsharpType(type);
                         function generateSerializeUnionMember(): void {
@@ -668,6 +669,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                             writer.write(".Deserialize<");
                             writer.writeNode(csharpType);
                             writer.write(">(options)");
+                            areAnyOptional ||= csharpType.isOptional();
                             writer.writeLine(",");
                         }
 
@@ -689,9 +691,13 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                     writer.writeLine("_ => json.Deserialize<object?>(options)");
                     writer.dedent();
                     // it's a bit better if we place the null check at the end - one of the inner types could be a readonly record struct, and can't be ??'d in the switch
-                    writer.writeTextStatement(
-                        '} ?? throw new JsonException($"Failed to deserialize union value of {discriminator}")'
-                    );
+                    if (areAnyOptional) {
+                        writer.writeTextStatement(" }");
+                    } else {
+                        writer.writeTextStatement(
+                            '} ?? throw new JsonException($"Failed to deserialize union value of {discriminator}")'
+                        );
+                    }
 
                     if (baseProperties.length > 0) {
                         writer.write("var baseProperties = json.Deserialize<");

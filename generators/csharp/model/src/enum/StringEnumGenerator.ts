@@ -21,7 +21,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
         // so we'll rename the Value property to 'Value_' (far less likely to be used than the enum value)
         // and we'll explicitly implement the IStringEnum interface so that it works as expected.
         if (enumDeclaration.values.some((v) => v.name.name.pascalCase.safeName === "Value")) {
-            this.valuePropertyName = "_Value";
+            this.valuePropertyName = "Value_";
         }
         this.classReference = this.context.csharpTypeMapper.convertToClassReference(this.typeDeclaration.name);
         this.customMethodName = this.getCustomMethodName(enumDeclaration);

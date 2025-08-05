@@ -131,8 +131,7 @@ export class EndpointSnippetGenerator {
     }): csharp.MethodInvocation {
         // if the example has *any* sample with stream set to true, then the method is an async enumerable
         const isAsyncEnumerable = endpoint.examples?.some(
-            // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-            (example: Record<string, any>) => example.requestBody?.stream && example.requestBody?.stream === true
+            (example) => (example.requestBody as Record<string, unknown> | undefined)?.stream === true
         );
         return csharp.invokeMethod({
             on: csharp.codeblock(CLIENT_VAR_NAME),
@@ -710,7 +709,7 @@ export class EndpointSnippetGenerator {
             });
 
             // if there is no value, then let's just use a random string
-            str = "Some random text to upload";
+            str = "[bytes]";
         }
         return csharp.TypeLiteral.reference(this.context.getMemoryStreamForString(str));
     }
