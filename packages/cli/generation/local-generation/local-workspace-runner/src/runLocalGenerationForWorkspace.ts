@@ -102,7 +102,8 @@ export async function runLocalGenerationForWorkspace({
                 const publishConfig = getPublishConfig({
                     generatorInvocation,
                     org: organization.ok ? organization.body : undefined,
-                    version
+                    version,
+                    context
                 });
                 if (publishConfig != null) {
                     intermediateRepresentation.publishConfig = publishConfig;
@@ -172,11 +173,13 @@ export async function getWorkspaceTempDir(): Promise<tmp.DirectoryResult> {
 function getPublishConfig({
     generatorInvocation,
     org,
-    version
+    version,
+    context,
 }: {
     generatorInvocation: generatorsYml.GeneratorInvocation;
     org?: FernVenusApi.Organization;
     version?: string;
+    context: TaskContext;
 }): FernIr.PublishingConfig | undefined {
     if (generatorInvocation.raw?.github != null && isGithubSelfhosted(generatorInvocation.raw.github)) {
         return FernIr.PublishingConfig.github({
@@ -195,10 +198,11 @@ function getPublishConfig({
     if (generatorInvocation.raw?.output?.location === "local-file-system") {
         let publishTarget: PublishTarget | undefined = undefined;
         if (generatorInvocation.language === "python") {
-            publishTarget = PublishTarget.pypi({
+            publishTarget = FernIr.PublishTarget.pypi({
                 version,
                 packageName: undefined
             });
+            context.logger.debug("Publish target set to PyPI for Python language.");
         }
 
         return FernIr.PublishingConfig.filesystem({
