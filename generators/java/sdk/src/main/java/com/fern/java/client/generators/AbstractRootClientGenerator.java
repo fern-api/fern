@@ -159,6 +159,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
     private TypeSpec getClientBuilder() {
         boolean isExtensible = clientGeneratorContext.getCustomConfig().extend();
+        // TODO: Remove this debug comment after testing
+        System.out.println("DEBUG: Building client with extend=" + isExtensible);
         
         TypeSpec.Builder clientBuilder;
         if (isExtensible) {

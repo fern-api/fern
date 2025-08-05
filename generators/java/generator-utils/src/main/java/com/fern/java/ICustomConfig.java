@@ -71,6 +71,12 @@ public interface ICustomConfig {
         return false;
     }
 
+    @Value.Default
+    @JsonProperty("extend")
+    default Boolean extend() {
+        return false;
+    }
+
     @JsonProperty("package-prefix")
     Optional<String> packagePrefix();
 
