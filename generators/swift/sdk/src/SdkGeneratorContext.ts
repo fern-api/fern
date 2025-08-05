@@ -3,6 +3,7 @@ import { AbstractSwiftGeneratorContext } from "@fern-api/swift-base";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
+import { ReadmeConfigBuilder } from "./readme";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SwiftGeneratorAgent } from "./SwiftGeneratorAgent";
 
@@ -18,8 +19,8 @@ export class SdkGeneratorContext extends AbstractSwiftGeneratorContext<SdkCustom
         super(ir, config, customConfig, generatorNotificationService);
         this.generatorAgent = new SwiftGeneratorAgent({
             logger: this.logger,
-            config,
-            ir
+            config: this.config,
+            ir: this.ir
         });
     }
 
