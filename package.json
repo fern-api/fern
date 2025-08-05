@@ -94,6 +94,7 @@
   },
   "resolutions": {
     "@babel/traverse": "7.23.2",
+    "@bufbuild/protobuf": "2.2.5",
     "cross-spawn": "7.0.5",
     "json5": "2.2.2",
     "katex": "0.16.21",
