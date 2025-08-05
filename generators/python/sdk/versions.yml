@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.25.7-rc0
+  changelogEntry:
+    - summary: |
+        Enforce nested folders for package names with a "." in them.
+      type: feat
+  createdAt: '2025-08-04'
+  irVersion: 58
+
 - version: 4.25.6
   changelogEntry:
     - summary: |
