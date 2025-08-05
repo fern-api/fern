@@ -6,6 +6,19 @@
         Improve generation so that all expected tests/samples correctly
         generate and compile. 
        
+  changelogEntry:
+    - type: fix
+      summary: |
+        In `RawClient.cs` namespace references are prefixed with `global::`
+        to ensure that the class works correctly when an explicit namespace
+        and client class are used that could cause it to collide.
+
+  changelogEntry:
+    - type: fix
+      summary: |
+        Set csharpier version to `1.1.*` to avoid inadvertently picking up 
+        `1.0.3` which has an inconsistency in formatting. 
+       
   createdAt: '2025-08-04'
   irVersion: 58
 

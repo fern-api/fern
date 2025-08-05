@@ -19,16 +19,16 @@ internal partial class RawClient(ClientOptions clientOptions)
     internal readonly ClientOptions Options = clientOptions;
 
     [Obsolete("Use SendRequestAsync instead.")]
-    internal Task<SeedMixedCase.Core.ApiResponse> MakeRequestAsync(
-        SeedMixedCase.Core.BaseRequest request,
+    internal Task<global::SeedMixedCase.Core.ApiResponse> MakeRequestAsync(
+        global::SeedMixedCase.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
         return SendRequestAsync(request, cancellationToken);
     }
 
-    internal async Task<SeedMixedCase.Core.ApiResponse> SendRequestAsync(
-        SeedMixedCase.Core.BaseRequest request,
+    internal async Task<global::SeedMixedCase.Core.ApiResponse> SendRequestAsync(
+        global::SeedMixedCase.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
@@ -43,7 +43,7 @@ internal partial class RawClient(ClientOptions clientOptions)
             .ConfigureAwait(false);
     }
 
-    internal async Task<SeedMixedCase.Core.ApiResponse> SendRequestAsync(
+    internal async Task<global::SeedMixedCase.Core.ApiResponse> SendRequestAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken = default
@@ -109,7 +109,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     /// Sends the request with retries, unless the request content is not retryable,
     /// such as stream requests and multipart form data with stream content.
     /// </summary>
-    private async Task<SeedMixedCase.Core.ApiResponse> SendWithRetriesAsync(
+    private async Task<global::SeedMixedCase.Core.ApiResponse> SendWithRetriesAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken
@@ -122,7 +122,7 @@ internal partial class RawClient(ClientOptions clientOptions)
 
         if (!isRetryableContent)
         {
-            return new SeedMixedCase.Core.ApiResponse
+            return new global::SeedMixedCase.Core.ApiResponse
             {
                 StatusCode = (int)response.StatusCode,
                 Raw = response,
@@ -144,7 +144,7 @@ internal partial class RawClient(ClientOptions clientOptions)
                 .ConfigureAwait(false);
         }
 
-        return new SeedMixedCase.Core.ApiResponse
+        return new global::SeedMixedCase.Core.ApiResponse
         {
             StatusCode = (int)response.StatusCode,
             Raw = response,
@@ -168,7 +168,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         };
     }
 
-    internal HttpRequestMessage CreateHttpRequest(SeedMixedCase.Core.BaseRequest request)
+    internal HttpRequestMessage CreateHttpRequest(global::SeedMixedCase.Core.BaseRequest request)
     {
         var url = BuildUrl(request);
         var httpRequest = new HttpRequestMessage(request.Method, url);
@@ -184,7 +184,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         return httpRequest;
     }
 
-    private static string BuildUrl(SeedMixedCase.Core.BaseRequest request)
+    private static string BuildUrl(global::SeedMixedCase.Core.BaseRequest request)
     {
         var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl;
         var trimmedBaseUrl = baseUrl.TrimEnd('/');
@@ -231,7 +231,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     private static List<KeyValuePair<string, string>> GetQueryParameters(
-        SeedMixedCase.Core.BaseRequest request
+        global::SeedMixedCase.Core.BaseRequest request
     )
     {
         var result = TransformToKeyValuePairs(request.Query);
@@ -387,26 +387,26 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     /// <inheritdoc />
-    [Obsolete("Use SeedMixedCase.Core.ApiResponse instead.")]
-    internal record ApiResponse : SeedMixedCase.Core.ApiResponse;
+    [Obsolete("Use global::SeedMixedCase.Core.ApiResponse instead.")]
+    internal record ApiResponse : global::SeedMixedCase.Core.ApiResponse;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedMixedCase.Core.BaseRequest instead.")]
-    internal abstract record BaseApiRequest : SeedMixedCase.Core.BaseRequest;
+    [Obsolete("Use global::SeedMixedCase.Core.BaseRequest instead.")]
+    internal abstract record BaseApiRequest : global::SeedMixedCase.Core.BaseRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedMixedCase.Core.EmptyRequest instead.")]
-    internal abstract record EmptyApiRequest : SeedMixedCase.Core.EmptyRequest;
+    [Obsolete("Use global::SeedMixedCase.Core.EmptyRequest instead.")]
+    internal abstract record EmptyApiRequest : global::SeedMixedCase.Core.EmptyRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedMixedCase.Core.JsonRequest instead.")]
-    internal abstract record JsonApiRequest : SeedMixedCase.Core.JsonRequest;
+    [Obsolete("Use global::SeedMixedCase.Core.JsonRequest instead.")]
+    internal abstract record JsonApiRequest : global::SeedMixedCase.Core.JsonRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedMixedCase.Core.MultipartFormRequest instead.")]
-    internal abstract record MultipartFormRequest : SeedMixedCase.Core.MultipartFormRequest;
+    [Obsolete("Use global::SeedMixedCase.Core.MultipartFormRequest instead.")]
+    internal abstract record MultipartFormRequest : global::SeedMixedCase.Core.MultipartFormRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedMixedCase.Core.StreamRequest instead.")]
-    internal abstract record StreamApiRequest : SeedMixedCase.Core.StreamRequest;
+    [Obsolete("Use global::SeedMixedCase.Core.StreamRequest instead.")]
+    internal abstract record StreamApiRequest : global::SeedMixedCase.Core.StreamRequest;
 }

@@ -19,16 +19,16 @@ internal partial class RawClient(ClientOptions clientOptions)
     internal readonly ClientOptions Options = clientOptions;
 
     [Obsolete("Use SendRequestAsync instead.")]
-    internal Task<SeedCsharpAccess.Core.ApiResponse> MakeRequestAsync(
-        SeedCsharpAccess.Core.BaseRequest request,
+    internal Task<global::SeedCsharpAccess.Core.ApiResponse> MakeRequestAsync(
+        global::SeedCsharpAccess.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
         return SendRequestAsync(request, cancellationToken);
     }
 
-    internal async Task<SeedCsharpAccess.Core.ApiResponse> SendRequestAsync(
-        SeedCsharpAccess.Core.BaseRequest request,
+    internal async Task<global::SeedCsharpAccess.Core.ApiResponse> SendRequestAsync(
+        global::SeedCsharpAccess.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
@@ -43,7 +43,7 @@ internal partial class RawClient(ClientOptions clientOptions)
             .ConfigureAwait(false);
     }
 
-    internal async Task<SeedCsharpAccess.Core.ApiResponse> SendRequestAsync(
+    internal async Task<global::SeedCsharpAccess.Core.ApiResponse> SendRequestAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken = default
@@ -109,7 +109,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     /// Sends the request with retries, unless the request content is not retryable,
     /// such as stream requests and multipart form data with stream content.
     /// </summary>
-    private async Task<SeedCsharpAccess.Core.ApiResponse> SendWithRetriesAsync(
+    private async Task<global::SeedCsharpAccess.Core.ApiResponse> SendWithRetriesAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken
@@ -122,7 +122,7 @@ internal partial class RawClient(ClientOptions clientOptions)
 
         if (!isRetryableContent)
         {
-            return new SeedCsharpAccess.Core.ApiResponse
+            return new global::SeedCsharpAccess.Core.ApiResponse
             {
                 StatusCode = (int)response.StatusCode,
                 Raw = response,
@@ -144,7 +144,7 @@ internal partial class RawClient(ClientOptions clientOptions)
                 .ConfigureAwait(false);
         }
 
-        return new SeedCsharpAccess.Core.ApiResponse
+        return new global::SeedCsharpAccess.Core.ApiResponse
         {
             StatusCode = (int)response.StatusCode,
             Raw = response,
@@ -168,7 +168,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         };
     }
 
-    internal HttpRequestMessage CreateHttpRequest(SeedCsharpAccess.Core.BaseRequest request)
+    internal HttpRequestMessage CreateHttpRequest(global::SeedCsharpAccess.Core.BaseRequest request)
     {
         var url = BuildUrl(request);
         var httpRequest = new HttpRequestMessage(request.Method, url);
@@ -184,7 +184,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         return httpRequest;
     }
 
-    private static string BuildUrl(SeedCsharpAccess.Core.BaseRequest request)
+    private static string BuildUrl(global::SeedCsharpAccess.Core.BaseRequest request)
     {
         var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl;
         var trimmedBaseUrl = baseUrl.TrimEnd('/');
@@ -231,7 +231,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     private static List<KeyValuePair<string, string>> GetQueryParameters(
-        SeedCsharpAccess.Core.BaseRequest request
+        global::SeedCsharpAccess.Core.BaseRequest request
     )
     {
         var result = TransformToKeyValuePairs(request.Query);
@@ -387,26 +387,27 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     /// <inheritdoc />
-    [Obsolete("Use SeedCsharpAccess.Core.ApiResponse instead.")]
-    internal record ApiResponse : SeedCsharpAccess.Core.ApiResponse;
+    [Obsolete("Use global::SeedCsharpAccess.Core.ApiResponse instead.")]
+    internal record ApiResponse : global::SeedCsharpAccess.Core.ApiResponse;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedCsharpAccess.Core.BaseRequest instead.")]
-    internal abstract record BaseApiRequest : SeedCsharpAccess.Core.BaseRequest;
+    [Obsolete("Use global::SeedCsharpAccess.Core.BaseRequest instead.")]
+    internal abstract record BaseApiRequest : global::SeedCsharpAccess.Core.BaseRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedCsharpAccess.Core.EmptyRequest instead.")]
-    internal abstract record EmptyApiRequest : SeedCsharpAccess.Core.EmptyRequest;
+    [Obsolete("Use global::SeedCsharpAccess.Core.EmptyRequest instead.")]
+    internal abstract record EmptyApiRequest : global::SeedCsharpAccess.Core.EmptyRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedCsharpAccess.Core.JsonRequest instead.")]
-    internal abstract record JsonApiRequest : SeedCsharpAccess.Core.JsonRequest;
+    [Obsolete("Use global::SeedCsharpAccess.Core.JsonRequest instead.")]
+    internal abstract record JsonApiRequest : global::SeedCsharpAccess.Core.JsonRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedCsharpAccess.Core.MultipartFormRequest instead.")]
-    internal abstract record MultipartFormRequest : SeedCsharpAccess.Core.MultipartFormRequest;
+    [Obsolete("Use global::SeedCsharpAccess.Core.MultipartFormRequest instead.")]
+    internal abstract record MultipartFormRequest
+        : global::SeedCsharpAccess.Core.MultipartFormRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedCsharpAccess.Core.StreamRequest instead.")]
-    internal abstract record StreamApiRequest : SeedCsharpAccess.Core.StreamRequest;
+    [Obsolete("Use global::SeedCsharpAccess.Core.StreamRequest instead.")]
+    internal abstract record StreamApiRequest : global::SeedCsharpAccess.Core.StreamRequest;
 }

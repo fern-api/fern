@@ -19,16 +19,16 @@ internal partial class RawClient(ClientOptions clientOptions)
     internal readonly ClientOptions Options = clientOptions;
 
     [Obsolete("Use SendRequestAsync instead.")]
-    internal Task<SeedCustomAuth.Core.ApiResponse> MakeRequestAsync(
-        SeedCustomAuth.Core.BaseRequest request,
+    internal Task<global::SeedCustomAuth.Core.ApiResponse> MakeRequestAsync(
+        global::SeedCustomAuth.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
         return SendRequestAsync(request, cancellationToken);
     }
 
-    internal async Task<SeedCustomAuth.Core.ApiResponse> SendRequestAsync(
-        SeedCustomAuth.Core.BaseRequest request,
+    internal async Task<global::SeedCustomAuth.Core.ApiResponse> SendRequestAsync(
+        global::SeedCustomAuth.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
@@ -43,7 +43,7 @@ internal partial class RawClient(ClientOptions clientOptions)
             .ConfigureAwait(false);
     }
 
-    internal async Task<SeedCustomAuth.Core.ApiResponse> SendRequestAsync(
+    internal async Task<global::SeedCustomAuth.Core.ApiResponse> SendRequestAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken = default
@@ -109,7 +109,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     /// Sends the request with retries, unless the request content is not retryable,
     /// such as stream requests and multipart form data with stream content.
     /// </summary>
-    private async Task<SeedCustomAuth.Core.ApiResponse> SendWithRetriesAsync(
+    private async Task<global::SeedCustomAuth.Core.ApiResponse> SendWithRetriesAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken
@@ -122,7 +122,7 @@ internal partial class RawClient(ClientOptions clientOptions)
 
         if (!isRetryableContent)
         {
-            return new SeedCustomAuth.Core.ApiResponse
+            return new global::SeedCustomAuth.Core.ApiResponse
             {
                 StatusCode = (int)response.StatusCode,
                 Raw = response,
@@ -144,7 +144,7 @@ internal partial class RawClient(ClientOptions clientOptions)
                 .ConfigureAwait(false);
         }
 
-        return new SeedCustomAuth.Core.ApiResponse
+        return new global::SeedCustomAuth.Core.ApiResponse
         {
             StatusCode = (int)response.StatusCode,
             Raw = response,
@@ -168,7 +168,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         };
     }
 
-    internal HttpRequestMessage CreateHttpRequest(SeedCustomAuth.Core.BaseRequest request)
+    internal HttpRequestMessage CreateHttpRequest(global::SeedCustomAuth.Core.BaseRequest request)
     {
         var url = BuildUrl(request);
         var httpRequest = new HttpRequestMessage(request.Method, url);
@@ -184,7 +184,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         return httpRequest;
     }
 
-    private static string BuildUrl(SeedCustomAuth.Core.BaseRequest request)
+    private static string BuildUrl(global::SeedCustomAuth.Core.BaseRequest request)
     {
         var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl;
         var trimmedBaseUrl = baseUrl.TrimEnd('/');
@@ -231,7 +231,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     private static List<KeyValuePair<string, string>> GetQueryParameters(
-        SeedCustomAuth.Core.BaseRequest request
+        global::SeedCustomAuth.Core.BaseRequest request
     )
     {
         var result = TransformToKeyValuePairs(request.Query);
@@ -387,26 +387,27 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     /// <inheritdoc />
-    [Obsolete("Use SeedCustomAuth.Core.ApiResponse instead.")]
-    internal record ApiResponse : SeedCustomAuth.Core.ApiResponse;
+    [Obsolete("Use global::SeedCustomAuth.Core.ApiResponse instead.")]
+    internal record ApiResponse : global::SeedCustomAuth.Core.ApiResponse;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedCustomAuth.Core.BaseRequest instead.")]
-    internal abstract record BaseApiRequest : SeedCustomAuth.Core.BaseRequest;
+    [Obsolete("Use global::SeedCustomAuth.Core.BaseRequest instead.")]
+    internal abstract record BaseApiRequest : global::SeedCustomAuth.Core.BaseRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedCustomAuth.Core.EmptyRequest instead.")]
-    internal abstract record EmptyApiRequest : SeedCustomAuth.Core.EmptyRequest;
+    [Obsolete("Use global::SeedCustomAuth.Core.EmptyRequest instead.")]
+    internal abstract record EmptyApiRequest : global::SeedCustomAuth.Core.EmptyRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedCustomAuth.Core.JsonRequest instead.")]
-    internal abstract record JsonApiRequest : SeedCustomAuth.Core.JsonRequest;
+    [Obsolete("Use global::SeedCustomAuth.Core.JsonRequest instead.")]
+    internal abstract record JsonApiRequest : global::SeedCustomAuth.Core.JsonRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedCustomAuth.Core.MultipartFormRequest instead.")]
-    internal abstract record MultipartFormRequest : SeedCustomAuth.Core.MultipartFormRequest;
+    [Obsolete("Use global::SeedCustomAuth.Core.MultipartFormRequest instead.")]
+    internal abstract record MultipartFormRequest
+        : global::SeedCustomAuth.Core.MultipartFormRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedCustomAuth.Core.StreamRequest instead.")]
-    internal abstract record StreamApiRequest : SeedCustomAuth.Core.StreamRequest;
+    [Obsolete("Use global::SeedCustomAuth.Core.StreamRequest instead.")]
+    internal abstract record StreamApiRequest : global::SeedCustomAuth.Core.StreamRequest;
 }

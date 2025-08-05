@@ -19,16 +19,16 @@ internal partial class RawClient(ClientOptions clientOptions)
     internal readonly ClientOptions Options = clientOptions;
 
     [Obsolete("Use SendRequestAsync instead.")]
-    internal Task<SeedFileUpload.Core.ApiResponse> MakeRequestAsync(
-        SeedFileUpload.Core.BaseRequest request,
+    internal Task<global::SeedFileUpload.Core.ApiResponse> MakeRequestAsync(
+        global::SeedFileUpload.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
         return SendRequestAsync(request, cancellationToken);
     }
 
-    internal async Task<SeedFileUpload.Core.ApiResponse> SendRequestAsync(
-        SeedFileUpload.Core.BaseRequest request,
+    internal async Task<global::SeedFileUpload.Core.ApiResponse> SendRequestAsync(
+        global::SeedFileUpload.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
@@ -43,7 +43,7 @@ internal partial class RawClient(ClientOptions clientOptions)
             .ConfigureAwait(false);
     }
 
-    internal async Task<SeedFileUpload.Core.ApiResponse> SendRequestAsync(
+    internal async Task<global::SeedFileUpload.Core.ApiResponse> SendRequestAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken = default
@@ -109,7 +109,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     /// Sends the request with retries, unless the request content is not retryable,
     /// such as stream requests and multipart form data with stream content.
     /// </summary>
-    private async Task<SeedFileUpload.Core.ApiResponse> SendWithRetriesAsync(
+    private async Task<global::SeedFileUpload.Core.ApiResponse> SendWithRetriesAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken
@@ -122,7 +122,7 @@ internal partial class RawClient(ClientOptions clientOptions)
 
         if (!isRetryableContent)
         {
-            return new SeedFileUpload.Core.ApiResponse
+            return new global::SeedFileUpload.Core.ApiResponse
             {
                 StatusCode = (int)response.StatusCode,
                 Raw = response,
@@ -144,7 +144,7 @@ internal partial class RawClient(ClientOptions clientOptions)
                 .ConfigureAwait(false);
         }
 
-        return new SeedFileUpload.Core.ApiResponse
+        return new global::SeedFileUpload.Core.ApiResponse
         {
             StatusCode = (int)response.StatusCode,
             Raw = response,
@@ -168,7 +168,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         };
     }
 
-    internal HttpRequestMessage CreateHttpRequest(SeedFileUpload.Core.BaseRequest request)
+    internal HttpRequestMessage CreateHttpRequest(global::SeedFileUpload.Core.BaseRequest request)
     {
         var url = BuildUrl(request);
         var httpRequest = new HttpRequestMessage(request.Method, url);
@@ -184,7 +184,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         return httpRequest;
     }
 
-    private static string BuildUrl(SeedFileUpload.Core.BaseRequest request)
+    private static string BuildUrl(global::SeedFileUpload.Core.BaseRequest request)
     {
         var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl;
         var trimmedBaseUrl = baseUrl.TrimEnd('/');
@@ -231,7 +231,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     private static List<KeyValuePair<string, string>> GetQueryParameters(
-        SeedFileUpload.Core.BaseRequest request
+        global::SeedFileUpload.Core.BaseRequest request
     )
     {
         var result = TransformToKeyValuePairs(request.Query);
@@ -387,26 +387,27 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     /// <inheritdoc />
-    [Obsolete("Use SeedFileUpload.Core.ApiResponse instead.")]
-    internal record ApiResponse : SeedFileUpload.Core.ApiResponse;
+    [Obsolete("Use global::SeedFileUpload.Core.ApiResponse instead.")]
+    internal record ApiResponse : global::SeedFileUpload.Core.ApiResponse;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedFileUpload.Core.BaseRequest instead.")]
-    internal abstract record BaseApiRequest : SeedFileUpload.Core.BaseRequest;
+    [Obsolete("Use global::SeedFileUpload.Core.BaseRequest instead.")]
+    internal abstract record BaseApiRequest : global::SeedFileUpload.Core.BaseRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedFileUpload.Core.EmptyRequest instead.")]
-    internal abstract record EmptyApiRequest : SeedFileUpload.Core.EmptyRequest;
+    [Obsolete("Use global::SeedFileUpload.Core.EmptyRequest instead.")]
+    internal abstract record EmptyApiRequest : global::SeedFileUpload.Core.EmptyRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedFileUpload.Core.JsonRequest instead.")]
-    internal abstract record JsonApiRequest : SeedFileUpload.Core.JsonRequest;
+    [Obsolete("Use global::SeedFileUpload.Core.JsonRequest instead.")]
+    internal abstract record JsonApiRequest : global::SeedFileUpload.Core.JsonRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedFileUpload.Core.MultipartFormRequest instead.")]
-    internal abstract record MultipartFormRequest : SeedFileUpload.Core.MultipartFormRequest;
+    [Obsolete("Use global::SeedFileUpload.Core.MultipartFormRequest instead.")]
+    internal abstract record MultipartFormRequest
+        : global::SeedFileUpload.Core.MultipartFormRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedFileUpload.Core.StreamRequest instead.")]
-    internal abstract record StreamApiRequest : SeedFileUpload.Core.StreamRequest;
+    [Obsolete("Use global::SeedFileUpload.Core.StreamRequest instead.")]
+    internal abstract record StreamApiRequest : global::SeedFileUpload.Core.StreamRequest;
 }
