@@ -1,3 +1,11 @@
+- version: 2.39.6
+  changelogEntry:
+    - summary: |
+        Add extensible builder pattern with self-type support via opt-in `extend` flag
+      type: feat
+  createdAt: '2025-08-05'
+  irVersion: 58
+
 - version: 2.39.5
   changelogEntry:
     - summary: |

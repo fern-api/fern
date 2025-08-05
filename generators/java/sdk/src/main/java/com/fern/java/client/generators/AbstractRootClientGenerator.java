@@ -116,11 +116,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
         TypeSpec builderTypeSpec = getClientBuilder();
 
-        // Check if extensible builders are enabled
         boolean isExtensible = clientGeneratorContext.getCustomConfig().extend();
-        
+
         if (isExtensible) {
-            // For extensible builders, return the concrete Impl
             ClassName implClassName = builderName.nestedClass("Impl");
             result.getClientImpl()
                     .addMethod(MethodSpec.methodBuilder("builder")
@@ -129,7 +127,6 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                             .addStatement("return new $T()", implClassName)
                             .build());
         } else {
-            // For simple builders, return the builder directly
             result.getClientImpl()
                     .addMethod(MethodSpec.methodBuilder("builder")
                             .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
@@ -159,28 +156,23 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
     private TypeSpec getClientBuilder() {
         boolean isExtensible = clientGeneratorContext.getCustomConfig().extend();
-        // TODO: Remove this debug comment after testing
-        System.out.println("DEBUG: Building client with extend=" + isExtensible);
-        
+
         TypeSpec.Builder clientBuilder;
         if (isExtensible) {
-            // For extensible builders, make it abstract with type parameter
             clientBuilder = TypeSpec.classBuilder(builderName)
                     .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
-                    .addTypeVariable(
-                            TypeVariableName.get("T", ParameterizedTypeName.get(builderName, TypeVariableName.get("T"))));
-            
-            // Add abstract self() method
+                    .addTypeVariable(TypeVariableName.get(
+                            "T", ParameterizedTypeName.get(builderName, TypeVariableName.get("T"))));
+
             MethodSpec selfMethod = MethodSpec.methodBuilder("self")
                     .addModifiers(Modifier.PROTECTED, Modifier.ABSTRACT)
                     .returns(TypeVariableName.get("T"))
                     .build();
             clientBuilder.addMethod(selfMethod);
         } else {
-            // For simple builders, keep it as is
             clientBuilder = TypeSpec.classBuilder(builderName).addModifiers(Modifier.PUBLIC);
         }
-        
+
         MethodSpec.Builder buildMethod =
                 MethodSpec.methodBuilder("build").addModifiers(Modifier.PUBLIC).returns(className());
 
@@ -206,7 +198,6 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         boolean hasCustomHeaders = !generatorContext.getIr().getHeaders().isEmpty();
         boolean hasVariables = !generatorContext.getIr().getVariables().isEmpty();
 
-        // Create builders for configuration methods based on API spec
         MethodSpec.Builder configureAuthBuilder = null;
         if (hasAuth) {
             configureAuthBuilder = MethodSpec.methodBuilder("setAuthentication")
@@ -507,7 +498,6 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .addStatement("return new $T(buildClientOptions())", className())
                 .build());
 
-        // Add concrete Impl class for extensible builders
         if (isExtensible) {
             ClassName implClassName = builderName.nestedClass("Impl");
             TypeSpec.Builder implBuilder = TypeSpec.classBuilder("Impl")
@@ -519,7 +509,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                             .returns(implClassName)
                             .addStatement("return this")
                             .build());
-            
+
             clientBuilder.addType(implBuilder.build());
         }
 
@@ -565,7 +555,6 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             String fieldName = bearer.getToken().getCamelCase().getSafeName();
             createSetter(fieldName, bearer.getTokenEnvVar(), Optional.empty());
 
-            // Add validation to build() method
             if (isMandatory) {
                 this.buildMethod
                         .beginControlFlow("if ($L == null)", fieldName)
