@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.25.7-rc1
+  changelogEntry:
+    - summary: |
+        Attempt to plumb version in Abstract Generator
+      type: feat
+  createdAt: '2025-08-04'
+  irVersion: 58
+
 
 - version: 4.25.7-rc0
   changelogEntry:
