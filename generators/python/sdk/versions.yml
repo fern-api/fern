@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
-- version: 4.25.7
+- version: 4.25.9
   changelogEntry:
     - summary: |
         Fix: allow setting of package name and version in local docker generation
