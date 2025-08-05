@@ -26,17 +26,22 @@ export class ClientGeneratorContext {
     }
 
     private getSubClients(): { property: swift.Property; clientName: string }[] {
-        const subpackages = this.sdkGeneratorContext.getSubpackagesOrThrow(this.packageOrSubpackage);
-        return subpackages.map((subpackage) => {
-            const clientName = this.sdkGeneratorContext.getSubClientName(subpackage);
-            const property = swift.property({
-                unsafeName: subpackage.name.camelCase.unsafeName,
-                accessLevel: swift.AccessLevel.Public,
-                declarationType: swift.DeclarationType.Let,
-                type: swift.Type.custom(clientName)
+        return this.sdkGeneratorContext
+            .getSubpackagesOrThrow(this.packageOrSubpackage)
+            .map(([subpackageId, subpackage]) => {
+                const clientName =
+                    this.sdkGeneratorContext.project.symbolRegistry.getSubClientSymbolOrThrow(subpackageId);
+                const property = swift.property({
+                    unsafeName: subpackage.name.camelCase.unsafeName,
+                    accessLevel: swift.AccessLevel.Public,
+                    declarationType: swift.DeclarationType.Let,
+                    type: swift.Type.custom(clientName)
+                });
+                return {
+                    property,
+                    clientName
+                };
             });
-            return { property, clientName: this.sdkGeneratorContext.getSubClientName(subpackage) };
-        });
     }
 
     private getHttpClient(): { property: swift.Property; clientName: string } {

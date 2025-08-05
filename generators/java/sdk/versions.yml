@@ -1,3 +1,19 @@
+- version: 2.39.4
+  changelogEntry:
+    - summary: |
+        Ensure JUnit dependencies are always added when test files are generated
+      type: fix
+  createdAt: '2025-08-04'
+  irVersion: 58
+
+- version: 2.39.3
+  changelogEntry:
+    - summary: |
+        Fix compilation error when using boolean path parameters by properly handling primitive boolean to String conversion
+      type: fix
+  createdAt: '2025-08-04'
+  irVersion: 58
+
 - version: 2.39.2
   changelogEntry:
     - summary: |

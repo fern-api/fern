@@ -15,10 +15,7 @@
               "docs": "Create a chat while specifying the default retrieval parameters used by the prompt.",
               "examples": [
                 {
-                  "headers": {
-                    "Request-Timeout": "Request-Timeout",
-                    "Request-Timeout-Millis": "Request-Timeout-Millis",
-                  },
+                  "headers": {},
                   "request": {
                     "query": "How can I use the Vectara platform?",
                     "stream_response": false,
@@ -69,10 +66,7 @@
               "docs": "Create a chat while specifying the default retrieval parameters used by the prompt.",
               "examples": [
                 {
-                  "headers": {
-                    "Request-Timeout": "Request-Timeout",
-                    "Request-Timeout-Millis": "Request-Timeout-Millis",
-                  },
+                  "headers": {},
                   "request": {
                     "query": "How can I use the Vectara platform?",
                     "stream_response": true,
@@ -189,9 +183,7 @@
         type: ChatStreamedResponse
         format: json
       examples:
-        - headers:
-            Request-Timeout: Request-Timeout
-            Request-Timeout-Millis: Request-Timeout-Millis
+        - headers: {}
           request:
             query: How can I use the Vectara platform?
             stream_response: true
@@ -224,9 +216,7 @@
         type: ChatFullResponse
         status-code: 200
       examples:
-        - headers:
-            Request-Timeout: Request-Timeout
-            Request-Timeout-Millis: Request-Timeout-Millis
+        - headers: {}
           request:
             query: How can I use the Vectara platform?
             stream_response: false

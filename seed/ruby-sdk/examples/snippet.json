@@ -222,6 +222,17 @@
         },
         {
             "id": {
+                "path": "/refresh-token",
+                "method": "POST",
+                "identifierOverride": "endpoint_service.refreshToken"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.service.refresh_token",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
                 "path": "/movie/{movieId}",
                 "method": "GET",
                 "identifierOverride": "endpoint_service.getMovie"
@@ -261,6 +272,17 @@
             },
             "snippet": {
                 "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.service.create_big_entity(request: { cast_member: { name: \"name\", id: \"id\" }, extended_movie: { cast: [\"cast\", \"cast\"], id: \"id\", prequel: \"prequel\", title: \"title\", from: \"from\", rating: 1.1, type: \"movie\", tag: \"tag\", book: \"book\", metadata: { \"metadata\": {\"key\":\"value\"} }, revenue: 1000000 }, entity: { type: PRIMITIVE, name: \"name\" }, common_metadata: { id: \"id\", data: { \"data\": \"data\" }, json_string: \"jsonString\" }, migration: { name: \"name\", status: RUNNING }, node: { name: \"name\", nodes: [{ name: \"name\", nodes: [{ name: \"name\", nodes: , trees:  }, { name: \"name\", nodes: , trees:  }], trees: [{ nodes:  }, { nodes:  }] }, { name: \"name\", nodes: [{ name: \"name\", nodes: , trees:  }, { name: \"name\", nodes: , trees:  }], trees: [{ nodes:  }, { nodes:  }] }], trees: [{ nodes: [{ name: \"name\", nodes: , trees:  }, { name: \"name\", nodes: , trees:  }] }, { nodes: [{ name: \"name\", nodes: , trees:  }, { name: \"name\", nodes: , trees:  }] }] }, directory: { name: \"name\", files: [{ name: \"name\", contents: \"contents\" }, { name: \"name\", contents: \"contents\" }], directories: [{ name: \"name\", files: [{ name: \"name\", contents: \"contents\" }, { name: \"name\", contents: \"contents\" }], directories: [{ name: \"name\", files: , directories:  }, { name: \"name\", files: , directories:  }] }, { name: \"name\", files: [{ name: \"name\", contents: \"contents\" }, { name: \"name\", contents: \"contents\" }], directories: [{ name: \"name\", files: , directories:  }, { name: \"name\", files: , directories:  }] }] }, moment: { id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", date: Date.parse(\"2023-01-15\"), datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\") } })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/refresh-token",
+                "method": "POST",
+                "identifierOverride": "endpoint_service.refreshToken"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.service.refresh_token",
                 "type": "ruby"
             }
         },

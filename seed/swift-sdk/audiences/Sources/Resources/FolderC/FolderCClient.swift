@@ -1,9 +1,9 @@
 public final class FolderCClient: Sendable {
-    public let common: CommonClient
+    public let common: FolderCCommonClient
     private let httpClient: HTTPClient
 
     public init(config: ClientConfig) {
-        self.common = CommonClient(config: config)
+        self.common = FolderCCommonClient(config: config)
         self.httpClient = HTTPClient(config: config)
     }
 }
