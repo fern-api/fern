@@ -1,3 +1,24 @@
+- version: 2.39.6
+  changelogEntry:
+    - summary: |
+        Add opt-in extensible builder pattern via `enable-extensible-builders` flag. When enabled, builders use the self-type 
+        pattern allowing users to extend generated builders while maintaining type safety. Example:
+
+        ```java
+        class CustomBuilder extends BaseClientBuilder<CustomBuilder> {
+            @Override
+            protected CustomBuilder self() { return this; }
+            
+            public CustomBuilder workspaceId(String id) {
+                // custom logic
+                return this;
+            }
+        }
+        ```
+      type: feat
+  createdAt: '2025-08-05'
+  irVersion: 58
+
 - version: 2.39.5
   changelogEntry:
     - summary: |
