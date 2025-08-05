@@ -12,10 +12,10 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import core.ObjectMappers;
 import java.io.IOException;
-import java.lang.IllegalArgumentException;
 import java.lang.IllegalStateException;
 import java.lang.Integer;
 import java.lang.Object;
+import java.lang.RuntimeException;
 import java.lang.String;
 import java.lang.SuppressWarnings;
 import java.util.Objects;
@@ -109,15 +109,15 @@ public final class SearchRequestNeighbor {
       Object value = p.readValueAs(Object.class);
       try {
         return of(ObjectMappers.JSON_MAPPER.convertValue(value, User.class));
-      } catch(IllegalArgumentException e) {
+      } catch(RuntimeException e) {
       }
       try {
         return of(ObjectMappers.JSON_MAPPER.convertValue(value, NestedUser.class));
-      } catch(IllegalArgumentException e) {
+      } catch(RuntimeException e) {
       }
       try {
         return of(ObjectMappers.JSON_MAPPER.convertValue(value, String.class));
-      } catch(IllegalArgumentException e) {
+      } catch(RuntimeException e) {
       }
       if (value instanceof Integer) {
         return of((Integer) value);
