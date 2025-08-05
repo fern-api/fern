@@ -31,7 +31,7 @@ class AsyncRealtimeSocketClient(EventEmitterMixin):
 
     async def __aiter__(self):
         async for message in self._websocket:
-            yield parse_obj_as(RealtimeSocketClientResponse, json.loads(message))  # type: ignore
+            yield parse_obj_as(RealtimeSocketClientResponse, message)  # type: ignore
 
     async def start_listening(self):
         """
@@ -105,7 +105,7 @@ class RealtimeSocketClient(EventEmitterMixin):
 
     def __iter__(self):
         for message in self._websocket:
-            yield parse_obj_as(RealtimeSocketClientResponse, json.loads(message))  # type: ignore
+            yield parse_obj_as(RealtimeSocketClientResponse, message)  # type: ignore
 
     def start_listening(self):
         """
