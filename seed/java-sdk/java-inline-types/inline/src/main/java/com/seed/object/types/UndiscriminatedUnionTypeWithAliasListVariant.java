@@ -79,7 +79,7 @@ public final class UndiscriminatedUnionTypeWithAliasListVariant {
             Object value = p.readValueAs(Object.class);
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<AliasVariant>>() {}));
-            } catch (IllegalArgumentException e) {
+            } catch (RuntimeException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");
         }
