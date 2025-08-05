@@ -2,9 +2,19 @@
   changelogEntry:
     - summary: |
         Add opt-in extensible builder pattern via `enable-extensible-builders` flag. When enabled, builders use the self-type 
-        pattern (F-bounded polymorphism) allowing users to extend generated builders while maintaining type safety during 
-        method chaining. Builders become abstract with a self() method, and include a default Impl inner class for direct usage. 
-        Example: `class CustomBuilder extends BaseClientBuilder<CustomBuilder> { @Override protected CustomBuilder self() { return this; } }`
+        pattern allowing users to extend generated builders while maintaining type safety. Example:
+
+        ```java
+        class CustomBuilder extends BaseClientBuilder<CustomBuilder> {
+            @Override
+            protected CustomBuilder self() { return this; }
+            
+            public CustomBuilder workspaceId(String id) {
+                // custom logic
+                return this;
+            }
+        }
+        ```
       type: feat
   createdAt: '2025-08-05'
   irVersion: 58
