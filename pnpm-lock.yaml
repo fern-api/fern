@@ -2204,6 +2204,9 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
+      '@fern-api/logger':
+        specifier: workspace:*
+        version: link:../../../packages/cli/logger
       '@fern-api/swift-base':
         specifier: workspace:*
         version: link:../base
@@ -2216,6 +2219,9 @@ importers:
       '@fern-api/test-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/test-utils
+      '@fern-fern/generator-cli-sdk':
+        specifier: 0.0.30
+        version: 0.0.30
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
         version: 0.0.1045
