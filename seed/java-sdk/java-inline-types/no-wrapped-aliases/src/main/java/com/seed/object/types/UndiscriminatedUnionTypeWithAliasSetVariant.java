@@ -88,7 +88,7 @@ public final class UndiscriminatedUnionTypeWithAliasSetVariant {
             Object value = p.readValueAs(Object.class);
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<Set<AliasVariantType>>() {}));
-            } catch (IllegalArgumentException e) {
+            } catch (RuntimeException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");
         }
