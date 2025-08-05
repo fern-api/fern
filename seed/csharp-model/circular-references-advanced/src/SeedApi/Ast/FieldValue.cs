@@ -221,18 +221,17 @@ public record FieldValue
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value = discriminator switch
-            {
-                "primitive_value" => json.GetProperty("value")
-                    .Deserialize<SeedApi.PrimitiveValue>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedApi.PrimitiveValue"),
-                "object_value" => json.Deserialize<SeedApi.ObjectValue>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedApi.ObjectValue"),
-                "container_value" => json.GetProperty("value")
-                    .Deserialize<SeedApi.ContainerValue>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedApi.ContainerValue"),
-                _ => json.Deserialize<object?>(options),
-            };
+            var value =
+                discriminator switch
+                {
+                    "primitive_value" => json.GetProperty("value")
+                        .Deserialize<SeedApi.PrimitiveValue>(options),
+                    "object_value" => json.Deserialize<SeedApi.ObjectValue>(options),
+                    "container_value" => json.GetProperty("value")
+                        .Deserialize<SeedApi.ContainerValue>(options),
+                    _ => json.Deserialize<object?>(options),
+                }
+                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
             return new FieldValue(discriminator, value);
         }
 

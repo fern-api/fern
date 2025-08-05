@@ -173,13 +173,14 @@ public record UnionWithNoProperties
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value = discriminator switch
-            {
-                "foo" => json.Deserialize<SeedUnions.Foo>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedUnions.Foo"),
-                "empty" => new { },
-                _ => json.Deserialize<object?>(options),
-            };
+            var value =
+                discriminator switch
+                {
+                    "foo" => json.Deserialize<SeedUnions.Foo>(options),
+                    "empty" => new { },
+                    _ => json.Deserialize<object?>(options),
+                }
+                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
             return new UnionWithNoProperties(discriminator, value);
         }
 

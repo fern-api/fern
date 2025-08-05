@@ -266,23 +266,19 @@ public record TestSubmissionStatus
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value = discriminator switch
-            {
-                "stopped" => new { },
-                "errored" => json.GetProperty("value").Deserialize<SeedTrace.ErrorInfo>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.ErrorInfo"),
-                "running" => json.GetProperty("value")
-                    .Deserialize<SeedTrace.RunningSubmissionState>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.RunningSubmissionState"
-                    ),
-                "testCaseIdToState" => json.GetProperty("value")
-                    .Deserialize<Dictionary<string, SubmissionStatusForTestCase>>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize Dictionary<string, SubmissionStatusForTestCase>"
-                    ),
-                _ => json.Deserialize<object?>(options),
-            };
+            var value =
+                discriminator switch
+                {
+                    "stopped" => new { },
+                    "errored" => json.GetProperty("value")
+                        .Deserialize<SeedTrace.ErrorInfo>(options),
+                    "running" => json.GetProperty("value")
+                        .Deserialize<SeedTrace.RunningSubmissionState>(options),
+                    "testCaseIdToState" => json.GetProperty("value")
+                        .Deserialize<Dictionary<string, SubmissionStatusForTestCase>>(options),
+                    _ => json.Deserialize<object?>(options),
+                }
+                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
             return new TestSubmissionStatus(discriminator, value);
         }
 

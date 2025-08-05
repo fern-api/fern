@@ -177,17 +177,15 @@ public record CustomFiles
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value = discriminator switch
-            {
-                "basic" => json.Deserialize<SeedTrace.V2.BasicCustomFiles>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.V2.BasicCustomFiles"
-                    ),
-                "custom" => json.GetProperty("value")
-                    .Deserialize<Dictionary<Language, Files>>(options)
-                    ?? throw new JsonException("Failed to deserialize Dictionary<Language, Files>"),
-                _ => json.Deserialize<object?>(options),
-            };
+            var value =
+                discriminator switch
+                {
+                    "basic" => json.Deserialize<SeedTrace.V2.BasicCustomFiles>(options),
+                    "custom" => json.GetProperty("value")
+                        .Deserialize<Dictionary<Language, Files>>(options),
+                    _ => json.Deserialize<object?>(options),
+                }
+                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
             return new CustomFiles(discriminator, value);
         }
 

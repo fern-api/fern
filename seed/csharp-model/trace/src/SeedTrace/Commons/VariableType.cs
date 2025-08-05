@@ -510,22 +510,22 @@ public record VariableType
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value = discriminator switch
-            {
-                "integerType" => new { },
-                "doubleType" => new { },
-                "booleanType" => new { },
-                "stringType" => new { },
-                "charType" => new { },
-                "listType" => json.Deserialize<SeedTrace.ListType>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.ListType"),
-                "mapType" => json.Deserialize<SeedTrace.MapType>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.MapType"),
-                "binaryTreeType" => new { },
-                "singlyLinkedListType" => new { },
-                "doublyLinkedListType" => new { },
-                _ => json.Deserialize<object?>(options),
-            };
+            var value =
+                discriminator switch
+                {
+                    "integerType" => new { },
+                    "doubleType" => new { },
+                    "booleanType" => new { },
+                    "stringType" => new { },
+                    "charType" => new { },
+                    "listType" => json.Deserialize<SeedTrace.ListType>(options),
+                    "mapType" => json.Deserialize<SeedTrace.MapType>(options),
+                    "binaryTreeType" => new { },
+                    "singlyLinkedListType" => new { },
+                    "doublyLinkedListType" => new { },
+                    _ => json.Deserialize<object?>(options),
+                }
+                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
             return new VariableType(discriminator, value);
         }
 

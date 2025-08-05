@@ -179,19 +179,17 @@ public record TestCaseFunction
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value = discriminator switch
-            {
-                "withActualResult" =>
-                    json.Deserialize<SeedTrace.V2.TestCaseWithActualResultImplementation>(options)
-                        ?? throw new JsonException(
-                            "Failed to deserialize SeedTrace.V2.TestCaseWithActualResultImplementation"
+            var value =
+                discriminator switch
+                {
+                    "withActualResult" =>
+                        json.Deserialize<SeedTrace.V2.TestCaseWithActualResultImplementation>(
+                            options
                         ),
-                "custom" => json.Deserialize<SeedTrace.V2.VoidFunctionDefinition>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.V2.VoidFunctionDefinition"
-                    ),
-                _ => json.Deserialize<object?>(options),
-            };
+                    "custom" => json.Deserialize<SeedTrace.V2.VoidFunctionDefinition>(options),
+                    _ => json.Deserialize<object?>(options),
+                }
+                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
             return new TestCaseFunction(discriminator, value);
         }
 

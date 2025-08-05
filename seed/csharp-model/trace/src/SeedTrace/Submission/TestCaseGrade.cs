@@ -176,18 +176,14 @@ public record TestCaseGrade
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value = discriminator switch
-            {
-                "hidden" => json.Deserialize<SeedTrace.TestCaseHiddenGrade>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.TestCaseHiddenGrade"
-                    ),
-                "nonHidden" => json.Deserialize<SeedTrace.TestCaseNonHiddenGrade>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.TestCaseNonHiddenGrade"
-                    ),
-                _ => json.Deserialize<object?>(options),
-            };
+            var value =
+                discriminator switch
+                {
+                    "hidden" => json.Deserialize<SeedTrace.TestCaseHiddenGrade>(options),
+                    "nonHidden" => json.Deserialize<SeedTrace.TestCaseNonHiddenGrade>(options),
+                    _ => json.Deserialize<object?>(options),
+                }
+                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
             return new TestCaseGrade(discriminator, value);
         }
 

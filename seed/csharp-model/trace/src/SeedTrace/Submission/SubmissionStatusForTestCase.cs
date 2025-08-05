@@ -227,19 +227,16 @@ public record SubmissionStatusForTestCase
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value = discriminator switch
-            {
-                "graded" => json.Deserialize<SeedTrace.TestCaseResultWithStdout>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.TestCaseResultWithStdout"
-                    ),
-                "gradedV2" => json.GetProperty("value")
-                    .Deserialize<SeedTrace.TestCaseGrade>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.TestCaseGrade"),
-                "traced" => json.Deserialize<SeedTrace.TracedTestCase>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.TracedTestCase"),
-                _ => json.Deserialize<object?>(options),
-            };
+            var value =
+                discriminator switch
+                {
+                    "graded" => json.Deserialize<SeedTrace.TestCaseResultWithStdout>(options),
+                    "gradedV2" => json.GetProperty("value")
+                        .Deserialize<SeedTrace.TestCaseGrade>(options),
+                    "traced" => json.Deserialize<SeedTrace.TracedTestCase>(options),
+                    _ => json.Deserialize<object?>(options),
+                }
+                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
             return new SubmissionStatusForTestCase(discriminator, value);
         }
 

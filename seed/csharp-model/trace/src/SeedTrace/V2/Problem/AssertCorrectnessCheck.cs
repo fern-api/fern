@@ -179,23 +179,19 @@ public record AssertCorrectnessCheck
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value = discriminator switch
-            {
-                "deepEquality" => json.Deserialize<SeedTrace.V2.DeepEqualityCorrectnessCheck>(
-                    options
-                )
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.V2.DeepEqualityCorrectnessCheck"
-                    ),
-                "custom" =>
-                    json.Deserialize<SeedTrace.V2.VoidFunctionDefinitionThatTakesActualResult>(
+            var value =
+                discriminator switch
+                {
+                    "deepEquality" => json.Deserialize<SeedTrace.V2.DeepEqualityCorrectnessCheck>(
                         options
-                    )
-                        ?? throw new JsonException(
-                            "Failed to deserialize SeedTrace.V2.VoidFunctionDefinitionThatTakesActualResult"
+                    ),
+                    "custom" =>
+                        json.Deserialize<SeedTrace.V2.VoidFunctionDefinitionThatTakesActualResult>(
+                            options
                         ),
-                _ => json.Deserialize<object?>(options),
-            };
+                    _ => json.Deserialize<object?>(options),
+                }
+                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
             return new AssertCorrectnessCheck(discriminator, value);
         }
 
