@@ -215,7 +215,7 @@ function getPublishConfig({
         }
 
         return FernIr.PublishingConfig.filesystem({
-            generateFullProject: true,// todo: uncomment this - org?.selfHostedSdKs ?? false,
+            generateFullProject: org?.selfHostedSdKs ?? false,
             publishTarget
         });
     }
