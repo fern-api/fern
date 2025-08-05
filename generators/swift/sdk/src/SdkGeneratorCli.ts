@@ -66,18 +66,32 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
-        this.generateRootFiles(context);
-        await this.generateSourceFiles(context);
+        await Promise.all([this.generateRootFiles(context), this.generateSourceFiles(context)]);
         await context.project.persist();
     }
 
-    private generateRootFiles(context: SdkGeneratorContext): void {
-        const files: SwiftFile[] = [];
-        const packageSwiftGenerator = new PackageSwiftGenerator({
+    private async generateRootFiles(context: SdkGeneratorContext): Promise<void> {
+        this.generatePackageSwiftFile(context);
+        await this.generateReadme(context);
+    }
+
+    private generatePackageSwiftFile(context: SdkGeneratorContext): void {
+        const generator = new PackageSwiftGenerator({
             sdkGeneratorContext: context
         });
-        files.push(packageSwiftGenerator.generate());
-        context.project.addRootFiles(...files);
+        const file = generator.generate();
+        context.project.addRootFiles(file);
+    }
+
+    private async generateReadme(context: SdkGeneratorContext): Promise<void> {
+        // TODO(kafkas): Generate readme
+        context.project.addRootFiles(
+            new SwiftFile({
+                filename: "README.md",
+                fileContents: "# Swift SDK",
+                directory: RelativeFilePath.of("")
+            })
+        );
     }
 
     private async generateSourceFiles(context: SdkGeneratorContext): Promise<void> {
