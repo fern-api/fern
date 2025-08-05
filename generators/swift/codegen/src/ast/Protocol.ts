@@ -1,11 +1,12 @@
 export const Protocol = {
-    Encodable: "Encodable",
-    Decodable: "Decodable",
-    Codable: "Codable",
-    Equatable: "Equatable",
-    Hashable: "Hashable",
     CaseIterable: "CaseIterable",
+    Codable: "Codable",
     CodingKey: "CodingKey",
+    Decodable: "Decodable",
+    Encodable: "Encodable",
+    Equatable: "Equatable",
+    Error: "Error",
+    Hashable: "Hashable",
     Sendable: "Sendable"
 } as const;
 

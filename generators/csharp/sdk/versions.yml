@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.1.6
+  changelogEntry:
+    - type: feat
+      summary: Trigger release to use new version of CSharpier formatter
+  createdAt: '2025-08-04'
+  irVersion: 58
+
 - version: 2.1.5
   changelogEntry:
     - type: fix
@@ -8,7 +15,7 @@
 - version: 2.1.4
   changelogEntry:
     - type: fix
-      summary: ensure that query parameters are Uri encodeded in RawClient.cs
+      summary: ensure that query parameters are Uri encoded in RawClient.cs
   createdAt: '2025-07-31'
   irVersion: 58
 - version: 2.1.3

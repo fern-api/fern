@@ -2008,6 +2008,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
       zod:
         specifier: ^3.25.75
         version: 3.25.76
@@ -2015,6 +2018,9 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -2039,6 +2045,9 @@ importers:
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
         version: 58.2.0
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -2055,6 +2064,9 @@ importers:
       '@fern-api/test-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/test-utils
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3

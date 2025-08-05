@@ -13,13 +13,13 @@ let package = Package(
     products: [
         .library(
             name: "BasicAuth",
-            targets: ["BasicAuthTarget"]
+            targets: ["BasicAuth"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "BasicAuthTarget",
+            name: "BasicAuth",
             path: "Sources"
         )
     ]

@@ -2,10 +2,10 @@ public struct BigEntity: Codable, Hashable, Sendable {
     public let castMember: CastMember?
     public let extendedMovie: ExtendedMovie?
     public let entity: Entity?
-    public let metadata: Metadata?
+    public let metadata: MetadataType?
     public let commonMetadata: Metadata?
     public let eventInfo: EventInfo?
-    public let data: Data?
+    public let data: DataType?
     public let migration: Migration?
     public let exception: Exception?
     public let test: Test?
@@ -18,10 +18,10 @@ public struct BigEntity: Codable, Hashable, Sendable {
         castMember: CastMember? = nil,
         extendedMovie: ExtendedMovie? = nil,
         entity: Entity? = nil,
-        metadata: Metadata? = nil,
+        metadata: MetadataType? = nil,
         commonMetadata: Metadata? = nil,
         eventInfo: EventInfo? = nil,
-        data: Data? = nil,
+        data: DataType? = nil,
         migration: Migration? = nil,
         exception: Exception? = nil,
         test: Test? = nil,
@@ -51,10 +51,10 @@ public struct BigEntity: Codable, Hashable, Sendable {
         self.castMember = try container.decodeIfPresent(CastMember.self, forKey: .castMember)
         self.extendedMovie = try container.decodeIfPresent(ExtendedMovie.self, forKey: .extendedMovie)
         self.entity = try container.decodeIfPresent(Entity.self, forKey: .entity)
-        self.metadata = try container.decodeIfPresent(Metadata.self, forKey: .metadata)
+        self.metadata = try container.decodeIfPresent(MetadataType.self, forKey: .metadata)
         self.commonMetadata = try container.decodeIfPresent(Metadata.self, forKey: .commonMetadata)
         self.eventInfo = try container.decodeIfPresent(EventInfo.self, forKey: .eventInfo)
-        self.data = try container.decodeIfPresent(Data.self, forKey: .data)
+        self.data = try container.decodeIfPresent(DataType.self, forKey: .data)
         self.migration = try container.decodeIfPresent(Migration.self, forKey: .migration)
         self.exception = try container.decodeIfPresent(Exception.self, forKey: .exception)
         self.test = try container.decodeIfPresent(Test.self, forKey: .test)

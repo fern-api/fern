@@ -4,12 +4,22 @@ use crate::{types::*};
 
 pub struct ContainerClient {
     pub http_client: HttpClient,
+    pub api_key: Option<String>,
+    pub bearer_token: Option<String>,
+    pub username: Option<String>,
+    pub password: Option<String>,
 }
 
 impl ContainerClient {
-    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig, api_key: Option<String>, bearer_token: Option<String>, username: Option<String>, password: Option<String>) -> Result<Self, ClientError> {
         let http_client = HttpClient::new(config)?;
-        Ok(Self { http_client })
+        Ok(Self { 
+            http_client, 
+            api_key, 
+            bearer_token, 
+            username, 
+            password 
+        })
     }
 
     pub async fn get_and_return_list_of_primitives(&self, request: &Vec<String>, options: Option<RequestOptions>) -> Result<Vec<String>, ClientError> {
@@ -17,6 +27,7 @@ impl ContainerClient {
             Method::POST,
             "/container/list-of-primitives",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -26,6 +37,7 @@ impl ContainerClient {
             Method::POST,
             "/container/list-of-objects",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -35,6 +47,7 @@ impl ContainerClient {
             Method::POST,
             "/container/set-of-primitives",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -44,6 +57,7 @@ impl ContainerClient {
             Method::POST,
             "/container/set-of-objects",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -53,6 +67,7 @@ impl ContainerClient {
             Method::POST,
             "/container/map-prim-to-prim",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -62,6 +77,7 @@ impl ContainerClient {
             Method::POST,
             "/container/map-prim-to-object",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }
@@ -71,6 +87,7 @@ impl ContainerClient {
             Method::POST,
             "/container/opt-objects",
             Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
             options,
         ).await
     }

@@ -1,5 +1,5 @@
 public final class NullableClient: Sendable {
-    public let nullable: NullableClient
+    public let nullable: NullableClient_
     private let httpClient: HTTPClient
 
     public init(
@@ -19,7 +19,7 @@ public final class NullableClient: Sendable {
             timeout: timeout,
             urlSession: urlSession
         )
-        self.nullable = NullableClient(config: config)
+        self.nullable = NullableClient_(config: config)
         self.httpClient = HTTPClient(config: config)
     }
 }

@@ -13,13 +13,13 @@ let package = Package(
     products: [
         .library(
             name: "Api",
-            targets: ["ApiTarget"]
+            targets: ["Api"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "ApiTarget",
+            name: "Api",
             path: "Sources"
         )
     ]

@@ -886,3 +886,43 @@ client.service().createBigEntity(
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.service.refreshToken(request)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.service().refreshToken(Optional.of());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Optional<RefreshTokenRequest>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>

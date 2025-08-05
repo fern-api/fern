@@ -1,28 +1,28 @@
-import { mkdir } from "fs/promises";
-
+import { mkdir } from "node:fs/promises";
 import { AbstractProject } from "@fern-api/base-generator";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
-import { BaseSwiftCustomConfigSchema } from "@fern-api/swift-codegen";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { BaseSwiftCustomConfigSchema, swift } from "@fern-api/swift-codegen";
 
-import { AbstractSwiftGeneratorContext } from "../context/AbstractSwiftGeneratorContext";
+import { AbstractSwiftGeneratorContext } from "../context";
 import { SwiftFile } from "./SwiftFile";
+import { SymbolRegistry } from "./SymbolRegistry";
 
 export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<BaseSwiftCustomConfigSchema>> {
-    private readonly name: string;
     /** Files stored in the the project root. */
     private readonly rootFiles: SwiftFile[] = [];
     /** Files stored in the `Sources` directory. */
     private readonly srcFiles: SwiftFile[] = [];
+    private readonly srcFileNamesWithoutExtension = new Set<string>();
+
+    public readonly symbolRegistry: SymbolRegistry;
 
     public constructor({
-        context,
-        name
+        context
     }: {
         context: AbstractSwiftGeneratorContext<BaseSwiftCustomConfigSchema>;
-        name: string;
     }) {
         super(context);
-        this.name = name;
+        this.symbolRegistry = SymbolRegistry.create();
     }
 
     private get srcDirectory(): RelativeFilePath {
@@ -37,15 +37,34 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
         this.rootFiles.push(...files);
     }
 
-    public addSourceFiles(...files: SwiftFile[]): void {
-        this.srcFiles.push(...files);
+    public addSourceFile({
+        nameCandidateWithoutExtension,
+        directory,
+        fileContents
+    }: {
+        nameCandidateWithoutExtension: string;
+        directory: RelativeFilePath;
+        fileContents: string | swift.FileComponent[];
+    }): SwiftFile {
+        let filenameWithoutExt = nameCandidateWithoutExtension;
+        while (this.srcFileNamesWithoutExtension.has(filenameWithoutExt)) {
+            filenameWithoutExt += "_";
+        }
+        this.srcFileNamesWithoutExtension.add(filenameWithoutExt);
+        const file = new SwiftFile({
+            filename: filenameWithoutExt + ".swift",
+            directory,
+            fileContents
+        });
+        this.srcFiles.push(file);
+        return file;
     }
 
     public async persist(): Promise<void> {
         const { context, absolutePathToSrcDirectory } = this;
         context.logger.debug(`mkdir ${absolutePathToSrcDirectory}`);
         await mkdir(absolutePathToSrcDirectory, { recursive: true });
-        await Promise.all([this.persistRootFiles(), this.persistDynamicSourceFiles(), this.persistStaticSourceFiles()]);
+        await Promise.all([this.persistRootFiles(), this.persistSourceFiles()]);
     }
 
     private async persistRootFiles(): Promise<void> {
@@ -53,25 +72,8 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
         await Promise.all(rootFiles.map((file) => file.write(absolutePathToOutputDirectory)));
     }
 
-    private async persistDynamicSourceFiles(): Promise<void> {
+    private async persistSourceFiles(): Promise<void> {
         const { absolutePathToSrcDirectory, srcFiles } = this;
-        // TODO(kafkas): Use Promise.all() when we start handling name collisions
-        for (const file of srcFiles) {
-            await file.write(absolutePathToSrcDirectory);
-        }
-    }
-
-    private async persistStaticSourceFiles(): Promise<void> {
-        const { context, absolutePathToSrcDirectory } = this;
-        await Promise.all(
-            context.getCoreAsIsFiles().map(async (def) => {
-                const swiftFile = new SwiftFile({
-                    filename: def.filename,
-                    directory: def.directory,
-                    fileContents: await def.loadContents()
-                });
-                await swiftFile.write(absolutePathToSrcDirectory);
-            })
-        );
+        await Promise.all(srcFiles.map((file) => file.write(absolutePathToSrcDirectory)));
     }
 }

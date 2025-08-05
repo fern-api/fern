@@ -44,6 +44,7 @@ export async function writeFilesToDiskAndRunGenerator({
     absolutePathToLocalSnippetJSON,
     absolutePathToLocalSnippetTemplateJSON,
     audiences,
+    version,
     workspaceTempDir,
     keepDocker,
     context,
@@ -61,6 +62,7 @@ export async function writeFilesToDiskAndRunGenerator({
     absolutePathToFernConfig: AbsoluteFilePath | undefined;
     workspace: FernWorkspace;
     generatorInvocation: generatorsYml.GeneratorInvocation;
+    version: string | undefined;
     absolutePathToLocalOutput: AbsoluteFilePath;
     absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
     absolutePathToLocalSnippetTemplateJSON: AbsoluteFilePath | undefined;
@@ -85,7 +87,7 @@ export async function writeFilesToDiskAndRunGenerator({
         context,
         irVersionOverride,
         packageName: generatorsYml.getPackageName({ generatorInvocation }),
-        version: outputVersionOverride,
+        version: version ?? outputVersionOverride,
         sourceConfig: getSourceConfig(workspace),
         includeOptionalRequestPropertyExamples,
         ir

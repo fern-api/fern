@@ -209,6 +209,7 @@ export class GenerationRunner {
                 : undefined,
             audiences: generatorGroup.audiences,
             workspaceTempDir,
+            version: outputVersionOverride,
             keepDocker: false,
             context,
             irVersionOverride,

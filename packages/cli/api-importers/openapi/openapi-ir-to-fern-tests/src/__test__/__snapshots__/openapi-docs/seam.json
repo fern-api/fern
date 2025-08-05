@@ -10315,11 +10315,7 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "device_id": "device_id",
                   },
@@ -10439,11 +10435,7 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "device_ids": [
                       "device_ids",
@@ -10552,11 +10544,7 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "access_code_id": "access_code_id",
                   },
@@ -10629,11 +10617,7 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "device_id": "device_id",
                   },
@@ -10714,11 +10698,7 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {},
                   "response": {
                     "body": {
@@ -10807,11 +10787,7 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {},
                   "response": {
                     "body": {
@@ -10894,11 +10870,7 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "access_code_id": "access_code_id",
                   },
@@ -10979,11 +10951,7 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "access_code_id": "access_code_id",
                   },
@@ -11432,10 +11400,7 @@ service:
         - root.AccessCodesCreateRequestBadRequestError
         - root.AccessCodesCreateRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             device_id: device_id
           response:
@@ -11520,10 +11485,7 @@ service:
         - root.AccessCodesCreateMultipleRequestBadRequestError
         - root.AccessCodesCreateMultipleRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             device_ids:
               - device_ids
@@ -11585,10 +11547,7 @@ service:
         - root.AccessCodesDeleteRequestBadRequestError
         - root.AccessCodesDeleteRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             access_code_id: access_code_id
           response:
@@ -11625,10 +11584,7 @@ service:
         - root.AccessCodesGenerateCodeRequestBadRequestError
         - root.AccessCodesGenerateCodeRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             device_id: device_id
           response:
@@ -11688,10 +11644,7 @@ service:
         - root.AccessCodesGetRequestBadRequestError
         - root.AccessCodesGetRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request: {}
           response:
             body:
@@ -11747,10 +11700,7 @@ service:
         - root.AccessCodesListRequestBadRequestError
         - root.AccessCodesListRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request: {}
           response:
             body:
@@ -11804,10 +11754,7 @@ service:
         - root.AccessCodesPullBackupAccessCodeRequestBadRequestError
         - root.AccessCodesPullBackupAccessCodeRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             access_code_id: access_code_id
           response:
@@ -11892,10 +11839,7 @@ service:
         - root.AccessCodesUpdateRequestBadRequestError
         - root.AccessCodesUpdateRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             access_code_id: access_code_id
           response:
@@ -11931,11 +11875,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "code": "code",
                     "device_id": "device_id",
@@ -12073,10 +12013,7 @@ service:
         - root.SimulateCreateUnmanagedAccessCodeRequestBadRequestError
         - root.SimulateCreateUnmanagedAccessCodeRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             device_id: device_id
             name: name
@@ -12123,11 +12060,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "access_code_id": "access_code_id",
                   },
@@ -12187,11 +12120,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "access_code_id": "access_code_id",
                   },
@@ -12255,11 +12184,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {},
                   "response": {
                     "body": {
@@ -12339,11 +12264,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "device_id": "device_id",
                   },
@@ -12418,11 +12339,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "access_code_id": "access_code_id",
                     "is_managed": true,
@@ -12596,10 +12513,7 @@ service:
         - root.UnmanagedConvertToManagedRequestBadRequestError
         - root.UnmanagedConvertToManagedRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             access_code_id: access_code_id
           response:
@@ -12632,10 +12546,7 @@ service:
         - root.UnmanagedDeleteRequestBadRequestError
         - root.UnmanagedDeleteRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             access_code_id: access_code_id
           response:
@@ -12677,10 +12588,7 @@ service:
         - root.UnmanagedGetRequestBadRequestError
         - root.UnmanagedGetRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request: {}
           response:
             body:
@@ -12726,10 +12634,7 @@ service:
         - root.UnmanagedListRequestBadRequestError
         - root.UnmanagedListRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             device_id: device_id
           response:
@@ -12778,10 +12683,7 @@ service:
         - root.UnmanagedUpdateRequestBadRequestError
         - root.UnmanagedUpdateRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             access_code_id: access_code_id
             is_managed: true
@@ -12812,11 +12714,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "acs_access_group_id": "acs_access_group_id",
                     "acs_user_id": "acs_user_id",
@@ -12879,11 +12777,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "acs_access_group_id": "acs_access_group_id",
                   },
@@ -12949,11 +12843,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {},
                   "response": {
                     "body": {
@@ -13028,11 +12918,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "acs_access_group_id": "acs_access_group_id",
                   },
@@ -13111,11 +12997,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "acs_access_group_id": "acs_access_group_id",
                     "acs_user_id": "acs_user_id",
@@ -13292,10 +13174,7 @@ service:
         - root.AccessGroupsAddUserRequestBadRequestError
         - root.AccessGroupsAddUserRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             acs_access_group_id: acs_access_group_id
             acs_user_id: acs_user_id
@@ -13327,10 +13206,7 @@ service:
         - root.AccessGroupsGetRequestBadRequestError
         - root.AccessGroupsGetRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             acs_access_group_id: acs_access_group_id
           response:
@@ -13376,10 +13252,7 @@ service:
         - root.AccessGroupsListRequestBadRequestError
         - root.AccessGroupsListRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request: {}
           response:
             body:
@@ -13420,10 +13293,7 @@ service:
         - root.AccessGroupsListUsersRequestBadRequestError
         - root.AccessGroupsListUsersRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             acs_access_group_id: acs_access_group_id
           response:
@@ -13478,10 +13348,7 @@ service:
         - root.AccessGroupsRemoveUserRequestBadRequestError
         - root.AccessGroupsRemoveUserRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             acs_access_group_id: acs_access_group_id
             acs_user_id: acs_user_id
@@ -13512,11 +13379,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "acs_system_id": "acs_system_id",
                   },
@@ -13628,10 +13491,7 @@ service:
         - root.CredentialPoolsListRequestBadRequestError
         - root.CredentialPoolsListRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             acs_system_id: acs_system_id
           response:
@@ -13669,11 +13529,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "credential_manager_acs_system_id": "credential_manager_acs_system_id",
                     "user_identity_id": "user_identity_id",
@@ -13823,10 +13679,7 @@ service:
         - root.CredentialProvisioningAutomationsLaunchRequestBadRequestError
         - root.CredentialProvisioningAutomationsLaunchRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             user_identity_id: user_identity_id
             credential_manager_acs_system_id: credential_manager_acs_system_id
@@ -13863,11 +13716,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "acs_credential_id": "acs_credential_id",
                     "acs_user_id": "acs_user_id",
@@ -13973,11 +13822,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "access_method": "code",
                     "acs_user_id": "acs_user_id",
@@ -14102,11 +13947,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "acs_credential_id": "acs_credential_id",
                   },
@@ -14159,11 +14000,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "acs_credential_id": "acs_credential_id",
                   },
@@ -14260,11 +14097,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {},
                   "response": {
                     "body": {
@@ -14344,11 +14177,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "acs_credential_id": "acs_credential_id",
                   },
@@ -14426,11 +14255,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "acs_credential_id": "acs_credential_id",
                     "acs_user_id": "acs_user_id",
@@ -14536,11 +14361,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "acs_credential_id": "acs_credential_id",
                   },
@@ -14916,10 +14737,7 @@ service:
         - root.CredentialsAssignRequestBadRequestError
         - root.CredentialsAssignRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             acs_user_id: acs_user_id
             acs_credential_id: acs_credential_id
@@ -14999,10 +14817,7 @@ service:
         - root.CredentialsCreateRequestBadRequestError
         - root.CredentialsCreateRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             acs_user_id: acs_user_id
             access_method: code
@@ -15065,10 +14880,7 @@ service:
         - root.CredentialsDeleteRequestBadRequestError
         - root.CredentialsDeleteRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             acs_credential_id: acs_credential_id
           response:
@@ -15099,10 +14911,7 @@ service:
         - root.CredentialsGetRequestBadRequestError
         - root.CredentialsGetRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             acs_credential_id: acs_credential_id
           response:
@@ -15162,10 +14971,7 @@ service:
         - root.CredentialsListRequestBadRequestError
         - root.CredentialsListRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request: {}
           response:
             body:
@@ -15221,10 +15027,7 @@ service:
         - root.CredentialsListAccessibleEntrancesRequestBadRequestError
         - root.CredentialsListAccessibleEntrancesRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             acs_credential_id: acs_credential_id
           response:
@@ -15274,10 +15077,7 @@ service:
         - root.CredentialsUnassignRequestBadRequestError
         - root.CredentialsUnassignRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             acs_user_id: acs_user_id
             acs_credential_id: acs_credential_id
@@ -15342,10 +15142,7 @@ service:
         - root.CredentialsUpdateRequestBadRequestError
         - root.CredentialsUpdateRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             acs_credential_id: acs_credential_id
           response:
@@ -15407,11 +15204,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "acs_entrance_id": "acs_entrance_id",
                   },
@@ -15493,11 +15286,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "acs_entrance_id": "acs_entrance_id",
                     "acs_user_id": "acs_user_id",
@@ -15560,11 +15349,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {},
                   "response": {
                     "body": {
@@ -15649,11 +15434,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "acs_entrance_id": "acs_entrance_id",
                   },
@@ -15840,10 +15621,7 @@ service:
         - root.EntrancesGetRequestBadRequestError
         - root.EntrancesGetRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             acs_entrance_id: acs_entrance_id
           response:
@@ -15896,10 +15674,7 @@ service:
         - root.EntrancesGrantAccessRequestBadRequestError
         - root.EntrancesGrantAccessRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             acs_entrance_id: acs_entrance_id
             acs_user_id: acs_user_id
@@ -15935,10 +15710,7 @@ service:
         - root.EntrancesListRequestBadRequestError
         - root.EntrancesListRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request: {}
           response:
             body:
@@ -15985,10 +15757,7 @@ service:
         - root.EntrancesListCredentialsWithAccessRequestBadRequestError
         - root.EntrancesListCredentialsWithAccessRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             acs_entrance_id: acs_entrance_id
           response:
@@ -16044,11 +15813,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "acs_system_id": "acs_system_id",
                   },
@@ -16131,11 +15896,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {},
                   "response": {
                     "body": {
@@ -16218,11 +15979,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "acs_system_id": "acs_system_id",
                   },
@@ -16388,10 +16145,7 @@ service:
         - root.SystemsGetRequestBadRequestError
         - root.SystemsGetRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             acs_system_id: acs_system_id
           response:
@@ -16445,10 +16199,7 @@ service:
         - root.SystemsListRequestBadRequestError
         - root.SystemsListRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request: {}
           response:
             body:
@@ -16503,10 +16254,7 @@ service:
         - >-
           root.SystemsListCompatibleCredentialManagerAcsSystemsRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             acs_system_id: acs_system_id
           response:
@@ -16559,11 +16307,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "acs_access_group_id": "acs_access_group_id",
                     "acs_user_id": "acs_user_id",
@@ -16626,11 +16370,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "acs_system_id": "acs_system_id",
                   },
@@ -16743,11 +16483,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "acs_user_id": "acs_user_id",
                   },
@@ -16800,11 +16536,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "acs_user_id": "acs_user_id",
                   },
@@ -16881,11 +16613,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {},
                   "response": {
                     "body": {
@@ -16973,11 +16701,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "acs_user_id": "acs_user_id",
                   },
@@ -17055,11 +16779,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "acs_access_group_id": "acs_access_group_id",
                     "acs_user_id": "acs_user_id",
@@ -17122,11 +16842,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "acs_user_id": "acs_user_id",
                   },
@@ -17179,11 +16895,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "acs_user_id": "acs_user_id",
                   },
@@ -17236,11 +16948,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "acs_user_id": "acs_user_id",
                   },
@@ -17293,11 +17001,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "acs_user_id": "acs_user_id",
                   },
@@ -17627,10 +17331,7 @@ service:
         - root.UsersAddToAccessGroupRequestBadRequestError
         - root.UsersAddToAccessGroupRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             acs_user_id: acs_user_id
             acs_access_group_id: acs_access_group_id
@@ -17684,10 +17385,7 @@ service:
         - root.UsersCreateRequestBadRequestError
         - root.UsersCreateRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             acs_system_id: acs_system_id
           response:
@@ -17738,10 +17436,7 @@ service:
         - root.UsersDeleteRequestBadRequestError
         - root.UsersDeleteRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             acs_user_id: acs_user_id
           response:
@@ -17772,10 +17467,7 @@ service:
         - root.UsersGetRequestBadRequestError
         - root.UsersGetRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             acs_user_id: acs_user_id
           response:
@@ -17833,10 +17525,7 @@ service:
         - root.UsersListRequestBadRequestError
         - root.UsersListRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request: {}
           response:
             body:
@@ -17887,10 +17576,7 @@ service:
         - root.UsersListAccessibleEntrancesRequestBadRequestError
         - root.UsersListAccessibleEntrancesRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             acs_user_id: acs_user_id
           response:
@@ -17940,10 +17626,7 @@ service:
         - root.UsersRemoveFromAccessGroupRequestBadRequestError
         - root.UsersRemoveFromAccessGroupRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             acs_user_id: acs_user_id
             acs_access_group_id: acs_access_group_id
@@ -17974,10 +17657,7 @@ service:
         - root.UsersRevokeAccessToAllEntrancesRequestBadRequestError
         - root.UsersRevokeAccessToAllEntrancesRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             acs_user_id: acs_user_id
           response:
@@ -18007,10 +17687,7 @@ service:
         - root.UsersSuspendRequestBadRequestError
         - root.UsersSuspendRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             acs_user_id: acs_user_id
           response:
@@ -18040,10 +17717,7 @@ service:
         - root.UsersUnsuspendRequestBadRequestError
         - root.UsersUnsuspendRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             acs_user_id: acs_user_id
           response:
@@ -18094,10 +17768,7 @@ service:
         - root.UsersUpdateRequestBadRequestError
         - root.UsersUpdateRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             acs_user_id: acs_user_id
           response:
@@ -18127,11 +17798,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "action_attempt_id": "action_attempt_id",
                   },
@@ -18192,11 +17859,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "action_attempt_ids": [
                       "action_attempt_ids",
@@ -18317,10 +17980,7 @@ service:
         - root.ActionAttemptsGetRequestBadRequestError
         - root.ActionAttemptsGetRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             action_attempt_id: action_attempt_id
           response:
@@ -18354,10 +18014,7 @@ service:
         - root.ActionAttemptsListRequestBadRequestError
         - root.ActionAttemptsListRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             action_attempt_ids:
               - action_attempt_ids
@@ -18394,11 +18051,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {},
                   "response": {
                     "body": {
@@ -18471,11 +18124,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "client_session_id": "client_session_id",
                   },
@@ -18528,11 +18177,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {},
                   "response": {
                     "body": {
@@ -18594,11 +18239,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {},
                   "response": {
                     "body": {
@@ -18671,11 +18312,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {},
                   "response": {
                     "body": {
@@ -18739,11 +18376,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {},
                   "response": {
                     "body": {
@@ -18810,11 +18443,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "client_session_id": "client_session_id",
                   },
@@ -19016,10 +18645,7 @@ service:
         - root.ClientSessionsCreateRequestBadRequestError
         - root.ClientSessionsCreateRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request: {}
           response:
             body:
@@ -19061,10 +18687,7 @@ service:
         - root.ClientSessionsDeleteRequestBadRequestError
         - root.ClientSessionsDeleteRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             client_session_id: client_session_id
           response:
@@ -19093,10 +18716,7 @@ service:
         - root.ClientSessionsGetRequestBadRequestError
         - root.ClientSessionsGetRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request: {}
           response:
             body:
@@ -19143,10 +18763,7 @@ service:
         - root.ClientSessionsGetOrCreateRequestBadRequestError
         - root.ClientSessionsGetOrCreateRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request: {}
           response:
             body:
@@ -19189,10 +18806,7 @@ service:
         - root.ClientSessionsGrantAccessRequestBadRequestError
         - root.ClientSessionsGrantAccessRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request: {}
           response:
             body:
@@ -19236,10 +18850,7 @@ service:
         - root.ClientSessionsListRequestBadRequestError
         - root.ClientSessionsListRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request: {}
           response:
             body:
@@ -19281,10 +18892,7 @@ service:
         - root.ClientSessionsRevokeRequestBadRequestError
         - root.ClientSessionsRevokeRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             client_session_id: client_session_id
           response:
@@ -19314,11 +18922,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {},
                   "response": {
                     "body": {
@@ -19402,11 +19006,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "connect_webview_id": "connect_webview_id",
                   },
@@ -19459,11 +19059,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "connect_webview_id": "connect_webview_id",
                   },
@@ -19544,11 +19140,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {},
                   "response": {
                     "body": {
@@ -19926,10 +19518,7 @@ service:
         - root.ConnectWebviewsCreateRequestBadRequestError
         - root.ConnectWebviewsCreateRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request: {}
           response:
             body:
@@ -19981,10 +19570,7 @@ service:
         - root.ConnectWebviewsDeleteRequestBadRequestError
         - root.ConnectWebviewsDeleteRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             connect_webview_id: connect_webview_id
           response:
@@ -20015,10 +19601,7 @@ service:
         - root.ConnectWebviewsGetRequestBadRequestError
         - root.ConnectWebviewsGetRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             connect_webview_id: connect_webview_id
           response:
@@ -20079,10 +19662,7 @@ service:
         - root.ConnectWebviewsListRequestBadRequestError
         - root.ConnectWebviewsListRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request: {}
           response:
             body:
@@ -20134,11 +19714,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "connected_account_id": "connected_account_id",
                   },
@@ -20195,11 +19771,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "connected_account_id": "connected_account_id",
                   },
@@ -20260,11 +19832,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {},
                   "response": {
                     "body": {
@@ -20329,11 +19897,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "connected_account_id": "connected_account_id",
                   },
@@ -20638,10 +20202,7 @@ service:
         - root.ConnectedAccountsDeleteRequestBadRequestError
         - root.ConnectedAccountsDeleteRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             connected_account_id: connected_account_id
           response:
@@ -20666,10 +20227,7 @@ service:
         - root.ConnectedAccountsGetRequestBadRequestError
         - root.ConnectedAccountsGetRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             connected_account_id: connected_account_id
           response:
@@ -20721,10 +20279,7 @@ service:
         - root.ConnectedAccountsListRequestBadRequestError
         - root.ConnectedAccountsListRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request: {}
           response:
             body:
@@ -20770,10 +20325,7 @@ service:
         - root.ConnectedAccountsUpdateRequestBadRequestError
         - root.ConnectedAccountsUpdateRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             connected_account_id: connected_account_id
           response:
@@ -20821,11 +20373,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "device_id": "device_id",
                   },
@@ -20878,11 +20426,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {},
                   "response": {
                     "body": {
@@ -21188,11 +20732,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {},
                   "response": {
                     "body": {
@@ -21316,11 +20856,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {},
                   "response": {
                     "body": {
@@ -21374,11 +20910,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "device_id": "device_id",
                   },
@@ -21934,10 +21466,7 @@ service:
         - root.DevicesDeleteRequestBadRequestError
         - root.DevicesDeleteRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             device_id: device_id
           response:
@@ -21969,10 +21498,7 @@ service:
         - root.DevicesGetRequestBadRequestError
         - root.DevicesGetRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request: {}
           response:
             body:
@@ -22215,10 +21741,7 @@ service:
         - root.DevicesListRequestBadRequestError
         - root.DevicesListRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request: {}
           response:
             body:
@@ -22279,10 +21802,7 @@ service:
         - root.DevicesListDeviceProvidersRequestBadRequestError
         - root.DevicesListDeviceProvidersRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request: {}
           response:
             body:
@@ -22325,10 +21845,7 @@ service:
         - root.DevicesUpdateRequestBadRequestError
         - root.DevicesUpdateRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             device_id: device_id
           response:
@@ -22358,11 +21875,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "device_id": "device_id",
                   },
@@ -22415,11 +21928,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "device_id": "device_id",
                   },
@@ -22472,11 +21981,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "device_id": "device_id",
                   },
@@ -22603,10 +22108,7 @@ service:
         - root.SimulateConnectRequestBadRequestError
         - root.SimulateConnectRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             device_id: device_id
           response:
@@ -22636,10 +22138,7 @@ service:
         - root.SimulateDisconnectRequestBadRequestError
         - root.SimulateDisconnectRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             device_id: device_id
           response:
@@ -22669,10 +22168,7 @@ service:
         - root.SimulateRemoveRequestBadRequestError
         - root.SimulateRemoveRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             device_id: device_id
           response:
@@ -22702,11 +22198,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {},
                   "response": {
                     "body": {
@@ -22810,11 +22302,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {},
                   "response": {
                     "body": {
@@ -22930,11 +22418,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "device_id": "device_id",
                     "is_managed": true,
@@ -23383,10 +22867,7 @@ service:
         - root.UnmanagedGetRequestBadRequestError
         - root.UnmanagedGetRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request: {}
           response:
             body:
@@ -23473,10 +22954,7 @@ service:
         - root.UnmanagedListRequestBadRequestError
         - root.UnmanagedListRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request: {}
           response:
             body:
@@ -23534,10 +23012,7 @@ service:
         - root.UnmanagedUpdateRequestBadRequestError
         - root.UnmanagedUpdateRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             device_id: device_id
             is_managed: true
@@ -23568,11 +23043,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {},
                   "response": {
                     "body": {
@@ -23649,11 +23120,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {},
                   "response": {
                     "body": {
@@ -24563,10 +24030,7 @@ service:
         - root.EventsGetRequestBadRequestError
         - root.EventsGetRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request: {}
           response:
             body:
@@ -24627,10 +24091,7 @@ service:
         - root.EventsListRequestBadRequestError
         - root.EventsListRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request: {}
           response:
             body:
@@ -24672,11 +24133,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {},
                   "response": {
                     "body": {
@@ -25235,11 +24692,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {},
                   "response": {
                     "body": {
@@ -25411,11 +24864,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "device_id": "device_id",
                   },
@@ -25480,11 +24929,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "device_id": "device_id",
                   },
@@ -25966,10 +25411,7 @@ service:
         - root.LocksGetRequestBadRequestError
         - root.LocksGetRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request: {}
           response:
             body:
@@ -26407,10 +25849,7 @@ service:
         - root.LocksListRequestBadRequestError
         - root.LocksListRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request: {}
           response:
             body:
@@ -26511,10 +25950,7 @@ service:
         - root.LocksLockDoorRequestBadRequestError
         - root.LocksLockDoorRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             device_id: device_id
           response:
@@ -26554,10 +25990,7 @@ service:
         - root.LocksUnlockDoorRequestBadRequestError
         - root.LocksUnlockDoorRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             device_id: device_id
           response:
@@ -26593,11 +26026,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "network_id": "network_id",
                   },
@@ -26657,11 +26086,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {},
                   "response": {
                     "body": {
@@ -26775,10 +26200,7 @@ service:
         - root.NetworksGetRequestBadRequestError
         - root.NetworksGetRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             network_id: network_id
           response:
@@ -26810,10 +26232,7 @@ service:
         - root.NetworksListRequestBadRequestError
         - root.NetworksListRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request: {}
           response:
             body:
@@ -26847,11 +26266,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "device_id": "device_id",
                     "ends_daily_at": "ends_daily_at",
@@ -26932,11 +26347,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "device_id": "device_id",
                     "noise_threshold_id": "noise_threshold_id",
@@ -27010,11 +26421,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "noise_threshold_id": "noise_threshold_id",
                   },
@@ -27077,11 +26484,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "device_id": "device_id",
                   },
@@ -27147,11 +26550,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "device_id": "device_id",
                     "noise_threshold_id": "noise_threshold_id",
@@ -27355,10 +26754,7 @@ service:
         - root.NoiseThresholdsCreateRequestBadRequestError
         - root.NoiseThresholdsCreateRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             device_id: device_id
             starts_daily_at: starts_daily_at
@@ -27411,10 +26807,7 @@ service:
         - root.NoiseThresholdsDeleteRequestBadRequestError
         - root.NoiseThresholdsDeleteRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             noise_threshold_id: noise_threshold_id
             device_id: device_id
@@ -27452,10 +26845,7 @@ service:
         - root.NoiseThresholdsGetRequestBadRequestError
         - root.NoiseThresholdsGetRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             noise_threshold_id: noise_threshold_id
           response:
@@ -27495,10 +26885,7 @@ service:
         - root.NoiseThresholdsListRequestBadRequestError
         - root.NoiseThresholdsListRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             device_id: device_id
           response:
@@ -27548,10 +26935,7 @@ service:
         - root.NoiseThresholdsUpdateRequestBadRequestError
         - root.NoiseThresholdsUpdateRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             noise_threshold_id: noise_threshold_id
             device_id: device_id
@@ -27588,11 +26972,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "device_id": "device_id",
                   },
@@ -27689,10 +27069,7 @@ service:
         - root.SimulateTriggerNoiseThresholdRequestBadRequestError
         - root.SimulateTriggerNoiseThresholdRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             device_id: device_id
           response:
@@ -27722,11 +27099,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "device_id": "device_id",
                   },
@@ -27771,11 +27144,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {},
                   "response": {
                     "body": {
@@ -27922,10 +27291,7 @@ service:
         - root.PhonesDeactivateRequestBadRequestError
         - root.PhonesDeactivateRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             device_id: device_id
           response:
@@ -27956,10 +27322,7 @@ service:
         - root.PhonesListRequestBadRequestError
         - root.PhonesListRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request: {}
           response:
             body:
@@ -28014,11 +27377,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "user_identity_id": "user_identity_id",
                   },
@@ -28292,10 +27651,7 @@ service:
         - root.SimulateCreateSandboxPhoneRequestBadRequestError
         - root.SimulateCreateSandboxPhoneRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             user_identity_id: user_identity_id
           response:
@@ -28359,11 +27715,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "device_id": "device_id",
                   },
@@ -28430,11 +27782,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {},
                   "response": {
                     "body": {
@@ -28740,11 +28088,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "device_id": "device_id",
                   },
@@ -28811,11 +28155,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "device_id": "device_id",
                   },
@@ -28884,11 +28224,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {},
                   "response": {
                     "body": {
@@ -29012,11 +28348,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "device_id": "device_id",
                   },
@@ -29081,11 +28413,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "device_id": "device_id",
                   },
@@ -29152,11 +28480,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "default_climate_setting": {},
                     "device_id": "device_id",
@@ -29779,10 +29103,7 @@ service:
         - root.ThermostatsCoolRequestBadRequestError
         - root.ThermostatsCoolRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             device_id: device_id
           response:
@@ -29820,10 +29141,7 @@ service:
         - root.ThermostatsGetRequestBadRequestError
         - root.ThermostatsGetRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request: {}
           response:
             body:
@@ -30053,10 +29371,7 @@ service:
         - root.ThermostatsHeatRequestBadRequestError
         - root.ThermostatsHeatRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             device_id: device_id
           response:
@@ -30100,10 +29415,7 @@ service:
         - root.ThermostatsHeatCoolRequestBadRequestError
         - root.ThermostatsHeatCoolRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             device_id: device_id
           response:
@@ -30160,10 +29472,7 @@ service:
         - root.ThermostatsListRequestBadRequestError
         - root.ThermostatsListRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request: {}
           response:
             body:
@@ -30230,10 +29539,7 @@ service:
         - root.ThermostatsOffRequestBadRequestError
         - root.ThermostatsOffRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             device_id: device_id
           response:
@@ -30275,10 +29581,7 @@ service:
         - root.ThermostatsSetFanModeRequestBadRequestError
         - root.ThermostatsSetFanModeRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             device_id: device_id
           response:
@@ -30315,10 +29618,7 @@ service:
         - root.ThermostatsUpdateRequestBadRequestError
         - root.ThermostatsUpdateRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             device_id: device_id
             default_climate_setting: {}
@@ -30349,11 +29649,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "device_id": "device_id",
                     "schedule_ends_at": "schedule_ends_at",
@@ -30433,11 +29729,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "climate_setting_schedule_id": "climate_setting_schedule_id",
                   },
@@ -30490,11 +29782,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {},
                   "response": {
                     "body": {
@@ -30575,11 +29863,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "device_id": "device_id",
                   },
@@ -30656,11 +29940,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "climate_setting_schedule_id": "climate_setting_schedule_id",
                   },
@@ -30909,10 +30189,7 @@ service:
         - root.ClimateSettingSchedulesCreateRequestBadRequestError
         - root.ClimateSettingSchedulesCreateRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             device_id: device_id
             schedule_starts_at: schedule_starts_at
@@ -30962,10 +30239,7 @@ service:
         - root.ClimateSettingSchedulesDeleteRequestBadRequestError
         - root.ClimateSettingSchedulesDeleteRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             climate_setting_schedule_id: climate_setting_schedule_id
           response:
@@ -31000,10 +30274,7 @@ service:
         - root.ClimateSettingSchedulesGetRequestBadRequestError
         - root.ClimateSettingSchedulesGetRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request: {}
           response:
             body:
@@ -31052,10 +30323,7 @@ service:
         - root.ClimateSettingSchedulesListRequestBadRequestError
         - root.ClimateSettingSchedulesListRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             device_id: device_id
           response:
@@ -31115,10 +30383,7 @@ service:
         - root.ClimateSettingSchedulesUpdateRequestBadRequestError
         - root.ClimateSettingSchedulesUpdateRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             climate_setting_schedule_id: climate_setting_schedule_id
           response:
@@ -31166,11 +30431,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "acs_user_id": "acs_user_id",
                     "user_identity_id": "user_identity_id",
@@ -31233,11 +30494,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {},
                   "response": {
                     "body": {
@@ -31318,11 +30575,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "user_identity_id": "user_identity_id",
                   },
@@ -31375,11 +30628,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "user_identity_id": "user_identity_id",
                   },
@@ -31427,11 +30676,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "device_id": "device_id",
                     "user_identity_id": "user_identity_id",
@@ -31494,11 +30739,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {},
                   "response": {
                     "body": {
@@ -31562,11 +30803,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "user_identity_id": "user_identity_id",
                   },
@@ -31716,11 +30953,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "user_identity_id": "user_identity_id",
                   },
@@ -31805,11 +31038,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "user_identity_id": "user_identity_id",
                   },
@@ -31888,11 +31117,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "acs_user_id": "acs_user_id",
                     "user_identity_id": "user_identity_id",
@@ -31955,11 +31180,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "device_id": "device_id",
                     "user_identity_id": "user_identity_id",
@@ -32022,11 +31243,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "user_identity_id": "user_identity_id",
                   },
@@ -32411,10 +31628,7 @@ service:
         - root.UserIdentitiesAddAcsUserRequestBadRequestError
         - root.UserIdentitiesAddAcsUserRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             user_identity_id: user_identity_id
             acs_user_id: acs_user_id
@@ -32455,10 +31669,7 @@ service:
         - root.UserIdentitiesCreateRequestBadRequestError
         - root.UserIdentitiesCreateRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request: {}
           response:
             body:
@@ -32496,10 +31707,7 @@ service:
         - root.UserIdentitiesDeleteRequestBadRequestError
         - root.UserIdentitiesDeleteRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             user_identity_id: user_identity_id
           response:
@@ -32524,10 +31732,7 @@ service:
         - root.UserIdentitiesGetRequestBadRequestError
         - root.UserIdentitiesGetRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             user_identity_id: user_identity_id
           response:
@@ -32570,10 +31775,7 @@ service:
         - root.UserIdentitiesGrantAccessToDeviceRequestBadRequestError
         - root.UserIdentitiesGrantAccessToDeviceRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             user_identity_id: user_identity_id
             device_id: device_id
@@ -32605,10 +31807,7 @@ service:
         - root.UserIdentitiesListRequestBadRequestError
         - root.UserIdentitiesListRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request: {}
           response:
             body:
@@ -32647,10 +31846,7 @@ service:
         - root.UserIdentitiesListAccessibleDevicesRequestBadRequestError
         - root.UserIdentitiesListAccessibleDevicesRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             user_identity_id: user_identity_id
           response:
@@ -32749,10 +31945,7 @@ service:
         - root.UserIdentitiesListAcsSystemsRequestBadRequestError
         - root.UserIdentitiesListAcsSystemsRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             user_identity_id: user_identity_id
           response:
@@ -32806,10 +31999,7 @@ service:
         - root.UserIdentitiesListAcsUsersRequestBadRequestError
         - root.UserIdentitiesListAcsUsersRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             user_identity_id: user_identity_id
           response:
@@ -32864,10 +32054,7 @@ service:
         - root.UserIdentitiesRemoveAcsUserRequestBadRequestError
         - root.UserIdentitiesRemoveAcsUserRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             user_identity_id: user_identity_id
             acs_user_id: acs_user_id
@@ -32902,10 +32089,7 @@ service:
         - root.UserIdentitiesRevokeAccessToDeviceRequestBadRequestError
         - root.UserIdentitiesRevokeAccessToDeviceRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             user_identity_id: user_identity_id
             device_id: device_id
@@ -32949,10 +32133,7 @@ service:
         - root.UserIdentitiesUpdateRequestBadRequestError
         - root.UserIdentitiesUpdateRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             user_identity_id: user_identity_id
           response:
@@ -32982,11 +32163,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "enrollment_automation_id": "enrollment_automation_id",
                   },
@@ -33039,11 +32216,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "enrollment_automation_id": "enrollment_automation_id",
                   },
@@ -33104,11 +32277,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "credential_manager_acs_system_id": "credential_manager_acs_system_id",
                     "user_identity_id": "user_identity_id",
@@ -33199,11 +32368,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "user_identity_id": "user_identity_id",
                   },
@@ -33442,10 +32607,7 @@ service:
         - root.EnrollmentAutomationsDeleteRequestBadRequestError
         - root.EnrollmentAutomationsDeleteRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             enrollment_automation_id: enrollment_automation_id
           response:
@@ -33476,10 +32638,7 @@ service:
         - root.EnrollmentAutomationsGetRequestBadRequestError
         - root.EnrollmentAutomationsGetRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             enrollment_automation_id: enrollment_automation_id
           response:
@@ -33529,10 +32688,7 @@ service:
         - root.EnrollmentAutomationsLaunchRequestBadRequestError
         - root.EnrollmentAutomationsLaunchRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             user_identity_id: user_identity_id
             credential_manager_acs_system_id: credential_manager_acs_system_id
@@ -33571,10 +32727,7 @@ service:
         - root.EnrollmentAutomationsListRequestBadRequestError
         - root.EnrollmentAutomationsListRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             user_identity_id: user_identity_id
           response:
@@ -33610,11 +32763,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "url": "url",
                   },
@@ -33677,11 +32826,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "webhook_id": "webhook_id",
                   },
@@ -33726,11 +32871,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "webhook_id": "webhook_id",
                   },
@@ -33784,11 +32925,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "response": {
                     "body": {
                       "ok": true,
@@ -33829,11 +32966,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "event_types": [
                       "event_types",
@@ -33994,10 +33127,7 @@ service:
         - root.WebhooksCreateRequestBadRequestError
         - root.WebhooksCreateRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             url: url
           response:
@@ -34030,10 +33160,7 @@ service:
         - root.WebhooksDeleteRequestBadRequestError
         - root.WebhooksDeleteRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             webhook_id: webhook_id
           response:
@@ -34061,10 +33188,7 @@ service:
         - root.WebhooksGetRequestBadRequestError
         - root.WebhooksGetRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             webhook_id: webhook_id
           response:
@@ -34092,10 +33216,7 @@ service:
         - root.WebhooksListRequestBadRequestError
         - root.WebhooksListRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           response:
             body:
               webhooks:
@@ -34127,10 +33248,7 @@ service:
         - root.WebhooksUpdateRequestBadRequestError
         - root.WebhooksUpdateRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             webhook_id: webhook_id
             event_types:
@@ -34162,11 +33280,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "request": {
                     "name": "name",
                   },
@@ -34234,11 +33348,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "response": {
                     "body": {
                       "ok": true,
@@ -34276,11 +33386,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "response": {
                     "body": {
                       "ok": true,
@@ -34320,11 +33426,7 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {
-                    "client-session-token": "client-session-token",
-                    "seam-client-session-token": "seam-client-session-token",
-                    "seam-workspace": "seam-workspace",
-                  },
+                  "headers": {},
                   "response": {
                     "body": {
                       "action_attempt": {
@@ -34488,10 +33590,7 @@ service:
         - root.WorkspacesCreateRequestBadRequestError
         - root.WorkspacesCreateRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           request:
             name: name
           response:
@@ -34519,10 +33618,7 @@ service:
         - root.WorkspacesGetRequestBadRequestError
         - root.WorkspacesGetRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           response:
             body:
               workspace:
@@ -34548,10 +33644,7 @@ service:
         - root.WorkspacesListRequestBadRequestError
         - root.WorkspacesListRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           response:
             body:
               workspaces:
@@ -34577,10 +33670,7 @@ service:
         - root.WorkspacesResetSandboxRequestBadRequestError
         - root.WorkspacesResetSandboxRequestUnauthorizedError
       examples:
-        - headers:
-            seam-workspace: seam-workspace
-            seam-client-session-token: seam-client-session-token
-            client-session-token: client-session-token
+        - headers: {}
           response:
             body:
               action_attempt:
