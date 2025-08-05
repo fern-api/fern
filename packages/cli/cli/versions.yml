@@ -1,7 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
+
 - changelogEntry:
     - summary: |
-        Fix: allow setting of PyPI package name and version in local docker generation
+        Fix: allow setting of PyPI package name and version in SDK generation with local docker (--local flag)
+      type: feat
+  irVersion: 58
+  createdAt: "2025-08-05"
+  version: 0.65.47
+
+- changelogEntry:
+    - summary: |
+        
+        Fix in endpoint example gen: updated processing for all types of headers
       type: feat
   irVersion: 58
   createdAt: "2025-08-05"

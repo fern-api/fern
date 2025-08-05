@@ -14,7 +14,10 @@
               "docs": undefined,
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "date_header": "[object Object]",
+                    "date_time_header": "[object Object]",
+                  },
                   "request": {},
                   "response": {
                     "body": {
@@ -96,7 +99,9 @@
         type: Response
         status-code: 200
       examples:
-        - headers: {}
+        - headers:
+            date_header: '[object Object]'
+            date_time_header: '[object Object]'
           request: {}
           response:
             body:

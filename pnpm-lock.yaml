@@ -6,6 +6,7 @@ settings:
 
 overrides:
   '@babel/traverse': 7.23.2
+  '@bufbuild/protobuf': 2.2.5
   cross-spawn: 7.0.5
   json5: 2.2.2
   katex: 0.16.21
@@ -4423,8 +4424,8 @@ importers:
   packages/cli/cli:
     devDependencies:
       '@bufbuild/protobuf':
-        specifier: ^2.2.5
-        version: 2.5.2
+        specifier: 2.2.5
+        version: 2.2.5
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
         version: link:../workspace/commons
@@ -6114,8 +6115,8 @@ importers:
   packages/cli/generation/protoc-gen-fern:
     dependencies:
       '@bufbuild/protobuf':
-        specifier: ^2.2.5
-        version: 2.5.2
+        specifier: 2.2.5
+        version: 2.2.5
       '@bufbuild/protoplugin':
         specifier: 2.2.5
         version: 2.2.5
@@ -8397,9 +8398,6 @@ packages:
 
   '@bufbuild/protobuf@2.2.5':
     resolution: {integrity: sha512-/g5EzJifw5GF8aren8wZ/G5oMuPoGeS6MQD3ca8ddcvdXR5UELUfdTZITCGNhNXynY/AYl3Z4plmxdj/tRl/hQ==}
-
-  '@bufbuild/protobuf@2.5.2':
-    resolution: {integrity: sha512-foZ7qr0IsUBjzWIq+SuBLfdQCpJ1j8cTuNNT4owngTHoN5KsJb8L9t65fzz7SCeSWzescoOil/0ldqiL041ABg==}
 
   '@bufbuild/protoplugin@2.2.5':
     resolution: {integrity: sha512-Z68KTDLiidUYoJ8kjs6YfhK8r58W93pOFIfGqlnK1RZQTQRtbH6WRWjSqtuiy4WjJpJZ5qE0lKtFGR+bHU8Vaw==}
@@ -15436,8 +15434,6 @@ snapshots:
       stylelint: 14.16.1
 
   '@bufbuild/protobuf@2.2.5': {}
-
-  '@bufbuild/protobuf@2.5.2': {}
 
   '@bufbuild/protoplugin@2.2.5':
     dependencies:
