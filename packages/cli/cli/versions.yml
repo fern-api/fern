@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix: updated processing for optional type headers
+      type: feat
+  irVersion: 58
+  createdAt: "2025-08-05"
+  version: 0.65.45
+
+- changelogEntry:
+    - summary: |
         Fix in endpoint example gen: literal type headers should use the literal value for example
       type: feat
   irVersion: 58
