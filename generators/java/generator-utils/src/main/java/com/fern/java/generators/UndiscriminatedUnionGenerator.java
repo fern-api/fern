@@ -535,7 +535,7 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
                                     ObjectMappersGenerator.JSON_MAPPER_STATIC_FIELD_NAME,
                                     VALUE_FIELD_SPEC.name,
                                     ParameterizedTypeName.get(ClassName.get(TypeReference.class), typeName))
-                            .nextControlFlow("catch($T e)", IllegalArgumentException.class)
+                            .nextControlFlow("catch($T e)", RuntimeException.class)
                             .endControlFlow();
                 } else {
                     deserializeMethod
@@ -547,7 +547,7 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
                                     ObjectMappersGenerator.JSON_MAPPER_STATIC_FIELD_NAME,
                                     VALUE_FIELD_SPEC.name,
                                     typeName)
-                            .nextControlFlow("catch($T e)", IllegalArgumentException.class)
+                            .nextControlFlow("catch($T e)", RuntimeException.class)
                             .endControlFlow();
                 }
             }
