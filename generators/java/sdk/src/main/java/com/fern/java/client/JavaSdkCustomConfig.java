@@ -60,6 +60,12 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
         return false;
     }
 
+    @JsonProperty("extend")
+    @Value.Default
+    default boolean extend() {
+        return false;
+    }
+
     static ImmutableJavaSdkCustomConfig.Builder builder() {
         return ImmutableJavaSdkCustomConfig.builder();
     }
