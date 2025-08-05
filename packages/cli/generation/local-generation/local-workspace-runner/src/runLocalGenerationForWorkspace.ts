@@ -99,10 +99,17 @@ export async function runLocalGenerationForWorkspace({
                 }
 
                 // Set the publish config on the intermediateRepresentation if available
+
+                // grabs generator.yml > config > package_name
+                const packageName =typeof generatorInvocation.raw?.config === "object" && generatorInvocation.raw?.config !== null
+                ? (generatorInvocation.raw.config as { package_name?: string }).package_name
+                : undefined  
+
                 const publishConfig = getPublishConfig({
                     generatorInvocation,
                     org: organization.ok ? organization.body : undefined,
                     version,
+                    packageName,
                     context
                 });
                 if (publishConfig != null) {
@@ -174,11 +181,13 @@ function getPublishConfig({
     generatorInvocation,
     org,
     version,
-    context,
+    packageName,
+    context
 }: {
     generatorInvocation: generatorsYml.GeneratorInvocation;
     org?: FernVenusApi.Organization;
     version?: string;
+    packageName?: string;
     context: TaskContext;
 }): FernIr.PublishingConfig | undefined {
     if (generatorInvocation.raw?.github != null && isGithubSelfhosted(generatorInvocation.raw.github)) {
@@ -198,15 +207,15 @@ function getPublishConfig({
     if (generatorInvocation.raw?.output?.location === "local-file-system") {
         let publishTarget: PublishTarget | undefined = undefined;
         if (generatorInvocation.language === "python") {
-            publishTarget = FernIr.PublishTarget.pypi({
+            publishTarget = PublishTarget.pypi({
                 version,
-                packageName: undefined
+                packageName
             });
-            context.logger.debug("Publish target set to PyPI for Python language.");
+            context.logger.debug(`Created PyPiPublishTarget: version ${version} package name: ${packageName}`);
         }
 
         return FernIr.PublishingConfig.filesystem({
-            generateFullProject: org?.selfHostedSdKs ?? false,
+            generateFullProject: true,// todo: uncomment this - org?.selfHostedSdKs ?? false,
             publishTarget
         });
     }
