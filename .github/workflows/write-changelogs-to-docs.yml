@@ -65,10 +65,10 @@ jobs:
         run: rsync -av --delete "changelogs/ts-sdk/" "docs/fern/products/sdks/overview/typescript/changelog"
 
       - name: update rust-sdk changelog
-        run: rsync -avu --delete "changelogs/rust-sdk/" "docs/fern/products/sdks/overview/rust/changelog"
+        run: rsync -av --delete "changelogs/rust-sdk/" "docs/fern/products/sdks/overview/rust/changelog"
 
       - name: update swift-sdk changelog
-        run: rsync -avu --delete "changelogs/swift-sdk/" "docs/fern/products/sdks/overview/swift/changelog"
+        run: rsync -av --delete "changelogs/swift-sdk/" "docs/fern/products/sdks/overview/swift/changelog"
 
       - name: update cli changelog
         run: rsync -av --delete "changelogs/cli/" "docs/fern/products/cli-api-reference/cli-changelog"
