@@ -19,16 +19,16 @@ internal partial class RawClient(ClientOptions clientOptions)
     internal readonly ClientOptions Options = clientOptions;
 
     [Obsolete("Use SendRequestAsync instead.")]
-    internal Task<SeedNurseryApi.Core.ApiResponse> MakeRequestAsync(
-        SeedNurseryApi.Core.BaseRequest request,
+    internal Task<global::SeedNurseryApi.Core.ApiResponse> MakeRequestAsync(
+        global::SeedNurseryApi.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
         return SendRequestAsync(request, cancellationToken);
     }
 
-    internal async Task<SeedNurseryApi.Core.ApiResponse> SendRequestAsync(
-        SeedNurseryApi.Core.BaseRequest request,
+    internal async Task<global::SeedNurseryApi.Core.ApiResponse> SendRequestAsync(
+        global::SeedNurseryApi.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
@@ -43,7 +43,7 @@ internal partial class RawClient(ClientOptions clientOptions)
             .ConfigureAwait(false);
     }
 
-    internal async Task<SeedNurseryApi.Core.ApiResponse> SendRequestAsync(
+    internal async Task<global::SeedNurseryApi.Core.ApiResponse> SendRequestAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken = default
@@ -109,7 +109,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     /// Sends the request with retries, unless the request content is not retryable,
     /// such as stream requests and multipart form data with stream content.
     /// </summary>
-    private async Task<SeedNurseryApi.Core.ApiResponse> SendWithRetriesAsync(
+    private async Task<global::SeedNurseryApi.Core.ApiResponse> SendWithRetriesAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken
@@ -122,7 +122,7 @@ internal partial class RawClient(ClientOptions clientOptions)
 
         if (!isRetryableContent)
         {
-            return new SeedNurseryApi.Core.ApiResponse
+            return new global::SeedNurseryApi.Core.ApiResponse
             {
                 StatusCode = (int)response.StatusCode,
                 Raw = response,
@@ -144,7 +144,7 @@ internal partial class RawClient(ClientOptions clientOptions)
                 .ConfigureAwait(false);
         }
 
-        return new SeedNurseryApi.Core.ApiResponse
+        return new global::SeedNurseryApi.Core.ApiResponse
         {
             StatusCode = (int)response.StatusCode,
             Raw = response,
@@ -168,7 +168,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         };
     }
 
-    internal HttpRequestMessage CreateHttpRequest(SeedNurseryApi.Core.BaseRequest request)
+    internal HttpRequestMessage CreateHttpRequest(global::SeedNurseryApi.Core.BaseRequest request)
     {
         var url = BuildUrl(request);
         var httpRequest = new HttpRequestMessage(request.Method, url);
@@ -184,7 +184,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         return httpRequest;
     }
 
-    private static string BuildUrl(SeedNurseryApi.Core.BaseRequest request)
+    private static string BuildUrl(global::SeedNurseryApi.Core.BaseRequest request)
     {
         var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl;
         var trimmedBaseUrl = baseUrl.TrimEnd('/');
@@ -231,7 +231,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     private static List<KeyValuePair<string, string>> GetQueryParameters(
-        SeedNurseryApi.Core.BaseRequest request
+        global::SeedNurseryApi.Core.BaseRequest request
     )
     {
         var result = TransformToKeyValuePairs(request.Query);
@@ -387,26 +387,27 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     /// <inheritdoc />
-    [Obsolete("Use SeedNurseryApi.Core.ApiResponse instead.")]
-    internal record ApiResponse : SeedNurseryApi.Core.ApiResponse;
+    [Obsolete("Use global::SeedNurseryApi.Core.ApiResponse instead.")]
+    internal record ApiResponse : global::SeedNurseryApi.Core.ApiResponse;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedNurseryApi.Core.BaseRequest instead.")]
-    internal abstract record BaseApiRequest : SeedNurseryApi.Core.BaseRequest;
+    [Obsolete("Use global::SeedNurseryApi.Core.BaseRequest instead.")]
+    internal abstract record BaseApiRequest : global::SeedNurseryApi.Core.BaseRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedNurseryApi.Core.EmptyRequest instead.")]
-    internal abstract record EmptyApiRequest : SeedNurseryApi.Core.EmptyRequest;
+    [Obsolete("Use global::SeedNurseryApi.Core.EmptyRequest instead.")]
+    internal abstract record EmptyApiRequest : global::SeedNurseryApi.Core.EmptyRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedNurseryApi.Core.JsonRequest instead.")]
-    internal abstract record JsonApiRequest : SeedNurseryApi.Core.JsonRequest;
+    [Obsolete("Use global::SeedNurseryApi.Core.JsonRequest instead.")]
+    internal abstract record JsonApiRequest : global::SeedNurseryApi.Core.JsonRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedNurseryApi.Core.MultipartFormRequest instead.")]
-    internal abstract record MultipartFormRequest : SeedNurseryApi.Core.MultipartFormRequest;
+    [Obsolete("Use global::SeedNurseryApi.Core.MultipartFormRequest instead.")]
+    internal abstract record MultipartFormRequest
+        : global::SeedNurseryApi.Core.MultipartFormRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedNurseryApi.Core.StreamRequest instead.")]
-    internal abstract record StreamApiRequest : SeedNurseryApi.Core.StreamRequest;
+    [Obsolete("Use global::SeedNurseryApi.Core.StreamRequest instead.")]
+    internal abstract record StreamApiRequest : global::SeedNurseryApi.Core.StreamRequest;
 }

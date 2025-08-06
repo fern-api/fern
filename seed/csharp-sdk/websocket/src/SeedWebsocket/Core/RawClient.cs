@@ -19,16 +19,16 @@ internal partial class RawClient(ClientOptions clientOptions)
     internal readonly ClientOptions Options = clientOptions;
 
     [Obsolete("Use SendRequestAsync instead.")]
-    internal Task<SeedWebsocket.Core.ApiResponse> MakeRequestAsync(
-        SeedWebsocket.Core.BaseRequest request,
+    internal Task<global::SeedWebsocket.Core.ApiResponse> MakeRequestAsync(
+        global::SeedWebsocket.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
         return SendRequestAsync(request, cancellationToken);
     }
 
-    internal async Task<SeedWebsocket.Core.ApiResponse> SendRequestAsync(
-        SeedWebsocket.Core.BaseRequest request,
+    internal async Task<global::SeedWebsocket.Core.ApiResponse> SendRequestAsync(
+        global::SeedWebsocket.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
@@ -43,7 +43,7 @@ internal partial class RawClient(ClientOptions clientOptions)
             .ConfigureAwait(false);
     }
 
-    internal async Task<SeedWebsocket.Core.ApiResponse> SendRequestAsync(
+    internal async Task<global::SeedWebsocket.Core.ApiResponse> SendRequestAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken = default
@@ -109,7 +109,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     /// Sends the request with retries, unless the request content is not retryable,
     /// such as stream requests and multipart form data with stream content.
     /// </summary>
-    private async Task<SeedWebsocket.Core.ApiResponse> SendWithRetriesAsync(
+    private async Task<global::SeedWebsocket.Core.ApiResponse> SendWithRetriesAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken
@@ -122,7 +122,7 @@ internal partial class RawClient(ClientOptions clientOptions)
 
         if (!isRetryableContent)
         {
-            return new SeedWebsocket.Core.ApiResponse
+            return new global::SeedWebsocket.Core.ApiResponse
             {
                 StatusCode = (int)response.StatusCode,
                 Raw = response,
@@ -144,7 +144,7 @@ internal partial class RawClient(ClientOptions clientOptions)
                 .ConfigureAwait(false);
         }
 
-        return new SeedWebsocket.Core.ApiResponse
+        return new global::SeedWebsocket.Core.ApiResponse
         {
             StatusCode = (int)response.StatusCode,
             Raw = response,
@@ -168,7 +168,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         };
     }
 
-    internal HttpRequestMessage CreateHttpRequest(SeedWebsocket.Core.BaseRequest request)
+    internal HttpRequestMessage CreateHttpRequest(global::SeedWebsocket.Core.BaseRequest request)
     {
         var url = BuildUrl(request);
         var httpRequest = new HttpRequestMessage(request.Method, url);
@@ -184,7 +184,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         return httpRequest;
     }
 
-    private static string BuildUrl(SeedWebsocket.Core.BaseRequest request)
+    private static string BuildUrl(global::SeedWebsocket.Core.BaseRequest request)
     {
         var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl;
         var trimmedBaseUrl = baseUrl.TrimEnd('/');
@@ -231,7 +231,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     private static List<KeyValuePair<string, string>> GetQueryParameters(
-        SeedWebsocket.Core.BaseRequest request
+        global::SeedWebsocket.Core.BaseRequest request
     )
     {
         var result = TransformToKeyValuePairs(request.Query);
@@ -387,26 +387,26 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     /// <inheritdoc />
-    [Obsolete("Use SeedWebsocket.Core.ApiResponse instead.")]
-    internal record ApiResponse : SeedWebsocket.Core.ApiResponse;
+    [Obsolete("Use global::SeedWebsocket.Core.ApiResponse instead.")]
+    internal record ApiResponse : global::SeedWebsocket.Core.ApiResponse;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedWebsocket.Core.BaseRequest instead.")]
-    internal abstract record BaseApiRequest : SeedWebsocket.Core.BaseRequest;
+    [Obsolete("Use global::SeedWebsocket.Core.BaseRequest instead.")]
+    internal abstract record BaseApiRequest : global::SeedWebsocket.Core.BaseRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedWebsocket.Core.EmptyRequest instead.")]
-    internal abstract record EmptyApiRequest : SeedWebsocket.Core.EmptyRequest;
+    [Obsolete("Use global::SeedWebsocket.Core.EmptyRequest instead.")]
+    internal abstract record EmptyApiRequest : global::SeedWebsocket.Core.EmptyRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedWebsocket.Core.JsonRequest instead.")]
-    internal abstract record JsonApiRequest : SeedWebsocket.Core.JsonRequest;
+    [Obsolete("Use global::SeedWebsocket.Core.JsonRequest instead.")]
+    internal abstract record JsonApiRequest : global::SeedWebsocket.Core.JsonRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedWebsocket.Core.MultipartFormRequest instead.")]
-    internal abstract record MultipartFormRequest : SeedWebsocket.Core.MultipartFormRequest;
+    [Obsolete("Use global::SeedWebsocket.Core.MultipartFormRequest instead.")]
+    internal abstract record MultipartFormRequest : global::SeedWebsocket.Core.MultipartFormRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedWebsocket.Core.StreamRequest instead.")]
-    internal abstract record StreamApiRequest : SeedWebsocket.Core.StreamRequest;
+    [Obsolete("Use global::SeedWebsocket.Core.StreamRequest instead.")]
+    internal abstract record StreamApiRequest : global::SeedWebsocket.Core.StreamRequest;
 }

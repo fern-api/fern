@@ -225,7 +225,16 @@ export class DynamicTypeLiteralMapper {
                 return this.instantiateUnionWithBaseProperties({
                     classReference,
                     baseProperties,
-                    arguments_: []
+                    arguments_: [
+                        // Unions with no properties require the discriminant property to be set.
+                        csharp.instantiateClass({
+                            classReference: csharp.classReference({
+                                name: `${this.context.getClassName(discriminatedUnion.declaration.name)}.${this.context.getClassName(discriminatedUnionTypeInstance.discriminantValue.name)}`,
+                                namespace: this.context.getNamespace(discriminatedUnion.declaration.fernFilepath)
+                            }),
+                            arguments_: []
+                        })
+                    ]
                 });
             default:
                 assertNever(unionVariant);

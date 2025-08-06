@@ -779,8 +779,6 @@ public record VariableValue
         internal IEnumerable<VariableValue> Value { get; set; } = new List<VariableValue>();
 
         public override string ToString() => Value.ToString();
-
-        public static implicit operator ListValue(IEnumerable<VariableValue> value) => new(value);
     }
 
     /// <summary>

@@ -12,11 +12,11 @@ public class Example0
             }
         );
 
-        await client.Dummy.GenerateStreamAsync(
+        await foreach (var item in client.Dummy.GenerateStreamAsync(
             new GenerateStreamRequest{
                 NumEvents = 1
             }
-        );
+        )) {/** consume each item */};
     }
 
 }

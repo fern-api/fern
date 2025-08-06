@@ -19,16 +19,16 @@ internal partial class RawClient(ClientOptions clientOptions)
     internal readonly ClientOptions Options = clientOptions;
 
     [Obsolete("Use SendRequestAsync instead.")]
-    internal Task<SeedQueryParameters.Core.ApiResponse> MakeRequestAsync(
-        SeedQueryParameters.Core.BaseRequest request,
+    internal Task<global::SeedQueryParameters.Core.ApiResponse> MakeRequestAsync(
+        global::SeedQueryParameters.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
         return SendRequestAsync(request, cancellationToken);
     }
 
-    internal async Task<SeedQueryParameters.Core.ApiResponse> SendRequestAsync(
-        SeedQueryParameters.Core.BaseRequest request,
+    internal async Task<global::SeedQueryParameters.Core.ApiResponse> SendRequestAsync(
+        global::SeedQueryParameters.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
@@ -43,7 +43,7 @@ internal partial class RawClient(ClientOptions clientOptions)
             .ConfigureAwait(false);
     }
 
-    internal async Task<SeedQueryParameters.Core.ApiResponse> SendRequestAsync(
+    internal async Task<global::SeedQueryParameters.Core.ApiResponse> SendRequestAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken = default
@@ -109,7 +109,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     /// Sends the request with retries, unless the request content is not retryable,
     /// such as stream requests and multipart form data with stream content.
     /// </summary>
-    private async Task<SeedQueryParameters.Core.ApiResponse> SendWithRetriesAsync(
+    private async Task<global::SeedQueryParameters.Core.ApiResponse> SendWithRetriesAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken
@@ -122,7 +122,7 @@ internal partial class RawClient(ClientOptions clientOptions)
 
         if (!isRetryableContent)
         {
-            return new SeedQueryParameters.Core.ApiResponse
+            return new global::SeedQueryParameters.Core.ApiResponse
             {
                 StatusCode = (int)response.StatusCode,
                 Raw = response,
@@ -144,7 +144,7 @@ internal partial class RawClient(ClientOptions clientOptions)
                 .ConfigureAwait(false);
         }
 
-        return new SeedQueryParameters.Core.ApiResponse
+        return new global::SeedQueryParameters.Core.ApiResponse
         {
             StatusCode = (int)response.StatusCode,
             Raw = response,
@@ -168,7 +168,9 @@ internal partial class RawClient(ClientOptions clientOptions)
         };
     }
 
-    internal HttpRequestMessage CreateHttpRequest(SeedQueryParameters.Core.BaseRequest request)
+    internal HttpRequestMessage CreateHttpRequest(
+        global::SeedQueryParameters.Core.BaseRequest request
+    )
     {
         var url = BuildUrl(request);
         var httpRequest = new HttpRequestMessage(request.Method, url);
@@ -184,7 +186,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         return httpRequest;
     }
 
-    private static string BuildUrl(SeedQueryParameters.Core.BaseRequest request)
+    private static string BuildUrl(global::SeedQueryParameters.Core.BaseRequest request)
     {
         var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl;
         var trimmedBaseUrl = baseUrl.TrimEnd('/');
@@ -231,7 +233,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     private static List<KeyValuePair<string, string>> GetQueryParameters(
-        SeedQueryParameters.Core.BaseRequest request
+        global::SeedQueryParameters.Core.BaseRequest request
     )
     {
         var result = TransformToKeyValuePairs(request.Query);
@@ -387,26 +389,27 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     /// <inheritdoc />
-    [Obsolete("Use SeedQueryParameters.Core.ApiResponse instead.")]
-    internal record ApiResponse : SeedQueryParameters.Core.ApiResponse;
+    [Obsolete("Use global::SeedQueryParameters.Core.ApiResponse instead.")]
+    internal record ApiResponse : global::SeedQueryParameters.Core.ApiResponse;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedQueryParameters.Core.BaseRequest instead.")]
-    internal abstract record BaseApiRequest : SeedQueryParameters.Core.BaseRequest;
+    [Obsolete("Use global::SeedQueryParameters.Core.BaseRequest instead.")]
+    internal abstract record BaseApiRequest : global::SeedQueryParameters.Core.BaseRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedQueryParameters.Core.EmptyRequest instead.")]
-    internal abstract record EmptyApiRequest : SeedQueryParameters.Core.EmptyRequest;
+    [Obsolete("Use global::SeedQueryParameters.Core.EmptyRequest instead.")]
+    internal abstract record EmptyApiRequest : global::SeedQueryParameters.Core.EmptyRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedQueryParameters.Core.JsonRequest instead.")]
-    internal abstract record JsonApiRequest : SeedQueryParameters.Core.JsonRequest;
+    [Obsolete("Use global::SeedQueryParameters.Core.JsonRequest instead.")]
+    internal abstract record JsonApiRequest : global::SeedQueryParameters.Core.JsonRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedQueryParameters.Core.MultipartFormRequest instead.")]
-    internal abstract record MultipartFormRequest : SeedQueryParameters.Core.MultipartFormRequest;
+    [Obsolete("Use global::SeedQueryParameters.Core.MultipartFormRequest instead.")]
+    internal abstract record MultipartFormRequest
+        : global::SeedQueryParameters.Core.MultipartFormRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedQueryParameters.Core.StreamRequest instead.")]
-    internal abstract record StreamApiRequest : SeedQueryParameters.Core.StreamRequest;
+    [Obsolete("Use global::SeedQueryParameters.Core.StreamRequest instead.")]
+    internal abstract record StreamApiRequest : global::SeedQueryParameters.Core.StreamRequest;
 }
