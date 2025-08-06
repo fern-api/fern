@@ -646,7 +646,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                     writer.writeLine("var value = discriminator switch");
                     writer.writeLine("{");
                     writer.indent();
-                    let areAnyOptional = false;
+
                     this.unionDeclaration.types.forEach((type) => {
                         const csharpType = this.getCsharpType(type);
                         function generateSerializeUnionMember(): void {
