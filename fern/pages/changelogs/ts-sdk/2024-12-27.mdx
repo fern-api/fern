@@ -1,6 +1,0 @@
-## 0.45.1
-**`(fix):`** Export everything inside of TypeScript namespaces that used to be ambient.
-
-For the `enableInlineTypes` feature, some namespaces were no longer declared (ambient), and types and interfaces inside the namespace would no longer be automatically exported without the `export` keyword. This fix exports everything that's inside these namespaces and also declared namespaces for good measure (in case they are not declared in the future).
-
-
