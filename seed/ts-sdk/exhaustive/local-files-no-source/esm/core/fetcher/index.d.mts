@@ -6,4 +6,4 @@ export { Supplier } from "./Supplier.mjs";
 export { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse.mjs";
 export type { RawResponse, WithRawResponse } from "./RawResponse.mjs";
 export { HttpResponsePromise } from "./HttpResponsePromise.mjs";
-export { BinaryResponse } from "./BinaryResponse.mjs";
+export type { BinaryResponse } from "./BinaryResponse.mjs";

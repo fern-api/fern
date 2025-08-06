@@ -3,7 +3,7 @@ import stream from "stream";
 import { join } from "path";
 
 import { Fetcher, fetcherImpl } from "../../../../../src/test-packagePath/core/fetcher/Fetcher.js";
-import { BinaryResponse } from "../../../../../src/test-packagePath/core/index.js";
+import type { BinaryResponse } from "../../../../../src/test-packagePath/core/index.js";
 
 describe("Test fetcherImpl", () => {
     it("should handle successful request", async () => {
