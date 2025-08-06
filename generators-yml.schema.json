@@ -579,6 +579,93 @@
       ],
       "additionalProperties": false
     },
+    "fernDefinition.auth.InferredAuthenticatedRequestHeader": {
+      "type": "object",
+      "properties": {
+        "response-property": {
+          "type": "string"
+        },
+        "header-name": {
+          "type": "string"
+        },
+        "value-prefix": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "response-property",
+        "header-name"
+      ],
+      "additionalProperties": false
+    },
+    "fernDefinition.auth.InferredGetTokenEndpointSchema": {
+      "type": "object",
+      "properties": {
+        "endpoint": {
+          "type": "string"
+        },
+        "expiry-response-property": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "authenticated-request-headers": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/fernDefinition.auth.InferredAuthenticatedRequestHeader"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "endpoint"
+      ],
+      "additionalProperties": false
+    },
+    "fernDefinition.auth.InferredAuthSchemeSchema": {
+      "type": "object",
+      "properties": {
+        "docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scheme": {
+          "const": "inferred"
+        },
+        "get-token": {
+          "$ref": "#/definitions/fernDefinition.auth.InferredGetTokenEndpointSchema"
+        }
+      },
+      "required": [
+        "scheme",
+        "get-token"
+      ],
+      "additionalProperties": false
+    },
     "fernDefinition.auth.AuthSchemeDeclarationSchema": {
       "anyOf": [
         {
@@ -592,6 +679,9 @@
         },
         {
           "$ref": "#/definitions/fernDefinition.auth.BearerAuthSchemeSchema"
+        },
+        {
+          "$ref": "#/definitions/fernDefinition.auth.InferredAuthSchemeSchema"
         }
       ]
     },

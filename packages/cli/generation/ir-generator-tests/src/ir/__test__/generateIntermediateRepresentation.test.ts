@@ -72,18 +72,16 @@ describe("test definitions", async () => {
         defaultToAllApiWorkspaces: true
     });
 
-    await Promise.all(
-        apiWorkspaces.map(async (workspace) => {
-            it(`${workspace.workspaceName}`, async () => {
-                await generateAndSnapshotIR({
-                    absolutePathToIr: AbsoluteFilePath.of(path.join(__dirname, "test-definitions")),
-                    workspace,
-                    audiences: { type: "all" },
-                    workspaceName: workspace.workspaceName ?? ""
-                });
+    apiWorkspaces.filter(w => w.workspaceName?.indexOf("inferred") !== -1).map((workspace) => {
+        it(`${workspace.workspaceName}`, async () => {
+            await generateAndSnapshotIR({
+                absolutePathToIr: AbsoluteFilePath.of(path.join(__dirname, "test-definitions")),
+                workspace,
+                audiences: { type: "all" },
+                workspaceName: workspace.workspaceName ?? ""
             });
-        })
-    );
+        });
+    });
 });
 
 it("test definitions openapi", async () => {

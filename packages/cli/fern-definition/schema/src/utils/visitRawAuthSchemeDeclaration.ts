@@ -4,15 +4,17 @@ import {
     AuthSchemeDeclarationSchema,
     BasicAuthSchemeSchema,
     BearerAuthSchemeSchema,
-    HeaderAuthSchemeSchema
+    HeaderAuthSchemeSchema,
+    InferredAuthSchemeSchema,
+    OAuthSchemeSchema
 } from "../schemas";
-import { OAuthSchemeSchema } from "../schemas";
 
 export interface AuthSchemeDeclarationVisitor<R> {
     header: (authScheme: HeaderAuthSchemeSchema) => R;
     basic: (authScheme: BasicAuthSchemeSchema) => R;
     bearer: (authScheme: BearerAuthSchemeSchema) => R;
     oauth: (authScheme: OAuthSchemeSchema) => R;
+    inferred: (authScheme: InferredAuthSchemeSchema) => R;
 }
 
 export function visitRawAuthSchemeDeclaration<R>(
@@ -29,6 +31,8 @@ export function visitRawAuthSchemeDeclaration<R>(
             return visitor.bearer(authScheme);
         case "oauth":
             return visitor.oauth(authScheme);
+        case "inferred":
+            return visitor.inferred(authScheme);
         default:
             assertNever(authScheme);
     }

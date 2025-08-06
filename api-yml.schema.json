@@ -822,6 +822,93 @@
       ],
       "additionalProperties": false
     },
+    "auth.InferredAuthenticatedRequestHeader": {
+      "type": "object",
+      "properties": {
+        "response-property": {
+          "type": "string"
+        },
+        "header-name": {
+          "type": "string"
+        },
+        "value-prefix": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "response-property",
+        "header-name"
+      ],
+      "additionalProperties": false
+    },
+    "auth.InferredGetTokenEndpointSchema": {
+      "type": "object",
+      "properties": {
+        "endpoint": {
+          "type": "string"
+        },
+        "expiry-response-property": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "authenticated-request-headers": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/auth.InferredAuthenticatedRequestHeader"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "endpoint"
+      ],
+      "additionalProperties": false
+    },
+    "auth.InferredAuthSchemeSchema": {
+      "type": "object",
+      "properties": {
+        "docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scheme": {
+          "const": "inferred"
+        },
+        "get-token": {
+          "$ref": "#/definitions/auth.InferredGetTokenEndpointSchema"
+        }
+      },
+      "required": [
+        "scheme",
+        "get-token"
+      ],
+      "additionalProperties": false
+    },
     "auth.AuthSchemeDeclarationSchema": {
       "anyOf": [
         {
@@ -835,6 +922,9 @@
         },
         {
           "$ref": "#/definitions/auth.BearerAuthSchemeSchema"
+        },
+        {
+          "$ref": "#/definitions/auth.InferredAuthSchemeSchema"
         }
       ]
     },

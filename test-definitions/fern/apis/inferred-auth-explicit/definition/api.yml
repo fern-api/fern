@@ -1,0 +1,15 @@
+name: inferred-auth-explicit
+imports:
+  auth: auth.yml
+
+auth: InferredAuthScheme
+auth-schemes:
+  InferredAuthScheme:
+    scheme: inferred
+    get-token:
+      endpoint: auth.getTokenWithClientCredentials
+      expiry-response-property: $response.expires_in
+      authenticated-request-headers:
+        - header-name: Authorization
+          value-prefix: "Bearer "
+          response-property: $response.access_token

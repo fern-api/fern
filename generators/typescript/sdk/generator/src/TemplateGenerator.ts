@@ -1103,7 +1103,7 @@ export class TemplateGenerator {
                 },
                 inferred: () => {
                     return;
-                    throw "TODO: Handle inferred auth scheme";
+                    // TODO: Handle inferred auth scheme
                 },
                 _other: () => {
                     throw new Error("Unknown auth scheme: " + authScheme.type);

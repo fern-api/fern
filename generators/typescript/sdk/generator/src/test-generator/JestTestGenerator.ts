@@ -294,7 +294,7 @@ describe("test", () => {
                 },
                 inferred: () => {
                     return;
-                    throw "TODO: Handle inferred auth scheme";
+                    // TODO: Handle inferred auth scheme
                 },
                 _other: () => {
                     // noop

@@ -9,6 +9,7 @@ import { OAuthSchemeSchema } from "./OAuthSchemeSchema";
 import { HeaderAuthSchemeSchema } from "./HeaderAuthSchemeSchema";
 import { BasicAuthSchemeSchema } from "./BasicAuthSchemeSchema";
 import { BearerAuthSchemeSchema } from "./BearerAuthSchemeSchema";
+import { InferredAuthSchemeSchema } from "./InferredAuthSchemeSchema";
 
 export const AuthSchemeDeclarationSchema: core.serialization.Schema<
     serializers.AuthSchemeDeclarationSchema.Raw,
@@ -18,6 +19,7 @@ export const AuthSchemeDeclarationSchema: core.serialization.Schema<
     HeaderAuthSchemeSchema,
     BasicAuthSchemeSchema,
     BearerAuthSchemeSchema,
+    InferredAuthSchemeSchema,
 ]);
 
 export declare namespace AuthSchemeDeclarationSchema {
@@ -25,5 +27,6 @@ export declare namespace AuthSchemeDeclarationSchema {
         | OAuthSchemeSchema.Raw
         | HeaderAuthSchemeSchema.Raw
         | BasicAuthSchemeSchema.Raw
-        | BearerAuthSchemeSchema.Raw;
+        | BearerAuthSchemeSchema.Raw
+        | InferredAuthSchemeSchema.Raw;
 }

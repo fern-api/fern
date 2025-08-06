@@ -1,23 +1,24 @@
 {
+    "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
     "apiName": {
-        "originalName": "oauth-client-credentials",
+        "originalName": "inferred-auth-explicit",
         "camelCase": {
-            "unsafeName": "oauthClientCredentials",
-            "safeName": "oauthClientCredentials"
+            "unsafeName": "inferredAuthExplicit",
+            "safeName": "inferredAuthExplicit"
         },
         "snakeCase": {
-            "unsafeName": "oauth_client_credentials",
-            "safeName": "oauth_client_credentials"
+            "unsafeName": "inferred_auth_explicit",
+            "safeName": "inferred_auth_explicit"
         },
         "screamingSnakeCase": {
-            "unsafeName": "OAUTH_CLIENT_CREDENTIALS",
-            "safeName": "OAUTH_CLIENT_CREDENTIALS"
+            "unsafeName": "INFERRED_AUTH_EXPLICIT",
+            "safeName": "INFERRED_AUTH_EXPLICIT"
         },
         "pascalCase": {
-            "unsafeName": "OauthClientCredentials",
-            "safeName": "OauthClientCredentials"
+            "unsafeName": "InferredAuthExplicit",
+            "safeName": "InferredAuthExplicit"
         }
     },
     "apiDisplayName": null,
@@ -26,246 +27,62 @@
         "requirement": "ALL",
         "schemes": [
             {
-                "_type": "oauth",
-                "configuration": {
-                    "type": "clientCredentials",
-                    "clientIdEnvVar": null,
-                    "clientSecretEnvVar": null,
-                    "tokenPrefix": null,
-                    "tokenHeader": null,
-                    "scopes": null,
-                    "tokenEndpoint": {
-                        "endpointReference": {
-                            "endpointId": "endpoint_auth.getTokenWithClientCredentials",
-                            "serviceId": "service_auth",
-                            "subpackageId": "subpackage_auth"
-                        },
-                        "requestProperties": {
-                            "clientId": {
-                                "propertyPath": [],
-                                "property": {
-                                    "type": "body",
-                                    "name": {
-                                        "name": {
-                                            "originalName": "client_id",
-                                            "camelCase": {
-                                                "unsafeName": "clientId",
-                                                "safeName": "clientId"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "client_id",
-                                                "safeName": "client_id"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "CLIENT_ID",
-                                                "safeName": "CLIENT_ID"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "ClientId",
-                                                "safeName": "ClientId"
-                                            }
-                                        },
-                                        "wireValue": "client_id"
+                "_type": "inferred",
+                "tokenEndpoint": {
+                    "endpoint": {
+                        "endpointId": "endpoint_auth.getTokenWithClientCredentials",
+                        "serviceId": "service_auth",
+                        "subpackageId": "subpackage_auth"
+                    },
+                    "expiryProperty": {
+                        "propertyPath": [],
+                        "property": {
+                            "name": {
+                                "name": {
+                                    "originalName": "expires_in",
+                                    "camelCase": {
+                                        "unsafeName": "expiresIn",
+                                        "safeName": "expiresIn"
                                     },
-                                    "valueType": {
-                                        "_type": "primitive",
-                                        "primitive": {
-                                            "v1": "STRING",
-                                            "v2": {
-                                                "type": "string",
-                                                "default": null,
-                                                "validation": null
-                                            }
-                                        }
+                                    "snakeCase": {
+                                        "unsafeName": "expires_in",
+                                        "safeName": "expires_in"
                                     },
-                                    "propertyAccess": null,
-                                    "example": null,
-                                    "availability": null,
-                                    "docs": null
-                                }
-                            },
-                            "clientSecret": {
-                                "propertyPath": [],
-                                "property": {
-                                    "type": "body",
-                                    "name": {
-                                        "name": {
-                                            "originalName": "client_secret",
-                                            "camelCase": {
-                                                "unsafeName": "clientSecret",
-                                                "safeName": "clientSecret"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "client_secret",
-                                                "safeName": "client_secret"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "CLIENT_SECRET",
-                                                "safeName": "CLIENT_SECRET"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "ClientSecret",
-                                                "safeName": "ClientSecret"
-                                            }
-                                        },
-                                        "wireValue": "client_secret"
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "EXPIRES_IN",
+                                        "safeName": "EXPIRES_IN"
                                     },
-                                    "valueType": {
-                                        "_type": "primitive",
-                                        "primitive": {
-                                            "v1": "STRING",
-                                            "v2": {
-                                                "type": "string",
-                                                "default": null,
-                                                "validation": null
-                                            }
-                                        }
-                                    },
-                                    "propertyAccess": null,
-                                    "example": null,
-                                    "availability": null,
-                                    "docs": null
-                                }
-                            },
-                            "scopes": null,
-                            "customProperties": [
-                                {
-                                    "propertyPath": [],
-                                    "property": {
-                                        "type": "body",
-                                        "name": {
-                                            "name": {
-                                                "originalName": "audience",
-                                                "camelCase": {
-                                                    "unsafeName": "audience",
-                                                    "safeName": "audience"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "audience",
-                                                    "safeName": "audience"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "AUDIENCE",
-                                                    "safeName": "AUDIENCE"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Audience",
-                                                    "safeName": "Audience"
-                                                }
-                                            },
-                                            "wireValue": "audience"
-                                        },
-                                        "valueType": {
-                                            "_type": "container",
-                                            "container": {
-                                                "_type": "literal",
-                                                "literal": {
-                                                    "type": "string",
-                                                    "string": "https://api.example.com"
-                                                }
-                                            }
-                                        },
-                                        "propertyAccess": null,
-                                        "example": null,
-                                        "availability": null,
-                                        "docs": null
+                                    "pascalCase": {
+                                        "unsafeName": "ExpiresIn",
+                                        "safeName": "ExpiresIn"
                                     }
                                 },
-                                {
-                                    "propertyPath": [],
-                                    "property": {
-                                        "type": "body",
-                                        "name": {
-                                            "name": {
-                                                "originalName": "grant_type",
-                                                "camelCase": {
-                                                    "unsafeName": "grantType",
-                                                    "safeName": "grantType"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "grant_type",
-                                                    "safeName": "grant_type"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "GRANT_TYPE",
-                                                    "safeName": "GRANT_TYPE"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "GrantType",
-                                                    "safeName": "GrantType"
-                                                }
-                                            },
-                                            "wireValue": "grant_type"
-                                        },
-                                        "valueType": {
-                                            "_type": "container",
-                                            "container": {
-                                                "_type": "literal",
-                                                "literal": {
-                                                    "type": "string",
-                                                    "string": "client_credentials"
-                                                }
-                                            }
-                                        },
-                                        "propertyAccess": null,
-                                        "example": null,
-                                        "availability": null,
-                                        "docs": null
-                                    }
-                                },
-                                {
-                                    "propertyPath": [],
-                                    "property": {
-                                        "type": "body",
-                                        "name": {
-                                            "name": {
-                                                "originalName": "scope",
-                                                "camelCase": {
-                                                    "unsafeName": "scope",
-                                                    "safeName": "scope"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "scope",
-                                                    "safeName": "scope"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "SCOPE",
-                                                    "safeName": "SCOPE"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Scope",
-                                                    "safeName": "Scope"
-                                                }
-                                            },
-                                            "wireValue": "scope"
-                                        },
-                                        "valueType": {
-                                            "_type": "container",
-                                            "container": {
-                                                "_type": "optional",
-                                                "optional": {
-                                                    "_type": "primitive",
-                                                    "primitive": {
-                                                        "v1": "STRING",
-                                                        "v2": {
-                                                            "type": "string",
-                                                            "default": null,
-                                                            "validation": null
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        "propertyAccess": null,
-                                        "example": null,
-                                        "availability": null,
-                                        "docs": null
+                                "wireValue": "expires_in"
+                            },
+                            "valueType": {
+                                "_type": "primitive",
+                                "primitive": {
+                                    "v1": "INTEGER",
+                                    "v2": {
+                                        "type": "integer",
+                                        "default": null,
+                                        "validation": null
                                     }
                                 }
-                            ]
-                        },
-                        "responseProperties": {
-                            "accessToken": {
+                            },
+                            "propertyAccess": null,
+                            "v2Examples": {
+                                "userSpecifiedExamples": {},
+                                "autogeneratedExamples": {}
+                            },
+                            "availability": null,
+                            "docs": null
+                        }
+                    },
+                    "authenticatedRequestHeaders": [
+                        {
+                            "headerName": "Authorization",
+                            "responseProperty": {
                                 "propertyPath": [],
                                 "property": {
                                     "name": {
@@ -302,57 +119,17 @@
                                         }
                                     },
                                     "propertyAccess": null,
-                                    "example": null,
+                                    "v2Examples": {
+                                        "userSpecifiedExamples": {},
+                                        "autogeneratedExamples": {}
+                                    },
                                     "availability": null,
                                     "docs": null
                                 }
                             },
-                            "expiresIn": {
-                                "propertyPath": [],
-                                "property": {
-                                    "name": {
-                                        "name": {
-                                            "originalName": "expires_in",
-                                            "camelCase": {
-                                                "unsafeName": "expiresIn",
-                                                "safeName": "expiresIn"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "expires_in",
-                                                "safeName": "expires_in"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "EXPIRES_IN",
-                                                "safeName": "EXPIRES_IN"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "ExpiresIn",
-                                                "safeName": "ExpiresIn"
-                                            }
-                                        },
-                                        "wireValue": "expires_in"
-                                    },
-                                    "valueType": {
-                                        "_type": "primitive",
-                                        "primitive": {
-                                            "v1": "INTEGER",
-                                            "v2": {
-                                                "type": "integer",
-                                                "default": null,
-                                                "validation": null
-                                            }
-                                        }
-                                    },
-                                    "propertyAccess": null,
-                                    "example": null,
-                                    "availability": null,
-                                    "docs": null
-                                }
-                            },
-                            "refreshToken": null
+                            "valuePrefix": "Bearer "
                         }
-                    },
-                    "refreshEndpoint": null
+                    ]
                 },
                 "docs": null
             }
@@ -427,6 +204,7 @@
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_auth:TokenResponse"
             },
             "shape": {
@@ -468,7 +246,10 @@
                             }
                         },
                         "propertyAccess": null,
-                        "example": null,
+                        "v2Examples": {
+                            "userSpecifiedExamples": {},
+                            "autogeneratedExamples": {}
+                        },
                         "availability": null,
                         "docs": null
                     },
@@ -507,7 +288,10 @@
                             }
                         },
                         "propertyAccess": null,
-                        "example": null,
+                        "v2Examples": {
+                            "userSpecifiedExamples": {},
+                            "autogeneratedExamples": {}
+                        },
                         "availability": null,
                         "docs": null
                     },
@@ -552,7 +336,10 @@
                             }
                         },
                         "propertyAccess": null,
-                        "example": null,
+                        "v2Examples": {
+                            "userSpecifiedExamples": {},
+                            "autogeneratedExamples": {}
+                        },
                         "availability": null,
                         "docs": null
                     }
@@ -662,6 +449,7 @@
                     "auth": false,
                     "idempotent": false,
                     "baseUrl": null,
+                    "v2BaseUrls": null,
                     "method": "POST",
                     "basePath": null,
                     "path": {
@@ -698,15 +486,14 @@
                             }
                         },
                         "extends": [],
-                        "contentType": null,
                         "properties": [
                             {
                                 "name": {
                                     "name": {
                                         "originalName": "client_id",
                                         "camelCase": {
-                                            "unsafeName": "clientId",
-                                            "safeName": "clientId"
+                                            "unsafeName": "clientID",
+                                            "safeName": "clientID"
                                         },
                                         "snakeCase": {
                                             "unsafeName": "client_id",
@@ -717,8 +504,8 @@
                                             "safeName": "CLIENT_ID"
                                         },
                                         "pascalCase": {
-                                            "unsafeName": "ClientId",
-                                            "safeName": "ClientId"
+                                            "unsafeName": "ClientID",
+                                            "safeName": "ClientID"
                                         }
                                     },
                                     "wireValue": "client_id"
@@ -734,7 +521,11 @@
                                         }
                                     }
                                 },
-                                "example": null,
+                                "v2Examples": {
+                                    "userSpecifiedExamples": {},
+                                    "autogeneratedExamples": {}
+                                },
+                                "propertyAccess": null,
                                 "availability": null,
                                 "docs": null
                             },
@@ -772,7 +563,11 @@
                                         }
                                     }
                                 },
-                                "example": null,
+                                "v2Examples": {
+                                    "userSpecifiedExamples": {},
+                                    "autogeneratedExamples": {}
+                                },
+                                "propertyAccess": null,
                                 "availability": null,
                                 "docs": null
                             },
@@ -809,7 +604,11 @@
                                         }
                                     }
                                 },
-                                "example": null,
+                                "v2Examples": {
+                                    "userSpecifiedExamples": {},
+                                    "autogeneratedExamples": {}
+                                },
+                                "propertyAccess": null,
                                 "availability": null,
                                 "docs": null
                             },
@@ -846,7 +645,11 @@
                                         }
                                     }
                                 },
-                                "example": null,
+                                "v2Examples": {
+                                    "userSpecifiedExamples": {},
+                                    "autogeneratedExamples": {}
+                                },
+                                "propertyAccess": null,
                                 "availability": null,
                                 "docs": null
                             },
@@ -890,15 +693,22 @@
                                         }
                                     }
                                 },
-                                "example": null,
+                                "v2Examples": {
+                                    "userSpecifiedExamples": {},
+                                    "autogeneratedExamples": {}
+                                },
+                                "propertyAccess": null,
                                 "availability": null,
                                 "docs": null
                             }
                         ],
                         "extra-properties": false,
                         "extendedProperties": [],
-                        "docs": null
+                        "docs": null,
+                        "v2Examples": null,
+                        "contentType": null
                     },
+                    "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
@@ -1033,21 +843,24 @@
                                             }
                                         }
                                     },
+                                    "displayName": null,
                                     "typeId": "type_auth:TokenResponse",
                                     "default": null,
                                     "inline": null
                                 },
-                                "docs": null
+                                "docs": null,
+                                "v2Examples": null
                             }
                         },
                         "status-code": null
                     },
+                    "v2Responses": null,
                     "errors": [],
                     "userSpecifiedExamples": [],
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "c6482fdf",
+                                "id": "4c516301",
                                 "url": "/token",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -1064,8 +877,8 @@
                                                 "name": {
                                                     "originalName": "client_id",
                                                     "camelCase": {
-                                                        "unsafeName": "clientId",
-                                                        "safeName": "clientId"
+                                                        "unsafeName": "clientID",
+                                                        "safeName": "clientID"
                                                     },
                                                     "snakeCase": {
                                                         "unsafeName": "client_id",
@@ -1076,8 +889,8 @@
                                                         "safeName": "CLIENT_ID"
                                                     },
                                                     "pascalCase": {
-                                                        "unsafeName": "ClientId",
-                                                        "safeName": "ClientId"
+                                                        "unsafeName": "ClientID",
+                                                        "safeName": "ClientID"
                                                     }
                                                 },
                                                 "wireValue": "client_id"
@@ -1362,6 +1175,7 @@
                                                                         }
                                                                     }
                                                                 },
+                                                                "displayName": null,
                                                                 "typeId": "type_auth:TokenResponse"
                                                             },
                                                             "value": {
@@ -1463,6 +1277,7 @@
                                                                         }
                                                                     }
                                                                 },
+                                                                "displayName": null,
                                                                 "typeId": "type_auth:TokenResponse"
                                                             },
                                                             "value": {
@@ -1562,6 +1377,7 @@
                                                                         }
                                                                     }
                                                                 },
+                                                                "displayName": null,
                                                                 "typeId": "type_auth:TokenResponse"
                                                             },
                                                             "value": {
@@ -1662,6 +1478,7 @@
                                                             }
                                                         }
                                                     },
+                                                    "displayName": null,
                                                     "typeId": "type_auth:TokenResponse"
                                                 }
                                             },
@@ -1680,6 +1497,8 @@
                     "pagination": null,
                     "transport": null,
                     "v2Examples": null,
+                    "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 },
@@ -1708,6 +1527,7 @@
                     "auth": false,
                     "idempotent": false,
                     "baseUrl": null,
+                    "v2BaseUrls": null,
                     "method": "POST",
                     "basePath": null,
                     "path": {
@@ -1744,15 +1564,14 @@
                             }
                         },
                         "extends": [],
-                        "contentType": null,
                         "properties": [
                             {
                                 "name": {
                                     "name": {
                                         "originalName": "client_id",
                                         "camelCase": {
-                                            "unsafeName": "clientId",
-                                            "safeName": "clientId"
+                                            "unsafeName": "clientID",
+                                            "safeName": "clientID"
                                         },
                                         "snakeCase": {
                                             "unsafeName": "client_id",
@@ -1763,8 +1582,8 @@
                                             "safeName": "CLIENT_ID"
                                         },
                                         "pascalCase": {
-                                            "unsafeName": "ClientId",
-                                            "safeName": "ClientId"
+                                            "unsafeName": "ClientID",
+                                            "safeName": "ClientID"
                                         }
                                     },
                                     "wireValue": "client_id"
@@ -1780,7 +1599,11 @@
                                         }
                                     }
                                 },
-                                "example": null,
+                                "v2Examples": {
+                                    "userSpecifiedExamples": {},
+                                    "autogeneratedExamples": {}
+                                },
+                                "propertyAccess": null,
                                 "availability": null,
                                 "docs": null
                             },
@@ -1818,7 +1641,11 @@
                                         }
                                     }
                                 },
-                                "example": null,
+                                "v2Examples": {
+                                    "userSpecifiedExamples": {},
+                                    "autogeneratedExamples": {}
+                                },
+                                "propertyAccess": null,
                                 "availability": null,
                                 "docs": null
                             },
@@ -1856,7 +1683,11 @@
                                         }
                                     }
                                 },
-                                "example": null,
+                                "v2Examples": {
+                                    "userSpecifiedExamples": {},
+                                    "autogeneratedExamples": {}
+                                },
+                                "propertyAccess": null,
                                 "availability": null,
                                 "docs": null
                             },
@@ -1893,7 +1724,11 @@
                                         }
                                     }
                                 },
-                                "example": null,
+                                "v2Examples": {
+                                    "userSpecifiedExamples": {},
+                                    "autogeneratedExamples": {}
+                                },
+                                "propertyAccess": null,
                                 "availability": null,
                                 "docs": null
                             },
@@ -1930,7 +1765,11 @@
                                         }
                                     }
                                 },
-                                "example": null,
+                                "v2Examples": {
+                                    "userSpecifiedExamples": {},
+                                    "autogeneratedExamples": {}
+                                },
+                                "propertyAccess": null,
                                 "availability": null,
                                 "docs": null
                             },
@@ -1974,15 +1813,22 @@
                                         }
                                     }
                                 },
-                                "example": null,
+                                "v2Examples": {
+                                    "userSpecifiedExamples": {},
+                                    "autogeneratedExamples": {}
+                                },
+                                "propertyAccess": null,
                                 "availability": null,
                                 "docs": null
                             }
                         ],
                         "extra-properties": false,
                         "extendedProperties": [],
-                        "docs": null
+                        "docs": null,
+                        "v2Examples": null,
+                        "contentType": null
                     },
+                    "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
@@ -2117,21 +1963,24 @@
                                             }
                                         }
                                     },
+                                    "displayName": null,
                                     "typeId": "type_auth:TokenResponse",
                                     "default": null,
                                     "inline": null
                                 },
-                                "docs": null
+                                "docs": null,
+                                "v2Examples": null
                             }
                         },
                         "status-code": null
                     },
+                    "v2Responses": null,
                     "errors": [],
                     "userSpecifiedExamples": [],
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "507b76db",
+                                "id": "3365d90",
                                 "url": "/token",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -2148,8 +1997,8 @@
                                                 "name": {
                                                     "originalName": "client_id",
                                                     "camelCase": {
-                                                        "unsafeName": "clientId",
-                                                        "safeName": "clientId"
+                                                        "unsafeName": "clientID",
+                                                        "safeName": "clientID"
                                                     },
                                                     "snakeCase": {
                                                         "unsafeName": "client_id",
@@ -2160,8 +2009,8 @@
                                                         "safeName": "CLIENT_ID"
                                                     },
                                                     "pascalCase": {
-                                                        "unsafeName": "ClientId",
-                                                        "safeName": "ClientId"
+                                                        "unsafeName": "ClientID",
+                                                        "safeName": "ClientID"
                                                     }
                                                 },
                                                 "wireValue": "client_id"
@@ -2484,6 +2333,7 @@
                                                                         }
                                                                     }
                                                                 },
+                                                                "displayName": null,
                                                                 "typeId": "type_auth:TokenResponse"
                                                             },
                                                             "value": {
@@ -2585,6 +2435,7 @@
                                                                         }
                                                                     }
                                                                 },
+                                                                "displayName": null,
                                                                 "typeId": "type_auth:TokenResponse"
                                                             },
                                                             "value": {
@@ -2684,6 +2535,7 @@
                                                                         }
                                                                     }
                                                                 },
+                                                                "displayName": null,
                                                                 "typeId": "type_auth:TokenResponse"
                                                             },
                                                             "value": {
@@ -2784,6 +2636,7 @@
                                                             }
                                                         }
                                                     },
+                                                    "displayName": null,
                                                     "typeId": "type_auth:TokenResponse"
                                                 }
                                             },
@@ -2802,10 +2655,13 @@
                     "pagination": null,
                     "transport": null,
                     "v2Examples": null,
+                    "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 }
-            ]
+            ],
+            "audiences": null
         },
         "service_simple": {
             "availability": null,
@@ -2894,6 +2750,7 @@
                     "auth": true,
                     "idempotent": false,
                     "baseUrl": null,
+                    "v2BaseUrls": null,
                     "method": "GET",
                     "basePath": null,
                     "path": {
@@ -2909,17 +2766,19 @@
                     "queryParameters": [],
                     "headers": [],
                     "requestBody": null,
+                    "v2RequestBodies": null,
                     "sdkRequest": null,
                     "response": {
                         "body": null,
                         "status-code": null
                     },
+                    "v2Responses": null,
                     "errors": [],
                     "userSpecifiedExamples": [],
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "41279096",
+                                "id": "b8b5a106",
                                 "url": "/get-something",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -2943,10 +2802,13 @@
                     "pagination": null,
                     "transport": null,
                     "v2Examples": null,
+                    "source": null,
+                    "audiences": null,
                     "availability": null,
                     "docs": null
                 }
-            ]
+            ],
+            "audiences": null
         }
     },
     "constants": {
@@ -2954,8 +2816,8 @@
             "name": {
                 "originalName": "errorInstanceId",
                 "camelCase": {
-                    "unsafeName": "errorInstanceId",
-                    "safeName": "errorInstanceId"
+                    "unsafeName": "errorInstanceID",
+                    "safeName": "errorInstanceID"
                 },
                 "snakeCase": {
                     "unsafeName": "error_instance_id",
@@ -2966,8 +2828,8 @@
                     "safeName": "ERROR_INSTANCE_ID"
                 },
                 "pascalCase": {
-                    "unsafeName": "ErrorInstanceId",
-                    "safeName": "ErrorInstanceId"
+                    "unsafeName": "ErrorInstanceID",
+                    "safeName": "ErrorInstanceID"
                 }
             },
             "wireValue": "errorInstanceId"
@@ -3158,45 +3020,7 @@
         "endpoints": {
             "endpoint_auth.getTokenWithClientCredentials": {
                 "auth": {
-                    "type": "oauth",
-                    "clientId": {
-                        "originalName": "clientId",
-                        "camelCase": {
-                            "unsafeName": "clientId",
-                            "safeName": "clientId"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "client_id",
-                            "safeName": "client_id"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "CLIENT_ID",
-                            "safeName": "CLIENT_ID"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "ClientId",
-                            "safeName": "ClientId"
-                        }
-                    },
-                    "clientSecret": {
-                        "originalName": "clientSecret",
-                        "camelCase": {
-                            "unsafeName": "clientSecret",
-                            "safeName": "clientSecret"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "client_secret",
-                            "safeName": "client_secret"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "CLIENT_SECRET",
-                            "safeName": "CLIENT_SECRET"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "ClientSecret",
-                            "safeName": "ClientSecret"
-                        }
-                    }
+                    "type": "inferred"
                 },
                 "declaration": {
                     "name": {
@@ -3343,8 +3167,8 @@
                                     "name": {
                                         "originalName": "client_id",
                                         "camelCase": {
-                                            "unsafeName": "clientId",
-                                            "safeName": "clientId"
+                                            "unsafeName": "clientID",
+                                            "safeName": "clientID"
                                         },
                                         "snakeCase": {
                                             "unsafeName": "client_id",
@@ -3355,8 +3179,8 @@
                                             "safeName": "CLIENT_ID"
                                         },
                                         "pascalCase": {
-                                            "unsafeName": "ClientId",
-                                            "safeName": "ClientId"
+                                            "unsafeName": "ClientID",
+                                            "safeName": "ClientID"
                                         }
                                     },
                                     "wireValue": "client_id"
@@ -3501,45 +3325,7 @@
             },
             "endpoint_auth.refreshToken": {
                 "auth": {
-                    "type": "oauth",
-                    "clientId": {
-                        "originalName": "clientId",
-                        "camelCase": {
-                            "unsafeName": "clientId",
-                            "safeName": "clientId"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "client_id",
-                            "safeName": "client_id"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "CLIENT_ID",
-                            "safeName": "CLIENT_ID"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "ClientId",
-                            "safeName": "ClientId"
-                        }
-                    },
-                    "clientSecret": {
-                        "originalName": "clientSecret",
-                        "camelCase": {
-                            "unsafeName": "clientSecret",
-                            "safeName": "clientSecret"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "client_secret",
-                            "safeName": "client_secret"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "CLIENT_SECRET",
-                            "safeName": "CLIENT_SECRET"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "ClientSecret",
-                            "safeName": "ClientSecret"
-                        }
-                    }
+                    "type": "inferred"
                 },
                 "declaration": {
                     "name": {
@@ -3686,8 +3472,8 @@
                                     "name": {
                                         "originalName": "client_id",
                                         "camelCase": {
-                                            "unsafeName": "clientId",
-                                            "safeName": "clientId"
+                                            "unsafeName": "clientID",
+                                            "safeName": "clientID"
                                         },
                                         "snakeCase": {
                                             "unsafeName": "client_id",
@@ -3698,8 +3484,8 @@
                                             "safeName": "CLIENT_ID"
                                         },
                                         "pascalCase": {
-                                            "unsafeName": "ClientId",
-                                            "safeName": "ClientId"
+                                            "unsafeName": "ClientID",
+                                            "safeName": "ClientID"
                                         }
                                     },
                                     "wireValue": "client_id"
@@ -3872,45 +3658,7 @@
             },
             "endpoint_simple.getSomething": {
                 "auth": {
-                    "type": "oauth",
-                    "clientId": {
-                        "originalName": "clientId",
-                        "camelCase": {
-                            "unsafeName": "clientId",
-                            "safeName": "clientId"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "client_id",
-                            "safeName": "client_id"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "CLIENT_ID",
-                            "safeName": "CLIENT_ID"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "ClientId",
-                            "safeName": "ClientId"
-                        }
-                    },
-                    "clientSecret": {
-                        "originalName": "clientSecret",
-                        "camelCase": {
-                            "unsafeName": "clientSecret",
-                            "safeName": "clientSecret"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "client_secret",
-                            "safeName": "client_secret"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "CLIENT_SECRET",
-                            "safeName": "CLIENT_SECRET"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "ClientSecret",
-                            "safeName": "ClientSecret"
-                        }
-                    }
+                    "type": "inferred"
                 },
                 "declaration": {
                     "name": {
@@ -3995,6 +3743,7 @@
         "environments": null,
         "generatorConfig": null
     },
+    "audiences": null,
     "subpackages": {
         "subpackage_auth": {
             "name": {
@@ -4016,6 +3765,7 @@
                     "safeName": "Auth"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -4091,6 +3841,7 @@
                     "safeName": "Simple"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
