@@ -2,6 +2,7 @@ import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { noop } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractSwiftGeneratorCli, SwiftFile } from "@fern-api/swift-base";
+import { swift } from "@fern-api/swift-codegen";
 import {
     AliasGenerator,
     DiscriminatedUnionGenerator,
@@ -125,6 +126,9 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         ),
                         properties: endpoint.requestBody.properties,
                         extendedProperties: endpoint.requestBody.extendedProperties,
+                        docs: endpoint.requestBody.docs
+                            ? swift.docComment({ summary: endpoint.requestBody.docs })
+                            : undefined,
                         context
                     });
                     const struct = generator.generate();
@@ -172,6 +176,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         name: context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
                         properties: otd.properties,
                         extendedProperties: otd.extendedProperties,
+                        docs: typeDeclaration.docs ? swift.docComment({ summary: typeDeclaration.docs }) : undefined,
                         context
                     });
                     const struct = generator.generate();

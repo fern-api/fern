@@ -21,6 +21,7 @@ export declare namespace StructGenerator {
         constantPropertyDefinitions: ConstantPropertyDefinition[];
         dataPropertyDefinitions: DataPropertyDefinition[];
         additionalProperties: boolean;
+        docs?: swift.DocComment;
     }
 }
 
@@ -29,17 +30,20 @@ export class StructGenerator {
     private readonly constantPropertyDefinitions: StructGenerator.ConstantPropertyDefinition[];
     private readonly dataPropertyDefinitions: StructGenerator.DataPropertyDefinition[];
     private readonly additionalPropertiesInfo;
+    private readonly docs?: swift.DocComment;
 
     public constructor({
         name,
         constantPropertyDefinitions,
         dataPropertyDefinitions,
-        additionalProperties
+        additionalProperties,
+        docs
     }: StructGenerator.Args) {
         this.name = name;
         this.constantPropertyDefinitions = constantPropertyDefinitions;
         this.dataPropertyDefinitions = dataPropertyDefinitions;
         this.additionalPropertiesInfo = additionalProperties ? this.getAdditionalPropertiesInfo() : undefined;
+        this.docs = docs;
     }
 
     private getAdditionalPropertiesInfo = () => {
@@ -82,7 +86,8 @@ export class StructGenerator {
             properties,
             initializers: this.generateInitializers(dataProperties),
             methods: this.generateMethods(constantProperties, dataProperties),
-            nestedTypes: this.generateNestedTypes(dataProperties)
+            nestedTypes: this.generateNestedTypes(dataProperties),
+            docs: this.docs
         });
     }
 

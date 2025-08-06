@@ -266,7 +266,8 @@ export class DiscriminatedUnionGenerator {
                 name: singleUnionType.discriminantValue.name.pascalCase.unsafeName,
                 constantPropertyDefinitions,
                 dataPropertyDefinitions,
-                additionalProperties: true
+                additionalProperties: true,
+                docs: singleUnionType.docs ? swift.docComment({ summary: singleUnionType.docs }) : undefined
             }).generate();
         });
 

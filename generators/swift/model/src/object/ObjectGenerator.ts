@@ -9,6 +9,7 @@ export declare namespace ObjectGenerator {
         name: string;
         properties: (ObjectProperty | InlinedRequestBodyProperty)[];
         extendedProperties?: ObjectProperty[];
+        docs?: swift.DocComment;
         context: ModelGeneratorContext;
     }
 }
@@ -17,12 +18,14 @@ export class ObjectGenerator {
     private readonly name: string;
     private readonly properties: (ObjectProperty | InlinedRequestBodyProperty)[];
     private readonly extendedProperties: ObjectProperty[];
+    private readonly docs?: swift.DocComment;
     private readonly context: ModelGeneratorContext;
 
-    public constructor({ name, properties, extendedProperties, context }: ObjectGenerator.Args) {
+    public constructor({ name, properties, extendedProperties, docs, context }: ObjectGenerator.Args) {
         this.name = name;
         this.properties = properties;
         this.extendedProperties = extendedProperties ?? [];
+        this.docs = docs;
         this.context = context;
     }
 
@@ -40,7 +43,8 @@ export class ObjectGenerator {
                 type: this.context.getSwiftTypeForTypeReference(p.valueType),
                 docs: p.docs ? swift.docComment({ summary: p.docs }) : undefined
             })),
-            additionalProperties: true
+            additionalProperties: true,
+            docs: this.docs
         }).generate();
     }
 }
