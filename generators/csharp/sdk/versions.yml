@@ -1,4 +1,25 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.1.7
+  changelogEntry:
+    - type: fix
+      summary: |
+        Improve generation so that all expected tests/samples correctly
+        generate and compile. 
+       
+    - type: fix
+      summary: |
+        In `RawClient.cs` namespace references are prefixed with `global::`
+        to ensure that the class works correctly when an explicit namespace
+        and client class are used that could cause it to collide.
+
+    - type: fix
+      summary: |
+        Set csharpier version to `1.1.*` to avoid inadvertently picking up 
+        `1.0.3` which has an inconsistency in formatting. 
+       
+  createdAt: '2025-08-04'
+  irVersion: 58
+
 - version: 2.1.6
   changelogEntry:
     - type: feat

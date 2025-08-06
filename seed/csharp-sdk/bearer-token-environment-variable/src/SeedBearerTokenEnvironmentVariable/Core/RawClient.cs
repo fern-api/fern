@@ -19,16 +19,16 @@ internal partial class RawClient(ClientOptions clientOptions)
     internal readonly ClientOptions Options = clientOptions;
 
     [Obsolete("Use SendRequestAsync instead.")]
-    internal Task<SeedBearerTokenEnvironmentVariable.Core.ApiResponse> MakeRequestAsync(
-        SeedBearerTokenEnvironmentVariable.Core.BaseRequest request,
+    internal Task<global::SeedBearerTokenEnvironmentVariable.Core.ApiResponse> MakeRequestAsync(
+        global::SeedBearerTokenEnvironmentVariable.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
         return SendRequestAsync(request, cancellationToken);
     }
 
-    internal async Task<SeedBearerTokenEnvironmentVariable.Core.ApiResponse> SendRequestAsync(
-        SeedBearerTokenEnvironmentVariable.Core.BaseRequest request,
+    internal async Task<global::SeedBearerTokenEnvironmentVariable.Core.ApiResponse> SendRequestAsync(
+        global::SeedBearerTokenEnvironmentVariable.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
@@ -43,7 +43,7 @@ internal partial class RawClient(ClientOptions clientOptions)
             .ConfigureAwait(false);
     }
 
-    internal async Task<SeedBearerTokenEnvironmentVariable.Core.ApiResponse> SendRequestAsync(
+    internal async Task<global::SeedBearerTokenEnvironmentVariable.Core.ApiResponse> SendRequestAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken = default
@@ -109,7 +109,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     /// Sends the request with retries, unless the request content is not retryable,
     /// such as stream requests and multipart form data with stream content.
     /// </summary>
-    private async Task<SeedBearerTokenEnvironmentVariable.Core.ApiResponse> SendWithRetriesAsync(
+    private async Task<global::SeedBearerTokenEnvironmentVariable.Core.ApiResponse> SendWithRetriesAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken
@@ -122,7 +122,7 @@ internal partial class RawClient(ClientOptions clientOptions)
 
         if (!isRetryableContent)
         {
-            return new SeedBearerTokenEnvironmentVariable.Core.ApiResponse
+            return new global::SeedBearerTokenEnvironmentVariable.Core.ApiResponse
             {
                 StatusCode = (int)response.StatusCode,
                 Raw = response,
@@ -144,7 +144,7 @@ internal partial class RawClient(ClientOptions clientOptions)
                 .ConfigureAwait(false);
         }
 
-        return new SeedBearerTokenEnvironmentVariable.Core.ApiResponse
+        return new global::SeedBearerTokenEnvironmentVariable.Core.ApiResponse
         {
             StatusCode = (int)response.StatusCode,
             Raw = response,
@@ -169,7 +169,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     internal HttpRequestMessage CreateHttpRequest(
-        SeedBearerTokenEnvironmentVariable.Core.BaseRequest request
+        global::SeedBearerTokenEnvironmentVariable.Core.BaseRequest request
     )
     {
         var url = BuildUrl(request);
@@ -186,7 +186,9 @@ internal partial class RawClient(ClientOptions clientOptions)
         return httpRequest;
     }
 
-    private static string BuildUrl(SeedBearerTokenEnvironmentVariable.Core.BaseRequest request)
+    private static string BuildUrl(
+        global::SeedBearerTokenEnvironmentVariable.Core.BaseRequest request
+    )
     {
         var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl;
         var trimmedBaseUrl = baseUrl.TrimEnd('/');
@@ -233,7 +235,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     private static List<KeyValuePair<string, string>> GetQueryParameters(
-        SeedBearerTokenEnvironmentVariable.Core.BaseRequest request
+        global::SeedBearerTokenEnvironmentVariable.Core.BaseRequest request
     )
     {
         var result = TransformToKeyValuePairs(request.Query);
@@ -389,28 +391,31 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     /// <inheritdoc />
-    [Obsolete("Use SeedBearerTokenEnvironmentVariable.Core.ApiResponse instead.")]
-    internal record ApiResponse : SeedBearerTokenEnvironmentVariable.Core.ApiResponse;
+    [Obsolete("Use global::SeedBearerTokenEnvironmentVariable.Core.ApiResponse instead.")]
+    internal record ApiResponse : global::SeedBearerTokenEnvironmentVariable.Core.ApiResponse;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedBearerTokenEnvironmentVariable.Core.BaseRequest instead.")]
-    internal abstract record BaseApiRequest : SeedBearerTokenEnvironmentVariable.Core.BaseRequest;
+    [Obsolete("Use global::SeedBearerTokenEnvironmentVariable.Core.BaseRequest instead.")]
+    internal abstract record BaseApiRequest
+        : global::SeedBearerTokenEnvironmentVariable.Core.BaseRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedBearerTokenEnvironmentVariable.Core.EmptyRequest instead.")]
-    internal abstract record EmptyApiRequest : SeedBearerTokenEnvironmentVariable.Core.EmptyRequest;
+    [Obsolete("Use global::SeedBearerTokenEnvironmentVariable.Core.EmptyRequest instead.")]
+    internal abstract record EmptyApiRequest
+        : global::SeedBearerTokenEnvironmentVariable.Core.EmptyRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedBearerTokenEnvironmentVariable.Core.JsonRequest instead.")]
-    internal abstract record JsonApiRequest : SeedBearerTokenEnvironmentVariable.Core.JsonRequest;
+    [Obsolete("Use global::SeedBearerTokenEnvironmentVariable.Core.JsonRequest instead.")]
+    internal abstract record JsonApiRequest
+        : global::SeedBearerTokenEnvironmentVariable.Core.JsonRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedBearerTokenEnvironmentVariable.Core.MultipartFormRequest instead.")]
+    [Obsolete("Use global::SeedBearerTokenEnvironmentVariable.Core.MultipartFormRequest instead.")]
     internal abstract record MultipartFormRequest
-        : SeedBearerTokenEnvironmentVariable.Core.MultipartFormRequest;
+        : global::SeedBearerTokenEnvironmentVariable.Core.MultipartFormRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedBearerTokenEnvironmentVariable.Core.StreamRequest instead.")]
+    [Obsolete("Use global::SeedBearerTokenEnvironmentVariable.Core.StreamRequest instead.")]
     internal abstract record StreamApiRequest
-        : SeedBearerTokenEnvironmentVariable.Core.StreamRequest;
+        : global::SeedBearerTokenEnvironmentVariable.Core.StreamRequest;
 }

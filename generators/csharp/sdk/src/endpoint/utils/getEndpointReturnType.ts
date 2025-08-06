@@ -18,8 +18,46 @@ export function getEndpointReturnType({
         }
         return undefined;
     }
+
+    const streamResultType = {
+        json: (jsonChunk: FernIr.JsonStreamChunk) =>
+            csharp.Type.reference(
+                csharp.classReference({
+                    name: "IAsyncEnumerable",
+                    namespace: "System.Collections.Generic",
+                    generics: [context.csharpTypeMapper.convert({ reference: jsonChunk.payload })]
+                })
+            ),
+        text: () =>
+            csharp.Type.reference(
+                csharp.classReference({
+                    name: "IAsyncEnumerable",
+                    namespace: "System.Collections.Generic",
+                    generics: [csharp.Type.string()]
+                })
+            ),
+
+        sse: (sseChunk: FernIr.SseStreamChunk) => undefined,
+        /*
+            // todo: implement SSE - this is a placeholder for now
+            csharp.Type.reference(
+                csharp.classReference({
+                    name: "IAsyncEnumerable",
+                    namespace: "System.Collections.Generic",
+                    generics: [context.csharpTypeMapper.convert({ reference: sseChunk.payload })]
+                })
+            ),
+            */
+        _other: () => undefined
+    };
+
     return endpoint.response.body._visit({
-        streamParameter: () => undefined,
+        streaming: (reference) => reference._visit(streamResultType),
+
+        // endpoints that are *possibly* streaming will be implemented so they always have a stream-response
+        // (this requires that consumers use `for await()` to consume the result, regardless if they are streaming or not)
+        streamParameter: (reference) => reference.streamResponse._visit(streamResultType),
+
         fileDownload: () =>
             csharp.Type.reference(
                 csharp.classReference({
@@ -28,43 +66,7 @@ export function getEndpointReturnType({
                     fullyQualified: true
                 })
             ),
-        json: (reference) => {
-            return context.csharpTypeMapper.convert({ reference: reference.responseBodyType });
-        },
-        streaming: (reference) => {
-            return reference._visit({
-                json: (jsonChunk) => {
-                    const payloadType = context.csharpTypeMapper.convert({ reference: jsonChunk.payload });
-                    return csharp.Type.reference(
-                        csharp.classReference({
-                            name: "IAsyncEnumerable",
-                            namespace: "System.Collections.Generic",
-                            generics: [payloadType]
-                        })
-                    );
-                },
-                text: () => {
-                    return csharp.Type.reference(
-                        csharp.classReference({
-                            name: "IAsyncEnumerable",
-                            namespace: "System.Collections.Generic",
-                            generics: [csharp.Type.string()]
-                        })
-                    );
-                },
-                sse: (sseChunk) => {
-                    const payloadType = context.csharpTypeMapper.convert({ reference: sseChunk.payload });
-                    return csharp.Type.reference(
-                        csharp.classReference({
-                            name: "IAsyncEnumerable",
-                            namespace: "System.Collections.Generic",
-                            generics: [payloadType]
-                        })
-                    );
-                },
-                _other: () => undefined
-            });
-        },
+        json: (reference) => context.csharpTypeMapper.convert({ reference: reference.responseBodyType }),
         text: () => csharp.Type.string(),
         bytes: () => undefined,
         _other: () => undefined

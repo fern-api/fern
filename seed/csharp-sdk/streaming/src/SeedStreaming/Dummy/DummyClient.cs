@@ -48,7 +48,7 @@ public partial class DummyClient
                 {
                     chunk = JsonUtils.Deserialize<StreamResponse>(line);
                 }
-                catch (JsonException)
+                catch (System.Text.Json.JsonException)
                 {
                     throw new SeedStreamingException(
                         $"Unable to deserialize JSON response '{line}'"

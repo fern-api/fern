@@ -904,9 +904,6 @@ public record DebugVariableValue
             new List<DebugVariableValue>();
 
         public override string ToString() => Value.ToString();
-
-        public static implicit operator ListValue(IEnumerable<DebugVariableValue> value) =>
-            new(value);
     }
 
     /// <summary>
