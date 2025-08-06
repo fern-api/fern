@@ -215,15 +215,13 @@ public record Status
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value =
-                discriminator switch
-                {
-                    "active" => new { },
-                    "archived" => json.GetProperty("value").Deserialize<DateTime?>(options),
-                    "soft-deleted" => json.GetProperty("value").Deserialize<DateTime?>(options),
-                    _ => json.Deserialize<object?>(options),
-                }
-                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
+            var value = discriminator switch
+            {
+                "active" => new { },
+                "archived" => json.GetProperty("value").Deserialize<DateTime?>(options),
+                "soft-deleted" => json.GetProperty("value").Deserialize<DateTime?>(options),
+                _ => json.Deserialize<object?>(options),
+            };
             return new Status(discriminator, value);
         }
 
