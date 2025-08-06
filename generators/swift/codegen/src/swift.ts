@@ -2,6 +2,7 @@ import {
     Class,
     CodeBlock,
     Comment,
+    DocComment,
     EnumWithAssociatedValues,
     EnumWithRawValues,
     FunctionArgument,
@@ -22,6 +23,10 @@ export function codeBlock(args: CodeBlock.Args): CodeBlock {
 
 export function comment(args: Comment.Args): Comment {
     return new Comment(args);
+}
+
+export function docComment(args: DocComment.Args): DocComment {
+    return new DocComment(args);
 }
 
 export function enumWithAssociatedValues(args: EnumWithAssociatedValues.Args): EnumWithAssociatedValues {

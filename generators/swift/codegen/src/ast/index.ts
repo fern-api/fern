@@ -2,6 +2,7 @@ export { AccessLevel } from "./AccessLevel";
 export { Class } from "./Class";
 export { CodeBlock } from "./CodeBlock";
 export { Comment } from "./Comment";
+export { DocComment } from "./DocComment";
 export { DeclarationType } from "./DeclarationType";
 export { EnumWithAssociatedValues } from "./EnumWithAssociatedValues";
 export { EnumWithRawValues } from "./EnumWithRawValues";
