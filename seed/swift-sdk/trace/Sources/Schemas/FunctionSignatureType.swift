@@ -1,6 +1,7 @@
 public enum FunctionSignatureType: Codable, Hashable, Sendable {
     case void(Void)
     case nonVoid(NonVoid)
+    /// Useful when specifying custom grading for a testcase where actualResult is defined.
     case voidThatTakesActualResult(VoidThatTakesActualResult)
 
     public init(from decoder: Decoder) throws {

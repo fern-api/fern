@@ -1,3 +1,5 @@
+/// Tests enum name and value can be
+/// different.
 public enum Operand: String, Codable, Hashable, CaseIterable, Sendable {
     case greaterThan = ">"
     case equalTo = "="

@@ -1,5 +1,6 @@
 public enum UnionWithoutKey: Codable, Hashable, Sendable {
     case foo(Foo)
+    /// This is a bar field.
     case bar(Bar)
 
     public init(from decoder: Decoder) throws {

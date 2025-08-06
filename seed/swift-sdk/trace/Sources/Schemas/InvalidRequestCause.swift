@@ -1,6 +1,8 @@
 public enum InvalidRequestCause: Codable, Hashable, Sendable {
+    /// The submission request references a submission id that doesn't exist.
     case submissionIdNotFound(SubmissionIdNotFound)
     case customTestCasesUnsupported(CustomTestCasesUnsupported)
+    /// The submission request was routed to an incorrect language executor.
     case unexpectedLanguage(UnexpectedLanguage)
 
     public init(from decoder: Decoder) throws {

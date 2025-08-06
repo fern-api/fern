@@ -1,4 +1,5 @@
 public enum UnionWithDiscriminant: Codable, Hashable, Sendable {
+    /// This is a Foo field.
     case foo(Foo)
     case bar(Bar)
 
