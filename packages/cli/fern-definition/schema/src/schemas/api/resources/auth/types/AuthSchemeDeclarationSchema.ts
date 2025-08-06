@@ -8,5 +8,4 @@ export type AuthSchemeDeclarationSchema =
     | FernDefinition.OAuthSchemeSchema
     | FernDefinition.HeaderAuthSchemeSchema
     | FernDefinition.BasicAuthSchemeSchema
-    | FernDefinition.BearerAuthSchemeSchema
-    | FernDefinition.InferredAuthSchemeSchema;
+    | FernDefinition.BearerAuthSchemeSchema;

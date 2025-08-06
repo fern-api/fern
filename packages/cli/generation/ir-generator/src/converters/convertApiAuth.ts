@@ -104,22 +104,22 @@ function convertSchemeReference({
                     docs,
                     rawScheme
                 }),
-            bearer: (rawScheme) =>
+            tokenBearer: (rawScheme) =>
                 generateBearerAuth({
                     file,
                     docs,
                     rawScheme
                 }),
-            oauth: (rawScheme) =>
-                generateOAuth({
+            inferredBearer: (rawScheme) =>
+                generateInferredAuth({
                     file,
                     docs,
                     rawScheme,
                     propertyResolver,
                     endpointResolver
                 }),
-            inferred: (rawScheme) =>
-                generateInferredAuth({
+            oauth: (rawScheme) =>
+                generateOAuth({
                     file,
                     docs,
                     rawScheme,
@@ -164,7 +164,7 @@ function generateBearerAuth({
 }: {
     file: FernFileContext;
     docs: string | undefined;
-    rawScheme: RawSchemas.BearerAuthSchemeSchema | undefined;
+    rawScheme: RawSchemas.TokenBearerAuthSchema | undefined;
 }): AuthScheme.Bearer {
     return AuthScheme.bearer({
         docs,
@@ -233,7 +233,7 @@ function generateInferredAuth({
 }: {
     file: FernFileContext;
     docs: string | undefined;
-    rawScheme: RawSchemas.InferredAuthSchemeSchema;
+    rawScheme: RawSchemas.InferredBearerAuthSchema;
     propertyResolver: PropertyResolver;
     endpointResolver: EndpointResolver;
 }): AuthScheme.Inferred {
@@ -255,7 +255,7 @@ function getInferredTokenEndpoint({
     endpointResolver
 }: {
     file: FernFileContext;
-    rawScheme: RawSchemas.InferredAuthSchemeSchema;
+    rawScheme: RawSchemas.InferredBearerAuthSchema;
     propertyResolver: PropertyResolver;
     endpointResolver: EndpointResolver;
 }): InferredAuthSchemeTokenEndpoint {

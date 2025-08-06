@@ -5,6 +5,6 @@ imports:
 auth: InferredAuthScheme
 auth-schemes:
   InferredAuthScheme:
-    scheme: inferred
+    scheme: bearer
     get-token:
       endpoint: auth.getTokenWithClientCredentials

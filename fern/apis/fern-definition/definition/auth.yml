@@ -39,7 +39,6 @@ types:
       - HeaderAuthSchemeSchema
       - BasicAuthSchemeSchema
       - BearerAuthSchemeSchema
-      - InferredAuthSchemeSchema
   
   WithEnvironmentVariable: 
     properties: 
@@ -71,17 +70,23 @@ types:
       password: optional<AuthVariable>
   
   BearerAuthSchemeSchema: 
+    discriminated: false
+    union:
+      - TokenBearerAuthSchema
+      - InferredBearerAuthSchema
+
+  TokenBearerAuthSchema:
+    extends: 
+      - commons.WithDocsSchema
+    properties:
+      scheme: literal<"bearer">
+      token: optional<AuthVariable>
+
+  InferredBearerAuthSchema: 
     extends: 
       - commons.WithDocsSchema
     properties: 
       scheme: literal<"bearer">
-      token: optional<AuthVariable>
-
-  InferredAuthSchemeSchema: 
-    extends: 
-      - commons.WithDocsSchema
-    properties: 
-      scheme: literal<"inferred">
       get-token: InferredGetTokenEndpointSchema
     # refresh-token: optional<InferredRefreshTokenEndpointSchema>
   

@@ -163,45 +163,7 @@
     "endpoints": {
         "endpoint_auth.getTokenWithClientCredentials": {
             "auth": {
-                "type": "oauth",
-                "clientId": {
-                    "originalName": "clientId",
-                    "camelCase": {
-                        "unsafeName": "clientId",
-                        "safeName": "clientId"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "client_id",
-                        "safeName": "client_id"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "CLIENT_ID",
-                        "safeName": "CLIENT_ID"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "ClientId",
-                        "safeName": "ClientId"
-                    }
-                },
-                "clientSecret": {
-                    "originalName": "clientSecret",
-                    "camelCase": {
-                        "unsafeName": "clientSecret",
-                        "safeName": "clientSecret"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "client_secret",
-                        "safeName": "client_secret"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "CLIENT_SECRET",
-                        "safeName": "CLIENT_SECRET"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "ClientSecret",
-                        "safeName": "ClientSecret"
-                    }
-                }
+                "type": "inferred"
             },
             "declaration": {
                 "name": {
@@ -506,45 +468,7 @@
         },
         "endpoint_auth.refreshToken": {
             "auth": {
-                "type": "oauth",
-                "clientId": {
-                    "originalName": "clientId",
-                    "camelCase": {
-                        "unsafeName": "clientId",
-                        "safeName": "clientId"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "client_id",
-                        "safeName": "client_id"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "CLIENT_ID",
-                        "safeName": "CLIENT_ID"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "ClientId",
-                        "safeName": "ClientId"
-                    }
-                },
-                "clientSecret": {
-                    "originalName": "clientSecret",
-                    "camelCase": {
-                        "unsafeName": "clientSecret",
-                        "safeName": "clientSecret"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "client_secret",
-                        "safeName": "client_secret"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "CLIENT_SECRET",
-                        "safeName": "CLIENT_SECRET"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "ClientSecret",
-                        "safeName": "ClientSecret"
-                    }
-                }
+                "type": "inferred"
             },
             "declaration": {
                 "name": {
@@ -877,45 +801,7 @@
         },
         "endpoint_simple.getSomething": {
             "auth": {
-                "type": "oauth",
-                "clientId": {
-                    "originalName": "clientId",
-                    "camelCase": {
-                        "unsafeName": "clientId",
-                        "safeName": "clientId"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "client_id",
-                        "safeName": "client_id"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "CLIENT_ID",
-                        "safeName": "CLIENT_ID"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "ClientId",
-                        "safeName": "ClientId"
-                    }
-                },
-                "clientSecret": {
-                    "originalName": "clientSecret",
-                    "camelCase": {
-                        "unsafeName": "clientSecret",
-                        "safeName": "clientSecret"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "client_secret",
-                        "safeName": "client_secret"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "CLIENT_SECRET",
-                        "safeName": "CLIENT_SECRET"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "ClientSecret",
-                        "safeName": "ClientSecret"
-                    }
-                }
+                "type": "inferred"
             },
             "declaration": {
                 "name": {

@@ -8,19 +8,19 @@ import * as core from "../../../../core";
 import { InferredGetTokenEndpointSchema } from "./InferredGetTokenEndpointSchema";
 import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 
-export const InferredAuthSchemeSchema: core.serialization.ObjectSchema<
-    serializers.InferredAuthSchemeSchema.Raw,
-    FernDefinition.InferredAuthSchemeSchema
+export const InferredBearerAuthSchema: core.serialization.ObjectSchema<
+    serializers.InferredBearerAuthSchema.Raw,
+    FernDefinition.InferredBearerAuthSchema
 > = core.serialization
     .object({
-        scheme: core.serialization.stringLiteral("inferred"),
+        scheme: core.serialization.stringLiteral("bearer"),
         "get-token": InferredGetTokenEndpointSchema,
     })
     .extend(WithDocsSchema);
 
-export declare namespace InferredAuthSchemeSchema {
+export declare namespace InferredBearerAuthSchema {
     export interface Raw extends WithDocsSchema.Raw {
-        scheme: "inferred";
+        scheme: "bearer";
         "get-token": InferredGetTokenEndpointSchema.Raw;
     }
 }

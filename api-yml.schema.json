@@ -790,7 +790,7 @@
       ],
       "additionalProperties": false
     },
-    "auth.BearerAuthSchemeSchema": {
+    "auth.TokenBearerAuthSchema": {
       "type": "object",
       "properties": {
         "docs": {
@@ -883,7 +883,7 @@
       ],
       "additionalProperties": false
     },
-    "auth.InferredAuthSchemeSchema": {
+    "auth.InferredBearerAuthSchema": {
       "type": "object",
       "properties": {
         "docs": {
@@ -897,7 +897,7 @@
           ]
         },
         "scheme": {
-          "const": "inferred"
+          "const": "bearer"
         },
         "get-token": {
           "$ref": "#/definitions/auth.InferredGetTokenEndpointSchema"
@@ -908,6 +908,16 @@
         "get-token"
       ],
       "additionalProperties": false
+    },
+    "auth.BearerAuthSchemeSchema": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/auth.TokenBearerAuthSchema"
+        },
+        {
+          "$ref": "#/definitions/auth.InferredBearerAuthSchema"
+        }
+      ]
     },
     "auth.AuthSchemeDeclarationSchema": {
       "anyOf": [
@@ -922,9 +932,6 @@
         },
         {
           "$ref": "#/definitions/auth.BearerAuthSchemeSchema"
-        },
-        {
-          "$ref": "#/definitions/auth.InferredAuthSchemeSchema"
         }
       ]
     },

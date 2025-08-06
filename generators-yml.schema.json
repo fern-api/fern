@@ -547,7 +547,7 @@
       ],
       "additionalProperties": false
     },
-    "fernDefinition.auth.BearerAuthSchemeSchema": {
+    "fernDefinition.auth.TokenBearerAuthSchema": {
       "type": "object",
       "properties": {
         "docs": {
@@ -640,7 +640,7 @@
       ],
       "additionalProperties": false
     },
-    "fernDefinition.auth.InferredAuthSchemeSchema": {
+    "fernDefinition.auth.InferredBearerAuthSchema": {
       "type": "object",
       "properties": {
         "docs": {
@@ -654,7 +654,7 @@
           ]
         },
         "scheme": {
-          "const": "inferred"
+          "const": "bearer"
         },
         "get-token": {
           "$ref": "#/definitions/fernDefinition.auth.InferredGetTokenEndpointSchema"
@@ -665,6 +665,16 @@
         "get-token"
       ],
       "additionalProperties": false
+    },
+    "fernDefinition.auth.BearerAuthSchemeSchema": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/fernDefinition.auth.TokenBearerAuthSchema"
+        },
+        {
+          "$ref": "#/definitions/fernDefinition.auth.InferredBearerAuthSchema"
+        }
+      ]
     },
     "fernDefinition.auth.AuthSchemeDeclarationSchema": {
       "anyOf": [
@@ -679,9 +689,6 @@
         },
         {
           "$ref": "#/definitions/fernDefinition.auth.BearerAuthSchemeSchema"
-        },
-        {
-          "$ref": "#/definitions/fernDefinition.auth.InferredAuthSchemeSchema"
         }
       ]
     },
