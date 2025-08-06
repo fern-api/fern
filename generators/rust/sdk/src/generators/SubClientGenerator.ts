@@ -402,7 +402,7 @@ export class SubClientGenerator {
             const wireValue = queryParam.name.wireValue;
             const isOptionalType = this.isOptionalType(queryParam.valueType);
             const pattern = isOptionalType ? `Some(Some(value))` : `Some(value)`;
-            
+
             return `if let ${pattern} = ${paramName} {
                 query_params.push(("${wireValue}".to_string(), ${this.getQueryParameterConversion(queryParam, paramName)}));
             }`;
