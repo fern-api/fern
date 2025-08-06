@@ -1,8 +1,44 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`fern generator upgrade > fern generator help commands 1`] = `""`;
+exports[`fern generator upgrade > fern generator help commands 1`] = `
+"fern-dev generator
 
-exports[`fern generator upgrade > fern generator help commands 2`] = `""`;
+Operate on the generators within your Fern configuration
+
+Commands:
+  fern-dev generator upgrade  Upgrades the specified generator in generators.yml
+                              to the latest stable version.
+
+Options:
+  --help       Show help                                               [boolean]
+  --log-level
+          [choices: "trace", "debug", "info", "warn", "error"] [default: "info"]"
+`;
+
+exports[`fern generator upgrade > fern generator help commands 2`] = `
+"fern-dev generator upgrade
+
+Upgrades the specified generator in generators.yml to the latest stable version.
+
+Options:
+  --help           Show help                                           [boolean]
+  --log-level
+          [choices: "trace", "debug", "info", "warn", "error"] [default: "info"]
+  --generator      The type of generator to upgrade, ex:
+                   \`fern-typescript-node-sdk\`.                          [string]
+  --group          The group in which the generator is located, if group is not
+                   specified, the all generators of the specified type will be
+                   upgraded.                                            [string]
+  --api            The API to upgrade the generator for. If not specified, the
+                   generator will be upgraded for all APIs.             [string]
+  --include-major  Whether or not to include major versions within the upgrade.
+                   Defaults to false, meaning major versions will be skipped.
+                                                      [boolean] [default: false]
+  --channel                                                [choices: "GA", "RC"]
+  --list           When specified, a list of available upgrades will be
+                   displayed, but no upgrade will be taken.
+                                                      [boolean] [default: false]"
+`;
 
 exports[`fern generator upgrade > fern generator upgrade message 1`] = `
 "         ╭────────────────────────────────────────────────────────────╮

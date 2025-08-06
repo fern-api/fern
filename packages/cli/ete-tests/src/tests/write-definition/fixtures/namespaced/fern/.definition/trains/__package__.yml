@@ -1,0 +1,386 @@
+types:
+  Booking:
+    properties:
+      has_bicycle:
+        docs: Indicates whether the passenger has a bicycle.
+        type: optional<boolean>
+      has_dog:
+        docs: Indicates whether the passenger has a dog.
+        type: optional<boolean>
+      id:
+        access: read-only
+        docs: Unique identifier for the booking
+        type: optional<string>
+        validation:
+          format: uuid
+      passenger_name:
+        docs: Name of the passenger
+        type: optional<string>
+      trip_id:
+        docs: Identifier of the booked trip
+        type: optional<string>
+        validation:
+          format: uuid
+    source:
+      openapi: openapi/trains/openapi.yml
+  BookingPayment:
+    properties:
+      amount:
+        docs: >-
+          Amount intended to be collected by this payment. A positive decimal
+          figure describing the amount to be collected.
+        type: optional<double>
+      currency:
+        docs: >-
+          Three-letter [ISO currency
+          code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
+        type: optional<BookingPaymentCurrency>
+      id:
+        access: read-only
+        docs: >-
+          Unique identifier for the payment. This will be a unique identifier
+          for the payment, and is used to reference the payment in other
+          objects.
+        type: optional<string>
+        validation:
+          format: uuid
+      source:
+        docs: >-
+          The payment source to take the payment from. This can be a card or a
+          bank account. Some of these properties will be hidden on read to
+          protect PII leaking.
+        type: optional<BookingPaymentSource>
+      status:
+        access: read-only
+        docs: The status of the payment, one of `pending`, `succeeded`, or `failed`.
+        type: optional<BookingPaymentStatus>
+    source:
+      openapi: openapi/trains/openapi.yml
+  BookingPaymentCurrency:
+    docs: >-
+      Three-letter [ISO currency
+      code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
+    enum:
+      - bam
+      - bgn
+      - chf
+      - eur
+      - gbp
+      - nok
+      - sek
+      - try
+    inline: true
+    source:
+      openapi: openapi/trains/openapi.yml
+  BookingPaymentSource:
+    base-properties: {}
+    discriminant: object
+    docs: >-
+      The payment source to take the payment from. This can be a card or a bank
+      account. Some of these properties will be hidden on read to protect PII
+      leaking.
+    source:
+      openapi: openapi/trains/openapi.yml
+    union:
+      bank_account:
+        docs: >-
+          A bank account to take payment from. Must be able to make payments in
+          the currency specified in the payment.
+        type: BookingPaymentSourceBankAccount
+      card:
+        docs: A card (debit or credit) to take payment from.
+        type: Card
+  BookingPaymentSourceBankAccount:
+    docs: >-
+      A bank account to take payment from. Must be able to make payments in the
+      currency specified in the payment.
+    inline: true
+    properties:
+      account_type:
+        docs: >-
+          The type of entity that holds the account. This can be either
+          `individual` or `company`.
+        type: BookingPaymentSourceBankAccountAccountType
+      bank_name:
+        docs: The name of the bank associated with the routing number.
+        type: string
+      country:
+        docs: Two-letter country code (ISO 3166-1 alpha-2).
+        type: string
+      name: string
+      number:
+        docs: >-
+          The account number for the bank account, in string form. Must be a
+          current account.
+        type: string
+      sort_code:
+        docs: >-
+          The sort code for the bank account, in string form. Must be a
+          six-digit number.
+        type: optional<string>
+    source:
+      openapi: openapi/trains/openapi.yml
+  BookingPaymentSourceBankAccountAccountType:
+    docs: >-
+      The type of entity that holds the account. This can be either `individual`
+      or `company`.
+    enum:
+      - individual
+      - company
+    inline: true
+    source:
+      openapi: openapi/trains/openapi.yml
+  BookingPaymentStatus:
+    docs: The status of the payment, one of `pending`, `succeeded`, or `failed`.
+    enum:
+      - pending
+      - succeeded
+      - failed
+    inline: true
+    source:
+      openapi: openapi/trains/openapi.yml
+  Card:
+    docs: A card (debit or credit) to take payment from.
+    inline: true
+    properties:
+      address_city:
+        type: optional<string>
+      address_country: string
+      address_line1:
+        access: write-only
+        type: optional<string>
+      address_line2:
+        access: write-only
+        type: optional<string>
+      address_post_code:
+        type: optional<string>
+      cvc:
+        access: write-only
+        docs: >-
+          Card security code, 3 or 4 digits usually found on the back of the
+          card.
+        type: integer
+      exp_month:
+        docs: Two-digit number representing the card's expiration month.
+        type: long
+      exp_year:
+        docs: Four-digit number representing the card's expiration year.
+        type: long
+      name:
+        docs: Cardholder's full name as it appears on the card.
+        type: string
+      number:
+        docs: >-
+          The card number, as a string without any separators. On read all but
+          the last four digits will be masked for security.
+        type: string
+    source:
+      openapi: openapi/trains/openapi.yml
+  LinksBooking:
+    properties:
+      booking:
+        type: optional<string>
+        validation:
+          format: uri
+    source:
+      openapi: openapi/trains/openapi.yml
+  LinksPagination:
+    properties:
+      next:
+        type: optional<string>
+        validation:
+          format: uri
+      prev:
+        type: optional<string>
+        validation:
+          format: uri
+    source:
+      openapi: openapi/trains/openapi.yml
+  LinksSelf:
+    properties:
+      self:
+        type: optional<string>
+        validation:
+          format: uri
+    source:
+      openapi: openapi/trains/openapi.yml
+  Pet:
+    properties:
+      id: long
+      name: string
+    source:
+      openapi: openapi/trains/openapi.yml
+  Problem:
+    properties:
+      detail:
+        docs: >-
+          A human-readable explanation specific to this occurrence of the
+          problem
+        type: optional<string>
+      instance:
+        docs: A URI reference that identifies the specific occurrence of the problem
+        type: optional<string>
+      status:
+        docs: The HTTP status code
+        type: optional<integer>
+      title:
+        docs: A short, human-readable summary of the problem type
+        type: optional<string>
+      type:
+        docs: A URI reference that identifies the problem type
+        type: optional<string>
+    source:
+      openapi: openapi/trains/openapi.yml
+  Station:
+    properties:
+      address:
+        docs: The address of the station.
+        type: string
+      country_code:
+        docs: The country code of the station.
+        type: string
+      id:
+        docs: Unique identifier for the station.
+        type: string
+        validation:
+          format: uuid
+      messages: optional<V2ChatMessages>
+      name:
+        docs: The name of the station
+        type: string
+      pet: optional<Pet>
+      timezone:
+        docs: >-
+          The timezone of the station in the [IANA Time Zone Database
+          format](https://www.iana.org/time-zones).
+        type: optional<string>
+    source:
+      openapi: openapi/trains/openapi.yml
+  Trip:
+    properties:
+      arrival_time:
+        docs: The date and time when the trip arrives
+        type: optional<datetime>
+      bicycles_allowed:
+        docs: Indicates whether bicycles are allowed on the trip
+        type: optional<boolean>
+      departure_time:
+        docs: The date and time when the trip departs
+        type: optional<datetime>
+      destination:
+        docs: The destination station of the trip
+        type: optional<string>
+      dogs_allowed:
+        docs: Indicates whether dogs are allowed on the trip
+        type: optional<boolean>
+      id:
+        docs: Unique identifier for the trip
+        type: optional<string>
+        validation:
+          format: uuid
+      operator:
+        docs: The name of the operator of the trip
+        type: optional<string>
+      origin:
+        docs: The starting station of the trip
+        type: optional<string>
+      price:
+        docs: The cost of the trip
+        type: optional<double>
+    source:
+      openapi: openapi/trains/openapi.yml
+  V2ChatMessages:
+    docs: >
+      A list of chat messages in chronological order, representing a
+      conversation between the user and the model.
+
+
+      Messages can be from `User`, `Assistant`, `Tool` and `System` roles. Learn
+      more about messages and roles in [the Chat API
+      guide](https://docs.cohere.com/docs/chat-api).
+    type: list<unknown>
+  WrapperCollection:
+    docs: >-
+      This is a generic request/response wrapper which contains both data and
+      links which serve as hypermedia controls (HATEOAS).
+    properties:
+      data:
+        docs: The wrapper for a collection is an array of objects.
+        type: optional<list<map<string, unknown>>>
+      links:
+        access: read-only
+        docs: A set of hypermedia links which serve as controls for the client.
+        type: optional<map<string, unknown>>
+    source:
+      openapi: openapi/trains/openapi.yml
+errors:
+  BadRequestError:
+    docs: Bad Request
+    examples:
+      - value:
+          detail: The request is invalid or missing required parameters.
+          status: 400
+          title: Bad Request
+          type: https://example.com/errors/bad-request
+    status-code: 400
+    type: Problem
+  ConflictError:
+    docs: Conflict
+    examples:
+      - value:
+          detail: There is a conflict with an existing resource.
+          status: 409
+          title: Conflict
+          type: https://example.com/errors/conflict
+    status-code: 409
+    type: Problem
+  ForbiddenError:
+    docs: Forbidden
+    examples:
+      - value:
+          detail: Access is forbidden with the provided credentials.
+          status: 403
+          title: Forbidden
+          type: https://example.com/errors/forbidden
+    status-code: 403
+    type: Problem
+  InternalServerError:
+    docs: Internal Server Error
+    examples:
+      - value:
+          detail: An unexpected error occurred.
+          status: 500
+          title: Internal Server Error
+          type: https://example.com/errors/internal-server-error
+    status-code: 500
+    type: Problem
+  NotFoundError:
+    docs: Not Found
+    examples:
+      - value:
+          detail: The requested resource was not found.
+          status: 404
+          title: Not Found
+          type: https://example.com/errors/not-found
+    status-code: 404
+    type: Problem
+  TooManyRequestsError:
+    docs: Too Many Requests
+    examples:
+      - value:
+          detail: You have exceeded the rate limit.
+          status: 429
+          title: Too Many Requests
+          type: https://example.com/errors/too-many-requests
+    status-code: 429
+    type: Problem
+  UnauthorizedError:
+    docs: Unauthorized
+    examples:
+      - value:
+          detail: You do not have the necessary permissions.
+          status: 401
+          title: Unauthorized
+          type: https://example.com/errors/unauthorized
+    status-code: 401
+    type: Problem

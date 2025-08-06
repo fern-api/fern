@@ -1,0 +1,167 @@
+types:
+  BadRequestErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere-v2.yaml
+  ClientClosedRequestErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere-v2.yaml
+  ForbiddenErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere-v2.yaml
+  GatewayTimeoutErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere-v2.yaml
+  InternalServerErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere-v2.yaml
+  InvalidTokenErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere-v2.yaml
+  NotFoundErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere-v2.yaml
+  NotImplementedErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere-v2.yaml
+  ServiceUnavailableErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere-v2.yaml
+  TooManyRequestsErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere-v2.yaml
+  UnauthorizedErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere-v2.yaml
+  UnprocessableEntityErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere-v2.yaml
+errors:
+  BadRequestError:
+    docs: >
+      This error is returned when the request is not well formed. This could be
+      because:
+        - JSON is invalid
+        - The request is missing required fields
+        - The request contains an invalid combination of fields
+    examples:
+      - value: {}
+    status-code: 400
+    type: unknown
+  ClientClosedRequestError:
+    docs: |
+      This error is returned when a request is cancelled by the user.
+    examples:
+      - value: {}
+    status-code: 499
+    type: unknown
+  ForbiddenError:
+    docs: >
+      This error indicates that the operation attempted to be performed is not
+      allowed. This could be because:
+        - The api token is invalid
+        - The user does not have the necessary permissions
+    examples:
+      - value: {}
+    status-code: 403
+    type: unknown
+  GatewayTimeoutError:
+    docs: >
+      This error is returned when a request to the server times out. This could
+      be due to:
+        - An internal services taking too long to respond
+    examples:
+      - value: {}
+    status-code: 504
+    type: unknown
+  InternalServerError:
+    docs: |
+      This error is returned when an uncategorized internal server error occurs.
+    examples:
+      - value: {}
+    status-code: 500
+    type: unknown
+  InvalidTokenError:
+    docs: >
+      This error is returned when a request or response contains a deny-listed
+      token.
+    examples:
+      - value: {}
+    status-code: 498
+    type: unknown
+  NotFoundError:
+    docs: >
+      This error is returned when a resource is not found. This could be
+      because:
+        - The endpoint does not exist
+        - The resource does not exist eg model id, dataset id
+    examples:
+      - value: {}
+    status-code: 404
+    type: unknown
+  NotImplementedError:
+    docs: |
+      This error is returned when the requested feature is not implemented.
+    examples:
+      - value: {}
+    status-code: 501
+    type: unknown
+  ServiceUnavailableError:
+    docs: >
+      This error is returned when the service is unavailable. This could be due
+      to:
+        - Too many users trying to access the service at the same time
+    examples:
+      - value: {}
+    status-code: 503
+    type: unknown
+  TooManyRequestsError:
+    docs: Too many requests
+    examples:
+      - value: {}
+    status-code: 429
+    type: unknown
+  UnauthorizedError:
+    docs: >
+      This error indicates that the operation attempted to be performed is not
+      allowed. This could be because:
+        - The api token is invalid
+        - The user does not have the necessary permissions
+    examples:
+      - value: {}
+    status-code: 401
+    type: unknown
+  UnprocessableEntityError:
+    docs: >
+      This error is returned when the request is not well formed. This could be
+      because:
+        - JSON is invalid
+        - The request is missing required fields
+        - The request contains an invalid combination of fields
+    examples:
+      - value: {}
+    status-code: 422
+    type: unknown

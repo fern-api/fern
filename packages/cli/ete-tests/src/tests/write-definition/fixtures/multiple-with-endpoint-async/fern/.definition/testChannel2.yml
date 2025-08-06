@@ -1,0 +1,12 @@
+channel:
+  auth: false
+  examples:
+    - messages:
+        - body: string
+          type: testChannel2_sendMessage
+  messages:
+    testChannel2_sendMessage:
+      body: string
+      origin: client
+  path: /test2
+  url: websocket2

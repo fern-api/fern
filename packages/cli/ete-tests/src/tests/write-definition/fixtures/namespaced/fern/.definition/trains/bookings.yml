@@ -1,0 +1,171 @@
+imports:
+  trainsRoot: __package__.yml
+types:
+  CreateBookingResponse:
+    extends:
+      - trainsRoot.Booking
+    properties:
+      links: optional<trainsRoot.LinksSelf>
+    source:
+      openapi: openapi/trains/openapi.yml
+  GetBookingResponse:
+    extends:
+      - trainsRoot.Booking
+    properties:
+      links: optional<trainsRoot.LinksSelf>
+    source:
+      openapi: openapi/trains/openapi.yml
+  GetBookingsResponse:
+    properties:
+      data: optional<list<trainsRoot.Booking>>
+      links: optional<GetBookingsResponseLinks>
+    source:
+      openapi: openapi/trains/openapi.yml
+  GetBookingsResponseLinks:
+    extends:
+      - trainsRoot.LinksSelf
+      - trainsRoot.LinksPagination
+    inline: true
+    properties: {}
+    source:
+      openapi: openapi/trains/openapi.yml
+docs: |
+  Create and manage bookings for train trips, including passenger details
+  and optional extras.
+service:
+  auth: false
+  base-path: ''
+  display-name: Bookings
+  endpoints:
+    create-booking:
+      auth: true
+      display-name: Create a booking
+      docs: >-
+        A booking is a temporary hold on a trip. It is not confirmed until the
+        payment is processed.
+      errors:
+        - trainsRoot.BadRequestError
+        - trainsRoot.UnauthorizedError
+        - trainsRoot.NotFoundError
+        - trainsRoot.ConflictError
+        - trainsRoot.TooManyRequestsError
+        - trainsRoot.InternalServerError
+      examples:
+        - request: {}
+          response:
+            body:
+              has_bicycle: true
+              has_dog: true
+              id: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
+              links:
+                self: >-
+                  https://api.example.com/bookings/efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
+              passenger_name: John Doe
+              trip_id: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
+      method: POST
+      path: /bookings
+      request:
+        body: trainsRoot.Booking
+        content-type: application/json
+      response:
+        docs: Booking successful
+        status-code: 201
+        type: CreateBookingResponse
+      source:
+        openapi: openapi/trains/openapi.yml
+    delete-booking:
+      auth: true
+      display-name: Delete a booking
+      docs: Deletes a booking, cancelling the hold on the trip.
+      errors:
+        - trainsRoot.BadRequestError
+        - trainsRoot.UnauthorizedError
+        - trainsRoot.ForbiddenError
+        - trainsRoot.NotFoundError
+        - trainsRoot.TooManyRequestsError
+        - trainsRoot.InternalServerError
+      examples:
+        - path-parameters:
+            bookingId: 1725ff48-ab45-4bb5-9d02-88745177dedb
+      method: DELETE
+      path: /bookings/{bookingId}
+      path-parameters:
+        bookingId:
+          docs: The ID of the booking to retrieve.
+          type: string
+      source:
+        openapi: openapi/trains/openapi.yml
+    get-booking:
+      auth: true
+      display-name: Get a booking
+      docs: Returns the details of a specific booking.
+      errors:
+        - trainsRoot.BadRequestError
+        - trainsRoot.UnauthorizedError
+        - trainsRoot.ForbiddenError
+        - trainsRoot.NotFoundError
+        - trainsRoot.TooManyRequestsError
+        - trainsRoot.InternalServerError
+      examples:
+        - path-parameters:
+            bookingId: 1725ff48-ab45-4bb5-9d02-88745177dedb
+          response:
+            body:
+              has_bicycle: true
+              has_dog: true
+              id: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
+              links:
+                self: >-
+                  https://api.example.com/bookings/1725ff48-ab45-4bb5-9d02-88745177dedb
+              passenger_name: John Doe
+              trip_id: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
+      method: GET
+      path: /bookings/{bookingId}
+      path-parameters:
+        bookingId:
+          docs: The ID of the booking to retrieve.
+          type: string
+      response:
+        docs: The booking details
+        status-code: 200
+        type: GetBookingResponse
+      source:
+        openapi: openapi/trains/openapi.yml
+    get-bookings:
+      auth: true
+      display-name: List existing bookings
+      docs: Returns a list of all trip bookings by the authenticated user.
+      errors:
+        - trainsRoot.BadRequestError
+        - trainsRoot.UnauthorizedError
+        - trainsRoot.ForbiddenError
+        - trainsRoot.TooManyRequestsError
+        - trainsRoot.InternalServerError
+      examples:
+        - response:
+            body:
+              data:
+                - has_bicycle: true
+                  has_dog: true
+                  id: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
+                  passenger_name: John Doe
+                  trip_id: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
+                - has_bicycle: false
+                  has_dog: false
+                  id: b2e783e1-c824-4d63-b37a-d8d698862f1d
+                  passenger_name: Jane Smith
+                  trip_id: b2e783e1-c824-4d63-b37a-d8d698862f1d
+              links:
+                next: https://api.example.com/bookings?page=2
+                prev: prev
+                self: https://api.example.com/bookings
+      method: GET
+      path: /bookings
+      response:
+        docs: A list of bookings
+        status-code: 200
+        type: GetBookingsResponse
+      source:
+        openapi: openapi/trains/openapi.yml
+  source:
+    openapi: openapi/trains/openapi.yml

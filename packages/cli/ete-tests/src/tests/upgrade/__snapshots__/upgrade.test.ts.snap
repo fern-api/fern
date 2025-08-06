@@ -1,0 +1,54 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`fern upgrade > upgrades generators 1`] = `
+"groups:
+  internal:
+    generators:
+      - name: fernapi/fern-postman
+        version: 0.0.15
+        output:
+          location: local-file-system
+          path: ./generated-postman
+      - name: fernapi/fern-openapi
+        version: 0.0.3
+        output:
+          location: local-file-system
+          path: ./generated-openapi
+        config:
+          format: yaml
+      - name: fernapi/fern-java-sdk
+        version: 0.0.50
+        output:
+          location: maven
+          coordinate: ''
+      - name: fernapi/fern-typescript-sdk
+        version: 0.0.11
+        output:
+          location: npm
+          package-name: ''
+  external:
+    generators:
+      - name: fernapi/fern-postman
+        version: 0.0.20
+        output:
+          location: local-file-system
+          path: ./generated-postman
+      - name: fernapi/fern-openapi
+        version: 0.0.2
+        output:
+          location: local-file-system
+          path: ./generated-openapi
+        config:
+          format: yaml
+      - name: fernapi/fern-java-sdk
+        version: 0.0.81
+        output:
+          location: maven
+          coordinate: ''
+      - name: fernapi/fern-typescript-sdk
+        version: 0.0.14
+        output:
+          location: npm
+          package-name: ''
+"
+`;

@@ -1,0 +1,442 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`fern init > init docs 1`] = `
+[
+  {
+    "contents": [
+      {
+        "contents": [
+          {
+            "contents": "name: api
+error-discrimination:
+  strategy: status-code
+",
+            "name": "api.yml",
+            "type": "file",
+          },
+          {
+            "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+service:
+  auth: false
+  base-path: /movies
+  endpoints:
+    createMovie:
+      docs: Add a movie to the database
+      method: POST
+      path: /create-movie
+      request: CreateMovieRequest
+      response: MovieId
+
+    getMovie:
+      docs: Retrieve a movie from the database based on the ID
+      method: GET
+      path: /{id}
+      path-parameters:
+        id: MovieId
+      response: Movie
+      errors:
+        - MovieDoesNotExistError
+      examples:
+        # Success response
+        - path-parameters:
+            id: tt0111161
+          response:
+            body:
+              id: tt0111161
+              title: The Shawshank Redemption
+              rating: 9.3
+        # Error response
+        - path-parameters:
+            id: tt1234
+          response:
+            error: MovieDoesNotExistError
+            body: tt1234
+
+types:
+  MovieId:
+    type: string
+    docs: The unique identifier for a Movie in the database
+
+  Movie:
+    properties:
+      id: MovieId
+      title: string
+      rating:
+        type: double
+        docs: The rating scale out of ten stars
+
+  CreateMovieRequest:
+    properties:
+      title: string
+      rating: double
+
+errors:
+  MovieDoesNotExistError:
+    status-code: 404
+    type: MovieId
+",
+            "name": "imdb.yml",
+            "type": "file",
+          },
+        ],
+        "name": "definition",
+        "type": "directory",
+      },
+      {
+        "contents": "instances:
+  - url: https://fern.docs.dev.buildwithfern.com
+title: Fern | Documentation
+navigation:
+  - api: API Reference
+    paginated: true
+colors:
+  accentPrimary: '#ffffff'
+  background: '#000000'
+",
+        "name": "docs.yml",
+        "type": "file",
+      },
+      {
+        "contents": "{
+    "organization": "fern",
+    "version": "0.0.0"
+}",
+        "name": "fern.config.json",
+        "type": "file",
+      },
+      {
+        "contents": "# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-typescript-sdk
+        output:
+          location: local-file-system
+          path: ../sdks/typescript
+        version: 2.3.2
+",
+        "name": "generators.yml",
+        "type": "file",
+      },
+    ],
+    "name": "fern",
+    "type": "directory",
+  },
+]
+`;
+
+exports[`fern init > init mintlify 1`] = `
+[
+  {
+    "contents": [
+      {
+        "contents": "instances:
+  - url: https://test-api.docs.buildwithfern.com
+title: Test API
+favicon: favicon.png
+logo:
+  light: logo.png
+  dark: logo.png
+  height: 28
+colors:
+  accent-primary:
+    dark: '#0050B4'
+    light: '#4D9CFF'
+  background: {}
+layout:
+  searchbar-placement: header
+  page-width: full
+  tabs-placement: header
+navigation: []
+",
+        "name": "docs.yml",
+        "type": "file",
+      },
+      {
+        "contents": "<binary>",
+        "name": "favicon.png",
+        "type": "file",
+      },
+      {
+        "contents": "{
+    "version": "0.0.0",
+    "organization": "fern"
+}",
+        "name": "fern.config.json",
+        "type": "file",
+      },
+      {
+        "contents": "<binary>",
+        "name": "logo.png",
+        "type": "file",
+      },
+    ],
+    "name": "fern",
+    "type": "directory",
+  },
+]
+`;
+
+exports[`fern init > init openapi 1`] = `
+[
+  {
+    "contents": [
+      {
+        "contents": "{
+    "organization": "fern",
+    "version": "0.0.0"
+}",
+        "name": "fern.config.json",
+        "type": "file",
+      },
+      {
+        "contents": "# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+api:
+  specs:
+    - openapi: ../petstore-openapi.yml
+default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-typescript-sdk
+        output:
+          location: local-file-system
+          path: ../sdks/typescript
+        version: 2.3.2
+",
+        "name": "generators.yml",
+        "type": "file",
+      },
+    ],
+    "name": "fern",
+    "type": "directory",
+  },
+  {
+    "contents": "openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+  license:
+    name: MIT
+servers:
+  - url: http://petstore.swagger.io/v1
+paths:
+  /pets:
+    get:
+      summary: List all pets
+      operationId: listPets
+      tags:
+        - pets
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            maximum: 100
+            format: int32
+      responses:
+        "200":
+          description: A paged array of pets
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pets"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a pet
+      operationId: createPets
+      tags:
+        - pets
+      responses:
+        "201":
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /pets/{petId}:
+    get:
+      summary: Info for a specific pet
+      operationId: showPetById
+      tags:
+        - pets
+      parameters:
+        - name: petId
+          in: path
+          required: true
+          description: The id of the pet to retrieve
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pet"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Pet:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        tag:
+          type: string
+    Pets:
+      type: array
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/Pet"
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+",
+    "name": "petstore-openapi.yml",
+    "type": "file",
+  },
+]
+`;
+
+exports[`fern init > no existing fern directory 1`] = `
+[
+  {
+    "contents": [
+      {
+        "contents": "name: api
+error-discrimination:
+  strategy: status-code
+",
+        "name": "api.yml",
+        "type": "file",
+      },
+      {
+        "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+service:
+  auth: false
+  base-path: /movies
+  endpoints:
+    createMovie:
+      docs: Add a movie to the database
+      method: POST
+      path: /create-movie
+      request: CreateMovieRequest
+      response: MovieId
+
+    getMovie:
+      docs: Retrieve a movie from the database based on the ID
+      method: GET
+      path: /{id}
+      path-parameters:
+        id: MovieId
+      response: Movie
+      errors:
+        - MovieDoesNotExistError
+      examples:
+        # Success response
+        - path-parameters:
+            id: tt0111161
+          response:
+            body:
+              id: tt0111161
+              title: The Shawshank Redemption
+              rating: 9.3
+        # Error response
+        - path-parameters:
+            id: tt1234
+          response:
+            error: MovieDoesNotExistError
+            body: tt1234
+
+types:
+  MovieId:
+    type: string
+    docs: The unique identifier for a Movie in the database
+
+  Movie:
+    properties:
+      id: MovieId
+      title: string
+      rating:
+        type: double
+        docs: The rating scale out of ten stars
+
+  CreateMovieRequest:
+    properties:
+      title: string
+      rating: double
+
+errors:
+  MovieDoesNotExistError:
+    status-code: 404
+    type: MovieId
+",
+        "name": "imdb.yml",
+        "type": "file",
+      },
+    ],
+    "name": "definition",
+    "type": "directory",
+  },
+  {
+    "contents": "{
+    "organization": "fern",
+    "version": "0.0.0"
+}",
+    "name": "fern.config.json",
+    "type": "file",
+  },
+  {
+    "contents": "# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-typescript-sdk
+        output:
+          location: local-file-system
+          path: ../sdks/typescript
+        version: 2.3.2
+",
+    "name": "generators.yml",
+    "type": "file",
+  },
+]
+`;

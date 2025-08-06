@@ -1,0 +1,15 @@
+types:
+  Error:
+    properties:
+      code: integer
+      message: string
+    source:
+      openapi: openapi/openapi.yml
+  Pet:
+    properties:
+      id: long
+      name: string
+      tag: optional<string>
+    source:
+      openapi: openapi/openapi.yml
+  Pets: list<Pet>

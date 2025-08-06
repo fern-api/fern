@@ -1,0 +1,69 @@
+imports:
+  neopetsRoot: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    createPets:
+      auth: false
+      display-name: Create a pet
+      examples:
+        - {}
+      method: POST
+      path: /pets
+      source:
+        openapi: openapi/petstore/openapi.yml
+    listPets:
+      auth: false
+      display-name: List all pets
+      examples:
+        - response:
+            body:
+              - id: 1000000
+                messages:
+                  - key: value
+                name: name
+                tag: tag
+      method: GET
+      path: /pets
+      request:
+        name: ListPetsRequest
+        query-parameters:
+          limit:
+            docs: How many items to return at one time (max 100)
+            type: optional<integer>
+            validation:
+              max: 100
+      response:
+        docs: A paged array of pets
+        status-code: 200
+        type: neopetsRoot.Pets
+      source:
+        openapi: openapi/petstore/openapi.yml
+    showPetById:
+      auth: false
+      display-name: Info for a specific pet
+      examples:
+        - path-parameters:
+            petId: petId
+          response:
+            body:
+              id: 1000000
+              messages:
+                - key: value
+              name: name
+              tag: tag
+      method: GET
+      path: /pets/{petId}
+      path-parameters:
+        petId:
+          docs: The id of the pet to retrieve
+          type: string
+      response:
+        docs: Expected response to a valid request
+        status-code: 200
+        type: neopetsRoot.Pet
+      source:
+        openapi: openapi/petstore/openapi.yml
+  source:
+    openapi: openapi/petstore/openapi.yml

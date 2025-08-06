@@ -1,0 +1,453 @@
+types:
+  BadRequestErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere.yaml
+  ChatRequestPromptTruncation:
+    docs: >
+      Defaults to `AUTO` when `connectors` are specified and `OFF` in all other
+      cases.
+
+
+      Dictates how the prompt will be constructed.
+
+
+      With `prompt_truncation` set to "AUTO", some elements from `chat_history`
+      and `documents` will be dropped in an attempt to construct a prompt that
+      fits within the model's context length limit. During this process the
+      order of the documents and chat history will be changed and ranked by
+      relevance.
+
+
+      With `prompt_truncation` set to "AUTO_PRESERVE_ORDER", some elements from
+      `chat_history` and `documents` will be dropped in an attempt to construct
+      a prompt that fits within the model's context length limit. During this
+      process the order of the documents and chat history will be preserved as
+      they are inputted into the API.
+
+
+      With `prompt_truncation` set to "OFF", no elements will be dropped. If the
+      sum of the inputs exceeds the model's context length limit, a
+      `TooManyTokens` error will be returned.
+
+
+      Compatible Deployments: 
+       - AUTO: Cohere Platform Only
+       - AUTO_PRESERVE_ORDER: Azure, AWS Sagemaker/Bedrock, Private Deployments
+    enum:
+      - 'OFF'
+      - AUTO
+      - AUTO_PRESERVE_ORDER
+    inline: true
+    source:
+      openapi: openapi/cohere.yaml
+  ChatRequestSafetyMode:
+    docs: >
+      Used to select the [safety instruction](/docs/safety-modes) inserted into
+      the prompt. Defaults to `CONTEXTUAL`.
+
+      When `NONE` is specified, the safety instruction will be omitted.
+
+
+      Safety modes are not yet configurable in combination with `tools`,
+      `tool_results` and `documents` parameters.
+
+
+      **Note**: This parameter is only compatible with models [Command R
+      08-2024](/docs/command-r#august-2024-release), [Command R+
+      08-2024](/docs/command-r-plus#august-2024-release) and newer.
+
+
+      Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock,
+      Private Deployments
+    enum:
+      - CONTEXTUAL
+      - STRICT
+      - NONE
+    inline: true
+    source:
+      openapi: openapi/cohere.yaml
+  ClientClosedRequestErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere.yaml
+  ForbiddenErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere.yaml
+  GatewayTimeoutErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere.yaml
+  InternalServerErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere.yaml
+  InvalidTokenErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere.yaml
+  NotFoundErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere.yaml
+  NotImplementedErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere.yaml
+  ServiceUnavailableErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere.yaml
+  TooManyRequestsErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere.yaml
+  UnauthorizedErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere.yaml
+  UnprocessableEntityErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere.yaml
+errors:
+  BadRequestError:
+    docs: >
+      This error is returned when the request is not well formed. This could be
+      because:
+        - JSON is invalid
+        - The request is missing required fields
+        - The request contains an invalid combination of fields
+    examples:
+      - value: {}
+    status-code: 400
+    type: unknown
+  ClientClosedRequestError:
+    docs: |
+      This error is returned when a request is cancelled by the user.
+    examples:
+      - value: {}
+    status-code: 499
+    type: unknown
+  ForbiddenError:
+    docs: >
+      This error indicates that the operation attempted to be performed is not
+      allowed. This could be because:
+        - The api token is invalid
+        - The user does not have the necessary permissions
+    examples:
+      - value: {}
+    status-code: 403
+    type: unknown
+  GatewayTimeoutError:
+    docs: >
+      This error is returned when a request to the server times out. This could
+      be due to:
+        - An internal services taking too long to respond
+    examples:
+      - value: {}
+    status-code: 504
+    type: unknown
+  InternalServerError:
+    docs: |
+      This error is returned when an uncategorized internal server error occurs.
+    examples:
+      - value: {}
+    status-code: 500
+    type: unknown
+  InvalidTokenError:
+    docs: >
+      This error is returned when a request or response contains a deny-listed
+      token.
+    examples:
+      - value: {}
+    status-code: 498
+    type: unknown
+  NotFoundError:
+    docs: >
+      This error is returned when a resource is not found. This could be
+      because:
+        - The endpoint does not exist
+        - The resource does not exist eg model id, dataset id
+    examples:
+      - value: {}
+    status-code: 404
+    type: unknown
+  NotImplementedError:
+    docs: |
+      This error is returned when the requested feature is not implemented.
+    examples:
+      - value: {}
+    status-code: 501
+    type: unknown
+  ServiceUnavailableError:
+    docs: >
+      This error is returned when the service is unavailable. This could be due
+      to:
+        - Too many users trying to access the service at the same time
+    examples:
+      - value: {}
+    status-code: 503
+    type: unknown
+  TooManyRequestsError:
+    docs: Too many requests
+    examples:
+      - value: {}
+    status-code: 429
+    type: unknown
+  UnauthorizedError:
+    docs: >
+      This error indicates that the operation attempted to be performed is not
+      allowed. This could be because:
+        - The api token is invalid
+        - The user does not have the necessary permissions
+    examples:
+      - value: {}
+    status-code: 401
+    type: unknown
+  UnprocessableEntityError:
+    docs: >
+      This error is returned when the request is not well formed. This could be
+      because:
+        - JSON is invalid
+        - The request is missing required fields
+        - The request contains an invalid combination of fields
+    examples:
+      - value: {}
+    status-code: 422
+    type: unknown
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    chat:
+      audiences:
+        - public
+      auth: true
+      display-name: Chat
+      docs: >
+        Generates a text response to a user message.
+
+        To learn how to use the Chat API and RAG follow our [Text Generation
+        guides](https://docs.cohere.com/docs/chat-api).
+      errors:
+        - BadRequestError
+        - UnauthorizedError
+        - ForbiddenError
+        - NotFoundError
+        - UnprocessableEntityError
+        - TooManyRequestsError
+        - InvalidTokenError
+        - ClientClosedRequestError
+        - InternalServerError
+        - NotImplementedError
+        - ServiceUnavailableError
+        - GatewayTimeoutError
+      examples:
+        - request:
+            message: message
+          response:
+            body:
+              - string
+      method: POST
+      path: /v1/chat
+      request:
+        body:
+          properties:
+            chat_history:
+              audiences:
+                - public
+              docs: >
+                A list of previous messages between the user and the model,
+                giving the model conversational context for responding to the
+                user's `message`.
+
+
+                Each item represents a single message in the chat history,
+                excluding the current user turn. It has two properties: `role`
+                and `message`. The `role` identifies the sender (`CHATBOT`,
+                `SYSTEM`, or `USER`), while the `message` contains the text
+                content.
+
+
+                The chat_history parameter should not be used for `SYSTEM`
+                messages in most cases. Instead, to add a `SYSTEM` role message
+                at the beginning of a conversation, the `preamble` parameter
+                should be used.
+
+
+                Compatible Deployments: Cohere Platform, Azure, AWS
+                Sagemaker/Bedrock, Private Deployments
+              type: optional<list<unknown>>
+            conversation_id:
+              audiences:
+                - public
+              docs: >
+                An alternative to `chat_history`.
+
+
+                Providing a `conversation_id` creates or resumes a persisted
+                conversation with the specified ID. The ID can be any non empty
+                string.
+
+
+                Compatible Deployments: Cohere Platform
+              type: optional<string>
+            force_single_step:
+              audiences:
+                - public
+              docs: Forces the chat to be single step. Defaults to `false`.
+              type: optional<boolean>
+            message:
+              audiences:
+                - public
+              docs: >
+                Text input for the model to respond to.
+
+
+                Compatible Deployments: Cohere Platform, Azure, AWS
+                Sagemaker/Bedrock, Private Deployments
+              type: string
+            model:
+              audiences:
+                - public
+              docs: >
+                Defaults to `command-r-plus-08-2024`.
+
+
+                The name of a compatible [Cohere
+                model](https://docs.cohere.com/docs/models) or the ID of a
+                [fine-tuned](https://docs.cohere.com/docs/chat-fine-tuning)
+                model.
+
+
+                Compatible Deployments: Cohere Platform, Private Deployments
+              type: optional<string>
+            preamble:
+              audiences:
+                - public
+              docs: >
+                When specified, the default Cohere preamble will be replaced
+                with the provided one. Preambles are a part of the prompt used
+                to adjust the model's overall behavior and conversation style,
+                and use the `SYSTEM` role.
+
+
+                The `SYSTEM` role is also used for the contents of the optional
+                `chat_history=` parameter. When used with the `chat_history=`
+                parameter it adds content throughout a conversation. Conversely,
+                when used with the `preamble=` parameter it adds content at the
+                start of the conversation only.
+
+
+                Compatible Deployments: Cohere Platform, Azure, AWS
+                Sagemaker/Bedrock, Private Deployments
+              type: optional<string>
+            prompt_truncation:
+              audiences:
+                - public
+              docs: >
+                Defaults to `AUTO` when `connectors` are specified and `OFF` in
+                all other cases.
+
+
+                Dictates how the prompt will be constructed.
+
+
+                With `prompt_truncation` set to "AUTO", some elements from
+                `chat_history` and `documents` will be dropped in an attempt to
+                construct a prompt that fits within the model's context length
+                limit. During this process the order of the documents and chat
+                history will be changed and ranked by relevance.
+
+
+                With `prompt_truncation` set to "AUTO_PRESERVE_ORDER", some
+                elements from `chat_history` and `documents` will be dropped in
+                an attempt to construct a prompt that fits within the model's
+                context length limit. During this process the order of the
+                documents and chat history will be preserved as they are
+                inputted into the API.
+
+
+                With `prompt_truncation` set to "OFF", no elements will be
+                dropped. If the sum of the inputs exceeds the model's context
+                length limit, a `TooManyTokens` error will be returned.
+
+
+                Compatible Deployments: 
+                 - AUTO: Cohere Platform Only
+                 - AUTO_PRESERVE_ORDER: Azure, AWS Sagemaker/Bedrock, Private Deployments
+              type: optional<ChatRequestPromptTruncation>
+            safety_mode:
+              audiences:
+                - public
+              availability: pre-release
+              docs: >
+                Used to select the [safety instruction](/docs/safety-modes)
+                inserted into the prompt. Defaults to `CONTEXTUAL`.
+
+                When `NONE` is specified, the safety instruction will be
+                omitted.
+
+
+                Safety modes are not yet configurable in combination with
+                `tools`, `tool_results` and `documents` parameters.
+
+
+                **Note**: This parameter is only compatible with models [Command
+                R 08-2024](/docs/command-r#august-2024-release), [Command R+
+                08-2024](/docs/command-r-plus#august-2024-release) and newer.
+
+
+                Compatible Deployments: Cohere Platform, Azure, AWS
+                Sagemaker/Bedrock, Private Deployments
+              type: optional<ChatRequestSafetyMode>
+            stream:
+              audiences:
+                - public
+              docs: >
+                Defaults to `false`.
+
+
+                When `true`, the response will be a JSON stream of events. The
+                final event will contain the complete response, and will have an
+                `event_type` of `"stream-end"`.
+
+
+                Streaming is beneficial for user interfaces that render the
+                contents of the response piece by piece, as it gets generated.
+
+
+                Compatible Deployments: Cohere Platform, Azure, AWS
+                Sagemaker/Bedrock, Private Deployments
+              type: optional<boolean>
+        content-type: application/json
+        headers:
+          Accepts:
+            docs: >
+              Pass text/event-stream to receive the streamed response as
+              server-sent events. The default is `\n` delimited events.
+            name: accepts
+            type: optional<literal<"text/event-stream">>
+        name: ChatRequest
+      response:
+        docs: OK
+        status-code: 200
+        type: list<string>
+      source:
+        openapi: openapi/cohere.yaml
+  source:
+    openapi: openapi/cohere.yaml
