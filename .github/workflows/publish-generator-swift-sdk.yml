@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - "dak/ci/publish-swift-generator"
     paths:
       - "generators/swift/sdk/versions.yml"
   workflow_dispatch:
