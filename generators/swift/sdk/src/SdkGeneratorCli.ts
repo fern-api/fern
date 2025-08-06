@@ -160,7 +160,8 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                 enum: (etd) => {
                     const generator = new StringEnumGenerator({
                         name: context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
-                        enumTypeDeclaration: etd
+                        enumTypeDeclaration: etd,
+                        docsContent: typeDeclaration.docs
                     });
                     const enum_ = generator.generate();
                     context.project.addSourceFile({
@@ -188,6 +189,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                     const generator = new UndiscriminatedUnionGenerator({
                         name: context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
                         typeDeclaration: uutd,
+                        docsContent: typeDeclaration.docs,
                         context
                     });
                     const enum_ = generator.generate();
@@ -201,6 +203,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                     const generator = new DiscriminatedUnionGenerator({
                         name: context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
                         unionTypeDeclaration: utd,
+                        docsContent: typeDeclaration.docs,
                         context
                     });
                     const enum_ = generator.generate();
