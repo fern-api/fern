@@ -32,7 +32,10 @@ impl HttpClient {
     where
         T: DeserializeOwned,
     {
-        let url = format!("{}/{}", self.config.base_url.trim_end_matches('/'), path);
+        let url = format!("{}/{}", 
+            self.config.base_url.trim_end_matches('/'), 
+            path.trim_start_matches('/')
+        );
         let mut request = self.client.request(method, &url);
         
         // Apply query parameters if provided
@@ -66,7 +69,7 @@ impl HttpClient {
             .or(self.config.api_key.as_ref());
             
         if let Some(key) = api_key {
-            headers.insert("X-API-Key", key.parse().map_err(|_| ClientError::InvalidHeader)?);
+            headers.insert("api_key", key.parse().map_err(|_| ClientError::InvalidHeader)?);
         }
         
         // Apply bearer token (request options override config)

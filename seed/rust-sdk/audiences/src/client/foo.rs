@@ -4,25 +4,15 @@ use crate::{types::*};
 
 pub struct FooClient {
     pub http_client: HttpClient,
-    pub api_key: Option<String>,
-    pub bearer_token: Option<String>,
-    pub username: Option<String>,
-    pub password: Option<String>,
 }
 
 impl FooClient {
-    pub fn new(config: ClientConfig, api_key: Option<String>, bearer_token: Option<String>, username: Option<String>, password: Option<String>) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
         let http_client = HttpClient::new(config)?;
-        Ok(Self { 
-            http_client, 
-            api_key, 
-            bearer_token, 
-            username, 
-            password 
-        })
+        Ok(Self { http_client })
     }
 
-    pub async fn find(&self, optional_string: Option<&OptionalString>, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<ImportingType, ClientError> {
+    pub async fn find(&self, optional_string: Option<OptionalString>, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<ImportingType, ClientError> {
         self.http_client.execute_request(
             Method::POST,
             "",
