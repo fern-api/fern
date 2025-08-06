@@ -30,6 +30,10 @@ export interface Auth {
 
     AbstractAuthProvider: {
         _getReferenceToType: () => ts.TypeNode;
+        getAuthRequest: {
+            invoke: (instanceExpression: ts.Expression) => ts.Expression;
+            getReturnTypeNode: () => ts.TypeNode;
+        };
     };
 }
 
@@ -154,6 +158,24 @@ export class AuthImpl extends CoreUtility implements Auth {
         _getReferenceToType: this.withExportedName(
             "AbstractAuthProvider",
             (AbstractAuthProvider) => () => AbstractAuthProvider.getTypeNode()
-        )
+        ),
+        getAuthRequest: {
+            invoke: (instanceExpression: ts.Expression) => {
+                return ts.factory.createAwaitExpression(
+                    ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            instanceExpression,
+                            ts.factory.createIdentifier("getAuthRequest")
+                        ),
+                        undefined,
+                        []
+                    )
+                );
+            },
+            getReturnTypeNode: () =>
+                ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
+                    this.AuthRequest._getReferenceToType()
+                ])
+        }
     };
 }

@@ -30,7 +30,7 @@ types:
     extends: commons.WithDocs
     properties:
       tokenEndpoint: InferredAuthSchemeTokenEndpoint
-      refreshEndpoint: optional<InferredAuthSchemeRefreshEndpoint>
+      # refreshEndpoint: optional<InferredAuthSchemeRefreshEndpoint>
 
   InferredAuthSchemeTokenEndpoint:
     properties:
@@ -38,13 +38,13 @@ types:
       expiryProperty: optional<http.ResponseProperty>
       authenticatedRequestHeaders: list<InferredAuthenticatedRequestHeader>
 
-  InferredAuthSchemeRefreshEndpoint:
-    properties:
-      endpoint: commons.EndpointReference
-      expiryProperty: http.ResponseProperty
-      authenticatedRequestHeaders: 
-        type: list<InferredAuthenticatedRequestHeader>
-        docs: These headers will override the headers defined on the tokenEndpoint.
+  # InferredAuthSchemeRefreshEndpoint:
+  #   properties:
+  #     endpoint: commons.EndpointReference
+  #     expiryProperty: http.ResponseProperty
+  #     authenticatedRequestHeaders: 
+  #       type: list<InferredAuthenticatedRequestHeader>
+  #       docs: These headers will override the headers defined on the tokenEndpoint.
 
   InferredAuthenticatedRequestHeader:
     docs:

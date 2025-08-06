@@ -4,7 +4,6 @@ export * from "./AuthSchemesRequirement";
 export * from "./AuthScheme";
 export * from "./InferredAuthScheme";
 export * from "./InferredAuthSchemeTokenEndpoint";
-export * from "./InferredAuthSchemeRefreshEndpoint";
 export * from "./InferredAuthenticatedRequestHeader";
 export * from "./BearerAuthScheme";
 export * from "./OAuthScheme";

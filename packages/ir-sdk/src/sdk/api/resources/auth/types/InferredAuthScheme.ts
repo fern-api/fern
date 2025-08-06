@@ -6,5 +6,4 @@ import * as FernIr from "../../../index";
 
 export interface InferredAuthScheme extends FernIr.WithDocs {
     tokenEndpoint: FernIr.InferredAuthSchemeTokenEndpoint;
-    refreshEndpoint: FernIr.InferredAuthSchemeRefreshEndpoint | undefined;
 }

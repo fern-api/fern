@@ -29,3 +29,14 @@ await client.auth.refreshToken({
 ```
 
 
+```typescript
+import { SeedOauthClientCredentialsClient } from "@fern/oauth-client-credentials";
+
+const client = new SeedOauthClientCredentialsClient({
+  environment: "YOUR_BASE_URL",
+});
+await client.simple.getSomething();
+
+```
+
+

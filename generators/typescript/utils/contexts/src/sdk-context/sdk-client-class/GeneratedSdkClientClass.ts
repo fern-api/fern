@@ -9,7 +9,11 @@ import { GeneratedEndpointImplementation } from "./GeneratedEndpointImplementati
 import { EndpointSampleCode } from "../../commons";
 
 export interface GeneratedSdkClientClass extends GeneratedFile<SdkContext> {
-    instantiate: (args: { referenceToClient: ts.Expression; referenceToOptions: ts.Expression }) => ts.Expression;
+    instantiate: (args: {
+        referenceToClient: ts.Expression;
+        referenceToOptions: ts.Expression;
+        referenceToAuthProvider: ts.Expression | undefined;
+    }) => ts.Expression;
     accessFromRootClient(args: { referenceToRootClient: ts.Expression }): ts.Expression;
     instantiateAsRoot(args: { context: SdkContext; npmPackage?: NpmPackage | undefined }): ts.Expression;
     invokeEndpoint(args: {
@@ -27,4 +31,9 @@ export interface GeneratedSdkClientClass extends GeneratedFile<SdkContext> {
         example: ExampleEndpointCall;
         clientReference: ts.Identifier;
     }) => ts.Node[] | undefined;
+
+    hasAnyEndpointsWithAuth: () => boolean;
+    hasAuthProvider: () => boolean;
+    getReferenceToAuthProvider: () => ts.Expression | undefined;
+    getReferenceToAuthProviderOrThrow: () => ts.Expression;
 }

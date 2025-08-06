@@ -37,6 +37,7 @@ import {
     BasicAuthScheme,
     BearerAuthScheme,
     ExampleEndpointCall,
+    FernIr,
     HeaderAuthScheme,
     HttpEndpoint,
     HttpHeader,
@@ -68,6 +69,7 @@ import { getLiteralValueForHeader, isLiteralHeader } from "./endpoints/utils/isL
 import { REQUEST_OPTIONS_ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME } from "./endpoints/utils/requestOptionsParameter";
 import { OAuthTokenProviderGenerator } from "./oauth-generator/OAuthTokenProviderGenerator";
 import { GeneratedDefaultWebsocketImplementation } from "./websocket/GeneratedDefaultWebsocketImplementation";
+import { InferredAuthProviderGenerator } from "./auth-provider/InferredAuthProviderGenerator";
 
 export declare namespace GeneratedSdkClientClassImpl {
     export interface Init {
@@ -111,6 +113,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     public static readonly BASE_URL_OPTION_PROPERTY_NAME = "baseUrl";
     public static readonly ENVIRONMENT_OPTION_PROPERTY_NAME = "environment";
     public static readonly OPTIONS_INTERFACE_NAME = "Options";
+    public static readonly AUTH_PROVIDER_FIELD_NAME = "_authProvider";
+    public static readonly AUTH_PROVIDER_OPTIONS_PROPERTY_NAME = "authProvider";
     public static readonly OPTIONS_PRIVATE_MEMBER = "_options";
     public static readonly AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getAuthorizationHeader";
     public static readonly CUSTOM_AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getCustomAuthorizationHeaders";
@@ -145,6 +149,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly service: HttpService | undefined;
     private readonly omitFernHeaders: boolean;
     private readonly useDefaultRequestParameterValues: boolean;
+    private readonly anyEndpointWithAuth: boolean;
 
     constructor({
         isRoot,
@@ -201,6 +206,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         const service = packageResolver.getServiceDeclaration(packageId);
         this.service = service;
+
+        this.anyEndpointWithAuth = anyEndpointWithAuth({ packageId, packageResolver });
+
         const websocketChannel = packageResolver.getWebSocketChannelDeclaration(packageId);
         const websocketChannelId = this.package_.websocket ?? undefined;
 
@@ -520,12 +528,24 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
     public instantiate({
         referenceToClient,
-        referenceToOptions
+        referenceToOptions,
+        referenceToAuthProvider
     }: {
         referenceToClient: ts.Expression;
         referenceToOptions: ts.Expression;
+        referenceToAuthProvider?: ts.Expression | undefined;
     }): ts.Expression {
-        return ts.factory.createNewExpression(referenceToClient, undefined, [referenceToOptions]);
+        return ts.factory.createNewExpression(referenceToClient, undefined, [
+            referenceToAuthProvider && this.anyEndpointWithAuth
+                ? ts.factory.createObjectLiteralExpression([
+                      ts.factory.createPropertyAssignment(
+                          GeneratedSdkClientClassImpl.AUTH_PROVIDER_OPTIONS_PROPERTY_NAME,
+                          referenceToAuthProvider
+                      ),
+                      ts.factory.createSpreadAssignment(referenceToOptions)
+                  ])
+                : referenceToOptions
+        ]);
     }
 
     public instantiateAsRoot(args: { context: SdkContext; npmPackage: NpmPackage }): ts.Expression {
@@ -593,6 +613,16 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 name: OAuthTokenProviderGenerator.OAUTH_TOKEN_PROVIDER_PROPERTY_NAME,
                 type: getTextOfTsNode(context.coreUtilities.auth.OAuthTokenProvider._getReferenceToType()),
                 scope: Scope.Private,
+                isReadonly: true
+            });
+        }
+
+        if (this.inferredAuthScheme && this.anyEndpointWithAuth) {
+            serviceClass.properties.push({
+                kind: StructureKind.Property,
+                name: GeneratedSdkClientClassImpl.AUTH_PROVIDER_FIELD_NAME,
+                type: getTextOfTsNode(context.coreUtilities.auth.AbstractAuthProvider._getReferenceToType()),
+                scope: Scope.Protected,
                 isReadonly: true
             });
         }
@@ -731,6 +761,60 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         environment: this._options.environment,
                     }),
                 });
+            `;
+            serviceClass.ctors.push({
+                parameters,
+                statements: statements.toString({ dprintOptions: { indentWidth: 4 } })
+            });
+        } else if (this.isRoot && this.inferredAuthScheme && this.anyEndpointWithAuth) {
+            const parameters = [
+                {
+                    name: GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER,
+                    type: getTextOfTsNode(
+                        ts.factory.createTypeReferenceNode(
+                            ts.factory.createQualifiedName(
+                                ts.factory.createIdentifier(serviceModule.name),
+                                ts.factory.createIdentifier(optionsInterface.name)
+                            )
+                        )
+                    ),
+                    initializer: optionsInterface.properties?.every((property) => property.hasQuestionToken)
+                        ? "{}"
+                        : undefined
+                }
+            ];
+            InferredAuthProviderGenerator.import(context);
+            const statements = code`
+                ${this.getHeadersStatements(context)}
+                this.${GeneratedSdkClientClassImpl.AUTH_PROVIDER_FIELD_NAME} = new ${InferredAuthProviderGenerator.CLASS_NAME}({
+                    client: this,
+                    authTokenParameters: {...this._options},
+                });
+            `;
+            serviceClass.ctors.push({
+                parameters,
+                statements: statements.toString({ dprintOptions: { indentWidth: 4 } })
+            });
+        } else if (!this.isRoot && this.inferredAuthScheme && this.anyEndpointWithAuth) {
+            const parameters = [
+                {
+                    name: GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER,
+                    type: getTextOfTsNode(
+                        ts.factory.createTypeReferenceNode(
+                            ts.factory.createQualifiedName(
+                                ts.factory.createIdentifier(serviceModule.name),
+                                ts.factory.createIdentifier(optionsInterface.name)
+                            )
+                        )
+                    ),
+                    initializer: optionsInterface.properties?.every((property) => property.hasQuestionToken)
+                        ? "{}"
+                        : undefined
+                }
+            ];
+            const statements = code`
+                ${this.getHeadersStatements(context)}
+                this.${GeneratedSdkClientClassImpl.AUTH_PROVIDER_FIELD_NAME} = _options.authProvider;
             `;
             serviceClass.ctors.push({
                 parameters,
@@ -1385,8 +1469,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             hasQuestionToken: true,
             docs: ["Specify a custom URL to connect the client to."]
         });
-        console.log("this.isRoot", this.isRoot);
-        console.log("this.inferredAuthScheme", this.inferredAuthScheme);
         if (this.isRoot && this.oauthAuthScheme != null && context.generateOAuthClients) {
             properties.push({
                 name: getPropertyKey(OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME),
@@ -1412,22 +1494,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 ),
                 hasQuestionToken: this.oauthAuthScheme.configuration.clientSecretEnvVar != null
             });
-        } else if (this.isRoot && this.inferredAuthScheme != null) {
-            const service =
-                this.intermediateRepresentation.services[this.inferredAuthScheme.tokenEndpoint.endpoint.serviceId];
-            if (!service) {
-                throw new Error(
-                    `failed to find service with id ${this.inferredAuthScheme?.tokenEndpoint.endpoint.serviceId}`
-                );
-            }
-
+        } else if (this.isRoot && this.inferredAuthScheme != null && this.anyEndpointWithAuth) {
+            const service = this.getInferredAuthTokenService();
+            const endpoint = this.getInferredAuthTokenEndpoint(service);
             const tokenEndpointReference = this.inferredAuthScheme.tokenEndpoint.endpoint;
-            const endpoint = service?.endpoints.find(
-                (endpoint: HttpEndpoint) => endpoint.id === tokenEndpointReference.endpointId
-            );
-            if (!endpoint) {
-                throw new Error(`failed to find endpoint with id ${tokenEndpointReference.endpointId}`);
-            }
             const tokenEndpointPackageId = tokenEndpointReference.subpackageId;
             const endpointRequest = this.getGeneratedEndpointRequest({
                 endpoint,
@@ -1441,7 +1511,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 service
             });
             const requestParam = endpointRequest.getRequestParameter(context);
-            console.log("requestParam", requestParam);
             if (requestParam) {
                 iExtends.push(getTextOfTsNode(requestParam));
             }
@@ -1611,12 +1680,48 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             });
         }
 
+        if (this.inferredAuthScheme && this.anyEndpointWithAuth && !this.isRoot) {
+            properties.push({
+                name: GeneratedSdkClientClassImpl.AUTH_PROVIDER_OPTIONS_PROPERTY_NAME,
+                type: getTextOfTsNode(context.coreUtilities.auth.AbstractAuthProvider._getReferenceToType())
+            });
+        }
+
         return {
             kind: StructureKind.Interface,
             name: GeneratedSdkClientClassImpl.OPTIONS_INTERFACE_NAME,
             properties,
             isExported: true
         };
+    }
+
+    private getInferredAuthTokenService() {
+        if (!this.inferredAuthScheme) {
+            throw new Error("Inferred auth scheme is not defined");
+        }
+
+        const service =
+            this.intermediateRepresentation.services[this.inferredAuthScheme.tokenEndpoint.endpoint.serviceId];
+        if (!service) {
+            throw new Error(
+                `failed to find service with id ${this.inferredAuthScheme?.tokenEndpoint.endpoint.serviceId}`
+            );
+        }
+        return service;
+    }
+
+    private getInferredAuthTokenEndpoint(service: HttpService): HttpEndpoint {
+        if (!this.inferredAuthScheme) {
+            throw new Error("Inferred auth scheme is not defined");
+        }
+        const tokenEndpointReference = this.inferredAuthScheme.tokenEndpoint.endpoint;
+        const endpoint = service?.endpoints.find(
+            (endpoint: HttpEndpoint) => endpoint.id === tokenEndpointReference.endpointId
+        );
+        if (!endpoint) {
+            throw new Error(`failed to find endpoint with id ${tokenEndpointReference.endpointId}`);
+        }
+        return endpoint;
     }
 
     private getBearerAuthOptionKey(bearerAuthScheme: BearerAuthScheme): string {
@@ -1727,6 +1832,30 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         } else {
             return context.coreUtilities.fetcher.fetcher._getReferenceTo();
         }
+    }
+
+    public getReferenceToAuthProvider(): ts.Expression | undefined {
+        if (!this.inferredAuthScheme) {
+            return undefined;
+        }
+        return ts.factory.createPropertyAccessExpression(
+            ts.factory.createThis(),
+            GeneratedSdkClientClassImpl.AUTH_PROVIDER_FIELD_NAME
+        );
+    }
+
+    public getReferenceToAuthProviderOrThrow(): ts.Expression {
+        if (!this.inferredAuthScheme) {
+            throw new Error("Auth provider is not available");
+        }
+        return ts.factory.createPropertyAccessExpression(
+            ts.factory.createThis(),
+            GeneratedSdkClientClassImpl.AUTH_PROVIDER_FIELD_NAME
+        );
+    }
+
+    public hasAuthProvider(): boolean {
+        return this.inferredAuthScheme != null;
     }
 
     public getReferenceToOption(option: string): ts.Expression {
@@ -2290,6 +2419,46 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private getOptionNameForVariable(variable: VariableDeclaration): string {
         return variable.name.camelCase.unsafeName;
     }
+
+    public hasAnyEndpointsWithAuth(): boolean {
+        return this.anyEndpointWithAuth;
+    }
 }
 
 type CustomHeader = { type: "global"; header: HttpHeader } | { type: "authScheme"; header: HeaderAuthScheme };
+
+function anyEndpointWithAuth({
+    packageId,
+    packageResolver
+}: {
+    packageId: PackageId;
+    packageResolver: PackageResolver;
+}): boolean {
+    const irPackage = packageResolver.resolvePackage(packageId);
+
+    const websocketChannel = packageResolver.getWebSocketChannelDeclaration(packageId);
+    if (websocketChannel?.auth) {
+        return true;
+    }
+
+    const service = packageResolver.getServiceDeclaration(packageId);
+    if (service && service.endpoints.some((endpoint) => endpoint.auth)) {
+        return true;
+    }
+
+    if (
+        irPackage.subpackages.some((subpackageId) => {
+            return anyEndpointWithAuth({
+                packageId: {
+                    isRoot: false,
+                    subpackageId
+                },
+                packageResolver
+            });
+        })
+    ) {
+        return true;
+    }
+
+    return false;
+}

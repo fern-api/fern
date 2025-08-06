@@ -144,7 +144,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                                             })
                                         },
                                         propertyPath: undefined
-                                    },
+                                    }
                                 }
                             ],
                             expiryProperty: {
@@ -186,8 +186,8 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                                 propertyPath: undefined
                             }
                         },
-                        docs: undefined,
-                        refreshEndpoint: undefined
+                        docs: undefined
+                        // refreshEndpoint: undefined
                     })
                 ]
             };

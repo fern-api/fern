@@ -20,8 +20,9 @@ export declare namespace InferredAuthProviderGenerator {
         authScheme: FernIr.InferredAuthScheme;
     }
 }
-
+const CLASS_NAME = "InferredAuthProvider";
 export class InferredAuthProviderGenerator extends AbstractAuthProviderGenerator {
+    public static readonly CLASS_NAME = CLASS_NAME;
     private readonly authScheme: FernIr.InferredAuthScheme;
     private readonly packageId: PackageId;
     private readonly service: FernIr.HttpService;
@@ -63,28 +64,30 @@ export class InferredAuthProviderGenerator extends AbstractAuthProviderGenerator
                 }
             ],
             file: {
-                nameOnDisk: `${this.getClassName()}.ts`,
+                nameOnDisk: `${CLASS_NAME}.ts`,
                 exportDeclaration: {
-                    namedExports: [this.getClassName()]
+                    namedExports: [CLASS_NAME]
                 }
             }
         };
     }
 
     public getAuthProviderClassType(): ts.TypeNode {
-        return ts.factory.createTypeReferenceNode(this.getClassName());
+        return ts.factory.createTypeReferenceNode(CLASS_NAME);
+    }
+
+    public static import(context: SdkContext) {
+        context.importsManager.addImportFromRoot("auth/InferredAuthProvider", {
+            namedImports: [CLASS_NAME]
+        });
     }
 
     public getOptionsType(): ts.TypeNode {
-        return ts.factory.createTypeReferenceNode(`${this.getClassName()}.Options`);
+        return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.Options`);
     }
 
     public instantiate(constructorArgs: ts.Expression[]): ts.Expression {
-        return ts.factory.createNewExpression(
-            ts.factory.createIdentifier(this.getClassName()),
-            undefined,
-            constructorArgs
-        );
+        return ts.factory.createNewExpression(ts.factory.createIdentifier(CLASS_NAME), undefined, constructorArgs);
     }
 
     public writeToFile(context: SdkContext): void {
@@ -101,7 +104,7 @@ export class InferredAuthProviderGenerator extends AbstractAuthProviderGenerator
         requestWrapper: GeneratedRequestWrapper;
     }): void {
         context.sourceFile.addClass({
-            name: this.getClassName(),
+            name: CLASS_NAME,
             isExported: true,
             extends: getTextOfTsNode(context.coreUtilities.auth.AbstractAuthProvider._getReferenceToType()),
             properties: [
@@ -493,7 +496,7 @@ export class InferredAuthProviderGenerator extends AbstractAuthProviderGenerator
         );
 
         context.sourceFile.addModule({
-            name: this.getClassName(),
+            name: CLASS_NAME,
             isExported: true,
             kind: StructureKind.Module,
             statements: [
@@ -525,7 +528,7 @@ export class InferredAuthProviderGenerator extends AbstractAuthProviderGenerator
     }
 
     private getAuthTokenParametersTypeNode(context: SdkContext): ts.TypeNode {
-        return ts.factory.createTypeReferenceNode(`${this.getClassName()}.AuthTokenParameters`);
+        return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.AuthTokenParameters`);
     }
 
     private getPropertiesForAuthTokenParameters(
@@ -639,10 +642,6 @@ export class InferredAuthProviderGenerator extends AbstractAuthProviderGenerator
     private isLiteralType(typeReference: FernIr.TypeReference, context: SdkContext): boolean {
         const resolvedType = context.type.resolveTypeReference(typeReference);
         return resolvedType.type === "container" && resolvedType.container.type === "literal";
-    }
-
-    private getClassName(): string {
-        return "InferredAuthProvider";
     }
 }
 

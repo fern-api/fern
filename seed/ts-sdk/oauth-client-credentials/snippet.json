@@ -21,6 +21,17 @@
                 "type": "typescript",
                 "client": "import { SeedOauthClientCredentialsClient } from \"@fern/oauth-client-credentials\";\n\nconst client = new SeedOauthClientCredentialsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.auth.refreshToken({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    refresh_token: \"refresh_token\",\n    scope: \"scope\"\n});\n"
             }
+        },
+        {
+            "id": {
+                "path": "/get-something",
+                "method": "GET",
+                "identifier_override": "endpoint_simple.getSomething"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedOauthClientCredentialsClient } from \"@fern/oauth-client-credentials\";\n\nconst client = new SeedOauthClientCredentialsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.simple.getSomething();\n"
+            }
         }
     ],
     "types": {}

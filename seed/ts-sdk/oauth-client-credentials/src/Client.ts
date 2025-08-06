@@ -4,8 +4,10 @@
 
 import * as core from "./core/index.js";
 import * as SeedOauthClientCredentials from "./api/index.js";
+import { InferredAuthProvider } from "./auth/InferredAuthProvider.js";
 import { mergeHeaders } from "./core/headers.js";
 import { Auth } from "./api/resources/auth/client/Client.js";
+import { Simple } from "./api/resources/simple/client/Client.js";
 
 export declare namespace SeedOauthClientCredentialsClient {
     export interface Options {
@@ -32,7 +34,9 @@ export declare namespace SeedOauthClientCredentialsClient {
 
 export class SeedOauthClientCredentialsClient {
     protected readonly _options: SeedOauthClientCredentialsClient.Options;
+    protected readonly _authProvider: core.AbstractAuthProvider;
     protected _auth: Auth | undefined;
+    protected _simple: Simple | undefined;
 
     constructor(_options: SeedOauthClientCredentialsClient.Options) {
         this._options = {
@@ -49,9 +53,17 @@ export class SeedOauthClientCredentialsClient {
                 _options?.headers,
             ),
         };
+        this._authProvider = new InferredAuthProvider({
+            client: this,
+            authTokenParameters: { ...this._options },
+        });
     }
 
     public get auth(): Auth {
         return (this._auth ??= new Auth(this._options));
+    }
+
+    public get simple(): Simple {
+        return (this._simple ??= new Simple({ authProvider: this._authProvider, ...this._options }));
     }
 }

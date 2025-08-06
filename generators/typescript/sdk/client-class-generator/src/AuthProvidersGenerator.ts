@@ -58,6 +58,6 @@ export class AuthProvidersGenerator implements GeneratedFile<SdkContext> {
         if (!this.authProviderGenerator) {
             throw new Error("Auth provider generator is not defined.");
         }
-        return this.authProviderGenerator.getFilePath(); 
+        return this.authProviderGenerator.getFilePath();
     }
 }
