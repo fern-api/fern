@@ -230,7 +230,7 @@ export class Streamer {
 
     private getStreamFormatSseTypeReference(): go.TypeReference {
         return go.typeReference({
-            name: "StreamFormatSse",
+            name: "StreamFormatSSE",
             importPath: this.context.getCoreImportPath()
         });
     }
