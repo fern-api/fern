@@ -1,9 +1,10 @@
 import { AccessLevel } from "./AccessLevel";
 import { CodeBlock } from "./CodeBlock";
-import { FunctionParameter } from "./FunctionParameter";
-import { Type } from "./Type";
 import { AstNode, Writer } from "./core";
-import { escapeReservedKeyword } from "./syntax/reserved-keywords";
+import { DocComment } from "./DocComment";
+import { FunctionParameter } from "./FunctionParameter";
+import { escapeReservedKeyword } from "./syntax";
+import { Type } from "./Type";
 
 export declare namespace Method {
     interface Args {
@@ -15,6 +16,7 @@ export declare namespace Method {
         throws?: true;
         returnType: Type;
         body?: CodeBlock;
+        docs?: DocComment;
     }
 }
 
@@ -27,8 +29,19 @@ export class Method extends AstNode {
     public readonly throws?: true;
     public readonly returnType: Type;
     public readonly body: CodeBlock;
+    public readonly docs?: DocComment;
 
-    constructor({ unsafeName, accessLevel, static_, parameters, async, throws, returnType, body }: Method.Args) {
+    public constructor({
+        unsafeName,
+        accessLevel,
+        static_,
+        parameters,
+        async,
+        throws,
+        returnType,
+        body,
+        docs
+    }: Method.Args) {
         super();
         this.unsafeName = unsafeName;
         this.accessLevel = accessLevel;
@@ -38,9 +51,13 @@ export class Method extends AstNode {
         this.throws = throws;
         this.returnType = returnType;
         this.body = body ?? CodeBlock.empty();
+        this.docs = docs;
     }
 
     public write(writer: Writer): void {
+        if (this.docs != null) {
+            this.docs.write(writer);
+        }
         if (this.accessLevel != null) {
             writer.write(this.accessLevel);
             writer.write(" ");

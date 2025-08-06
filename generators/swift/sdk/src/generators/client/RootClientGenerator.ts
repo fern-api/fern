@@ -14,11 +14,6 @@ export declare namespace RootClientGenerator {
     }
 }
 
-type InitializerParam = {
-    swiftParam: swift.FunctionParameter;
-    docs: string;
-};
-
 export class RootClientGenerator {
     private readonly clientName: string;
     private readonly package_: Package;
@@ -58,8 +53,8 @@ export class RootClientGenerator {
                 summary:
                     "Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.",
                 parameters: initializerParams.map((p) => ({
-                    name: p.swiftParam.unsafeName,
-                    description: p.docs
+                    name: p.unsafeName,
+                    description: p.docsContent ?? ""
                 }))
             })
         });
@@ -69,7 +64,7 @@ export class RootClientGenerator {
         const initializerParams = this.getInitializerParams();
         return swift.initializer({
             accessLevel: swift.AccessLevel.Public,
-            parameters: initializerParams.map((p) => p.swiftParam),
+            parameters: initializerParams,
             body: swift.CodeBlock.withStatements([
                 swift.Statement.constantDeclaration({
                     unsafeName: "config",
@@ -129,70 +124,61 @@ export class RootClientGenerator {
         });
     }
 
-    private getInitializerParams(): InitializerParam[] {
+    private getInitializerParams(): swift.FunctionParameter[] {
         return [
-            {
-                docs: "The base URL to use for requests from the client. If not provided, the default base URL will be used.",
-                swiftParam: swift.functionParameter({
-                    argumentLabel: "baseURL",
-                    unsafeName: "baseURL",
-                    type: swift.Type.string(),
-                    defaultValue: this.getDefaultBaseUrl()
-                })
-            },
-            {
-                docs: "The API key for authentication.",
-                swiftParam: swift.functionParameter({
-                    argumentLabel: "apiKey",
-                    unsafeName: "apiKey",
-                    type: swift.Type.string()
-                })
-            },
-            {
-                docs: `Bearer token for authentication. If provided, will be sent as "Bearer {token}" in Authorization header.`,
-                swiftParam: swift.functionParameter({
-                    argumentLabel: "token",
-                    unsafeName: "token",
-                    type: swift.Type.optional(swift.Type.string()),
-                    defaultValue: swift.Expression.rawValue("nil")
-                })
-            },
-            {
-                docs: "Additional headers to send with each request.",
-                swiftParam: swift.functionParameter({
-                    argumentLabel: "headers",
-                    unsafeName: "headers",
-                    type: swift.Type.optional(swift.Type.dictionary(swift.Type.string(), swift.Type.string())),
-                    defaultValue: swift.Expression.rawValue("[:]")
-                })
-            },
-            {
-                docs: "Request timeout in seconds. Defaults to 60 seconds. Ignored if a custom `urlSession` is provided.",
-                swiftParam: swift.functionParameter({
-                    argumentLabel: "timeout",
-                    unsafeName: "timeout",
-                    type: swift.Type.optional(swift.Type.int()),
-                    defaultValue: swift.Expression.rawValue("nil")
-                })
-            },
-            {
-                docs: "Maximum number of retries for failed requests. Defaults to 2.",
-                swiftParam: swift.functionParameter({
-                    argumentLabel: "maxRetries",
-                    unsafeName: "maxRetries",
-                    type: swift.Type.optional(swift.Type.int()),
-                    defaultValue: swift.Expression.rawValue("nil")
-                })
-            },
-            {
-                docs: "Custom `URLSession` to use for requests. If not provided, a default session will be created with the specified timeout.",
-                swiftParam: swift.functionParameter({
-                    argumentLabel: "urlSession",
-                    unsafeName: "urlSession",
-                    type: swift.Type.optional(swift.Type.custom("URLSession")),
-                    defaultValue: swift.Expression.rawValue("nil")
-                })
-            }
+            swift.functionParameter({
+                argumentLabel: "baseURL",
+                unsafeName: "baseURL",
+                type: swift.Type.string(),
+                defaultValue: this.getDefaultBaseUrl(),
+                docsContent:
+                    "The base URL to use for requests from the client. If not provided, the default base URL will be used."
+            }),
+            swift.functionParameter({
+                argumentLabel: "apiKey",
+                unsafeName: "apiKey",
+                type: swift.Type.string(),
+                docsContent: "The API key for authentication."
+            }),
+
+            swift.functionParameter({
+                argumentLabel: "token",
+                unsafeName: "token",
+                type: swift.Type.optional(swift.Type.string()),
+                defaultValue: swift.Expression.rawValue("nil"),
+                docsContent: `Bearer token for authentication. If provided, will be sent as "Bearer {token}" in Authorization header.`
+            }),
+            swift.functionParameter({
+                argumentLabel: "headers",
+                unsafeName: "headers",
+                type: swift.Type.optional(swift.Type.dictionary(swift.Type.string(), swift.Type.string())),
+                defaultValue: swift.Expression.rawValue("[:]"),
+                docsContent: "Additional headers to send with each request."
+            }),
+
+            swift.functionParameter({
+                argumentLabel: "timeout",
+                unsafeName: "timeout",
+                type: swift.Type.optional(swift.Type.int()),
+                defaultValue: swift.Expression.rawValue("nil"),
+                docsContent:
+                    "Request timeout in seconds. Defaults to 60 seconds. Ignored if a custom `urlSession` is provided."
+            }),
+            swift.functionParameter({
+                argumentLabel: "maxRetries",
+                unsafeName: "maxRetries",
+                type: swift.Type.optional(swift.Type.int()),
+                defaultValue: swift.Expression.rawValue("nil"),
+                docsContent: "Maximum number of retries for failed requests. Defaults to 2."
+            }),
+            swift.functionParameter({
+                argumentLabel: "urlSession",
+                unsafeName: "urlSession",
+                type: swift.Type.optional(swift.Type.custom("URLSession")),
+                defaultValue: swift.Expression.rawValue("nil"),
+                docsContent:
+                    "Custom `URLSession` to use for requests. If not provided, a default session will be created with the specified timeout."
+            })
         ];
     }
 

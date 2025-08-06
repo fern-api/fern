@@ -33,13 +33,11 @@ export class DocComment extends AstNode {
 
     public write(writer: Writer): void {
         this.writeMultilineText(writer, this.summary);
-
         if (this.description != null) {
             writer.write("///");
             writer.newLine();
             this.writeMultilineText(writer, this.description);
         }
-
         if (this.parameters.length > 0) {
             writer.write("///");
             writer.newLine();
@@ -59,7 +57,6 @@ export class DocComment extends AstNode {
                 });
             }
         }
-
         if (this.returns != null) {
             const returnLines = this.returns.split("\n");
             returnLines.forEach((line, lineIdx) => {
@@ -73,7 +70,6 @@ export class DocComment extends AstNode {
                 writer.newLine();
             });
         }
-
         if (this.throws.length > 0) {
             for (const throwsDescription of this.throws) {
                 const throwsLines = throwsDescription.split("\n");

@@ -8,6 +8,7 @@ type PathPart =
     | {
           type: "path-parameter";
           unsafeNameCamelCase: string;
+          docs: string | undefined;
       };
 
 export type ParseEndpointPathResult = {
@@ -17,10 +18,13 @@ export type ParseEndpointPathResult = {
 export function parseEndpointPath(endpoint: HttpEndpoint): ParseEndpointPathResult {
     const pathParts: PathPart[] = [];
 
-    const pathParameterNamesByOriginalName = Object.fromEntries(
+    const pathParameterInfosByOriginalName = Object.fromEntries(
         endpoint.allPathParameters.map((pathParam) => [
             pathParam.name.originalName,
-            pathParam.name.camelCase.unsafeName
+            {
+                unsafeNameCamelCase: pathParam.name.camelCase.unsafeName,
+                docs: pathParam.docs
+            }
         ])
     );
 
@@ -29,11 +33,12 @@ export function parseEndpointPath(endpoint: HttpEndpoint): ParseEndpointPathResu
     }
 
     for (const pathPart of endpoint.fullPath.parts) {
-        const pathParameterName = pathParameterNamesByOriginalName[pathPart.pathParameter];
-        if (pathParameterName != null) {
+        const pathParameterInfo = pathParameterInfosByOriginalName[pathPart.pathParameter];
+        if (pathParameterInfo != null) {
             pathParts.push({
                 type: "path-parameter",
-                unsafeNameCamelCase: pathParameterName
+                unsafeNameCamelCase: pathParameterInfo.unsafeNameCamelCase,
+                docs: pathParameterInfo.docs
             });
         }
         if (pathPart.tail != null) {
