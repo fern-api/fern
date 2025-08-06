@@ -6,12 +6,14 @@ export declare namespace StructGenerator {
         rawName: string;
         type: swift.Type;
         value: swift.Expression;
+        docs?: swift.DocComment;
     }
 
     interface DataPropertyDefinition {
         unsafeName: string;
         rawName: string;
         type: swift.Type;
+        docs?: swift.DocComment;
     }
 
     interface Args {
@@ -66,7 +68,10 @@ export class StructGenerator {
                     unsafeName: this.additionalPropertiesInfo.propertyName,
                     accessLevel: swift.AccessLevel.Public,
                     declarationType: swift.DeclarationType.Let,
-                    type: this.additionalPropertiesInfo.swiftType
+                    type: this.additionalPropertiesInfo.swiftType,
+                    docs: swift.docComment({
+                        summary: "Additional properties that are not explicitly defined in the schema"
+                    })
                 })
             );
         }
@@ -88,7 +93,8 @@ export class StructGenerator {
                 accessLevel: swift.AccessLevel.Public,
                 declarationType: swift.DeclarationType.Let,
                 type: p.type,
-                defaultValue: p.value
+                defaultValue: p.value,
+                docs: p.docs
             })
         );
     }
@@ -99,7 +105,8 @@ export class StructGenerator {
                 unsafeName: p.unsafeName,
                 accessLevel: swift.AccessLevel.Public,
                 declarationType: swift.DeclarationType.Let,
-                type: p.type
+                type: p.type,
+                docs: p.docs
             })
         );
     }

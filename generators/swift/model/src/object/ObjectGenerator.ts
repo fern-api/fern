@@ -37,7 +37,8 @@ export class ObjectGenerator {
             dataPropertyDefinitions: [...this.extendedProperties, ...this.properties].map((p) => ({
                 unsafeName: p.name.name.camelCase.unsafeName,
                 rawName: p.name.wireValue,
-                type: this.context.getSwiftTypeForTypeReference(p.valueType)
+                type: this.context.getSwiftTypeForTypeReference(p.valueType),
+                docs: p.docs ? swift.docComment({ summary: p.docs }) : undefined
             })),
             additionalProperties: true
         }).generate();

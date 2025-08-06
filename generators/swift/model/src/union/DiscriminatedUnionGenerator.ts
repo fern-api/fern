@@ -252,7 +252,8 @@ export class DiscriminatedUnionGenerator {
                     ...variantProperties.map((p) => ({
                         unsafeName: p.name.name.camelCase.unsafeName,
                         rawName: p.name.wireValue,
-                        type: this.context.getSwiftTypeForTypeReference(p.valueType)
+                        type: this.context.getSwiftTypeForTypeReference(p.valueType),
+                        docs: p.docs ? swift.docComment({ summary: p.docs }) : undefined
                     }))
                 );
             } else if (singleUnionType.shape.propertiesType === "noProperties") {

@@ -1,6 +1,7 @@
 import { AccessLevel } from "./AccessLevel";
 import { AstNode, Writer } from "./core";
 import { DeclarationType } from "./DeclarationType";
+import { DocComment } from "./DocComment";
 import { Expression } from "./Expression";
 import { isReservedKeyword } from "./syntax";
 import { Type } from "./Type";
@@ -13,7 +14,7 @@ export declare namespace Property {
         declarationType: DeclarationType;
         type: Type;
         defaultValue?: Expression;
-        docs?: string;
+        docs?: DocComment;
     }
 }
 
@@ -24,7 +25,7 @@ export class Property extends AstNode {
     public readonly declarationType: DeclarationType;
     public readonly type: Type;
     public readonly defaultValue?: Expression;
-    public readonly docs?: string;
+    public readonly docs?: DocComment;
 
     constructor({ unsafeName, accessLevel, static_, declarationType, type, defaultValue, docs }: Property.Args) {
         super();
@@ -39,7 +40,7 @@ export class Property extends AstNode {
 
     public write(writer: Writer): void {
         if (this.docs != null) {
-            writer.write(this.docs);
+            this.docs.write(writer);
             writer.newLine();
         }
         if (this.accessLevel != null) {
