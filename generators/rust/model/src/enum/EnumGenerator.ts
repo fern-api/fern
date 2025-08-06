@@ -39,12 +39,17 @@ export class EnumGenerator {
 
         // Write the enum
         rustEnum.write(writer);
+        writer.newLine();
+
+        // Write Display implementation
+        this.writeDisplayImplementation(writer);
 
         return writer.toString();
     }
 
     private writeUseStatements(writer: rust.Writer): void {
         writer.writeLine("use serde::{Deserialize, Serialize};");
+        writer.writeLine("use std::fmt;");
     }
 
     private generateEnumForTypeDeclaration(): rust.Enum {
@@ -78,5 +83,31 @@ export class EnumGenerator {
             name: enumValue.name.name.pascalCase.unsafeName,
             attributes: variantAttributes.length > 0 ? variantAttributes : undefined
         });
+    }
+
+    private writeDisplayImplementation(writer: rust.Writer): void {
+        const enumName = this.typeDeclaration.name.name.pascalCase.unsafeName;
+
+        writer.writeLine(`impl fmt::Display for ${enumName} {`);
+        writer.indent();
+        writer.writeLine("fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {");
+        writer.indent();
+        writer.writeLine("let s = match self {");
+        writer.indent();
+
+        // Generate match arms for each enum variant
+        this.enumTypeDeclaration.values.forEach((enumValue) => {
+            const variantName = enumValue.name.name.pascalCase.unsafeName;
+            const wireValue = enumValue.name.wireValue;
+            writer.writeLine(`Self::${variantName} => "${wireValue}",`);
+        });
+
+        writer.dedent();
+        writer.writeLine("};");
+        writer.writeLine('write!(f, "{}", s)');
+        writer.dedent();
+        writer.writeLine("}");
+        writer.dedent();
+        writer.writeLine("}");
     }
 }

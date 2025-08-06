@@ -103,30 +103,6 @@ export class SubClientGenerator {
             }
         ];
 
-        // Always add standard auth fields for consistent API
-        fields.push(
-            {
-                name: "api_key",
-                type: "Option<String>",
-                visibility: "pub"
-            },
-            {
-                name: "bearer_token",
-                type: "Option<String>",
-                visibility: "pub"
-            },
-            {
-                name: "username",
-                type: "Option<String>",
-                visibility: "pub"
-            },
-            {
-                name: "password",
-                type: "Option<String>",
-                visibility: "pub"
-            }
-        );
-
         return fields;
     }
 
@@ -135,23 +111,11 @@ export class SubClientGenerator {
         const errorType = rust.Type.reference(rust.reference({ name: "ClientError" }));
         const returnType = rust.Type.result(selfType, errorType);
 
-        // Use consistent parameter signature for all auth types
-        const parameters = [
-            "config: ClientConfig",
-            "api_key: Option<String>",
-            "bearer_token: Option<String>",
-            "username: Option<String>",
-            "password: Option<String>"
-        ];
+        // Use simple parameter signature with just config
+        const parameters = ["config: ClientConfig"];
 
         const constructorBody = `let http_client = HttpClient::new(config)?;
-        Ok(Self { 
-            http_client, 
-            api_key, 
-            bearer_token, 
-            username, 
-            password 
-        })`;
+        Ok(Self { http_client })`;
 
         return {
             name: "new",
@@ -253,7 +217,7 @@ export class SubClientGenerator {
                 name: queryParam.name.name.snakeCase.safeName,
                 type: generateRustTypeForTypeReference(queryParam.valueType),
                 optional: true,
-                isRef: this.shouldPassByReference(queryParam.valueType)
+                isRef: false // Query parameters should be Option<T>, not Option<&T>
             });
         });
     }
@@ -416,7 +380,7 @@ export class SubClientGenerator {
         const queryParamStatements = queryParams.map((queryParam) => {
             const paramName = queryParam.name.name.snakeCase.safeName;
             const wireValue = queryParam.name.wireValue;
-            return `if let Some(value) = ${paramName} {
+            return `if let Some(Some(value)) = ${paramName} {
                 query_params.push(("${wireValue}".to_string(), ${this.getQueryParameterConversion(queryParam, paramName)}));
             }`;
         });
