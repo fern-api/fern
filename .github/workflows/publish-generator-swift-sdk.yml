@@ -21,9 +21,10 @@ jobs:
     steps:
       - name: Checkout repo at current ref
         uses: actions/checkout@v4
-        with:
-          ref: main
-          fetch-depth: 2
+        # Uncomment before merging
+        # with:
+        #   ref: main
+        #   fetch-depth: 2
       - name: automated publish
         if: ${{ github.event_name == 'push' }}
         uses: ./.github/actions/publish-generator
