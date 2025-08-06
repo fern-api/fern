@@ -44,25 +44,25 @@ jobs:
           path: docs
 
       - name: update csharp-sdk changelog
-        run: rsync -avu --delete "changelogs/csharp-sdk/" "docs/fern/products/sdks/overview/csharp/changelog"
+        run: rsync -av --delete "changelogs/csharp-sdk/" "docs/fern/products/sdks/overview/csharp/changelog"
 
       - name: update go-sdk changelog
-        run: rsync -avu --delete "changelogs/go-sdk/" "docs/fern/products/sdks/overview/go/changelog"
+        run: rsync -av --delete "changelogs/go-sdk/" "docs/fern/products/sdks/overview/go/changelog"
 
       - name: update java-sdk changelog
-        run: rsync -avu --delete "changelogs/java-sdk/" "docs/fern/products/sdks/overview/java/changelog"
+        run: rsync -av --delete "changelogs/java-sdk/" "docs/fern/products/sdks/overview/java/changelog"
 
       - name: update php-sdk changelog
-        run: rsync -avu --delete "changelogs/php-sdk/" "docs/fern/products/sdks/overview/php/changelog"
+        run: rsync -av --delete "changelogs/php-sdk/" "docs/fern/products/sdks/overview/php/changelog"
 
       - name: update python-sdk changelog
-        run: rsync -avu --delete "changelogs/python-sdk/" "docs/fern/products/sdks/overview/python/changelog"
+        run: rsync -av --delete "changelogs/python-sdk/" "docs/fern/products/sdks/overview/python/changelog"
 
       - name: update ruby-sdk changelog
-        run: rsync -avu --delete "changelogs/ruby-sdk/" "docs/fern/products/sdks/overview/ruby/changelog"
+        run: rsync -av --delete "changelogs/ruby-sdk/" "docs/fern/products/sdks/overview/ruby/changelog"
 
       - name: update ts-sdk changelog
-        run: rsync -avu --delete "changelogs/ts-sdk/" "docs/fern/products/sdks/overview/typescript/changelog"
+        run: rsync -av --delete "changelogs/ts-sdk/" "docs/fern/products/sdks/overview/typescript/changelog"
 
       - name: update rust-sdk changelog
         run: rsync -avu --delete "changelogs/rust-sdk/" "docs/fern/products/sdks/overview/rust/changelog"
@@ -71,7 +71,7 @@ jobs:
         run: rsync -avu --delete "changelogs/swift-sdk/" "docs/fern/products/sdks/overview/swift/changelog"
 
       - name: update cli changelog
-        run: rsync -avu --delete "changelogs/cli/" "docs/fern/products/cli-api-reference/cli-changelog"
+        run: rsync -av --delete "changelogs/cli/" "docs/fern/products/cli-api-reference/cli-changelog"
 
       - name: create PR
         id: cpr
