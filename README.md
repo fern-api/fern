@@ -249,6 +249,6 @@ Fern is inspired by internal tooling built to enhance the developer experience. 
 
 ## Contributing
 
-We welcome community contributions. For guidelines, refer to our [CONTRIBUTING.md](/CONTRIBUTING.md).
+We welcome community contributions. For guidelines, refer to our [CONTRIBUTING.md](/CONTRIBUTING.md). To contribute to our documentation, refer to our [docs](https://github.com/fern-api/docs) repo.
 
 ![Fern Contributors](https://contrib.rocks/image?repo=fern-api/fern)
