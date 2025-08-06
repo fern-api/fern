@@ -18,7 +18,6 @@ package com.fern.java.spring.generators;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.ir.model.types.ContainerType;
 import com.fern.ir.model.types.ObjectProperty;
@@ -35,24 +34,22 @@ import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import javax.lang.model.element.Modifier;
 
 /**
- * Generates object classes for JSON Merge Patch request bodies.
- * Uses JsonMergePatch wrapper instead of Optional for nullable fields.
+ * Generates object classes for JSON Merge Patch request bodies. Uses JsonMergePatch wrapper instead of Optional for
+ * nullable fields.
  */
 public final class MergePatchObjectGenerator extends AbstractFileGenerator {
-    
+
     private static final ClassName JSON_MERGE_PATCH = ClassName.get("core", "JsonMergePatch");
     private final ObjectTypeDeclaration objectTypeDeclaration;
-    
+
     public MergePatchObjectGenerator(
             ObjectTypeDeclaration objectTypeDeclaration,
             ClassName className,
@@ -60,7 +57,7 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
         super(className, generatorContext);
         this.objectTypeDeclaration = objectTypeDeclaration;
     }
-    
+
     @Override
     public GeneratedJavaFile generateFile() {
         TypeSpec.Builder classBuilder = TypeSpec.classBuilder(className)
@@ -68,60 +65,61 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
                 .addAnnotation(AnnotationSpec.builder(JsonDeserialize.class)
                         .addMember("builder", "$T.Builder.class", className)
                         .build());
-        
+
         // Add fields
         List<FieldSpec> fields = new ArrayList<>();
         for (ObjectProperty property : objectTypeDeclaration.getProperties()) {
             TypeName fieldType = getFieldType(property);
             String fieldName = KeyWordUtils.getKeyWordCompatibleName(
                     property.getName().getName().getCamelCase().getUnsafeName());
-            
+
             FieldSpec field = FieldSpec.builder(fieldType, fieldName)
                     .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
                     .build();
             fields.add(field);
             classBuilder.addField(field);
         }
-        
+
         // Add constructor
         MethodSpec constructor = createConstructor(fields);
         classBuilder.addMethod(constructor);
-        
+
         // Add getters
         for (ObjectProperty property : objectTypeDeclaration.getProperties()) {
             classBuilder.addMethod(createGetter(property));
         }
-        
+
         // Add equals, hashCode, toString
         classBuilder.addMethod(createEquals());
         classBuilder.addMethod(createHashCode(fields));
         classBuilder.addMethod(createToString());
-        
+
         // Add builder
         classBuilder.addMethod(createBuilderMethod());
         classBuilder.addType(createBuilderClass());
-        
+
         return GeneratedJavaFile.builder()
                 .className(className)
-                .javaFile(JavaFile.builder(className.packageName(), classBuilder.build()).build())
+                .javaFile(JavaFile.builder(className.packageName(), classBuilder.build())
+                        .build())
                 .build();
     }
-    
+
     private TypeName getFieldType(ObjectProperty property) {
         TypeReference valueType = property.getValueType();
-        
+
         // Check if the field is nullable
         boolean isNullable = valueType.visit(new TypeReference.Visitor<Boolean>() {
             @Override
             public Boolean visitNamed(com.fern.ir.model.types.NamedType namedType) {
                 return false;
             }
-            
+
             @Override
             public Boolean visitPrimitive(com.fern.ir.model.types.PrimitiveType primitiveType) {
                 return false;
             }
-            
+
             @Override
             public Boolean visitContainer(ContainerType containerType) {
                 return containerType.visit(new ContainerType.Visitor<Boolean>() {
@@ -129,50 +127,50 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
                     public Boolean visitList(TypeReference typeReference) {
                         return false;
                     }
-                    
+
                     @Override
                     public Boolean visitSet(TypeReference typeReference) {
                         return false;
                     }
-                    
+
                     @Override
                     public Boolean visitMap(com.fern.ir.model.types.MapType mapType) {
                         return false;
                     }
-                    
+
                     @Override
                     public Boolean visitOptional(TypeReference typeReference) {
                         return true;
                     }
-                    
+
                     @Override
                     public Boolean visitNullable(TypeReference typeReference) {
                         return true;
                     }
-                    
+
                     @Override
                     public Boolean visitLiteral(com.fern.ir.model.types.Literal literal) {
                         return false;
                     }
-                    
+
                     @Override
                     public Boolean _visitUnknown(Object unknown) {
                         return false;
                     }
                 });
             }
-            
+
             @Override
             public Boolean visitUnknown() {
                 return false;
             }
-            
+
             @Override
             public Boolean _visitUnknown(Object unknown) {
                 return false;
             }
         });
-        
+
         if (isNullable) {
             // For nullable fields, use JsonMergePatch wrapper
             TypeName innerType = getInnerType(valueType);
@@ -182,7 +180,7 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
             return generatorContext.getPoetTypeNameMapper().convertToTypeName(false, valueType);
         }
     }
-    
+
     private TypeName getInnerType(TypeReference typeReference) {
         // Extract the inner type from Optional/nullable container
         return typeReference.visit(new TypeReference.Visitor<TypeName>() {
@@ -193,96 +191,95 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
                     public TypeName visitOptional(TypeReference inner) {
                         return generatorContext.getPoetTypeNameMapper().convertToTypeName(false, inner);
                     }
-                    
+
                     @Override
                     public TypeName visitNullable(TypeReference inner) {
                         return generatorContext.getPoetTypeNameMapper().convertToTypeName(false, inner);
                     }
-                    
+
                     @Override
                     public TypeName visitList(TypeReference typeReference) {
                         return generatorContext.getPoetTypeNameMapper().convertToTypeName(false, typeReference);
                     }
-                    
+
                     @Override
                     public TypeName visitSet(TypeReference typeReference) {
                         return generatorContext.getPoetTypeNameMapper().convertToTypeName(false, typeReference);
                     }
-                    
+
                     @Override
                     public TypeName visitMap(com.fern.ir.model.types.MapType mapType) {
-                        return generatorContext.getPoetTypeNameMapper().convertToTypeName(false, 
-                                TypeReference.container(ContainerType.map(mapType)));
+                        return generatorContext
+                                .getPoetTypeNameMapper()
+                                .convertToTypeName(false, TypeReference.container(ContainerType.map(mapType)));
                     }
-                    
+
                     @Override
                     public TypeName visitLiteral(com.fern.ir.model.types.Literal literal) {
                         return ClassName.get(String.class);
                     }
-                    
+
                     @Override
                     public TypeName _visitUnknown(Object unknown) {
                         return ClassName.get(Object.class);
                     }
                 });
             }
-            
+
             @Override
             public TypeName visitNamed(com.fern.ir.model.types.NamedType namedType) {
                 return generatorContext.getPoetTypeNameMapper().convertToTypeName(false, typeReference);
             }
-            
+
             @Override
             public TypeName visitPrimitive(com.fern.ir.model.types.PrimitiveType primitiveType) {
                 return generatorContext.getPoetTypeNameMapper().convertToTypeName(false, typeReference);
             }
-            
+
             @Override
             public TypeName visitUnknown() {
                 return ClassName.get(Object.class);
             }
-            
+
             @Override
             public TypeName _visitUnknown(Object unknown) {
                 return ClassName.get(Object.class);
             }
         });
     }
-    
+
     private MethodSpec createConstructor(List<FieldSpec> fields) {
-        MethodSpec.Builder constructor = MethodSpec.constructorBuilder()
-                .addModifiers(Modifier.PRIVATE);
-        
+        MethodSpec.Builder constructor = MethodSpec.constructorBuilder().addModifiers(Modifier.PRIVATE);
+
         for (FieldSpec field : fields) {
             constructor.addParameter(field.type, field.name);
             constructor.addStatement("this.$N = $N", field.name, field.name);
         }
-        
+
         return constructor.build();
     }
-    
+
     private MethodSpec createGetter(ObjectProperty property) {
         String fieldName = KeyWordUtils.getKeyWordCompatibleName(
                 property.getName().getName().getCamelCase().getUnsafeName());
         String methodName = KeyWordUtils.getKeyWordCompatibleMethodName(
                 "get" + property.getName().getName().getPascalCase().getUnsafeName());
         TypeName returnType = getFieldType(property);
-        
+
         MethodSpec.Builder getter = MethodSpec.methodBuilder(methodName)
                 .addModifiers(Modifier.PUBLIC)
                 .returns(returnType)
                 .addAnnotation(AnnotationSpec.builder(JsonProperty.class)
                         .addMember("value", "$S", property.getName().getWireValue())
                         .build());
-        
-        property.getDocs().ifPresent(docs -> 
-                getter.addJavadoc(JavaDocUtils.render(docs)));
-        
+
+        property.getDocs().ifPresent(docs -> getter.addJavadoc(JavaDocUtils.render(docs)));
+
         getter.addStatement("return $N", fieldName);
-        
+
         return getter.build();
     }
-    
+
     private MethodSpec createEquals() {
         return MethodSpec.methodBuilder("equals")
                 .addAnnotation(Override.class)
@@ -296,23 +293,33 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
                 .addStatement("return false")
                 .endControlFlow()
                 .addStatement("$T that = ($T) other", className, className)
-                .addStatement("return java.util.Objects.equals(this.$N, that.$N)",
-                        objectTypeDeclaration.getProperties().get(0).getName().getName()
-                                .getCamelCase().getUnsafeName(),
-                        objectTypeDeclaration.getProperties().get(0).getName().getName()
-                                .getCamelCase().getUnsafeName())
+                .addStatement(
+                        "return java.util.Objects.equals(this.$N, that.$N)",
+                        objectTypeDeclaration
+                                .getProperties()
+                                .get(0)
+                                .getName()
+                                .getName()
+                                .getCamelCase()
+                                .getUnsafeName(),
+                        objectTypeDeclaration
+                                .getProperties()
+                                .get(0)
+                                .getName()
+                                .getName()
+                                .getCamelCase()
+                                .getUnsafeName())
                 .build();
     }
-    
+
     private MethodSpec createHashCode(List<FieldSpec> fields) {
         MethodSpec.Builder hashCode = MethodSpec.methodBuilder("hashCode")
                 .addAnnotation(Override.class)
                 .addModifiers(Modifier.PUBLIC)
                 .returns(int.class);
-        
+
         if (!fields.isEmpty()) {
-            CodeBlock.Builder codeBlock = CodeBlock.builder()
-                    .add("return java.util.Objects.hash(");
+            CodeBlock.Builder codeBlock = CodeBlock.builder().add("return java.util.Objects.hash(");
             for (int i = 0; i < fields.size(); i++) {
                 if (i > 0) codeBlock.add(", ");
                 codeBlock.add("this.$N", fields.get(i).name);
@@ -322,10 +329,10 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
         } else {
             hashCode.addStatement("return 0");
         }
-        
+
         return hashCode.build();
     }
-    
+
     private MethodSpec createToString() {
         return MethodSpec.methodBuilder("toString")
                 .addAnnotation(Override.class)
@@ -334,7 +341,7 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
                 .addStatement("return $T.stringify(this)", ClassName.get("core", "ObjectMappers"))
                 .build();
     }
-    
+
     private MethodSpec createBuilderMethod() {
         return MethodSpec.methodBuilder("builder")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
@@ -342,71 +349,70 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
                 .addStatement("return new Builder()")
                 .build();
     }
-    
+
     private TypeSpec createBuilderClass() {
         TypeSpec.Builder builder = TypeSpec.classBuilder("Builder")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
                 .addAnnotation(AnnotationSpec.builder(JsonIgnoreProperties.class)
                         .addMember("ignoreUnknown", "true")
                         .build());
-        
+
         // Add fields
         List<FieldSpec> builderFields = new ArrayList<>();
         for (ObjectProperty property : objectTypeDeclaration.getProperties()) {
             TypeName fieldType = getFieldType(property);
             String fieldName = KeyWordUtils.getKeyWordCompatibleName(
                     property.getName().getName().getCamelCase().getUnsafeName());
-            
-            FieldSpec.Builder fieldBuilder = FieldSpec.builder(fieldType, fieldName)
-                    .addModifiers(Modifier.PRIVATE);
-            
+
+            FieldSpec.Builder fieldBuilder =
+                    FieldSpec.builder(fieldType, fieldName).addModifiers(Modifier.PRIVATE);
+
             // Initialize JsonMergePatch fields to absent
-            if (fieldType instanceof ParameterizedTypeName && 
-                    ((ParameterizedTypeName) fieldType).rawType.equals(JSON_MERGE_PATCH)) {
+            if (fieldType instanceof ParameterizedTypeName
+                    && ((ParameterizedTypeName) fieldType).rawType.equals(JSON_MERGE_PATCH)) {
                 fieldBuilder.initializer("$T.absent()", JSON_MERGE_PATCH);
             }
-            
+
             FieldSpec field = fieldBuilder.build();
             builderFields.add(field);
             builder.addField(field);
         }
-        
+
         // Add constructor
-        builder.addMethod(MethodSpec.constructorBuilder()
-                .addModifiers(Modifier.PRIVATE)
-                .build());
-        
+        builder.addMethod(
+                MethodSpec.constructorBuilder().addModifiers(Modifier.PRIVATE).build());
+
         // Add setter methods
         for (ObjectProperty property : objectTypeDeclaration.getProperties()) {
             builder.addMethod(createBuilderSetter(property));
         }
-        
+
         // Add build method
         builder.addMethod(createBuildMethod(builderFields));
-        
+
         return builder.build();
     }
-    
+
     private MethodSpec createBuilderSetter(ObjectProperty property) {
         String fieldName = KeyWordUtils.getKeyWordCompatibleName(
                 property.getName().getName().getCamelCase().getUnsafeName());
         String setterName = fieldName;
         TypeName fieldType = getFieldType(property);
-        
+
         MethodSpec.Builder setter = MethodSpec.methodBuilder(setterName)
                 .addModifiers(Modifier.PUBLIC)
                 .returns(ClassName.get(className.packageName(), className.simpleName(), "Builder"));
-        
+
         // For JsonMergePatch fields, create a special setter
-        if (fieldType instanceof ParameterizedTypeName && 
-                ((ParameterizedTypeName) fieldType).rawType.equals(JSON_MERGE_PATCH)) {
+        if (fieldType instanceof ParameterizedTypeName
+                && ((ParameterizedTypeName) fieldType).rawType.equals(JSON_MERGE_PATCH)) {
             TypeName innerType = ((ParameterizedTypeName) fieldType).typeArguments.get(0);
-            
+
             // Add JsonSetter annotation to handle deserialization
             setter.addAnnotation(AnnotationSpec.builder(JsonSetter.class)
                     .addMember("value", "$S", property.getName().getWireValue())
                     .build());
-            
+
             // Accept the inner type and wrap in JsonMergePatch
             setter.addParameter(innerType, "value");
             setter.addStatement("this.$N = $T.ofNullable(value)", fieldName, JSON_MERGE_PATCH);
@@ -414,25 +420,24 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
             setter.addParameter(fieldType, "value");
             setter.addStatement("this.$N = value", fieldName);
         }
-        
+
         setter.addStatement("return this");
-        
+
         return setter.build();
     }
-    
+
     private MethodSpec createBuildMethod(List<FieldSpec> fields) {
-        MethodSpec.Builder build = MethodSpec.methodBuilder("build")
-                .addModifiers(Modifier.PUBLIC)
-                .returns(className);
-        
+        MethodSpec.Builder build =
+                MethodSpec.methodBuilder("build").addModifiers(Modifier.PUBLIC).returns(className);
+
         CodeBlock.Builder params = CodeBlock.builder();
         for (int i = 0; i < fields.size(); i++) {
             if (i > 0) params.add(", ");
             params.add("$N", fields.get(i).name);
         }
-        
+
         build.addStatement("return new $T($L)", className, params.build());
-        
+
         return build.build();
     }
 }
