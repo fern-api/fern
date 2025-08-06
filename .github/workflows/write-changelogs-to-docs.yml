@@ -64,9 +64,8 @@ jobs:
       - name: update ts-sdk changelog
         run: rsync -avu --delete "changelogs/ts-sdk/" "docs/fern/products/sdks/overview/typescript/changelog"
 
-      # Uncomment below once we are ready to start publishing this
-      # - name: update rust-sdk changelog
-      #   run: rsync -avu --delete "changelogs/rust-sdk/" "docs/fern/products/sdks/overview/rust/changelog"
+      - name: update rust-sdk changelog
+        run: rsync -avu --delete "changelogs/rust-sdk/" "docs/fern/products/sdks/overview/rust/changelog"
 
       - name: update swift-sdk changelog
         run: rsync -avu --delete "changelogs/swift-sdk/" "docs/fern/products/sdks/overview/swift/changelog
