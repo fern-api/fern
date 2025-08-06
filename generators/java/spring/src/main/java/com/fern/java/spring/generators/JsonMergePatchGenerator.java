@@ -178,6 +178,25 @@ public final class JsonMergePatchGenerator extends AbstractFileGenerator {
                         Optional.class)
                 .build();
 
+        MethodSpec getJsonValue = MethodSpec.methodBuilder("getJsonValue")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(Object.class)
+                .addAnnotation(ClassName.get("com.fasterxml.jackson.annotation", "JsonValue"))
+                .addJavadoc("For JSON serialization - serialize the actual value or null.\n")
+                .addJavadoc("Absent values should be handled by @JsonInclude(JsonInclude.Include.CUSTOM)\n")
+                .beginControlFlow(
+                        "if (state == $T.ABSENT)", ClassName.get(className.packageName(), "JsonMergePatch", "State"))
+                .addComment("Should not be serialized - handled by custom inclusion")
+                .addStatement(
+                        "throw new $T($S)",
+                        IllegalStateException.class,
+                        "Absent values should not be serialized")
+                .endControlFlow()
+                .addStatement(
+                        "return state == $T.NULL ? null : value",
+                        ClassName.get(className.packageName(), "JsonMergePatch", "State"))
+                .build();
+
         TypeSpec jsonMergePatchSpec = TypeSpec.classBuilder("JsonMergePatch")
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addTypeVariable(typeVariable)
@@ -202,6 +221,7 @@ public final class JsonMergePatchGenerator extends AbstractFileGenerator {
                 .addMethod(get)
                 .addMethod(orElse)
                 .addMethod(toOptional)
+                .addMethod(getJsonValue)
                 .addMethod(createEquals())
                 .addMethod(createHashCode())
                 .addMethod(createToString())

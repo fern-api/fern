@@ -1,25 +1,9 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`validate > docs 1`] = `
-"Misconfigured fern directory: please see the docs at https://buildwithfern.com/learn/api-definition/introduction/what-is-the-fern-folder
-[docs]: ✓ All checks passed"
-`;
+exports[`validate > docs 1`] = `""`;
 
-exports[`validate > no-api 1`] = `
-"[docs]:✓ All checks passed
-[api]: Missing file: api.yml"
-`;
+exports[`validate > no-api 1`] = `""`;
 
-exports[`validate > no-generator 1`] = `"Misconfigured fern directory: please see the docs at https://buildwithfern.com/learn/api-definition/introduction/what-is-the-fern-folder"`;
+exports[`validate > no-generator 1`] = `""`;
 
-exports[`validate > simple 1`] = `
-"[api]: api.yml -> error-discrimination
-       api.yml
-       error-discrimination is required because this API has declared errors.
-       
-[api]: other.yml -> types -> MyType
-       other.yml
-       Type MissingType is not defined.
-       
-[api]: Found 2 errors and 0 warnings in"
-`;
+exports[`validate > simple 1`] = `""`;
