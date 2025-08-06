@@ -78,6 +78,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         public let type: String = "buildingExecutor"
         public let submissionId: SubmissionId
         public let status: ExecutionSessionStatus
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -116,6 +117,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         public let type: String = "running"
         public let submissionId: SubmissionId
         public let state: RunningSubmissionState
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -154,6 +156,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         public let type: String = "errored"
         public let submissionId: SubmissionId
         public let errorInfo: ErrorInfo
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -191,6 +194,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
     public struct Stopped: Codable, Hashable, Sendable {
         public let type: String = "stopped"
         public let submissionId: SubmissionId
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -224,6 +228,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         public let type: String = "graded"
         public let submissionId: SubmissionId
         public let testCases: [String: TestCaseResultWithStdout]
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -262,6 +267,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         public let type: String = "gradedV2"
         public let submissionId: SubmissionId
         public let testCases: [TestCaseId: TestCaseGrade]
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -300,6 +306,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         public let type: String = "workspaceRan"
         public let submissionId: SubmissionId
         public let runDetails: WorkspaceRunDetails
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -341,6 +348,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         public let lineNumber: Int
         public let lightweightStackInfo: LightweightStackframeInformation
         public let tracedFile: TracedFile?
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -395,6 +403,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         public let submissionId: SubmissionId
         public let traceResponsesSize: Int
         public let testCaseId: String?
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -438,6 +447,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         public let type: String = "invalidRequest"
         public let request: SubmissionRequest
         public let cause: InvalidRequestCause
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -475,6 +485,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
     public struct Finished: Codable, Hashable, Sendable {
         public let type: String = "finished"
         public let submissionId: SubmissionId
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(

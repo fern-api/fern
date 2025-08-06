@@ -4,6 +4,7 @@ public struct RecordingResponseNotification: Codable, Hashable, Sendable {
     public let lineNumber: Int
     public let lightweightStackInfo: LightweightStackframeInformation
     public let tracedFile: TracedFile?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

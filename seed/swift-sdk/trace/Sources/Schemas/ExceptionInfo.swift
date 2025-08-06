@@ -2,6 +2,7 @@ public struct ExceptionInfo: Codable, Hashable, Sendable {
     public let exceptionType: String
     public let exceptionMessage: String
     public let exceptionStacktrace: String
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

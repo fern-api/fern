@@ -1,6 +1,7 @@
 public struct GetBasicSolutionFileRequestType: Codable, Hashable, Sendable {
     public let methodName: String
     public let signature: NonVoidFunctionSignatureType
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

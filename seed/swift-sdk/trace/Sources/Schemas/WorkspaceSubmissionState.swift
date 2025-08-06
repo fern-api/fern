@@ -1,5 +1,6 @@
 public struct WorkspaceSubmissionState: Codable, Hashable, Sendable {
     public let status: WorkspaceSubmissionStatus
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

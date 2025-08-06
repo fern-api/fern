@@ -37,6 +37,7 @@ public enum FunctionSignature: Codable, Hashable, Sendable {
     public struct Void: Codable, Hashable, Sendable {
         public let type: String = "void"
         public let parameters: [Parameter]
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -70,6 +71,7 @@ public enum FunctionSignature: Codable, Hashable, Sendable {
         public let type: String = "nonVoid"
         public let parameters: [Parameter]
         public let returnType: VariableType
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -108,6 +110,7 @@ public enum FunctionSignature: Codable, Hashable, Sendable {
         public let type: String = "voidThatTakesActualResult"
         public let parameters: [Parameter]
         public let actualResultType: VariableType
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(

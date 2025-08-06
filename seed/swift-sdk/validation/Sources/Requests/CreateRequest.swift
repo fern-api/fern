@@ -3,6 +3,7 @@ public struct CreateRequest: Codable, Hashable, Sendable {
     public let even: Int
     public let name: String
     public let shape: Shape
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

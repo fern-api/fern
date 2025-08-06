@@ -32,6 +32,7 @@ public enum UnionWithPrimitive: Codable, Hashable, Sendable {
     public struct Integer: Codable, Hashable, Sendable {
         public let type: String = "integer"
         public let value: Int
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -64,6 +65,7 @@ public enum UnionWithPrimitive: Codable, Hashable, Sendable {
     public struct String: Codable, Hashable, Sendable {
         public let type: String = "string"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(

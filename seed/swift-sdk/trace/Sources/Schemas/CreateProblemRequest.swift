@@ -6,6 +6,7 @@ public struct CreateProblemRequest: Codable, Hashable, Sendable {
     public let outputType: VariableType
     public let testcases: [TestCaseWithExpectedResult]
     public let methodName: String
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

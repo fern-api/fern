@@ -1,6 +1,7 @@
 public struct NestedUser: Codable, Hashable, Sendable {
     public let name: String?
     public let user: User?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

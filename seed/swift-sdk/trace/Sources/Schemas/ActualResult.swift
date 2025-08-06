@@ -37,6 +37,7 @@ public enum ActualResult: Codable, Hashable, Sendable {
     public struct Value: Codable, Hashable, Sendable {
         public let type: String = "value"
         public let value: VariableValue
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -71,6 +72,7 @@ public enum ActualResult: Codable, Hashable, Sendable {
         public let exceptionType: String
         public let exceptionMessage: String
         public let exceptionStacktrace: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -113,6 +115,7 @@ public enum ActualResult: Codable, Hashable, Sendable {
     public struct ExceptionV2: Codable, Hashable, Sendable {
         public let type: String = "exceptionV2"
         public let value: ExceptionV2
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(

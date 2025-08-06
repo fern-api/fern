@@ -1,6 +1,7 @@
 public struct TestCaseWithActualResultImplementation: Codable, Hashable, Sendable {
     public let getActualResult: NonVoidFunctionDefinition
     public let assertCorrectnessCheck: AssertCorrectnessCheck
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

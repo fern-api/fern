@@ -12,6 +12,7 @@ public struct BigEntity: Codable, Hashable, Sendable {
     public let node: Node?
     public let directory: Directory?
     public let moment: Moment?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

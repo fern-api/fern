@@ -1,6 +1,7 @@
 public struct Actor: Codable, Hashable, Sendable {
     public let name: String
     public let id: String
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

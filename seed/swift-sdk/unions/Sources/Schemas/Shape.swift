@@ -32,6 +32,7 @@ public enum Shape: Codable, Hashable, Sendable {
     public struct Circle: Codable, Hashable, Sendable {
         public let type: String = "circle"
         public let radius: Double
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -64,6 +65,7 @@ public enum Shape: Codable, Hashable, Sendable {
     public struct Square: Codable, Hashable, Sendable {
         public let type: String = "square"
         public let length: Double
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(

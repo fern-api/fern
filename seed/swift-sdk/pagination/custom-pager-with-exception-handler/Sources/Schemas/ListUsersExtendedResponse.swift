@@ -1,7 +1,9 @@
 public struct ListUsersExtendedResponse: Codable, Hashable, Sendable {
     public let data: UserListContainer
     public let next: UUID?
+    /// The totall number of /users
     public let totalCount: Int
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

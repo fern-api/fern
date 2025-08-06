@@ -1,7 +1,9 @@
 public struct Movie: Codable, Hashable, Sendable {
     public let id: MovieId
     public let title: String
+    /// The rating scale is one to five stars
     public let rating: Double
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

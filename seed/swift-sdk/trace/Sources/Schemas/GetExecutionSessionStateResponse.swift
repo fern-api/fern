@@ -2,6 +2,7 @@ public struct GetExecutionSessionStateResponse: Codable, Hashable, Sendable {
     public let states: [String: ExecutionSessionState]
     public let numWarmingInstances: Int?
     public let warmingSessionIds: [String]
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

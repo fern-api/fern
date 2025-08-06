@@ -37,6 +37,7 @@ public enum InvalidRequestCause: Codable, Hashable, Sendable {
     public struct SubmissionIdNotFound: Codable, Hashable, Sendable {
         public let type: String = "submissionIdNotFound"
         public let missingSubmissionId: SubmissionId
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -70,6 +71,7 @@ public enum InvalidRequestCause: Codable, Hashable, Sendable {
         public let type: String = "customTestCasesUnsupported"
         public let problemId: ProblemId
         public let submissionId: SubmissionId
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -108,6 +110,7 @@ public enum InvalidRequestCause: Codable, Hashable, Sendable {
         public let type: String = "unexpectedLanguage"
         public let expectedLanguage: Language
         public let actualLanguage: Language
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(

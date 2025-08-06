@@ -37,6 +37,7 @@ public enum ErrorInfo: Codable, Hashable, Sendable {
     public struct CompileError: Codable, Hashable, Sendable {
         public let type: String = "compileError"
         public let message: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -69,6 +70,7 @@ public enum ErrorInfo: Codable, Hashable, Sendable {
     public struct RuntimeError: Codable, Hashable, Sendable {
         public let type: String = "runtimeError"
         public let message: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -101,6 +103,7 @@ public enum ErrorInfo: Codable, Hashable, Sendable {
     public struct InternalError: Codable, Hashable, Sendable {
         public let type: String = "internalError"
         public let exceptionInfo: ExceptionInfo
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(

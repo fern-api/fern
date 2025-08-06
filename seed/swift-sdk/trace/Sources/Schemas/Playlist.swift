@@ -3,6 +3,7 @@ public struct Playlist: Codable, Hashable, Sendable {
     public let problems: [ProblemId]
     public let playlistId: PlaylistId
     public let ownerId: UserId
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

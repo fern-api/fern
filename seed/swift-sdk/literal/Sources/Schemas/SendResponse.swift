@@ -2,6 +2,7 @@ public struct SendResponse: Codable, Hashable, Sendable {
     public let message: String
     public let status: Int
     public let success: JSONValue
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

@@ -1,6 +1,7 @@
 public struct UnexpectedLanguageError: Codable, Hashable, Sendable {
     public let expectedLanguage: Language
     public let actualLanguage: Language
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

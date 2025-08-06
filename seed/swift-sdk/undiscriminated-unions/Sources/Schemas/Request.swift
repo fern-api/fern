@@ -1,5 +1,6 @@
 public struct Request: Codable, Hashable, Sendable {
     public let union: MetadataUnion?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

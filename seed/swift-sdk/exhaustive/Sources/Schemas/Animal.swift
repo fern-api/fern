@@ -33,6 +33,7 @@ public enum Animal: Codable, Hashable, Sendable {
         public let animal: String = "dog"
         public let name: String
         public let likesToWoof: Bool
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -71,6 +72,7 @@ public enum Animal: Codable, Hashable, Sendable {
         public let animal: String = "cat"
         public let name: String
         public let likesToMeow: Bool
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(

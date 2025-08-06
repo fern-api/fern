@@ -9,6 +9,7 @@ public struct ProblemInfoV2Type: Codable, Hashable, Sendable {
     public let customTestCaseTemplates: [TestCaseTemplateType]
     public let testcases: [TestCaseV2Type]
     public let isPublic: Bool
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

@@ -32,6 +32,7 @@ public enum TestCaseImplementationDescriptionBoard: Codable, Hashable, Sendable 
     public struct Html: Codable, Hashable, Sendable {
         public let type: String = "html"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -64,6 +65,7 @@ public enum TestCaseImplementationDescriptionBoard: Codable, Hashable, Sendable 
     public struct ParamId: Codable, Hashable, Sendable {
         public let type: String = "paramId"
         public let value: ParameterId
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(

@@ -1,5 +1,6 @@
 public struct UsernameContainer: Codable, Hashable, Sendable {
     public let results: [String]
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

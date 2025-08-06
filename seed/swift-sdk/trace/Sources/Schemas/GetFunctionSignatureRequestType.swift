@@ -1,5 +1,6 @@
 public struct GetFunctionSignatureRequestType: Codable, Hashable, Sendable {
     public let functionSignature: FunctionSignatureType
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

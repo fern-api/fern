@@ -32,6 +32,7 @@ public enum ContainerValue: Codable, Hashable, Sendable {
     public struct List: Codable, Hashable, Sendable {
         public let type: String = "list"
         public let value: [FieldValue]
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -64,6 +65,7 @@ public enum ContainerValue: Codable, Hashable, Sendable {
     public struct Optional: Codable, Hashable, Sendable {
         public let type: String = "optional"
         public let value: FieldValue?
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(

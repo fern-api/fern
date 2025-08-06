@@ -3,6 +3,7 @@ public struct TestSubmissionStatusV2: Codable, Hashable, Sendable {
     public let problemId: ProblemId
     public let problemVersion: Int
     public let problemInfo: ProblemInfoV2
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

@@ -1,5 +1,6 @@
 public struct Scope: Codable, Hashable, Sendable {
     public let variables: [String: DebugVariableValue]
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

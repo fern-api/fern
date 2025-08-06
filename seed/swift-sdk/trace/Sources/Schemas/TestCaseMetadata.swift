@@ -2,6 +2,7 @@ public struct TestCaseMetadata: Codable, Hashable, Sendable {
     public let id: TestCaseId
     public let name: String
     public let hidden: Bool
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

@@ -1,6 +1,7 @@
 public struct TestCase: Codable, Hashable, Sendable {
     public let id: String
     public let params: [VariableValue]
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

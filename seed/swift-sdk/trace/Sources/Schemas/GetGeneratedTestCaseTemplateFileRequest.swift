@@ -1,5 +1,6 @@
 public struct GetGeneratedTestCaseTemplateFileRequest: Codable, Hashable, Sendable {
     public let template: TestCaseTemplate
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

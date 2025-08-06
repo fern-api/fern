@@ -3,6 +3,7 @@ public struct TestCaseV2Type: Codable, Hashable, Sendable {
     public let implementation: TestCaseImplementationReferenceType
     public let arguments: [ParameterIdType: VariableValue]
     public let expects: TestCaseExpectsType?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

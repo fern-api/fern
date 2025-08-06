@@ -1,6 +1,7 @@
 public struct InvalidRequestResponse: Codable, Hashable, Sendable {
     public let request: SubmissionRequest
     public let cause: InvalidRequestCause
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

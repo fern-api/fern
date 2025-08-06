@@ -1,6 +1,7 @@
 public struct DoublyLinkedListValue: Codable, Hashable, Sendable {
     public let head: NodeId?
     public let nodes: [NodeId: DoublyLinkedListNodeValue]
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

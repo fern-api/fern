@@ -1,5 +1,6 @@
 public struct U: Codable, Hashable, Sendable {
     public let child: T
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

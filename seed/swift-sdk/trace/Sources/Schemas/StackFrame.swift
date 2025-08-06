@@ -2,6 +2,7 @@ public struct StackFrame: Codable, Hashable, Sendable {
     public let methodName: String
     public let lineNumber: Int
     public let scopes: [Scope]
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

@@ -1,6 +1,7 @@
 public struct GenerateRequest: Codable, Hashable, Sendable {
     public let stream: Bool
     public let numEvents: Int
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

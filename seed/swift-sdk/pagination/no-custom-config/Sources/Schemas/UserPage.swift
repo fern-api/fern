@@ -1,6 +1,7 @@
 public struct UserPage: Codable, Hashable, Sendable {
     public let data: UserListContainer
     public let next: UUID?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

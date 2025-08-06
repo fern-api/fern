@@ -6,6 +6,7 @@ public struct Account: Codable, Hashable, Sendable {
     public let name: String
     public let patient: Patient?
     public let practitioner: Practitioner?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

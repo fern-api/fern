@@ -2,6 +2,7 @@ public struct BaseResource: Codable, Hashable, Sendable {
     public let id: String
     public let relatedResources: [ResourceList]
     public let memo: Memo
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

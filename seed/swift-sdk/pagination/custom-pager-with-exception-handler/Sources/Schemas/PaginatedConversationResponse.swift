@@ -3,6 +3,7 @@ public struct PaginatedConversationResponse: Codable, Hashable, Sendable {
     public let pages: CursorPages?
     public let totalCount: Int
     public let type: JSONValue
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

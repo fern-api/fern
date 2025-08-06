@@ -1,6 +1,7 @@
 public struct SearchRequest: Codable, Hashable, Sendable {
     public let pagination: StartingAfterPaging?
     public let query: SearchRequestQuery
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

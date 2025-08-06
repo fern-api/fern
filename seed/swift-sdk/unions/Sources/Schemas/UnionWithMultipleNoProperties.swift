@@ -37,6 +37,7 @@ public enum UnionWithMultipleNoProperties: Codable, Hashable, Sendable {
     public struct Foo: Codable, Hashable, Sendable {
         public let type: String = "foo"
         public let name: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -67,6 +68,7 @@ public enum UnionWithMultipleNoProperties: Codable, Hashable, Sendable {
     }
 
     public struct Empty1: Codable, Hashable, Sendable {
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -85,6 +87,7 @@ public enum UnionWithMultipleNoProperties: Codable, Hashable, Sendable {
     }
 
     public struct Empty2: Codable, Hashable, Sendable {
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(

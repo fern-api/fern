@@ -1,6 +1,7 @@
 public struct ExpressionLocation: Codable, Hashable, Sendable {
     public let start: Int
     public let offset: Int
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

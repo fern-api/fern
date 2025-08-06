@@ -7,6 +7,7 @@ public struct User: Codable, Hashable, Sendable {
     public let favoriteNumber: WeirdNumber
     public let numbers: JSONValue?
     public let strings: JSONValue?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

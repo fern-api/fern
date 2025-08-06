@@ -1,5 +1,6 @@
 public struct TestCaseHiddenGrade: Codable, Hashable, Sendable {
     public let passed: Bool
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

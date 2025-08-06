@@ -1,6 +1,7 @@
 public struct StdoutResponse: Codable, Hashable, Sendable {
     public let submissionId: SubmissionId
     public let stdout: String
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

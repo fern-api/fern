@@ -2,6 +2,7 @@ public struct TokenResponse: Codable, Hashable, Sendable {
     public let accessToken: String
     public let expiresIn: Int
     public let refreshToken: String?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

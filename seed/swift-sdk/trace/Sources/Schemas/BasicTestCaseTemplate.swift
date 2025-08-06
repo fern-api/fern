@@ -3,6 +3,7 @@ public struct BasicTestCaseTemplate: Codable, Hashable, Sendable {
     public let name: String
     public let description: TestCaseImplementationDescription
     public let expectedValueParameterId: ParameterId
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

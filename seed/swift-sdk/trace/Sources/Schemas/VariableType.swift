@@ -70,6 +70,7 @@ public enum VariableType: Codable, Hashable, Sendable {
     }
 
     public struct IntegerType: Codable, Hashable, Sendable {
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -88,6 +89,7 @@ public enum VariableType: Codable, Hashable, Sendable {
     }
 
     public struct DoubleType: Codable, Hashable, Sendable {
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -106,6 +108,7 @@ public enum VariableType: Codable, Hashable, Sendable {
     }
 
     public struct BooleanType: Codable, Hashable, Sendable {
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -124,6 +127,7 @@ public enum VariableType: Codable, Hashable, Sendable {
     }
 
     public struct StringType: Codable, Hashable, Sendable {
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -142,6 +146,7 @@ public enum VariableType: Codable, Hashable, Sendable {
     }
 
     public struct CharType: Codable, Hashable, Sendable {
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -162,7 +167,9 @@ public enum VariableType: Codable, Hashable, Sendable {
     public struct ListType: Codable, Hashable, Sendable {
         public let type: String = "listType"
         public let valueType: VariableType
+        /// Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.
         public let isFixedLength: Bool?
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -201,6 +208,7 @@ public enum VariableType: Codable, Hashable, Sendable {
         public let type: String = "mapType"
         public let keyType: VariableType
         public let valueType: VariableType
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -236,6 +244,7 @@ public enum VariableType: Codable, Hashable, Sendable {
     }
 
     public struct BinaryTreeType: Codable, Hashable, Sendable {
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -254,6 +263,7 @@ public enum VariableType: Codable, Hashable, Sendable {
     }
 
     public struct SinglyLinkedListType: Codable, Hashable, Sendable {
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -272,6 +282,7 @@ public enum VariableType: Codable, Hashable, Sendable {
     }
 
     public struct DoublyLinkedListType: Codable, Hashable, Sendable {
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(

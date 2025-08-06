@@ -32,6 +32,7 @@ public enum TestCaseImplementationReference: Codable, Hashable, Sendable {
     public struct TemplateId: Codable, Hashable, Sendable {
         public let type: String = "templateId"
         public let value: TestCaseTemplateId
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -65,6 +66,7 @@ public enum TestCaseImplementationReference: Codable, Hashable, Sendable {
         public let type: String = "implementation"
         public let description: TestCaseImplementationDescription
         public let function: TestCaseFunction
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(

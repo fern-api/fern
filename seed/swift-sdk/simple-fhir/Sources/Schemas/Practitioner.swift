@@ -4,6 +4,7 @@ public struct Practitioner: Codable, Hashable, Sendable {
     public let memo: Memo
     public let resourceType: JSONValue
     public let name: String
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

@@ -1,6 +1,7 @@
 public struct Memo: Codable, Hashable, Sendable {
     public let description: String
     public let account: Account?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

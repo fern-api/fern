@@ -35,6 +35,7 @@ public enum SubmissionStatusV2: Codable, Hashable, Sendable {
         public let problemId: ProblemId
         public let problemVersion: Int
         public let problemInfo: ProblemInfoV2
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -82,6 +83,7 @@ public enum SubmissionStatusV2: Codable, Hashable, Sendable {
     public struct Workspace: Codable, Hashable, Sendable {
         public let type: String = "workspace"
         public let updates: [WorkspaceSubmissionUpdate]
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(

@@ -5,6 +5,7 @@ public struct SubmitRequestV2: Codable, Hashable, Sendable {
     public let problemId: ProblemId
     public let problemVersion: Int?
     public let userId: String?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

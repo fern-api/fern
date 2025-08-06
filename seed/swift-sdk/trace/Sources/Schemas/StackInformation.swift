@@ -1,6 +1,7 @@
 public struct StackInformation: Codable, Hashable, Sendable {
     public let numStackFrames: Int
     public let topStackFrame: StackFrame?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

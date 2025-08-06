@@ -32,6 +32,7 @@ public enum AssertCorrectnessCheck: Codable, Hashable, Sendable {
     public struct DeepEquality: Codable, Hashable, Sendable {
         public let type: String = "deepEquality"
         public let expectedValueParameterId: ParameterId
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -65,6 +66,7 @@ public enum AssertCorrectnessCheck: Codable, Hashable, Sendable {
         public let type: String = "custom"
         public let additionalParameters: [Parameter]
         public let code: FunctionImplementationForMultipleLanguages
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(

@@ -3,6 +3,7 @@ public struct BasicCustomFilesType: Codable, Hashable, Sendable {
     public let signature: NonVoidFunctionSignatureType
     public let additionalFiles: [Language: FilesType]
     public let basicTestCaseTemplate: BasicTestCaseTemplateType
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

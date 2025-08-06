@@ -24,6 +24,7 @@ public struct Type: Codable, Hashable, Sendable {
     public let twentythree: String
     public let twentyfour: Date?
     public let twentyfive: Date?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

@@ -1,6 +1,7 @@
 public struct TracedTestCase: Codable, Hashable, Sendable {
     public let result: TestCaseResultWithStdout
     public let traceResponsesSize: Int
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

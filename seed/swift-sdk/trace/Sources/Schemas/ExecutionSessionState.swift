@@ -1,10 +1,12 @@
 public struct ExecutionSessionState: Codable, Hashable, Sendable {
     public let lastTimeContacted: String?
+    /// The auto-generated session id. Formatted as a uuid.
     public let sessionId: String
     public let isWarmInstance: Bool
     public let awsTaskId: String?
     public let language: Language
     public let status: ExecutionSessionStatus
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

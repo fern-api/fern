@@ -34,6 +34,7 @@ public enum EventInfo: Codable, Hashable, Sendable {
         public let id: String
         public let data: [String: String]?
         public let jsonString: String?
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -76,6 +77,7 @@ public enum EventInfo: Codable, Hashable, Sendable {
     public struct Tag: Codable, Hashable, Sendable {
         public let type: String = "tag"
         public let value: Tag
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(

@@ -48,6 +48,7 @@ public enum SubmissionRequest: Codable, Hashable, Sendable {
         public let type: String = "initializeProblemRequest"
         public let problemId: ProblemId
         public let problemVersion: Int?
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -83,6 +84,7 @@ public enum SubmissionRequest: Codable, Hashable, Sendable {
     }
 
     public struct InitializeWorkspaceRequest: Codable, Hashable, Sendable {
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -108,6 +110,7 @@ public enum SubmissionRequest: Codable, Hashable, Sendable {
         public let problemId: ProblemId
         public let problemVersion: Int?
         public let userId: String?
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -168,6 +171,7 @@ public enum SubmissionRequest: Codable, Hashable, Sendable {
         public let language: Language
         public let submissionFiles: [SubmissionFileInfo]
         public let userId: String?
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -215,6 +219,7 @@ public enum SubmissionRequest: Codable, Hashable, Sendable {
     public struct Stop: Codable, Hashable, Sendable {
         public let type: String = "stop"
         public let submissionId: SubmissionId
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(

@@ -1,5 +1,6 @@
 public struct SendLiteralsInHeadersRequest: Codable, Hashable, Sendable {
     public let query: String
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

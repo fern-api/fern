@@ -2,6 +2,7 @@ public struct NestedObjectWithLiterals: Codable, Hashable, Sendable {
     public let literal1: JSONValue
     public let literal2: JSONValue
     public let strProp: String
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

@@ -35,6 +35,7 @@ public enum CustomFilesType: Codable, Hashable, Sendable {
         public let signature: NonVoidFunctionSignatureType
         public let additionalFiles: [Language: FilesType]
         public let basicTestCaseTemplate: BasicTestCaseTemplateType
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -82,6 +83,7 @@ public enum CustomFilesType: Codable, Hashable, Sendable {
     public struct Custom: Codable, Hashable, Sendable {
         public let type: String = "custom"
         public let value: [Language: FilesType]
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(

@@ -1,5 +1,6 @@
 public struct CreateOrganizationRequest: Codable, Hashable, Sendable {
     public let name: String
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

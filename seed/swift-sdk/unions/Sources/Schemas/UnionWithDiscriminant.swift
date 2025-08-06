@@ -32,6 +32,7 @@ public enum UnionWithDiscriminant: Codable, Hashable, Sendable {
     public struct Foo: Codable, Hashable, Sendable {
         public let type: String = "foo"
         public let foo: Foo
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -64,6 +65,7 @@ public enum UnionWithDiscriminant: Codable, Hashable, Sendable {
     public struct Bar: Codable, Hashable, Sendable {
         public let type: String = "bar"
         public let bar: Bar
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(

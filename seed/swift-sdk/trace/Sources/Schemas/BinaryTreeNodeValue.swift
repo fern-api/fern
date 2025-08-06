@@ -3,6 +3,7 @@ public struct BinaryTreeNodeValue: Codable, Hashable, Sendable {
     public let val: Double
     public let right: NodeId?
     public let left: NodeId?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

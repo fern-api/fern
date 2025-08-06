@@ -1,6 +1,7 @@
 public struct FilteredType: Codable, Hashable, Sendable {
     public let publicProperty: String?
     public let privateProperty: Int
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

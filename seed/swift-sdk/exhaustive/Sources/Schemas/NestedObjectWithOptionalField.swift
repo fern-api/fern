@@ -1,6 +1,7 @@
 public struct NestedObjectWithOptionalField: Codable, Hashable, Sendable {
     public let string: String?
     public let nestedObject: ObjectWithOptionalField?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

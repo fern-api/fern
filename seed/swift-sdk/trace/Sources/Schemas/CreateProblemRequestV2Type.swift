@@ -6,6 +6,7 @@ public struct CreateProblemRequestV2Type: Codable, Hashable, Sendable {
     public let testcases: [TestCaseV2Type]
     public let supportedLanguages: JSONValue
     public let isPublic: Bool
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

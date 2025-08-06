@@ -2,6 +2,7 @@ public struct Node: Codable, Hashable, Sendable {
     public let name: String
     public let nodes: [Node]?
     public let trees: [Tree]?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

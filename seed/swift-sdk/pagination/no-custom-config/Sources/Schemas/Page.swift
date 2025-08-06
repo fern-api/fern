@@ -1,8 +1,10 @@
 public struct Page: Codable, Hashable, Sendable {
+    /// The current page
     public let page: Int
     public let next: NextPage?
     public let perPage: Int
     public let totalPage: Int
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

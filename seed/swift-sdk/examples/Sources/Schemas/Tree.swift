@@ -1,5 +1,6 @@
 public struct Tree: Codable, Hashable, Sendable {
     public let nodes: [Node]?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

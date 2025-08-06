@@ -3,6 +3,7 @@ public struct ErrorType: Codable, Hashable, Sendable {
     public let code: ErrorCode
     public let detail: String?
     public let field: String?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

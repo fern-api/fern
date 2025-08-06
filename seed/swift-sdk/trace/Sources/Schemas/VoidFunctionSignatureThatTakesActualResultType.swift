@@ -1,6 +1,7 @@
 public struct VoidFunctionSignatureThatTakesActualResultType: Codable, Hashable, Sendable {
     public let parameters: [ParameterType]
     public let actualResultType: VariableType
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

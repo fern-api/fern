@@ -3,6 +3,7 @@ public struct TestSubmissionState: Codable, Hashable, Sendable {
     public let defaultTestCases: [TestCase]
     public let customTestCases: [TestCase]
     public let status: TestSubmissionStatus
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

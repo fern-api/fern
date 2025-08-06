@@ -3,6 +3,7 @@ public struct CreateUserRequest: Codable, Hashable, Sendable {
     public let tags: [String]?
     public let metadata: Metadata?
     public let avatar: JSONValue?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

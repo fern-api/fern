@@ -2,6 +2,7 @@ public struct TestCaseTemplateType: Codable, Hashable, Sendable {
     public let templateId: TestCaseTemplateIdType
     public let name: String
     public let implementation: TestCaseImplementationType
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

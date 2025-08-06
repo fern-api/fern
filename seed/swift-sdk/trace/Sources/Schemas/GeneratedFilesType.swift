@@ -2,6 +2,7 @@ public struct GeneratedFilesType: Codable, Hashable, Sendable {
     public let generatedTestCaseFiles: [Language: FilesType]
     public let generatedTemplateFiles: [Language: FilesType]
     public let other: [Language: FilesType]
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

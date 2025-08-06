@@ -9,6 +9,7 @@ public struct ProblemInfo: Codable, Hashable, Sendable {
     public let testcases: [TestCaseWithExpectedResult]
     public let methodName: String
     public let supportsCustomTestCases: Bool
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

@@ -32,6 +32,7 @@ public enum UnionWithSubTypes: Codable, Hashable, Sendable {
     public struct Foo: Codable, Hashable, Sendable {
         public let type: String = "foo"
         public let name: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -65,6 +66,7 @@ public enum UnionWithSubTypes: Codable, Hashable, Sendable {
         public let type: String = "fooExtended"
         public let name: String
         public let age: Int
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(

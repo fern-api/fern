@@ -1,6 +1,7 @@
 public struct DefaultProvidedFileType: Codable, Hashable, Sendable {
     public let file: FileInfoV2Type
     public let relatedTypes: [VariableType]
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

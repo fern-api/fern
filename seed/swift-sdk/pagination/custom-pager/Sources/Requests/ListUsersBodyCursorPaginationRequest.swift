@@ -1,5 +1,8 @@
 public struct ListUsersBodyCursorPaginationRequest: Codable, Hashable, Sendable {
+    /// The object that contains the cursor used for pagination
+    /// in order to fetch the next page of results.
     public let pagination: WithCursor?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

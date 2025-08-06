@@ -1,6 +1,7 @@
 public struct GradedResponseV2: Codable, Hashable, Sendable {
     public let submissionId: SubmissionId
     public let testCases: [TestCaseId: TestCaseGrade]
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

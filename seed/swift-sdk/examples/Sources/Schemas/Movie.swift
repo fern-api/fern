@@ -3,12 +3,14 @@ public struct Movie: Codable, Hashable, Sendable {
     public let prequel: MovieId?
     public let title: String
     public let from: String
+    /// The rating scale is one to five stars
     public let rating: Double
     public let type: JSONValue
     public let tag: Tag
     public let book: String?
     public let metadata: [String: JSONValue]
     public let revenue: Int64
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

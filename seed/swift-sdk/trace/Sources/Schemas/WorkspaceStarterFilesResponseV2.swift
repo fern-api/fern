@@ -1,5 +1,6 @@
 public struct WorkspaceStarterFilesResponseV2: Codable, Hashable, Sendable {
     public let filesByLanguage: [Language: Files]
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

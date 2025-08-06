@@ -2,6 +2,7 @@ public struct TestCaseResult: Codable, Hashable, Sendable {
     public let expectedResult: VariableValue
     public let actualResult: ActualResult
     public let passed: Bool
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

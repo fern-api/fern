@@ -1,6 +1,7 @@
 public struct WorkspaceFiles: Codable, Hashable, Sendable {
     public let mainFile: FileInfo
     public let readOnlyFiles: [FileInfo]
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

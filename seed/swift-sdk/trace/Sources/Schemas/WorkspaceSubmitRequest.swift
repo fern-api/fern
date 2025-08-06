@@ -3,6 +3,7 @@ public struct WorkspaceSubmitRequest: Codable, Hashable, Sendable {
     public let language: Language
     public let submissionFiles: [SubmissionFileInfo]
     public let userId: String?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

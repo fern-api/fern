@@ -1,6 +1,7 @@
 public struct SendEvent2: Codable, Hashable, Sendable {
     public let sendText2: String
     public let sendParam2: Bool
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

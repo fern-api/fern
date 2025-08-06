@@ -1,6 +1,7 @@
 public struct DebugKeyValuePairs: Codable, Hashable, Sendable {
     public let key: DebugVariableValue
     public let value: DebugVariableValue
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

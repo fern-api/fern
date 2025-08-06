@@ -35,6 +35,7 @@ public enum Status: Codable, Hashable, Sendable {
     }
 
     public struct Active: Codable, Hashable, Sendable {
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -55,6 +56,7 @@ public enum Status: Codable, Hashable, Sendable {
     public struct Archived: Codable, Hashable, Sendable {
         public let type: String = "archived"
         public let value: JSONValue
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -87,6 +89,7 @@ public enum Status: Codable, Hashable, Sendable {
     public struct SoftDeleted: Codable, Hashable, Sendable {
         public let type: String = "soft-deleted"
         public let value: Date?
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(

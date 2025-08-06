@@ -1,5 +1,6 @@
 public struct ImportingType: Codable, Hashable, Sendable {
     public let imported: Imported
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

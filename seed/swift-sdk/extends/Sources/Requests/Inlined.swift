@@ -2,6 +2,7 @@ public struct Inlined: Codable, Hashable, Sendable {
     public let name: String
     public let docs: String
     public let unique: String
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

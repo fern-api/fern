@@ -1,6 +1,11 @@
 public struct CreateUserRequest: Codable, Hashable, Sendable {
+    /// The name of the user to create.
+    /// This name is unique to each user.
     public let name: String
+    /// The age of the user.
+    /// This property is not required.
     public let age: Int?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

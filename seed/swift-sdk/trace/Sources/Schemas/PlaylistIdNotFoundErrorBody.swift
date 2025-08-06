@@ -27,6 +27,7 @@ public enum PlaylistIdNotFoundErrorBody: Codable, Hashable, Sendable {
     public struct PlaylistId: Codable, Hashable, Sendable {
         public let type: String = "playlistId"
         public let value: PlaylistId
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(

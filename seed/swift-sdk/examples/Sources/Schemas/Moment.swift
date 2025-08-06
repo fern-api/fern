@@ -2,6 +2,7 @@ public struct Moment: Codable, Hashable, Sendable {
     public let id: UUID
     public let date: Date
     public let datetime: Date
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

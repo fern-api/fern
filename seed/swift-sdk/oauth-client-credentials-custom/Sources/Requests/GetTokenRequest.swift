@@ -6,6 +6,7 @@ public struct GetTokenRequest: Codable, Hashable, Sendable {
     public let audience: JSONValue
     public let grantType: JSONValue
     public let scope: String?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

@@ -1,6 +1,7 @@
 public struct NonVoidFunctionSignature: Codable, Hashable, Sendable {
     public let parameters: [Parameter]
     public let returnType: VariableType
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

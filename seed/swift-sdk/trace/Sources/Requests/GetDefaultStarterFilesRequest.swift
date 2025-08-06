@@ -1,7 +1,14 @@
 public struct GetDefaultStarterFilesRequest: Codable, Hashable, Sendable {
     public let inputParams: [VariableTypeAndName]
     public let outputType: VariableType
+    /// The name of the `method` that the student has to complete.
+    /// The method name cannot include the following characters:
+    ///   - Greater Than `>`
+    ///   - Less Than `<``
+    ///   - Equals `=`
+    ///   - Period `.`
     public let methodName: String
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

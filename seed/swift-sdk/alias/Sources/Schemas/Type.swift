@@ -1,6 +1,7 @@
 public struct Type: Codable, Hashable, Sendable {
     public let id: TypeId
     public let name: String
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

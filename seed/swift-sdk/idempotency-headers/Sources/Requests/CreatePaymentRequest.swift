@@ -1,6 +1,7 @@
 public struct CreatePaymentRequest: Codable, Hashable, Sendable {
     public let amount: Int
     public let currency: Currency
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

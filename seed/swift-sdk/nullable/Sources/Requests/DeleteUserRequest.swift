@@ -1,5 +1,7 @@
 public struct DeleteUserRequest: Codable, Hashable, Sendable {
+    /// The user to delete.
     public let username: JSONValue?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

@@ -1,6 +1,7 @@
 public struct NonVoidFunctionDefinitionType: Codable, Hashable, Sendable {
     public let signature: NonVoidFunctionSignatureType
     public let code: FunctionImplementationForMultipleLanguagesType
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

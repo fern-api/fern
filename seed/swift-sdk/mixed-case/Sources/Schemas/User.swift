@@ -2,6 +2,7 @@ public struct User: Codable, Hashable, Sendable {
     public let userName: String
     public let metadataTags: [String]
     public let extraProperties: [String: String]
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

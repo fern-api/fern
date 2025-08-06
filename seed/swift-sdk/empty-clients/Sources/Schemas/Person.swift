@@ -1,6 +1,7 @@
 public struct Person: Codable, Hashable, Sendable {
     public let name: String
     public let address: Address
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

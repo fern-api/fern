@@ -1,5 +1,6 @@
 public struct UsernameCursor: Codable, Hashable, Sendable {
     public let cursor: UsernamePage
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

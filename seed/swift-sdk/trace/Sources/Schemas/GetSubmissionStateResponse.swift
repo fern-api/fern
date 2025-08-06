@@ -3,6 +3,7 @@ public struct GetSubmissionStateResponse: Codable, Hashable, Sendable {
     public let submission: String
     public let language: Language
     public let submissionTypeState: SubmissionTypeState
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(

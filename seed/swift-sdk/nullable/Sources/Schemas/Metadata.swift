@@ -5,6 +5,7 @@ public struct Metadata: Codable, Hashable, Sendable {
     public let activated: JSONValue?
     public let status: Status
     public let values: [String: JSONValue?]?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
