@@ -7,7 +7,6 @@ public final class ParamsClient: Sendable {
 
     /// GET with path param
     ///
-    /// - Parameter param: 
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getWithPath(param: String, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
@@ -20,7 +19,6 @@ public final class ParamsClient: Sendable {
 
     /// GET with path param
     ///
-    /// - Parameter param: 
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getWithInlinePath(param: String, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
@@ -33,8 +31,6 @@ public final class ParamsClient: Sendable {
 
     /// GET with query param
     ///
-    /// - Parameter query: 
-    /// - Parameter number: 
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getWithQuery(query: String, number: Int, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
@@ -50,8 +46,6 @@ public final class ParamsClient: Sendable {
 
     /// GET with multiple of same query param
     ///
-    /// - Parameter query: 
-    /// - Parameter number: 
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getWithAllowMultipleQuery(query: String, number: Int, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
@@ -67,8 +61,6 @@ public final class ParamsClient: Sendable {
 
     /// GET with path and query params
     ///
-    /// - Parameter param: 
-    /// - Parameter query: 
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getWithPathAndQuery(param: String, query: String, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
@@ -83,8 +75,6 @@ public final class ParamsClient: Sendable {
 
     /// GET with path and query params
     ///
-    /// - Parameter param: 
-    /// - Parameter query: 
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getWithInlinePathAndQuery(param: String, query: String, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
@@ -99,8 +89,6 @@ public final class ParamsClient: Sendable {
 
     /// PUT to update with path param
     ///
-    /// - Parameter param: 
-    /// - Parameter request: 
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func modifyWithPath(param: String, request: String, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
@@ -114,8 +102,6 @@ public final class ParamsClient: Sendable {
 
     /// PUT to update with path param
     ///
-    /// - Parameter param: 
-    /// - Parameter request: 
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func modifyWithInlinePath(param: String, request: String, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(

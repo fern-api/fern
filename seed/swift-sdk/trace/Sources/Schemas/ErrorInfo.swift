@@ -67,6 +67,7 @@ public enum ErrorInfo: Codable, Hashable, Sendable {
         }
     }
 
+    /// If the submission cannot be executed and throws a runtime error before getting to any of the testcases.
     public struct RuntimeError: Codable, Hashable, Sendable {
         public let type: String = "runtimeError"
         public let message: String
@@ -100,6 +101,7 @@ public enum ErrorInfo: Codable, Hashable, Sendable {
         }
     }
 
+    /// If the trace backend encounters an unexpected error.
     public struct InternalError: Codable, Hashable, Sendable {
         public let type: String = "internalError"
         public let exceptionInfo: ExceptionInfo

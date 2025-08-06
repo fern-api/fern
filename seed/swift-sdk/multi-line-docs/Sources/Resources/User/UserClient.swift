@@ -22,7 +22,6 @@ public final class UserClient: Sendable {
     /// Create a new user.
     /// This endpoint is used to create a new user.
     ///
-    /// - Parameter request: 
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func createUser(request: CreateUserRequest, requestOptions: RequestOptions? = nil) async throws -> User {
         return try await httpClient.performRequest(

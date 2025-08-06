@@ -34,6 +34,7 @@ public enum InvalidRequestCause: Codable, Hashable, Sendable {
         }
     }
 
+    /// The submission request references a submission id that doesn't exist.
     public struct SubmissionIdNotFound: Codable, Hashable, Sendable {
         public let type: String = "submissionIdNotFound"
         public let missingSubmissionId: SubmissionId
@@ -106,6 +107,7 @@ public enum InvalidRequestCause: Codable, Hashable, Sendable {
         }
     }
 
+    /// The submission request was routed to an incorrect language executor.
     public struct UnexpectedLanguage: Codable, Hashable, Sendable {
         public let type: String = "unexpectedLanguage"
         public let expectedLanguage: Language

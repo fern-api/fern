@@ -62,6 +62,7 @@ public enum UnionWithoutKey: Codable, Hashable, Sendable {
         }
     }
 
+    /// This is a bar field.
     public struct Bar: Codable, Hashable, Sendable {
         public let type: String = "bar"
         public let name: String

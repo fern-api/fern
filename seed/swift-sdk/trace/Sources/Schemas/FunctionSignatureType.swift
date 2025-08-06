@@ -106,6 +106,7 @@ public enum FunctionSignatureType: Codable, Hashable, Sendable {
         }
     }
 
+    /// Useful when specifying custom grading for a testcase where actualResult is defined.
     public struct VoidThatTakesActualResult: Codable, Hashable, Sendable {
         public let type: String = "voidThatTakesActualResult"
         public let parameters: [ParameterType]

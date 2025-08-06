@@ -1,3 +1,4 @@
+/// The generated signature will include an additional param, actualResult
 public struct VoidFunctionDefinitionThatTakesActualResultType: Codable, Hashable, Sendable {
     public let additionalParameters: [ParameterType]
     public let code: FunctionImplementationForMultipleLanguagesType

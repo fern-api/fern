@@ -74,6 +74,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         }
     }
 
+    /// Statuses if an executor for the session isn't ready (Before RunningResponse).
     public struct BuildingExecutor: Codable, Hashable, Sendable {
         public let type: String = "buildingExecutor"
         public let submissionId: SubmissionId
@@ -113,6 +114,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         }
     }
 
+    /// Sent once a test submission is executing.
     public struct Running: Codable, Hashable, Sendable {
         public let type: String = "running"
         public let submissionId: SubmissionId
@@ -152,6 +154,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         }
     }
 
+    /// Sent if a submission cannot be run (i.e. Compile Error).
     public struct Errored: Codable, Hashable, Sendable {
         public let type: String = "errored"
         public let submissionId: SubmissionId
@@ -191,6 +194,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         }
     }
 
+    /// Sent if a submission is stopped.
     public struct Stopped: Codable, Hashable, Sendable {
         public let type: String = "stopped"
         public let submissionId: SubmissionId
@@ -224,6 +228,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         }
     }
 
+    /// Graded testcases without trace information.
     public struct Graded: Codable, Hashable, Sendable {
         public let type: String = "graded"
         public let submissionId: SubmissionId
@@ -263,6 +268,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         }
     }
 
+    /// Graded submission for v2 problems.
     public struct GradedV2: Codable, Hashable, Sendable {
         public let type: String = "gradedV2"
         public let submissionId: SubmissionId
@@ -302,6 +308,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         }
     }
 
+    /// Workspace run without trace information.
     public struct WorkspaceRan: Codable, Hashable, Sendable {
         public let type: String = "workspaceRan"
         public let submissionId: SubmissionId
@@ -341,6 +348,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         }
     }
 
+    /// Gives progress about what is being recorded.
     public struct Recording: Codable, Hashable, Sendable {
         public let type: String = "recording"
         public let submissionId: SubmissionId
@@ -398,6 +406,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         }
     }
 
+    /// Graded testcases with trace information.
     public struct Recorded: Codable, Hashable, Sendable {
         public let type: String = "recorded"
         public let submissionId: SubmissionId
@@ -443,6 +452,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         }
     }
 
+    /// Sent if an invalid request is sent for a submission.
     public struct InvalidRequest: Codable, Hashable, Sendable {
         public let type: String = "invalidRequest"
         public let request: SubmissionRequest
@@ -482,6 +492,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
         }
     }
 
+    /// Sent once a submission is graded and fully recorded.
     public struct Finished: Codable, Hashable, Sendable {
         public let type: String = "finished"
         public let submissionId: SubmissionId

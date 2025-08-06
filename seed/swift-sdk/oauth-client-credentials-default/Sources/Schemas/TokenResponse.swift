@@ -1,3 +1,4 @@
+/// An OAuth token response.
 public struct TokenResponse: Codable, Hashable, Sendable {
     public let accessToken: String
     public let expiresIn: Int

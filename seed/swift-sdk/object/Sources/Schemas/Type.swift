@@ -1,3 +1,4 @@
+/// Exercises all of the built-in types.
 public struct Type: Codable, Hashable, Sendable {
     public let one: Int
     public let two: Double

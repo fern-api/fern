@@ -7,7 +7,6 @@ public final class ProblemClient: Sendable {
 
     /// Creates a problem
     ///
-    /// - Parameter request: 
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func createProblem(request: CreateProblemRequest, requestOptions: RequestOptions? = nil) async throws -> CreateProblemResponse {
         return try await httpClient.performRequest(
@@ -21,8 +20,6 @@ public final class ProblemClient: Sendable {
 
     /// Updates a problem
     ///
-    /// - Parameter problemId: 
-    /// - Parameter request: 
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func updateProblem(problemId: String, request: CreateProblemRequest, requestOptions: RequestOptions? = nil) async throws -> UpdateProblemResponse {
         return try await httpClient.performRequest(
@@ -36,7 +33,6 @@ public final class ProblemClient: Sendable {
 
     /// Soft deletes a problem
     ///
-    /// - Parameter problemId: 
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func deleteProblem(problemId: String, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
@@ -48,7 +44,6 @@ public final class ProblemClient: Sendable {
 
     /// Returns default starter files for problem
     ///
-    /// - Parameter request: 
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getDefaultStarterFiles(request: GetDefaultStarterFilesRequest, requestOptions: RequestOptions? = nil) async throws -> GetDefaultStarterFilesResponse {
         return try await httpClient.performRequest(

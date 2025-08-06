@@ -29,6 +29,7 @@ public enum UnionWithDiscriminant: Codable, Hashable, Sendable {
         }
     }
 
+    /// This is a Foo field.
     public struct Foo: Codable, Hashable, Sendable {
         public let type: String = "foo"
         public let foo: Foo

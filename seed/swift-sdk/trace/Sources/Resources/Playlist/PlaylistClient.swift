@@ -7,10 +7,6 @@ public final class PlaylistClient: Sendable {
 
     /// Create a new playlist
     ///
-    /// - Parameter serviceParam: 
-    /// - Parameter datetime: 
-    /// - Parameter optionalDatetime: 
-    /// - Parameter request: 
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func createPlaylist(serviceParam: String, datetime: Date, optionalDatetime: Date? = nil, request: PlaylistCreateRequest, requestOptions: RequestOptions? = nil) async throws -> Playlist {
         return try await httpClient.performRequest(
@@ -28,13 +24,9 @@ public final class PlaylistClient: Sendable {
 
     /// Returns the user's playlists
     ///
-    /// - Parameter serviceParam: 
-    /// - Parameter limit: 
     /// - Parameter otherField: i'm another field
     /// - Parameter multiLineDocs: I'm a multiline
     /// description
-    /// - Parameter optionalMultipleField: 
-    /// - Parameter multipleField: 
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getPlaylists(serviceParam: String, limit: Int? = nil, otherField: String, multiLineDocs: String, optionalMultipleField: String? = nil, multipleField: String, requestOptions: RequestOptions? = nil) async throws -> [Playlist] {
         return try await httpClient.performRequest(
@@ -54,8 +46,6 @@ public final class PlaylistClient: Sendable {
 
     /// Returns a playlist
     ///
-    /// - Parameter serviceParam: 
-    /// - Parameter playlistId: 
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getPlaylist(serviceParam: String, playlistId: String, requestOptions: RequestOptions? = nil) async throws -> Playlist {
         return try await httpClient.performRequest(
@@ -68,9 +58,6 @@ public final class PlaylistClient: Sendable {
 
     /// Updates a playlist
     ///
-    /// - Parameter serviceParam: 
-    /// - Parameter playlistId: 
-    /// - Parameter request: 
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func updatePlaylist(serviceParam: String, playlistId: String, request: UpdatePlaylistRequest?, requestOptions: RequestOptions? = nil) async throws -> Playlist? {
         return try await httpClient.performRequest(
@@ -84,8 +71,6 @@ public final class PlaylistClient: Sendable {
 
     /// Deletes a playlist
     ///
-    /// - Parameter serviceParam: 
-    /// - Parameter playlistId: 
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func deletePlaylist(serviceParam: String, playlistId: String, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(

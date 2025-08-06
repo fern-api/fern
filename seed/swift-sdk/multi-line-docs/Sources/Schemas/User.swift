@@ -1,3 +1,6 @@
+/// A user object. This type is used throughout the following APIs:
+///   - createUser
+///   - getUser
 public struct User: Codable, Hashable, Sendable {
     public let id: String
     /// The user's name. This name is unique to each user. A few examples are included below:
