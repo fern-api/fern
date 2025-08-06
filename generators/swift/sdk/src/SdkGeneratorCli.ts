@@ -148,6 +148,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                     const generator = new AliasGenerator({
                         name: name,
                         typeDeclaration: atd,
+                        docsContent: typeDeclaration.docs,
                         context
                     });
                     const declaration = generator.generate();
