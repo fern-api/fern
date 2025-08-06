@@ -5,7 +5,7 @@ import tmp from "tmp-promise";
 
 import { FernToken, getAccessToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
-import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
+import { fernConfigJson, GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
 import { createVenusService } from "@fern-api/core";
 import { ContainerRunner, replaceEnvVariables } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
@@ -99,10 +99,16 @@ export async function runLocalGenerationForWorkspace({
                 }
 
                 // Set the publish config on the intermediateRepresentation if available
+
+                // grabs generator.yml > config > package_name
+                const packageName = getPackageNameFromGeneratorConfig(generatorInvocation);
+
                 const publishConfig = getPublishConfig({
                     generatorInvocation,
                     org: organization.ok ? organization.body : undefined,
-                    version
+                    version,
+                    packageName,
+                    context
                 });
                 if (publishConfig != null) {
                     intermediateRepresentation.publishConfig = publishConfig;
@@ -160,6 +166,12 @@ export async function runLocalGenerationForWorkspace({
     }
 }
 
+function getPackageNameFromGeneratorConfig(generatorInvocation: GeneratorInvocation): string | undefined {
+    return typeof generatorInvocation.raw?.config === "object" && generatorInvocation.raw?.config !== null
+        ? (generatorInvocation.raw.config as { package_name?: string }).package_name
+        : undefined;
+}
+
 export async function getWorkspaceTempDir(): Promise<tmp.DirectoryResult> {
     return tmp.dir({
         // use the /private prefix on osx so that docker can access the tmpdir
@@ -172,11 +184,15 @@ export async function getWorkspaceTempDir(): Promise<tmp.DirectoryResult> {
 function getPublishConfig({
     generatorInvocation,
     org,
-    version
+    version,
+    packageName,
+    context
 }: {
     generatorInvocation: generatorsYml.GeneratorInvocation;
     org?: FernVenusApi.Organization;
     version?: string;
+    packageName?: string;
+    context: TaskContext;
 }): FernIr.PublishingConfig | undefined {
     if (generatorInvocation.raw?.github != null && isGithubSelfhosted(generatorInvocation.raw.github)) {
         return FernIr.PublishingConfig.github({
@@ -197,8 +213,9 @@ function getPublishConfig({
         if (generatorInvocation.language === "python") {
             publishTarget = PublishTarget.pypi({
                 version,
-                packageName: undefined
+                packageName
             });
+            context.logger.debug(`Created PyPiPublishTarget: version ${version} package name: ${packageName}`);
         }
 
         return FernIr.PublishingConfig.filesystem({

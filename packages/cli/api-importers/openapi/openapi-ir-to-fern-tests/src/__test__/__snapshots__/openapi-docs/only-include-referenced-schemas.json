@@ -13158,7 +13158,9 @@ You can view the currently authorised admin along with the embedded app object (
 ",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Successful response",
                   "response": {
                     "body": {
@@ -13212,7 +13214,9 @@ You can view the currently authorised admin along with the embedded app object (
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Successful response",
                   "query-parameters": {
                     "created_at_after": "1677253093",
@@ -13291,7 +13295,9 @@ You can view the currently authorised admin along with the embedded app object (
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Successful response",
                   "response": {
                     "body": {
@@ -13338,7 +13344,9 @@ You can view the currently authorised admin along with the embedded app object (
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Admin found",
                   "path-parameters": {
                     "id": 1,
@@ -13397,7 +13405,9 @@ You can view the currently authorised admin along with the embedded app object (
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Successful response",
                   "path-parameters": {
                     "id": 1,
@@ -13432,7 +13442,9 @@ You can view the currently authorised admin along with the embedded app object (
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Admin not found",
                   "path-parameters": {
                     "id": 1,
@@ -13467,7 +13479,9 @@ You can view the currently authorised admin along with the embedded app object (
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Unauthorized",
                   "path-parameters": {
                     "id": 1,
@@ -13640,7 +13654,8 @@ service:
         status-code: 200
       examples:
         - name: Successful response
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: admin
@@ -13704,7 +13719,8 @@ service:
         - name: Successful response
           path-parameters:
             id: 1
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             away_mode_enabled: true
             away_mode_reassign: true
@@ -13729,7 +13745,8 @@ service:
         - name: Admin not found
           path-parameters:
             id: 1
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             away_mode_enabled: true
             away_mode_reassign: true
@@ -13754,7 +13771,8 @@ service:
         - name: Unauthorized
           path-parameters:
             id: 1
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             away_mode_enabled: true
             away_mode_reassign: true
@@ -13808,7 +13826,8 @@ service:
           query-parameters:
             created_at_after: '1677253093'
             created_at_before: '1677861493'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: activity_log.list
@@ -13854,7 +13873,8 @@ service:
         - root.ListAdminsRequestUnauthorizedError
       examples:
         - name: Successful response
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: admin.list
@@ -13893,7 +13913,8 @@ service:
         - name: Admin found
           path-parameters:
             id: 1
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: admin
@@ -14171,7 +14192,9 @@ imports:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "article created",
                   "request": {
                     "author_id": 991267407,
@@ -14634,7 +14657,9 @@ imports:
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Bad Request",
                   "request": {
                     "author_id": 1295,
@@ -15114,7 +15139,9 @@ imports:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "path-parameters": {
                     "id": 1,
@@ -15160,7 +15187,9 @@ imports:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "response": {
                     "body": {
@@ -15224,7 +15253,9 @@ imports:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Article found",
                   "path-parameters": {
                     "id": 1,
@@ -15699,7 +15730,9 @@ imports:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Search successful",
                   "query-parameters": {
                     "phrase": "Getting started",
@@ -15792,7 +15825,9 @@ imports:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "path-parameters": {
                     "id": 1,
@@ -16244,7 +16279,9 @@ imports:
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Article Not Found",
                   "path-parameters": {
                     "id": 1,
@@ -16979,7 +17016,8 @@ service:
         - root.ListArticlesRequestUnauthorizedError
       examples:
         - name: successful
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: list
@@ -17034,7 +17072,8 @@ service:
         - root.CreateArticleRequestUnauthorizedError
       examples:
         - name: article created
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             title: Thanks for everything
             description: Description of the Article
@@ -17451,7 +17490,8 @@ service:
                 neutral_reaction_percentage: 0
                 sad_reaction_percentage: 0
         - name: Bad Request
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             title: Thanks for everything
             description: Description of the Article
@@ -17883,7 +17923,8 @@ service:
         - name: Article found
           path-parameters:
             id: 1
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: article
@@ -18313,7 +18354,8 @@ service:
         - name: successful
           path-parameters:
             id: 1
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             title: Christmas is here!
             body: <p>New gifts in store for the jolly season</p>
@@ -18720,7 +18762,8 @@ service:
         - name: Article Not Found
           path-parameters:
             id: 1
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             title: Christmas is here!
             body: <p>New gifts in store for the jolly season</p>
@@ -19149,7 +19192,8 @@ service:
         - name: successful
           path-parameters:
             id: 1
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               id: '51'
@@ -19195,7 +19239,8 @@ service:
           query-parameters:
             phrase: Getting started
             state: published
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: list
@@ -19442,7 +19487,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Successful",
                   "path-parameters": {
                     "id": "5f4d3c1c-7b1b-4d7d-a97e-6095715c6632",
@@ -19557,7 +19604,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Successful",
                   "path-parameters": {
                     "id": "5f4d3c1c-7b1b-4d7d-a97e-6095715c6632",
@@ -19608,7 +19657,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Successful",
                   "path-parameters": {
                     "id": "5f4d3c1c-7b1b-4d7d-a97e-6095715c6632",
@@ -19694,7 +19745,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Successful",
                   "path-parameters": {
                     "id": "5f4d3c1c-7b1b-4d7d-a97e-6095715c6632",
@@ -19776,7 +19829,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Successful",
                   "path-parameters": {
                     "id": "id",
@@ -19832,7 +19887,9 @@ types:
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Bad Request",
                   "path-parameters": {
                     "id": "id",
@@ -19888,7 +19945,9 @@ types:
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Company Not Found",
                   "path-parameters": {
                     "id": "id",
@@ -19998,7 +20057,9 @@ Companies are looked up via `company_id` in a `POST` request, if not found via `
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Successful",
                   "request": {
                     "company_id": "company_remote_id",
@@ -20081,7 +20142,9 @@ Companies are looked up via `company_id` in a `POST` request, if not found via `
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Successful",
                   "path-parameters": {
                     "id": "5f4d3c1c-7b1b-4d7d-a97e-6095715c6632",
@@ -20123,7 +20186,9 @@ Companies are looked up via `company_id` in a `POST` request, if not found via `
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Successful",
                   "path-parameters": {
                     "contact_id": "58a430d35458202d41b1e65b",
@@ -20217,7 +20282,9 @@ When using the Companies endpoint and the pages object to iterate through the re
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Successful",
                   "query-parameters": {
                     "order": "desc",
@@ -20327,7 +20394,9 @@ You can fetch all companies and filter by `segment_id` or `tag_id` as a query pa
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Successful",
                   "query-parameters": {
                     "company_id": "12345",
@@ -20455,7 +20524,9 @@ You can fetch all companies and filter by `segment_id` or `tag_id` as a query pa
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Successful",
                   "response": {
                     "body": {
@@ -20730,7 +20801,8 @@ service:
             company_id: '12345'
             tag_id: '678910'
             segment_id: '98765'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: list
@@ -20807,7 +20879,8 @@ service:
         - root.CreateOrUpdateCompanyRequestUnauthorizedError
       examples:
         - name: Successful
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             name: my company
             company_id: company_remote_id
@@ -20869,7 +20942,8 @@ service:
         - name: Successful
           path-parameters:
             id: 5f4d3c1c-7b1b-4d7d-a97e-6095715c6632
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: company
@@ -20932,7 +21006,8 @@ service:
         - name: Successful
           path-parameters:
             id: 5f4d3c1c-7b1b-4d7d-a97e-6095715c6632
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: company
@@ -20990,7 +21065,8 @@ service:
         - name: Successful
           path-parameters:
             id: 5f4d3c1c-7b1b-4d7d-a97e-6095715c6632
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               id: 667d60848a68186f43bafd45
@@ -21019,7 +21095,8 @@ service:
         - name: Successful
           path-parameters:
             id: 5f4d3c1c-7b1b-4d7d-a97e-6095715c6632
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: list
@@ -21111,7 +21188,8 @@ service:
         - name: Successful
           path-parameters:
             id: 5f4d3c1c-7b1b-4d7d-a97e-6095715c6632
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: list
@@ -21174,7 +21252,8 @@ service:
         - name: Successful
           query-parameters:
             order: desc
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: list
@@ -21259,7 +21338,8 @@ service:
         - root.ScrollOverAllCompaniesRequestUnauthorizedError
       examples:
         - name: Successful
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: list
@@ -21328,7 +21408,8 @@ service:
         - name: Successful
           path-parameters:
             id: id
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             id: 667d608d8a68186f43bafd70
           response:
@@ -21368,7 +21449,8 @@ service:
         - name: Bad Request
           path-parameters:
             id: id
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             id: 58a430d35458202d41b1e65b
           response:
@@ -21408,7 +21490,8 @@ service:
         - name: Company Not Found
           path-parameters:
             id: id
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             id: '123'
           response:
@@ -21472,7 +21555,8 @@ service:
           path-parameters:
             contact_id: 58a430d35458202d41b1e65b
             id: 58a430d35458202d41b1e65b
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: company
@@ -21632,7 +21716,9 @@ types:
               "docs": "You can archive a single contact.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "path-parameters": {
                     "id": "63a07ddf05a32042dffac965",
@@ -21674,7 +21760,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "request": {
                     "email": "joebloggs@intercom.io",
@@ -21766,7 +21854,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "path-parameters": {
                     "id": "id",
@@ -21813,7 +21903,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "response": {
                     "body": {
@@ -21918,7 +22010,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "request": {
                     "from": "667d60ac8a68186f43bafdbb",
@@ -22129,7 +22223,9 @@ The table below shows the operators you can use to define how you want to search
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "request": {
                     "pagination": {
@@ -22255,7 +22351,9 @@ The table below shows the operators you can use to define how you want to search
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "path-parameters": {
                     "id": "63a07ddf05a32042dffac965",
@@ -22349,7 +22447,9 @@ The table below shows the operators you can use to define how you want to search
               "docs": "You can unarchive a single contact.",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "path-parameters": {
                     "id": "63a07ddf05a32042dffac965",
@@ -22391,7 +22491,9 @@ The table below shows the operators you can use to define how you want to search
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "path-parameters": {
                     "id": "63a07ddf05a32042dffac965",
@@ -22548,7 +22650,9 @@ The table below shows the operators you can use to define how you want to search
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "path-parameters": {
                     "id": "63a07ddf05a32042dffac965",
@@ -22624,7 +22728,9 @@ The table below shows the operators you can use to define how you want to search
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "path-parameters": {
                     "contact_id": "63a07ddf05a32042dffac965",
@@ -22682,7 +22788,9 @@ The data property will show a combined list of:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Successful",
                   "path-parameters": {
                     "contact_id": "63a07ddf05a32042dffac965",
@@ -22766,7 +22874,9 @@ The data property will show a combined list of:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "path-parameters": {
                     "contact_id": "63a07ddf05a32042dffac965",
@@ -23054,7 +23164,8 @@ service:
         - name: successful
           path-parameters:
             id: 63a07ddf05a32042dffac965
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: list
@@ -23111,7 +23222,8 @@ service:
         - name: successful
           path-parameters:
             contact_id: 63a07ddf05a32042dffac965
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: list
@@ -23158,7 +23270,8 @@ service:
         - name: Successful
           path-parameters:
             contact_id: 63a07ddf05a32042dffac965
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: list
@@ -23216,7 +23329,8 @@ service:
         - name: successful
           path-parameters:
             contact_id: 63a07ddf05a32042dffac965
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: list
@@ -23249,7 +23363,8 @@ service:
         - name: successful
           path-parameters:
             id: 63a07ddf05a32042dffac965
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: contact
@@ -23360,7 +23475,8 @@ service:
         - name: successful
           path-parameters:
             id: 63a07ddf05a32042dffac965
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             email: joebloggs@intercom.io
             name: joe bloggs
@@ -23432,7 +23548,8 @@ service:
         - name: successful
           path-parameters:
             id: id
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: contact
@@ -23472,7 +23589,8 @@ service:
         - root.MergeContactRequestUnauthorizedError
       examples:
         - name: successful
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             from: 667d60ac8a68186f43bafdbb
             into: 667d60ac8a68186f43bafdbc
@@ -23757,7 +23875,8 @@ service:
         - root.SearchContactsRequestUnauthorizedError
       examples:
         - name: successful
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             query:
               operator: AND
@@ -23858,7 +23977,8 @@ service:
         - root.ListContactsRequestUnauthorizedError
       examples:
         - name: successful
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: list
@@ -23946,7 +24066,8 @@ service:
         - root.CreateContactRequestUnauthorizedError
       examples:
         - name: successful
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             email: joebloggs@intercom.io
           response:
@@ -24012,7 +24133,8 @@ service:
         - name: successful
           path-parameters:
             id: 63a07ddf05a32042dffac965
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: contact
@@ -24039,7 +24161,8 @@ service:
         - name: successful
           path-parameters:
             id: 63a07ddf05a32042dffac965
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: contact
@@ -24245,7 +24368,9 @@ If you add a contact via the email parameter and there is no user/lead found on 
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Attach a contact to a conversation",
                   "path-parameters": {
                     "id": "123",
@@ -24421,7 +24546,9 @@ If you add a contact via the email parameter and there is no user/lead found on 
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Not found",
                   "path-parameters": {
                     "id": "123",
@@ -24648,7 +24775,9 @@ It is not possible to use this endpoint with Workflows.
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Assign a conversation using assignment rules",
                   "path-parameters": {
                     "id": "123",
@@ -24789,7 +24918,9 @@ It is not possible to use this endpoint with Workflows.
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "path-parameters": {
                     "id": 1,
@@ -24914,7 +25045,9 @@ It is not possible to use this endpoint with Workflows.
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Bad request",
                   "path-parameters": {
                     "id": 1,
@@ -25096,7 +25229,9 @@ This will return the Message model that has been created.
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "conversation created",
                   "request": {
                     "body": "Hello there",
@@ -25118,7 +25253,9 @@ This will return the Message model that has been created.
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Contact Not Found",
                   "request": {
                     "body": "Hello there",
@@ -25186,7 +25323,9 @@ If you add a contact via the email parameter and there is no user/lead found on 
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Detach a contact from a group conversation",
                   "path-parameters": {
                     "contact_id": "123",
@@ -25360,7 +25499,9 @@ If you add a contact via the email parameter and there is no user/lead found on 
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Conversation not found",
                   "path-parameters": {
                     "contact_id": "123",
@@ -25534,7 +25675,9 @@ If you add a contact via the email parameter and there is no user/lead found on 
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Contact not found",
                   "path-parameters": {
                     "contact_id": "123",
@@ -25708,7 +25851,9 @@ If you add a contact via the email parameter and there is no user/lead found on 
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Last customer",
                   "path-parameters": {
                     "contact_id": "123",
@@ -25936,7 +26081,9 @@ You can optionally request the result page size and the cursor to start after to
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "response": {
                     "body": {
@@ -26032,7 +26179,9 @@ You can optionally request the result page size and the cursor to start after to
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Close a conversation",
                   "path-parameters": {
                     "id": "123",
@@ -26149,7 +26298,9 @@ You can optionally request the result page size and the cursor to start after to
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Snooze a conversation",
                   "path-parameters": {
                     "id": "123",
@@ -26266,7 +26417,9 @@ You can optionally request the result page size and the cursor to start after to
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Open a conversation",
                   "path-parameters": {
                     "id": "123",
@@ -26382,7 +26535,9 @@ You can optionally request the result page size and the cursor to start after to
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Assign a conversation",
                   "path-parameters": {
                     "id": "123",
@@ -26504,7 +26659,9 @@ You can optionally request the result page size and the cursor to start after to
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Not found",
                   "path-parameters": {
                     "id": "123",
@@ -26659,7 +26816,9 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Redact a conversation part",
                   "request": {
                     "conversation_id": "19894788788",
@@ -26778,7 +26937,9 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Not found",
                   "request": {
                     "conversation_id": "really_123_doesnt_exist",
@@ -26924,7 +27085,9 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "User reply",
                   "path-parameters": {
                     "id": "123 or "last"",
@@ -27047,7 +27210,9 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Admin note reply",
                   "path-parameters": {
                     "id": "123 or "last"",
@@ -27176,7 +27341,9 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "User last conversation reply",
                   "path-parameters": {
                     "id": "123 or "last"",
@@ -27299,7 +27466,9 @@ If you are redacting a conversation part, it must have a `body`. If you are reda
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Not found",
                   "path-parameters": {
                     "id": "123 or "last"",
@@ -27465,7 +27634,9 @@ For AI agent conversation metadata, please note that you need to have the agent 
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "conversation found",
                   "path-parameters": {
                     "id": 1,
@@ -27693,7 +27864,9 @@ The table below shows the operators you can use to define how you want to search
 ",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "request": {
                     "pagination": {
@@ -27839,7 +28012,9 @@ If you want to reply to a coveration or take an action such as assign, unassign,
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "conversation found",
                   "path-parameters": {
                     "id": 1,
@@ -27987,7 +28162,9 @@ If you want to reply to a coveration or take an action such as assign, unassign,
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Not found",
                   "path-parameters": {
                     "id": 1,
@@ -28483,7 +28660,8 @@ service:
         - root.ListConversationsRequestForbiddenError
       examples:
         - name: successful
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: conversation.list
@@ -28566,7 +28744,8 @@ service:
         - root.CreateConversationRequestNotFoundError
       examples:
         - name: conversation created
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             from:
               type: user
@@ -28582,7 +28761,8 @@ service:
               message_type: inapp
               conversation_id: '363'
         - name: Contact Not Found
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             from:
               type: user
@@ -28649,7 +28829,8 @@ service:
             id: 1
           query-parameters:
             display_as: plaintext
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: conversation
@@ -28765,7 +28946,8 @@ service:
             id: 1
           query-parameters:
             display_as: plaintext
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             read: true
             custom_attributes:
@@ -28875,7 +29057,8 @@ service:
             id: 1
           query-parameters:
             display_as: plaintext
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             read: true
             custom_attributes:
@@ -29317,7 +29500,8 @@ service:
         status-code: 200
       examples:
         - name: successful
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             query:
               operator: AND
@@ -29423,7 +29607,8 @@ service:
         - name: User reply
           path-parameters:
             id: 123 or "last"
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             message_type: comment
             type: user
@@ -29513,7 +29698,8 @@ service:
         - name: Admin note reply
           path-parameters:
             id: 123 or "last"
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             message_type: note
             type: admin
@@ -29615,7 +29801,8 @@ service:
         - name: User last conversation reply
           path-parameters:
             id: 123 or "last"
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             message_type: comment
             type: user
@@ -29705,7 +29892,8 @@ service:
         - name: Not found
           path-parameters:
             id: 123 or "last"
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             message_type: comment
             type: user
@@ -29824,7 +30012,8 @@ service:
         - name: Close a conversation
           path-parameters:
             id: '123'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             type: admin
             admin_id: '12345'
@@ -29909,7 +30098,8 @@ service:
         - name: Snooze a conversation
           path-parameters:
             id: '123'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             admin_id: '5017691'
             snoozed_until: 1673609604
@@ -29994,7 +30184,8 @@ service:
         - name: Open a conversation
           path-parameters:
             id: '123'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             admin_id: '5017690'
             message_type: open
@@ -30078,7 +30269,8 @@ service:
         - name: Assign a conversation
           path-parameters:
             id: '123'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             type: admin
             admin_id: '12345'
@@ -30167,7 +30359,8 @@ service:
         - name: Not found
           path-parameters:
             id: '123'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             type: admin
             admin_id: '12345'
@@ -30281,7 +30474,8 @@ service:
         - name: Assign a conversation using assignment rules
           path-parameters:
             id: '123'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: conversation
@@ -30407,7 +30601,8 @@ service:
         - name: Attach a contact to a conversation
           path-parameters:
             id: '123'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             admin_id: '12345'
             customer:
@@ -30539,7 +30734,8 @@ service:
         - name: Not found
           path-parameters:
             id: '123'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             admin_id: '12345'
             customer:
@@ -30717,7 +30913,8 @@ service:
           path-parameters:
             conversation_id: '123'
             contact_id: '123'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             admin_id: '5017690'
           response:
@@ -30848,7 +31045,8 @@ service:
           path-parameters:
             conversation_id: '123'
             contact_id: '123'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             admin_id: '5017690'
           response:
@@ -30979,7 +31177,8 @@ service:
           path-parameters:
             conversation_id: '123'
             contact_id: '123'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             admin_id: '5017690'
           response:
@@ -31110,7 +31309,8 @@ service:
           path-parameters:
             conversation_id: '123'
             contact_id: '123'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             admin_id: '5017690'
           response:
@@ -31270,7 +31470,8 @@ service:
         - root.RedactConversationRequestNotFoundError
       examples:
         - name: Redact a conversation part
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             type: conversation_part
             conversation_id: '19894788788'
@@ -31357,7 +31558,8 @@ service:
                   - id: '7583'
               ai_agent_participated: false
         - name: Not found
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             type: conversation_part
             conversation_id: really_123_doesnt_exist
@@ -31477,7 +31679,8 @@ service:
         - name: successful
           path-parameters:
             id: 1
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             ticket_type_id: '79'
           response:
@@ -31572,7 +31775,8 @@ service:
         - name: Bad request
           path-parameters:
             id: 1
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             ticket_type_id: '80'
           response:
@@ -31933,7 +32137,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Successful",
                   "request": {
                     "data_type": "string",
@@ -31966,7 +32172,9 @@ types:
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Same name already exists",
                   "request": {
                     "data_type": "integer",
@@ -31999,7 +32207,9 @@ types:
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Invalid name",
                   "request": {
                     "data_type": "string",
@@ -32032,7 +32242,9 @@ types:
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Attribute already exists",
                   "request": {
                     "data_type": "string",
@@ -32065,7 +32277,9 @@ types:
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Invalid Data Type",
                   "request": {
                     "data_type": "string",
@@ -32098,7 +32312,9 @@ types:
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Too few options for list",
                   "request": {
                     "data_type": "string",
@@ -32191,7 +32407,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Successful response",
                   "response": {
                     "body": {
@@ -32619,7 +32837,9 @@ You can update a data attribute.
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Successful",
                   "path-parameters": {
                     "id": 1,
@@ -32658,7 +32878,9 @@ You can update a data attribute.
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Too few options in list",
                   "path-parameters": {
                     "id": 1,
@@ -32697,7 +32919,9 @@ You can update a data attribute.
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Attribute Not Found",
                   "path-parameters": {
                     "id": 1,
@@ -32736,7 +32960,9 @@ You can update a data attribute.
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Has Dependant Object",
                   "path-parameters": {
                     "id": 1,
@@ -33115,7 +33341,8 @@ service:
         - root.LisDataAttributesRequestUnauthorizedError
       examples:
         - name: Successful response
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: list
@@ -33496,7 +33723,8 @@ service:
         - root.CreateDataAttributeRequestUnauthorizedError
       examples:
         - name: Successful
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             name: Mithril Shirt
             model: company
@@ -33523,7 +33751,8 @@ service:
               updated_at: 1719492955
               admin_id: '991267686'
         - name: Same name already exists
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             name: The One Ring
             model: contact
@@ -33550,7 +33779,8 @@ service:
               updated_at: 1719492955
               admin_id: '991267686'
         - name: Invalid name
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             name: '!nv@l!d n@me'
             model: company
@@ -33577,7 +33807,8 @@ service:
               updated_at: 1719492955
               admin_id: '991267686'
         - name: Attribute already exists
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             name: The One Ring
             model: company
@@ -33604,7 +33835,8 @@ service:
               updated_at: 1719492955
               admin_id: '991267686'
         - name: Invalid Data Type
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             name: The Second Ring
             model: company
@@ -33631,7 +33863,8 @@ service:
               updated_at: 1719492955
               admin_id: '991267686'
         - name: Too few options for list
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             name: My Data Attribute
             model: contact
@@ -33716,7 +33949,8 @@ service:
         - name: Successful
           path-parameters:
             id: 1
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             archived: false
             description: Just a plain old ring
@@ -33747,7 +33981,8 @@ service:
         - name: Too few options in list
           path-parameters:
             id: 1
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             archived: false
             description: Too few options
@@ -33778,7 +34013,8 @@ service:
         - name: Attribute Not Found
           path-parameters:
             id: 1
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             archived: false
             description: Just a plain old ring
@@ -33809,7 +34045,8 @@ service:
         - name: Has Dependant Object
           path-parameters:
             id: 1
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             archived: true
             description: Trying to archieve
@@ -33923,7 +34160,9 @@ Duplicated events are responded to using the normal `202 Accepted` code - an err
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "request": {},
                 },
               ],
@@ -34373,7 +34612,8 @@ service:
       errors:
         - root.DataEventSummariesRequestUnauthorizedError
       examples:
-        - headers: {}
+        - headers:
+            Intercom-Version: root.IntercomVersion
           request: {}
   source:
     openapi: ../openapi.yml
@@ -34396,7 +34636,9 @@ docs: Everything about your Data Events
               "docs": "You can cancel your job",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "path-parameters": {
                     "job_identifier": "job_identifier",
@@ -34450,7 +34692,9 @@ The only parameters you need to provide are the range of dates that you want exp
 ",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "request": {
                     "created_at_after": 1719474967,
@@ -34510,7 +34754,9 @@ Your exported message data will be streamed continuously back down to you in a g
 ",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "path-parameters": {
                     "job_identifier": "job_identifier",
                   },
@@ -34540,7 +34786,9 @@ Your exported message data will be streamed continuously back down to you in a g
 ",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "path-parameters": {
                     "job_identifier": "job_identifier",
@@ -34690,7 +34938,8 @@ Your exported message data will be streamed continuously back down to you in a g
         status-code: 200
       examples:
         - name: successful
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             created_at_after: 1719474967
             created_at_before: 1719492967
@@ -34734,7 +34983,8 @@ Your exported message data will be streamed continuously back down to you in a g
         - name: successful
           path-parameters:
             job_identifier: job_identifier
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               job_identfier: orzzsbd7hk67xyu
@@ -34761,7 +35011,8 @@ Your exported message data will be streamed continuously back down to you in a g
         - name: successful
           path-parameters:
             job_identifier: job_identifier
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               job_identfier: orzzsbd7hk67xyu
@@ -34798,7 +35049,8 @@ Your exported message data will be streamed continuously back down to you in a g
       examples:
         - path-parameters:
             job_identifier: job_identifier
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
   source:
     openapi: ../openapi.yml
   display-name: Data Export
@@ -34859,7 +35111,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "collection created",
                   "request": {
                     "name": "Thanks for everything",
@@ -35069,7 +35323,9 @@ types:
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Bad Request",
                   "request": {
                     "description": "Missing required parameter",
@@ -35332,7 +35588,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "path-parameters": {
                     "id": 1,
@@ -35376,7 +35634,9 @@ Collections will be returned in descending order on the `updated_at` attribute. 
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Successful",
                   "response": {
                     "body": {
@@ -35444,7 +35704,9 @@ Collections will be returned in descending order on the `updated_at` attribute. 
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Help Centers found",
                   "response": {
                     "body": {
@@ -35486,7 +35748,9 @@ Collections will be returned in descending order on the `updated_at` attribute. 
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Collection found",
                   "path-parameters": {
                     "id": 1,
@@ -35724,7 +35988,9 @@ Collections will be returned in descending order on the `updated_at` attribute. 
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Collection found",
                   "path-parameters": {
                     "id": 1,
@@ -35770,7 +36036,9 @@ Collections will be returned in descending order on the `updated_at` attribute. 
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "path-parameters": {
                     "id": 1,
@@ -35983,7 +36251,9 @@ Collections will be returned in descending order on the `updated_at` attribute. 
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Collection Not Found",
                   "path-parameters": {
                     "id": 1,
@@ -36391,7 +36661,8 @@ service:
         - root.ListAllCollectionsRequestUnauthorizedError
       examples:
         - name: Successful
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: list
@@ -36472,7 +36743,8 @@ service:
         - root.CreateCollectionRequestUnauthorizedError
       examples:
         - name: collection created
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             name: Thanks for everything
           response:
@@ -36639,7 +36911,8 @@ service:
                   description: ' Collection description'
               help_center_id: 81
         - name: Bad Request
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             name: collection 51
             description: Missing required parameter
@@ -36831,7 +37104,8 @@ service:
         - name: Collection found
           path-parameters:
             id: 1
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               id: '170'
@@ -37042,7 +37316,8 @@ service:
         - name: successful
           path-parameters:
             id: 1
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             name: Update collection name
           response:
@@ -37211,7 +37486,8 @@ service:
         - name: Collection Not Found
           path-parameters:
             id: 1
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             name: Update collection name
           response:
@@ -37402,7 +37678,8 @@ service:
         - name: successful
           path-parameters:
             id: 1
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               id: '182'
@@ -37433,7 +37710,8 @@ service:
         - name: Collection found
           path-parameters:
             id: 1
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               id: '93'
@@ -37461,7 +37739,8 @@ service:
         - root.ListHelpCentersRequestUnauthorizedError
       examples:
         - name: Help Centers found
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: list
@@ -37618,7 +37897,9 @@ This will return the Message model that has been created.
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "user message created",
                   "request": {
                     "body": "heyy",
@@ -37641,7 +37922,9 @@ This will return the Message model that has been created.
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "lead message created",
                   "request": {
                     "body": "heyy",
@@ -37664,7 +37947,9 @@ This will return the Message model that has been created.
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "admin message created",
                   "request": {
                     "body": "heyy",
@@ -37691,7 +37976,9 @@ This will return the Message model that has been created.
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "No body supplied for message",
                   "request": {
                     "from": {
@@ -37718,7 +38005,9 @@ This will return the Message model that has been created.
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "No subject supplied for email message",
                   "request": {
                     "body": "hey there",
@@ -37745,7 +38034,9 @@ This will return the Message model that has been created.
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "No body supplied for email message",
                   "request": {
                     "from": {
@@ -37897,7 +38188,8 @@ service:
         - root.CreateMessageRequestUnprocessableEntityError
       examples:
         - name: user message created
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             from:
               type: user
@@ -37914,7 +38206,8 @@ service:
               message_type: inapp
               conversation_id: '476'
         - name: lead message created
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             from:
               type: lead
@@ -37931,7 +38224,8 @@ service:
               message_type: inapp
               conversation_id: '477'
         - name: admin message created
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             from:
               type: admin
@@ -37951,7 +38245,8 @@ service:
               message_type: inapp
               conversation_id: '64619700005570'
         - name: No body supplied for message
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             from:
               type: admin
@@ -37971,7 +38266,8 @@ service:
               message_type: inapp
               conversation_id: '476'
         - name: No subject supplied for email message
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             from:
               type: admin
@@ -37991,7 +38287,8 @@ service:
               message_type: inapp
               conversation_id: '476'
         - name: No body supplied for email message
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             from:
               type: admin
@@ -38080,7 +38377,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "request": {
                     "body": "<p>New costumes in store for this spooky season</p>",
@@ -38162,7 +38461,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "path-parameters": {
                     "id": 1,
@@ -38203,7 +38504,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "path-parameters": {
                     "id": "123",
@@ -38280,7 +38583,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "response": {
                     "body": {
@@ -38373,7 +38678,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "response": {
                     "body": {
@@ -38431,7 +38738,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "path-parameters": {
                     "id": 1,
@@ -38493,7 +38802,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "path-parameters": {
                     "id": "123",
@@ -38536,7 +38847,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "path-parameters": {
                     "id": 1,
@@ -38578,7 +38891,9 @@ types:
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "News Item Not Found",
                   "path-parameters": {
                     "id": 1,
@@ -38797,7 +39112,8 @@ service:
         - root.ListNewsItemsRequestUnauthorizedError
       examples:
         - name: successful
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: list
@@ -38875,7 +39191,8 @@ service:
         - root.CreateNewsItemRequestUnauthorizedError
       examples:
         - name: successful
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             title: Halloween is here!
             body: <p>New costumes in store for this spooky season</p>
@@ -38936,7 +39253,8 @@ service:
         - name: successful
           path-parameters:
             id: 1
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               id: '34'
@@ -38984,7 +39302,8 @@ service:
         - name: successful
           path-parameters:
             id: 1
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             title: Christmas is here!
             body: <p>New gifts in store for the jolly season</p>
@@ -39014,7 +39333,8 @@ service:
         - name: News Item Not Found
           path-parameters:
             id: 1
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             title: Christmas is here!
             body: <p>New gifts in store for the jolly season</p>
@@ -39064,7 +39384,8 @@ service:
         - name: successful
           path-parameters:
             id: 1
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               id: '40'
@@ -39094,7 +39415,8 @@ service:
         - name: successful
           path-parameters:
             id: '123'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: list
@@ -39146,7 +39468,8 @@ service:
         - root.ListNewsfeedsRequestUnauthorizedError
       examples:
         - name: successful
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: list
@@ -39194,7 +39517,8 @@ service:
         - name: successful
           path-parameters:
             id: '123'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               id: '72'
@@ -39340,7 +39664,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Successful response",
                   "path-parameters": {
                     "id": 1,
@@ -39386,7 +39712,9 @@ types:
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Admin not found",
                   "path-parameters": {
                     "id": 1,
@@ -39432,7 +39760,9 @@ types:
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Contact not found",
                   "path-parameters": {
                     "id": 1,
@@ -39528,7 +39858,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Successful response",
                   "path-parameters": {
                     "id": 1,
@@ -39637,7 +39969,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Note found",
                   "path-parameters": {
                     "id": 1,
@@ -39783,7 +40117,8 @@ service:
         - name: Successful response
           path-parameters:
             id: 1
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: list
@@ -39878,7 +40213,8 @@ service:
         - name: Successful response
           path-parameters:
             id: 1
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             body: Hello
             contact_id: 667d60978a68186f43bafd9e
@@ -39912,7 +40248,8 @@ service:
         - name: Admin not found
           path-parameters:
             id: 1
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             body: Hello
             contact_id: 667d60988a68186f43bafd9f
@@ -39946,7 +40283,8 @@ service:
         - name: Contact not found
           path-parameters:
             id: 1
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             body: Hello
             contact_id: '123'
@@ -40000,7 +40338,8 @@ service:
         - name: Note found
           path-parameters:
             id: 1
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: note
@@ -40090,7 +40429,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Successful response",
                   "response": {
                     "body": {
@@ -40153,7 +40494,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Successful response",
                   "path-parameters": {
                     "id": "123",
@@ -40273,7 +40616,8 @@ service:
         - root.ListSegmentsRequestUnauthorizedError
       examples:
         - name: Successful response
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: segment.list
@@ -40317,7 +40661,8 @@ service:
         - name: Successful response
           path-parameters:
             id: '123'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: segment
@@ -40399,7 +40744,9 @@ This will return a subscription type model for the subscription type that was ad
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Successful",
                   "path-parameters": {
                     "contact_id": "63a07ddf05a32042dffac965",
@@ -40433,7 +40780,9 @@ This will return a subscription type model for the subscription type that was ad
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Contact not found",
                   "path-parameters": {
                     "contact_id": "63a07ddf05a32042dffac965",
@@ -40467,7 +40816,9 @@ This will return a subscription type model for the subscription type that was ad
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Resource not found",
                   "path-parameters": {
                     "contact_id": "63a07ddf05a32042dffac965",
@@ -40548,7 +40899,9 @@ This will return a subscription type model for the subscription type that was ad
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Successful",
                   "path-parameters": {
                     "contact_id": "63a07ddf05a32042dffac965",
@@ -40610,7 +40963,9 @@ This will return a subscription type model for the subscription type that was ad
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Successful",
                   "response": {
                     "body": {
@@ -40783,7 +41138,8 @@ service:
         - name: Successful
           path-parameters:
             contact_id: 63a07ddf05a32042dffac965
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             id: '37846'
             consent_type: opt_in
@@ -40806,7 +41162,8 @@ service:
         - name: Contact not found
           path-parameters:
             contact_id: 63a07ddf05a32042dffac965
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             id: '37846'
             consent_type: opt_in
@@ -40829,7 +41186,8 @@ service:
         - name: Resource not found
           path-parameters:
             contact_id: 63a07ddf05a32042dffac965
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             id: invalid_id
             consent_type: opt_in
@@ -40881,7 +41239,8 @@ service:
           path-parameters:
             contact_id: 63a07ddf05a32042dffac965
             id: '37846'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: subscription
@@ -40916,7 +41275,8 @@ service:
         - root.ListSubscriptionTypesRequestUnauthorizedError
       examples:
         - name: Successful
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: list
@@ -41025,7 +41385,9 @@ If custom attributes are specified, they will be added to the user or lead's cus
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "request": {
                     "custom_attributes": {
@@ -41042,7 +41404,9 @@ If custom attributes are specified, they will be added to the user or lead's cus
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "bad request - exception sending sms",
                   "request": {
                     "custom_attributes": {
@@ -41059,7 +41423,9 @@ If custom attributes are specified, they will be added to the user or lead's cus
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "bad request - invalid number",
                   "request": {
                     "custom_attributes": {
@@ -41076,7 +41442,9 @@ If custom attributes are specified, they will be added to the user or lead's cus
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "unprocessable entity",
                   "request": {
                     "custom_attributes": {
@@ -41153,7 +41521,8 @@ service:
         - root.CreatePhoneSwitchRequestUnprocessableEntityError
       examples:
         - name: successful
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             phone: '+353832345678'
             custom_attributes:
@@ -41164,7 +41533,8 @@ service:
               type: phone_call_redirect
               phone: +1 1234567890
         - name: bad request - exception sending sms
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             phone: '+353832345678'
             custom_attributes:
@@ -41175,7 +41545,8 @@ service:
               type: phone_call_redirect
               phone: +1 1234567890
         - name: bad request - invalid number
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             phone: '+353832345678'
             custom_attributes:
@@ -41186,7 +41557,8 @@ service:
               type: phone_call_redirect
               phone: +1 1234567890
         - name: unprocessable entity
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             phone: '+40241100100'
             custom_attributes:
@@ -41224,7 +41596,9 @@ docs: Everything about Switch
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "path-parameters": {
                     "contact_id": "63a07ddf05a32042dffac965",
@@ -41246,7 +41620,9 @@ docs: Everything about Switch
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Contact not found",
                   "path-parameters": {
                     "contact_id": "63a07ddf05a32042dffac965",
@@ -41268,7 +41644,9 @@ docs: Everything about Switch
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Tag not found",
                   "path-parameters": {
                     "contact_id": "63a07ddf05a32042dffac965",
@@ -41333,7 +41711,9 @@ docs: Everything about Switch
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "path-parameters": {
                     "conversation_id": "64619700005694",
@@ -41356,7 +41736,9 @@ docs: Everything about Switch
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Conversation not found",
                   "path-parameters": {
                     "conversation_id": "64619700005694",
@@ -41426,7 +41808,9 @@ docs: Everything about Switch
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "path-parameters": {
                     "ticket_id": "64619700005694",
@@ -41449,7 +41833,9 @@ docs: Everything about Switch
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Ticket not found",
                   "path-parameters": {
                     "ticket_id": "64619700005694",
@@ -41533,7 +41919,9 @@ Each operation will return a tag object.
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Action successful",
                   "request": {
                     "name": "test",
@@ -41552,7 +41940,9 @@ Each operation will return a tag object.
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Invalid parameters",
                   "request": {
                     "name": "Independent",
@@ -41571,7 +41961,9 @@ Each operation will return a tag object.
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Company not found",
                   "request": {
                     "companies": [
@@ -41595,7 +41987,9 @@ Each operation will return a tag object.
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "User  not found",
                   "request": {
                     "name": "test",
@@ -41646,7 +42040,9 @@ Each operation will return a tag object.
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "path-parameters": {
                     "id": "123",
                   },
@@ -41675,7 +42071,9 @@ Each operation will return a tag object.
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "path-parameters": {
                     "contact_id": "63a07ddf05a32042dffac965",
@@ -41727,7 +42125,9 @@ Each operation will return a tag object.
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "path-parameters": {
                     "conversation_id": "64619700005694",
@@ -41750,7 +42150,9 @@ Each operation will return a tag object.
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Conversation not found",
                   "path-parameters": {
                     "conversation_id": "64619700005694",
@@ -41773,7 +42175,9 @@ Each operation will return a tag object.
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Tag not found",
                   "path-parameters": {
                     "conversation_id": "64619700005694",
@@ -41843,7 +42247,9 @@ Each operation will return a tag object.
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "path-parameters": {
                     "id": "7522907",
@@ -41866,7 +42272,9 @@ Each operation will return a tag object.
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Ticket not found",
                   "path-parameters": {
                     "id": "7522907",
@@ -41889,7 +42297,9 @@ Each operation will return a tag object.
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Tag not found",
                   "path-parameters": {
                     "id": "7522907",
@@ -41961,7 +42371,9 @@ This will return a tag object.
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Tag found",
                   "path-parameters": {
                     "id": "123",
@@ -42009,7 +42421,9 @@ This will return a tag object.
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "response": {
                     "body": {
@@ -42139,7 +42553,8 @@ service:
         - name: successful
           path-parameters:
             contact_id: 63a07ddf05a32042dffac965
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             id: '7522907'
           response:
@@ -42154,7 +42569,8 @@ service:
         - name: Contact not found
           path-parameters:
             contact_id: 63a07ddf05a32042dffac965
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             id: '7522907'
           response:
@@ -42169,7 +42585,8 @@ service:
         - name: Tag not found
           path-parameters:
             contact_id: 63a07ddf05a32042dffac965
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             id: '123'
           response:
@@ -42210,7 +42627,8 @@ service:
           path-parameters:
             contact_id: 63a07ddf05a32042dffac965
             id: '7522907'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: tag
@@ -42256,7 +42674,8 @@ service:
         - name: successful
           path-parameters:
             conversation_id: '64619700005694'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             id: '7522907'
             admin_id: '780'
@@ -42272,7 +42691,8 @@ service:
         - name: Conversation not found
           path-parameters:
             conversation_id: '64619700005694'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             id: '7522907'
             admin_id: '780'
@@ -42322,7 +42742,8 @@ service:
           path-parameters:
             conversation_id: '64619700005694'
             id: '7522907'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             admin_id: '123'
           response:
@@ -42338,7 +42759,8 @@ service:
           path-parameters:
             conversation_id: '64619700005694'
             id: '7522907'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             admin_id: '123'
           response:
@@ -42354,7 +42776,8 @@ service:
           path-parameters:
             conversation_id: '64619700005694'
             id: '7522907'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             admin_id: '123'
           response:
@@ -42384,7 +42807,8 @@ service:
         - root.ListTagsRequestUnauthorizedError
       examples:
         - name: successful
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: list
@@ -42429,7 +42853,8 @@ service:
         - root.CreateTagRequestNotFoundError
       examples:
         - name: Action successful
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             name: test
           response:
@@ -42442,7 +42867,8 @@ service:
                 type: contact
                 id: 1a2b3c
         - name: Invalid parameters
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             name: Independent
           response:
@@ -42455,7 +42881,8 @@ service:
                 type: contact
                 id: 1a2b3c
         - name: Company not found
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             name: test
             companies:
@@ -42470,7 +42897,8 @@ service:
                 type: contact
                 id: 1a2b3c
         - name: User  not found
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             name: test
             users:
@@ -42509,7 +42937,8 @@ service:
         - name: Tag found
           path-parameters:
             id: '123'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: tag
@@ -42540,7 +42969,8 @@ service:
       examples:
         - path-parameters:
             id: '123'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
     attachTagToTicket:
       path: /tickets/{ticket_id}/tags
       method: POST
@@ -42577,7 +43007,8 @@ service:
         - name: successful
           path-parameters:
             ticket_id: '64619700005694'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             id: '7522907'
             admin_id: '780'
@@ -42593,7 +43024,8 @@ service:
         - name: Ticket not found
           path-parameters:
             ticket_id: '64619700005694'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             id: '7522907'
             admin_id: '780'
@@ -42643,7 +43075,8 @@ service:
           path-parameters:
             ticket_id: '64619700005694'
             id: '7522907'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             admin_id: '123'
           response:
@@ -42659,7 +43092,8 @@ service:
           path-parameters:
             ticket_id: '64619700005694'
             id: '7522907'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             admin_id: '123'
           response:
@@ -42675,7 +43109,8 @@ service:
           path-parameters:
             ticket_id: '64619700005694'
             id: '7522907'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             admin_id: '123'
           response:
@@ -42745,7 +43180,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "response": {
                     "body": {
@@ -42786,7 +43223,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "path-parameters": {
                     "id": "123",
@@ -42887,7 +43326,8 @@ service:
         - root.ListTeamsRequestUnauthorizedError
       examples:
         - name: successful
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: team.list
@@ -42922,7 +43362,8 @@ service:
         - name: successful
           path-parameters:
             id: '123'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: team
@@ -42982,7 +43423,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Ticket Type Attribute created",
                   "path-parameters": {
                     "ticket_type_id": "ticket_type_id",
@@ -43100,7 +43543,9 @@ types:
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Ticket Type Attribute updated",
                   "path-parameters": {
                     "id": "id",
@@ -43334,7 +43779,8 @@ service:
         - name: Ticket Type Attribute created
           path-parameters:
             ticket_type_id: ticket_type_id
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             name: Attribute Title
             description: Attribute Description
@@ -43448,7 +43894,8 @@ service:
           path-parameters:
             ticket_type_id: ticket_type_id
             id: id
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             description: New Attribute Description
           response:
@@ -43504,7 +43951,9 @@ docs: Everything about your ticket type attributes
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Ticket type created",
                   "request": {
                     "category": "Customer",
@@ -43579,7 +44028,9 @@ docs: Everything about your ticket type attributes
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Ticket type found",
                   "path-parameters": {
                     "id": "id",
@@ -43651,7 +44102,9 @@ docs: Everything about your ticket type attributes
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "response": {
                     "body": {
@@ -43701,7 +44154,9 @@ You can update a ticket type.
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Ticket type updated",
                   "path-parameters": {
                     "id": "id",
@@ -43802,7 +44257,8 @@ service:
         - root.ListTicketTypesRequestUnauthorizedError
       examples:
         - name: successful
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: list
@@ -43848,7 +44304,8 @@ service:
         - root.CreateTicketTypeRequestUnauthorizedError
       examples:
         - name: Ticket type created
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             name: Customer Issue
             description: Customer Report Template
@@ -43909,7 +44366,8 @@ service:
         - name: Ticket type found
           path-parameters:
             id: id
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: ticket_type
@@ -43979,7 +44437,8 @@ service:
         - name: Ticket type updated
           path-parameters:
             id: id
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             name: Bug Report 2
           response:
@@ -44040,7 +44499,9 @@ docs: Everything about your ticket types
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Successful response",
                   "request": {
                     "contacts": [
@@ -44197,7 +44658,9 @@ docs: Everything about your ticket types
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Ticket found",
                   "path-parameters": {
                     "id": "id",
@@ -44323,7 +44786,9 @@ docs: Everything about your ticket types
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "User reply",
                   "path-parameters": {
                     "id": "123",
@@ -44375,7 +44840,9 @@ docs: Everything about your ticket types
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Admin note reply",
                   "path-parameters": {
                     "id": "123",
@@ -44427,7 +44894,9 @@ docs: Everything about your ticket types
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Admin quick_reply reply",
                   "path-parameters": {
                     "id": "123",
@@ -44477,7 +44946,9 @@ docs: Everything about your ticket types
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Not found",
                   "path-parameters": {
                     "id": "123",
@@ -44615,7 +45086,9 @@ The table below shows the operators you can use to define how you want to search
 ",
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "request": {
                     "pagination": {
@@ -44767,7 +45240,9 @@ The table below shows the operators you can use to define how you want to search
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Successful response",
                   "path-parameters": {
                     "id": "id",
@@ -45008,7 +45483,9 @@ The table below shows the operators you can use to define how you want to search
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Admin not found",
                   "path-parameters": {
                     "id": "id",
@@ -45247,7 +45724,9 @@ The table below shows the operators you can use to define how you want to search
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Assignee not found",
                   "path-parameters": {
                     "id": "id",
@@ -46240,7 +46719,8 @@ service:
         - name: User reply
           path-parameters:
             id: '123'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             message_type: comment
             type: user
@@ -46283,7 +46763,8 @@ service:
         - name: Admin note reply
           path-parameters:
             id: '123'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             message_type: note
             type: admin
@@ -46330,7 +46811,8 @@ service:
         - name: Admin quick_reply reply
           path-parameters:
             id: '123'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             message_type: quick_reply
             type: admin
@@ -46365,7 +46847,8 @@ service:
         - name: Not found
           path-parameters:
             id: '123'
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             message_type: comment
             type: user
@@ -46446,7 +46929,8 @@ service:
         - root.CreateTicketRequestUnauthorizedError
       examples:
         - name: Successful response
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             ticket_type_id: '1234'
             contacts:
@@ -46546,7 +47030,8 @@ service:
         - name: Ticket found
           path-parameters:
             id: id
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: ticket
@@ -46663,7 +47148,8 @@ service:
         - name: Successful response
           path-parameters:
             id: id
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             ticket_attributes:
               _default_title_: example
@@ -46850,7 +47336,8 @@ service:
         - name: Admin not found
           path-parameters:
             id: id
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             ticket_attributes:
               _default_title_: example
@@ -47035,7 +47522,8 @@ service:
         - name: Assignee not found
           path-parameters:
             id: id
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             ticket_attributes:
               _default_title_: example
@@ -47394,7 +47882,8 @@ service:
         status-code: 200
       examples:
         - name: successful
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             query:
               operator: AND
@@ -47516,7 +48005,9 @@ docs: Everything about your tickets
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "request": {
                     "type": "user",
@@ -47629,7 +48120,9 @@ docs: Everything about your tickets
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "query-parameters": {
                     "user_id": "user_id",
@@ -47754,7 +48247,9 @@ docs: Everything about your tickets
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "successful",
                   "request": {
                     "id": "667d61cc8a68186f43bafe95",
@@ -47847,7 +48342,9 @@ docs: Everything about your tickets
                   },
                 },
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "visitor Not Found",
                   "request": {
                     "name": "Christian Fail",
@@ -47994,7 +48491,8 @@ service:
         - name: successful
           query-parameters:
             user_id: user_id
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           response:
             body:
               type: visitor
@@ -48089,7 +48587,8 @@ service:
         - root.UpdateVisitorRequestNotFoundError
       examples:
         - name: successful
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             id: 667d61cc8a68186f43bafe95
             name: Gareth Bale
@@ -48162,7 +48661,8 @@ service:
               custom_attributes:
                 key: value
         - name: visitor Not Found
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             user_id: fail
             name: Christian Fail
@@ -48273,7 +48773,8 @@ service:
         - root.ConvertVisitorRequestUnauthorizedError
       examples:
         - name: successful
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             type: user
             user:

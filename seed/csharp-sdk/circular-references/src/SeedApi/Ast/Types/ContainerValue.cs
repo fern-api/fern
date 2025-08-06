@@ -224,8 +224,6 @@ public record ContainerValue
         internal IEnumerable<FieldValue> Value { get; set; } = new List<FieldValue>();
 
         public override string ToString() => Value.ToString();
-
-        public static implicit operator List(IEnumerable<FieldValue> value) => new(value);
     }
 
     /// <summary>

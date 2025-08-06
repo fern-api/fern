@@ -279,7 +279,9 @@ Companies are looked up via `company_id` in a `POST` request, if not found via `
               ],
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "Intercom-Version": "root.IntercomVersion",
+                  },
                   "name": "Successful",
                   "request": {
                     "company_id": "company_remote_id",
@@ -536,7 +538,8 @@ service:
         - root.CreateOrUpdateCompanyRequestUnauthorizedError
       examples:
         - name: Successful
-          headers: {}
+          headers:
+            Intercom-Version: root.IntercomVersion
           request:
             name: my company
             company_id: company_remote_id

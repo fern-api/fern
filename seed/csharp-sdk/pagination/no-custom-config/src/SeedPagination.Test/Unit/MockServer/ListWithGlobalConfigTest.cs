@@ -34,10 +34,10 @@ public class ListWithGlobalConfigTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var pager = await Client.Users.ListWithGlobalConfigAsync(
+        var items = await Client.Users.ListWithGlobalConfigAsync(
             new ListWithGlobalConfigRequest { Offset = 1 }
         );
-        await foreach (var item in pager)
+        await foreach (var item in items)
         {
             Assert.That(item, Is.Not.Null);
             break; // Only check the first item

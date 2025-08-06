@@ -14,7 +14,7 @@ public record Animal
 {
     internal Animal(string type, object? value)
     {
-        Animal = type;
+        Animal_ = type;
         Value = value;
     }
 
@@ -23,7 +23,7 @@ public record Animal
     /// </summary>
     public Animal(Animal.Dog value)
     {
-        Animal = "dog";
+        Animal_ = "dog";
         Value = value.Value;
     }
 
@@ -32,7 +32,7 @@ public record Animal
     /// </summary>
     public Animal(Animal.Cat value)
     {
-        Animal = "cat";
+        Animal_ = "cat";
         Value = value.Value;
     }
 
@@ -40,7 +40,7 @@ public record Animal
     /// Discriminant value
     /// </summary>
     [JsonPropertyName("animal")]
-    public string Animal { get; internal set; }
+    public string Animal_ { get; internal set; }
 
     /// <summary>
     /// Discriminated union value
@@ -48,32 +48,32 @@ public record Animal
     public object? Value { get; internal set; }
 
     /// <summary>
-    /// Returns true if <see cref="Animal"/> is "dog"
+    /// Returns true if <see cref="Animal_"/> is "dog"
     /// </summary>
-    public bool IsDog => Animal == "dog";
+    public bool IsDog => Animal_ == "dog";
 
     /// <summary>
-    /// Returns true if <see cref="Animal"/> is "cat"
+    /// Returns true if <see cref="Animal_"/> is "cat"
     /// </summary>
-    public bool IsCat => Animal == "cat";
+    public bool IsCat => Animal_ == "cat";
 
     /// <summary>
-    /// Returns the value as a <see cref="SeedExhaustive.Types.Dog"/> if <see cref="Animal"/> is 'dog', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedExhaustive.Types.Dog"/> if <see cref="Animal_"/> is 'dog', otherwise throws an exception.
     /// </summary>
-    /// <exception cref="Exception">Thrown when <see cref="Animal"/> is not 'dog'.</exception>
+    /// <exception cref="Exception">Thrown when <see cref="Animal_"/> is not 'dog'.</exception>
     public SeedExhaustive.Types.Dog AsDog() =>
         IsDog
             ? (SeedExhaustive.Types.Dog)Value!
-            : throw new Exception("Animal.Animal is not 'dog'");
+            : throw new Exception("Animal.Animal_ is not 'dog'");
 
     /// <summary>
-    /// Returns the value as a <see cref="SeedExhaustive.Types.Cat"/> if <see cref="Animal"/> is 'cat', otherwise throws an exception.
+    /// Returns the value as a <see cref="SeedExhaustive.Types.Cat"/> if <see cref="Animal_"/> is 'cat', otherwise throws an exception.
     /// </summary>
-    /// <exception cref="Exception">Thrown when <see cref="Animal"/> is not 'cat'.</exception>
+    /// <exception cref="Exception">Thrown when <see cref="Animal_"/> is not 'cat'.</exception>
     public SeedExhaustive.Types.Cat AsCat() =>
         IsCat
             ? (SeedExhaustive.Types.Cat)Value!
-            : throw new Exception("Animal.Animal is not 'cat'");
+            : throw new Exception("Animal.Animal_ is not 'cat'");
 
     public T Match<T>(
         Func<SeedExhaustive.Types.Dog, T> onDog,
@@ -81,11 +81,11 @@ public record Animal
         Func<string, object?, T> onUnknown_
     )
     {
-        return Animal switch
+        return Animal_ switch
         {
             "dog" => onDog(AsDog()),
             "cat" => onCat(AsCat()),
-            _ => onUnknown_(Animal, Value),
+            _ => onUnknown_(Animal_, Value),
         };
     }
 
@@ -95,7 +95,7 @@ public record Animal
         Action<string, object?> onUnknown_
     )
     {
-        switch (Animal)
+        switch (Animal_)
         {
             case "dog":
                 onDog(AsDog());
@@ -104,7 +104,7 @@ public record Animal
                 onCat(AsCat());
                 break;
             default:
-                onUnknown_(Animal, Value);
+                onUnknown_(Animal_, Value);
                 break;
         }
     }
@@ -114,7 +114,7 @@ public record Animal
     /// </summary>
     public bool TryAsDog(out SeedExhaustive.Types.Dog? value)
     {
-        if (Animal == "dog")
+        if (Animal_ == "dog")
         {
             value = (SeedExhaustive.Types.Dog)Value!;
             return true;
@@ -128,7 +128,7 @@ public record Animal
     /// </summary>
     public bool TryAsCat(out SeedExhaustive.Types.Cat? value)
     {
-        if (Animal == "cat")
+        if (Animal_ == "cat")
         {
             value = (SeedExhaustive.Types.Cat)Value!;
             return true;
@@ -194,13 +194,13 @@ public record Animal
         )
         {
             JsonNode json =
-                value.Animal switch
+                value.Animal_ switch
                 {
                     "dog" => JsonSerializer.SerializeToNode(value.Value, options),
                     "cat" => JsonSerializer.SerializeToNode(value.Value, options),
                     _ => JsonSerializer.SerializeToNode(value.Value, options),
                 } ?? new JsonObject();
-            json["animal"] = value.Animal;
+            json["animal"] = value.Animal_;
             json.WriteTo(writer, options);
         }
     }

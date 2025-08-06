@@ -10,13 +10,19 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext";
 export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
     private readonly classReference: csharp.ClassReference;
     private readonly customMethodName: string;
-
+    private valuePropertyName: string = "Value";
     constructor(
         context: ModelGeneratorContext,
         private readonly typeDeclaration: TypeDeclaration,
         private readonly enumDeclaration: EnumTypeDeclaration
     ) {
         super(context);
+        // if the enum contains a value actually called 'value', we need to avoid stomping on that
+        // so we'll rename the Value property to 'Value_' (far less likely to be used than the enum value)
+        // and we'll explicitly implement the IStringEnum interface so that it works as expected.
+        if (enumDeclaration.values.some((v) => v.name.name.pascalCase.safeName === "Value")) {
+            this.valuePropertyName = "Value_";
+        }
         this.classReference = this.context.csharpTypeMapper.convertToClassReference(this.typeDeclaration.name);
         this.customMethodName = this.getCustomMethodName(enumDeclaration);
     }
@@ -65,13 +71,13 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
                 })
             ],
             body: csharp.codeblock((writer) => {
-                writer.writeTextStatement("Value = value");
+                writer.writeTextStatement(`${this.valuePropertyName} = value`);
             })
         });
 
         stringEnum.addField(
             csharp.field({
-                name: "Value",
+                name: this.valuePropertyName,
                 type: csharp.Type.string(),
                 access: csharp.Access.Public,
                 get: csharp.Access.Public,
@@ -158,7 +164,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
                 summary: "Returns the string value of the enum.",
                 type: csharp.MethodType.INSTANCE,
                 body: csharp.codeblock((writer) => {
-                    writer.writeTextStatement("return Value");
+                    writer.writeTextStatement(`return ${this.valuePropertyName}`);
                 })
             })
         );
@@ -175,7 +181,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
                 ],
                 return_: csharp.Type.boolean(),
                 body: csharp.codeblock((writer) => {
-                    writer.writeTextStatement("return Value.Equals(other)");
+                    writer.writeTextStatement(`return ${this.valuePropertyName}.Equals(other)`);
                 })
             })
         );
@@ -188,7 +194,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
             ],
             return: csharp.Type.boolean(),
             body: csharp.codeblock((writer) => {
-                writer.write("value1.Value.Equals(value2)");
+                writer.write(`value1.${this.valuePropertyName}.Equals(value2)`);
             }),
             useExpressionBody: true
         });
@@ -201,7 +207,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
             ],
             return: csharp.Type.boolean(),
             body: csharp.codeblock((writer) => {
-                writer.write("!value1.Value.Equals(value2)");
+                writer.write(`!value1.${this.valuePropertyName}.Equals(value2)`);
             }),
             useExpressionBody: true
         });
@@ -213,7 +219,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
                 name: "value",
                 type: csharp.Type.reference(this.classReference)
             }),
-            body: csharp.codeblock("value.Value"),
+            body: csharp.codeblock(`value.${this.valuePropertyName}`),
             useExpressionBody: true
         });
         stringEnum.addOperator({
@@ -225,6 +231,22 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
             body: csharp.codeblock("new(value)"),
             useExpressionBody: true
         });
+
+        if (this.valuePropertyName !== "Value") {
+            // if we've renamed the value property, we need to implement the IStringEnum interface explicitly
+
+            stringEnum.addField(
+                csharp.field({
+                    name: "IStringEnum.Value",
+                    type: csharp.Type.string(),
+                    get: csharp.Access.Public,
+                    summary: "The string value of the enum.",
+                    init: false,
+                    set: false,
+                    initializer: csharp.codeblock(`${this.valuePropertyName}`)
+                })
+            );
+        }
 
         return new CSharpFile({
             clazz: stringEnum,

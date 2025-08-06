@@ -46,15 +46,21 @@ public class Example17
                 },
                 InputParams = new List<VariableTypeAndName>(){
                     new VariableTypeAndName{
-                        VariableType = new VariableType(),
+                        VariableType = new VariableType(
+                            new VariableType.IntegerType()
+                        ),
                         Name = "name"
                     },
                     new VariableTypeAndName{
-                        VariableType = new VariableType(),
+                        VariableType = new VariableType(
+                            new VariableType.IntegerType()
+                        ),
                         Name = "name"
                     },
                 },
-                OutputType = new VariableType(),
+                OutputType = new VariableType(
+                    new VariableType.IntegerType()
+                ),
                 Testcases = new List<TestCaseWithExpectedResult>(){
                     new TestCaseWithExpectedResult{
                         TestCase = new TestCase{

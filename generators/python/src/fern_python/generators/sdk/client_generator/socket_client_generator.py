@@ -164,7 +164,7 @@ class SocketClientGenerator:
             with writer.indent():
                 writer.write("yield ")
                 writer.write_reference(self._context.core_utilities.get_parse_obj_as())
-                writer.write(f"({self._get_response_type_name()}, message)  # type: ignore")
+                writer.write(f"({self._get_response_type_name()}, json.loads(message))  # type: ignore")
 
         return _get_iterator_method_body
 

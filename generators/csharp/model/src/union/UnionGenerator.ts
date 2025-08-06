@@ -30,15 +30,20 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
         super(context);
         this.discriminantPropertyName = unionDeclaration.discriminant.name.pascalCase.safeName;
         const basePropNames = unionDeclaration.baseProperties.map((p) => p.name.name.pascalCase.safeName);
-        if (basePropNames.includes(this.discriminantPropertyName)) {
-            this.discriminantPropertyName = `_${this.discriminantPropertyName}`;
-        }
 
         if (basePropNames.includes(this.valuePropertyName)) {
-            this.valuePropertyName = `_${this.valuePropertyName}`;
+            this.valuePropertyName = `${this.valuePropertyName}_`;
         }
         this.typeDeclaration = typeDeclaration;
         this.classReference = this.context.csharpTypeMapper.convertToClassReference(this.typeDeclaration.name);
+
+        if (
+            basePropNames.includes(this.discriminantPropertyName) ||
+            this.classReference.name === this.discriminantPropertyName
+        ) {
+            this.discriminantPropertyName = `${this.discriminantPropertyName}_`;
+        }
+
         this.exampleGenerator = new ExampleGenerator(context);
         this.unionMemberTypeMap = new Map(
             unionDeclaration.types.map((type) => this.getCsharpTypeMapEntry(type, context))
@@ -64,6 +69,8 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
             access: csharp.Access.Public,
             type: csharp.Class.ClassType.Record
         });
+
+        this.discriminantPropertyName;
 
         class_.addField(
             csharp.field({
@@ -472,8 +479,8 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                         )
                     })
                 );
-
-                if (memberType.unwrapIfOptional().internalType.type !== "object") {
+                // we can't have an implicit cast from object or (IEnumerable<T>)
+                if (!["object", "list"].includes(memberType.unwrapIfOptional().internalType.type)) {
                     unionTypeClass.addOperator({
                         type: csharp.Class.CastOperator.Type.Implicit,
                         parameter: csharp.parameter({
@@ -639,6 +646,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                     writer.writeLine("var value = discriminator switch");
                     writer.writeLine("{");
                     writer.indent();
+
                     this.unionDeclaration.types.forEach((type) => {
                         const csharpType = this.getCsharpType(type);
                         function generateSerializeUnionMember(): void {

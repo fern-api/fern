@@ -69,7 +69,7 @@ export function buildEndpointExample({
 
             // set global header example value
             if (info != null && typeof info === "object" && info.type != null) {
-                // handling literal header types
+                // handling header types
                 const valueToUse = recursivelyVisitRawTypeReference<void | string>({
                     type: info.type,
                     _default: undefined,
@@ -77,13 +77,13 @@ export function buildEndpointExample({
                     // generic visitor to extract the string value from the literal
                     // todo: add handling for other types in this visitor
                     visitor: {
-                        primitive: noop,
-                        map: noop,
-                        list: noop,
-                        optional: noop,
-                        nullable: noop,
-                        set: noop,
-                        named: noop,
+                        primitive: (primitive) => primitive.toString(),
+                        map: (map) => map.toString(),
+                        list: (list) => list,
+                        optional: (optional) => optional,
+                        nullable: (nullable) => nullable,
+                        set: (set) => set,
+                        named: (named) => named,
                         literal: (literal) => {
                             if (literal.type === "string") {
                                 return literal.string;
@@ -103,7 +103,7 @@ export function buildEndpointExample({
                     });
                 }
             } else {
-                // handling all other types
+                // Adds a header example using the header name as the value when no type information is available
                 namedFullExamples.push({
                     name: header,
                     value: FullExample.primitive(PrimitiveExample.string(header))

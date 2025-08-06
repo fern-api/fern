@@ -41,10 +41,10 @@ public class ListWithMixedTypeCursorPaginationTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var pager = await Client.Users.ListWithMixedTypeCursorPaginationAsync(
+        var items = await Client.Users.ListWithMixedTypeCursorPaginationAsync(
             new ListUsersMixedTypeCursorPaginationRequest { Cursor = "cursor" }
         );
-        await foreach (var item in pager)
+        await foreach (var item in items)
         {
             Assert.That(item, Is.Not.Null);
             break; // Only check the first item

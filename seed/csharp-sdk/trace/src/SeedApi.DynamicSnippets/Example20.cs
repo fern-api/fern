@@ -17,15 +17,21 @@ public class Example20
             new GetDefaultStarterFilesRequest{
                 InputParams = new List<VariableTypeAndName>(){
                     new VariableTypeAndName{
-                        VariableType = new VariableType(),
+                        VariableType = new VariableType(
+                            new VariableType.IntegerType()
+                        ),
                         Name = "name"
                     },
                     new VariableTypeAndName{
-                        VariableType = new VariableType(),
+                        VariableType = new VariableType(
+                            new VariableType.IntegerType()
+                        ),
                         Name = "name"
                     },
                 },
-                OutputType = new VariableType(),
+                OutputType = new VariableType(
+                    new VariableType.IntegerType()
+                ),
                 MethodName = "methodName"
             }
         );

@@ -53,7 +53,9 @@
               "docs": undefined,
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-API-Key": "[object Object]",
+                  },
                   "request": {
                     "prompt": "prompt",
                   },
@@ -115,7 +117,8 @@
         type: string
         status-code: 200
       examples:
-        - headers: {}
+        - headers:
+            X-API-Key: '[object Object]'
           request:
             prompt: prompt
           response:
