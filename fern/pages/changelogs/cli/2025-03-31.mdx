@@ -1,8 +1,0 @@
-## 0.57.11
-**`(fix):`** Add support for `respect-forward-compatible-enums` configuration option to specify whether to respect forward compatible enums in OpenAPI specifications.
-
-
-## 0.57.10
-**`(fix):`** Add support for handling integer types without a specified format in the new OpenAPI parser. When a schema defines a property with `type: integer` but doesn't specify a format (like int32, int64, etc.), the parser now defaults to treating it as a standard integer type. This ensures consistent behavior for integer fields regardless of whether a format is explicitly provided.
-
-
