@@ -23,6 +23,7 @@ public struct WithPage: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.page, forKey: .page)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case page
     }

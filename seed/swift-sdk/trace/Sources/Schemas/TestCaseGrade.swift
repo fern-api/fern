@@ -56,6 +56,7 @@ public enum TestCaseGrade: Codable, Hashable, Sendable {
             try container.encode(self.passed, forKey: .passed)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case passed
@@ -104,6 +105,7 @@ public enum TestCaseGrade: Codable, Hashable, Sendable {
             try container.encode(self.stdout, forKey: .stdout)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case passed

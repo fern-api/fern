@@ -23,6 +23,7 @@ public struct DebugMapValue: Codable, Hashable, Sendable {
         try container.encode(self.keyValuePairs, forKey: .keyValuePairs)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case keyValuePairs
     }

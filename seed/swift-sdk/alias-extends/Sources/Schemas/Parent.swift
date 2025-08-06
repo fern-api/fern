@@ -23,6 +23,7 @@ public struct Parent: Codable, Hashable, Sendable {
         try container.encode(self.parent, forKey: .parent)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case parent
     }

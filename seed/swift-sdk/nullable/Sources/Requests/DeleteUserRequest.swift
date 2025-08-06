@@ -24,6 +24,7 @@ public struct DeleteUserRequest: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.username, forKey: .username)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case username
     }

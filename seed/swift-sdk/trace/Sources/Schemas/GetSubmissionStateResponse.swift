@@ -38,6 +38,7 @@ public struct GetSubmissionStateResponse: Codable, Hashable, Sendable {
         try container.encode(self.submissionTypeState, forKey: .submissionTypeState)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case timeSubmitted
         case submission

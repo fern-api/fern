@@ -23,6 +23,7 @@ public struct GetFunctionSignatureResponseType: Codable, Hashable, Sendable {
         try container.encode(self.functionByLanguage, forKey: .functionByLanguage)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case functionByLanguage
     }

@@ -43,6 +43,7 @@ public struct RecordingResponseNotification: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.tracedFile, forKey: .tracedFile)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case submissionId
         case testCaseId

@@ -33,6 +33,7 @@ public struct GetTokenRequest: Codable, Hashable, Sendable {
         try container.encode(self.grantType, forKey: .grantType)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case clientId = "client_id"
         case clientSecret = "client_secret"

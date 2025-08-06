@@ -28,6 +28,7 @@ public struct TestSubmissionUpdate: Codable, Hashable, Sendable {
         try container.encode(self.updateInfo, forKey: .updateInfo)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case updateTime
         case updateInfo

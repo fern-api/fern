@@ -101,6 +101,7 @@ public enum VariableValue: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -134,6 +135,7 @@ public enum VariableValue: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -167,6 +169,7 @@ public enum VariableValue: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -200,6 +203,7 @@ public enum VariableValue: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -233,6 +237,7 @@ public enum VariableValue: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -266,6 +271,7 @@ public enum VariableValue: Codable, Hashable, Sendable {
             try container.encode(self.keyValuePairs, forKey: .keyValuePairs)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case keyValuePairs
@@ -299,6 +305,7 @@ public enum VariableValue: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -337,6 +344,7 @@ public enum VariableValue: Codable, Hashable, Sendable {
             try container.encode(self.nodes, forKey: .nodes)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case root
@@ -376,6 +384,7 @@ public enum VariableValue: Codable, Hashable, Sendable {
             try container.encode(self.nodes, forKey: .nodes)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case head
@@ -415,6 +424,7 @@ public enum VariableValue: Codable, Hashable, Sendable {
             try container.encode(self.nodes, forKey: .nodes)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case head

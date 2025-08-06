@@ -76,6 +76,7 @@ public enum SubmissionRequest: Codable, Hashable, Sendable {
             try container.encodeIfPresent(self.problemVersion, forKey: .problemVersion)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case problemId
@@ -154,6 +155,7 @@ public enum SubmissionRequest: Codable, Hashable, Sendable {
             try container.encodeIfPresent(self.userId, forKey: .userId)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case submissionId
@@ -207,6 +209,7 @@ public enum SubmissionRequest: Codable, Hashable, Sendable {
             try container.encodeIfPresent(self.userId, forKey: .userId)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case submissionId
@@ -243,6 +246,7 @@ public enum SubmissionRequest: Codable, Hashable, Sendable {
             try container.encode(self.submissionId, forKey: .submissionId)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case submissionId

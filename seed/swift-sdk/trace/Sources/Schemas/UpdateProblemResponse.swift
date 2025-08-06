@@ -23,6 +23,7 @@ public struct UpdateProblemResponse: Codable, Hashable, Sendable {
         try container.encode(self.problemVersion, forKey: .problemVersion)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case problemVersion
     }

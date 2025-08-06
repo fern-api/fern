@@ -144,6 +144,7 @@ public struct Type: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.twentyfive, forKey: .twentyfive)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case one
         case two

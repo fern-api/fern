@@ -28,6 +28,7 @@ public struct Json: Codable, Hashable, Sendable {
         try container.encode(self.raw, forKey: .raw)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case docs
         case raw

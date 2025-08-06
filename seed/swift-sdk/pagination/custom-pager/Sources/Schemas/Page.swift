@@ -39,6 +39,7 @@ public struct Page: Codable, Hashable, Sendable {
         try container.encode(self.totalPage, forKey: .totalPage)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case page
         case next

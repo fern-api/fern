@@ -23,6 +23,7 @@ public struct Request: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.union, forKey: .union)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case union
     }

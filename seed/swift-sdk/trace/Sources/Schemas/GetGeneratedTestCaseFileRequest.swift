@@ -28,6 +28,7 @@ public struct GetGeneratedTestCaseFileRequest: Codable, Hashable, Sendable {
         try container.encode(self.testCase, forKey: .testCase)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case template
         case testCase

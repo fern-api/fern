@@ -23,6 +23,7 @@ public struct InternalError: Codable, Hashable, Sendable {
         try container.encode(self.exceptionInfo, forKey: .exceptionInfo)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case exceptionInfo
     }

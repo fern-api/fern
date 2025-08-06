@@ -23,6 +23,7 @@ public struct WithCursor: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.cursor, forKey: .cursor)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case cursor
     }

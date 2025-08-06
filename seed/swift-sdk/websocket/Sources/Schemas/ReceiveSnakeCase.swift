@@ -28,6 +28,7 @@ public struct ReceiveSnakeCase: Codable, Hashable, Sendable {
         try container.encode(self.receiveInt, forKey: .receiveInt)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case receiveText = "receive_text"
         case receiveInt = "receive_int"

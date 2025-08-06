@@ -23,6 +23,7 @@ public struct MyInlineType: Codable, Hashable, Sendable {
         try container.encode(self.bar, forKey: .bar)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case bar
     }

@@ -29,6 +29,7 @@ public struct UpdatePlaylistRequest: Codable, Hashable, Sendable {
         try container.encode(self.problems, forKey: .problems)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case name
         case problems

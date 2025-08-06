@@ -34,6 +34,7 @@ public struct ListUsersExtendedOptionalListResponse: Codable, Hashable, Sendable
         try container.encode(self.totalCount, forKey: .totalCount)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case data
         case next

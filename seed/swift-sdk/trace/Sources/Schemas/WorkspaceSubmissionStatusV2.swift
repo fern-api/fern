@@ -23,6 +23,7 @@ public struct WorkspaceSubmissionStatusV2: Codable, Hashable, Sendable {
         try container.encode(self.updates, forKey: .updates)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case updates
     }

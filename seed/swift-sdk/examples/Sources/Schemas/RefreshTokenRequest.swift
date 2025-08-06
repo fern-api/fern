@@ -23,6 +23,7 @@ public struct RefreshTokenRequest: Codable, Hashable, Sendable {
         try container.encode(self.ttl, forKey: .ttl)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case ttl
     }

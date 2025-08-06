@@ -28,6 +28,7 @@ public struct PatchProxyRequest: Codable, Hashable, Sendable {
         try container.encode(self.requireAuth, forKey: .requireAuth)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case application
         case requireAuth = "require_auth"

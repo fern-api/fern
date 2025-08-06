@@ -38,6 +38,7 @@ public struct SendEnumInlinedRequest: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.maybeOperandOrColor, forKey: .maybeOperandOrColor)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case operand
         case maybeOperand

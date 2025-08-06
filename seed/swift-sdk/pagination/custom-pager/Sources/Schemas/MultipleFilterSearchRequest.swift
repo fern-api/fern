@@ -28,6 +28,7 @@ public struct MultipleFilterSearchRequest: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.value, forKey: .value)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case `operator`
         case value

@@ -38,6 +38,7 @@ public struct PaginatedConversationResponse: Codable, Hashable, Sendable {
         try container.encode(self.type, forKey: .type)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case conversations
         case pages

@@ -28,6 +28,7 @@ public struct InvalidRequestResponse: Codable, Hashable, Sendable {
         try container.encode(self.cause, forKey: .cause)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case request
         case cause

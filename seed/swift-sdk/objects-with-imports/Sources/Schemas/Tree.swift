@@ -23,6 +23,7 @@ public struct Tree: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.nodes, forKey: .nodes)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case nodes
     }

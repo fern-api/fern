@@ -33,6 +33,7 @@ public struct CreateUsernameRequest: Codable, Hashable, Sendable {
         try container.encode(self.name, forKey: .name)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case username
         case password

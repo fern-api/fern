@@ -23,6 +23,7 @@ public struct WithDocs: Codable, Hashable, Sendable {
         try container.encode(self.docs, forKey: .docs)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case docs
     }

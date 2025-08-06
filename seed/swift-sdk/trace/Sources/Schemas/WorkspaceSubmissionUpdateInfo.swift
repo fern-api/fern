@@ -81,6 +81,7 @@ public enum WorkspaceSubmissionUpdateInfo: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -124,6 +125,7 @@ public enum WorkspaceSubmissionUpdateInfo: Codable, Hashable, Sendable {
             try container.encode(self.stdout, forKey: .stdout)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case exceptionV2
@@ -197,6 +199,7 @@ public enum WorkspaceSubmissionUpdateInfo: Codable, Hashable, Sendable {
             try container.encode(self.traceResponsesSize, forKey: .traceResponsesSize)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case traceResponsesSize
@@ -230,6 +233,7 @@ public enum WorkspaceSubmissionUpdateInfo: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value

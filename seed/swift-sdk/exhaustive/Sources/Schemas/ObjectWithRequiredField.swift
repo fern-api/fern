@@ -23,6 +23,7 @@ public struct ObjectWithRequiredField: Codable, Hashable, Sendable {
         try container.encode(self.string, forKey: .string)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case string
     }

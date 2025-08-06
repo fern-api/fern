@@ -23,6 +23,7 @@ public struct GetPresignedUrlRequest: Codable, Hashable, Sendable {
         try container.encode(self.s3Key, forKey: .s3Key)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case s3Key
     }

@@ -33,6 +33,7 @@ public struct File: Codable, Hashable, Sendable {
         try container.encode(self.info, forKey: .info)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case name
         case contents

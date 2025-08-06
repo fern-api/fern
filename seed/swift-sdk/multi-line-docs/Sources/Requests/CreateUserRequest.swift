@@ -32,6 +32,7 @@ public struct CreateUserRequest: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.age, forKey: .age)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case name
         case age

@@ -48,6 +48,7 @@ public struct RefreshTokenRequest: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.scope, forKey: .scope)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case clientId = "client_id"
         case clientSecret = "client_secret"

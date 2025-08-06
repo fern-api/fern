@@ -23,6 +23,7 @@ public struct DeepEqualityCorrectnessCheckType: Codable, Hashable, Sendable {
         try container.encode(self.expectedValueParameterId, forKey: .expectedValueParameterId)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case expectedValueParameterId
     }

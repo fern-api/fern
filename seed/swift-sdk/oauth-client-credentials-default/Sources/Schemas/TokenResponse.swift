@@ -29,6 +29,7 @@ public struct TokenResponse: Codable, Hashable, Sendable {
         try container.encode(self.expiresIn, forKey: .expiresIn)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case accessToken = "access_token"
         case expiresIn = "expires_in"

@@ -197,6 +197,7 @@ public enum VariableType: Codable, Hashable, Sendable {
             try container.encodeIfPresent(self.isFixedLength, forKey: .isFixedLength)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case valueType
@@ -236,6 +237,7 @@ public enum VariableType: Codable, Hashable, Sendable {
             try container.encode(self.valueType, forKey: .valueType)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case keyType

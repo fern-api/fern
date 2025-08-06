@@ -74,6 +74,7 @@ public struct ExtendedMovie: Codable, Hashable, Sendable {
         try container.encode(self.cast, forKey: .cast)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case prequel

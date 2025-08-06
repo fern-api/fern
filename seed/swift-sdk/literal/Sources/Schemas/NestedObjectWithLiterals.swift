@@ -33,6 +33,7 @@ public struct NestedObjectWithLiterals: Codable, Hashable, Sendable {
         try container.encode(self.strProp, forKey: .strProp)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case literal1
         case literal2

@@ -28,6 +28,7 @@ public struct NextPage: Codable, Hashable, Sendable {
         try container.encode(self.startingAfter, forKey: .startingAfter)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case page
         case startingAfter = "starting_after"

@@ -28,6 +28,7 @@ public struct DefaultProvidedFile: Codable, Hashable, Sendable {
         try container.encode(self.relatedTypes, forKey: .relatedTypes)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case file
         case relatedTypes

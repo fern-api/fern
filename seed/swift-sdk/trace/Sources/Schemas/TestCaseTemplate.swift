@@ -33,6 +33,7 @@ public struct TestCaseTemplate: Codable, Hashable, Sendable {
         try container.encode(self.implementation, forKey: .implementation)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case templateId
         case name

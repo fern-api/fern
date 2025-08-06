@@ -66,6 +66,7 @@ public enum Exception: Codable, Hashable, Sendable {
             try container.encode(self.exceptionStacktrace, forKey: .exceptionStacktrace)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case exceptionType

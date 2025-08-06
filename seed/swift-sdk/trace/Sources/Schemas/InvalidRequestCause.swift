@@ -62,6 +62,7 @@ public enum InvalidRequestCause: Codable, Hashable, Sendable {
             try container.encode(self.missingSubmissionId, forKey: .missingSubmissionId)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case missingSubmissionId
@@ -100,6 +101,7 @@ public enum InvalidRequestCause: Codable, Hashable, Sendable {
             try container.encode(self.submissionId, forKey: .submissionId)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case problemId
@@ -140,6 +142,7 @@ public enum InvalidRequestCause: Codable, Hashable, Sendable {
             try container.encode(self.actualLanguage, forKey: .actualLanguage)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case expectedLanguage

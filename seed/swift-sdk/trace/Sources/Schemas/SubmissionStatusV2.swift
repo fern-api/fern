@@ -71,6 +71,7 @@ public enum SubmissionStatusV2: Codable, Hashable, Sendable {
             try container.encode(self.problemInfo, forKey: .problemInfo)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case updates
@@ -107,6 +108,7 @@ public enum SubmissionStatusV2: Codable, Hashable, Sendable {
             try container.encode(self.updates, forKey: .updates)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case updates

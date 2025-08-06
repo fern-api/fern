@@ -38,6 +38,7 @@ public struct BinaryTreeNodeValue: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.left, forKey: .left)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case nodeId
         case val

@@ -33,6 +33,7 @@ public struct TestCaseMetadata: Codable, Hashable, Sendable {
         try container.encode(self.hidden, forKey: .hidden)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case name

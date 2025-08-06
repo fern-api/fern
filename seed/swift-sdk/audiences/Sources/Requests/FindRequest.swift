@@ -28,6 +28,7 @@ public struct FindRequest: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.privateProperty, forKey: .privateProperty)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case publicProperty
         case privateProperty

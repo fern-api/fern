@@ -23,6 +23,7 @@ public struct WithMetadata: Codable, Hashable, Sendable {
         try container.encode(self.metadata, forKey: .metadata)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case metadata
     }

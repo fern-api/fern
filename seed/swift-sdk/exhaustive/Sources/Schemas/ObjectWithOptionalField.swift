@@ -84,6 +84,7 @@ public struct ObjectWithOptionalField: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.bigint, forKey: .bigint)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case string
         case integer

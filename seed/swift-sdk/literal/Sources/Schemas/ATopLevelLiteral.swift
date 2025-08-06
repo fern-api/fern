@@ -23,6 +23,7 @@ public struct ATopLevelLiteral: Codable, Hashable, Sendable {
         try container.encode(self.nestedLiteral, forKey: .nestedLiteral)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case nestedLiteral
     }

@@ -43,6 +43,7 @@ public struct CursorPages: Codable, Hashable, Sendable {
         try container.encode(self.type, forKey: .type)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case next
         case page

@@ -28,6 +28,7 @@ public struct GenericValue: Codable, Hashable, Sendable {
         try container.encode(self.stringifiedValue, forKey: .stringifiedValue)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case stringifiedType
         case stringifiedValue

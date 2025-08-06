@@ -23,6 +23,7 @@ public struct ImportingType: Codable, Hashable, Sendable {
         try container.encode(self.imported, forKey: .imported)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case imported
     }

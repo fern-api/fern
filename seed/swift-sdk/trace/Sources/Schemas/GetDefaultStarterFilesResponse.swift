@@ -23,6 +23,7 @@ public struct GetDefaultStarterFilesResponse: Codable, Hashable, Sendable {
         try container.encode(self.files, forKey: .files)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case files
     }

@@ -23,6 +23,7 @@ public struct UserOptionalListContainer: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.users, forKey: .users)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case users
     }

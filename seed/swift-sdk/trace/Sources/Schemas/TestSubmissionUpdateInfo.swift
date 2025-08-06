@@ -76,6 +76,7 @@ public enum TestSubmissionUpdateInfo: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -128,6 +129,7 @@ public enum TestSubmissionUpdateInfo: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -166,6 +168,7 @@ public enum TestSubmissionUpdateInfo: Codable, Hashable, Sendable {
             try container.encode(self.grade, forKey: .grade)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case testCaseId
@@ -205,6 +208,7 @@ public enum TestSubmissionUpdateInfo: Codable, Hashable, Sendable {
             try container.encode(self.traceResponsesSize, forKey: .traceResponsesSize)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case testCaseId

@@ -33,6 +33,7 @@ public struct ExceptionInfo: Codable, Hashable, Sendable {
         try container.encode(self.exceptionStacktrace, forKey: .exceptionStacktrace)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case exceptionType
         case exceptionMessage

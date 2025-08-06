@@ -23,6 +23,7 @@ public struct ProblemDescription: Codable, Hashable, Sendable {
         try container.encode(self.boards, forKey: .boards)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case boards
     }

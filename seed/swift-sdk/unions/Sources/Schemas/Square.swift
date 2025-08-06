@@ -23,6 +23,7 @@ public struct Square: Codable, Hashable, Sendable {
         try container.encode(self.length, forKey: .length)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case length
     }

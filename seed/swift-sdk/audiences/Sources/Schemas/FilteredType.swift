@@ -28,6 +28,7 @@ public struct FilteredType: Codable, Hashable, Sendable {
         try container.encode(self.privateProperty, forKey: .privateProperty)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case publicProperty = "public_property"
         case privateProperty = "private_property"

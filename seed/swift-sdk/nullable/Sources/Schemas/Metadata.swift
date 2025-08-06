@@ -48,6 +48,7 @@ public struct Metadata: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.values, forKey: .values)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case createdAt
         case updatedAt

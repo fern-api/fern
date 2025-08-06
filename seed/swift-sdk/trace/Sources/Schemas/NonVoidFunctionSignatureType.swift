@@ -28,6 +28,7 @@ public struct NonVoidFunctionSignatureType: Codable, Hashable, Sendable {
         try container.encode(self.returnType, forKey: .returnType)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case parameters
         case returnType

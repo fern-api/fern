@@ -48,6 +48,7 @@ public struct SubmitRequestV2: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.userId, forKey: .userId)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case submissionId
         case language

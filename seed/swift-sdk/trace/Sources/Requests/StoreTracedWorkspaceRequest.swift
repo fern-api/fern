@@ -28,6 +28,7 @@ public struct StoreTracedWorkspaceRequest: Codable, Hashable, Sendable {
         try container.encode(self.traceResponses, forKey: .traceResponses)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case workspaceRunDetails
         case traceResponses

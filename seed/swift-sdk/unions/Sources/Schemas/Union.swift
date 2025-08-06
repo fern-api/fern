@@ -56,6 +56,7 @@ public enum Union: Codable, Hashable, Sendable {
             try container.encode(self.foo, forKey: .foo)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case foo
@@ -89,6 +90,7 @@ public enum Union: Codable, Hashable, Sendable {
             try container.encode(self.bar, forKey: .bar)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case bar

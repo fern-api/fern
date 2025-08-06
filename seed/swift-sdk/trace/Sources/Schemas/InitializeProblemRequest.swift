@@ -28,6 +28,7 @@ public struct InitializeProblemRequest: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.problemVersion, forKey: .problemVersion)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case problemId
         case problemVersion

@@ -23,6 +23,7 @@ public struct BootInstanceRequest: Codable, Hashable, Sendable {
         try container.encode(self.size, forKey: .size)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case size
     }

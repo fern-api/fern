@@ -28,6 +28,7 @@ public struct ProblemFiles: Codable, Hashable, Sendable {
         try container.encode(self.readOnlyFiles, forKey: .readOnlyFiles)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case solutionFile
         case readOnlyFiles

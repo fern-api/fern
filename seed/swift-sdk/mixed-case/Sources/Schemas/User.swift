@@ -33,6 +33,7 @@ public struct User: Codable, Hashable, Sendable {
         try container.encode(self.extraProperties, forKey: .extraProperties)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case userName
         case metadataTags = "metadata_tags"

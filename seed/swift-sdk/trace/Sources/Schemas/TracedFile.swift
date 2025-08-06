@@ -28,6 +28,7 @@ public struct TracedFile: Codable, Hashable, Sendable {
         try container.encode(self.directory, forKey: .directory)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case filename
         case directory

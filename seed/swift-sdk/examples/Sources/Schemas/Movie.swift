@@ -69,6 +69,7 @@ public struct Movie: Codable, Hashable, Sendable {
         try container.encode(self.revenue, forKey: .revenue)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case prequel

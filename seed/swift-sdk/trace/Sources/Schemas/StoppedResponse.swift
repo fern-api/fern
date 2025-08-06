@@ -23,6 +23,7 @@ public struct StoppedResponse: Codable, Hashable, Sendable {
         try container.encode(self.submissionId, forKey: .submissionId)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case submissionId
     }

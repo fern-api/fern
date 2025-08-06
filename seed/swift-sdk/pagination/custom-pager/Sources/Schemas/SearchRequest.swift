@@ -28,6 +28,7 @@ public struct SearchRequest: Codable, Hashable, Sendable {
         try container.encode(self.query, forKey: .query)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case pagination
         case query

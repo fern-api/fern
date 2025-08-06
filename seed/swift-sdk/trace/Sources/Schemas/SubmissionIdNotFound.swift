@@ -23,6 +23,7 @@ public struct SubmissionIdNotFound: Codable, Hashable, Sendable {
         try container.encode(self.missingSubmissionId, forKey: .missingSubmissionId)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case missingSubmissionId
     }

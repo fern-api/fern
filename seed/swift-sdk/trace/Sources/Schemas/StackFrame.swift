@@ -33,6 +33,7 @@ public struct StackFrame: Codable, Hashable, Sendable {
         try container.encode(self.scopes, forKey: .scopes)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case methodName
         case lineNumber

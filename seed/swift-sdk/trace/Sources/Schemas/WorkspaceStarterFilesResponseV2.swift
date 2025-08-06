@@ -23,6 +23,7 @@ public struct WorkspaceStarterFilesResponseV2: Codable, Hashable, Sendable {
         try container.encode(self.filesByLanguage, forKey: .filesByLanguage)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case filesByLanguage
     }

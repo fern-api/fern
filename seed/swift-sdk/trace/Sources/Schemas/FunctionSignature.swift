@@ -61,6 +61,7 @@ public enum FunctionSignature: Codable, Hashable, Sendable {
             try container.encode(self.parameters, forKey: .parameters)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case parameters
@@ -99,6 +100,7 @@ public enum FunctionSignature: Codable, Hashable, Sendable {
             try container.encode(self.returnType, forKey: .returnType)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case parameters
@@ -139,6 +141,7 @@ public enum FunctionSignature: Codable, Hashable, Sendable {
             try container.encode(self.actualResultType, forKey: .actualResultType)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case parameters

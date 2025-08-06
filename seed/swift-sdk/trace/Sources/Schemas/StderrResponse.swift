@@ -28,6 +28,7 @@ public struct StderrResponse: Codable, Hashable, Sendable {
         try container.encode(self.stderr, forKey: .stderr)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case submissionId
         case stderr

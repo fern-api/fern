@@ -48,6 +48,7 @@ public struct AddressType: Codable, Hashable, Sendable {
         try container.encode(self.country, forKey: .country)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case line1
         case line2

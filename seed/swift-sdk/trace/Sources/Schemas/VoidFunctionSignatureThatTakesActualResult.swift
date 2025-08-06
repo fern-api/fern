@@ -28,6 +28,7 @@ public struct VoidFunctionSignatureThatTakesActualResult: Codable, Hashable, Sen
         try container.encode(self.actualResultType, forKey: .actualResultType)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case parameters
         case actualResultType

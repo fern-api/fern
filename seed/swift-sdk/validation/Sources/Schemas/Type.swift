@@ -39,6 +39,7 @@ public struct Type: Codable, Hashable, Sendable {
         try container.encode(self.shape, forKey: .shape)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case decimal
         case even

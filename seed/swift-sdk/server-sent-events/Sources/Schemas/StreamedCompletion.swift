@@ -28,6 +28,7 @@ public struct StreamedCompletion: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.tokens, forKey: .tokens)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case delta
         case tokens

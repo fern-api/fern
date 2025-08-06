@@ -28,6 +28,7 @@ public struct ListUsersMixedTypePaginationResponse: Codable, Hashable, Sendable 
         try container.encode(self.data, forKey: .data)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case next
         case data

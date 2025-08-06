@@ -33,6 +33,7 @@ public struct GenericCreateProblemError: Codable, Hashable, Sendable {
         try container.encode(self.stacktrace, forKey: .stacktrace)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case message
         case type

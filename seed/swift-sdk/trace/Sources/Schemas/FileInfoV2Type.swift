@@ -38,6 +38,7 @@ public struct FileInfoV2Type: Codable, Hashable, Sendable {
         try container.encode(self.editable, forKey: .editable)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case filename
         case directory

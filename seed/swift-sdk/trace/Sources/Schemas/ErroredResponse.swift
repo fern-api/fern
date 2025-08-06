@@ -28,6 +28,7 @@ public struct ErroredResponse: Codable, Hashable, Sendable {
         try container.encode(self.errorInfo, forKey: .errorInfo)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case submissionId
         case errorInfo

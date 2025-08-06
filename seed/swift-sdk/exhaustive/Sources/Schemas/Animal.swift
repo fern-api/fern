@@ -61,6 +61,7 @@ public enum Animal: Codable, Hashable, Sendable {
             try container.encode(self.likesToWoof, forKey: .likesToWoof)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case animal
             case name
@@ -100,6 +101,7 @@ public enum Animal: Codable, Hashable, Sendable {
             try container.encode(self.likesToMeow, forKey: .likesToMeow)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case animal
             case name

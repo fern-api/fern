@@ -48,6 +48,7 @@ public struct Patient: Codable, Hashable, Sendable {
         try container.encode(self.scripts, forKey: .scripts)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case relatedResources = "related_resources"

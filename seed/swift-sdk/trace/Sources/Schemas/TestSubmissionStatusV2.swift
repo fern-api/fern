@@ -38,6 +38,7 @@ public struct TestSubmissionStatusV2: Codable, Hashable, Sendable {
         try container.encode(self.problemInfo, forKey: .problemInfo)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case updates
         case problemId

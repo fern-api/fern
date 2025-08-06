@@ -23,6 +23,7 @@ public struct ExistingSubmissionExecuting: Codable, Hashable, Sendable {
         try container.encode(self.submissionId, forKey: .submissionId)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case submissionId
     }

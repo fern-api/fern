@@ -28,6 +28,7 @@ public struct TestCase: Codable, Hashable, Sendable {
         try container.encode(self.params, forKey: .params)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case params

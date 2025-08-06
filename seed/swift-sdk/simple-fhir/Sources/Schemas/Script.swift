@@ -43,6 +43,7 @@ public struct Script: Codable, Hashable, Sendable {
         try container.encode(self.name, forKey: .name)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case relatedResources = "related_resources"

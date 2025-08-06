@@ -28,6 +28,7 @@ public struct DoublyLinkedListValue: Codable, Hashable, Sendable {
         try container.encode(self.nodes, forKey: .nodes)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case head
         case nodes

@@ -23,6 +23,7 @@ public struct ReceiveEvent3: Codable, Hashable, Sendable {
         try container.encode(self.receiveText3, forKey: .receiveText3)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case receiveText3
     }

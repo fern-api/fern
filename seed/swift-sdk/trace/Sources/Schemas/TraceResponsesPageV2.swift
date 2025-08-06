@@ -30,6 +30,7 @@ public struct TraceResponsesPageV2: Codable, Hashable, Sendable {
         try container.encode(self.traceResponses, forKey: .traceResponses)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case offset
         case traceResponses

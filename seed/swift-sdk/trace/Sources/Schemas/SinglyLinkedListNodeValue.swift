@@ -33,6 +33,7 @@ public struct SinglyLinkedListNodeValue: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.next, forKey: .next)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case nodeId
         case val

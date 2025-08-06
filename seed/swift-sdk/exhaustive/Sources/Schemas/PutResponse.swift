@@ -23,6 +23,7 @@ public struct PutResponse: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.errors, forKey: .errors)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case errors
     }

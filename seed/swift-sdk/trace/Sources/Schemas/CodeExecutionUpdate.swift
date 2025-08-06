@@ -107,6 +107,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
             try container.encode(self.status, forKey: .status)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case submissionId
@@ -147,6 +148,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
             try container.encode(self.state, forKey: .state)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case submissionId
@@ -187,6 +189,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
             try container.encode(self.errorInfo, forKey: .errorInfo)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case submissionId
@@ -222,6 +225,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
             try container.encode(self.submissionId, forKey: .submissionId)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case submissionId
@@ -261,6 +265,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
             try container.encode(self.testCases, forKey: .testCases)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case submissionId
@@ -301,6 +306,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
             try container.encode(self.testCases, forKey: .testCases)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case submissionId
@@ -341,6 +347,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
             try container.encode(self.runDetails, forKey: .runDetails)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case submissionId
@@ -396,6 +403,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
             try container.encodeIfPresent(self.tracedFile, forKey: .tracedFile)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case submissionId
@@ -444,6 +452,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
             try container.encodeIfPresent(self.testCaseId, forKey: .testCaseId)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case submissionId
@@ -485,6 +494,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
             try container.encode(self.cause, forKey: .cause)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case request
@@ -520,6 +530,7 @@ public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
             try container.encode(self.submissionId, forKey: .submissionId)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case submissionId

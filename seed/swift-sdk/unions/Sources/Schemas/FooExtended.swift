@@ -28,6 +28,7 @@ public struct FooExtended: Codable, Hashable, Sendable {
         try container.encode(self.age, forKey: .age)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case name
         case age

@@ -28,6 +28,7 @@ public struct Memo: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.account, forKey: .account)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case description
         case account

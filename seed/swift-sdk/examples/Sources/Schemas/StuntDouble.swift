@@ -28,6 +28,7 @@ public struct StuntDouble: Codable, Hashable, Sendable {
         try container.encode(self.actorOrActressId, forKey: .actorOrActressId)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case name
         case actorOrActressId

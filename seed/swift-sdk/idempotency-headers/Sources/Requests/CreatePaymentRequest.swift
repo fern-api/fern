@@ -28,6 +28,7 @@ public struct CreatePaymentRequest: Codable, Hashable, Sendable {
         try container.encode(self.currency, forKey: .currency)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case amount
         case currency

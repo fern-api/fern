@@ -28,6 +28,7 @@ public struct GradedResponseV2: Codable, Hashable, Sendable {
         try container.encode(self.testCases, forKey: .testCases)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case submissionId
         case testCases

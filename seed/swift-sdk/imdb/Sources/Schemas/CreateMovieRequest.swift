@@ -28,6 +28,7 @@ public struct CreateMovieRequest: Codable, Hashable, Sendable {
         try container.encode(self.rating, forKey: .rating)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case title
         case rating

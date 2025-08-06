@@ -23,6 +23,7 @@ public struct Circle: Codable, Hashable, Sendable {
         try container.encode(self.radius, forKey: .radius)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case radius
     }

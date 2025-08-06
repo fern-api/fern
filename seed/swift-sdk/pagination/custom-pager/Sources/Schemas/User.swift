@@ -28,6 +28,7 @@ public struct User: Codable, Hashable, Sendable {
         try container.encode(self.id, forKey: .id)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case name
         case id

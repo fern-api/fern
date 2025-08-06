@@ -58,6 +58,7 @@ public struct User: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.strings, forKey: .strings)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case name
         case id

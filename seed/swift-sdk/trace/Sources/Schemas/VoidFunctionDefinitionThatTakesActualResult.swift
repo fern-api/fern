@@ -29,6 +29,7 @@ public struct VoidFunctionDefinitionThatTakesActualResult: Codable, Hashable, Se
         try container.encode(self.code, forKey: .code)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case additionalParameters
         case code

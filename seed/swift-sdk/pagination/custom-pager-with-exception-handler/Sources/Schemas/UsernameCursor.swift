@@ -23,6 +23,7 @@ public struct UsernameCursor: Codable, Hashable, Sendable {
         try container.encode(self.cursor, forKey: .cursor)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case cursor
     }

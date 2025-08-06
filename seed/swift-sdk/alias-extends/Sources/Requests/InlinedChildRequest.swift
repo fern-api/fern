@@ -28,6 +28,7 @@ public struct InlinedChildRequest: Codable, Hashable, Sendable {
         try container.encode(self.child, forKey: .child)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case parent
         case child

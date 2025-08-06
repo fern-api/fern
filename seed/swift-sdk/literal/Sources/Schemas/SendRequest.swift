@@ -53,6 +53,7 @@ public struct SendRequest: Codable, Hashable, Sendable {
         try container.encode(self.containerObject, forKey: .containerObject)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case prompt
         case query

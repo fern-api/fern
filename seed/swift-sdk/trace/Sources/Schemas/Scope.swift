@@ -23,6 +23,7 @@ public struct Scope: Codable, Hashable, Sendable {
         try container.encode(self.variables, forKey: .variables)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case variables
     }

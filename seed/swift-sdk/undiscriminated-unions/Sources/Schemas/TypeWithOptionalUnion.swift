@@ -23,6 +23,7 @@ public struct TypeWithOptionalUnion: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.myUnion, forKey: .myUnion)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case myUnion
     }

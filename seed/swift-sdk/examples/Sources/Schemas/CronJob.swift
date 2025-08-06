@@ -23,6 +23,7 @@ public struct CronJob: Codable, Hashable, Sendable {
         try container.encode(self.expression, forKey: .expression)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case expression
     }

@@ -23,6 +23,7 @@ public struct ResponseType: Codable, Hashable, Sendable {
         try container.encode(self.foo, forKey: .foo)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case foo
     }

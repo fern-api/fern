@@ -38,6 +38,7 @@ public struct TestCaseV2Type: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.expects, forKey: .expects)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case metadata
         case implementation

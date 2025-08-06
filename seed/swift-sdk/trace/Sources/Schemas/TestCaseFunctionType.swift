@@ -61,6 +61,7 @@ public enum TestCaseFunctionType: Codable, Hashable, Sendable {
             try container.encode(self.assertCorrectnessCheck, forKey: .assertCorrectnessCheck)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case getActualResult
@@ -100,6 +101,7 @@ public enum TestCaseFunctionType: Codable, Hashable, Sendable {
             try container.encode(self.code, forKey: .code)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case parameters

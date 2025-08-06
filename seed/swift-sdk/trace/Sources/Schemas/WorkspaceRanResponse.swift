@@ -28,6 +28,7 @@ public struct WorkspaceRanResponse: Codable, Hashable, Sendable {
         try container.encode(self.runDetails, forKey: .runDetails)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case submissionId
         case runDetails

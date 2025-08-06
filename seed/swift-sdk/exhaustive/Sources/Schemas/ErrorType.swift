@@ -38,6 +38,7 @@ public struct ErrorType: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.field, forKey: .field)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case category
         case code

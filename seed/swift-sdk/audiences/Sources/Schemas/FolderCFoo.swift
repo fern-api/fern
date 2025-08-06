@@ -23,6 +23,7 @@ public struct FolderCFoo: Codable, Hashable, Sendable {
         try container.encode(self.barProperty, forKey: .barProperty)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case barProperty = "bar_property"
     }

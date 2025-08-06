@@ -23,6 +23,7 @@ public struct GetBasicSolutionFileResponse: Codable, Hashable, Sendable {
         try container.encode(self.solutionFileByLanguage, forKey: .solutionFileByLanguage)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case solutionFileByLanguage
     }

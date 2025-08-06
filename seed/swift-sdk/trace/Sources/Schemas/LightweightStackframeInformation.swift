@@ -28,6 +28,7 @@ public struct LightweightStackframeInformation: Codable, Hashable, Sendable {
         try container.encode(self.topStackFrameMethodName, forKey: .topStackFrameMethodName)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case numStackFrames
         case topStackFrameMethodName

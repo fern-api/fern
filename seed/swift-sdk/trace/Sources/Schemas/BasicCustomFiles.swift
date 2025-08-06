@@ -38,6 +38,7 @@ public struct BasicCustomFiles: Codable, Hashable, Sendable {
         try container.encode(self.basicTestCaseTemplate, forKey: .basicTestCaseTemplate)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case methodName
         case signature

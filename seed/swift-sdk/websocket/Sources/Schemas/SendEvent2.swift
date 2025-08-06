@@ -28,6 +28,7 @@ public struct SendEvent2: Codable, Hashable, Sendable {
         try container.encode(self.sendParam2, forKey: .sendParam2)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case sendText2
         case sendParam2

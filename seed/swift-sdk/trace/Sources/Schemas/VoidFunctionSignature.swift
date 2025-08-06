@@ -23,6 +23,7 @@ public struct VoidFunctionSignature: Codable, Hashable, Sendable {
         try container.encode(self.parameters, forKey: .parameters)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case parameters
     }

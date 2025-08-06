@@ -23,6 +23,7 @@ public struct ANestedLiteral: Codable, Hashable, Sendable {
         try container.encode(self.myLiteral, forKey: .myLiteral)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case myLiteral
     }

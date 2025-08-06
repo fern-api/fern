@@ -28,6 +28,7 @@ public struct RunningResponse: Codable, Hashable, Sendable {
         try container.encode(self.state, forKey: .state)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case submissionId
         case state

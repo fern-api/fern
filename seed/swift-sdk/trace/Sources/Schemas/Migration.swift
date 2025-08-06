@@ -28,6 +28,7 @@ public struct Migration: Codable, Hashable, Sendable {
         try container.encode(self.status, forKey: .status)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case name
         case status

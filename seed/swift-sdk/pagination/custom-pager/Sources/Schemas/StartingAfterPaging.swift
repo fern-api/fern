@@ -28,6 +28,7 @@ public struct StartingAfterPaging: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.startingAfter, forKey: .startingAfter)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case perPage = "per_page"
         case startingAfter = "starting_after"

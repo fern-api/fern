@@ -28,6 +28,7 @@ public struct Cat: Codable, Hashable, Sendable {
         try container.encode(self.likesToMeow, forKey: .likesToMeow)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case name
         case likesToMeow

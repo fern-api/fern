@@ -68,6 +68,7 @@ public struct ProblemInfo: Codable, Hashable, Sendable {
         try container.encode(self.supportsCustomTestCases, forKey: .supportsCustomTestCases)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case problemId
         case problemDescription

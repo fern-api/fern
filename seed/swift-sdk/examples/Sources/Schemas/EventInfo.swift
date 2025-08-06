@@ -66,6 +66,7 @@ public enum EventInfo: Codable, Hashable, Sendable {
             try container.encodeIfPresent(self.jsonString, forKey: .jsonString)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case id
@@ -101,6 +102,7 @@ public enum EventInfo: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value

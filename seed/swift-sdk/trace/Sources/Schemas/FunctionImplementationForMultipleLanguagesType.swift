@@ -23,6 +23,7 @@ public struct FunctionImplementationForMultipleLanguagesType: Codable, Hashable,
         try container.encode(self.codeByLanguage, forKey: .codeByLanguage)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case codeByLanguage
     }

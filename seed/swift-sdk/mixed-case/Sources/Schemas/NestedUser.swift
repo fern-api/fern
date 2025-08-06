@@ -28,6 +28,7 @@ public struct NestedUser: Codable, Hashable, Sendable {
         try container.encode(self.nestedUser, forKey: .nestedUser)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case name = "Name"
         case nestedUser = "NestedUser"

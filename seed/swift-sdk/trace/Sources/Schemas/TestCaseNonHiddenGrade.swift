@@ -38,6 +38,7 @@ public struct TestCaseNonHiddenGrade: Codable, Hashable, Sendable {
         try container.encode(self.stdout, forKey: .stdout)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case passed
         case actualResult

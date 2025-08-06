@@ -33,6 +33,7 @@ public struct SendResponse: Codable, Hashable, Sendable {
         try container.encode(self.success, forKey: .success)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case message
         case status

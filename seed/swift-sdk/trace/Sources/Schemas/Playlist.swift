@@ -38,6 +38,7 @@ public struct Playlist: Codable, Hashable, Sendable {
         try container.encode(self.ownerId, forKey: .ownerId)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case name
         case problems

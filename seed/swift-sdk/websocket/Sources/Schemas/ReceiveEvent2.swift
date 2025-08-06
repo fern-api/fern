@@ -33,6 +33,7 @@ public struct ReceiveEvent2: Codable, Hashable, Sendable {
         try container.encode(self.epsilon, forKey: .epsilon)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case gamma
         case delta

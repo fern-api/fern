@@ -53,6 +53,7 @@ public struct TraceResponseV2: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.stdout, forKey: .stdout)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case submissionId
         case lineNumber

@@ -23,6 +23,7 @@ public struct ObjectWithMapOfMap: Codable, Hashable, Sendable {
         try container.encode(self.map, forKey: .map)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case map
     }

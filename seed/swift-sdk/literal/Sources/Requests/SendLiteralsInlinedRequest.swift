@@ -58,6 +58,7 @@ public struct SendLiteralsInlinedRequest: Codable, Hashable, Sendable {
         try container.encode(self.objectWithLiteral, forKey: .objectWithLiteral)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case prompt
         case context

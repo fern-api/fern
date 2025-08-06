@@ -61,6 +61,7 @@ public enum ErrorInfo: Codable, Hashable, Sendable {
             try container.encode(self.message, forKey: .message)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case message
@@ -95,6 +96,7 @@ public enum ErrorInfo: Codable, Hashable, Sendable {
             try container.encode(self.message, forKey: .message)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case message
@@ -129,6 +131,7 @@ public enum ErrorInfo: Codable, Hashable, Sendable {
             try container.encode(self.exceptionInfo, forKey: .exceptionInfo)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case exceptionInfo

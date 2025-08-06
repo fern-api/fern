@@ -28,6 +28,7 @@ public struct BinaryTreeNodeAndTreeValue: Codable, Hashable, Sendable {
         try container.encode(self.fullTree, forKey: .fullTree)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case nodeId
         case fullTree

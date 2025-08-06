@@ -28,6 +28,7 @@ public struct GenerateRequest: Codable, Hashable, Sendable {
         try container.encode(self.numEvents, forKey: .numEvents)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case stream
         case numEvents = "num_events"

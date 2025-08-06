@@ -33,6 +33,7 @@ public struct Identifier: Codable, Hashable, Sendable {
         try container.encode(self.label, forKey: .label)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case type
         case value

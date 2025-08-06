@@ -23,6 +23,7 @@ public struct SearchResponse: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.results, forKey: .results)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case results
     }

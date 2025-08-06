@@ -66,6 +66,7 @@ public enum Resource: Codable, Hashable, Sendable {
             try container.encode(self.extraProperties, forKey: .extraProperties)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case resourceType = "resource_type"
             case userName
@@ -101,6 +102,7 @@ public enum Resource: Codable, Hashable, Sendable {
             try container.encode(self.name, forKey: .name)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case resourceType = "resource_type"
             case name

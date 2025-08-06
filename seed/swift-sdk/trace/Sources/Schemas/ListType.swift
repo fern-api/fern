@@ -29,6 +29,7 @@ public struct ListType: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.isFixedLength, forKey: .isFixedLength)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case valueType
         case isFixedLength

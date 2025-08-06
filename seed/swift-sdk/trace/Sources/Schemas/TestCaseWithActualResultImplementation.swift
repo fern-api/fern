@@ -28,6 +28,7 @@ public struct TestCaseWithActualResultImplementation: Codable, Hashable, Sendabl
         try container.encode(self.assertCorrectnessCheck, forKey: .assertCorrectnessCheck)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case getActualResult
         case assertCorrectnessCheck

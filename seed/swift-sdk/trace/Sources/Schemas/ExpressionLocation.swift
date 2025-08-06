@@ -28,6 +28,7 @@ public struct ExpressionLocation: Codable, Hashable, Sendable {
         try container.encode(self.offset, forKey: .offset)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case start
         case offset

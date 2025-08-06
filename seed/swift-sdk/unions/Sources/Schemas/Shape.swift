@@ -56,6 +56,7 @@ public enum Shape: Codable, Hashable, Sendable {
             try container.encode(self.radius, forKey: .radius)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case radius
@@ -89,6 +90,7 @@ public enum Shape: Codable, Hashable, Sendable {
             try container.encode(self.length, forKey: .length)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case length

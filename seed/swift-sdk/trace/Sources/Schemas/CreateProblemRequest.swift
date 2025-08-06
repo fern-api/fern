@@ -53,6 +53,7 @@ public struct CreateProblemRequest: Codable, Hashable, Sendable {
         try container.encode(self.methodName, forKey: .methodName)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case problemName
         case problemDescription

@@ -28,6 +28,7 @@ public struct Organization: Codable, Hashable, Sendable {
         try container.encode(self.tags, forKey: .tags)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case name
         case tags

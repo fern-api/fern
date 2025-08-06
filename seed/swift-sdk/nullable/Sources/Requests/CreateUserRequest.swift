@@ -38,6 +38,7 @@ public struct CreateUserRequest: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.avatar, forKey: .avatar)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case username
         case tags

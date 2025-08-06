@@ -53,6 +53,7 @@ public struct Account: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.practitioner, forKey: .practitioner)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case relatedResources = "related_resources"

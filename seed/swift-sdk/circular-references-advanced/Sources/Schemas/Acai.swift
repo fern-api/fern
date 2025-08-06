@@ -23,6 +23,7 @@ public struct Acai: Codable, Hashable, Sendable {
         try container.encode(self.animal, forKey: .animal)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case animal
     }

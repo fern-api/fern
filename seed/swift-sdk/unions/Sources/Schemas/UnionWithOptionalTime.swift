@@ -56,6 +56,7 @@ public enum UnionWithOptionalTime: Codable, Hashable, Sendable {
             try container.encodeIfPresent(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -89,6 +90,7 @@ public enum UnionWithOptionalTime: Codable, Hashable, Sendable {
             try container.encodeIfPresent(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value

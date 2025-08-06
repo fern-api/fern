@@ -28,6 +28,7 @@ public struct MyObjectWithOptional: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.optionalProp, forKey: .optionalProp)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case prop
         case optionalProp

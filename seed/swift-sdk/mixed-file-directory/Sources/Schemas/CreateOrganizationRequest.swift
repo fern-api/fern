@@ -23,6 +23,7 @@ public struct CreateOrganizationRequest: Codable, Hashable, Sendable {
         try container.encode(self.name, forKey: .name)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case name
     }

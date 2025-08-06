@@ -28,6 +28,7 @@ public struct FunctionImplementation: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.imports, forKey: .imports)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case impl
         case imports

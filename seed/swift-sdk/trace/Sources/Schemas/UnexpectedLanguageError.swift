@@ -28,6 +28,7 @@ public struct UnexpectedLanguageError: Codable, Hashable, Sendable {
         try container.encode(self.actualLanguage, forKey: .actualLanguage)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case expectedLanguage
         case actualLanguage

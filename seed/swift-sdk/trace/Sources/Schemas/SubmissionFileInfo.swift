@@ -33,6 +33,7 @@ public struct SubmissionFileInfo: Codable, Hashable, Sendable {
         try container.encode(self.contents, forKey: .contents)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case directory
         case filename

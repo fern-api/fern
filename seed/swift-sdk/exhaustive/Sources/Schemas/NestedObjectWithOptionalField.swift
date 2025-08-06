@@ -28,6 +28,7 @@ public struct NestedObjectWithOptionalField: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.nestedObject, forKey: .nestedObject)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case string
         case nestedObject = "NestedObject"

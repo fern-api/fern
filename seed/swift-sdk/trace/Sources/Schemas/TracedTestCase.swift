@@ -28,6 +28,7 @@ public struct TracedTestCase: Codable, Hashable, Sendable {
         try container.encode(self.traceResponsesSize, forKey: .traceResponsesSize)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case result
         case traceResponsesSize

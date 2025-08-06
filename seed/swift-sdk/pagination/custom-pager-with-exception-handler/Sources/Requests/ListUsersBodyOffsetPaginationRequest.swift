@@ -25,6 +25,7 @@ public struct ListUsersBodyOffsetPaginationRequest: Codable, Hashable, Sendable 
         try container.encodeIfPresent(self.pagination, forKey: .pagination)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case pagination
     }
