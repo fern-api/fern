@@ -403,21 +403,28 @@ public record WorkspaceSubmissionUpdateInfo
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value =
-                discriminator switch
-                {
-                    "running" => json.GetProperty("value")
-                        .Deserialize<SeedTrace.RunningSubmissionState>(options),
-                    "ran" => json.Deserialize<SeedTrace.WorkspaceRunDetails>(options),
-                    "stopped" => new { },
-                    "traced" => new { },
-                    "tracedV2" => json.Deserialize<SeedTrace.WorkspaceTracedUpdate>(options),
-                    "errored" => json.GetProperty("value")
-                        .Deserialize<SeedTrace.ErrorInfo>(options),
-                    "finished" => new { },
-                    _ => json.Deserialize<object?>(options),
-                }
-                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
+            var value = discriminator switch
+            {
+                "running" => json.GetProperty("value")
+                    .Deserialize<SeedTrace.RunningSubmissionState>(options)
+                    ?? throw new JsonException(
+                        "Failed to deserialize SeedTrace.RunningSubmissionState"
+                    ),
+                "ran" => json.Deserialize<SeedTrace.WorkspaceRunDetails>(options)
+                    ?? throw new JsonException(
+                        "Failed to deserialize SeedTrace.WorkspaceRunDetails"
+                    ),
+                "stopped" => new { },
+                "traced" => new { },
+                "tracedV2" => json.Deserialize<SeedTrace.WorkspaceTracedUpdate>(options)
+                    ?? throw new JsonException(
+                        "Failed to deserialize SeedTrace.WorkspaceTracedUpdate"
+                    ),
+                "errored" => json.GetProperty("value").Deserialize<SeedTrace.ErrorInfo>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedTrace.ErrorInfo"),
+                "finished" => new { },
+                _ => json.Deserialize<object?>(options),
+            };
             return new WorkspaceSubmissionUpdateInfo(discriminator, value);
         }
 

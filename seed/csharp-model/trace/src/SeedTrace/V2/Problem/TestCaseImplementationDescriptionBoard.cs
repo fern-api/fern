@@ -182,14 +182,14 @@ public record TestCaseImplementationDescriptionBoard
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value =
-                discriminator switch
-                {
-                    "html" => json.GetProperty("value").Deserialize<string>(options),
-                    "paramId" => json.GetProperty("value").Deserialize<string>(options),
-                    _ => json.Deserialize<object?>(options),
-                }
-                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
+            var value = discriminator switch
+            {
+                "html" => json.GetProperty("value").Deserialize<string>(options)
+                    ?? throw new JsonException("Failed to deserialize string"),
+                "paramId" => json.GetProperty("value").Deserialize<string>(options)
+                    ?? throw new JsonException("Failed to deserialize string"),
+                _ => json.Deserialize<object?>(options),
+            };
             return new TestCaseImplementationDescriptionBoard(discriminator, value);
         }
 

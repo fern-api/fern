@@ -178,15 +178,17 @@ public record CreateProblemResponse
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value =
-                discriminator switch
-                {
-                    "success" => json.GetProperty("value").Deserialize<string>(options),
-                    "error" => json.GetProperty("value")
-                        .Deserialize<SeedTrace.CreateProblemError>(options),
-                    _ => json.Deserialize<object?>(options),
-                }
-                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
+            var value = discriminator switch
+            {
+                "success" => json.GetProperty("value").Deserialize<string>(options)
+                    ?? throw new JsonException("Failed to deserialize string"),
+                "error" => json.GetProperty("value")
+                    .Deserialize<SeedTrace.CreateProblemError>(options)
+                    ?? throw new JsonException(
+                        "Failed to deserialize SeedTrace.CreateProblemError"
+                    ),
+                _ => json.Deserialize<object?>(options),
+            };
             return new CreateProblemResponse(discriminator, value);
         }
 

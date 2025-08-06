@@ -315,19 +315,26 @@ public record WorkspaceSubmissionStatus
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value =
-                discriminator switch
-                {
-                    "stopped" => new { },
-                    "errored" => json.GetProperty("value")
-                        .Deserialize<SeedTrace.ErrorInfo>(options),
-                    "running" => json.GetProperty("value")
-                        .Deserialize<SeedTrace.RunningSubmissionState>(options),
-                    "ran" => json.Deserialize<SeedTrace.WorkspaceRunDetails>(options),
-                    "traced" => json.Deserialize<SeedTrace.WorkspaceRunDetails>(options),
-                    _ => json.Deserialize<object?>(options),
-                }
-                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
+            var value = discriminator switch
+            {
+                "stopped" => new { },
+                "errored" => json.GetProperty("value").Deserialize<SeedTrace.ErrorInfo>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedTrace.ErrorInfo"),
+                "running" => json.GetProperty("value")
+                    .Deserialize<SeedTrace.RunningSubmissionState>(options)
+                    ?? throw new JsonException(
+                        "Failed to deserialize SeedTrace.RunningSubmissionState"
+                    ),
+                "ran" => json.Deserialize<SeedTrace.WorkspaceRunDetails>(options)
+                    ?? throw new JsonException(
+                        "Failed to deserialize SeedTrace.WorkspaceRunDetails"
+                    ),
+                "traced" => json.Deserialize<SeedTrace.WorkspaceRunDetails>(options)
+                    ?? throw new JsonException(
+                        "Failed to deserialize SeedTrace.WorkspaceRunDetails"
+                    ),
+                _ => json.Deserialize<object?>(options),
+            };
             return new WorkspaceSubmissionStatus(discriminator, value);
         }
 

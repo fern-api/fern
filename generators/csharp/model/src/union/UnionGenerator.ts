@@ -669,8 +669,22 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                             writer.write(".Deserialize<");
                             writer.writeNode(csharpType);
                             writer.write(">(options)");
-                            areAnyOptional ||= csharpType.isOptional();
-                            writer.writeLine(",");
+                            if (csharpType.isOptional()) {
+                                writer.writeLine(",");
+                            } else {
+                                const isReferenceType = csharpType.isReferenceType();
+                                if (
+                                    isReferenceType === true ||
+                                    csharpType.internalType.type === "reference" ||
+                                    csharpType.internalType.type === "coreReference"
+                                ) {
+                                    writer.write(' ?? throw new JsonException("Failed to deserialize ');
+                                    writer.writeNode(csharpType);
+                                    writer.writeLine('"),');
+                                } else {
+                                    writer.writeLine(",");
+                                }
+                            }
                         }
 
                         switch (type.shape.propertiesType) {
@@ -690,14 +704,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                     });
                     writer.writeLine("_ => json.Deserialize<object?>(options)");
                     writer.dedent();
-                    // it's a bit better if we place the null check at the end - one of the inner types could be a readonly record struct, and can't be ??'d in the switch
-                    if (areAnyOptional) {
-                        writer.writeTextStatement(" }");
-                    } else {
-                        writer.writeTextStatement(
-                            '} ?? throw new JsonException($"Failed to deserialize union value of {discriminator}")'
-                        );
-                    }
+                    writer.writeTextStatement("}");
 
                     if (baseProperties.length > 0) {
                         writer.write("var baseProperties = json.Deserialize<");

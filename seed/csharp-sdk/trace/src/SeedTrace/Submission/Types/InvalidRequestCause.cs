@@ -229,20 +229,23 @@ public record InvalidRequestCause
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value =
-                discriminator switch
-                {
-                    "submissionIdNotFound" => json.Deserialize<SeedTrace.SubmissionIdNotFound>(
-                        options
+            var value = discriminator switch
+            {
+                "submissionIdNotFound" => json.Deserialize<SeedTrace.SubmissionIdNotFound>(options)
+                    ?? throw new JsonException(
+                        "Failed to deserialize SeedTrace.SubmissionIdNotFound"
                     ),
-                    "customTestCasesUnsupported" =>
-                        json.Deserialize<SeedTrace.CustomTestCasesUnsupported>(options),
-                    "unexpectedLanguage" => json.Deserialize<SeedTrace.UnexpectedLanguageError>(
-                        options
+                "customTestCasesUnsupported" =>
+                    json.Deserialize<SeedTrace.CustomTestCasesUnsupported>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.CustomTestCasesUnsupported"
+                        ),
+                "unexpectedLanguage" => json.Deserialize<SeedTrace.UnexpectedLanguageError>(options)
+                    ?? throw new JsonException(
+                        "Failed to deserialize SeedTrace.UnexpectedLanguageError"
                     ),
-                    _ => json.Deserialize<object?>(options),
-                }
-                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
+                _ => json.Deserialize<object?>(options),
+            };
             return new InvalidRequestCause(discriminator, value);
         }
 

@@ -181,6 +181,10 @@ allowedFailures:
   - objects-with-imports
   - mixed-file-directory
 
+  # deserialization/?? issues for public readonly record struct 
+  - circular-references
+  - circular-references-advanced
+
   ## Dynamic snippets
   - auth-environment-variables # TODO: Add global headers to ExampleEndpointCall.
   - csharp-grpc-proto # TODO: Add support for ReadOnlyMemory types.

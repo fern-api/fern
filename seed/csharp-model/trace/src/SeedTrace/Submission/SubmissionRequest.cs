@@ -315,20 +315,25 @@ public record SubmissionRequest
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value =
-                discriminator switch
-                {
-                    "initializeProblemRequest" =>
-                        json.Deserialize<SeedTrace.InitializeProblemRequest>(options),
-                    "initializeWorkspaceRequest" => new { },
-                    "submitV2" => json.Deserialize<SeedTrace.SubmitRequestV2>(options),
-                    "workspaceSubmit" => json.Deserialize<SeedTrace.WorkspaceSubmitRequest>(
-                        options
+            var value = discriminator switch
+            {
+                "initializeProblemRequest" => json.Deserialize<SeedTrace.InitializeProblemRequest>(
+                    options
+                )
+                    ?? throw new JsonException(
+                        "Failed to deserialize SeedTrace.InitializeProblemRequest"
                     ),
-                    "stop" => json.Deserialize<SeedTrace.StopRequest>(options),
-                    _ => json.Deserialize<object?>(options),
-                }
-                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
+                "initializeWorkspaceRequest" => new { },
+                "submitV2" => json.Deserialize<SeedTrace.SubmitRequestV2>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedTrace.SubmitRequestV2"),
+                "workspaceSubmit" => json.Deserialize<SeedTrace.WorkspaceSubmitRequest>(options)
+                    ?? throw new JsonException(
+                        "Failed to deserialize SeedTrace.WorkspaceSubmitRequest"
+                    ),
+                "stop" => json.Deserialize<SeedTrace.StopRequest>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedTrace.StopRequest"),
+                _ => json.Deserialize<object?>(options),
+            };
             return new SubmissionRequest(discriminator, value);
         }
 

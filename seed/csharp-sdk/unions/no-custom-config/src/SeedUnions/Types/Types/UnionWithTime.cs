@@ -215,15 +215,13 @@ public record UnionWithTime
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value =
-                discriminator switch
-                {
-                    "value" => json.GetProperty("value").Deserialize<int>(options),
-                    "date" => json.GetProperty("value").Deserialize<DateOnly>(options),
-                    "datetime" => json.GetProperty("value").Deserialize<DateTime>(options),
-                    _ => json.Deserialize<object?>(options),
-                }
-                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
+            var value = discriminator switch
+            {
+                "value" => json.GetProperty("value").Deserialize<int>(options),
+                "date" => json.GetProperty("value").Deserialize<DateOnly>(options),
+                "datetime" => json.GetProperty("value").Deserialize<DateTime>(options),
+                _ => json.Deserialize<object?>(options),
+            };
             return new UnionWithTime(discriminator, value);
         }
 

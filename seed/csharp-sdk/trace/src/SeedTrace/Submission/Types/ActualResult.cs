@@ -221,17 +221,17 @@ public record ActualResult
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value =
-                discriminator switch
-                {
-                    "value" => json.GetProperty("value")
-                        .Deserialize<SeedTrace.VariableValue>(options),
-                    "exception" => json.Deserialize<SeedTrace.ExceptionInfo>(options),
-                    "exceptionV2" => json.GetProperty("value")
-                        .Deserialize<SeedTrace.ExceptionV2>(options),
-                    _ => json.Deserialize<object?>(options),
-                }
-                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
+            var value = discriminator switch
+            {
+                "value" => json.GetProperty("value").Deserialize<SeedTrace.VariableValue>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedTrace.VariableValue"),
+                "exception" => json.Deserialize<SeedTrace.ExceptionInfo>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedTrace.ExceptionInfo"),
+                "exceptionV2" => json.GetProperty("value")
+                    .Deserialize<SeedTrace.ExceptionV2>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedTrace.ExceptionV2"),
+                _ => json.Deserialize<object?>(options),
+            };
             return new ActualResult(discriminator, value);
         }
 

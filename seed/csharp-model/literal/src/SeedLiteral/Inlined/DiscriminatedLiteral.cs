@@ -269,16 +269,16 @@ public record DiscriminatedLiteral
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value =
-                discriminator switch
-                {
-                    "customName" => json.GetProperty("value").Deserialize<string>(options),
-                    "defaultName" => json.GetProperty("value").Deserialize<string>(options),
-                    "george" => json.GetProperty("value").Deserialize<bool>(options),
-                    "literalGeorge" => json.GetProperty("value").Deserialize<bool>(options),
-                    _ => json.Deserialize<object?>(options),
-                }
-                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
+            var value = discriminator switch
+            {
+                "customName" => json.GetProperty("value").Deserialize<string>(options)
+                    ?? throw new JsonException("Failed to deserialize string"),
+                "defaultName" => json.GetProperty("value").Deserialize<string>(options)
+                    ?? throw new JsonException("Failed to deserialize string"),
+                "george" => json.GetProperty("value").Deserialize<bool>(options),
+                "literalGeorge" => json.GetProperty("value").Deserialize<bool>(options),
+                _ => json.Deserialize<object?>(options),
+            };
             return new DiscriminatedLiteral(discriminator, value);
         }
 

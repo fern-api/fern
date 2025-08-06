@@ -187,14 +187,14 @@ public record Metadata
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value =
-                discriminator switch
-                {
-                    "html" => json.GetProperty("value").Deserialize<string>(options),
-                    "markdown" => json.GetProperty("value").Deserialize<string>(options),
-                    _ => json.Deserialize<object?>(options),
-                }
-                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
+            var value = discriminator switch
+            {
+                "html" => json.GetProperty("value").Deserialize<string>(options)
+                    ?? throw new JsonException("Failed to deserialize string"),
+                "markdown" => json.GetProperty("value").Deserialize<string>(options)
+                    ?? throw new JsonException("Failed to deserialize string"),
+                _ => json.Deserialize<object?>(options),
+            };
             var baseProperties =
                 json.Deserialize<Metadata.BaseProperties>(options)
                 ?? throw new JsonException("Failed to deserialize Metadata.BaseProperties");

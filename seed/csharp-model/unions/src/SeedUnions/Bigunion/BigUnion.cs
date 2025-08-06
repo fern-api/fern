@@ -1358,43 +1358,72 @@ public record BigUnion
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value =
-                discriminator switch
-                {
-                    "normalSweet" => json.Deserialize<SeedUnions.NormalSweet>(options),
-                    "thankfulFactor" => json.Deserialize<SeedUnions.ThankfulFactor>(options),
-                    "jumboEnd" => json.Deserialize<SeedUnions.JumboEnd>(options),
-                    "hastyPain" => json.Deserialize<SeedUnions.HastyPain>(options),
-                    "mistySnow" => json.Deserialize<SeedUnions.MistySnow>(options),
-                    "distinctFailure" => json.Deserialize<SeedUnions.DistinctFailure>(options),
-                    "practicalPrinciple" => json.Deserialize<SeedUnions.PracticalPrinciple>(
-                        options
+            var value = discriminator switch
+            {
+                "normalSweet" => json.Deserialize<SeedUnions.NormalSweet>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.NormalSweet"),
+                "thankfulFactor" => json.Deserialize<SeedUnions.ThankfulFactor>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.ThankfulFactor"),
+                "jumboEnd" => json.Deserialize<SeedUnions.JumboEnd>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.JumboEnd"),
+                "hastyPain" => json.Deserialize<SeedUnions.HastyPain>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.HastyPain"),
+                "mistySnow" => json.Deserialize<SeedUnions.MistySnow>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.MistySnow"),
+                "distinctFailure" => json.Deserialize<SeedUnions.DistinctFailure>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.DistinctFailure"),
+                "practicalPrinciple" => json.Deserialize<SeedUnions.PracticalPrinciple>(options)
+                    ?? throw new JsonException(
+                        "Failed to deserialize SeedUnions.PracticalPrinciple"
                     ),
-                    "limpingStep" => json.Deserialize<SeedUnions.LimpingStep>(options),
-                    "vibrantExcitement" => json.Deserialize<SeedUnions.VibrantExcitement>(options),
-                    "activeDiamond" => json.Deserialize<SeedUnions.ActiveDiamond>(options),
-                    "popularLimit" => json.Deserialize<SeedUnions.PopularLimit>(options),
-                    "falseMirror" => json.Deserialize<SeedUnions.FalseMirror>(options),
-                    "primaryBlock" => json.Deserialize<SeedUnions.PrimaryBlock>(options),
-                    "rotatingRatio" => json.Deserialize<SeedUnions.RotatingRatio>(options),
-                    "colorfulCover" => json.Deserialize<SeedUnions.ColorfulCover>(options),
-                    "disloyalValue" => json.Deserialize<SeedUnions.DisloyalValue>(options),
-                    "gruesomeCoach" => json.Deserialize<SeedUnions.GruesomeCoach>(options),
-                    "totalWork" => json.Deserialize<SeedUnions.TotalWork>(options),
-                    "harmoniousPlay" => json.Deserialize<SeedUnions.HarmoniousPlay>(options),
-                    "uniqueStress" => json.Deserialize<SeedUnions.UniqueStress>(options),
-                    "unwillingSmoke" => json.Deserialize<SeedUnions.UnwillingSmoke>(options),
-                    "frozenSleep" => json.Deserialize<SeedUnions.FrozenSleep>(options),
-                    "diligentDeal" => json.Deserialize<SeedUnions.DiligentDeal>(options),
-                    "attractiveScript" => json.Deserialize<SeedUnions.AttractiveScript>(options),
-                    "hoarseMouse" => json.Deserialize<SeedUnions.HoarseMouse>(options),
-                    "circularCard" => json.Deserialize<SeedUnions.CircularCard>(options),
-                    "potableBad" => json.Deserialize<SeedUnions.PotableBad>(options),
-                    "triangularRepair" => json.Deserialize<SeedUnions.TriangularRepair>(options),
-                    "gaseousRoad" => json.Deserialize<SeedUnions.GaseousRoad>(options),
-                    _ => json.Deserialize<object?>(options),
-                }
-                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
+                "limpingStep" => json.Deserialize<SeedUnions.LimpingStep>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.LimpingStep"),
+                "vibrantExcitement" => json.Deserialize<SeedUnions.VibrantExcitement>(options)
+                    ?? throw new JsonException(
+                        "Failed to deserialize SeedUnions.VibrantExcitement"
+                    ),
+                "activeDiamond" => json.Deserialize<SeedUnions.ActiveDiamond>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.ActiveDiamond"),
+                "popularLimit" => json.Deserialize<SeedUnions.PopularLimit>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.PopularLimit"),
+                "falseMirror" => json.Deserialize<SeedUnions.FalseMirror>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.FalseMirror"),
+                "primaryBlock" => json.Deserialize<SeedUnions.PrimaryBlock>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.PrimaryBlock"),
+                "rotatingRatio" => json.Deserialize<SeedUnions.RotatingRatio>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.RotatingRatio"),
+                "colorfulCover" => json.Deserialize<SeedUnions.ColorfulCover>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.ColorfulCover"),
+                "disloyalValue" => json.Deserialize<SeedUnions.DisloyalValue>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.DisloyalValue"),
+                "gruesomeCoach" => json.Deserialize<SeedUnions.GruesomeCoach>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.GruesomeCoach"),
+                "totalWork" => json.Deserialize<SeedUnions.TotalWork>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.TotalWork"),
+                "harmoniousPlay" => json.Deserialize<SeedUnions.HarmoniousPlay>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.HarmoniousPlay"),
+                "uniqueStress" => json.Deserialize<SeedUnions.UniqueStress>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.UniqueStress"),
+                "unwillingSmoke" => json.Deserialize<SeedUnions.UnwillingSmoke>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.UnwillingSmoke"),
+                "frozenSleep" => json.Deserialize<SeedUnions.FrozenSleep>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.FrozenSleep"),
+                "diligentDeal" => json.Deserialize<SeedUnions.DiligentDeal>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.DiligentDeal"),
+                "attractiveScript" => json.Deserialize<SeedUnions.AttractiveScript>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.AttractiveScript"),
+                "hoarseMouse" => json.Deserialize<SeedUnions.HoarseMouse>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.HoarseMouse"),
+                "circularCard" => json.Deserialize<SeedUnions.CircularCard>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.CircularCard"),
+                "potableBad" => json.Deserialize<SeedUnions.PotableBad>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.PotableBad"),
+                "triangularRepair" => json.Deserialize<SeedUnions.TriangularRepair>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.TriangularRepair"),
+                "gaseousRoad" => json.Deserialize<SeedUnions.GaseousRoad>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedUnions.GaseousRoad"),
+                _ => json.Deserialize<object?>(options),
+            };
             var baseProperties =
                 json.Deserialize<BigUnion.BaseProperties>(options)
                 ?? throw new JsonException("Failed to deserialize BigUnion.BaseProperties");

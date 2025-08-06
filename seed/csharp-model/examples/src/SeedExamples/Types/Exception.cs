@@ -172,14 +172,13 @@ public record Exception
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value =
-                discriminator switch
-                {
-                    "generic" => json.Deserialize<SeedExamples.ExceptionInfo>(options),
-                    "timeout" => new { },
-                    _ => json.Deserialize<object?>(options),
-                }
-                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
+            var value = discriminator switch
+            {
+                "generic" => json.Deserialize<SeedExamples.ExceptionInfo>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedExamples.ExceptionInfo"),
+                "timeout" => new { },
+                _ => json.Deserialize<object?>(options),
+            };
             return new Exception(discriminator, value);
         }
 

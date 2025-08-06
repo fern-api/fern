@@ -185,14 +185,14 @@ public record Resource
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'resource_type' is null");
 
-            var value =
-                discriminator switch
-                {
-                    "user" => json.Deserialize<SeedMixedCase.User>(options),
-                    "Organization" => json.Deserialize<SeedMixedCase.Organization>(options),
-                    _ => json.Deserialize<object?>(options),
-                }
-                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
+            var value = discriminator switch
+            {
+                "user" => json.Deserialize<SeedMixedCase.User>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedMixedCase.User"),
+                "Organization" => json.Deserialize<SeedMixedCase.Organization>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedMixedCase.Organization"),
+                _ => json.Deserialize<object?>(options),
+            };
             var baseProperties =
                 json.Deserialize<Resource.BaseProperties>(options)
                 ?? throw new JsonException("Failed to deserialize Resource.BaseProperties");

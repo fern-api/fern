@@ -593,27 +593,42 @@ public record CodeExecutionUpdate
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
-            var value =
-                discriminator switch
-                {
-                    "buildingExecutor" => json.Deserialize<SeedTrace.BuildingExecutorResponse>(
-                        options
+            var value = discriminator switch
+            {
+                "buildingExecutor" => json.Deserialize<SeedTrace.BuildingExecutorResponse>(options)
+                    ?? throw new JsonException(
+                        "Failed to deserialize SeedTrace.BuildingExecutorResponse"
                     ),
-                    "running" => json.Deserialize<SeedTrace.RunningResponse>(options),
-                    "errored" => json.Deserialize<SeedTrace.ErroredResponse>(options),
-                    "stopped" => json.Deserialize<SeedTrace.StoppedResponse>(options),
-                    "graded" => json.Deserialize<SeedTrace.GradedResponse>(options),
-                    "gradedV2" => json.Deserialize<SeedTrace.GradedResponseV2>(options),
-                    "workspaceRan" => json.Deserialize<SeedTrace.WorkspaceRanResponse>(options),
-                    "recording" => json.Deserialize<SeedTrace.RecordingResponseNotification>(
-                        options
+                "running" => json.Deserialize<SeedTrace.RunningResponse>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedTrace.RunningResponse"),
+                "errored" => json.Deserialize<SeedTrace.ErroredResponse>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedTrace.ErroredResponse"),
+                "stopped" => json.Deserialize<SeedTrace.StoppedResponse>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedTrace.StoppedResponse"),
+                "graded" => json.Deserialize<SeedTrace.GradedResponse>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedTrace.GradedResponse"),
+                "gradedV2" => json.Deserialize<SeedTrace.GradedResponseV2>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedTrace.GradedResponseV2"),
+                "workspaceRan" => json.Deserialize<SeedTrace.WorkspaceRanResponse>(options)
+                    ?? throw new JsonException(
+                        "Failed to deserialize SeedTrace.WorkspaceRanResponse"
                     ),
-                    "recorded" => json.Deserialize<SeedTrace.RecordedResponseNotification>(options),
-                    "invalidRequest" => json.Deserialize<SeedTrace.InvalidRequestResponse>(options),
-                    "finished" => json.Deserialize<SeedTrace.FinishedResponse>(options),
-                    _ => json.Deserialize<object?>(options),
-                }
-                ?? throw new JsonException($"Failed to deserialize union value of {discriminator}");
+                "recording" => json.Deserialize<SeedTrace.RecordingResponseNotification>(options)
+                    ?? throw new JsonException(
+                        "Failed to deserialize SeedTrace.RecordingResponseNotification"
+                    ),
+                "recorded" => json.Deserialize<SeedTrace.RecordedResponseNotification>(options)
+                    ?? throw new JsonException(
+                        "Failed to deserialize SeedTrace.RecordedResponseNotification"
+                    ),
+                "invalidRequest" => json.Deserialize<SeedTrace.InvalidRequestResponse>(options)
+                    ?? throw new JsonException(
+                        "Failed to deserialize SeedTrace.InvalidRequestResponse"
+                    ),
+                "finished" => json.Deserialize<SeedTrace.FinishedResponse>(options)
+                    ?? throw new JsonException("Failed to deserialize SeedTrace.FinishedResponse"),
+                _ => json.Deserialize<object?>(options),
+            };
             return new CodeExecutionUpdate(discriminator, value);
         }
 
