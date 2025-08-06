@@ -217,7 +217,7 @@ export class SubClientGenerator {
                 name: queryParam.name.name.snakeCase.safeName,
                 type: generateRustTypeForTypeReference(queryParam.valueType),
                 optional: true,
-                isRef: false // Query parameters should be Option<T>, not Option<&T>
+                isRef: false
             });
         });
     }
@@ -275,6 +275,26 @@ export class SubClientGenerator {
             container: () => true, // Collections passed by reference
             unknown: () => true,
             _other: () => true
+        });
+    }
+
+    private isOptionalType(typeRef: TypeReference): boolean {
+        return TypeReference._visit(typeRef, {
+            primitive: () => false,
+            named: () => false,
+            container: (container) => {
+                return container._visit({
+                    optional: () => true,
+                    nullable: () => true,
+                    list: () => false,
+                    set: () => false,
+                    map: () => false,
+                    literal: () => false,
+                    _other: () => false
+                });
+            },
+            unknown: () => false,
+            _other: () => false
         });
     }
 
@@ -380,7 +400,10 @@ export class SubClientGenerator {
         const queryParamStatements = queryParams.map((queryParam) => {
             const paramName = queryParam.name.name.snakeCase.safeName;
             const wireValue = queryParam.name.wireValue;
-            return `if let Some(Some(value)) = ${paramName} {
+            const isOptionalType = this.isOptionalType(queryParam.valueType);
+            const pattern = isOptionalType ? `Some(Some(value))` : `Some(value)`;
+            
+            return `if let ${pattern} = ${paramName} {
                 query_params.push(("${wireValue}".to_string(), ${this.getQueryParameterConversion(queryParam, paramName)}));
             }`;
         });
