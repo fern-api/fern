@@ -41,7 +41,6 @@ export class Property extends AstNode {
     public write(writer: Writer): void {
         if (this.docs != null) {
             this.docs.write(writer);
-            writer.newLine();
         }
         if (this.accessLevel != null) {
             writer.write(this.accessLevel);
