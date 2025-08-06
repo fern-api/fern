@@ -286,10 +286,7 @@ func (s *SseStreamReader) nextEvent() (*SseEvent, error) {
 			return nil, errors.New("sseStreamReader.ReadFromStream: unknown line type: " + string(_bytes))
 		}
 	}
-	if event.data == nil {
-		return &event, io.EOF
-	}
-	return &event, nil
+	return &event, io.EOF
 }
 
 type SseEvent struct {
