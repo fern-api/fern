@@ -6,14 +6,14 @@ export declare namespace StructGenerator {
         rawName: string;
         type: swift.Type;
         value: swift.Expression;
-        docs?: swift.DocComment;
+        docsContent?: string;
     }
 
     interface DataPropertyDefinition {
         unsafeName: string;
         rawName: string;
         type: swift.Type;
-        docs?: swift.DocComment;
+        docsContent?: string;
     }
 
     interface Args {
@@ -21,7 +21,7 @@ export declare namespace StructGenerator {
         constantPropertyDefinitions: ConstantPropertyDefinition[];
         dataPropertyDefinitions: DataPropertyDefinition[];
         additionalProperties: boolean;
-        docs?: swift.DocComment;
+        docsContent?: string;
     }
 }
 
@@ -30,20 +30,20 @@ export class StructGenerator {
     private readonly constantPropertyDefinitions: StructGenerator.ConstantPropertyDefinition[];
     private readonly dataPropertyDefinitions: StructGenerator.DataPropertyDefinition[];
     private readonly additionalPropertiesInfo;
-    private readonly docs?: swift.DocComment;
+    private readonly docsContent?: string;
 
     public constructor({
         name,
         constantPropertyDefinitions,
         dataPropertyDefinitions,
         additionalProperties,
-        docs
+        docsContent
     }: StructGenerator.Args) {
         this.name = name;
         this.constantPropertyDefinitions = constantPropertyDefinitions;
         this.dataPropertyDefinitions = dataPropertyDefinitions;
         this.additionalPropertiesInfo = additionalProperties ? this.getAdditionalPropertiesInfo() : undefined;
-        this.docs = docs;
+        this.docsContent = docsContent;
     }
 
     private getAdditionalPropertiesInfo = () => {
@@ -87,7 +87,7 @@ export class StructGenerator {
             initializers: this.generateInitializers(dataProperties),
             methods: this.generateMethods(constantProperties, dataProperties),
             nestedTypes: this.generateNestedTypes(dataProperties),
-            docs: this.docs
+            docs: this.docsContent ? swift.docComment({ summary: this.docsContent }) : undefined
         });
     }
 
@@ -99,7 +99,7 @@ export class StructGenerator {
                 declarationType: swift.DeclarationType.Let,
                 type: p.type,
                 defaultValue: p.value,
-                docs: p.docs
+                docs: p.docsContent ? swift.docComment({ summary: p.docsContent }) : undefined
             })
         );
     }
@@ -111,7 +111,7 @@ export class StructGenerator {
                 accessLevel: swift.AccessLevel.Public,
                 declarationType: swift.DeclarationType.Let,
                 type: p.type,
-                docs: p.docs
+                docs: p.docsContent ? swift.docComment({ summary: p.docsContent }) : undefined
             })
         );
     }

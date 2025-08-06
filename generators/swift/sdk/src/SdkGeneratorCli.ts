@@ -126,9 +126,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         ),
                         properties: endpoint.requestBody.properties,
                         extendedProperties: endpoint.requestBody.extendedProperties,
-                        docs: endpoint.requestBody.docs
-                            ? swift.docComment({ summary: endpoint.requestBody.docs })
-                            : undefined,
+                        docsContent: endpoint.requestBody.docs,
                         context
                     });
                     const struct = generator.generate();
@@ -176,7 +174,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         name: context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
                         properties: otd.properties,
                         extendedProperties: otd.extendedProperties,
-                        docs: typeDeclaration.docs ? swift.docComment({ summary: typeDeclaration.docs }) : undefined,
+                        docsContent: typeDeclaration.docs,
                         context
                     });
                     const struct = generator.generate();

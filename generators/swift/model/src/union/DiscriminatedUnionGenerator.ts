@@ -253,7 +253,7 @@ export class DiscriminatedUnionGenerator {
                         unsafeName: p.name.name.camelCase.unsafeName,
                         rawName: p.name.wireValue,
                         type: this.context.getSwiftTypeForTypeReference(p.valueType),
-                        docs: p.docs ? swift.docComment({ summary: p.docs }) : undefined
+                        docsContent: p.docs
                     }))
                 );
             } else if (singleUnionType.shape.propertiesType === "noProperties") {
@@ -267,7 +267,7 @@ export class DiscriminatedUnionGenerator {
                 constantPropertyDefinitions,
                 dataPropertyDefinitions,
                 additionalProperties: true,
-                docs: singleUnionType.docs ? swift.docComment({ summary: singleUnionType.docs }) : undefined
+                docsContent: singleUnionType.docs
             }).generate();
         });
 
