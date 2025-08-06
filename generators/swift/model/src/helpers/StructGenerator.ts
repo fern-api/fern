@@ -361,7 +361,8 @@ export class StructGenerator {
                     unsafeName: property.unsafeName,
                     rawValue: property.rawName
                 }))
-            ]
+            ],
+            docs: swift.docComment({ summary: "Keys for encoding/decoding struct properties." })
         });
     }
 }
