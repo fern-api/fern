@@ -2,10 +2,19 @@ package core
 
 import (
 	"bufio"
+	"bytes"
 	"encoding/json"
+	"errors"
 	"io"
 	"net/http"
 	"strings"
+)
+
+type StreamFormat string
+
+const (
+	StreamFormatSSE   StreamFormat = "sse"
+	StreamFormatEmpty StreamFormat = ""
 )
 
 // defaultStreamDelimiter is the default stream delimiter used to split messages.
@@ -44,6 +53,15 @@ func WithPrefix(prefix string) StreamOption {
 func WithTerminator(terminator string) StreamOption {
 	return func(opts *streamOptions) {
 		opts.terminator = terminator
+	}
+}
+
+// WithFormat overrides the isSSE flag for the Stream.
+//
+// By default, the Stream is not SSE.
+func WithFormat(format StreamFormat) StreamOption {
+	return func(opts *streamOptions) {
+		opts.format = format
 	}
 }
 
@@ -94,30 +112,33 @@ func newStreamReader(reader io.Reader, options *streamOptions) streamReader {
 		if options.delimiter == "" {
 			options.delimiter = string(defaultStreamDelimiter)
 		}
+		if options.format == StreamFormatSSE {
+			return newSseStreamReader(reader, options)
+		}
 		return newScannerStreamReader(reader, options)
 	}
 	return newBufferStreamReader(reader)
 }
 
-// bufferStreamReader reads data from a *bufio.Reader, which splits
+// BufferStreamReader reads data from a *bufio.Reader, which splits
 // on newlines.
-type bufferStreamReader struct {
+type BufferStreamReader struct {
 	reader *bufio.Reader
 }
 
-func newBufferStreamReader(reader io.Reader) *bufferStreamReader {
-	return &bufferStreamReader{
+func newBufferStreamReader(reader io.Reader) *BufferStreamReader {
+	return &BufferStreamReader{
 		reader: bufio.NewReader(reader),
 	}
 }
 
-func (b *bufferStreamReader) ReadFromStream() ([]byte, error) {
+func (b *BufferStreamReader) ReadFromStream() ([]byte, error) {
 	return b.reader.ReadBytes(defaultStreamDelimiter)
 }
 
-// scannerStreamReader reads data from a *bufio.Scanner, which allows for
+// ScannerStreamReader reads data from a *bufio.Scanner, which allows for
 // configurable delimiters.
-type scannerStreamReader struct {
+type ScannerStreamReader struct {
 	scanner *bufio.Scanner
 	options *streamOptions
 }
@@ -125,9 +146,9 @@ type scannerStreamReader struct {
 func newScannerStreamReader(
 	reader io.Reader,
 	options *streamOptions,
-) *scannerStreamReader {
+) *ScannerStreamReader {
 	scanner := bufio.NewScanner(reader)
-	stream := &scannerStreamReader{
+	stream := &ScannerStreamReader{
 		scanner: scanner,
 		options: options,
 	}
@@ -144,7 +165,7 @@ func newScannerStreamReader(
 	return stream
 }
 
-func (s *scannerStreamReader) ReadFromStream() ([]byte, error) {
+func (s *ScannerStreamReader) ReadFromStream() ([]byte, error) {
 	if s.scanner.Scan() {
 		return s.scanner.Bytes(), nil
 	}
@@ -154,7 +175,7 @@ func (s *scannerStreamReader) ReadFromStream() ([]byte, error) {
 	return nil, io.EOF
 }
 
-func (s *scannerStreamReader) parse(bytes []byte) (int, []byte, error) {
+func (s *ScannerStreamReader) parse(bytes []byte) (int, []byte, error) {
 	var startIndex int
 	if s.options != nil && s.options.prefix != "" {
 		if i := strings.Index(string(bytes), s.options.prefix); i >= 0 {
@@ -172,7 +193,7 @@ func (s *scannerStreamReader) parse(bytes []byte) (int, []byte, error) {
 	return n, parsedData, nil
 }
 
-func (s *scannerStreamReader) isTerminated(bytes []byte) bool {
+func (s *ScannerStreamReader) isTerminated(bytes []byte) bool {
 	if s.options == nil || s.options.terminator == "" {
 		return false
 	}
@@ -183,8 +204,104 @@ type streamOptions struct {
 	delimiter  string
 	prefix     string
 	terminator string
+	format     StreamFormat
 }
 
 func (s *streamOptions) isEmpty() bool {
 	return s.delimiter == "" && s.prefix == "" && s.terminator == ""
 }
+
+// SseStreamReader reads data from a *bufio.Scanner, which allows for
+// configurable delimiters.
+type SseStreamReader struct {
+	scanner *bufio.Scanner
+	options *streamOptions
+}
+
+func newSseStreamReader(
+	reader io.Reader,
+	options *streamOptions,
+) *SseStreamReader {
+	scanner := bufio.NewScanner(reader)
+	stream := &SseStreamReader{
+		scanner: scanner,
+		options: options,
+	}
+	scanner.Split(func(bytes []byte, atEOF bool) (int, []byte, error) {
+		if atEOF && len(bytes) == 0 {
+			return 0, nil, nil
+		}
+		n, data, err := stream.parse(bytes)
+		if stream.isTerminated(data) {
+			return 0, nil, io.EOF
+		}
+		return n, data, err
+	})
+	return stream
+}
+
+func (s *SseStreamReader) parse(bytes []byte) (int, []byte, error) {
+	delimIndex := strings.Index(string(bytes), s.options.delimiter)
+	if delimIndex < 0 {
+		return len(bytes), bytes, nil
+	}
+	endIndex := delimIndex + len(s.options.delimiter)
+	parsedData := bytes[:delimIndex]
+	n := endIndex
+	return n, parsedData, nil
+}
+
+func (s *SseStreamReader) isTerminated(bytes []byte) bool {
+	if s.options == nil || s.options.terminator == "" {
+		return false
+	}
+	return strings.Contains(string(bytes), s.options.terminator)
+}
+
+func (s *SseStreamReader) ReadFromStream() ([]byte, error) {
+
+	event, err := s.nextEvent()
+	if err != nil {
+		return nil, err
+	}
+	return event.data, nil
+}
+
+func (s *SseStreamReader) nextEvent() (*SseEvent, error) {
+
+	event := SseEvent{}
+	for s.scanner.Scan() {
+		_bytes := s.scanner.Bytes()
+		if bytes.HasPrefix(_bytes, sseDataPrefix) {
+			event.data = append(event.data, _bytes[len(sseDataPrefix):]...)
+		} else if bytes.HasPrefix(_bytes, sseIdPrefix) {
+			event.id = append(event.id, _bytes[len(sseIdPrefix):]...)
+		} else if bytes.HasPrefix(_bytes, sseEventPrefix) {
+			event.event = append(event.event, _bytes[len(sseEventPrefix):]...)
+		} else if bytes.HasPrefix(_bytes, sseRetryPrefix) {
+			event.retry = append(event.retry, _bytes[len(sseRetryPrefix):]...)
+		} else if string(_bytes) == "" {
+			return &event, nil
+		} else {
+			return nil, errors.New("sseStreamReader.ReadFromStream: unknown line type: " + string(_bytes))
+		}
+	}
+	if event.data == nil {
+		return &event, io.EOF
+	}
+	return &event, nil
+}
+
+type SseEvent struct {
+	id    []byte
+	data  []byte
+	event []byte
+	retry []byte
+}
+
+var (
+	sseIdPrefix    = []byte("id: ")
+	sseDataPrefix  = []byte("data: ")
+	sseEventPrefix = []byte("event: ")
+	sseRetryPrefix = []byte("retry: ")
+)
