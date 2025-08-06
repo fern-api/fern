@@ -1,6 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add JSON Merge Patch (RFC 7396) support. Endpoints with `content-type: application/merge-patch+json` 
+        now use `JsonMergePatch<T>` instead of `Optional<T>` to distinguish between absent fields, 
+        explicit nulls, and present values.
+      type: feat
+  createdAt: '2025-08-06'
+  irVersion: 58
+  version: 1.7.0
+- changelogEntry:
+    - summary: |
         Upgrade to irV58
       type: fix
   createdAt: '2025-06-03'

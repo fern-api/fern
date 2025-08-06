@@ -51,7 +51,6 @@ public final class JsonMergePatchGenerator extends AbstractFileGenerator {
                 .addEnumConstant("PRESENT")
                 .build();
         
-        // Fields
         FieldSpec stateField = FieldSpec.builder(ClassName.get(className.packageName(), "JsonMergePatch", "State"), "state")
                 .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
                 .build();
@@ -60,7 +59,6 @@ public final class JsonMergePatchGenerator extends AbstractFileGenerator {
                 .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
                 .build();
         
-        // Constructor
         MethodSpec constructor = MethodSpec.constructorBuilder()
                 .addModifiers(Modifier.PRIVATE)
                 .addParameter(ClassName.get(className.packageName(), "JsonMergePatch", "State"), "state")
@@ -69,7 +67,6 @@ public final class JsonMergePatchGenerator extends AbstractFileGenerator {
                 .addStatement("this.value = value")
                 .build();
         
-        // Static factory methods
         MethodSpec absent = MethodSpec.methodBuilder("absent")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .addTypeVariable(typeVariable)
@@ -106,7 +103,6 @@ public final class JsonMergePatchGenerator extends AbstractFileGenerator {
                 .addStatement("return value == null ? ofNull() : of(value)")
                 .build();
         
-        // Query methods
         MethodSpec isAbsent = MethodSpec.methodBuilder("isAbsent")
                 .addModifiers(Modifier.PUBLIC)
                 .returns(boolean.class)
@@ -135,7 +131,6 @@ public final class JsonMergePatchGenerator extends AbstractFileGenerator {
                 .addStatement("return state != $T.ABSENT", ClassName.get(className.packageName(), "JsonMergePatch", "State"))
                 .build();
         
-        // Getter methods
         MethodSpec get = MethodSpec.methodBuilder("get")
                 .addModifiers(Modifier.PUBLIC)
                 .returns(typeVariable)
@@ -162,7 +157,6 @@ public final class JsonMergePatchGenerator extends AbstractFileGenerator {
                         ClassName.get(className.packageName(), "JsonMergePatch", "State"), Optional.class, Optional.class)
                 .build();
         
-        // Build the class
         TypeSpec jsonMergePatchSpec = TypeSpec.classBuilder("JsonMergePatch")
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addTypeVariable(typeVariable)

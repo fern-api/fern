@@ -88,7 +88,6 @@ public final class Cli extends AbstractGeneratorCli<SpringCustomConfig, SpringCu
         GeneratedObjectMapper objectMapper = objectMappersGenerator.generateFile();
         this.addGeneratedFile(objectMapper);
         
-        // Add JsonMergePatch for merge patch support
         JsonMergePatchGenerator jsonMergePatchGenerator = new JsonMergePatchGenerator(context);
         GeneratedJavaFile jsonMergePatch = jsonMergePatchGenerator.generateFile();
         this.addGeneratedFile(jsonMergePatch);
