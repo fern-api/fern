@@ -5,7 +5,6 @@ on:
   push:
     branches:
       - main
-      - "dak/ci/swift-generator"
     paths:
       - "generators/swift/sdk/versions.yml"
   workflow_dispatch:
@@ -21,10 +20,9 @@ jobs:
     steps:
       - name: Checkout repo at current ref
         uses: actions/checkout@v4
-        # Uncomment before merging
-        # with:
-        #   ref: main
-        #   fetch-depth: 2
+        with:
+          ref: main
+          fetch-depth: 2
       - name: automated publish
         if: ${{ github.event_name == 'push' }}
         uses: ./.github/actions/publish-generator
