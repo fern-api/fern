@@ -7,6 +7,10 @@ public final class EventsClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// List all user events.
+    ///
+    /// - Parameter limit: The maximum number of results to return.
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func listEvents(limit: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> [Event] {
         return try await httpClient.performRequest(
             method: .get,

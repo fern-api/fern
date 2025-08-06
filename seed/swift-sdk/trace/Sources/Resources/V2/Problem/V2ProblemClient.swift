@@ -5,6 +5,9 @@ public final class V2ProblemClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// Returns lightweight versions of all problems
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getLightweightProblems(requestOptions: RequestOptions? = nil) async throws -> [LightweightProblemInfoV2] {
         return try await httpClient.performRequest(
             method: .get,
@@ -14,6 +17,9 @@ public final class V2ProblemClient: Sendable {
         )
     }
 
+    /// Returns latest versions of all problems
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getProblems(requestOptions: RequestOptions? = nil) async throws -> [ProblemInfoV2] {
         return try await httpClient.performRequest(
             method: .get,
@@ -23,6 +29,10 @@ public final class V2ProblemClient: Sendable {
         )
     }
 
+    /// Returns latest version of a problem
+    ///
+    /// - Parameter problemId: 
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getLatestProblem(problemId: String, requestOptions: RequestOptions? = nil) async throws -> ProblemInfoV2 {
         return try await httpClient.performRequest(
             method: .get,
@@ -32,6 +42,11 @@ public final class V2ProblemClient: Sendable {
         )
     }
 
+    /// Returns requested version of a problem
+    ///
+    /// - Parameter problemId: 
+    /// - Parameter problemVersion: 
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getProblemVersion(problemId: String, problemVersion: String, requestOptions: RequestOptions? = nil) async throws -> ProblemInfoV2 {
         return try await httpClient.performRequest(
             method: .get,
