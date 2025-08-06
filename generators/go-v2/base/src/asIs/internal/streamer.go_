@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/fern-api/faux-fern-go-sdk/core"
+	"github.com/fern-api/fern-go/internal/generator/sdk/core"
 )
 
 const (
