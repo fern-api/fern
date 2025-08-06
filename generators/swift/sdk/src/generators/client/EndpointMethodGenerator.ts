@@ -37,10 +37,12 @@ export class EndpointMethodGenerator {
             docs: endpoint.docs
                 ? swift.docComment({
                       summary: endpoint.docs,
-                      parameters: parameters.map((p) => ({
-                          name: p.unsafeName,
-                          description: p.docsContent ?? ""
-                      }))
+                      parameters: parameters
+                          .map((p) => ({
+                              name: p.unsafeName,
+                              description: p.docsContent ?? ""
+                          }))
+                          .filter((p) => p.description !== "")
                   })
                 : undefined
         });

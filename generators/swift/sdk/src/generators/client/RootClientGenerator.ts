@@ -52,10 +52,12 @@ export class RootClientGenerator {
             docs: swift.docComment({
                 summary:
                     "Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.",
-                parameters: initializerParams.map((p) => ({
-                    name: p.unsafeName,
-                    description: p.docsContent ?? ""
-                }))
+                parameters: initializerParams
+                    .map((p) => ({
+                        name: p.unsafeName,
+                        description: p.docsContent ?? ""
+                    }))
+                    .filter((p) => p.description !== "")
             })
         });
     }
