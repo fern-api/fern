@@ -9,6 +9,7 @@ import { BasicAuthValues } from "./BasicAuthValues";
 import { BearerAuthValues } from "./BearerAuthValues";
 import { HeaderAuthValues } from "./HeaderAuthValues";
 import { OAuthValues } from "./OAuthValues";
+import { InferredAuthValues } from "./InferredAuthValues";
 
 export const AuthValues: core.serialization.Schema<serializers.dynamic.AuthValues.Raw, FernIr.dynamic.AuthValues> =
     core.serialization
@@ -17,6 +18,7 @@ export const AuthValues: core.serialization.Schema<serializers.dynamic.AuthValue
             bearer: BearerAuthValues,
             header: HeaderAuthValues,
             oauth: OAuthValues,
+            inferred: InferredAuthValues,
         })
         .transform<FernIr.dynamic.AuthValues>({
             transform: (value) => {
@@ -29,6 +31,8 @@ export const AuthValues: core.serialization.Schema<serializers.dynamic.AuthValue
                         return FernIr.dynamic.AuthValues.header(value);
                     case "oauth":
                         return FernIr.dynamic.AuthValues.oauth(value);
+                    case "inferred":
+                        return FernIr.dynamic.AuthValues.inferred(value);
                     default:
                         return value as FernIr.dynamic.AuthValues;
                 }
@@ -37,7 +41,7 @@ export const AuthValues: core.serialization.Schema<serializers.dynamic.AuthValue
         });
 
 export declare namespace AuthValues {
-    export type Raw = AuthValues.Basic | AuthValues.Bearer | AuthValues.Header | AuthValues.Oauth;
+    export type Raw = AuthValues.Basic | AuthValues.Bearer | AuthValues.Header | AuthValues.Oauth | AuthValues.Inferred;
 
     export interface Basic extends BasicAuthValues.Raw {
         type: "basic";
@@ -53,5 +57,9 @@ export declare namespace AuthValues {
 
     export interface Oauth extends OAuthValues.Raw {
         type: "oauth";
+    }
+
+    export interface Inferred extends InferredAuthValues.Raw {
+        type: "inferred";
     }
 }

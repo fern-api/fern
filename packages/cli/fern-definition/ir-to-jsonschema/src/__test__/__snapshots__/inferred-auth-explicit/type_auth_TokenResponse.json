@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "properties": {
+    "access_token": {
+      "type": "string"
+    },
+    "expires_in": {
+      "type": "integer"
+    },
+    "refresh_token": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "access_token",
+    "expires_in"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

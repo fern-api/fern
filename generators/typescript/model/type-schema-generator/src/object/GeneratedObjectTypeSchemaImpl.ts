@@ -3,7 +3,7 @@ import { Zurg, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons"
 import { GeneratedObjectTypeSchema, ModelContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
 
-import { ObjectTypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { ObjectTypeDeclaration } from "@fern-fern/ir-sdk";
 
 import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
 

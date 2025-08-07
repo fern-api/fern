@@ -1,7 +1,7 @@
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedRequestWrapper } from "@fern-typescript/contexts";
 
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk";
 
 import { GeneratedRequestWrapperImpl } from "./GeneratedRequestWrapperImpl";
 

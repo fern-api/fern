@@ -4,7 +4,7 @@ import { ErrorResolver } from "@fern-typescript/resolvers";
 import { SdkErrorSchemaGenerator } from "@fern-typescript/sdk-error-schema-generator";
 import { SourceFile } from "ts-morph";
 
-import { DeclaredErrorName } from "@fern-fern/ir-sdk/api";
+import { DeclaredErrorName } from "@fern-fern/ir-sdk";
 
 import { SdkErrorDeclarationReferencer } from "../../declaration-referencers/SdkErrorDeclarationReferencer";
 import { getSchemaImportStrategy } from "../getSchemaImportStrategy";

@@ -3,16 +3,21 @@
  */
 
 import * as core from "./core/index.js";
-import { Auth } from "./api/resources/auth/client/Client.js";
 import { mergeHeaders } from "./core/headers.js";
+import { InferredAuthProvider } from "./auth/InferredAuthProvider.js";
+import { Auth } from "./api/resources/auth/client/Client.js";
+import { NestedNoAuth } from "./api/resources/nestedNoAuth/client/Client.js";
+import { Nested } from "./api/resources/nested/client/Client.js";
+import { Simple } from "./api/resources/simple/client/Client.js";
 
 export declare namespace SeedOauthClientCredentialsClient {
     export interface Options {
         environment: core.Supplier<string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
-        clientId: core.Supplier<string>;
-        clientSecret: core.Supplier<string>;
+        clientId: string;
+        clientSecret: string;
+        scope?: string;
         /** Additional headers to include in requests. */
         headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
@@ -33,8 +38,11 @@ export declare namespace SeedOauthClientCredentialsClient {
 
 export class SeedOauthClientCredentialsClient {
     protected readonly _options: SeedOauthClientCredentialsClient.Options;
-    private readonly _oauthTokenProvider: core.OAuthTokenProvider;
+    protected readonly _authProvider: core.AbstractAuthProvider;
     protected _auth: Auth | undefined;
+    protected _nestedNoAuth: NestedNoAuth | undefined;
+    protected _nested: Nested | undefined;
+    protected _simple: Simple | undefined;
 
     constructor(_options: SeedOauthClientCredentialsClient.Options) {
         this._options = {
@@ -51,21 +59,25 @@ export class SeedOauthClientCredentialsClient {
                 _options?.headers,
             ),
         };
-
-        this._oauthTokenProvider = new core.OAuthTokenProvider({
-            clientId: this._options.clientId,
-            clientSecret: this._options.clientSecret,
-            authClient: new Auth({
-                ...this._options,
-                environment: this._options.environment,
-            }),
+        this._authProvider = new InferredAuthProvider({
+            client: this,
+            authTokenParameters: { ...this._options },
         });
     }
 
     public get auth(): Auth {
-        return (this._auth ??= new Auth({
-            ...this._options,
-            token: async () => await this._oauthTokenProvider.getToken(),
-        }));
+        return (this._auth ??= new Auth(this._options));
+    }
+
+    public get nestedNoAuth(): NestedNoAuth {
+        return (this._nestedNoAuth ??= new NestedNoAuth(this._options));
+    }
+
+    public get nested(): Nested {
+        return (this._nested ??= new Nested({ ...this._options, authProvider: this._authProvider }));
+    }
+
+    public get simple(): Simple {
+        return (this._simple ??= new Simple({ ...this._options, authProvider: this._authProvider }));
     }
 }

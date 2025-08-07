@@ -7,7 +7,7 @@ import {
     EnvironmentId,
     SingleBaseUrlEnvironment,
     SingleBaseUrlEnvironments
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-fern/ir-sdk";
 
 export declare namespace GeneratedSingleUrlEnvironmentsImpl {
     export interface Init {

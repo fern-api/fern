@@ -1,6 +1,6 @@
 import { GeneratedExpressErrorSchema } from "@fern-typescript/contexts";
 
-import { ErrorDeclaration } from "@fern-fern/ir-sdk/api";
+import { ErrorDeclaration } from "@fern-fern/ir-sdk";
 
 import { GeneratedExpressErrorSchemaImpl } from "./GeneratedExpressErrorSchemaImpl";
 

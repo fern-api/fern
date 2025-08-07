@@ -9,7 +9,7 @@ import {
     NameAndWireValue,
     PathParameter,
     QueryParameter
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-fern/ir-sdk";
 
 import { GeneratedFile } from "../../commons/GeneratedFile";
 import { SdkContext } from "../SdkContext";

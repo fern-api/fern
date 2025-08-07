@@ -3,7 +3,7 @@ import { GeneratedEndpointErrorUnion, GeneratedUnion, SdkContext } from "@fern-t
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { GeneratedUnionImpl } from "@fern-typescript/union-generator";
 
-import { ErrorDiscriminationStrategy, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { ErrorDiscriminationStrategy, HttpEndpoint } from "@fern-fern/ir-sdk";
 
 import { ParsedSingleUnionTypeForError } from "./error/ParsedSingleUnionTypeForError";
 import { UnknownErrorSingleUnionType } from "./error/UnknownErrorSingleUnionType";

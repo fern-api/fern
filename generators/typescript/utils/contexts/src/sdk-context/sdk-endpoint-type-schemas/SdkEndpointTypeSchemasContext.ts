@@ -1,6 +1,6 @@
 import { PackageId, Reference } from "@fern-typescript/commons";
 
-import { Name } from "@fern-fern/ir-sdk/api";
+import { Name } from "@fern-fern/ir-sdk";
 
 import { GeneratedSdkEndpointTypeSchemas } from "./GeneratedSdkEndpointTypeSchemas";
 

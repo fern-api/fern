@@ -1,7 +1,7 @@
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
-import { DeclaredTypeName, QueryParameter, TypeReference } from "@fern-fern/ir-sdk/api";
+import { DeclaredTypeName, QueryParameter, TypeReference } from "@fern-fern/ir-sdk";
 
 import {
     REQUEST_OPTIONS_ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME,

@@ -3,7 +3,7 @@ import { PackageId, Reference, Zurg, getSchemaOptions, getTextOfTsNode } from "@
 import { GeneratedWebsocketTypeSchema, SdkContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
 
-import { WebSocketChannel, WebSocketMessageBodyReference } from "@fern-fern/ir-sdk/api";
+import { WebSocketChannel, WebSocketMessageBodyReference } from "@fern-fern/ir-sdk";
 
 export declare namespace GeneratedWebsocketResponseSchemaImpl {
     export interface Init extends AbstractGeneratedSchema.Init {

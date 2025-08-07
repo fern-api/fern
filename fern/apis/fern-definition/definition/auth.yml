@@ -70,11 +70,52 @@ types:
       password: optional<AuthVariable>
   
   BearerAuthSchemeSchema: 
+    discriminated: false
+    union:
+      - TokenBearerAuthSchema
+      - InferredBearerAuthSchema
+
+  TokenBearerAuthSchema:
+    extends: 
+      - commons.WithDocsSchema
+    properties:
+      scheme: literal<"bearer">
+      token: optional<AuthVariable>
+
+  InferredBearerAuthSchema: 
     extends: 
       - commons.WithDocsSchema
     properties: 
       scheme: literal<"bearer">
-      token: optional<AuthVariable>
+      get-token: InferredGetTokenEndpointSchema
+    # refresh-token: optional<InferredRefreshTokenEndpointSchema>
+  
+  InferredGetTokenEndpointSchema: 
+    properties: 
+      endpoint: 
+        type: string
+        docs: The endpoint to get the access token, such as 'auth.get_token'
+      expiry-response-property:
+        type: optional<string>
+        docs: The property name for the expiry time in the response.
+      authenticated-request-headers: 
+        type: optional<list<InferredAuthenticatedRequestHeader>>
+        docs: The headers that will be set on HTTP requests when the inferred auth scheme is applied to an endpoint.
+  
+  InferredAuthenticatedRequestHeader:
+    docs:
+      A header that will be set on HTTP requests when the inferred auth scheme is applied to an endpoint.
+      These are not headers for the authorization endpoint.
+    properties:
+      response-property: 
+        type: string
+        docs: The property to retrieve the header value from the get token or refresh endpoint response.
+      header-name: 
+        type: string
+        docs: The header name to put the token in for any authenticated HTTP request. 
+      value-prefix:
+        type: optional<string>
+        docs: Commonly used for setting the `Authorization` scheme, but could be used for other things.
 
   OAuthSchemeSchema: 
     extends: 

@@ -3,7 +3,7 @@ import { Zurg, getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
 
-import { TypeReference } from "@fern-fern/ir-sdk/api";
+import { TypeReference } from "@fern-fern/ir-sdk";
 
 import { AbstractGeneratedEndpointTypeSchema } from "./AbstractGeneratedEndpointTypeSchema";
 

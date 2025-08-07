@@ -8,7 +8,7 @@ import {
     ErrorDiscriminationStrategy,
     HttpEndpoint,
     HttpResponseBody
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-fern/ir-sdk";
 
 import { GeneratedEndpointResponse, PaginationResponseInfo } from "./GeneratedEndpointResponse";
 import { getSuccessReturnType } from "./getSuccessReturnType";

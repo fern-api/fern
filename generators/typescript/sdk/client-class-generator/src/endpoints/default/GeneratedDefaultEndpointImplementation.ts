@@ -2,7 +2,7 @@ import { Fetcher, GetReferenceOpts, getExampleEndpointCalls } from "@fern-typesc
 import { EndpointSampleCode, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
-import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk";
 
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";
 import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpointRequest";

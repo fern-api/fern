@@ -9,7 +9,7 @@ import {
 
 import { assertNever } from "@fern-api/core-utils";
 
-import { DeclaredTypeName, MapType, NamedType, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
+import { DeclaredTypeName, MapType, NamedType, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk";
 
 import { InlineConsts } from "./inlineConsts";
 

@@ -15,7 +15,7 @@ function transformAndMaybeSkipValidation<T>(
         const transformed = transform(value, opts);
         const { skipValidation = false } = opts ?? {};
         if (!transformed.ok && skipValidation) {
-            // biome-ignore lint/suspicious/noConsole: allow console
+            // eslint-disable-next-line no-console
             console.warn(
                 [
                     "Failed to validate.",

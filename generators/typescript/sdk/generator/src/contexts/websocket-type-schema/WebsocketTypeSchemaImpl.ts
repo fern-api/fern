@@ -4,7 +4,7 @@ import { PackageResolver } from "@fern-typescript/resolvers";
 import { WebsocketTypeSchemaGenerator } from "@fern-typescript/websocket-type-schema-generator";
 import { SourceFile } from "ts-morph";
 
-import { Name, WebSocketChannel, WebSocketMessageBodyReference } from "@fern-fern/ir-sdk/api";
+import { Name, WebSocketChannel, WebSocketMessageBodyReference } from "@fern-fern/ir-sdk";
 
 import { WebsocketTypeSchemaDeclarationReferencer } from "../../declaration-referencers/WebsocketTypeSchemaDeclarationReferencer";
 import { getSchemaImportStrategy } from "../getSchemaImportStrategy";

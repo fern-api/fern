@@ -1,6 +1,6 @@
 import { Zurg } from "@fern-typescript/commons";
 
-import { DeclaredTypeName, Literal, MapType, TypeReference } from "@fern-fern/ir-sdk/api";
+import { DeclaredTypeName, Literal, MapType, TypeReference } from "@fern-fern/ir-sdk";
 
 import { AbstractTypeReferenceConverter, ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter";
 

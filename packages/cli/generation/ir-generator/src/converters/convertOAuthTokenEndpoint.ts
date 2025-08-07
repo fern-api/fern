@@ -1,12 +1,10 @@
 import { OAuthTokenEndpoint } from "@fern-api/ir-sdk";
-import { IdGenerator } from "@fern-api/ir-utils";
 
 import { FernFileContext } from "../FernFileContext";
 import { EndpointResolver } from "../resolvers/EndpointResolver";
 import { PropertyResolver } from "../resolvers/PropertyResolver";
-import { generateEndpointIdFromResolvedEndpoint } from "../resolvers/generateEndpointIdFromResolvedEndpoint";
-import { isRootFernFilepath } from "../utils/isRootFernFilepath";
 import { TokenEndpoint } from "./convertOAuthUtils";
+import { createEndpointReference } from "../utils/createEndpointReference";
 
 export function convertOAuthTokenEndpoint({
     endpointResolver,
@@ -46,13 +44,7 @@ export function convertOAuthTokenEndpoint({
     } catch {}
 
     return {
-        endpointReference: {
-            endpointId: generateEndpointIdFromResolvedEndpoint(resolvedEndpoint),
-            serviceId: IdGenerator.generateServiceIdFromFernFilepath(resolvedEndpoint.file.fernFilepath),
-            subpackageId: !isRootFernFilepath({ fernFilePath: resolvedEndpoint.file.fernFilepath })
-                ? IdGenerator.generateSubpackageId(resolvedEndpoint.file.fernFilepath)
-                : undefined
-        },
+        endpointReference: createEndpointReference({ resolvedEndpoint }),
         requestProperties: {
             clientId: propertyResolver.resolveRequestPropertyOrThrow({
                 file,
