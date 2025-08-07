@@ -38,6 +38,7 @@ public interface PlaylistService {
   )
   Playlist createPlaylist(@RequestHeader("Authorization") BearerAuth auth, Principal principal,
       @RequestHeader("X-Random-Header") Optional<String> xRandomHeader,
+      @PathVariable("serviceParam") Integer serviceParam,
       @RequestParam("datetime") OffsetDateTime datetime,
       @RequestParam("optionalDatetime") Optional<OffsetDateTime> optionalDatetime,
       @RequestBody PlaylistCreateRequest body);
@@ -48,6 +49,7 @@ public interface PlaylistService {
   )
   List<Playlist> getPlaylists(@RequestHeader("Authorization") BearerAuth auth, Principal principal,
       @RequestHeader("X-Random-Header") Optional<String> xRandomHeader,
+      @PathVariable("serviceParam") Integer serviceParam,
       @RequestParam("limit") Optional<Integer> limit, @RequestParam("otherField") String otherField,
       @RequestParam("multiLineDocs") String multiLineDocs,
       @RequestParam("optionalMultipleField") Optional<String> optionalMultipleField,
@@ -58,6 +60,7 @@ public interface PlaylistService {
       produces = "application/json"
   )
   Playlist getPlaylist(@RequestHeader("X-Random-Header") Optional<String> xRandomHeader,
+      @PathVariable("serviceParam") Integer serviceParam,
       @PathVariable("playlistId") PlaylistId playlistId) throws PlaylistIdNotFoundError,
       UnauthorizedError;
 
@@ -68,6 +71,7 @@ public interface PlaylistService {
   )
   Optional<Playlist> updatePlaylist(@RequestHeader("Authorization") BearerAuth auth,
       Principal principal, @RequestHeader("X-Random-Header") Optional<String> xRandomHeader,
+      @PathVariable("serviceParam") Integer serviceParam,
       @PathVariable("playlistId") PlaylistId playlistId,
       @RequestBody Optional<UpdatePlaylistRequest> body) throws PlaylistIdNotFoundError;
 
@@ -77,5 +81,6 @@ public interface PlaylistService {
   )
   void deletePlaylist(@RequestHeader("Authorization") BearerAuth auth, Principal principal,
       @RequestHeader("X-Random-Header") Optional<String> xRandomHeader,
+      @PathVariable("serviceParam") Integer serviceParam,
       @PathVariable("playlist_id") PlaylistId playlistId);
 }
