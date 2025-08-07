@@ -49,3 +49,41 @@ func (c *Client) Patch(
 	}
 	return nil
 }
+
+// Update with JSON merge patch - complex types
+func (c *Client) PatchComplex(
+	ctx context.Context,
+	id string,
+	request *fern.PatchComplexRequest,
+	opts ...option.RequestOption,
+) error {
+	_, err := c.WithRawResponse.PatchComplex(
+		ctx,
+		id,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// Regular PATCH endpoint without merge-patch semantics
+func (c *Client) RegularPatch(
+	ctx context.Context,
+	id string,
+	request *fern.RegularPatchRequest,
+	opts ...option.RequestOption,
+) error {
+	_, err := c.WithRawResponse.RegularPatch(
+		ctx,
+		id,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}
