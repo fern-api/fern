@@ -8,8 +8,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import core.JsonMergePatch;
 import core.ObjectMappers;
+import core.TriStateOptional;
 import java.lang.Boolean;
 import java.lang.Integer;
 import java.lang.Object;
@@ -23,21 +23,22 @@ import java.util.Optional;
     builder = PatchComplexRequest.Builder.class
 )
 public final class PatchComplexRequest {
-  private final JsonMergePatch<String> name;
+  private final TriStateOptional<String> name;
 
-  private final JsonMergePatch<Optional<String>> email;
+  private final TriStateOptional<Optional<String>> email;
 
-  private final JsonMergePatch<Integer> age;
+  private final TriStateOptional<Integer> age;
 
-  private final JsonMergePatch<Boolean> active;
+  private final TriStateOptional<Boolean> active;
 
-  private final JsonMergePatch<Map<String, Object>> metadata;
+  private final TriStateOptional<Map<String, Object>> metadata;
 
-  private final JsonMergePatch<List<String>> tags;
+  private final TriStateOptional<List<String>> tags;
 
-  private PatchComplexRequest(JsonMergePatch<String> name, JsonMergePatch<Optional<String>> email,
-      JsonMergePatch<Integer> age, JsonMergePatch<Boolean> active,
-      JsonMergePatch<Map<String, Object>> metadata, JsonMergePatch<List<String>> tags) {
+  private PatchComplexRequest(TriStateOptional<String> name,
+      TriStateOptional<Optional<String>> email, TriStateOptional<Integer> age,
+      TriStateOptional<Boolean> active, TriStateOptional<Map<String, Object>> metadata,
+      TriStateOptional<List<String>> tags) {
     this.name = name;
     this.email = email;
     this.age = age;
@@ -47,32 +48,32 @@ public final class PatchComplexRequest {
   }
 
   @JsonProperty("name")
-  public JsonMergePatch<String> getName() {
+  public TriStateOptional<String> getName() {
     return name;
   }
 
   @JsonProperty("email")
-  public JsonMergePatch<Optional<String>> getEmail() {
+  public TriStateOptional<Optional<String>> getEmail() {
     return email;
   }
 
   @JsonProperty("age")
-  public JsonMergePatch<Integer> getAge() {
+  public TriStateOptional<Integer> getAge() {
     return age;
   }
 
   @JsonProperty("active")
-  public JsonMergePatch<Boolean> getActive() {
+  public TriStateOptional<Boolean> getActive() {
     return active;
   }
 
   @JsonProperty("metadata")
-  public JsonMergePatch<Map<String, Object>> getMetadata() {
+  public TriStateOptional<Map<String, Object>> getMetadata() {
     return metadata;
   }
 
   @JsonProperty("tags")
-  public JsonMergePatch<List<String>> getTags() {
+  public TriStateOptional<List<String>> getTags() {
     return tags;
   }
 
@@ -106,54 +107,54 @@ public final class PatchComplexRequest {
       ignoreUnknown = true
   )
   public static final class Builder {
-    private JsonMergePatch<String> name = JsonMergePatch.absent();
+    private TriStateOptional<String> name = TriStateOptional.absent();
 
-    private JsonMergePatch<Optional<String>> email = JsonMergePatch.absent();
+    private TriStateOptional<Optional<String>> email = TriStateOptional.absent();
 
-    private JsonMergePatch<Integer> age = JsonMergePatch.absent();
+    private TriStateOptional<Integer> age = TriStateOptional.absent();
 
-    private JsonMergePatch<Boolean> active = JsonMergePatch.absent();
+    private TriStateOptional<Boolean> active = TriStateOptional.absent();
 
-    private JsonMergePatch<Map<String, Object>> metadata = JsonMergePatch.absent();
+    private TriStateOptional<Map<String, Object>> metadata = TriStateOptional.absent();
 
-    private JsonMergePatch<List<String>> tags = JsonMergePatch.absent();
+    private TriStateOptional<List<String>> tags = TriStateOptional.absent();
 
     private Builder() {
     }
 
     @JsonSetter("name")
     public Builder name(String value) {
-      this.name = JsonMergePatch.ofNullable(value);
+      this.name = TriStateOptional.ofNullable(value);
       return this;
     }
 
     @JsonSetter("email")
     public Builder email(Optional<String> value) {
-      this.email = JsonMergePatch.ofNullable(value);
+      this.email = TriStateOptional.ofNullable(value);
       return this;
     }
 
     @JsonSetter("age")
     public Builder age(Integer value) {
-      this.age = JsonMergePatch.ofNullable(value);
+      this.age = TriStateOptional.ofNullable(value);
       return this;
     }
 
     @JsonSetter("active")
     public Builder active(Boolean value) {
-      this.active = JsonMergePatch.ofNullable(value);
+      this.active = TriStateOptional.ofNullable(value);
       return this;
     }
 
     @JsonSetter("metadata")
     public Builder metadata(Map<String, Object> value) {
-      this.metadata = JsonMergePatch.ofNullable(value);
+      this.metadata = TriStateOptional.ofNullable(value);
       return this;
     }
 
     @JsonSetter("tags")
     public Builder tags(List<String> value) {
-      this.tags = JsonMergePatch.ofNullable(value);
+      this.tags = TriStateOptional.ofNullable(value);
       return this;
     }
 

@@ -30,10 +30,10 @@ import java.util.Objects;
 import java.util.Optional;
 import javax.lang.model.element.Modifier;
 
-public final class JsonMergePatchGenerator extends AbstractFileGenerator {
+public final class TriStateOptionalGenerator extends AbstractFileGenerator {
 
-    public JsonMergePatchGenerator(AbstractGeneratorContext<?, ?> generatorContext) {
-        super(ClassName.get("core", "JsonMergePatch"), generatorContext);
+    public TriStateOptionalGenerator(AbstractGeneratorContext<?, ?> generatorContext) {
+        super(ClassName.get("core", "TriStateOptional"), generatorContext);
     }
 
     @Override
@@ -49,7 +49,7 @@ public final class JsonMergePatchGenerator extends AbstractFileGenerator {
                 .build();
 
         FieldSpec stateField = FieldSpec.builder(
-                        ClassName.get(className.packageName(), "JsonMergePatch", "State"), "state")
+                        ClassName.get(className.packageName(), "TriStateOptional", "State"), "state")
                 .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
                 .build();
 
@@ -59,7 +59,7 @@ public final class JsonMergePatchGenerator extends AbstractFileGenerator {
 
         MethodSpec constructor = MethodSpec.constructorBuilder()
                 .addModifiers(Modifier.PRIVATE)
-                .addParameter(ClassName.get(className.packageName(), "JsonMergePatch", "State"), "state")
+                .addParameter(ClassName.get(className.packageName(), "TriStateOptional", "State"), "state")
                 .addParameter(typeVariable, "value")
                 .addStatement("this.state = state")
                 .addStatement("this.value = value")
@@ -69,22 +69,22 @@ public final class JsonMergePatchGenerator extends AbstractFileGenerator {
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .addTypeVariable(typeVariable)
                 .returns(ParameterizedTypeName.get(className, typeVariable))
-                .addJavadoc("Creates an absent JsonMergePatch (field not present).\n")
+                .addJavadoc("Creates an absent TriStateOptional (field not present).\n")
                 .addStatement(
                         "return new $T<>($T.ABSENT, null)",
                         className,
-                        ClassName.get(className.packageName(), "JsonMergePatch", "State"))
+                        ClassName.get(className.packageName(), "TriStateOptional", "State"))
                 .build();
 
         MethodSpec ofNull = MethodSpec.methodBuilder("ofNull")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .addTypeVariable(typeVariable)
                 .returns(ParameterizedTypeName.get(className, typeVariable))
-                .addJavadoc("Creates a null JsonMergePatch (field explicitly set to null).\n")
+                .addJavadoc("Creates a null TriStateOptional (field explicitly set to null).\n")
                 .addStatement(
                         "return new $T<>($T.NULL, null)",
                         className,
-                        ClassName.get(className.packageName(), "JsonMergePatch", "State"))
+                        ClassName.get(className.packageName(), "TriStateOptional", "State"))
                 .build();
 
         MethodSpec of = MethodSpec.methodBuilder("of")
@@ -92,12 +92,12 @@ public final class JsonMergePatchGenerator extends AbstractFileGenerator {
                 .addTypeVariable(typeVariable)
                 .returns(ParameterizedTypeName.get(className, typeVariable))
                 .addParameter(typeVariable, "value")
-                .addJavadoc("Creates a JsonMergePatch with a value.\n")
+                .addJavadoc("Creates a TriStateOptional with a value.\n")
                 .addStatement("$T.requireNonNull(value, $S)", Objects.class, "Use ofNull() for null values")
                 .addStatement(
                         "return new $T<>($T.PRESENT, value)",
                         className,
-                        ClassName.get(className.packageName(), "JsonMergePatch", "State"))
+                        ClassName.get(className.packageName(), "TriStateOptional", "State"))
                 .build();
 
         MethodSpec ofNullable = MethodSpec.methodBuilder("ofNullable")
@@ -106,7 +106,7 @@ public final class JsonMergePatchGenerator extends AbstractFileGenerator {
                 .returns(ParameterizedTypeName.get(className, typeVariable))
                 .addParameter(typeVariable, "value")
                 .addAnnotation(ClassName.get("com.fasterxml.jackson.annotation", "JsonCreator"))
-                .addJavadoc("Creates a JsonMergePatch from a nullable value.\n")
+                .addJavadoc("Creates a TriStateOptional from a nullable value.\n")
                 .addStatement("return value == null ? ofNull() : of(value)")
                 .build();
 
@@ -115,7 +115,7 @@ public final class JsonMergePatchGenerator extends AbstractFileGenerator {
                 .returns(boolean.class)
                 .addJavadoc("Returns true if the field was absent from the request.\n")
                 .addStatement(
-                        "return state == $T.ABSENT", ClassName.get(className.packageName(), "JsonMergePatch", "State"))
+                        "return state == $T.ABSENT", ClassName.get(className.packageName(), "TriStateOptional", "State"))
                 .build();
 
         MethodSpec isNull = MethodSpec.methodBuilder("isNull")
@@ -123,7 +123,7 @@ public final class JsonMergePatchGenerator extends AbstractFileGenerator {
                 .returns(boolean.class)
                 .addJavadoc("Returns true if the field was explicitly set to null.\n")
                 .addStatement(
-                        "return state == $T.NULL", ClassName.get(className.packageName(), "JsonMergePatch", "State"))
+                        "return state == $T.NULL", ClassName.get(className.packageName(), "TriStateOptional", "State"))
                 .build();
 
         MethodSpec isPresent = MethodSpec.methodBuilder("isPresent")
@@ -131,7 +131,7 @@ public final class JsonMergePatchGenerator extends AbstractFileGenerator {
                 .returns(boolean.class)
                 .addJavadoc("Returns true if the field has a value.\n")
                 .addStatement(
-                        "return state == $T.PRESENT", ClassName.get(className.packageName(), "JsonMergePatch", "State"))
+                        "return state == $T.PRESENT", ClassName.get(className.packageName(), "TriStateOptional", "State"))
                 .build();
 
         MethodSpec wasSpecified = MethodSpec.methodBuilder("wasSpecified")
@@ -139,7 +139,7 @@ public final class JsonMergePatchGenerator extends AbstractFileGenerator {
                 .returns(boolean.class)
                 .addJavadoc("Returns true if the field was present in the request (either null or with a value).\n")
                 .addStatement(
-                        "return state != $T.ABSENT", ClassName.get(className.packageName(), "JsonMergePatch", "State"))
+                        "return state != $T.ABSENT", ClassName.get(className.packageName(), "TriStateOptional", "State"))
                 .build();
 
         MethodSpec get = MethodSpec.methodBuilder("get")
@@ -147,12 +147,24 @@ public final class JsonMergePatchGenerator extends AbstractFileGenerator {
                 .returns(typeVariable)
                 .addJavadoc("Gets the value if present, throws if absent or null.\n")
                 .beginControlFlow(
-                        "if (state != $T.PRESENT)", ClassName.get(className.packageName(), "JsonMergePatch", "State"))
+                        "if (state != $T.PRESENT)", ClassName.get(className.packageName(), "TriStateOptional", "State"))
                 .addStatement(
                         "throw new $T($S + state + $S)",
                         IllegalStateException.class,
                         "Cannot get value from ",
-                        " JsonMergePatch")
+                        " TriStateOptional")
+                .endControlFlow()
+                .addStatement("return value")
+                .build();
+
+        MethodSpec getValueOrNull = MethodSpec.methodBuilder("getValueOrNull")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(typeVariable)
+                .addJavadoc("Gets the value if present or explicitly null, throws if absent.\n")
+                .addJavadoc("This is useful for update operations where null is a valid value to set.\n")
+                .beginControlFlow(
+                        "if (state == $T.ABSENT)", ClassName.get(className.packageName(), "TriStateOptional", "State"))
+                .addStatement("throw new $T($S)", IllegalStateException.class, "No value set")
                 .endControlFlow()
                 .addStatement("return value")
                 .build();
@@ -161,10 +173,16 @@ public final class JsonMergePatchGenerator extends AbstractFileGenerator {
                 .addModifiers(Modifier.PUBLIC)
                 .returns(typeVariable)
                 .addParameter(typeVariable, "defaultValue")
-                .addJavadoc("Gets the value if present, returns the provided default if absent or null.\n")
-                .addStatement(
-                        "return state == $T.PRESENT ? value : defaultValue",
-                        ClassName.get(className.packageName(), "JsonMergePatch", "State"))
+                .addJavadoc("Gets the value if present, returns null if explicitly set to null, or returns the provided default if absent.\n")
+                .beginControlFlow(
+                        "if (state == $T.PRESENT)", ClassName.get(className.packageName(), "TriStateOptional", "State"))
+                .addStatement("return value")
+                .endControlFlow()
+                .beginControlFlow(
+                        "if (state == $T.NULL)", ClassName.get(className.packageName(), "TriStateOptional", "State"))
+                .addStatement("return null")
+                .endControlFlow()
+                .addStatement("return defaultValue")
                 .build();
 
         MethodSpec toOptional = MethodSpec.methodBuilder("toOptional")
@@ -173,7 +191,7 @@ public final class JsonMergePatchGenerator extends AbstractFileGenerator {
                 .addJavadoc("Converts to an Optional, returning empty for both absent and null states.\n")
                 .addStatement(
                         "return state == $T.PRESENT ? $T.of(value) : $T.empty()",
-                        ClassName.get(className.packageName(), "JsonMergePatch", "State"),
+                        ClassName.get(className.packageName(), "TriStateOptional", "State"),
                         Optional.class,
                         Optional.class)
                 .build();
@@ -185,7 +203,7 @@ public final class JsonMergePatchGenerator extends AbstractFileGenerator {
                 .addJavadoc("For JSON serialization - serialize the actual value or null.\n")
                 .addJavadoc("Absent values should be handled by @JsonInclude(JsonInclude.Include.CUSTOM)\n")
                 .beginControlFlow(
-                        "if (state == $T.ABSENT)", ClassName.get(className.packageName(), "JsonMergePatch", "State"))
+                        "if (state == $T.ABSENT)", ClassName.get(className.packageName(), "TriStateOptional", "State"))
                 .addComment("Should not be serialized - handled by custom inclusion")
                 .addStatement(
                         "throw new $T($S)",
@@ -194,17 +212,20 @@ public final class JsonMergePatchGenerator extends AbstractFileGenerator {
                 .endControlFlow()
                 .addStatement(
                         "return state == $T.NULL ? null : value",
-                        ClassName.get(className.packageName(), "JsonMergePatch", "State"))
+                        ClassName.get(className.packageName(), "TriStateOptional", "State"))
                 .build();
 
-        TypeSpec jsonMergePatchSpec = TypeSpec.classBuilder("JsonMergePatch")
+        TypeSpec jsonMergePatchSpec = TypeSpec.classBuilder("TriStateOptional")
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addTypeVariable(typeVariable)
                 .addJavadoc(CodeBlock.builder()
-                        .add("A wrapper type for JSON Merge Patch operations (RFC 7396) that distinguishes between:\n")
-                        .add("- ABSENT: field not present in the request (don't modify)\n")
-                        .add("- NULL: field explicitly set to null (delete/clear the field)\n")
-                        .add("- PRESENT: field has a value (update the field)\n")
+                        .add("A tri-state wrapper type that distinguishes between:\n")
+                        .add("- ABSENT: field not present (e.g., not included in request)\n")
+                        .add("- NULL: field explicitly set to null\n")
+                        .add("- PRESENT: field has a non-null value\n")
+                        .add("\n")
+                        .add("This is useful for partial updates, JSON Merge Patch (RFC 7396), and any API\n")
+                        .add("that needs to differentiate between \"not specified\" and \"set to null\".\n")
                         .build())
                 .addType(stateEnum)
                 .addField(stateField)
@@ -219,6 +240,7 @@ public final class JsonMergePatchGenerator extends AbstractFileGenerator {
                 .addMethod(isPresent)
                 .addMethod(wasSpecified)
                 .addMethod(get)
+                .addMethod(getValueOrNull)
                 .addMethod(orElse)
                 .addMethod(toOptional)
                 .addMethod(getJsonValue)
@@ -270,9 +292,9 @@ public final class JsonMergePatchGenerator extends AbstractFileGenerator {
                 .addModifiers(Modifier.PUBLIC)
                 .returns(String.class)
                 .beginControlFlow("switch (state)")
-                .addStatement("case ABSENT: return $S", "JsonMergePatch.absent()")
-                .addStatement("case NULL: return $S", "JsonMergePatch.ofNull()")
-                .addStatement("case PRESENT: return $S + value + $S", "JsonMergePatch.of(", ")")
+                .addStatement("case ABSENT: return $S", "TriStateOptional.absent()")
+                .addStatement("case NULL: return $S", "TriStateOptional.ofNull()")
+                .addStatement("case PRESENT: return $S + value + $S", "TriStateOptional.of(", ")")
                 .addStatement("default: throw new $T($S + state)", IllegalStateException.class, "Unknown state: ")
                 .endControlFlow()
                 .build();

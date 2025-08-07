@@ -7,12 +7,15 @@ import java.util.Optional;
 import java.util.function.Function;
 
 /**
- * A wrapper type for JSON Merge Patch operations (RFC 7396) that distinguishes between:
- * - ABSENT: field not present in the request (don't modify)
- * - NULL: field explicitly set to null (delete/clear the field)
- * - PRESENT: field has a value (update the field)
+ * A tri-state wrapper type that distinguishes between:
+ * - ABSENT: field not present (e.g., not included in request)
+ * - NULL: field explicitly set to null
+ * - PRESENT: field has a non-null value
+ * 
+ * This is useful for partial updates, JSON Merge Patch (RFC 7396), and any API
+ * that needs to differentiate between "not specified" and "set to null".
  */
-public final class JsonMergePatch<T> {
+public final class TriStateOptional<T> {
     
     private enum State {
         ABSENT,
@@ -23,38 +26,38 @@ public final class JsonMergePatch<T> {
     private final State state;
     private final T value;
     
-    private JsonMergePatch(State state, T value) {
+    private TriStateOptional(State state, T value) {
         this.state = state;
         this.value = value;
     }
     
     /**
-     * Creates an absent JsonMergePatch (field not present).
+     * Creates an absent TriStateOptional (field not present).
      */
-    public static <T> JsonMergePatch<T> absent() {
-        return new JsonMergePatch<>(State.ABSENT, null);
+    public static <T> TriStateOptional<T> absent() {
+        return new TriStateOptional<>(State.ABSENT, null);
     }
     
     /**
-     * Creates a null JsonMergePatch (field explicitly set to null).
+     * Creates a null TriStateOptional (field explicitly set to null).
      */
-    public static <T> JsonMergePatch<T> ofNull() {
-        return new JsonMergePatch<>(State.NULL, null);
+    public static <T> TriStateOptional<T> ofNull() {
+        return new TriStateOptional<>(State.NULL, null);
     }
     
     /**
-     * Creates a JsonMergePatch with a value.
+     * Creates a TriStateOptional with a value.
      */
-    public static <T> JsonMergePatch<T> of(T value) {
+    public static <T> TriStateOptional<T> of(T value) {
         Objects.requireNonNull(value, "Use ofNull() for null values");
-        return new JsonMergePatch<>(State.PRESENT, value);
+        return new TriStateOptional<>(State.PRESENT, value);
     }
     
     /**
-     * Creates a JsonMergePatch from a nullable value.
+     * Creates a TriStateOptional from a nullable value.
      */
     @JsonCreator
-    public static <T> JsonMergePatch<T> ofNullable(T value) {
+    public static <T> TriStateOptional<T> ofNullable(T value) {
         return value == null ? ofNull() : of(value);
     }
     
@@ -91,16 +94,29 @@ public final class JsonMergePatch<T> {
      */
     public T get() {
         if (state != State.PRESENT) {
-            throw new IllegalStateException("Cannot get value from " + state + " JsonMergePatch");
+            throw new IllegalStateException("Cannot get value from " + state + " TriStateOptional");
         }
         return value;
     }
     
     /**
-     * Gets the value if present, returns the provided default if absent or null.
+     * Gets the value if present or explicitly null, throws if absent.
+     * This is useful for update operations where null is a valid value to set.
+     */
+    public T getValueOrNull() {
+        if (state == State.ABSENT) {
+            throw new IllegalStateException("No value set");
+        }
+        return value;  // Returns the actual value if PRESENT, or null if NULL
+    }
+    
+    /**
+     * Gets the value if present, returns null if explicitly set to null, or returns the provided default if absent.
      */
     public T orElse(T defaultValue) {
-        return state == State.PRESENT ? value : defaultValue;
+        if (state == State.PRESENT) return value;
+        if (state == State.NULL) return null;
+        return defaultValue;
     }
     
     /**
@@ -113,13 +129,13 @@ public final class JsonMergePatch<T> {
     /**
      * Maps the value if present, preserving absent and null states.
      */
-    public <U> JsonMergePatch<U> map(Function<? super T, ? extends U> mapper) {
+    public <U> TriStateOptional<U> map(Function<? super T, ? extends U> mapper) {
         if (state == State.PRESENT) {
-            return JsonMergePatch.of(mapper.apply(value));
+            return TriStateOptional.of(mapper.apply(value));
         } else if (state == State.NULL) {
-            return JsonMergePatch.ofNull();
+            return TriStateOptional.ofNull();
         } else {
-            return JsonMergePatch.absent();
+            return TriStateOptional.absent();
         }
     }
     
@@ -140,7 +156,7 @@ public final class JsonMergePatch<T> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        JsonMergePatch<?> that = (JsonMergePatch<?>) o;
+        TriStateOptional<?> that = (TriStateOptional<?>) o;
         return state == that.state && Objects.equals(value, that.value);
     }
     
@@ -153,11 +169,11 @@ public final class JsonMergePatch<T> {
     public String toString() {
         switch (state) {
             case ABSENT:
-                return "JsonMergePatch.absent()";
+                return "TriStateOptional.absent()";
             case NULL:
-                return "JsonMergePatch.ofNull()";
+                return "TriStateOptional.ofNull()";
             case PRESENT:
-                return "JsonMergePatch.of(" + value + ")";
+                return "TriStateOptional.of(" + value + ")";
             default:
                 throw new IllegalStateException("Unknown state: " + state);
         }

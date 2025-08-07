@@ -8,8 +8,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import core.JsonMergePatch;
 import core.ObjectMappers;
+import core.TriStateOptional;
 import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.Override;
@@ -19,23 +19,23 @@ import java.lang.String;
     builder = PatchProxyRequest.Builder.class
 )
 public final class PatchProxyRequest {
-  private final JsonMergePatch<String> application;
+  private final TriStateOptional<String> application;
 
-  private final JsonMergePatch<Boolean> requireAuth;
+  private final TriStateOptional<Boolean> requireAuth;
 
-  private PatchProxyRequest(JsonMergePatch<String> application,
-      JsonMergePatch<Boolean> requireAuth) {
+  private PatchProxyRequest(TriStateOptional<String> application,
+      TriStateOptional<Boolean> requireAuth) {
     this.application = application;
     this.requireAuth = requireAuth;
   }
 
   @JsonProperty("application")
-  public JsonMergePatch<String> getApplication() {
+  public TriStateOptional<String> getApplication() {
     return application;
   }
 
   @JsonProperty("require_auth")
-  public JsonMergePatch<Boolean> getRequireAuth() {
+  public TriStateOptional<Boolean> getRequireAuth() {
     return requireAuth;
   }
 
@@ -69,22 +69,22 @@ public final class PatchProxyRequest {
       ignoreUnknown = true
   )
   public static final class Builder {
-    private JsonMergePatch<String> application = JsonMergePatch.absent();
+    private TriStateOptional<String> application = TriStateOptional.absent();
 
-    private JsonMergePatch<Boolean> requireAuth = JsonMergePatch.absent();
+    private TriStateOptional<Boolean> requireAuth = TriStateOptional.absent();
 
     private Builder() {
     }
 
     @JsonSetter("application")
     public Builder application(String value) {
-      this.application = JsonMergePatch.ofNullable(value);
+      this.application = TriStateOptional.ofNullable(value);
       return this;
     }
 
     @JsonSetter("require_auth")
     public Builder requireAuth(Boolean value) {
-      this.requireAuth = JsonMergePatch.ofNullable(value);
+      this.requireAuth = TriStateOptional.ofNullable(value);
       return this;
     }
 

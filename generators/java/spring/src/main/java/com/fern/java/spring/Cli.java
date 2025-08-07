@@ -23,7 +23,7 @@ import com.fern.java.output.gradle.AbstractGradleDependency;
 import com.fern.java.spring.generators.ApiExceptionGenerator;
 import com.fern.java.spring.generators.ErrorBodyGenerator;
 import com.fern.java.spring.generators.ExceptionGenerator;
-import com.fern.java.spring.generators.JsonMergePatchGenerator;
+import com.fern.java.spring.generators.TriStateOptionalGenerator;
 import com.fern.java.spring.generators.SpringServerInterfaceGenerator;
 import com.palantir.common.streams.KeyedStream;
 import java.util.ArrayList;
@@ -88,9 +88,9 @@ public final class Cli extends AbstractGeneratorCli<SpringCustomConfig, SpringCu
         GeneratedObjectMapper objectMapper = objectMappersGenerator.generateFile();
         this.addGeneratedFile(objectMapper);
 
-        JsonMergePatchGenerator jsonMergePatchGenerator = new JsonMergePatchGenerator(context);
-        GeneratedJavaFile jsonMergePatch = jsonMergePatchGenerator.generateFile();
-        this.addGeneratedFile(jsonMergePatch);
+        TriStateOptionalGenerator triStateOptionalGenerator = new TriStateOptionalGenerator(context);
+        GeneratedJavaFile triStateOptional = triStateOptionalGenerator.generateFile();
+        this.addGeneratedFile(triStateOptional);
 
         ApiExceptionGenerator apiExceptionGenerator = new ApiExceptionGenerator(context);
         GeneratedJavaFile apiException = apiExceptionGenerator.generateFile();

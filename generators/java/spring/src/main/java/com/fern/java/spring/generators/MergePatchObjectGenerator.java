@@ -42,12 +42,12 @@ import java.util.List;
 import javax.lang.model.element.Modifier;
 
 /**
- * Generates object classes for JSON Merge Patch request bodies. Uses JsonMergePatch wrapper instead of Optional for
+ * Generates object classes for JSON Merge Patch request bodies. Uses TriStateOptional wrapper instead of Optional for
  * nullable fields.
  */
 public final class MergePatchObjectGenerator extends AbstractFileGenerator {
 
-    private static final ClassName JSON_MERGE_PATCH = ClassName.get("core", "JsonMergePatch");
+    private static final ClassName TRI_STATE_OPTIONAL = ClassName.get("core", "TriStateOptional");
     private final ObjectTypeDeclaration objectTypeDeclaration;
 
     public MergePatchObjectGenerator(
@@ -172,9 +172,9 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
         });
 
         if (isNullable) {
-            // For nullable fields, use JsonMergePatch wrapper
+            // For nullable fields, use TriStateOptional wrapper
             TypeName innerType = getInnerType(valueType);
-            return ParameterizedTypeName.get(JSON_MERGE_PATCH, innerType);
+            return ParameterizedTypeName.get(TRI_STATE_OPTIONAL, innerType);
         } else {
             // For required fields, use the type directly
             return generatorContext.getPoetTypeNameMapper().convertToTypeName(false, valueType);
@@ -367,10 +367,10 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
             FieldSpec.Builder fieldBuilder =
                     FieldSpec.builder(fieldType, fieldName).addModifiers(Modifier.PRIVATE);
 
-            // Initialize JsonMergePatch fields to absent
+            // Initialize TriStateOptional fields to absent
             if (fieldType instanceof ParameterizedTypeName
-                    && ((ParameterizedTypeName) fieldType).rawType.equals(JSON_MERGE_PATCH)) {
-                fieldBuilder.initializer("$T.absent()", JSON_MERGE_PATCH);
+                    && ((ParameterizedTypeName) fieldType).rawType.equals(TRI_STATE_OPTIONAL)) {
+                fieldBuilder.initializer("$T.absent()", TRI_STATE_OPTIONAL);
             }
 
             FieldSpec field = fieldBuilder.build();
@@ -403,9 +403,9 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
                 .addModifiers(Modifier.PUBLIC)
                 .returns(ClassName.get(className.packageName(), className.simpleName(), "Builder"));
 
-        // For JsonMergePatch fields, create a special setter
+        // For TriStateOptional fields, create a special setter
         if (fieldType instanceof ParameterizedTypeName
-                && ((ParameterizedTypeName) fieldType).rawType.equals(JSON_MERGE_PATCH)) {
+                && ((ParameterizedTypeName) fieldType).rawType.equals(TRI_STATE_OPTIONAL)) {
             TypeName innerType = ((ParameterizedTypeName) fieldType).typeArguments.get(0);
 
             // Add JsonSetter annotation to handle deserialization
@@ -413,9 +413,9 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
                     .addMember("value", "$S", property.getName().getWireValue())
                     .build());
 
-            // Accept the inner type and wrap in JsonMergePatch
+            // Accept the inner type and wrap in TriStateOptional
             setter.addParameter(innerType, "value");
-            setter.addStatement("this.$N = $T.ofNullable(value)", fieldName, JSON_MERGE_PATCH);
+            setter.addStatement("this.$N = $T.ofNullable(value)", fieldName, TRI_STATE_OPTIONAL);
         } else {
             setter.addParameter(fieldType, "value");
             setter.addStatement("this.$N = value", fieldName);
