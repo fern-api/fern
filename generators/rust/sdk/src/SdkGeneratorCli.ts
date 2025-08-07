@@ -1,10 +1,11 @@
-import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { File, GeneratorNotificationService } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractRustGeneratorCli, RustFile } from "@fern-api/rust-base";
 import { Module, ModuleDeclaration, UseStatement } from "@fern-api/rust-codegen";
 import { generateModels } from "@fern-api/rust-model";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
@@ -55,9 +56,18 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     // ===========================
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
+        context.logger.info("=== GENERATE METHOD CALLED ===");
+
         const projectFiles = await this.generateProjectFiles(context);
         context.project.addSourceFiles(...projectFiles);
+
+        context.logger.info("=== CALLING generateReadme ===");
+        // Generate README if configured
+        await this.generateReadme(context);
+
+        context.logger.info("=== CALLING persist ===");
         await context.project.persist();
+        context.logger.info("=== PERSIST COMPLETE ===");
     }
 
     private async generateProjectFiles(context: SdkGeneratorContext): Promise<RustFile[]> {
@@ -279,6 +289,108 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             useStatements,
             rawDeclarations
         });
+    }
+
+    // ===========================
+    // README GENERATION
+    // ===========================
+
+    private async generateReadme(context: SdkGeneratorContext): Promise<void> {
+        try {
+            context.logger.info("Starting README generation...");
+
+            // Generate endpoint snippets
+            const endpointSnippets = this.generateSnippets(context);
+
+            context.logger.debug(`Generated ${endpointSnippets.length} endpoint snippets`);
+            context.logger.debug("Calling generateReadme on agent...");
+
+            // Generate README content using the agent
+            const readmeContent = await context.generatorAgent.generateReadme({
+                context,
+                endpointSnippets
+            });
+
+            context.logger.debug(`Generated README content length: ${readmeContent.length}`);
+
+            // Add README to the project
+            const readmeFile = new RustFile({
+                filename: "README.md",
+                directory: RelativeFilePath.of(""),
+                fileContents: readmeContent
+            });
+
+            context.project.addSourceFiles(readmeFile);
+            context.logger.info("Successfully added README.md to project");
+        } catch (error) {
+            context.logger.error("Failed to generate README.md");
+            if (error instanceof Error) {
+                context.logger.error("Error details:", error.message);
+                if (error.stack) {
+                    context.logger.debug("Stack trace:", error.stack);
+                }
+            }
+        }
+    }
+
+    private generateSnippets(context: SdkGeneratorContext): Endpoint[] {
+        const endpointSnippets: Endpoint[] = [];
+
+        // Generate a basic example snippet for README
+        // In the future, this will use the dynamic IR to generate real snippets
+        try {
+            // Find the first endpoint to use as an example
+            const services = Object.values(context.ir.services);
+            const firstService = services[0];
+            const firstEndpoint = firstService?.endpoints[0];
+
+            if (firstService && firstEndpoint) {
+                const packageName = context.configManager.get("packageName") ?? "api_client";
+
+                // Generate a basic snippet
+                const snippet = `use ${packageName}::ApiClientBuilder;
+
+#[tokio::main]
+async fn main() {
+    let client = ApiClientBuilder::new("https://api.example.com")
+        .api_key("your-api-key")
+        .build()
+        .expect("Failed to build client");
+    
+    // Example API call
+    let response = client.${this.toSnakeCase(firstEndpoint.name.originalName)}()
+        .await
+        .expect("API call failed");
+    
+    println!("Response: {:?}", response);
+}`;
+
+                endpointSnippets.push({
+                    exampleIdentifier: "example_1",
+                    id: {
+                        method: firstEndpoint.method,
+                        path: FernGeneratorExec.EndpointPath(firstEndpoint.path.head),
+                        identifierOverride: firstEndpoint.id
+                    },
+                    snippet: {
+                        type: "typescript", // Use typescript as fallback until rust is properly supported
+                        client: snippet
+                    } as any
+                });
+            }
+        } catch (error) {
+            context.logger.debug(`Error generating example snippet: ${error}`);
+        }
+
+        return endpointSnippets;
+    }
+
+    private toSnakeCase(str: string): string {
+        return str
+            .replace(/([A-Z])/g, "_$1")
+            .toLowerCase()
+            .replace(/^_/, "")
+            .replace(/-/g, "_");
     }
 
     // ===========================

@@ -1,0 +1,38 @@
+{
+  "name": "@fern-api/rust-dynamic-snippets",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fern-api/fern.git",
+    "directory": "generators/rust/dynamic-snippets"
+  },
+  "private": true,
+  "type": "module",
+  "files": [
+    "lib"
+  ],
+  "source": "src/index.ts",
+  "typings": "lib/index.d.ts",
+  "scripts": {
+    "clean": "rm -rf ./lib && tsc --build --clean",
+    "compile": "tsc --build",
+    "test": "vitest run --passWithNoTests",
+    "test:update": "vitest run -u",
+    "organize-imports": "organize-imports-cli tsconfig.json",
+    "depcheck": "depcheck"
+  },
+  "devDependencies": {
+    "@fern-api/browser-compatible-base-generator": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
+    "@fern-api/rust-codegen": "workspace:*",
+    "@fern-fern/ir-sdk": "58.2.0",
+    "@fern-fern/generator-exec-sdk": "^0.0.1045",
+    "@types/node": "^18.7.18",
+    "@fern-api/rust-model": "workspace:*",
+    "dedent": "^1.5.3",
+    "depcheck": "^1.4.3",
+    "organize-imports-cli": "^0.10.0",
+    "typescript": "4.9.5",
+    "vitest": "^2.0.5"
+  }
+}

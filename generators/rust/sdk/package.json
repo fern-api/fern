@@ -27,7 +27,7 @@
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
     "depcheck": "depcheck",
-    "dist:cli": "rm -rf ./lib && rm -rf ./dist && pnpm compile && tsup ./src/cli.ts --format cjs && cp -R ../base/src/asIs dist",
+    "dist:cli": "rm -rf ./lib && rm -rf ./dist && pnpm compile && node build.mjs",
     "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-rust-sdk:latest ../../..",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
@@ -37,7 +37,10 @@
     "test": "vitest --passWithNoTests --run",
     "test:update": "vitest --passWithNoTests --run -u"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@fern-api/core-utils": "0.15.0-rc63",
+    "dedent": "^1.5.1"
+  },
   "devDependencies": {
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
