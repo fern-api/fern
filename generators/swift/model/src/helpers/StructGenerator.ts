@@ -6,12 +6,14 @@ export declare namespace StructGenerator {
         rawName: string;
         type: swift.Type;
         value: swift.Expression;
+        docsContent?: string;
     }
 
     interface DataPropertyDefinition {
         unsafeName: string;
         rawName: string;
         type: swift.Type;
+        docsContent?: string;
     }
 
     interface Args {
@@ -19,6 +21,7 @@ export declare namespace StructGenerator {
         constantPropertyDefinitions: ConstantPropertyDefinition[];
         dataPropertyDefinitions: DataPropertyDefinition[];
         additionalProperties: boolean;
+        docsContent?: string;
     }
 }
 
@@ -27,17 +30,20 @@ export class StructGenerator {
     private readonly constantPropertyDefinitions: StructGenerator.ConstantPropertyDefinition[];
     private readonly dataPropertyDefinitions: StructGenerator.DataPropertyDefinition[];
     private readonly additionalPropertiesInfo;
+    private readonly docsContent?: string;
 
     public constructor({
         name,
         constantPropertyDefinitions,
         dataPropertyDefinitions,
-        additionalProperties
+        additionalProperties,
+        docsContent
     }: StructGenerator.Args) {
         this.name = name;
         this.constantPropertyDefinitions = constantPropertyDefinitions;
         this.dataPropertyDefinitions = dataPropertyDefinitions;
         this.additionalPropertiesInfo = additionalProperties ? this.getAdditionalPropertiesInfo() : undefined;
+        this.docsContent = docsContent;
     }
 
     private getAdditionalPropertiesInfo = () => {
@@ -66,7 +72,10 @@ export class StructGenerator {
                     unsafeName: this.additionalPropertiesInfo.propertyName,
                     accessLevel: swift.AccessLevel.Public,
                     declarationType: swift.DeclarationType.Let,
-                    type: this.additionalPropertiesInfo.swiftType
+                    type: this.additionalPropertiesInfo.swiftType,
+                    docs: swift.docComment({
+                        summary: "Additional properties that are not explicitly defined in the schema"
+                    })
                 })
             );
         }
@@ -77,7 +86,8 @@ export class StructGenerator {
             properties,
             initializers: this.generateInitializers(dataProperties),
             methods: this.generateMethods(constantProperties, dataProperties),
-            nestedTypes: this.generateNestedTypes(dataProperties)
+            nestedTypes: this.generateNestedTypes(dataProperties),
+            docs: this.docsContent ? swift.docComment({ summary: this.docsContent }) : undefined
         });
     }
 
@@ -88,7 +98,8 @@ export class StructGenerator {
                 accessLevel: swift.AccessLevel.Public,
                 declarationType: swift.DeclarationType.Let,
                 type: p.type,
-                defaultValue: p.value
+                defaultValue: p.value,
+                docs: p.docsContent ? swift.docComment({ summary: p.docsContent }) : undefined
             })
         );
     }
@@ -99,7 +110,8 @@ export class StructGenerator {
                 unsafeName: p.unsafeName,
                 accessLevel: swift.AccessLevel.Public,
                 declarationType: swift.DeclarationType.Let,
-                type: p.type
+                type: p.type,
+                docs: p.docsContent ? swift.docComment({ summary: p.docsContent }) : undefined
             })
         );
     }
@@ -349,7 +361,8 @@ export class StructGenerator {
                     unsafeName: property.unsafeName,
                     rawValue: property.rawName
                 }))
-            ]
+            ],
+            docs: swift.docComment({ summary: "Keys for encoding/decoding struct properties." })
         });
     }
 }

@@ -3,6 +3,7 @@ public struct DoublyLinkedListNodeValue: Codable, Hashable, Sendable {
     public let val: Double
     public let next: NodeId?
     public let prev: NodeId?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -37,6 +38,7 @@ public struct DoublyLinkedListNodeValue: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.prev, forKey: .prev)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case nodeId
         case val

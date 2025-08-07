@@ -9,6 +9,7 @@ export declare namespace ObjectGenerator {
         name: string;
         properties: (ObjectProperty | InlinedRequestBodyProperty)[];
         extendedProperties?: ObjectProperty[];
+        docsContent?: string;
         context: ModelGeneratorContext;
     }
 }
@@ -17,12 +18,14 @@ export class ObjectGenerator {
     private readonly name: string;
     private readonly properties: (ObjectProperty | InlinedRequestBodyProperty)[];
     private readonly extendedProperties: ObjectProperty[];
+    private readonly docsContent?: string;
     private readonly context: ModelGeneratorContext;
 
-    public constructor({ name, properties, extendedProperties, context }: ObjectGenerator.Args) {
+    public constructor({ name, properties, extendedProperties, docsContent, context }: ObjectGenerator.Args) {
         this.name = name;
         this.properties = properties;
         this.extendedProperties = extendedProperties ?? [];
+        this.docsContent = docsContent;
         this.context = context;
     }
 
@@ -37,9 +40,11 @@ export class ObjectGenerator {
             dataPropertyDefinitions: [...this.extendedProperties, ...this.properties].map((p) => ({
                 unsafeName: p.name.name.camelCase.unsafeName,
                 rawName: p.name.wireValue,
-                type: this.context.getSwiftTypeForTypeReference(p.valueType)
+                type: this.context.getSwiftTypeForTypeReference(p.valueType),
+                docsContent: p.docs
             })),
-            additionalProperties: true
+            additionalProperties: true,
+            docsContent: this.docsContent
         }).generate();
     }
 }

@@ -1,6 +1,7 @@
 public struct TestCase: Codable, Hashable, Sendable {
     public let id: String
     public let params: [VariableValue]
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +28,7 @@ public struct TestCase: Codable, Hashable, Sendable {
         try container.encode(self.params, forKey: .params)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case params

@@ -1,6 +1,7 @@
 public struct SinglyLinkedListNodeAndListValue: Codable, Hashable, Sendable {
     public let nodeId: NodeId
     public let fullList: SinglyLinkedListValue
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +28,7 @@ public struct SinglyLinkedListNodeAndListValue: Codable, Hashable, Sendable {
         try container.encode(self.fullList, forKey: .fullList)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case nodeId
         case fullList

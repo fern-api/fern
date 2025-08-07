@@ -1,3 +1,4 @@
+/// Exercises all of the built-in types.
 public struct Type: Codable, Hashable, Sendable {
     public let one: Int
     public let two: Double
@@ -24,6 +25,7 @@ public struct Type: Codable, Hashable, Sendable {
     public let twentythree: String
     public let twentyfour: Date?
     public let twentyfive: Date?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -142,6 +144,7 @@ public struct Type: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.twentyfive, forKey: .twentyfive)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case one
         case two

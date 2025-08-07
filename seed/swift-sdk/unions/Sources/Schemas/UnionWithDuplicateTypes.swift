@@ -32,6 +32,7 @@ public enum UnionWithDuplicateTypes: Codable, Hashable, Sendable {
     public struct Foo1: Codable, Hashable, Sendable {
         public let type: String = "foo1"
         public let name: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -55,6 +56,7 @@ public enum UnionWithDuplicateTypes: Codable, Hashable, Sendable {
             try container.encode(self.name, forKey: .name)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case name
@@ -64,6 +66,7 @@ public enum UnionWithDuplicateTypes: Codable, Hashable, Sendable {
     public struct Foo2: Codable, Hashable, Sendable {
         public let type: String = "foo2"
         public let name: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -87,6 +90,7 @@ public enum UnionWithDuplicateTypes: Codable, Hashable, Sendable {
             try container.encode(self.name, forKey: .name)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case name

@@ -1,6 +1,7 @@
 public struct User: Codable, Hashable, Sendable {
     public let name: String
     public let id: Int
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +28,7 @@ public struct User: Codable, Hashable, Sendable {
         try container.encode(self.id, forKey: .id)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case name
         case id

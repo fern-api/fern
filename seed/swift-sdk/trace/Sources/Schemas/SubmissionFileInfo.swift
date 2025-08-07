@@ -2,6 +2,7 @@ public struct SubmissionFileInfo: Codable, Hashable, Sendable {
     public let directory: String
     public let filename: String
     public let contents: String
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -32,6 +33,7 @@ public struct SubmissionFileInfo: Codable, Hashable, Sendable {
         try container.encode(self.contents, forKey: .contents)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case directory
         case filename

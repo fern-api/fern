@@ -1,6 +1,7 @@
 public struct StreamedCompletion: Codable, Hashable, Sendable {
     public let delta: String
     public let tokens: Int?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +28,7 @@ public struct StreamedCompletion: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.tokens, forKey: .tokens)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case delta
         case tokens

@@ -6,16 +6,19 @@ export declare namespace StringEnumGenerator {
     interface Args {
         name: string;
         enumTypeDeclaration: EnumTypeDeclaration;
+        docsContent?: string;
     }
 }
 
 export class StringEnumGenerator {
     private readonly name: string;
     private readonly enumTypeDeclaration: EnumTypeDeclaration;
+    private readonly docsContent?: string;
 
-    public constructor({ name, enumTypeDeclaration }: StringEnumGenerator.Args) {
+    public constructor({ name, enumTypeDeclaration, docsContent }: StringEnumGenerator.Args) {
         this.name = name;
         this.enumTypeDeclaration = enumTypeDeclaration;
+        this.docsContent = docsContent;
     }
 
     public generate(): swift.EnumWithRawValues {
@@ -35,8 +38,10 @@ export class StringEnumGenerator {
             ],
             cases: this.enumTypeDeclaration.values.map((val) => ({
                 unsafeName: val.name.name.camelCase.unsafeName,
-                rawValue: val.name.wireValue
-            }))
+                rawValue: val.name.wireValue,
+                docs: val.docs ? swift.docComment({ summary: val.docs }) : undefined
+            })),
+            docs: this.docsContent ? swift.docComment({ summary: this.docsContent }) : undefined
         });
     }
 }

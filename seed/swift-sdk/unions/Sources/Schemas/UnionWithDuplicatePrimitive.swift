@@ -42,6 +42,7 @@ public enum UnionWithDuplicatePrimitive: Codable, Hashable, Sendable {
     public struct Integer1: Codable, Hashable, Sendable {
         public let type: String = "integer1"
         public let value: Int
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -65,6 +66,7 @@ public enum UnionWithDuplicatePrimitive: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -74,6 +76,7 @@ public enum UnionWithDuplicatePrimitive: Codable, Hashable, Sendable {
     public struct Integer2: Codable, Hashable, Sendable {
         public let type: String = "integer2"
         public let value: Int
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -97,6 +100,7 @@ public enum UnionWithDuplicatePrimitive: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -106,6 +110,7 @@ public enum UnionWithDuplicatePrimitive: Codable, Hashable, Sendable {
     public struct String1: Codable, Hashable, Sendable {
         public let type: String = "string1"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -129,6 +134,7 @@ public enum UnionWithDuplicatePrimitive: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -138,6 +144,7 @@ public enum UnionWithDuplicatePrimitive: Codable, Hashable, Sendable {
     public struct String2: Codable, Hashable, Sendable {
         public let type: String = "string2"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -161,6 +168,7 @@ public enum UnionWithDuplicatePrimitive: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value

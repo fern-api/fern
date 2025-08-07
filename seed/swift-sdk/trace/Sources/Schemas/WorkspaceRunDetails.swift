@@ -2,6 +2,7 @@ public struct WorkspaceRunDetails: Codable, Hashable, Sendable {
     public let exceptionV2: ExceptionV2?
     public let exception: ExceptionInfo?
     public let stdout: String
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -32,6 +33,7 @@ public struct WorkspaceRunDetails: Codable, Hashable, Sendable {
         try container.encode(self.stdout, forKey: .stdout)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case exceptionV2
         case exception

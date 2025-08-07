@@ -1,6 +1,7 @@
 public struct NonVoidFunctionSignature: Codable, Hashable, Sendable {
     public let parameters: [Parameter]
     public let returnType: VariableType
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +28,7 @@ public struct NonVoidFunctionSignature: Codable, Hashable, Sendable {
         try container.encode(self.returnType, forKey: .returnType)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case parameters
         case returnType
