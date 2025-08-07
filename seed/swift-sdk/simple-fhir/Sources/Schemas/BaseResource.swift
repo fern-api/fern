@@ -2,6 +2,7 @@ public struct BaseResource: Codable, Hashable, Sendable {
     public let id: String
     public let relatedResources: [ResourceList]
     public let memo: Memo
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -32,6 +33,7 @@ public struct BaseResource: Codable, Hashable, Sendable {
         try container.encode(self.memo, forKey: .memo)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case relatedResources = "related_resources"

@@ -1,5 +1,6 @@
 public struct Circle: Codable, Hashable, Sendable {
     public let radius: Double
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -22,6 +23,7 @@ public struct Circle: Codable, Hashable, Sendable {
         try container.encode(self.radius, forKey: .radius)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case radius
     }

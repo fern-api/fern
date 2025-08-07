@@ -1,7 +1,9 @@
 public struct Movie: Codable, Hashable, Sendable {
     public let id: MovieId
     public let title: String
+    /// The rating scale is one to five stars
     public let rating: Double
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -32,6 +34,7 @@ public struct Movie: Codable, Hashable, Sendable {
         try container.encode(self.rating, forKey: .rating)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case title

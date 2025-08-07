@@ -3,6 +3,7 @@ public struct CreateRequest: Codable, Hashable, Sendable {
     public let even: Int
     public let name: String
     public let shape: Shape
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -37,6 +38,7 @@ public struct CreateRequest: Codable, Hashable, Sendable {
         try container.encode(self.shape, forKey: .shape)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case decimal
         case even

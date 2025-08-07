@@ -1,6 +1,7 @@
 public struct ReceiveSnakeCase: Codable, Hashable, Sendable {
     public let receiveText: String
     public let receiveInt: Int
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +28,7 @@ public struct ReceiveSnakeCase: Codable, Hashable, Sendable {
         try container.encode(self.receiveInt, forKey: .receiveInt)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case receiveText = "receive_text"
         case receiveInt = "receive_int"

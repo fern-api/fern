@@ -6,6 +6,7 @@ public struct SendRequest: Codable, Hashable, Sendable {
     public let context: SomeLiteral
     public let maybeContext: SomeLiteral?
     public let containerObject: ContainerObject
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -52,6 +53,7 @@ public struct SendRequest: Codable, Hashable, Sendable {
         try container.encode(self.containerObject, forKey: .containerObject)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case prompt
         case query

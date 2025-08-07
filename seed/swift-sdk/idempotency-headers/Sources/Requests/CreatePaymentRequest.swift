@@ -1,6 +1,7 @@
 public struct CreatePaymentRequest: Codable, Hashable, Sendable {
     public let amount: Int
     public let currency: Currency
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +28,7 @@ public struct CreatePaymentRequest: Codable, Hashable, Sendable {
         try container.encode(self.currency, forKey: .currency)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case amount
         case currency

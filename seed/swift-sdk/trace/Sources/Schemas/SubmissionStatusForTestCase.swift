@@ -38,6 +38,7 @@ public enum SubmissionStatusForTestCase: Codable, Hashable, Sendable {
         public let type: String = "graded"
         public let result: TestCaseResult
         public let stdout: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -65,6 +66,7 @@ public enum SubmissionStatusForTestCase: Codable, Hashable, Sendable {
             try container.encode(self.stdout, forKey: .stdout)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case result
@@ -75,6 +77,7 @@ public enum SubmissionStatusForTestCase: Codable, Hashable, Sendable {
     public struct GradedV2: Codable, Hashable, Sendable {
         public let type: String = "gradedV2"
         public let value: TestCaseGrade
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -98,6 +101,7 @@ public enum SubmissionStatusForTestCase: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -108,6 +112,7 @@ public enum SubmissionStatusForTestCase: Codable, Hashable, Sendable {
         public let type: String = "traced"
         public let result: TestCaseResultWithStdout
         public let traceResponsesSize: Int
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -135,6 +140,7 @@ public enum SubmissionStatusForTestCase: Codable, Hashable, Sendable {
             try container.encode(self.traceResponsesSize, forKey: .traceResponsesSize)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case result

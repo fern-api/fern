@@ -1,6 +1,7 @@
 public struct StoreTracedWorkspaceRequest: Codable, Hashable, Sendable {
     public let workspaceRunDetails: WorkspaceRunDetails
     public let traceResponses: [TraceResponse]
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +28,7 @@ public struct StoreTracedWorkspaceRequest: Codable, Hashable, Sendable {
         try container.encode(self.traceResponses, forKey: .traceResponses)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case workspaceRunDetails
         case traceResponses

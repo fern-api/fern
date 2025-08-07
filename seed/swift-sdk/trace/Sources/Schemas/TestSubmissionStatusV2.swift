@@ -3,6 +3,7 @@ public struct TestSubmissionStatusV2: Codable, Hashable, Sendable {
     public let problemId: ProblemId
     public let problemVersion: Int
     public let problemInfo: ProblemInfoV2
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -37,6 +38,7 @@ public struct TestSubmissionStatusV2: Codable, Hashable, Sendable {
         try container.encode(self.problemInfo, forKey: .problemInfo)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case updates
         case problemId

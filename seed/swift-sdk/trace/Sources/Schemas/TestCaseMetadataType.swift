@@ -2,6 +2,7 @@ public struct TestCaseMetadataType: Codable, Hashable, Sendable {
     public let id: TestCaseIdType
     public let name: String
     public let hidden: Bool
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -32,6 +33,7 @@ public struct TestCaseMetadataType: Codable, Hashable, Sendable {
         try container.encode(self.hidden, forKey: .hidden)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case name

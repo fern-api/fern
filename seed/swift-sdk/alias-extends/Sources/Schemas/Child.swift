@@ -1,6 +1,7 @@
 public struct Child: Codable, Hashable, Sendable {
     public let parent: String
     public let child: String
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +28,7 @@ public struct Child: Codable, Hashable, Sendable {
         try container.encode(self.child, forKey: .child)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case parent
         case child

@@ -1,5 +1,6 @@
 public struct WithCursor: Codable, Hashable, Sendable {
     public let cursor: String?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -22,6 +23,7 @@ public struct WithCursor: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.cursor, forKey: .cursor)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case cursor
     }

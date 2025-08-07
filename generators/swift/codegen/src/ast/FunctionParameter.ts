@@ -1,6 +1,6 @@
+import { AstNode, Writer } from "./core";
 import { Expression } from "./Expression";
 import { Type } from "./Type";
-import { AstNode, Writer } from "./core";
 
 export declare namespace FunctionParameter {
     interface Args {
@@ -10,6 +10,7 @@ export declare namespace FunctionParameter {
         unsafeName: string;
         type: Type;
         defaultValue?: Expression;
+        docsContent?: string;
     }
 }
 
@@ -18,13 +19,15 @@ export class FunctionParameter extends AstNode {
     public readonly unsafeName: string;
     public readonly type: Type;
     public readonly defaultValue?: Expression;
+    public readonly docsContent?: string;
 
-    constructor({ argumentLabel, unsafeName, type, defaultValue }: FunctionParameter.Args) {
+    constructor({ argumentLabel, unsafeName, type, defaultValue, docsContent }: FunctionParameter.Args) {
         super();
         this.argumentLabel = argumentLabel;
         this.unsafeName = unsafeName;
         this.type = type;
         this.defaultValue = defaultValue;
+        this.docsContent = docsContent;
     }
 
     public write(writer: Writer): void {

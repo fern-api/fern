@@ -30,7 +30,8 @@ export class SingleUrlEnvironmentGenerator {
             conformances: ["String", swift.Protocol.CaseIterable],
             cases: this.environments.environments.map((e) => ({
                 unsafeName: e.name.camelCase.unsafeName,
-                rawValue: e.url
+                rawValue: e.url,
+                docs: e.docs ? swift.docComment({ summary: e.docs }) : undefined
             }))
         });
     }

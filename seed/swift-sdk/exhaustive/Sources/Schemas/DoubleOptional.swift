@@ -1,5 +1,6 @@
 public struct DoubleOptional: Codable, Hashable, Sendable {
     public let optionalAlias: OptionalAlias?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -22,6 +23,7 @@ public struct DoubleOptional: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.optionalAlias, forKey: .optionalAlias)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case optionalAlias
     }

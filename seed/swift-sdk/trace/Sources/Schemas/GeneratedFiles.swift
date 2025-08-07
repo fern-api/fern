@@ -2,6 +2,7 @@ public struct GeneratedFiles: Codable, Hashable, Sendable {
     public let generatedTestCaseFiles: [Language: Files]
     public let generatedTemplateFiles: [Language: Files]
     public let other: [Language: Files]
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -32,6 +33,7 @@ public struct GeneratedFiles: Codable, Hashable, Sendable {
         try container.encode(self.other, forKey: .other)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case generatedTestCaseFiles
         case generatedTemplateFiles

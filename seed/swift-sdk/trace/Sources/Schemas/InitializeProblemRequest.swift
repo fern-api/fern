@@ -1,6 +1,7 @@
 public struct InitializeProblemRequest: Codable, Hashable, Sendable {
     public let problemId: ProblemId
     public let problemVersion: Int?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +28,7 @@ public struct InitializeProblemRequest: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.problemVersion, forKey: .problemVersion)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case problemId
         case problemVersion

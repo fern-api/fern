@@ -32,6 +32,7 @@ public enum TestCaseImplementationReferenceType: Codable, Hashable, Sendable {
     public struct TemplateId: Codable, Hashable, Sendable {
         public let type: String = "templateId"
         public let value: TestCaseTemplateIdType
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -55,6 +56,7 @@ public enum TestCaseImplementationReferenceType: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -65,6 +67,7 @@ public enum TestCaseImplementationReferenceType: Codable, Hashable, Sendable {
         public let type: String = "implementation"
         public let description: TestCaseImplementationDescriptionType
         public let function: TestCaseFunctionType
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -92,6 +95,7 @@ public enum TestCaseImplementationReferenceType: Codable, Hashable, Sendable {
             try container.encode(self.function, forKey: .function)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case description

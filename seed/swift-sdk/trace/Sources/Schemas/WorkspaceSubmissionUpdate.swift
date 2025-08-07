@@ -1,6 +1,7 @@
 public struct WorkspaceSubmissionUpdate: Codable, Hashable, Sendable {
     public let updateTime: Date
     public let updateInfo: WorkspaceSubmissionUpdateInfo
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +28,7 @@ public struct WorkspaceSubmissionUpdate: Codable, Hashable, Sendable {
         try container.encode(self.updateInfo, forKey: .updateInfo)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case updateTime
         case updateInfo

@@ -1,5 +1,6 @@
 import { AccessLevel } from "./AccessLevel";
 import { AstNode, Writer } from "./core";
+import { DocComment } from "./DocComment";
 import type { EnumWithRawValues } from "./EnumWithRawValues";
 import { Initializer } from "./Initializer";
 import { Method } from "./Method";
@@ -15,6 +16,7 @@ export declare namespace Struct {
         initializers?: Initializer[];
         methods?: Method[];
         nestedTypes?: (Struct | EnumWithRawValues)[];
+        docs?: DocComment;
     }
 }
 
@@ -26,6 +28,7 @@ export class Struct extends AstNode {
     public readonly initializers: Initializer[];
     public readonly methods: Method[];
     public readonly nestedTypes: (Struct | EnumWithRawValues)[];
+    public readonly docs?: DocComment;
 
     public constructor({
         accessLevel,
@@ -34,7 +37,8 @@ export class Struct extends AstNode {
         properties,
         initializers,
         methods,
-        nestedTypes
+        nestedTypes,
+        docs
     }: Struct.Args) {
         super();
         this.name = name;
@@ -44,9 +48,13 @@ export class Struct extends AstNode {
         this.initializers = initializers ?? [];
         this.methods = methods ?? [];
         this.nestedTypes = nestedTypes ?? [];
+        this.docs = docs;
     }
 
     public write(writer: Writer): void {
+        if (this.docs != null) {
+            this.docs.write(writer);
+        }
         if (this.accessLevel != null) {
             writer.write(this.accessLevel);
             writer.write(" ");

@@ -1,5 +1,6 @@
 public struct ContainerObject: Codable, Hashable, Sendable {
     public let nestedObjects: [NestedObjectWithLiterals]
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -22,6 +23,7 @@ public struct ContainerObject: Codable, Hashable, Sendable {
         try container.encode(self.nestedObjects, forKey: .nestedObjects)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case nestedObjects
     }

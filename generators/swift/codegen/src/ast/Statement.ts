@@ -4,6 +4,7 @@ import { AccessLevel } from "./AccessLevel";
 import { CodeBlock } from "./CodeBlock";
 import { AstNode, Writer } from "./core";
 import { DeclarationType } from "./DeclarationType";
+import { DocComment } from "./DocComment";
 import { Expression } from "./Expression";
 import { Pattern } from "./Pattern";
 import { escapeReservedKeyword } from "./syntax";
@@ -14,6 +15,7 @@ type TypealiasDeclaration = {
     accessLevel?: AccessLevel;
     unsafeName: string;
     aliasedType: Type;
+    docs?: DocComment;
 };
 
 type ConstantDeclaration = {
@@ -119,6 +121,9 @@ export class Statement extends AstNode {
     public write(writer: Writer): void {
         switch (this.internalStatement.type) {
             case "typealias-declaration":
+                if (this.internalStatement.docs != null) {
+                    this.internalStatement.docs.write(writer);
+                }
                 if (this.internalStatement.accessLevel) {
                     writer.write(this.internalStatement.accessLevel);
                     writer.write(" ");
