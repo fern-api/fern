@@ -3,6 +3,6 @@
 # isort: skip_file
 
 from . import service
-from .service import PatchProxyRequest
+from .service import PatchComplexRequest, PatchProxyRequest, RegularPatchRequest
 
-__all__ = ["PatchProxyRequest", "service"]
+__all__ = ["PatchComplexRequest", "PatchProxyRequest", "RegularPatchRequest", "service"]

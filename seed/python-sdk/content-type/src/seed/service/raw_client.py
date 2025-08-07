@@ -6,6 +6,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
+from ..core.jsonable_encoder import jsonable_encoder
 from ..core.request_options import RequestOptions
 
 # this is used as the default value for optional parameters
@@ -57,6 +58,113 @@ class RawServiceClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def patch_complex(
+        self,
+        id: str,
+        *,
+        name: typing.Optional[str] = OMIT,
+        email: typing.Optional[str] = OMIT,
+        age: typing.Optional[int] = OMIT,
+        active: typing.Optional[bool] = OMIT,
+        metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        tags: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[None]:
+        """
+        Update with JSON merge patch - complex types
+
+        Parameters
+        ----------
+        id : str
+
+        name : typing.Optional[str]
+
+        email : typing.Optional[str]
+
+        age : typing.Optional[int]
+
+        active : typing.Optional[bool]
+
+        metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+
+        tags : typing.Optional[typing.Sequence[str]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[None]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"complex/{jsonable_encoder(id)}",
+            method="PATCH",
+            json={
+                "name": name,
+                "email": email,
+                "age": age,
+                "active": active,
+                "metadata": metadata,
+                "tags": tags,
+            },
+            headers={
+                "content-type": "application/merge-patch+json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return HttpResponse(response=_response, data=None)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def regular_patch(
+        self,
+        id: str,
+        *,
+        field_1: typing.Optional[str] = OMIT,
+        field_2: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[None]:
+        """
+        Regular PATCH endpoint without merge-patch semantics
+
+        Parameters
+        ----------
+        id : str
+
+        field_1 : typing.Optional[str]
+
+        field_2 : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[None]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"regular/{jsonable_encoder(id)}",
+            method="PATCH",
+            json={
+                "field1": field_1,
+                "field2": field_2,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return HttpResponse(response=_response, data=None)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -91,6 +199,113 @@ class AsyncRawServiceClient:
             },
             headers={
                 "content-type": "application/merge-patch+json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return AsyncHttpResponse(response=_response, data=None)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def patch_complex(
+        self,
+        id: str,
+        *,
+        name: typing.Optional[str] = OMIT,
+        email: typing.Optional[str] = OMIT,
+        age: typing.Optional[int] = OMIT,
+        active: typing.Optional[bool] = OMIT,
+        metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        tags: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[None]:
+        """
+        Update with JSON merge patch - complex types
+
+        Parameters
+        ----------
+        id : str
+
+        name : typing.Optional[str]
+
+        email : typing.Optional[str]
+
+        age : typing.Optional[int]
+
+        active : typing.Optional[bool]
+
+        metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+
+        tags : typing.Optional[typing.Sequence[str]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[None]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"complex/{jsonable_encoder(id)}",
+            method="PATCH",
+            json={
+                "name": name,
+                "email": email,
+                "age": age,
+                "active": active,
+                "metadata": metadata,
+                "tags": tags,
+            },
+            headers={
+                "content-type": "application/merge-patch+json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return AsyncHttpResponse(response=_response, data=None)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def regular_patch(
+        self,
+        id: str,
+        *,
+        field_1: typing.Optional[str] = OMIT,
+        field_2: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[None]:
+        """
+        Regular PATCH endpoint without merge-patch semantics
+
+        Parameters
+        ----------
+        id : str
+
+        field_1 : typing.Optional[str]
+
+        field_2 : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[None]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"regular/{jsonable_encoder(id)}",
+            method="PATCH",
+            json={
+                "field1": field_1,
+                "field2": field_2,
             },
             request_options=request_options,
             omit=OMIT,
