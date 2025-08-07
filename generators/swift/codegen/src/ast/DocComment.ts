@@ -104,11 +104,11 @@ export class DocComment extends AstNode {
      * Handles line endings and binary content that cause compilation issues.
      */
     private static sanitizeText(text: string): string {
-        // Step 1: Normalize line endings - carriage returns break doc comment format
+        // Normalize line endings - carriage returns break doc comment format
         text = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
 
-        // Step 2: Remove null bytes - they cause "nul character embedded in middle of file" warnings
-        // This cause a compiler warning (not error) but we should remove it nevertheless
+        // Remove null bytes - they cause "nul character embedded in middle of file" warnings
+        // This causes a compiler warning (not error) but we should remove it nevertheless
         // biome-ignore lint/suspicious/noControlCharactersInRegex: allow
         text = text.replace(/\x00/g, "");
 
