@@ -100,4 +100,154 @@ export class Service {
                 });
         }
     }
+
+    /**
+     * Update with JSON merge patch - complex types
+     *
+     * @param {string} id
+     * @param {SeedContentTypes.PatchComplexRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.service.patchComplex("id", {
+     *         name: "name",
+     *         email: "email",
+     *         age: 1,
+     *         active: true,
+     *         metadata: {
+     *             "metadata": {
+     *                 "key": "value"
+     *             }
+     *         },
+     *         tags: ["tags", "tags"]
+     *     })
+     */
+    public patchComplex(
+        id: string,
+        request: SeedContentTypes.PatchComplexRequest = {},
+        requestOptions?: Service.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__patchComplex(id, request, requestOptions));
+    }
+
+    private async __patchComplex(
+        id: string,
+        request: SeedContentTypes.PatchComplexRequest = {},
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `complex/${encodeURIComponent(id)}`,
+            ),
+            method: "PATCH",
+            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
+            contentType: "application/merge-patch+json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedContentTypesError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedContentTypesError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedContentTypesTimeoutError("Timeout exceeded when calling PATCH /complex/{id}.");
+            case "unknown":
+                throw new errors.SeedContentTypesError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * Regular PATCH endpoint without merge-patch semantics
+     *
+     * @param {string} id
+     * @param {SeedContentTypes.RegularPatchRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.service.regularPatch("id", {
+     *         field1: "field1",
+     *         field2: 1
+     *     })
+     */
+    public regularPatch(
+        id: string,
+        request: SeedContentTypes.RegularPatchRequest = {},
+        requestOptions?: Service.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__regularPatch(id, request, requestOptions));
+    }
+
+    private async __regularPatch(
+        id: string,
+        request: SeedContentTypes.RegularPatchRequest = {},
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `regular/${encodeURIComponent(id)}`,
+            ),
+            method: "PATCH",
+            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedContentTypesError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedContentTypesError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedContentTypesTimeoutError("Timeout exceeded when calling PATCH /regular/{id}.");
+            case "unknown":
+                throw new errors.SeedContentTypesError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
 }
