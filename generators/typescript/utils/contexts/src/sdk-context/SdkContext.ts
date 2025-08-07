@@ -21,6 +21,7 @@ import { TimeoutSdkErrorContext } from "./timeout-sdk-error";
 import { VersionContext } from "./version";
 import { WebsocketClassContext } from "./websocket-class";
 import { WebsocketTypeSchemaContext } from "./websocket-type-schema";
+import { AuthProviderContext } from "./auth-provider";
 
 export interface SdkContext extends BaseContext {
     logger: Logger;
@@ -52,4 +53,5 @@ export interface SdkContext extends BaseContext {
     neverThrowErrors: boolean;
     importsManager: ImportsManager;
     exportsManager: ExportsManager;
+    authProvider: AuthProviderContext;
 }

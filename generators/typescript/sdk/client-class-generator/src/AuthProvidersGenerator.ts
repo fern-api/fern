@@ -5,8 +5,7 @@ import { assertNever } from "@fern-api/core-utils";
 
 import { AuthScheme, IntermediateRepresentation } from "@fern-fern/ir-sdk";
 
-import { AbstractAuthProviderGenerator } from "./auth-provider/AbstractAuthProviderGenerator";
-import { InferredAuthProviderGenerator } from "./auth-provider/InferredAuthProviderGenerator";
+import { AuthProviderGenerator, InferredAuthProviderGenerator } from "./auth-provider";
 
 export declare namespace AuthProvidersGenerator {
     export interface Init {
@@ -16,12 +15,8 @@ export declare namespace AuthProvidersGenerator {
 }
 
 export class AuthProvidersGenerator implements GeneratedFile<SdkContext> {
-    private readonly ir: IntermediateRepresentation;
-    private readonly authScheme: AuthScheme;
-    private readonly authProviderGenerator: AbstractAuthProviderGenerator | undefined;
+    private readonly authProviderGenerator: AuthProviderGenerator | undefined;
     constructor({ ir, authScheme }: AuthProvidersGenerator.Init) {
-        this.ir = ir;
-        this.authScheme = authScheme;
         this.authProviderGenerator = (() => {
             switch (authScheme.type) {
                 case "inferred":

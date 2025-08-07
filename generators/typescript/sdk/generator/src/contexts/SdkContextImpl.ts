@@ -9,6 +9,7 @@ import {
     CoreUtilities
 } from "@fern-typescript/commons";
 import {
+    AuthProviderContext,
     EnvironmentsContext,
     GenericAPISdkErrorContext,
     JsonContext,
@@ -184,6 +185,7 @@ export class SdkContextImpl implements SdkContext {
     public readonly exportsManager: ExportsManager;
     public readonly relativePackagePath: string;
     public readonly relativeTestPath: string;
+    public readonly authProvider: AuthProviderContext;
 
     constructor({
         logger,
@@ -436,6 +438,9 @@ export class SdkContextImpl implements SdkContext {
             exportsManager,
             timeoutSdkErrorDeclarationReferencer,
             timeoutSdkErrorGenerator
+        });
+        this.authProvider = new AuthProviderContext({
+            context: this
         });
     }
     version: string | undefined;

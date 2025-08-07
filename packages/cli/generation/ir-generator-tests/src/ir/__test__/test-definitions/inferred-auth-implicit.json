@@ -2663,6 +2663,378 @@
             ],
             "audiences": null
         },
+        "service_nested-no-auth/api": {
+            "availability": null,
+            "name": {
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "nested-no-auth",
+                            "camelCase": {
+                                "unsafeName": "nestedNoAuth",
+                                "safeName": "nestedNoAuth"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "nested_no_auth",
+                                "safeName": "nested_no_auth"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NESTED_NO_AUTH",
+                                "safeName": "NESTED_NO_AUTH"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "NestedNoAuth",
+                                "safeName": "NestedNoAuth"
+                            }
+                        },
+                        {
+                            "originalName": "api",
+                            "camelCase": {
+                                "unsafeName": "api",
+                                "safeName": "api"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "api",
+                                "safeName": "api"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "API",
+                                "safeName": "API"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "API",
+                                "safeName": "API"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "nested-no-auth",
+                            "camelCase": {
+                                "unsafeName": "nestedNoAuth",
+                                "safeName": "nestedNoAuth"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "nested_no_auth",
+                                "safeName": "nested_no_auth"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NESTED_NO_AUTH",
+                                "safeName": "NESTED_NO_AUTH"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "NestedNoAuth",
+                                "safeName": "NestedNoAuth"
+                            }
+                        }
+                    ],
+                    "file": {
+                        "originalName": "api",
+                        "camelCase": {
+                            "unsafeName": "api",
+                            "safeName": "api"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "api",
+                            "safeName": "api"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "API",
+                            "safeName": "API"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "API",
+                            "safeName": "API"
+                        }
+                    }
+                }
+            },
+            "displayName": null,
+            "basePath": {
+                "head": "/nested-no-auth",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "transport": {
+                "type": "http"
+            },
+            "endpoints": [
+                {
+                    "id": "endpoint_nested-no-auth/api.getSomething",
+                    "name": {
+                        "originalName": "getSomething",
+                        "camelCase": {
+                            "unsafeName": "getSomething",
+                            "safeName": "getSomething"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get_something",
+                            "safeName": "get_something"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET_SOMETHING",
+                            "safeName": "GET_SOMETHING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GetSomething",
+                            "safeName": "GetSomething"
+                        }
+                    },
+                    "displayName": null,
+                    "auth": false,
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "v2BaseUrls": null,
+                    "method": "GET",
+                    "basePath": null,
+                    "path": {
+                        "head": "/get-something",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "/nested-no-auth/get-something",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": null,
+                    "v2RequestBodies": null,
+                    "sdkRequest": null,
+                    "response": {
+                        "body": null,
+                        "status-code": null
+                    },
+                    "v2Responses": null,
+                    "errors": [],
+                    "userSpecifiedExamples": [],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "id": "b8b5a106",
+                                "url": "/nested-no-auth/get-something",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": null
+                                    }
+                                },
+                                "docs": null
+                            }
+                        }
+                    ],
+                    "pagination": null,
+                    "transport": null,
+                    "v2Examples": null,
+                    "source": null,
+                    "audiences": null,
+                    "availability": null,
+                    "docs": null
+                }
+            ],
+            "audiences": null
+        },
+        "service_nested/api": {
+            "availability": null,
+            "name": {
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "nested",
+                            "camelCase": {
+                                "unsafeName": "nested",
+                                "safeName": "nested"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "nested",
+                                "safeName": "nested"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NESTED",
+                                "safeName": "NESTED"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Nested",
+                                "safeName": "Nested"
+                            }
+                        },
+                        {
+                            "originalName": "api",
+                            "camelCase": {
+                                "unsafeName": "api",
+                                "safeName": "api"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "api",
+                                "safeName": "api"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "API",
+                                "safeName": "API"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "API",
+                                "safeName": "API"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "nested",
+                            "camelCase": {
+                                "unsafeName": "nested",
+                                "safeName": "nested"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "nested",
+                                "safeName": "nested"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NESTED",
+                                "safeName": "NESTED"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Nested",
+                                "safeName": "Nested"
+                            }
+                        }
+                    ],
+                    "file": {
+                        "originalName": "api",
+                        "camelCase": {
+                            "unsafeName": "api",
+                            "safeName": "api"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "api",
+                            "safeName": "api"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "API",
+                            "safeName": "API"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "API",
+                            "safeName": "API"
+                        }
+                    }
+                }
+            },
+            "displayName": null,
+            "basePath": {
+                "head": "/nested",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "transport": {
+                "type": "http"
+            },
+            "endpoints": [
+                {
+                    "id": "endpoint_nested/api.getSomething",
+                    "name": {
+                        "originalName": "getSomething",
+                        "camelCase": {
+                            "unsafeName": "getSomething",
+                            "safeName": "getSomething"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get_something",
+                            "safeName": "get_something"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET_SOMETHING",
+                            "safeName": "GET_SOMETHING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GetSomething",
+                            "safeName": "GetSomething"
+                        }
+                    },
+                    "displayName": null,
+                    "auth": true,
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "v2BaseUrls": null,
+                    "method": "GET",
+                    "basePath": null,
+                    "path": {
+                        "head": "/get-something",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "/nested/get-something",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": null,
+                    "v2RequestBodies": null,
+                    "sdkRequest": null,
+                    "response": {
+                        "body": null,
+                        "status-code": null
+                    },
+                    "v2Responses": null,
+                    "errors": [],
+                    "userSpecifiedExamples": [],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "id": "b8b5a106",
+                                "url": "/nested/get-something",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": null
+                                    }
+                                },
+                                "docs": null
+                            }
+                        }
+                    ],
+                    "pagination": null,
+                    "transport": null,
+                    "v2Examples": null,
+                    "source": null,
+                    "audiences": null,
+                    "availability": null,
+                    "docs": null
+                }
+            ],
+            "audiences": null
+        },
         "service_simple": {
             "availability": null,
             "name": {
@@ -3656,6 +4028,248 @@
                 },
                 "examples": null
             },
+            "endpoint_nested-no-auth/api.getSomething": {
+                "auth": {
+                    "type": "inferred"
+                },
+                "declaration": {
+                    "name": {
+                        "originalName": "getSomething",
+                        "camelCase": {
+                            "unsafeName": "getSomething",
+                            "safeName": "getSomething"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get_something",
+                            "safeName": "get_something"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET_SOMETHING",
+                            "safeName": "GET_SOMETHING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GetSomething",
+                            "safeName": "GetSomething"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "nested-no-auth",
+                                "camelCase": {
+                                    "unsafeName": "nestedNoAuth",
+                                    "safeName": "nestedNoAuth"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "nested_no_auth",
+                                    "safeName": "nested_no_auth"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "NESTED_NO_AUTH",
+                                    "safeName": "NESTED_NO_AUTH"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "NestedNoAuth",
+                                    "safeName": "NestedNoAuth"
+                                }
+                            },
+                            {
+                                "originalName": "api",
+                                "camelCase": {
+                                    "unsafeName": "api",
+                                    "safeName": "api"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "api",
+                                    "safeName": "api"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "API",
+                                    "safeName": "API"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "API",
+                                    "safeName": "API"
+                                }
+                            }
+                        ],
+                        "packagePath": [
+                            {
+                                "originalName": "nested-no-auth",
+                                "camelCase": {
+                                    "unsafeName": "nestedNoAuth",
+                                    "safeName": "nestedNoAuth"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "nested_no_auth",
+                                    "safeName": "nested_no_auth"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "NESTED_NO_AUTH",
+                                    "safeName": "NESTED_NO_AUTH"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "NestedNoAuth",
+                                    "safeName": "NestedNoAuth"
+                                }
+                            }
+                        ],
+                        "file": {
+                            "originalName": "api",
+                            "camelCase": {
+                                "unsafeName": "api",
+                                "safeName": "api"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "api",
+                                "safeName": "api"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "API",
+                                "safeName": "API"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "API",
+                                "safeName": "API"
+                            }
+                        }
+                    }
+                },
+                "location": {
+                    "method": "GET",
+                    "path": "/nested-no-auth/get-something"
+                },
+                "request": {
+                    "type": "body",
+                    "pathParameters": [],
+                    "body": null
+                },
+                "response": {
+                    "type": "json"
+                },
+                "examples": null
+            },
+            "endpoint_nested/api.getSomething": {
+                "auth": {
+                    "type": "inferred"
+                },
+                "declaration": {
+                    "name": {
+                        "originalName": "getSomething",
+                        "camelCase": {
+                            "unsafeName": "getSomething",
+                            "safeName": "getSomething"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get_something",
+                            "safeName": "get_something"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET_SOMETHING",
+                            "safeName": "GET_SOMETHING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GetSomething",
+                            "safeName": "GetSomething"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "nested",
+                                "camelCase": {
+                                    "unsafeName": "nested",
+                                    "safeName": "nested"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "nested",
+                                    "safeName": "nested"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "NESTED",
+                                    "safeName": "NESTED"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Nested",
+                                    "safeName": "Nested"
+                                }
+                            },
+                            {
+                                "originalName": "api",
+                                "camelCase": {
+                                    "unsafeName": "api",
+                                    "safeName": "api"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "api",
+                                    "safeName": "api"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "API",
+                                    "safeName": "API"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "API",
+                                    "safeName": "API"
+                                }
+                            }
+                        ],
+                        "packagePath": [
+                            {
+                                "originalName": "nested",
+                                "camelCase": {
+                                    "unsafeName": "nested",
+                                    "safeName": "nested"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "nested",
+                                    "safeName": "nested"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "NESTED",
+                                    "safeName": "NESTED"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Nested",
+                                    "safeName": "Nested"
+                                }
+                            }
+                        ],
+                        "file": {
+                            "originalName": "api",
+                            "camelCase": {
+                                "unsafeName": "api",
+                                "safeName": "api"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "api",
+                                "safeName": "api"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "API",
+                                "safeName": "API"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "API",
+                                "safeName": "API"
+                            }
+                        }
+                    }
+                },
+                "location": {
+                    "method": "GET",
+                    "path": "/nested/get-something"
+                },
+                "request": {
+                    "type": "body",
+                    "pathParameters": [],
+                    "body": null
+                },
+                "response": {
+                    "type": "json"
+                },
+                "examples": null
+            },
             "endpoint_simple.getSomething": {
                 "auth": {
                     "type": "inferred"
@@ -3821,6 +4435,388 @@
             "hasEndpointsInTree": true,
             "docs": null
         },
+        "subpackage_nested-no-auth": {
+            "name": {
+                "originalName": "nested-no-auth",
+                "camelCase": {
+                    "unsafeName": "nestedNoAuth",
+                    "safeName": "nestedNoAuth"
+                },
+                "snakeCase": {
+                    "unsafeName": "nested_no_auth",
+                    "safeName": "nested_no_auth"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "NESTED_NO_AUTH",
+                    "safeName": "NESTED_NO_AUTH"
+                },
+                "pascalCase": {
+                    "unsafeName": "NestedNoAuth",
+                    "safeName": "NestedNoAuth"
+                }
+            },
+            "displayName": null,
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "nested-no-auth",
+                        "camelCase": {
+                            "unsafeName": "nestedNoAuth",
+                            "safeName": "nestedNoAuth"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested_no_auth",
+                            "safeName": "nested_no_auth"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED_NO_AUTH",
+                            "safeName": "NESTED_NO_AUTH"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "NestedNoAuth",
+                            "safeName": "NestedNoAuth"
+                        }
+                    }
+                ],
+                "packagePath": [
+                    {
+                        "originalName": "nested-no-auth",
+                        "camelCase": {
+                            "unsafeName": "nestedNoAuth",
+                            "safeName": "nestedNoAuth"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested_no_auth",
+                            "safeName": "nested_no_auth"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED_NO_AUTH",
+                            "safeName": "NESTED_NO_AUTH"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "NestedNoAuth",
+                            "safeName": "NestedNoAuth"
+                        }
+                    }
+                ],
+                "file": null
+            },
+            "service": null,
+            "types": [],
+            "errors": [],
+            "subpackages": [
+                "subpackage_nested-no-auth/api"
+            ],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": true,
+            "docs": null
+        },
+        "subpackage_nested-no-auth/api": {
+            "name": {
+                "originalName": "api",
+                "camelCase": {
+                    "unsafeName": "api",
+                    "safeName": "api"
+                },
+                "snakeCase": {
+                    "unsafeName": "api",
+                    "safeName": "api"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "API",
+                    "safeName": "API"
+                },
+                "pascalCase": {
+                    "unsafeName": "API",
+                    "safeName": "API"
+                }
+            },
+            "displayName": null,
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "nested-no-auth",
+                        "camelCase": {
+                            "unsafeName": "nestedNoAuth",
+                            "safeName": "nestedNoAuth"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested_no_auth",
+                            "safeName": "nested_no_auth"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED_NO_AUTH",
+                            "safeName": "NESTED_NO_AUTH"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "NestedNoAuth",
+                            "safeName": "NestedNoAuth"
+                        }
+                    },
+                    {
+                        "originalName": "api",
+                        "camelCase": {
+                            "unsafeName": "api",
+                            "safeName": "api"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "api",
+                            "safeName": "api"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "API",
+                            "safeName": "API"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "API",
+                            "safeName": "API"
+                        }
+                    }
+                ],
+                "packagePath": [
+                    {
+                        "originalName": "nested-no-auth",
+                        "camelCase": {
+                            "unsafeName": "nestedNoAuth",
+                            "safeName": "nestedNoAuth"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested_no_auth",
+                            "safeName": "nested_no_auth"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED_NO_AUTH",
+                            "safeName": "NESTED_NO_AUTH"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "NestedNoAuth",
+                            "safeName": "NestedNoAuth"
+                        }
+                    }
+                ],
+                "file": {
+                    "originalName": "api",
+                    "camelCase": {
+                        "unsafeName": "api",
+                        "safeName": "api"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "api",
+                        "safeName": "api"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "API",
+                        "safeName": "API"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "API",
+                        "safeName": "API"
+                    }
+                }
+            },
+            "service": "service_nested-no-auth/api",
+            "types": [],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": true,
+            "docs": null
+        },
+        "subpackage_nested": {
+            "name": {
+                "originalName": "nested",
+                "camelCase": {
+                    "unsafeName": "nested",
+                    "safeName": "nested"
+                },
+                "snakeCase": {
+                    "unsafeName": "nested",
+                    "safeName": "nested"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "NESTED",
+                    "safeName": "NESTED"
+                },
+                "pascalCase": {
+                    "unsafeName": "Nested",
+                    "safeName": "Nested"
+                }
+            },
+            "displayName": null,
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "nested",
+                        "camelCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED",
+                            "safeName": "NESTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Nested",
+                            "safeName": "Nested"
+                        }
+                    }
+                ],
+                "packagePath": [
+                    {
+                        "originalName": "nested",
+                        "camelCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED",
+                            "safeName": "NESTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Nested",
+                            "safeName": "Nested"
+                        }
+                    }
+                ],
+                "file": null
+            },
+            "service": null,
+            "types": [],
+            "errors": [],
+            "subpackages": [
+                "subpackage_nested/api"
+            ],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": true,
+            "docs": null
+        },
+        "subpackage_nested/api": {
+            "name": {
+                "originalName": "api",
+                "camelCase": {
+                    "unsafeName": "api",
+                    "safeName": "api"
+                },
+                "snakeCase": {
+                    "unsafeName": "api",
+                    "safeName": "api"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "API",
+                    "safeName": "API"
+                },
+                "pascalCase": {
+                    "unsafeName": "API",
+                    "safeName": "API"
+                }
+            },
+            "displayName": null,
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "nested",
+                        "camelCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED",
+                            "safeName": "NESTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Nested",
+                            "safeName": "Nested"
+                        }
+                    },
+                    {
+                        "originalName": "api",
+                        "camelCase": {
+                            "unsafeName": "api",
+                            "safeName": "api"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "api",
+                            "safeName": "api"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "API",
+                            "safeName": "API"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "API",
+                            "safeName": "API"
+                        }
+                    }
+                ],
+                "packagePath": [
+                    {
+                        "originalName": "nested",
+                        "camelCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED",
+                            "safeName": "NESTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Nested",
+                            "safeName": "Nested"
+                        }
+                    }
+                ],
+                "file": {
+                    "originalName": "api",
+                    "camelCase": {
+                        "unsafeName": "api",
+                        "safeName": "api"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "api",
+                        "safeName": "api"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "API",
+                        "safeName": "API"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "API",
+                        "safeName": "API"
+                    }
+                }
+            },
+            "service": "service_nested/api",
+            "types": [],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": true,
+            "docs": null
+        },
         "subpackage_simple": {
             "name": {
                 "originalName": "simple",
@@ -3908,6 +4904,8 @@
         "errors": [],
         "subpackages": [
             "subpackage_auth",
+            "subpackage_nested-no-auth",
+            "subpackage_nested",
             "subpackage_simple"
         ],
         "webhooks": null,

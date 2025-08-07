@@ -265,6 +265,11 @@ export class TypeContextImpl implements TypeContext {
         }
     }
 
+    public isLiteral(typeReference: TypeReference): boolean {
+        const resolvedType = this.resolveTypeReference(typeReference);
+        return resolvedType.type === "container" && resolvedType.container.type === "literal";
+    }
+
     public hasDefaultValue(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
             case "primitive":

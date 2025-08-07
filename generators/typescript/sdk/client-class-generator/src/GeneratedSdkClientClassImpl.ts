@@ -25,7 +25,6 @@ import {
     PropertySignatureStructure,
     Scope,
     StructureKind,
-    TypeAliasDeclarationStructure,
     ts
 } from "ts-morph";
 import { Code, code } from "ts-poet";
@@ -69,7 +68,7 @@ import { getLiteralValueForHeader, isLiteralHeader } from "./endpoints/utils/isL
 import { REQUEST_OPTIONS_ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME } from "./endpoints/utils/requestOptionsParameter";
 import { OAuthTokenProviderGenerator } from "./oauth-generator/OAuthTokenProviderGenerator";
 import { GeneratedDefaultWebsocketImplementation } from "./websocket/GeneratedDefaultWebsocketImplementation";
-import { InferredAuthProviderGenerator } from "./auth-provider/InferredAuthProviderGenerator";
+import { AuthProviderInstance, InferredAuthProviderInstance } from "./auth-provider";
 
 export declare namespace GeneratedSdkClientClassImpl {
     export interface Init {
@@ -113,8 +112,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     public static readonly BASE_URL_OPTION_PROPERTY_NAME = "baseUrl";
     public static readonly ENVIRONMENT_OPTION_PROPERTY_NAME = "environment";
     public static readonly OPTIONS_INTERFACE_NAME = "Options";
-    public static readonly AUTH_PROVIDER_FIELD_NAME = "_authProvider";
-    public static readonly AUTH_PROVIDER_OPTIONS_PROPERTY_NAME = "authProvider";
     public static readonly OPTIONS_PRIVATE_MEMBER = "_options";
     public static readonly AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getAuthorizationHeader";
     public static readonly CUSTOM_AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getCustomAuthorizationHeaders";
@@ -145,6 +142,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private bearerAuthScheme: BearerAuthScheme | undefined;
     private basicAuthScheme: BasicAuthScheme | undefined;
     private inferredAuthScheme: InferredAuthScheme | undefined;
+    private authProvider: AuthProviderInstance | undefined;
     private readonly authHeaders: HeaderAuthScheme[];
     private readonly service: HttpService | undefined;
     private readonly omitFernHeaders: boolean;
@@ -409,6 +407,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 },
                 inferred: (inferredAuthScheme) => {
                     this.inferredAuthScheme = inferredAuthScheme;
+                    this.authProvider = new InferredAuthProviderInstance();
                 },
                 _other: () => {
                     throw new Error("Unknown auth scheme: " + authScheme.type);
@@ -538,11 +537,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return ts.factory.createNewExpression(referenceToClient, undefined, [
             referenceToAuthProvider && this.anyEndpointWithAuth
                 ? ts.factory.createObjectLiteralExpression([
+                      ts.factory.createSpreadAssignment(referenceToOptions),
                       ts.factory.createPropertyAssignment(
-                          GeneratedSdkClientClassImpl.AUTH_PROVIDER_OPTIONS_PROPERTY_NAME,
+                          AuthProviderInstance.OPTIONS_PROPERTY_NAME,
                           referenceToAuthProvider
-                      ),
-                      ts.factory.createSpreadAssignment(referenceToOptions)
+                      )
                   ])
                 : referenceToOptions
         ]);
@@ -617,10 +616,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             });
         }
 
-        if (this.inferredAuthScheme && this.anyEndpointWithAuth) {
+        if (this.authProvider && this.anyEndpointWithAuth) {
             serviceClass.properties.push({
                 kind: StructureKind.Property,
-                name: GeneratedSdkClientClassImpl.AUTH_PROVIDER_FIELD_NAME,
+                name: AuthProviderInstance.FIELD_NAME,
                 type: getTextOfTsNode(context.coreUtilities.auth.AbstractAuthProvider._getReferenceToType()),
                 scope: Scope.Protected,
                 isReadonly: true
@@ -766,7 +765,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 parameters,
                 statements: statements.toString({ dprintOptions: { indentWidth: 4 } })
             });
-        } else if (this.isRoot && this.inferredAuthScheme && this.anyEndpointWithAuth) {
+        } else if (this.isRoot && this.authProvider && this.anyEndpointWithAuth) {
             const parameters = [
                 {
                     name: GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER,
@@ -783,19 +782,41 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         : undefined
                 }
             ];
-            InferredAuthProviderGenerator.import(context);
             const statements = code`
                 ${this.getHeadersStatements(context)}
-                this.${GeneratedSdkClientClassImpl.AUTH_PROVIDER_FIELD_NAME} = new ${InferredAuthProviderGenerator.CLASS_NAME}({
-                    client: this,
-                    authTokenParameters: {...this._options},
-                });
+                ${getTextOfTsNode(AuthProviderInstance.getReferenceToField())} = ${getTextOfTsNode(
+                    this.authProvider.instantiate({
+                        context,
+                        params: [
+                            ts.factory.createObjectLiteralExpression(
+                                [
+                                    ts.factory.createPropertyAssignment(
+                                        ts.factory.createIdentifier("client"),
+                                        ts.factory.createThis()
+                                    ),
+                                    ts.factory.createPropertyAssignment(
+                                        ts.factory.createIdentifier("authTokenParameters"),
+                                        ts.factory.createObjectLiteralExpression(
+                                            [
+                                                ts.factory.createSpreadAssignment(
+                                                    ts.factory.createIdentifier("this._options")
+                                                )
+                                            ],
+                                            false
+                                        )
+                                    )
+                                ],
+                                true
+                            )
+                        ]
+                    })
+                )};
             `;
             serviceClass.ctors.push({
                 parameters,
                 statements: statements.toString({ dprintOptions: { indentWidth: 4 } })
             });
-        } else if (!this.isRoot && this.inferredAuthScheme && this.anyEndpointWithAuth) {
+        } else if (!this.isRoot && this.authProvider && this.anyEndpointWithAuth) {
             const parameters = [
                 {
                     name: GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER,
@@ -814,7 +835,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             ];
             const statements = code`
                 ${this.getHeadersStatements(context)}
-                this.${GeneratedSdkClientClassImpl.AUTH_PROVIDER_FIELD_NAME} = _options.authProvider;
+                ${getTextOfTsNode(AuthProviderInstance.getReferenceToField())} = _options.${AuthProviderInstance.OPTIONS_PROPERTY_NAME};
             `;
             serviceClass.ctors.push({
                 parameters,
@@ -1444,7 +1465,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
     private generateOptionsInterface(context: SdkContext): InterfaceDeclarationStructure {
         const properties: OptionalKind<PropertySignatureStructure>[] = [];
-        const iExtends: string[] = [];
 
         if (!this.requireDefaultEnvironment) {
             const generatedEnvironments = context.environments.getGeneratedEnvironments();
@@ -1494,26 +1514,17 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 ),
                 hasQuestionToken: this.oauthAuthScheme.configuration.clientSecretEnvVar != null
             });
-        } else if (this.isRoot && this.inferredAuthScheme != null && this.anyEndpointWithAuth) {
-            const service = this.getInferredAuthTokenService();
-            const endpoint = this.getInferredAuthTokenEndpoint(service);
-            const tokenEndpointReference = this.inferredAuthScheme.tokenEndpoint.endpoint;
-            const tokenEndpointPackageId = tokenEndpointReference.subpackageId;
-            const endpointRequest = this.getGeneratedEndpointRequest({
-                endpoint,
-                requestBody: endpoint.requestBody,
-                packageId: tokenEndpointPackageId
-                    ? {
-                          isRoot: false,
-                          subpackageId: tokenEndpointPackageId
-                      }
-                    : { isRoot: true },
-                service
-            });
-            const requestParam = endpointRequest.getRequestParameter(context);
-            if (requestParam) {
-                iExtends.push(getTextOfTsNode(requestParam));
-            }
+        } else if (this.isRoot && this.inferredAuthScheme != null) {
+            const authTokenParams = context.authProvider.getPropertiesForAuthTokenParams(
+                FernIr.AuthScheme.inferred(this.inferredAuthScheme)
+            );
+            properties.push(
+                ...authTokenParams.map((param) => ({
+                    name: getPropertyKey(param.name),
+                    type: getTextOfTsNode(param.type),
+                    hasQuestionToken: param.isOptional
+                }))
+            );
         }
 
         for (const variable of this.intermediateRepresentation.variables) {
@@ -1680,9 +1691,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             });
         }
 
-        if (this.inferredAuthScheme && this.anyEndpointWithAuth && !this.isRoot) {
+        if (this.authProvider && this.anyEndpointWithAuth && !this.isRoot) {
             properties.push({
-                name: GeneratedSdkClientClassImpl.AUTH_PROVIDER_OPTIONS_PROPERTY_NAME,
+                name: AuthProviderInstance.OPTIONS_PROPERTY_NAME,
                 type: getTextOfTsNode(context.coreUtilities.auth.AbstractAuthProvider._getReferenceToType())
             });
         }
@@ -1693,35 +1704,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             properties,
             isExported: true
         };
-    }
-
-    private getInferredAuthTokenService() {
-        if (!this.inferredAuthScheme) {
-            throw new Error("Inferred auth scheme is not defined");
-        }
-
-        const service =
-            this.intermediateRepresentation.services[this.inferredAuthScheme.tokenEndpoint.endpoint.serviceId];
-        if (!service) {
-            throw new Error(
-                `failed to find service with id ${this.inferredAuthScheme?.tokenEndpoint.endpoint.serviceId}`
-            );
-        }
-        return service;
-    }
-
-    private getInferredAuthTokenEndpoint(service: HttpService): HttpEndpoint {
-        if (!this.inferredAuthScheme) {
-            throw new Error("Inferred auth scheme is not defined");
-        }
-        const tokenEndpointReference = this.inferredAuthScheme.tokenEndpoint.endpoint;
-        const endpoint = service?.endpoints.find(
-            (endpoint: HttpEndpoint) => endpoint.id === tokenEndpointReference.endpointId
-        );
-        if (!endpoint) {
-            throw new Error(`failed to find endpoint with id ${tokenEndpointReference.endpointId}`);
-        }
-        return endpoint;
     }
 
     private getBearerAuthOptionKey(bearerAuthScheme: BearerAuthScheme): string {
@@ -1835,27 +1817,21 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     }
 
     public getReferenceToAuthProvider(): ts.Expression | undefined {
-        if (!this.inferredAuthScheme) {
+        if (!this.authProvider) {
             return undefined;
         }
-        return ts.factory.createPropertyAccessExpression(
-            ts.factory.createThis(),
-            GeneratedSdkClientClassImpl.AUTH_PROVIDER_FIELD_NAME
-        );
+        return AuthProviderInstance.getReferenceToField();
     }
 
     public getReferenceToAuthProviderOrThrow(): ts.Expression {
-        if (!this.inferredAuthScheme) {
+        if (!this.authProvider) {
             throw new Error("Auth provider is not available");
         }
-        return ts.factory.createPropertyAccessExpression(
-            ts.factory.createThis(),
-            GeneratedSdkClientClassImpl.AUTH_PROVIDER_FIELD_NAME
-        );
+        return AuthProviderInstance.getReferenceToField();
     }
 
     public hasAuthProvider(): boolean {
-        return this.inferredAuthScheme != null;
+        return this.authProvider != null;
     }
 
     public getReferenceToOption(option: string): ts.Expression {

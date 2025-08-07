@@ -12,7 +12,7 @@ import {
 
 import { FernIr } from "@fern-fern/ir-sdk";
 
-import { AbstractAuthProviderGenerator } from "./AbstractAuthProviderGenerator";
+import { AuthProviderGenerator } from "./AuthProviderGenerator";
 
 export declare namespace InferredAuthProviderGenerator {
     export interface Init {
@@ -21,7 +21,7 @@ export declare namespace InferredAuthProviderGenerator {
     }
 }
 const CLASS_NAME = "InferredAuthProvider";
-export class InferredAuthProviderGenerator extends AbstractAuthProviderGenerator {
+export class InferredAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly CLASS_NAME = CLASS_NAME;
     private readonly authScheme: FernIr.InferredAuthScheme;
     private readonly packageId: PackageId;
@@ -29,8 +29,6 @@ export class InferredAuthProviderGenerator extends AbstractAuthProviderGenerator
     private readonly endpoint: FernIr.HttpEndpoint;
 
     constructor(init: InferredAuthProviderGenerator.Init) {
-        super(init);
-
         this.authScheme = init.authScheme;
         this.packageId = init.authScheme.tokenEndpoint.endpoint.subpackageId
             ? {
@@ -74,12 +72,6 @@ export class InferredAuthProviderGenerator extends AbstractAuthProviderGenerator
 
     public getAuthProviderClassType(): ts.TypeNode {
         return ts.factory.createTypeReferenceNode(CLASS_NAME);
-    }
-
-    public static import(context: SdkContext) {
-        context.importsManager.addImportFromRoot("auth/InferredAuthProvider", {
-            namedImports: [CLASS_NAME]
-        });
     }
 
     public getOptionsType(): ts.TypeNode {
@@ -377,19 +369,19 @@ export class InferredAuthProviderGenerator extends AbstractAuthProviderGenerator
             );
         };
         for (const pathParameter of this.endpoint.allPathParameters) {
-            if (!this.isLiteralType(pathParameter.valueType, context)) {
+            if (!context.type.isLiteral(pathParameter.valueType)) {
                 params.push(authPropRef(pathParameter.name.camelCase.safeName));
             }
         }
 
         for (const queryParameter of this.endpoint.queryParameters) {
-            if (!this.isLiteralType(queryParameter.valueType, context)) {
+            if (!context.type.isLiteral(queryParameter.valueType)) {
                 params.push(authPropRef(queryParameter.name.name.camelCase.safeName));
             }
         }
 
         for (const header of [...this.service.headers, ...this.endpoint.headers]) {
-            if (!this.isLiteralType(header.valueType, context)) {
+            if (!context.type.isLiteral(header.valueType)) {
                 params.push(authPropRef(header.name.name.camelCase.safeName));
             }
         }
@@ -400,7 +392,7 @@ export class InferredAuthProviderGenerator extends AbstractAuthProviderGenerator
                     params.push(
                         ts.factory.createObjectLiteralExpression(
                             this.endpoint.requestBody.properties
-                                .filter((property) => !this.isLiteralType(property.valueType, context))
+                                .filter((property) => !context.type.isLiteral(property.valueType))
                                 .map((property) => {
                                     return ts.factory.createPropertyAssignment(
                                         requestWrapper.getInlinedRequestBodyPropertyKey(property),
@@ -453,7 +445,7 @@ export class InferredAuthProviderGenerator extends AbstractAuthProviderGenerator
                                 params.push(
                                     ts.factory.createObjectLiteralExpression(
                                         joinedProperties
-                                            .filter((property) => !this.isLiteralType(property.type, context))
+                                            .filter((property) => !context.type.isLiteral(property.type))
                                             .map((property) => {
                                                 return ts.factory.createPropertyAssignment(
                                                     property.name,
@@ -481,7 +473,9 @@ export class InferredAuthProviderGenerator extends AbstractAuthProviderGenerator
     }
 
     private writeOptions(context: SdkContext): void {
-        const properties = this.getPropertiesForAuthTokenParameters(context);
+        const properties = context.authProvider.getPropertiesForAuthTokenParams(
+            FernIr.AuthScheme.inferred(this.authScheme)
+        );
         const tokenRequestProperties: PropertySignatureStructure[] = properties.map(
             (prop): PropertySignatureStructure => {
                 const propStructure: PropertySignatureStructure = {
@@ -529,119 +523,6 @@ export class InferredAuthProviderGenerator extends AbstractAuthProviderGenerator
 
     private getAuthTokenParametersTypeNode(context: SdkContext): ts.TypeNode {
         return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.AuthTokenParameters`);
-    }
-
-    private getPropertiesForAuthTokenParameters(
-        context: SdkContext
-    ): Array<{ name: string; type: ts.TypeNode; isOptional: boolean; docs?: string }> {
-        const properties: Array<{
-            name: string;
-            type: ts.TypeNode;
-            isOptional: boolean;
-            docs?: string;
-        }> = [];
-        for (const pathParameter of this.endpoint.allPathParameters) {
-            if (!this.isLiteralType(pathParameter.valueType, context)) {
-                const type = context.type.getReferenceToType(pathParameter.valueType);
-                properties.push({
-                    name: pathParameter.name.camelCase.safeName,
-                    type: type.typeNodeWithoutUndefined,
-                    isOptional: type.isOptional,
-                    docs: pathParameter.docs
-                });
-            }
-        }
-
-        for (const queryParameter of this.endpoint.queryParameters) {
-            if (!this.isLiteralType(queryParameter.valueType, context)) {
-                const type = context.type.getReferenceToType(queryParameter.valueType);
-                properties.push({
-                    name: queryParameter.name.name.camelCase.safeName,
-                    type: queryParameter.allowMultiple
-                        ? ts.factory.createUnionTypeNode([
-                              type.typeNodeWithoutUndefined,
-                              ts.factory.createArrayTypeNode(type.typeNodeWithoutUndefined)
-                          ])
-                        : type.typeNodeWithoutUndefined,
-                    isOptional: type.isOptional,
-                    docs: queryParameter.docs
-                });
-            }
-        }
-
-        for (const header of [...this.service.headers, ...this.endpoint.headers]) {
-            if (!this.isLiteralType(header.valueType, context)) {
-                const type = context.type.getReferenceToType(header.valueType);
-                properties.push({
-                    name: header.name.name.camelCase.safeName,
-                    type: type.typeNodeWithoutUndefined,
-                    isOptional: type.isOptional,
-                    docs: header.docs
-                });
-            }
-        }
-
-        if (this.endpoint.requestBody != null) {
-            switch (this.endpoint.requestBody.type) {
-                case "inlinedRequestBody":
-                    for (const property of this.endpoint.requestBody.properties) {
-                        if (!this.isLiteralType(property.valueType, context)) {
-                            const type = context.type.getReferenceToType(property.valueType);
-                            properties.push({
-                                name: property.name.name.camelCase.safeName,
-                                type: type.typeNodeWithoutUndefined,
-                                isOptional: type.isOptional,
-                                docs: property.docs
-                            });
-                        }
-                    }
-                    break;
-                case "reference": {
-                    const resolvedRequestBodyType = context.type.resolveTypeReference(
-                        this.endpoint.requestBody.requestBodyType
-                    );
-                    if (resolvedRequestBodyType.type === "named") {
-                        const typeDeclaration = context.type.getTypeDeclaration(resolvedRequestBodyType.name);
-                        if (typeDeclaration.shape.type === "object") {
-                            const generatedType = context.type.getGeneratedType(resolvedRequestBodyType.name);
-                            if (generatedType.type === "object") {
-                                const allProperties = generatedType.getAllPropertiesIncludingExtensions(context, {
-                                    forceCamelCase: true
-                                });
-                                for (const property of allProperties) {
-                                    if (!this.isLiteralType(property.type, context)) {
-                                        const type = context.type.getReferenceToType(property.type);
-                                        properties.push({
-                                            name: property.propertyKey,
-                                            type: type.typeNodeWithoutUndefined,
-                                            isOptional: type.isOptional,
-                                            docs: undefined
-                                        });
-                                    }
-                                }
-                            }
-                        }
-                    } else {
-                        // For non-object types, add as a single "body" property
-                        const type = context.type.getReferenceToType(this.endpoint.requestBody.requestBodyType);
-                        properties.push({
-                            name: "body",
-                            type: type.typeNodeWithoutUndefined,
-                            isOptional: type.isOptional,
-                            docs: this.endpoint.requestBody.docs
-                        });
-                    }
-                    break;
-                }
-            }
-        }
-
-        return properties;
-    }
-
-    private isLiteralType(typeReference: FernIr.TypeReference, context: SdkContext): boolean {
-        const resolvedType = context.type.resolveTypeReference(typeReference);
-        return resolvedType.type === "container" && resolvedType.container.type === "literal";
     }
 }
 
