@@ -90,7 +90,13 @@ types:
       get-token: InferredGetTokenEndpointSchema
     # refresh-token: optional<InferredRefreshTokenEndpointSchema>
   
-  InferredGetTokenEndpointSchema: 
+  InferredGetTokenEndpointSchema:
+    discriminated: false
+    union:
+      - string
+      - InferredGetTokenEndpointSchemaObject
+
+  InferredGetTokenEndpointSchemaObject: 
     properties: 
       endpoint: 
         type: string

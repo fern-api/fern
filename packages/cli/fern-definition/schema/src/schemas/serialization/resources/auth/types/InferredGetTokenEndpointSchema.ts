@@ -5,21 +5,13 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { InferredAuthenticatedRequestHeader } from "./InferredAuthenticatedRequestHeader";
+import { InferredGetTokenEndpointSchemaObject } from "./InferredGetTokenEndpointSchemaObject";
 
-export const InferredGetTokenEndpointSchema: core.serialization.ObjectSchema<
+export const InferredGetTokenEndpointSchema: core.serialization.Schema<
     serializers.InferredGetTokenEndpointSchema.Raw,
     FernDefinition.InferredGetTokenEndpointSchema
-> = core.serialization.object({
-    endpoint: core.serialization.string(),
-    "expiry-response-property": core.serialization.string().optional(),
-    "authenticated-request-headers": core.serialization.list(InferredAuthenticatedRequestHeader).optional(),
-});
+> = core.serialization.undiscriminatedUnion([core.serialization.string(), InferredGetTokenEndpointSchemaObject]);
 
 export declare namespace InferredGetTokenEndpointSchema {
-    export interface Raw {
-        endpoint: string;
-        "expiry-response-property"?: string | null;
-        "authenticated-request-headers"?: InferredAuthenticatedRequestHeader.Raw[] | null;
-    }
+    export type Raw = string | InferredGetTokenEndpointSchemaObject.Raw;
 }

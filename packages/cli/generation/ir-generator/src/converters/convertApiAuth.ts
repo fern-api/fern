@@ -259,7 +259,14 @@ function getInferredTokenEndpoint({
     propertyResolver: PropertyResolver;
     endpointResolver: EndpointResolver;
 }): InferredAuthSchemeTokenEndpoint {
-    const getTokenEndpointConfig = rawScheme["get-token"];
+    let getTokenEndpointConfigOrString: RawSchemas.InferredGetTokenEndpointSchema = rawScheme["get-token"];
+    const getTokenEndpointConfig: RawSchemas.InferredGetTokenEndpointSchemaObject =
+        typeof getTokenEndpointConfigOrString === "string"
+            ? {
+                  endpoint: getTokenEndpointConfigOrString
+              }
+            : getTokenEndpointConfigOrString;
+
     const tokenEndpoint = endpointResolver.resolveEndpointOrThrow({
         endpoint: getTokenEndpointConfig.endpoint,
         file
@@ -307,7 +314,7 @@ function getInferredAuthenticatedRequestHeaders({
     propertyResolver
 }: {
     tokenEndpoint: ResolvedEndpoint;
-    getTokenEndpointConfig: RawSchemas.InferredGetTokenEndpointSchema;
+    getTokenEndpointConfig: RawSchemas.InferredGetTokenEndpointSchemaObject;
     propertyResolver: PropertyResolver;
 }): FernIr.InferredAuthenticatedRequestHeader[] {
     const result = new Map<string, FernIr.InferredAuthenticatedRequestHeader>();
@@ -371,7 +378,7 @@ function getInferredExpiryProperty({
     propertyResolver
 }: {
     tokenEndpoint: ResolvedEndpoint;
-    getTokenEndpointConfig: RawSchemas.InferredGetTokenEndpointSchema;
+    getTokenEndpointConfig: RawSchemas.InferredGetTokenEndpointSchemaObject;
     propertyResolver: PropertyResolver;
 }): FernIr.ResponseProperty | undefined {
     if (getTokenEndpointConfig["expiry-response-property"]) {

@@ -1531,11 +1531,11 @@
                     "method": "POST",
                     "basePath": null,
                     "path": {
-                        "head": "/token",
+                        "head": "/token/refresh",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/token",
+                        "head": "/token/refresh",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -1981,7 +1981,7 @@
                         {
                             "example": {
                                 "id": "3365d90",
-                                "url": "/token",
+                                "url": "/token/refresh",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -3765,7 +3765,7 @@
                 },
                 "location": {
                     "method": "POST",
-                    "path": "/token"
+                    "path": "/token/refresh"
                 },
                 "request": {
                     "type": "inlined",

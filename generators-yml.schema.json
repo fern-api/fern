@@ -605,7 +605,7 @@
       ],
       "additionalProperties": false
     },
-    "fernDefinition.auth.InferredGetTokenEndpointSchema": {
+    "fernDefinition.auth.InferredGetTokenEndpointSchemaObject": {
       "type": "object",
       "properties": {
         "endpoint": {
@@ -639,6 +639,16 @@
         "endpoint"
       ],
       "additionalProperties": false
+    },
+    "fernDefinition.auth.InferredGetTokenEndpointSchema": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/fernDefinition.auth.InferredGetTokenEndpointSchemaObject"
+        }
+      ]
     },
     "fernDefinition.auth.InferredBearerAuthSchema": {
       "type": "object",

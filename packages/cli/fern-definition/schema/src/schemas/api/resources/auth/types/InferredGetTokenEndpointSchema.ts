@@ -4,11 +4,4 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface InferredGetTokenEndpointSchema {
-    /** The endpoint to get the access token, such as 'auth.get_token' */
-    endpoint: string;
-    /** The property name for the expiry time in the response. */
-    "expiry-response-property"?: string;
-    /** The headers that will be set on HTTP requests when the inferred auth scheme is applied to an endpoint. */
-    "authenticated-request-headers"?: FernDefinition.InferredAuthenticatedRequestHeader[];
-}
+export type InferredGetTokenEndpointSchema = string | FernDefinition.InferredGetTokenEndpointSchemaObject;

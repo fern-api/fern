@@ -536,7 +536,7 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/token"
+                "path": "/token/refresh"
             },
             "request": {
                 "type": "inlined",

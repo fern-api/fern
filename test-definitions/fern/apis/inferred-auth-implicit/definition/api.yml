@@ -1,10 +1,7 @@
 name: inferred-auth-implicit
-imports:
-  auth: auth.yml
 
 auth: InferredAuthScheme
 auth-schemes:
   InferredAuthScheme:
     scheme: bearer
-    get-token:
-      endpoint: auth.getTokenWithClientCredentials
+    get-token: POST /token

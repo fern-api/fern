@@ -12,6 +12,7 @@ export * from "./BearerAuthSchemeSchema";
 export * from "./TokenBearerAuthSchema";
 export * from "./InferredBearerAuthSchema";
 export * from "./InferredGetTokenEndpointSchema";
+export * from "./InferredGetTokenEndpointSchemaObject";
 export * from "./InferredAuthenticatedRequestHeader";
 export * from "./OAuthSchemeSchema";
 export * from "./OAuthGetTokenEndpointSchema";

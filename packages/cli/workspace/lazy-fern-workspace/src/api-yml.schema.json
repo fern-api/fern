@@ -848,7 +848,7 @@
       ],
       "additionalProperties": false
     },
-    "auth.InferredGetTokenEndpointSchema": {
+    "auth.InferredGetTokenEndpointSchemaObject": {
       "type": "object",
       "properties": {
         "endpoint": {
@@ -882,6 +882,16 @@
         "endpoint"
       ],
       "additionalProperties": false
+    },
+    "auth.InferredGetTokenEndpointSchema": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/auth.InferredGetTokenEndpointSchemaObject"
+        }
+      ]
     },
     "auth.InferredBearerAuthSchema": {
       "type": "object",
