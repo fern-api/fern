@@ -6,8 +6,7 @@ public final class AuthEnvironmentVariablesClient: Sendable {
     /// Initialize the client with the specified configuration.
     ///
     /// - Parameter baseURL: The base URL to use for requests from the client. If not provided, the default base URL will be used.
-    /// - Parameter apiKey: The API key for authentication.
-    /// - Parameter token: Bearer token for authentication. If provided, will be sent as "Bearer {token}" in Authorization header.
+    /// - Parameter apiKey: The apiKey to use for authentication.
     /// - Parameter headers: Additional headers to send with each request.
     /// - Parameter timeout: Request timeout in seconds. Defaults to 60 seconds. Ignored if a custom `urlSession` is provided.
     /// - Parameter maxRetries: Maximum number of retries for failed requests. Defaults to 2.
@@ -15,7 +14,6 @@ public final class AuthEnvironmentVariablesClient: Sendable {
     public init(
         baseURL: String,
         apiKey: String?,
-        token: String? = nil,
         headers: [String: String]? = [:],
         timeout: Int? = nil,
         maxRetries: Int? = nil,
