@@ -24,11 +24,14 @@ export class DocComment extends AstNode {
 
     public constructor({ summary, description, parameters, returns, throws }: DocComment.Args) {
         super();
-        this.summary = summary;
-        this.description = description;
-        this.parameters = parameters ?? [];
-        this.returns = returns;
-        this.throws = throws ?? [];
+        this.summary = DocComment.sanitizeText(summary);
+        this.description = description != null ? DocComment.sanitizeText(description) : undefined;
+        this.parameters = (parameters ?? []).map((param) => ({
+            name: param.name,
+            description: DocComment.sanitizeText(param.description)
+        }));
+        this.returns = returns != null ? DocComment.sanitizeText(returns) : undefined;
+        this.throws = (throws ?? []).map((t) => DocComment.sanitizeText(t));
     }
 
     public write(writer: Writer): void {
@@ -94,5 +97,14 @@ export class DocComment extends AstNode {
             writer.write(line);
             writer.newLine();
         }
+    }
+
+    /**
+     * Sanitizes text content to ensure it doesn't break Swift doc comment syntax.
+     * Currently only normalizes line endings (converts \r\n and \r to \n).
+     */
+    private static sanitizeText(text: string): string {
+        // Only normalize line endings - carriage returns break doc comment format
+        return text.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
     }
 }

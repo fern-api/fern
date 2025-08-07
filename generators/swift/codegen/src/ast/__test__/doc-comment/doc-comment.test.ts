@@ -134,4 +134,45 @@ describe("DocComment", () => {
             await expect(docComment.toString()).toMatchFileSnapshot("snapshots/multiline_throws.swift");
         });
     });
+
+    describe("sanitization", () => {
+        it("should correctly handle comment markers in summary", async () => {
+            const docComment = swift.docComment({
+                summary: "This summary has /// comment markers and /* block comments */ and // line comments"
+            });
+
+            await expect(docComment.toString()).toMatchFileSnapshot("snapshots/sanitized_comment_markers.swift");
+        });
+
+        it("should correctly handle backslashes and escape sequences", async () => {
+            const docComment = swift.docComment({
+                summary: "Summary with \\ backslashes and \n escape sequences",
+                description: "Description with \\t tabs and \\\" quotes and \\' apostrophes",
+                parameters: [
+                    {
+                        name: "path",
+                        description: "File path like C:\\Users\\Name\\file.txt with backslashes"
+                    }
+                ],
+                returns: 'Returns \\n\\t\\" escaped content'
+            });
+
+            await expect(docComment.toString()).toMatchFileSnapshot("snapshots/sanitized_backslashes.swift");
+        });
+
+        it("should correctly handle control characters", async () => {
+            const docComment = swift.docComment({
+                summary: "Summary with\ttabs and\rcarriage returns",
+                description: "Description with\nnewlines\tand tabs\rand carriage returns",
+                parameters: [
+                    {
+                        name: "data",
+                        description: "Parameter with\ttabs\rand\rother\tcontrol chars"
+                    }
+                ]
+            });
+
+            await expect(docComment.toString()).toMatchFileSnapshot("snapshots/sanitized_control_chars.swift");
+        });
+    });
 });
