@@ -1,4 +1,4 @@
-name: inferred-auth-explicit
+name: inferred-auth-implicit
 imports:
   auth: auth.yml
 

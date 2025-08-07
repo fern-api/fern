@@ -3,22 +3,22 @@
     "fdrApiDefinitionId": null,
     "apiVersion": null,
     "apiName": {
-        "originalName": "inferred-auth-explicit",
+        "originalName": "inferred-auth-implicit",
         "camelCase": {
-            "unsafeName": "inferredAuthExplicit",
-            "safeName": "inferredAuthExplicit"
+            "unsafeName": "inferredAuthImplicit",
+            "safeName": "inferredAuthImplicit"
         },
         "snakeCase": {
-            "unsafeName": "inferred_auth_explicit",
-            "safeName": "inferred_auth_explicit"
+            "unsafeName": "inferred_auth_implicit",
+            "safeName": "inferred_auth_implicit"
         },
         "screamingSnakeCase": {
-            "unsafeName": "INFERRED_AUTH_EXPLICIT",
-            "safeName": "INFERRED_AUTH_EXPLICIT"
+            "unsafeName": "INFERRED_AUTH_IMPLICIT",
+            "safeName": "INFERRED_AUTH_IMPLICIT"
         },
         "pascalCase": {
-            "unsafeName": "InferredAuthExplicit",
-            "safeName": "InferredAuthExplicit"
+            "unsafeName": "InferredAuthImplicit",
+            "safeName": "InferredAuthImplicit"
         }
     },
     "apiDisplayName": null,
