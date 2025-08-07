@@ -190,6 +190,33 @@ describe("DocComment", () => {
             await expect(docComment.toString()).toMatchFileSnapshot("snapshots/sanitized_null_bytes.swift");
         });
 
+        it("should correctly handle form feed and vertical tab", async () => {
+            const docComment = swift.docComment({
+                summary: "Summary with\x0Cform feed and\x0Bvertical tab",
+                description: "Description\x0Cwith form\x0Bfeed and vertical tab"
+            });
+
+            await expect(docComment.toString()).toMatchFileSnapshot("snapshots/sanitized_form_feed.swift");
+        });
+
+        it("should correctly handle line separator and paragraph separator", async () => {
+            const docComment = swift.docComment({
+                summary: "Summary with\u2028line separator and\u2029paragraph separator",
+                description: "Description\u2028with Unicode\u2029line breaks"
+            });
+
+            await expect(docComment.toString()).toMatchFileSnapshot("snapshots/sanitized_unicode_separators.swift");
+        });
+
+        it("should correctly handle next line character", async () => {
+            const docComment = swift.docComment({
+                summary: "Summary with\u0085next line character",
+                description: "Description\u0085with NEL character"
+            });
+
+            await expect(docComment.toString()).toMatchFileSnapshot("snapshots/sanitized_next_line.swift");
+        });
+
         it("should correctly handle mixed malicious content", async () => {
             const docComment = swift.docComment({
                 summary: "/// Malicious summary with /* comments */ and \\ backslashes\tand tabs",
