@@ -310,8 +310,6 @@ func (s *SseStreamReader) parseSseLine(_bytes []byte, event *SseEvent) error {
 		event.event = append(event.event, _bytes[len(sseEventPrefix):]...)
 	} else if bytes.HasPrefix(_bytes, sseRetryPrefix) {
 		event.retry = append(event.retry, _bytes[len(sseRetryPrefix):]...)
-	} else {
-		return errors.New("SseStreamReader.ReadFromStream: unknown line type: " + string(_bytes))
 	}
 	return nil
 }
