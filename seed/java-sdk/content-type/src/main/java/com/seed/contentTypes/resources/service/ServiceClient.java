@@ -5,7 +5,9 @@ package com.seed.contentTypes.resources.service;
 
 import com.seed.contentTypes.core.ClientOptions;
 import com.seed.contentTypes.core.RequestOptions;
+import com.seed.contentTypes.resources.service.requests.PatchComplexRequest;
 import com.seed.contentTypes.resources.service.requests.PatchProxyRequest;
+import com.seed.contentTypes.resources.service.requests.RegularPatchRequest;
 
 public class ServiceClient {
     protected final ClientOptions clientOptions;
@@ -30,5 +32,47 @@ public class ServiceClient {
 
     public void patch(PatchProxyRequest request, RequestOptions requestOptions) {
         this.rawClient.patch(request, requestOptions).body();
+    }
+
+    /**
+     * Update with JSON merge patch - complex types
+     */
+    public void patchComplex(String id) {
+        this.rawClient.patchComplex(id).body();
+    }
+
+    /**
+     * Update with JSON merge patch - complex types
+     */
+    public void patchComplex(String id, PatchComplexRequest request) {
+        this.rawClient.patchComplex(id, request).body();
+    }
+
+    /**
+     * Update with JSON merge patch - complex types
+     */
+    public void patchComplex(String id, PatchComplexRequest request, RequestOptions requestOptions) {
+        this.rawClient.patchComplex(id, request, requestOptions).body();
+    }
+
+    /**
+     * Regular PATCH endpoint without merge-patch semantics
+     */
+    public void regularPatch(String id) {
+        this.rawClient.regularPatch(id).body();
+    }
+
+    /**
+     * Regular PATCH endpoint without merge-patch semantics
+     */
+    public void regularPatch(String id, RegularPatchRequest request) {
+        this.rawClient.regularPatch(id, request).body();
+    }
+
+    /**
+     * Regular PATCH endpoint without merge-patch semantics
+     */
+    public void regularPatch(String id, RegularPatchRequest request, RequestOptions requestOptions) {
+        this.rawClient.regularPatch(id, request, requestOptions).body();
     }
 }
