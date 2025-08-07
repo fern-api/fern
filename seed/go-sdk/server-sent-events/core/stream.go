@@ -2,25 +2,10 @@ package core
 
 import (
 	"bufio"
-	"bytes"
 	"encoding/json"
-	"errors"
-	"fmt"
 	"io"
 	"net/http"
-	"slices"
 	"strings"
-)
-
-type StreamFormat string
-
-const (
-	StreamFormatSSE   StreamFormat = "sse"
-	StreamFormatEmpty StreamFormat = ""
-)
-
-const (
-	defaultMaxBufSize = 32 * 1024 // 32KB
 )
 
 // defaultStreamDelimiter is the default stream delimiter used to split messages.
@@ -59,15 +44,6 @@ func WithPrefix(prefix string) StreamOption {
 func WithTerminator(terminator string) StreamOption {
 	return func(opts *streamOptions) {
 		opts.terminator = terminator
-	}
-}
-
-// WithFormat overrides the isSSE flag for the Stream.
-//
-// By default, the Stream is not SSE.
-func WithFormat(format StreamFormat) StreamOption {
-	return func(opts *streamOptions) {
-		opts.format = format
 	}
 }
 
@@ -115,39 +91,33 @@ type streamReader interface {
 // split on custom delimiters.
 func newStreamReader(reader io.Reader, options *streamOptions) streamReader {
 	if !options.isEmpty() {
-		if options.maxBufSize == 0 {
-			options.maxBufSize = defaultMaxBufSize
-		}
 		if options.delimiter == "" {
 			options.delimiter = string(defaultStreamDelimiter)
-		}
-		if options.format == StreamFormatSSE {
-			return newSseStreamReader(reader, options)
 		}
 		return newScannerStreamReader(reader, options)
 	}
 	return newBufferStreamReader(reader)
 }
 
-// BufferStreamReader reads data from a *bufio.Reader, which splits
+// bufferStreamReader reads data from a *bufio.Reader, which splits
 // on newlines.
-type BufferStreamReader struct {
+type bufferStreamReader struct {
 	reader *bufio.Reader
 }
 
-func newBufferStreamReader(reader io.Reader) *BufferStreamReader {
-	return &BufferStreamReader{
+func newBufferStreamReader(reader io.Reader) *bufferStreamReader {
+	return &bufferStreamReader{
 		reader: bufio.NewReader(reader),
 	}
 }
 
-func (b *BufferStreamReader) ReadFromStream() ([]byte, error) {
+func (b *bufferStreamReader) ReadFromStream() ([]byte, error) {
 	return b.reader.ReadBytes(defaultStreamDelimiter)
 }
 
-// ScannerStreamReader reads data from a *bufio.Scanner, which allows for
+// scannerStreamReader reads data from a *bufio.Scanner, which allows for
 // configurable delimiters.
-type ScannerStreamReader struct {
+type scannerStreamReader struct {
 	scanner *bufio.Scanner
 	options *streamOptions
 }
@@ -155,9 +125,9 @@ type ScannerStreamReader struct {
 func newScannerStreamReader(
 	reader io.Reader,
 	options *streamOptions,
-) *ScannerStreamReader {
+) *scannerStreamReader {
 	scanner := bufio.NewScanner(reader)
-	stream := &ScannerStreamReader{
+	stream := &scannerStreamReader{
 		scanner: scanner,
 		options: options,
 	}
@@ -174,7 +144,7 @@ func newScannerStreamReader(
 	return stream
 }
 
-func (s *ScannerStreamReader) ReadFromStream() ([]byte, error) {
+func (s *scannerStreamReader) ReadFromStream() ([]byte, error) {
 	if s.scanner.Scan() {
 		return s.scanner.Bytes(), nil
 	}
@@ -184,7 +154,7 @@ func (s *ScannerStreamReader) ReadFromStream() ([]byte, error) {
 	return nil, io.EOF
 }
 
-func (s *ScannerStreamReader) parse(bytes []byte) (int, []byte, error) {
+func (s *scannerStreamReader) parse(bytes []byte) (int, []byte, error) {
 	var startIndex int
 	if s.options != nil && s.options.prefix != "" {
 		if i := strings.Index(string(bytes), s.options.prefix); i >= 0 {
@@ -202,7 +172,7 @@ func (s *ScannerStreamReader) parse(bytes []byte) (int, []byte, error) {
 	return n, parsedData, nil
 }
 
-func (s *ScannerStreamReader) isTerminated(bytes []byte) bool {
+func (s *scannerStreamReader) isTerminated(bytes []byte) bool {
 	if s.options == nil || s.options.terminator == "" {
 		return false
 	}
@@ -213,125 +183,8 @@ type streamOptions struct {
 	delimiter  string
 	prefix     string
 	terminator string
-	format     StreamFormat
-	maxBufSize int
 }
 
 func (s *streamOptions) isEmpty() bool {
-	return s.delimiter == "" && s.prefix == "" && s.terminator == "" && s.format == StreamFormatEmpty
+	return s.delimiter == "" && s.prefix == "" && s.terminator == ""
 }
-
-// SseStreamReader reads data from a *bufio.Scanner, which allows for
-// configurable delimiters.
-type SseStreamReader struct {
-	scanner *bufio.Scanner
-	options *streamOptions
-}
-
-func newSseStreamReader(
-	reader io.Reader,
-	options *streamOptions,
-) *SseStreamReader {
-	scanner := bufio.NewScanner(reader)
-	stream := &SseStreamReader{
-		scanner: scanner,
-		options: options,
-	}
-	scanner.Buffer(make([]byte, slices.Min([]int{4096, options.maxBufSize})), options.maxBufSize)
-	scanner.Split(func(bytes []byte, atEOF bool) (int, []byte, error) {
-		if atEOF && len(bytes) == 0 {
-			return 0, nil, nil
-		}
-		n, data, err := stream.parse(bytes)
-		if stream.isTerminated(data) {
-			return 0, nil, io.EOF
-		}
-		return n, data, err
-	})
-	return stream
-}
-
-func (s *SseStreamReader) parse(bytes []byte) (int, []byte, error) {
-	delimIndex := strings.Index(string(bytes), s.options.delimiter)
-	if delimIndex < 0 {
-		return len(bytes), bytes, nil
-	}
-	endIndex := delimIndex + len(s.options.delimiter)
-	parsedData := bytes[:delimIndex]
-	n := endIndex
-	return n, parsedData, nil
-}
-
-func (s *SseStreamReader) isTerminated(bytes []byte) bool {
-	if s.options == nil || s.options.terminator == "" {
-		return false
-	}
-	return strings.Contains(string(bytes), s.options.terminator)
-}
-
-func (s *SseStreamReader) ReadFromStream() ([]byte, error) {
-
-	event, err := s.nextEvent()
-	if err != nil {
-		return nil, err
-	}
-	return event.data, nil
-}
-
-func (s *SseStreamReader) nextEvent() (*SseEvent, error) {
-
-	event := SseEvent{}
-	for s.scanner.Scan() {
-		_bytes := s.scanner.Bytes()
-		if string(_bytes) == "" {
-			return &event, nil
-		}
-
-		if err := s.parseSseLine(_bytes, &event); err != nil {
-			return nil, err
-		}
-
-		if event.size() > s.options.maxBufSize {
-			return nil, errors.New("SseStreamReader.ReadFromStream: buffer limit exceeded")
-		}
-	}
-	return &event, io.EOF
-}
-
-func (s *SseStreamReader) parseSseLine(_bytes []byte, event *SseEvent) error {
-	if bytes.HasPrefix(_bytes, sseDataPrefix) {
-		if len(event.data) > 0 {
-			event.data = append(event.data, s.options.delimiter...)
-		}
-		event.data = append(event.data, _bytes[len(sseDataPrefix):]...)
-	} else if bytes.HasPrefix(_bytes, sseIdPrefix) {
-		event.id = append(event.id, _bytes[len(sseIdPrefix):]...)
-	} else if bytes.HasPrefix(_bytes, sseEventPrefix) {
-		event.event = append(event.event, _bytes[len(sseEventPrefix):]...)
-	} else if bytes.HasPrefix(_bytes, sseRetryPrefix) {
-		event.retry = append(event.retry, _bytes[len(sseRetryPrefix):]...)
-	}
-	return nil
-}
-
-func (event *SseEvent) size() int {
-	return len(event.id) + len(event.data) + len(event.event) + len(event.retry)
-}
-
-func (event *SseEvent) String() string {
-	return fmt.Sprintf("SseEvent{id: %q, event: %q, data: %q, retry: %q}", event.id, event.event, event.data, event.retry)
-}
-
-type SseEvent struct {
-	id    []byte
-	data  []byte
-	event []byte
-	retry []byte
-}
-
-var (
-	sseIdPrefix    = []byte("id: ")
-	sseDataPrefix  = []byte("data: ")
-	sseEventPrefix = []byte("event: ")
-	sseRetryPrefix = []byte("retry: ")
-)

@@ -44,7 +44,6 @@ type StreamParams struct {
 	Client          HTTPClient
 	Request         interface{}
 	ErrorDecoder    ErrorDecoder
-	Format          core.StreamFormat
 }
 
 // Stream issues an API streaming call according to the given stream parameters.
@@ -109,9 +108,6 @@ func (s *Streamer[T]) Stream(ctx context.Context, params *StreamParams) (*core.S
 	}
 	if params.Terminator != "" {
 		opts = append(opts, core.WithTerminator(params.Terminator))
-	}
-	if params.Format != core.StreamFormatEmpty {
-		opts = append(opts, core.WithFormat(params.Format))
 	}
 
 	return core.NewStream[T](resp, opts...), nil
