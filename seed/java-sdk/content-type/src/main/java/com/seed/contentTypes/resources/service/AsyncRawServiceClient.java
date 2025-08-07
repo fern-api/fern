@@ -5,15 +5,12 @@ package com.seed.contentTypes.resources.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.contentTypes.core.ClientOptions;
-import com.seed.contentTypes.core.MediaTypes;
 import com.seed.contentTypes.core.ObjectMappers;
 import com.seed.contentTypes.core.RequestOptions;
 import com.seed.contentTypes.core.SeedContentTypesApiException;
 import com.seed.contentTypes.core.SeedContentTypesException;
 import com.seed.contentTypes.core.SeedContentTypesHttpResponse;
-import com.seed.contentTypes.resources.service.requests.PatchComplexRequest;
 import com.seed.contentTypes.resources.service.requests.PatchProxyRequest;
-import com.seed.contentTypes.resources.service.requests.RegularPatchRequest;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
@@ -57,149 +54,6 @@ public class AsyncRawServiceClient {
                 .method("PATCH", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/merge-patch+json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<SeedContentTypesHttpResponse<Void>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        future.complete(new SeedContentTypesHttpResponse<>(null, response));
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    future.completeExceptionally(new SeedContentTypesApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(
-                            new SeedContentTypesException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new SeedContentTypesException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
-    }
-
-    /**
-     * Update with JSON merge patch - complex types
-     */
-    public CompletableFuture<SeedContentTypesHttpResponse<Void>> patchComplex(String id) {
-        return patchComplex(id, PatchComplexRequest.builder().build());
-    }
-
-    /**
-     * Update with JSON merge patch - complex types
-     */
-    public CompletableFuture<SeedContentTypesHttpResponse<Void>> patchComplex(String id, PatchComplexRequest request) {
-        return patchComplex(id, request, null);
-    }
-
-    /**
-     * Update with JSON merge patch - complex types
-     */
-    public CompletableFuture<SeedContentTypesHttpResponse<Void>> patchComplex(
-            String id, PatchComplexRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("complex")
-                .addPathSegment(id)
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request),
-                    MediaType.parse("application/merge-patch+json"));
-        } catch (JsonProcessingException e) {
-            throw new SeedContentTypesException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("PATCH", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/merge-patch+json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<SeedContentTypesHttpResponse<Void>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful()) {
-                        future.complete(new SeedContentTypesHttpResponse<>(null, response));
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    future.completeExceptionally(new SeedContentTypesApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(
-                            new SeedContentTypesException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new SeedContentTypesException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
-    }
-
-    /**
-     * Regular PATCH endpoint without merge-patch semantics
-     */
-    public CompletableFuture<SeedContentTypesHttpResponse<Void>> regularPatch(String id) {
-        return regularPatch(id, RegularPatchRequest.builder().build());
-    }
-
-    /**
-     * Regular PATCH endpoint without merge-patch semantics
-     */
-    public CompletableFuture<SeedContentTypesHttpResponse<Void>> regularPatch(String id, RegularPatchRequest request) {
-        return regularPatch(id, request, null);
-    }
-
-    /**
-     * Regular PATCH endpoint without merge-patch semantics
-     */
-    public CompletableFuture<SeedContentTypesHttpResponse<Void>> regularPatch(
-            String id, RegularPatchRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("regular")
-                .addPathSegment(id)
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new SeedContentTypesException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("PATCH", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {

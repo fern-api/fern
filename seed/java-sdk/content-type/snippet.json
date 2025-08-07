@@ -12,32 +12,6 @@
                 "sync_client": "package com.example.usage;\n\nimport com.seed.contentTypes.SeedContentTypesClient;\nimport com.seed.contentTypes.resources.service.requests.PatchProxyRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedContentTypesClient client = SeedContentTypesClient\n            .builder()\n            .build();\n\n        client.service().patch(\n            PatchProxyRequest\n                .builder()\n                .application(\"application\")\n                .requireAuth(true)\n                .build()\n        );\n    }\n}\n",
                 "async_client": "package com.example.usage;\n\nimport com.seed.contentTypes.SeedContentTypesClient;\nimport com.seed.contentTypes.resources.service.requests.PatchProxyRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedContentTypesClient client = SeedContentTypesClient\n            .builder()\n            .build();\n\n        client.service().patch(\n            PatchProxyRequest\n                .builder()\n                .application(\"application\")\n                .requireAuth(true)\n                .build()\n        );\n    }\n}\n"
             }
-        },
-        {
-            "example_identifier": "623c338a",
-            "id": {
-                "method": "PATCH",
-                "path": "/complex/{id}",
-                "identifier_override": "endpoint_service.patchComplex"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.contentTypes.SeedContentTypesClient;\nimport com.seed.contentTypes.resources.service.requests.PatchComplexRequest;\nimport java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedContentTypesClient client = SeedContentTypesClient\n            .builder()\n            .build();\n\n        client.service().patchComplex(\n            \"id\",\n            PatchComplexRequest\n                .builder()\n                .name(\"name\")\n                .email(\"email\")\n                .age(1)\n                .active(true)\n                .metadata(\n                    new HashMap<String, Object>() {{\n                        put(\"metadata\", new \n                        HashMap<String, Object>() {{put(\"key\", \"value\");\n                        }});\n                    }}\n                )\n                .tags(\n                    new ArrayList<String>(\n                        Arrays.asList(\"tags\", \"tags\")\n                    )\n                )\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.contentTypes.SeedContentTypesClient;\nimport com.seed.contentTypes.resources.service.requests.PatchComplexRequest;\nimport java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedContentTypesClient client = SeedContentTypesClient\n            .builder()\n            .build();\n\n        client.service().patchComplex(\n            \"id\",\n            PatchComplexRequest\n                .builder()\n                .name(\"name\")\n                .email(\"email\")\n                .age(1)\n                .active(true)\n                .metadata(\n                    new HashMap<String, Object>() {{\n                        put(\"metadata\", new \n                        HashMap<String, Object>() {{put(\"key\", \"value\");\n                        }});\n                    }}\n                )\n                .tags(\n                    new ArrayList<String>(\n                        Arrays.asList(\"tags\", \"tags\")\n                    )\n                )\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "694ff87e",
-            "id": {
-                "method": "PATCH",
-                "path": "/regular/{id}",
-                "identifier_override": "endpoint_service.regularPatch"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.contentTypes.SeedContentTypesClient;\nimport com.seed.contentTypes.resources.service.requests.RegularPatchRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedContentTypesClient client = SeedContentTypesClient\n            .builder()\n            .build();\n\n        client.service().regularPatch(\n            \"id\",\n            RegularPatchRequest\n                .builder()\n                .field1(\"field1\")\n                .field2(1)\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.contentTypes.SeedContentTypesClient;\nimport com.seed.contentTypes.resources.service.requests.RegularPatchRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedContentTypesClient client = SeedContentTypesClient\n            .builder()\n            .build();\n\n        client.service().regularPatch(\n            \"id\",\n            RegularPatchRequest\n                .builder()\n                .field1(\"field1\")\n                .field2(1)\n                .build()\n        );\n    }\n}\n"
-            }
         }
     ],
     "types": {}
