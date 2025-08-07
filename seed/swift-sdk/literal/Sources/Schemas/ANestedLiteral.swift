@@ -1,5 +1,6 @@
 public struct ANestedLiteral: Codable, Hashable, Sendable {
     public let myLiteral: JSONValue
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -22,6 +23,7 @@ public struct ANestedLiteral: Codable, Hashable, Sendable {
         try container.encode(self.myLiteral, forKey: .myLiteral)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case myLiteral
     }

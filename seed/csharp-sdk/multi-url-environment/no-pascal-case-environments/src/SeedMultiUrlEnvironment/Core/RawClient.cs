@@ -19,16 +19,16 @@ internal partial class RawClient(ClientOptions clientOptions)
     internal readonly ClientOptions Options = clientOptions;
 
     [Obsolete("Use SendRequestAsync instead.")]
-    internal Task<SeedMultiUrlEnvironment.Core.ApiResponse> MakeRequestAsync(
-        SeedMultiUrlEnvironment.Core.BaseRequest request,
+    internal Task<global::SeedMultiUrlEnvironment.Core.ApiResponse> MakeRequestAsync(
+        global::SeedMultiUrlEnvironment.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
         return SendRequestAsync(request, cancellationToken);
     }
 
-    internal async Task<SeedMultiUrlEnvironment.Core.ApiResponse> SendRequestAsync(
-        SeedMultiUrlEnvironment.Core.BaseRequest request,
+    internal async Task<global::SeedMultiUrlEnvironment.Core.ApiResponse> SendRequestAsync(
+        global::SeedMultiUrlEnvironment.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
@@ -43,7 +43,7 @@ internal partial class RawClient(ClientOptions clientOptions)
             .ConfigureAwait(false);
     }
 
-    internal async Task<SeedMultiUrlEnvironment.Core.ApiResponse> SendRequestAsync(
+    internal async Task<global::SeedMultiUrlEnvironment.Core.ApiResponse> SendRequestAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken = default
@@ -109,7 +109,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     /// Sends the request with retries, unless the request content is not retryable,
     /// such as stream requests and multipart form data with stream content.
     /// </summary>
-    private async Task<SeedMultiUrlEnvironment.Core.ApiResponse> SendWithRetriesAsync(
+    private async Task<global::SeedMultiUrlEnvironment.Core.ApiResponse> SendWithRetriesAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken
@@ -122,7 +122,7 @@ internal partial class RawClient(ClientOptions clientOptions)
 
         if (!isRetryableContent)
         {
-            return new SeedMultiUrlEnvironment.Core.ApiResponse
+            return new global::SeedMultiUrlEnvironment.Core.ApiResponse
             {
                 StatusCode = (int)response.StatusCode,
                 Raw = response,
@@ -144,7 +144,7 @@ internal partial class RawClient(ClientOptions clientOptions)
                 .ConfigureAwait(false);
         }
 
-        return new SeedMultiUrlEnvironment.Core.ApiResponse
+        return new global::SeedMultiUrlEnvironment.Core.ApiResponse
         {
             StatusCode = (int)response.StatusCode,
             Raw = response,
@@ -168,7 +168,9 @@ internal partial class RawClient(ClientOptions clientOptions)
         };
     }
 
-    internal HttpRequestMessage CreateHttpRequest(SeedMultiUrlEnvironment.Core.BaseRequest request)
+    internal HttpRequestMessage CreateHttpRequest(
+        global::SeedMultiUrlEnvironment.Core.BaseRequest request
+    )
     {
         var url = BuildUrl(request);
         var httpRequest = new HttpRequestMessage(request.Method, url);
@@ -184,7 +186,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         return httpRequest;
     }
 
-    private static string BuildUrl(SeedMultiUrlEnvironment.Core.BaseRequest request)
+    private static string BuildUrl(global::SeedMultiUrlEnvironment.Core.BaseRequest request)
     {
         var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl;
         var trimmedBaseUrl = baseUrl.TrimEnd('/');
@@ -231,7 +233,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     private static List<KeyValuePair<string, string>> GetQueryParameters(
-        SeedMultiUrlEnvironment.Core.BaseRequest request
+        global::SeedMultiUrlEnvironment.Core.BaseRequest request
     )
     {
         var result = TransformToKeyValuePairs(request.Query);
@@ -387,27 +389,27 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     /// <inheritdoc />
-    [Obsolete("Use SeedMultiUrlEnvironment.Core.ApiResponse instead.")]
-    internal record ApiResponse : SeedMultiUrlEnvironment.Core.ApiResponse;
+    [Obsolete("Use global::SeedMultiUrlEnvironment.Core.ApiResponse instead.")]
+    internal record ApiResponse : global::SeedMultiUrlEnvironment.Core.ApiResponse;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedMultiUrlEnvironment.Core.BaseRequest instead.")]
-    internal abstract record BaseApiRequest : SeedMultiUrlEnvironment.Core.BaseRequest;
+    [Obsolete("Use global::SeedMultiUrlEnvironment.Core.BaseRequest instead.")]
+    internal abstract record BaseApiRequest : global::SeedMultiUrlEnvironment.Core.BaseRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedMultiUrlEnvironment.Core.EmptyRequest instead.")]
-    internal abstract record EmptyApiRequest : SeedMultiUrlEnvironment.Core.EmptyRequest;
+    [Obsolete("Use global::SeedMultiUrlEnvironment.Core.EmptyRequest instead.")]
+    internal abstract record EmptyApiRequest : global::SeedMultiUrlEnvironment.Core.EmptyRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedMultiUrlEnvironment.Core.JsonRequest instead.")]
-    internal abstract record JsonApiRequest : SeedMultiUrlEnvironment.Core.JsonRequest;
+    [Obsolete("Use global::SeedMultiUrlEnvironment.Core.JsonRequest instead.")]
+    internal abstract record JsonApiRequest : global::SeedMultiUrlEnvironment.Core.JsonRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedMultiUrlEnvironment.Core.MultipartFormRequest instead.")]
+    [Obsolete("Use global::SeedMultiUrlEnvironment.Core.MultipartFormRequest instead.")]
     internal abstract record MultipartFormRequest
-        : SeedMultiUrlEnvironment.Core.MultipartFormRequest;
+        : global::SeedMultiUrlEnvironment.Core.MultipartFormRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedMultiUrlEnvironment.Core.StreamRequest instead.")]
-    internal abstract record StreamApiRequest : SeedMultiUrlEnvironment.Core.StreamRequest;
+    [Obsolete("Use global::SeedMultiUrlEnvironment.Core.StreamRequest instead.")]
+    internal abstract record StreamApiRequest : global::SeedMultiUrlEnvironment.Core.StreamRequest;
 }

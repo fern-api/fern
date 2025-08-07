@@ -19,16 +19,16 @@ internal partial class RawClient(ClientOptions clientOptions)
     internal readonly ClientOptions Options = clientOptions;
 
     [Obsolete("Use SendRequestAsync instead.")]
-    internal Task<SeedTrace.Core.ApiResponse> MakeRequestAsync(
-        SeedTrace.Core.BaseRequest request,
+    internal Task<global::SeedTrace.Core.ApiResponse> MakeRequestAsync(
+        global::SeedTrace.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
         return SendRequestAsync(request, cancellationToken);
     }
 
-    internal async Task<SeedTrace.Core.ApiResponse> SendRequestAsync(
-        SeedTrace.Core.BaseRequest request,
+    internal async Task<global::SeedTrace.Core.ApiResponse> SendRequestAsync(
+        global::SeedTrace.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
@@ -43,7 +43,7 @@ internal partial class RawClient(ClientOptions clientOptions)
             .ConfigureAwait(false);
     }
 
-    internal async Task<SeedTrace.Core.ApiResponse> SendRequestAsync(
+    internal async Task<global::SeedTrace.Core.ApiResponse> SendRequestAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken = default
@@ -109,7 +109,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     /// Sends the request with retries, unless the request content is not retryable,
     /// such as stream requests and multipart form data with stream content.
     /// </summary>
-    private async Task<SeedTrace.Core.ApiResponse> SendWithRetriesAsync(
+    private async Task<global::SeedTrace.Core.ApiResponse> SendWithRetriesAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken
@@ -122,7 +122,7 @@ internal partial class RawClient(ClientOptions clientOptions)
 
         if (!isRetryableContent)
         {
-            return new SeedTrace.Core.ApiResponse
+            return new global::SeedTrace.Core.ApiResponse
             {
                 StatusCode = (int)response.StatusCode,
                 Raw = response,
@@ -144,7 +144,7 @@ internal partial class RawClient(ClientOptions clientOptions)
                 .ConfigureAwait(false);
         }
 
-        return new SeedTrace.Core.ApiResponse
+        return new global::SeedTrace.Core.ApiResponse
         {
             StatusCode = (int)response.StatusCode,
             Raw = response,
@@ -168,7 +168,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         };
     }
 
-    internal HttpRequestMessage CreateHttpRequest(SeedTrace.Core.BaseRequest request)
+    internal HttpRequestMessage CreateHttpRequest(global::SeedTrace.Core.BaseRequest request)
     {
         var url = BuildUrl(request);
         var httpRequest = new HttpRequestMessage(request.Method, url);
@@ -184,7 +184,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         return httpRequest;
     }
 
-    private static string BuildUrl(SeedTrace.Core.BaseRequest request)
+    private static string BuildUrl(global::SeedTrace.Core.BaseRequest request)
     {
         var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl;
         var trimmedBaseUrl = baseUrl.TrimEnd('/');
@@ -231,7 +231,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     private static List<KeyValuePair<string, string>> GetQueryParameters(
-        SeedTrace.Core.BaseRequest request
+        global::SeedTrace.Core.BaseRequest request
     )
     {
         var result = TransformToKeyValuePairs(request.Query);
@@ -387,26 +387,26 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     /// <inheritdoc />
-    [Obsolete("Use SeedTrace.Core.ApiResponse instead.")]
-    internal record ApiResponse : SeedTrace.Core.ApiResponse;
+    [Obsolete("Use global::SeedTrace.Core.ApiResponse instead.")]
+    internal record ApiResponse : global::SeedTrace.Core.ApiResponse;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedTrace.Core.BaseRequest instead.")]
-    internal abstract record BaseApiRequest : SeedTrace.Core.BaseRequest;
+    [Obsolete("Use global::SeedTrace.Core.BaseRequest instead.")]
+    internal abstract record BaseApiRequest : global::SeedTrace.Core.BaseRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedTrace.Core.EmptyRequest instead.")]
-    internal abstract record EmptyApiRequest : SeedTrace.Core.EmptyRequest;
+    [Obsolete("Use global::SeedTrace.Core.EmptyRequest instead.")]
+    internal abstract record EmptyApiRequest : global::SeedTrace.Core.EmptyRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedTrace.Core.JsonRequest instead.")]
-    internal abstract record JsonApiRequest : SeedTrace.Core.JsonRequest;
+    [Obsolete("Use global::SeedTrace.Core.JsonRequest instead.")]
+    internal abstract record JsonApiRequest : global::SeedTrace.Core.JsonRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedTrace.Core.MultipartFormRequest instead.")]
-    internal abstract record MultipartFormRequest : SeedTrace.Core.MultipartFormRequest;
+    [Obsolete("Use global::SeedTrace.Core.MultipartFormRequest instead.")]
+    internal abstract record MultipartFormRequest : global::SeedTrace.Core.MultipartFormRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedTrace.Core.StreamRequest instead.")]
-    internal abstract record StreamApiRequest : SeedTrace.Core.StreamRequest;
+    [Obsolete("Use global::SeedTrace.Core.StreamRequest instead.")]
+    internal abstract record StreamApiRequest : global::SeedTrace.Core.StreamRequest;
 }

@@ -1,6 +1,7 @@
 public struct TestCaseWithActualResultImplementationType: Codable, Hashable, Sendable {
     public let getActualResult: NonVoidFunctionDefinitionType
     public let assertCorrectnessCheck: AssertCorrectnessCheckType
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +28,7 @@ public struct TestCaseWithActualResultImplementationType: Codable, Hashable, Sen
         try container.encode(self.assertCorrectnessCheck, forKey: .assertCorrectnessCheck)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case getActualResult
         case assertCorrectnessCheck

@@ -1,6 +1,7 @@
 public struct GetBasicSolutionFileRequestType: Codable, Hashable, Sendable {
     public let methodName: String
     public let signature: NonVoidFunctionSignatureType
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +28,7 @@ public struct GetBasicSolutionFileRequestType: Codable, Hashable, Sendable {
         try container.encode(self.signature, forKey: .signature)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case methodName
         case signature

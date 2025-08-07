@@ -5,7 +5,6 @@ image: fernapi/fern-java-spring
 publish:
   workingDirectory: generators/java
   preBuildCommands:
-    - cd generators/java
     - ./gradlew :spring:distTar
   docker: 
     file: ./generators/java/spring/Dockerfile
@@ -14,6 +13,7 @@ publish:
 test:
   docker:
     image: fernapi/fern-java-spring:latest
+    context: .
     command: 
       - cd generators/java
       - ./gradlew :spring:distTar

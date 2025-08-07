@@ -19,16 +19,16 @@ internal partial class RawClient(ClientOptions clientOptions)
     internal readonly ClientOptions Options = clientOptions;
 
     [Obsolete("Use SendRequestAsync instead.")]
-    internal Task<SeedNoEnvironment.Core.ApiResponse> MakeRequestAsync(
-        SeedNoEnvironment.Core.BaseRequest request,
+    internal Task<global::SeedNoEnvironment.Core.ApiResponse> MakeRequestAsync(
+        global::SeedNoEnvironment.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
         return SendRequestAsync(request, cancellationToken);
     }
 
-    internal async Task<SeedNoEnvironment.Core.ApiResponse> SendRequestAsync(
-        SeedNoEnvironment.Core.BaseRequest request,
+    internal async Task<global::SeedNoEnvironment.Core.ApiResponse> SendRequestAsync(
+        global::SeedNoEnvironment.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
@@ -43,7 +43,7 @@ internal partial class RawClient(ClientOptions clientOptions)
             .ConfigureAwait(false);
     }
 
-    internal async Task<SeedNoEnvironment.Core.ApiResponse> SendRequestAsync(
+    internal async Task<global::SeedNoEnvironment.Core.ApiResponse> SendRequestAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken = default
@@ -109,7 +109,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     /// Sends the request with retries, unless the request content is not retryable,
     /// such as stream requests and multipart form data with stream content.
     /// </summary>
-    private async Task<SeedNoEnvironment.Core.ApiResponse> SendWithRetriesAsync(
+    private async Task<global::SeedNoEnvironment.Core.ApiResponse> SendWithRetriesAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken
@@ -122,7 +122,7 @@ internal partial class RawClient(ClientOptions clientOptions)
 
         if (!isRetryableContent)
         {
-            return new SeedNoEnvironment.Core.ApiResponse
+            return new global::SeedNoEnvironment.Core.ApiResponse
             {
                 StatusCode = (int)response.StatusCode,
                 Raw = response,
@@ -144,7 +144,7 @@ internal partial class RawClient(ClientOptions clientOptions)
                 .ConfigureAwait(false);
         }
 
-        return new SeedNoEnvironment.Core.ApiResponse
+        return new global::SeedNoEnvironment.Core.ApiResponse
         {
             StatusCode = (int)response.StatusCode,
             Raw = response,
@@ -168,7 +168,9 @@ internal partial class RawClient(ClientOptions clientOptions)
         };
     }
 
-    internal HttpRequestMessage CreateHttpRequest(SeedNoEnvironment.Core.BaseRequest request)
+    internal HttpRequestMessage CreateHttpRequest(
+        global::SeedNoEnvironment.Core.BaseRequest request
+    )
     {
         var url = BuildUrl(request);
         var httpRequest = new HttpRequestMessage(request.Method, url);
@@ -184,7 +186,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         return httpRequest;
     }
 
-    private static string BuildUrl(SeedNoEnvironment.Core.BaseRequest request)
+    private static string BuildUrl(global::SeedNoEnvironment.Core.BaseRequest request)
     {
         var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl;
         var trimmedBaseUrl = baseUrl.TrimEnd('/');
@@ -231,7 +233,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     private static List<KeyValuePair<string, string>> GetQueryParameters(
-        SeedNoEnvironment.Core.BaseRequest request
+        global::SeedNoEnvironment.Core.BaseRequest request
     )
     {
         var result = TransformToKeyValuePairs(request.Query);
@@ -387,26 +389,27 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     /// <inheritdoc />
-    [Obsolete("Use SeedNoEnvironment.Core.ApiResponse instead.")]
-    internal record ApiResponse : SeedNoEnvironment.Core.ApiResponse;
+    [Obsolete("Use global::SeedNoEnvironment.Core.ApiResponse instead.")]
+    internal record ApiResponse : global::SeedNoEnvironment.Core.ApiResponse;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedNoEnvironment.Core.BaseRequest instead.")]
-    internal abstract record BaseApiRequest : SeedNoEnvironment.Core.BaseRequest;
+    [Obsolete("Use global::SeedNoEnvironment.Core.BaseRequest instead.")]
+    internal abstract record BaseApiRequest : global::SeedNoEnvironment.Core.BaseRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedNoEnvironment.Core.EmptyRequest instead.")]
-    internal abstract record EmptyApiRequest : SeedNoEnvironment.Core.EmptyRequest;
+    [Obsolete("Use global::SeedNoEnvironment.Core.EmptyRequest instead.")]
+    internal abstract record EmptyApiRequest : global::SeedNoEnvironment.Core.EmptyRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedNoEnvironment.Core.JsonRequest instead.")]
-    internal abstract record JsonApiRequest : SeedNoEnvironment.Core.JsonRequest;
+    [Obsolete("Use global::SeedNoEnvironment.Core.JsonRequest instead.")]
+    internal abstract record JsonApiRequest : global::SeedNoEnvironment.Core.JsonRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedNoEnvironment.Core.MultipartFormRequest instead.")]
-    internal abstract record MultipartFormRequest : SeedNoEnvironment.Core.MultipartFormRequest;
+    [Obsolete("Use global::SeedNoEnvironment.Core.MultipartFormRequest instead.")]
+    internal abstract record MultipartFormRequest
+        : global::SeedNoEnvironment.Core.MultipartFormRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedNoEnvironment.Core.StreamRequest instead.")]
-    internal abstract record StreamApiRequest : SeedNoEnvironment.Core.StreamRequest;
+    [Obsolete("Use global::SeedNoEnvironment.Core.StreamRequest instead.")]
+    internal abstract record StreamApiRequest : global::SeedNoEnvironment.Core.StreamRequest;
 }

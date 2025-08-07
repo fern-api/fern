@@ -1,5 +1,6 @@
 import { AccessLevel } from "./AccessLevel";
 import { AstNode, Writer } from "./core";
+import { DocComment } from "./DocComment";
 import { EnumWithRawValues } from "./EnumWithRawValues";
 import { Initializer } from "./Initializer";
 import { Method } from "./Method";
@@ -12,6 +13,7 @@ export declare namespace EnumWithAssociatedValues {
     interface Case {
         unsafeName: string;
         associatedValue: [Type, ...Type[]];
+        docs?: DocComment;
     }
 
     interface Args {
@@ -22,6 +24,7 @@ export declare namespace EnumWithAssociatedValues {
         initializers?: Initializer[];
         methods?: Method[];
         nestedTypes?: (EnumWithRawValues | Struct)[];
+        docs?: DocComment;
     }
 }
 
@@ -33,6 +36,7 @@ export class EnumWithAssociatedValues extends AstNode {
     public readonly initializers: Initializer[];
     public readonly methods: Method[];
     public readonly nestedTypes: (EnumWithRawValues | Struct)[];
+    public readonly docs?: DocComment;
 
     public constructor({
         accessLevel,
@@ -41,7 +45,8 @@ export class EnumWithAssociatedValues extends AstNode {
         cases,
         initializers,
         methods,
-        nestedTypes
+        nestedTypes,
+        docs
     }: EnumWithAssociatedValues.Args) {
         super();
         this.name = name;
@@ -51,9 +56,13 @@ export class EnumWithAssociatedValues extends AstNode {
         this.initializers = initializers ?? [];
         this.methods = methods ?? [];
         this.nestedTypes = nestedTypes ?? [];
+        this.docs = docs;
     }
 
     public write(writer: Writer): void {
+        if (this.docs != null) {
+            this.docs.write(writer);
+        }
         if (this.accessLevel != null) {
             writer.write(this.accessLevel);
             writer.write(" ");
@@ -71,6 +80,9 @@ export class EnumWithAssociatedValues extends AstNode {
         writer.newLine();
         writer.indent();
         this.cases.forEach((case_) => {
+            if (case_.docs != null) {
+                case_.docs.write(writer);
+            }
             writer.write("case ");
             if (isReservedKeyword(case_.unsafeName)) {
                 writer.write(`\`${case_.unsafeName}\``);

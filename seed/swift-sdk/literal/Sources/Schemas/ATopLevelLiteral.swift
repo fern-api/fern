@@ -1,5 +1,6 @@
 public struct ATopLevelLiteral: Codable, Hashable, Sendable {
     public let nestedLiteral: ANestedLiteral
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -22,6 +23,7 @@ public struct ATopLevelLiteral: Codable, Hashable, Sendable {
         try container.encode(self.nestedLiteral, forKey: .nestedLiteral)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case nestedLiteral
     }

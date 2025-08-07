@@ -27,16 +27,16 @@ internal partial class RawClient(ClientOptions clientOptions)
     internal readonly ClientOptions Options = clientOptions;
 
     [Obsolete("Use SendRequestAsync instead.")]
-    internal Task<<%= namespace%>.ApiResponse> MakeRequestAsync(
-        <%= namespace%>.BaseRequest request,
+    internal Task<global::<%= namespace%>.ApiResponse> MakeRequestAsync(
+        global::<%= namespace%>.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
         return SendRequestAsync(request, cancellationToken);
     }
 
-    internal async Task<<%= namespace%>.ApiResponse> SendRequestAsync(
-        <%= namespace%>.BaseRequest request,
+    internal async Task<global::<%= namespace%>.ApiResponse> SendRequestAsync(
+        global::<%= namespace%>.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
@@ -51,7 +51,7 @@ internal partial class RawClient(ClientOptions clientOptions)
             .ConfigureAwait(false);
     }
 
-    internal async Task<<%= namespace%>.ApiResponse> SendRequestAsync(
+    internal async Task<global::<%= namespace%>.ApiResponse> SendRequestAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken = default
@@ -117,7 +117,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     /// Sends the request with retries, unless the request content is not retryable,
     /// such as stream requests and multipart form data with stream content.
     /// </summary>
-    private async Task<<%= namespace%>.ApiResponse> SendWithRetriesAsync(
+    private async Task<global::<%= namespace%>.ApiResponse> SendWithRetriesAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken
@@ -130,7 +130,7 @@ internal partial class RawClient(ClientOptions clientOptions)
 
         if (!isRetryableContent)
         {
-            return new <%= namespace%>.ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
+            return new global::<%= namespace%>.ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
         }
 
         for (var i = 0; i < maxRetries; i++)
@@ -148,7 +148,7 @@ internal partial class RawClient(ClientOptions clientOptions)
                 .ConfigureAwait(false);
         }
 
-        return new <%= namespace%>.ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
+        return new global::<%= namespace%>.ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
     }
 
     private static bool ShouldRetry(HttpResponseMessage response)
@@ -168,7 +168,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         };
     }
 
-    internal HttpRequestMessage CreateHttpRequest(<%= namespace%>.BaseRequest request)
+    internal HttpRequestMessage CreateHttpRequest(global::<%= namespace%>.BaseRequest request)
     {
         var url = BuildUrl(request);
         var httpRequest = new HttpRequestMessage(request.Method, url);
@@ -184,7 +184,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         return httpRequest;
     }
 
-    private static string BuildUrl(<%= namespace%>.BaseRequest request)
+    private static string BuildUrl(global::<%= namespace%>.BaseRequest request)
     {
         var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl;
         var trimmedBaseUrl = baseUrl.TrimEnd('/');
@@ -227,7 +227,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         return url;
     }
 
-    private static List<KeyValuePair<string, string>> GetQueryParameters(<%= namespace%>.BaseRequest request)
+    private static List<KeyValuePair<string, string>> GetQueryParameters(global::<%= namespace%>.BaseRequest request)
     {
         var result = TransformToKeyValuePairs(request.Query);
         if (
@@ -382,26 +382,26 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     /// <inheritdoc />
-    [Obsolete("Use <%= namespace%>.ApiResponse instead.")]
-    internal record ApiResponse : <%= namespace%>.ApiResponse;
+    [Obsolete("Use global::<%= namespace%>.ApiResponse instead.")]
+    internal record ApiResponse : global::<%= namespace%>.ApiResponse;
 
     /// <inheritdoc />
-    [Obsolete("Use <%= namespace%>.BaseRequest instead.")]
-    internal abstract record BaseApiRequest : <%= namespace%>.BaseRequest;
+    [Obsolete("Use global::<%= namespace%>.BaseRequest instead.")]
+    internal abstract record BaseApiRequest : global::<%= namespace%>.BaseRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use <%= namespace%>.EmptyRequest instead.")]
-    internal abstract record EmptyApiRequest : <%= namespace%>.EmptyRequest;
+    [Obsolete("Use global::<%= namespace%>.EmptyRequest instead.")]
+    internal abstract record EmptyApiRequest : global::<%= namespace%>.EmptyRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use <%= namespace%>.JsonRequest instead.")]
-    internal abstract record JsonApiRequest : <%= namespace%>.JsonRequest;
+    [Obsolete("Use global::<%= namespace%>.JsonRequest instead.")]
+    internal abstract record JsonApiRequest : global::<%= namespace%>.JsonRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use <%= namespace%>.MultipartFormRequest instead.")]
-    internal abstract record MultipartFormRequest : <%= namespace%>.MultipartFormRequest;
+    [Obsolete("Use global::<%= namespace%>.MultipartFormRequest instead.")]
+    internal abstract record MultipartFormRequest : global::<%= namespace%>.MultipartFormRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use <%= namespace%>.StreamRequest instead.")]
-    internal abstract record StreamApiRequest : <%= namespace%>.StreamRequest;
+    [Obsolete("Use global::<%= namespace%>.StreamRequest instead.")]
+    internal abstract record StreamApiRequest : global::<%= namespace%>.StreamRequest;
 }

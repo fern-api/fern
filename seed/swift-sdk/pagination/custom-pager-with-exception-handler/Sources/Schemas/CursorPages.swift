@@ -4,6 +4,7 @@ public struct CursorPages: Codable, Hashable, Sendable {
     public let perPage: Int?
     public let totalPages: Int?
     public let type: JSONValue
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -42,6 +43,7 @@ public struct CursorPages: Codable, Hashable, Sendable {
         try container.encode(self.type, forKey: .type)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case next
         case page

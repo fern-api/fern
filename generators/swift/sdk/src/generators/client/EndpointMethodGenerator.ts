@@ -25,14 +25,26 @@ export class EndpointMethodGenerator {
     }
 
     public generateMethod(endpoint: HttpEndpoint): swift.Method {
+        const parameters = this.getMethodParametersForEndpoint(endpoint);
         return swift.method({
             unsafeName: endpoint.name.camelCase.unsafeName,
             accessLevel: swift.AccessLevel.Public,
-            parameters: this.getMethodParametersForEndpoint(endpoint),
+            parameters,
             async: true,
             throws: true,
             returnType: this.getMethodReturnTypeForEndpoint(endpoint),
-            body: this.getMethodBodyForEndpoint(endpoint)
+            body: this.getMethodBodyForEndpoint(endpoint),
+            docs: endpoint.docs
+                ? swift.docComment({
+                      summary: endpoint.docs,
+                      parameters: parameters
+                          .map((p) => ({
+                              name: p.unsafeName,
+                              description: p.docsContent ?? ""
+                          }))
+                          .filter((p) => p.description !== "")
+                  })
+                : undefined
         });
     }
 
@@ -47,7 +59,8 @@ export class EndpointMethodGenerator {
                     swift.functionParameter({
                         argumentLabel: pathPart.unsafeNameCamelCase,
                         unsafeName: pathPart.unsafeNameCamelCase,
-                        type: swift.Type.string()
+                        type: swift.Type.string(),
+                        docsContent: pathPart.docs
                     })
                 );
             }
@@ -60,7 +73,8 @@ export class EndpointMethodGenerator {
                     argumentLabel: header.name.name.camelCase.unsafeName,
                     unsafeName: header.name.name.camelCase.unsafeName,
                     type: swiftType,
-                    defaultValue: swiftType.isOptional ? swift.Expression.rawValue("nil") : undefined
+                    defaultValue: swiftType.isOptional ? swift.Expression.rawValue("nil") : undefined,
+                    docsContent: header.docs
                 })
             );
         });
@@ -72,7 +86,8 @@ export class EndpointMethodGenerator {
                     argumentLabel: queryParam.name.name.camelCase.unsafeName,
                     unsafeName: queryParam.name.name.camelCase.unsafeName,
                     type: swiftType,
-                    defaultValue: swiftType.isOptional ? swift.Expression.rawValue("nil") : undefined
+                    defaultValue: swiftType.isOptional ? swift.Expression.rawValue("nil") : undefined,
+                    docsContent: queryParam.docs
                 })
             );
         });
@@ -85,7 +100,8 @@ export class EndpointMethodGenerator {
                         unsafeName: "request",
                         type: this.sdkGeneratorContext.getSwiftTypeForTypeReference(
                             endpoint.requestBody.requestBodyType
-                        )
+                        ),
+                        docsContent: endpoint.requestBody.docs
                     })
                 );
             } else if (endpoint.requestBody.type === "inlinedRequestBody") {
@@ -93,7 +109,8 @@ export class EndpointMethodGenerator {
                     swift.functionParameter({
                         argumentLabel: "request",
                         unsafeName: "request",
-                        type: swift.Type.custom(endpoint.requestBody.name.pascalCase.unsafeName)
+                        type: swift.Type.custom(endpoint.requestBody.name.pascalCase.unsafeName),
+                        docsContent: endpoint.requestBody.docs
                     })
                 );
             } else if (endpoint.requestBody.type === "bytes") {
@@ -101,7 +118,8 @@ export class EndpointMethodGenerator {
                     swift.functionParameter({
                         argumentLabel: "request",
                         unsafeName: "request",
-                        type: swift.Type.data()
+                        type: swift.Type.data(),
+                        docsContent: endpoint.requestBody.docs
                     })
                 );
             } else {
@@ -110,7 +128,8 @@ export class EndpointMethodGenerator {
                     swift.functionParameter({
                         argumentLabel: "request",
                         unsafeName: "request",
-                        type: swift.Type.existentialAny(swift.Protocol.Codable)
+                        type: swift.Type.existentialAny(swift.Protocol.Codable),
+                        docsContent: endpoint.requestBody.docs
                     })
                 );
             }
@@ -121,7 +140,9 @@ export class EndpointMethodGenerator {
                 argumentLabel: "requestOptions",
                 unsafeName: "requestOptions",
                 type: swift.Type.optional(swift.Type.custom("RequestOptions")),
-                defaultValue: swift.Expression.rawValue("nil")
+                defaultValue: swift.Expression.rawValue("nil"),
+                docsContent:
+                    "Additional options for configuring the request, such as custom headers or timeout settings."
             })
         );
 

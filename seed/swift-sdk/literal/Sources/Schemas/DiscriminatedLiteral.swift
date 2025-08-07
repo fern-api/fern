@@ -42,6 +42,7 @@ public enum DiscriminatedLiteral: Codable, Hashable, Sendable {
     public struct CustomName: Codable, Hashable, Sendable {
         public let type: String = "customName"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -65,6 +66,7 @@ public enum DiscriminatedLiteral: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -74,6 +76,7 @@ public enum DiscriminatedLiteral: Codable, Hashable, Sendable {
     public struct DefaultName: Codable, Hashable, Sendable {
         public let type: String = "defaultName"
         public let value: JSONValue
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -97,6 +100,7 @@ public enum DiscriminatedLiteral: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -106,6 +110,7 @@ public enum DiscriminatedLiteral: Codable, Hashable, Sendable {
     public struct George: Codable, Hashable, Sendable {
         public let type: String = "george"
         public let value: Bool
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -129,6 +134,7 @@ public enum DiscriminatedLiteral: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -138,6 +144,7 @@ public enum DiscriminatedLiteral: Codable, Hashable, Sendable {
     public struct LiteralGeorge: Codable, Hashable, Sendable {
         public let type: String = "literalGeorge"
         public let value: JSONValue
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -161,6 +168,7 @@ public enum DiscriminatedLiteral: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value

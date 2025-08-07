@@ -45,6 +45,7 @@ public enum WorkspaceSubmissionStatus: Codable, Hashable, Sendable {
     }
 
     public struct Stopped: Codable, Hashable, Sendable {
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -65,6 +66,7 @@ public enum WorkspaceSubmissionStatus: Codable, Hashable, Sendable {
     public struct Errored: Codable, Hashable, Sendable {
         public let type: String = "errored"
         public let value: ErrorInfo
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -88,6 +90,7 @@ public enum WorkspaceSubmissionStatus: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -97,6 +100,7 @@ public enum WorkspaceSubmissionStatus: Codable, Hashable, Sendable {
     public struct Running: Codable, Hashable, Sendable {
         public let type: String = "running"
         public let value: RunningSubmissionState
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -120,6 +124,7 @@ public enum WorkspaceSubmissionStatus: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -131,6 +136,7 @@ public enum WorkspaceSubmissionStatus: Codable, Hashable, Sendable {
         public let exceptionV2: ExceptionV2?
         public let exception: ExceptionInfo?
         public let stdout: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -162,6 +168,7 @@ public enum WorkspaceSubmissionStatus: Codable, Hashable, Sendable {
             try container.encode(self.stdout, forKey: .stdout)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case exceptionV2
@@ -175,6 +182,7 @@ public enum WorkspaceSubmissionStatus: Codable, Hashable, Sendable {
         public let exceptionV2: ExceptionV2?
         public let exception: ExceptionInfo?
         public let stdout: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -206,6 +214,7 @@ public enum WorkspaceSubmissionStatus: Codable, Hashable, Sendable {
             try container.encode(self.stdout, forKey: .stdout)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case exceptionV2

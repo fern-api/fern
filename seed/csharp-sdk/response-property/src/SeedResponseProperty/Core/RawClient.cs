@@ -19,16 +19,16 @@ internal partial class RawClient(ClientOptions clientOptions)
     internal readonly ClientOptions Options = clientOptions;
 
     [Obsolete("Use SendRequestAsync instead.")]
-    internal Task<SeedResponseProperty.Core.ApiResponse> MakeRequestAsync(
-        SeedResponseProperty.Core.BaseRequest request,
+    internal Task<global::SeedResponseProperty.Core.ApiResponse> MakeRequestAsync(
+        global::SeedResponseProperty.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
         return SendRequestAsync(request, cancellationToken);
     }
 
-    internal async Task<SeedResponseProperty.Core.ApiResponse> SendRequestAsync(
-        SeedResponseProperty.Core.BaseRequest request,
+    internal async Task<global::SeedResponseProperty.Core.ApiResponse> SendRequestAsync(
+        global::SeedResponseProperty.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
@@ -43,7 +43,7 @@ internal partial class RawClient(ClientOptions clientOptions)
             .ConfigureAwait(false);
     }
 
-    internal async Task<SeedResponseProperty.Core.ApiResponse> SendRequestAsync(
+    internal async Task<global::SeedResponseProperty.Core.ApiResponse> SendRequestAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken = default
@@ -109,7 +109,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     /// Sends the request with retries, unless the request content is not retryable,
     /// such as stream requests and multipart form data with stream content.
     /// </summary>
-    private async Task<SeedResponseProperty.Core.ApiResponse> SendWithRetriesAsync(
+    private async Task<global::SeedResponseProperty.Core.ApiResponse> SendWithRetriesAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken
@@ -122,7 +122,7 @@ internal partial class RawClient(ClientOptions clientOptions)
 
         if (!isRetryableContent)
         {
-            return new SeedResponseProperty.Core.ApiResponse
+            return new global::SeedResponseProperty.Core.ApiResponse
             {
                 StatusCode = (int)response.StatusCode,
                 Raw = response,
@@ -144,7 +144,7 @@ internal partial class RawClient(ClientOptions clientOptions)
                 .ConfigureAwait(false);
         }
 
-        return new SeedResponseProperty.Core.ApiResponse
+        return new global::SeedResponseProperty.Core.ApiResponse
         {
             StatusCode = (int)response.StatusCode,
             Raw = response,
@@ -168,7 +168,9 @@ internal partial class RawClient(ClientOptions clientOptions)
         };
     }
 
-    internal HttpRequestMessage CreateHttpRequest(SeedResponseProperty.Core.BaseRequest request)
+    internal HttpRequestMessage CreateHttpRequest(
+        global::SeedResponseProperty.Core.BaseRequest request
+    )
     {
         var url = BuildUrl(request);
         var httpRequest = new HttpRequestMessage(request.Method, url);
@@ -184,7 +186,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         return httpRequest;
     }
 
-    private static string BuildUrl(SeedResponseProperty.Core.BaseRequest request)
+    private static string BuildUrl(global::SeedResponseProperty.Core.BaseRequest request)
     {
         var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl;
         var trimmedBaseUrl = baseUrl.TrimEnd('/');
@@ -231,7 +233,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     private static List<KeyValuePair<string, string>> GetQueryParameters(
-        SeedResponseProperty.Core.BaseRequest request
+        global::SeedResponseProperty.Core.BaseRequest request
     )
     {
         var result = TransformToKeyValuePairs(request.Query);
@@ -387,26 +389,27 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     /// <inheritdoc />
-    [Obsolete("Use SeedResponseProperty.Core.ApiResponse instead.")]
-    internal record ApiResponse : SeedResponseProperty.Core.ApiResponse;
+    [Obsolete("Use global::SeedResponseProperty.Core.ApiResponse instead.")]
+    internal record ApiResponse : global::SeedResponseProperty.Core.ApiResponse;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedResponseProperty.Core.BaseRequest instead.")]
-    internal abstract record BaseApiRequest : SeedResponseProperty.Core.BaseRequest;
+    [Obsolete("Use global::SeedResponseProperty.Core.BaseRequest instead.")]
+    internal abstract record BaseApiRequest : global::SeedResponseProperty.Core.BaseRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedResponseProperty.Core.EmptyRequest instead.")]
-    internal abstract record EmptyApiRequest : SeedResponseProperty.Core.EmptyRequest;
+    [Obsolete("Use global::SeedResponseProperty.Core.EmptyRequest instead.")]
+    internal abstract record EmptyApiRequest : global::SeedResponseProperty.Core.EmptyRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedResponseProperty.Core.JsonRequest instead.")]
-    internal abstract record JsonApiRequest : SeedResponseProperty.Core.JsonRequest;
+    [Obsolete("Use global::SeedResponseProperty.Core.JsonRequest instead.")]
+    internal abstract record JsonApiRequest : global::SeedResponseProperty.Core.JsonRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedResponseProperty.Core.MultipartFormRequest instead.")]
-    internal abstract record MultipartFormRequest : SeedResponseProperty.Core.MultipartFormRequest;
+    [Obsolete("Use global::SeedResponseProperty.Core.MultipartFormRequest instead.")]
+    internal abstract record MultipartFormRequest
+        : global::SeedResponseProperty.Core.MultipartFormRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedResponseProperty.Core.StreamRequest instead.")]
-    internal abstract record StreamApiRequest : SeedResponseProperty.Core.StreamRequest;
+    [Obsolete("Use global::SeedResponseProperty.Core.StreamRequest instead.")]
+    internal abstract record StreamApiRequest : global::SeedResponseProperty.Core.StreamRequest;
 }

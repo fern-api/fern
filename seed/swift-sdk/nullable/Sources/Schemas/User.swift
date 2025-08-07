@@ -7,6 +7,7 @@ public struct User: Codable, Hashable, Sendable {
     public let favoriteNumber: WeirdNumber
     public let numbers: JSONValue?
     public let strings: JSONValue?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -57,6 +58,7 @@ public struct User: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.strings, forKey: .strings)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case name
         case id

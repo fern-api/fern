@@ -2,6 +2,7 @@ public struct Moment: Codable, Hashable, Sendable {
     public let id: UUID
     public let date: Date
     public let datetime: Date
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -32,6 +33,7 @@ public struct Moment: Codable, Hashable, Sendable {
         try container.encode(self.datetime, forKey: .datetime)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case date

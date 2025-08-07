@@ -1,6 +1,7 @@
 public struct DefaultProvidedFile: Codable, Hashable, Sendable {
     public let file: FileInfoV2
     public let relatedTypes: [VariableType]
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +28,7 @@ public struct DefaultProvidedFile: Codable, Hashable, Sendable {
         try container.encode(self.relatedTypes, forKey: .relatedTypes)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case file
         case relatedTypes

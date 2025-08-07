@@ -32,6 +32,7 @@ public enum Test: Codable, Hashable, Sendable {
     public struct And: Codable, Hashable, Sendable {
         public let type: String = "and"
         public let value: Bool
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -55,6 +56,7 @@ public enum Test: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -64,6 +66,7 @@ public enum Test: Codable, Hashable, Sendable {
     public struct Or: Codable, Hashable, Sendable {
         public let type: String = "or"
         public let value: Bool
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -87,6 +90,7 @@ public enum Test: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value

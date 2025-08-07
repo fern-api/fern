@@ -34,6 +34,7 @@ public enum EventInfo: Codable, Hashable, Sendable {
         public let id: String
         public let data: [String: String]?
         public let jsonString: String?
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -65,6 +66,7 @@ public enum EventInfo: Codable, Hashable, Sendable {
             try container.encodeIfPresent(self.jsonString, forKey: .jsonString)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case id
@@ -76,6 +78,7 @@ public enum EventInfo: Codable, Hashable, Sendable {
     public struct Tag: Codable, Hashable, Sendable {
         public let type: String = "tag"
         public let value: Tag
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -99,6 +102,7 @@ public enum EventInfo: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value

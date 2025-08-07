@@ -1,7 +1,16 @@
+/// A user object. This type is used throughout the following APIs:
+///   - createUser
+///   - getUser
 public struct User: Codable, Hashable, Sendable {
     public let id: String
+    /// The user's name. This name is unique to each user. A few examples are included below:
+    ///  - Alice
+    ///  - Bob
+    ///  - Charlie
     public let name: String
+    /// The user's age.
     public let age: Int?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -32,6 +41,7 @@ public struct User: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.age, forKey: .age)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case name
