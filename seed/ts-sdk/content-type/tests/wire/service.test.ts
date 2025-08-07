@@ -19,4 +19,47 @@ describe("Service", () => {
         });
         expect(response).toEqual(undefined);
     });
+
+    test("patchComplex", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedContentTypesClient({ environment: server.baseUrl });
+        const rawRequestBody = {
+            name: "name",
+            email: "email",
+            age: 1,
+            active: true,
+            metadata: { metadata: { key: "value" } },
+            tags: ["tags", "tags"],
+        };
+
+        server.mockEndpoint().patch("/complex/id").jsonBody(rawRequestBody).respondWith().statusCode(200).build();
+
+        const response = await client.service.patchComplex("id", {
+            name: "name",
+            email: "email",
+            age: 1,
+            active: true,
+            metadata: {
+                metadata: {
+                    key: "value",
+                },
+            },
+            tags: ["tags", "tags"],
+        });
+        expect(response).toEqual(undefined);
+    });
+
+    test("regularPatch", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedContentTypesClient({ environment: server.baseUrl });
+        const rawRequestBody = { field1: "field1", field2: 1 };
+
+        server.mockEndpoint().patch("/regular/id").jsonBody(rawRequestBody).respondWith().statusCode(200).build();
+
+        const response = await client.service.regularPatch("id", {
+            field1: "field1",
+            field2: 1,
+        });
+        expect(response).toEqual(undefined);
+    });
 });
