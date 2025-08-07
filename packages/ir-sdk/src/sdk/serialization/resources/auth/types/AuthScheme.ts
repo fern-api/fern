@@ -9,6 +9,7 @@ import { BearerAuthScheme } from "./BearerAuthScheme";
 import { BasicAuthScheme } from "./BasicAuthScheme";
 import { HeaderAuthScheme } from "./HeaderAuthScheme";
 import { OAuthScheme } from "./OAuthScheme";
+import { InferredAuthScheme } from "./InferredAuthScheme";
 
 export const AuthScheme: core.serialization.Schema<serializers.AuthScheme.Raw, FernIr.AuthScheme> = core.serialization
     .union(core.serialization.discriminant("type", "_type"), {
@@ -16,6 +17,7 @@ export const AuthScheme: core.serialization.Schema<serializers.AuthScheme.Raw, F
         basic: BasicAuthScheme,
         header: HeaderAuthScheme,
         oauth: OAuthScheme,
+        inferred: InferredAuthScheme,
     })
     .transform<FernIr.AuthScheme>({
         transform: (value) => {
@@ -28,6 +30,8 @@ export const AuthScheme: core.serialization.Schema<serializers.AuthScheme.Raw, F
                     return FernIr.AuthScheme.header(value);
                 case "oauth":
                     return FernIr.AuthScheme.oauth(value);
+                case "inferred":
+                    return FernIr.AuthScheme.inferred(value);
                 default:
                     return value as FernIr.AuthScheme;
             }
@@ -36,7 +40,7 @@ export const AuthScheme: core.serialization.Schema<serializers.AuthScheme.Raw, F
     });
 
 export declare namespace AuthScheme {
-    export type Raw = AuthScheme.Bearer | AuthScheme.Basic | AuthScheme.Header | AuthScheme.Oauth;
+    export type Raw = AuthScheme.Bearer | AuthScheme.Basic | AuthScheme.Header | AuthScheme.Oauth | AuthScheme.Inferred;
 
     export interface Bearer extends BearerAuthScheme.Raw {
         _type: "bearer";
@@ -52,5 +56,9 @@ export declare namespace AuthScheme {
 
     export interface Oauth extends OAuthScheme.Raw {
         _type: "oauth";
+    }
+
+    export interface Inferred extends InferredAuthScheme.Raw {
+        _type: "inferred";
     }
 }

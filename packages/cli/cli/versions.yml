@@ -1,5 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- changelogEntry:
+    - summary: Add support for generating inferred auth in IR and expand bearer auth in Fern Definition for inference.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-08-07"
+  version: 0.66.00
 
 - changelogEntry:
     - summary: |

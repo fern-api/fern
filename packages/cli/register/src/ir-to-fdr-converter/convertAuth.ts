@@ -65,6 +65,8 @@ export function convertAuth(
                           description: auth.docs
                       };
             }
+            case "inferred":
+                throw "TODO: Handle inferred auth scheme";
             default:
                 assertNever(scheme);
         }

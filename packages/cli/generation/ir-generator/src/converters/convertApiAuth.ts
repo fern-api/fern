@@ -1,11 +1,21 @@
 import { RawSchemas, visitRawApiAuth, visitRawAuthSchemeDeclaration } from "@fern-api/fern-definition-schema";
-import { ApiAuth, AuthScheme, AuthSchemesRequirement, OAuthConfiguration } from "@fern-api/ir-sdk";
+import {
+    ApiAuth,
+    AuthScheme,
+    AuthSchemesRequirement,
+    FernIr,
+    OAuthConfiguration,
+    InferredAuthSchemeTokenEndpoint
+} from "@fern-api/ir-sdk";
 
 import { FernFileContext } from "../FernFileContext";
 import { EndpointResolver } from "../resolvers/EndpointResolver";
 import { PropertyResolver } from "../resolvers/PropertyResolver";
 import { convertOAuthClientCredentials } from "./convertOAuthClientCredentials";
-import { getRefreshTokenEndpoint, getTokenEndpoint } from "./convertOAuthUtils";
+import { getRefreshTokenEndpoint, get0AuthTokenEndpoint } from "./convertOAuthUtils";
+import { createEndpointReference } from "../utils/createEndpointReference";
+import { ResolvedEndpoint } from "../resolvers/ResolvedEndpoint";
+import { getResponsePropertyComponents } from "./services/convertProperty";
 
 export function convertApiAuth({
     rawApiFileSchema,
@@ -94,11 +104,19 @@ function convertSchemeReference({
                     docs,
                     rawScheme
                 }),
-            bearer: (rawScheme) =>
+            tokenBearer: (rawScheme) =>
                 generateBearerAuth({
                     file,
                     docs,
                     rawScheme
+                }),
+            inferredBearer: (rawScheme) =>
+                generateInferredAuth({
+                    file,
+                    docs,
+                    rawScheme,
+                    propertyResolver,
+                    endpointResolver
                 }),
             oauth: (rawScheme) =>
                 generateOAuth({
@@ -146,7 +164,7 @@ function generateBearerAuth({
 }: {
     file: FernFileContext;
     docs: string | undefined;
-    rawScheme: RawSchemas.BearerAuthSchemeSchema | undefined;
+    rawScheme: RawSchemas.TokenBearerAuthSchema | undefined;
 }): AuthScheme.Bearer {
     return AuthScheme.bearer({
         docs,
@@ -196,7 +214,7 @@ function generateOAuth({
                         endpointResolver,
                         file,
                         oauthScheme: rawScheme,
-                        tokenEndpoint: getTokenEndpoint(rawScheme),
+                        tokenEndpoint: get0AuthTokenEndpoint(rawScheme),
                         refreshTokenEndpoint: getRefreshTokenEndpoint(rawScheme)
                     })
                 )
@@ -204,4 +222,174 @@ function generateOAuth({
         default:
             throw new Error(`Unknown OAuth type: '${rawScheme?.type}'`);
     }
+}
+
+function generateInferredAuth({
+    file,
+    docs,
+    rawScheme,
+    propertyResolver,
+    endpointResolver
+}: {
+    file: FernFileContext;
+    docs: string | undefined;
+    rawScheme: RawSchemas.InferredBearerAuthSchema;
+    propertyResolver: PropertyResolver;
+    endpointResolver: EndpointResolver;
+}): AuthScheme.Inferred {
+    return AuthScheme.inferred({
+        docs,
+        tokenEndpoint: getInferredTokenEndpoint({
+            file,
+            rawScheme,
+            propertyResolver,
+            endpointResolver
+        })
+    });
+}
+
+function getInferredTokenEndpoint({
+    file,
+    rawScheme,
+    propertyResolver,
+    endpointResolver
+}: {
+    file: FernFileContext;
+    rawScheme: RawSchemas.InferredBearerAuthSchema;
+    propertyResolver: PropertyResolver;
+    endpointResolver: EndpointResolver;
+}): InferredAuthSchemeTokenEndpoint {
+    const getTokenEndpointConfig = rawScheme["get-token"];
+    const tokenEndpoint = endpointResolver.resolveEndpointOrThrow({
+        endpoint: getTokenEndpointConfig.endpoint,
+        file
+    });
+
+    const result: InferredAuthSchemeTokenEndpoint = {
+        endpoint: createEndpointReference({ resolvedEndpoint: tokenEndpoint }),
+        expiryProperty: getInferredExpiryProperty({
+            tokenEndpoint,
+            getTokenEndpointConfig,
+            propertyResolver
+        }),
+        authenticatedRequestHeaders: getInferredAuthenticatedRequestHeaders({
+            tokenEndpoint,
+            getTokenEndpointConfig,
+            propertyResolver
+        })
+    };
+
+    return result;
+}
+
+const commonAuthTokenProperties = [
+    "access_token",
+    "accessToken",
+    "AccessToken",
+    "token",
+    "Token",
+    "auth_token",
+    "authToken",
+    "AuthToken",
+    "bearer_token",
+    "bearerToken",
+    "BearerToken",
+    "jwt",
+    "Jwt",
+    "authentication_token",
+    "authenticationToken",
+    "AuthenticationToken"
+];
+
+function getInferredAuthenticatedRequestHeaders({
+    tokenEndpoint,
+    getTokenEndpointConfig,
+    propertyResolver
+}: {
+    tokenEndpoint: ResolvedEndpoint;
+    getTokenEndpointConfig: RawSchemas.InferredGetTokenEndpointSchema;
+    propertyResolver: PropertyResolver;
+}): FernIr.InferredAuthenticatedRequestHeader[] {
+    const result = new Map<string, FernIr.InferredAuthenticatedRequestHeader>();
+    const requestHeaders = getTokenEndpointConfig["authenticated-request-headers"] ?? [];
+    if (requestHeaders.length > 0) {
+        requestHeaders.forEach((header) => {
+            result.set(header["header-name"].toLowerCase(), {
+                headerName: header["header-name"],
+                responseProperty: propertyResolver.resolveResponsePropertyOrThrow({
+                    file: tokenEndpoint.file,
+                    endpoint: tokenEndpoint.endpointId,
+                    propertyComponents: getResponsePropertyComponents(header["response-property"])
+                }),
+                valuePrefix: header["value-prefix"]
+            });
+        });
+    }
+    if (!result.has("authorization")) {
+        for (const property of commonAuthTokenProperties) {
+            const responseProperty = propertyResolver.resolveResponseProperty({
+                file: tokenEndpoint.file,
+                endpoint: tokenEndpoint.endpointId,
+                propertyComponents: [property]
+            });
+            if (responseProperty) {
+                result.set("authorization", {
+                    headerName: "Authorization",
+                    responseProperty,
+                    valuePrefix: "Bearer "
+                });
+                break;
+            }
+        }
+    }
+    return Array.from(result.values());
+}
+
+const commonExpiryProperties = [
+    "expires_in",
+    "expiresIn",
+    "ExpiresIn",
+    "exp",
+    "Exp",
+    "expiry",
+    "Expiry",
+    "expires",
+    "Expires",
+    "expires_at",
+    "expiresAt",
+    "ExpiresAt",
+    "expiration",
+    "Expiration",
+    "valid_until",
+    "validUntil",
+    "ValidUntil"
+];
+
+function getInferredExpiryProperty({
+    tokenEndpoint,
+    getTokenEndpointConfig,
+    propertyResolver
+}: {
+    tokenEndpoint: ResolvedEndpoint;
+    getTokenEndpointConfig: RawSchemas.InferredGetTokenEndpointSchema;
+    propertyResolver: PropertyResolver;
+}): FernIr.ResponseProperty | undefined {
+    if (getTokenEndpointConfig["expiry-response-property"]) {
+        return propertyResolver.resolveResponsePropertyOrThrow({
+            file: tokenEndpoint.file,
+            endpoint: tokenEndpoint.endpointId,
+            propertyComponents: getResponsePropertyComponents(getTokenEndpointConfig["expiry-response-property"])
+        });
+    }
+    for (const property of commonExpiryProperties) {
+        const responseProperty = propertyResolver.resolveResponseProperty({
+            file: tokenEndpoint.file,
+            endpoint: tokenEndpoint.endpointId,
+            propertyComponents: [property]
+        });
+        if (responseProperty) {
+            return responseProperty;
+        }
+    }
+    return undefined;
 }

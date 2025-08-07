@@ -790,7 +790,7 @@
       ],
       "additionalProperties": false
     },
-    "auth.BearerAuthSchemeSchema": {
+    "auth.TokenBearerAuthSchema": {
       "type": "object",
       "properties": {
         "docs": {
@@ -821,6 +821,103 @@
         "scheme"
       ],
       "additionalProperties": false
+    },
+    "auth.InferredAuthenticatedRequestHeader": {
+      "type": "object",
+      "properties": {
+        "response-property": {
+          "type": "string"
+        },
+        "header-name": {
+          "type": "string"
+        },
+        "value-prefix": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "response-property",
+        "header-name"
+      ],
+      "additionalProperties": false
+    },
+    "auth.InferredGetTokenEndpointSchema": {
+      "type": "object",
+      "properties": {
+        "endpoint": {
+          "type": "string"
+        },
+        "expiry-response-property": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "authenticated-request-headers": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/auth.InferredAuthenticatedRequestHeader"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "endpoint"
+      ],
+      "additionalProperties": false
+    },
+    "auth.InferredBearerAuthSchema": {
+      "type": "object",
+      "properties": {
+        "docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scheme": {
+          "const": "bearer"
+        },
+        "get-token": {
+          "$ref": "#/definitions/auth.InferredGetTokenEndpointSchema"
+        }
+      },
+      "required": [
+        "scheme",
+        "get-token"
+      ],
+      "additionalProperties": false
+    },
+    "auth.BearerAuthSchemeSchema": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/auth.TokenBearerAuthSchema"
+        },
+        {
+          "$ref": "#/definitions/auth.InferredBearerAuthSchema"
+        }
+      ]
     },
     "auth.AuthSchemeDeclarationSchema": {
       "anyOf": [

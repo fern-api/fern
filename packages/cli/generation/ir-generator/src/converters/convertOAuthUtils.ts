@@ -61,7 +61,7 @@ interface OAuthRefreshTokenRequestPropertyComponents {
     refresh_token: string[];
 }
 
-export function getTokenEndpoint(oauthSchema: RawSchemas.OAuthSchemeSchema): TokenEndpoint {
+export function get0AuthTokenEndpoint(oauthSchema: RawSchemas.OAuthSchemeSchema): TokenEndpoint {
     return {
         endpoint: oauthSchema["get-token"].endpoint,
         requestProperties: getTokenEndpointRequestProperties({
