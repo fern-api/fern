@@ -5,7 +5,9 @@ package com.seed.contentTypes.resources.service;
 
 import com.seed.contentTypes.core.ClientOptions;
 import com.seed.contentTypes.core.RequestOptions;
+import com.seed.contentTypes.resources.service.requests.PatchComplexRequest;
 import com.seed.contentTypes.resources.service.requests.PatchProxyRequest;
+import com.seed.contentTypes.resources.service.requests.RegularPatchRequest;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncServiceClient {
@@ -31,5 +33,47 @@ public class AsyncServiceClient {
 
     public CompletableFuture<Void> patch(PatchProxyRequest request, RequestOptions requestOptions) {
         return this.rawClient.patch(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Update with JSON merge patch - complex types
+     */
+    public CompletableFuture<Void> patchComplex(String id) {
+        return this.rawClient.patchComplex(id).thenApply(response -> response.body());
+    }
+
+    /**
+     * Update with JSON merge patch - complex types
+     */
+    public CompletableFuture<Void> patchComplex(String id, PatchComplexRequest request) {
+        return this.rawClient.patchComplex(id, request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Update with JSON merge patch - complex types
+     */
+    public CompletableFuture<Void> patchComplex(String id, PatchComplexRequest request, RequestOptions requestOptions) {
+        return this.rawClient.patchComplex(id, request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Regular PATCH endpoint without merge-patch semantics
+     */
+    public CompletableFuture<Void> regularPatch(String id) {
+        return this.rawClient.regularPatch(id).thenApply(response -> response.body());
+    }
+
+    /**
+     * Regular PATCH endpoint without merge-patch semantics
+     */
+    public CompletableFuture<Void> regularPatch(String id, RegularPatchRequest request) {
+        return this.rawClient.regularPatch(id, request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Regular PATCH endpoint without merge-patch semantics
+     */
+    public CompletableFuture<Void> regularPatch(String id, RegularPatchRequest request, RequestOptions requestOptions) {
+        return this.rawClient.regularPatch(id, request, requestOptions).thenApply(response -> response.body());
     }
 }
