@@ -13,6 +13,138 @@
         },
         {
             "id": {
+                "path": "/inline/users",
+                "method": "GET",
+                "identifier_override": "endpoint_inline-users/api.listWithCursorPagination"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst response = await client.inlineUsers.api.listWithCursorPagination({\n    page: 1,\n    per_page: 1,\n    order: \"asc\",\n    starting_after: \"starting_after\"\n});\nfor await (const item of response) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.inlineUsers.api.listWithCursorPagination({\n    page: 1,\n    per_page: 1,\n    order: \"asc\",\n    starting_after: \"starting_after\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/inline/users",
+                "method": "POST",
+                "identifier_override": "endpoint_inline-users/api.listWithMixedTypeCursorPagination"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst response = await client.inlineUsers.api.listWithMixedTypeCursorPagination({\n    cursor: \"cursor\"\n});\nfor await (const item of response) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.inlineUsers.api.listWithMixedTypeCursorPagination({\n    cursor: \"cursor\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/inline/users",
+                "method": "POST",
+                "identifier_override": "endpoint_inline-users/api.listWithBodyCursorPagination"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst response = await client.inlineUsers.api.listWithBodyCursorPagination({\n    pagination: {\n        cursor: \"cursor\"\n    }\n});\nfor await (const item of response) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.inlineUsers.api.listWithBodyCursorPagination({\n    pagination: {\n        cursor: \"cursor\"\n    }\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/inline/users",
+                "method": "GET",
+                "identifier_override": "endpoint_inline-users/api.listWithOffsetPagination"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst response = await client.inlineUsers.api.listWithOffsetPagination({\n    page: 1,\n    per_page: 1,\n    order: \"asc\",\n    starting_after: \"starting_after\"\n});\nfor await (const item of response) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.inlineUsers.api.listWithOffsetPagination({\n    page: 1,\n    per_page: 1,\n    order: \"asc\",\n    starting_after: \"starting_after\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/inline/users",
+                "method": "GET",
+                "identifier_override": "endpoint_inline-users/api.listWithDoubleOffsetPagination"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst response = await client.inlineUsers.api.listWithDoubleOffsetPagination({\n    page: 1.1,\n    per_page: 1.1,\n    order: \"asc\",\n    starting_after: \"starting_after\"\n});\nfor await (const item of response) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.inlineUsers.api.listWithDoubleOffsetPagination({\n    page: 1.1,\n    per_page: 1.1,\n    order: \"asc\",\n    starting_after: \"starting_after\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/inline/users",
+                "method": "POST",
+                "identifier_override": "endpoint_inline-users/api.listWithBodyOffsetPagination"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst response = await client.inlineUsers.api.listWithBodyOffsetPagination({\n    pagination: {\n        page: 1\n    }\n});\nfor await (const item of response) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.inlineUsers.api.listWithBodyOffsetPagination({\n    pagination: {\n        page: 1\n    }\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/inline/users",
+                "method": "GET",
+                "identifier_override": "endpoint_inline-users/api.listWithOffsetStepPagination"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst response = await client.inlineUsers.api.listWithOffsetStepPagination({\n    page: 1,\n    limit: 1,\n    order: \"asc\"\n});\nfor await (const item of response) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.inlineUsers.api.listWithOffsetStepPagination({\n    page: 1,\n    limit: 1,\n    order: \"asc\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/inline/users",
+                "method": "GET",
+                "identifier_override": "endpoint_inline-users/api.listWithOffsetPaginationHasNextPage"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst response = await client.inlineUsers.api.listWithOffsetPaginationHasNextPage({\n    page: 1,\n    limit: 1,\n    order: \"asc\"\n});\nfor await (const item of response) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.inlineUsers.api.listWithOffsetPaginationHasNextPage({\n    page: 1,\n    limit: 1,\n    order: \"asc\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/inline/users",
+                "method": "GET",
+                "identifier_override": "endpoint_inline-users/api.listWithExtendedResults"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst response = await client.inlineUsers.api.listWithExtendedResults({\n    cursor: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"\n});\nfor await (const item of response) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.inlineUsers.api.listWithExtendedResults({\n    cursor: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/inline/users",
+                "method": "GET",
+                "identifier_override": "endpoint_inline-users/api.listWithExtendedResultsAndOptionalData"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst response = await client.inlineUsers.api.listWithExtendedResultsAndOptionalData({\n    cursor: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"\n});\nfor await (const item of response) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.inlineUsers.api.listWithExtendedResultsAndOptionalData({\n    cursor: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/inline/users",
+                "method": "GET",
+                "identifier_override": "endpoint_inline-users/api.listUsernames"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst response = await client.inlineUsers.api.listUsernames({\n    starting_after: \"starting_after\"\n});\nfor await (const item of response) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.inlineUsers.api.listUsernames({\n    starting_after: \"starting_after\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/inline/users",
+                "method": "GET",
+                "identifier_override": "endpoint_inline-users/api.listWithGlobalConfig"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst response = await client.inlineUsers.api.listWithGlobalConfig({\n    offset: 1\n});\nfor await (const item of response) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.inlineUsers.api.listWithGlobalConfig({\n    offset: 1\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/users",
                 "method": "GET",
                 "identifier_override": "endpoint_users.listWithCursorPagination"

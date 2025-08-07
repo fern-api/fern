@@ -22,6 +22,186 @@ const client = new SeedPaginationClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
+await client.inlineUsers.api.listWithCursorPagination({
+  page: 1,
+  per_page: 1,
+  starting_after: "starting_after",
+});
+
+```
+
+
+```typescript
+import { SeedPaginationClient } from "@fern/pagination";
+
+const client = new SeedPaginationClient({
+  environment: "YOUR_BASE_URL",
+  token: "YOUR_TOKEN",
+});
+await client.inlineUsers.api.listWithMixedTypeCursorPagination({
+  cursor: "cursor",
+});
+
+```
+
+
+```typescript
+import { SeedPaginationClient } from "@fern/pagination";
+
+const client = new SeedPaginationClient({
+  environment: "YOUR_BASE_URL",
+  token: "YOUR_TOKEN",
+});
+await client.inlineUsers.api.listWithBodyCursorPagination({
+  pagination: {
+    cursor: "cursor",
+  },
+});
+
+```
+
+
+```typescript
+import { SeedPaginationClient } from "@fern/pagination";
+
+const client = new SeedPaginationClient({
+  environment: "YOUR_BASE_URL",
+  token: "YOUR_TOKEN",
+});
+await client.inlineUsers.api.listWithOffsetPagination({
+  page: 1,
+  per_page: 1,
+  starting_after: "starting_after",
+});
+
+```
+
+
+```typescript
+import { SeedPaginationClient } from "@fern/pagination";
+
+const client = new SeedPaginationClient({
+  environment: "YOUR_BASE_URL",
+  token: "YOUR_TOKEN",
+});
+await client.inlineUsers.api.listWithDoubleOffsetPagination({
+  page: 1.1,
+  per_page: 1.1,
+  starting_after: "starting_after",
+});
+
+```
+
+
+```typescript
+import { SeedPaginationClient } from "@fern/pagination";
+
+const client = new SeedPaginationClient({
+  environment: "YOUR_BASE_URL",
+  token: "YOUR_TOKEN",
+});
+await client.inlineUsers.api.listWithBodyOffsetPagination({
+  pagination: {
+    page: 1,
+  },
+});
+
+```
+
+
+```typescript
+import { SeedPaginationClient } from "@fern/pagination";
+
+const client = new SeedPaginationClient({
+  environment: "YOUR_BASE_URL",
+  token: "YOUR_TOKEN",
+});
+await client.inlineUsers.api.listWithOffsetStepPagination({
+  page: 1,
+  limit: 1,
+});
+
+```
+
+
+```typescript
+import { SeedPaginationClient } from "@fern/pagination";
+
+const client = new SeedPaginationClient({
+  environment: "YOUR_BASE_URL",
+  token: "YOUR_TOKEN",
+});
+await client.inlineUsers.api.listWithOffsetPaginationHasNextPage({
+  page: 1,
+  limit: 1,
+});
+
+```
+
+
+```typescript
+import { SeedPaginationClient } from "@fern/pagination";
+
+const client = new SeedPaginationClient({
+  environment: "YOUR_BASE_URL",
+  token: "YOUR_TOKEN",
+});
+await client.inlineUsers.api.listWithExtendedResults({
+  cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+});
+
+```
+
+
+```typescript
+import { SeedPaginationClient } from "@fern/pagination";
+
+const client = new SeedPaginationClient({
+  environment: "YOUR_BASE_URL",
+  token: "YOUR_TOKEN",
+});
+await client.inlineUsers.api.listWithExtendedResultsAndOptionalData({
+  cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+});
+
+```
+
+
+```typescript
+import { SeedPaginationClient } from "@fern/pagination";
+
+const client = new SeedPaginationClient({
+  environment: "YOUR_BASE_URL",
+  token: "YOUR_TOKEN",
+});
+await client.inlineUsers.api.listUsernames({
+  starting_after: "starting_after",
+});
+
+```
+
+
+```typescript
+import { SeedPaginationClient } from "@fern/pagination";
+
+const client = new SeedPaginationClient({
+  environment: "YOUR_BASE_URL",
+  token: "YOUR_TOKEN",
+});
+await client.inlineUsers.api.listWithGlobalConfig({
+  offset: 1,
+});
+
+```
+
+
+```typescript
+import { SeedPaginationClient } from "@fern/pagination";
+
+const client = new SeedPaginationClient({
+  environment: "YOUR_BASE_URL",
+  token: "YOUR_TOKEN",
+});
 await client.users.listWithCursorPagination({
   page: 1,
   per_page: 1,

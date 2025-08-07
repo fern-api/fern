@@ -87,6 +87,774 @@ while (page.hasNextPage()) {
 </dl>
 </details>
 
+## InlineUsers Api
+
+<details><summary><code>client.inlineUsers.api.<a href="/src/api/resources/inlineUsers/resources/api/client/Client.ts">listWithCursorPagination</a>({ ...params }) -> core.Page<SeedPagination.User></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const response = await client.inlineUsers.api.listWithCursorPagination({
+    page: 1,
+    per_page: 1,
+    order: "asc",
+    starting_after: "starting_after",
+});
+for await (const item of response) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.inlineUsers.api.listWithCursorPagination({
+    page: 1,
+    per_page: 1,
+    order: "asc",
+    starting_after: "starting_after",
+});
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedPagination.inlineUsers.ListUsersCursorPaginationRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Api.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inlineUsers.api.<a href="/src/api/resources/inlineUsers/resources/api/client/Client.ts">listWithMixedTypeCursorPagination</a>({ ...params }) -> core.Page<SeedPagination.User></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const response = await client.inlineUsers.api.listWithMixedTypeCursorPagination({
+    cursor: "cursor",
+});
+for await (const item of response) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.inlineUsers.api.listWithMixedTypeCursorPagination({
+    cursor: "cursor",
+});
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedPagination.inlineUsers.ListUsersMixedTypeCursorPaginationRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Api.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inlineUsers.api.<a href="/src/api/resources/inlineUsers/resources/api/client/Client.ts">listWithBodyCursorPagination</a>({ ...params }) -> core.Page<SeedPagination.User></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const response = await client.inlineUsers.api.listWithBodyCursorPagination({
+    pagination: {
+        cursor: "cursor",
+    },
+});
+for await (const item of response) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.inlineUsers.api.listWithBodyCursorPagination({
+    pagination: {
+        cursor: "cursor",
+    },
+});
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedPagination.inlineUsers.ListUsersBodyCursorPaginationRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Api.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inlineUsers.api.<a href="/src/api/resources/inlineUsers/resources/api/client/Client.ts">listWithOffsetPagination</a>({ ...params }) -> core.Page<SeedPagination.User></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const response = await client.inlineUsers.api.listWithOffsetPagination({
+    page: 1,
+    per_page: 1,
+    order: "asc",
+    starting_after: "starting_after",
+});
+for await (const item of response) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.inlineUsers.api.listWithOffsetPagination({
+    page: 1,
+    per_page: 1,
+    order: "asc",
+    starting_after: "starting_after",
+});
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedPagination.inlineUsers.ListUsersOffsetPaginationRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Api.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inlineUsers.api.<a href="/src/api/resources/inlineUsers/resources/api/client/Client.ts">listWithDoubleOffsetPagination</a>({ ...params }) -> core.Page<SeedPagination.User></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const response = await client.inlineUsers.api.listWithDoubleOffsetPagination({
+    page: 1.1,
+    per_page: 1.1,
+    order: "asc",
+    starting_after: "starting_after",
+});
+for await (const item of response) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.inlineUsers.api.listWithDoubleOffsetPagination({
+    page: 1.1,
+    per_page: 1.1,
+    order: "asc",
+    starting_after: "starting_after",
+});
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedPagination.inlineUsers.ListUsersDoubleOffsetPaginationRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Api.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inlineUsers.api.<a href="/src/api/resources/inlineUsers/resources/api/client/Client.ts">listWithBodyOffsetPagination</a>({ ...params }) -> core.Page<SeedPagination.User></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const response = await client.inlineUsers.api.listWithBodyOffsetPagination({
+    pagination: {
+        page: 1,
+    },
+});
+for await (const item of response) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.inlineUsers.api.listWithBodyOffsetPagination({
+    pagination: {
+        page: 1,
+    },
+});
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedPagination.inlineUsers.ListUsersBodyOffsetPaginationRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Api.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inlineUsers.api.<a href="/src/api/resources/inlineUsers/resources/api/client/Client.ts">listWithOffsetStepPagination</a>({ ...params }) -> core.Page<SeedPagination.User></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const response = await client.inlineUsers.api.listWithOffsetStepPagination({
+    page: 1,
+    limit: 1,
+    order: "asc",
+});
+for await (const item of response) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.inlineUsers.api.listWithOffsetStepPagination({
+    page: 1,
+    limit: 1,
+    order: "asc",
+});
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedPagination.inlineUsers.ListUsersOffsetStepPaginationRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Api.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inlineUsers.api.<a href="/src/api/resources/inlineUsers/resources/api/client/Client.ts">listWithOffsetPaginationHasNextPage</a>({ ...params }) -> core.Page<SeedPagination.User></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const response = await client.inlineUsers.api.listWithOffsetPaginationHasNextPage({
+    page: 1,
+    limit: 1,
+    order: "asc",
+});
+for await (const item of response) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.inlineUsers.api.listWithOffsetPaginationHasNextPage({
+    page: 1,
+    limit: 1,
+    order: "asc",
+});
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedPagination.inlineUsers.ListWithOffsetPaginationHasNextPageRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Api.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inlineUsers.api.<a href="/src/api/resources/inlineUsers/resources/api/client/Client.ts">listWithExtendedResults</a>({ ...params }) -> core.Page<SeedPagination.User></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const response = await client.inlineUsers.api.listWithExtendedResults({
+    cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+});
+for await (const item of response) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.inlineUsers.api.listWithExtendedResults({
+    cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+});
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedPagination.inlineUsers.ListUsersExtendedRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Api.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inlineUsers.api.<a href="/src/api/resources/inlineUsers/resources/api/client/Client.ts">listWithExtendedResultsAndOptionalData</a>({ ...params }) -> core.Page<SeedPagination.User></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const response = await client.inlineUsers.api.listWithExtendedResultsAndOptionalData({
+    cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+});
+for await (const item of response) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.inlineUsers.api.listWithExtendedResultsAndOptionalData({
+    cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+});
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedPagination.inlineUsers.ListUsersExtendedRequestForOptionalData`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Api.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inlineUsers.api.<a href="/src/api/resources/inlineUsers/resources/api/client/Client.ts">listUsernames</a>({ ...params }) -> core.Page<string></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const response = await client.inlineUsers.api.listUsernames({
+    starting_after: "starting_after",
+});
+for await (const item of response) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.inlineUsers.api.listUsernames({
+    starting_after: "starting_after",
+});
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedPagination.inlineUsers.ListUsernamesRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Api.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inlineUsers.api.<a href="/src/api/resources/inlineUsers/resources/api/client/Client.ts">listWithGlobalConfig</a>({ ...params }) -> core.Page<string></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const response = await client.inlineUsers.api.listWithGlobalConfig({
+    offset: 1,
+});
+for await (const item of response) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.inlineUsers.api.listWithGlobalConfig({
+    offset: 1,
+});
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedPagination.inlineUsers.ListWithGlobalConfigRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Api.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 ## Users
 
 <details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithCursorPagination</a>({ ...params }) -> core.Page<SeedPagination.User></code></summary>
