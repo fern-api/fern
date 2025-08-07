@@ -4,10 +4,14 @@
 
 package resources.service;
 
+import java.lang.String;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import resources.service.requests.PatchComplexRequest;
 import resources.service.requests.PatchProxyRequest;
+import resources.service.requests.RegularPatchRequest;
 
 @RequestMapping(
     path = "/"
@@ -19,4 +23,18 @@ public interface ServiceService {
       consumes = "application/json"
   )
   void patch(@RequestBody PatchProxyRequest body);
+
+  @PatchMapping(
+      value = "/complex/{id}",
+      produces = "application/json",
+      consumes = "application/json"
+  )
+  void patchComplex(@PathVariable("id") String id, @RequestBody PatchComplexRequest body);
+
+  @PatchMapping(
+      value = "/regular/{id}",
+      produces = "application/json",
+      consumes = "application/json"
+  )
+  void regularPatch(@PathVariable("id") String id, @RequestBody RegularPatchRequest body);
 }

@@ -3,5 +3,5 @@
   createdAt: "2025-07-25"
   changelogEntry:
     - type: feat
-      summary: Initial release.
+      summary: Initial beta release.
   irVersion: 58

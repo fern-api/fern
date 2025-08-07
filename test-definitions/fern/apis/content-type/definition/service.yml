@@ -14,3 +14,36 @@ service:
         name: PatchProxyRequest
       source:
         openapi: ../specs/vault/swagger.json
+    
+    # Test with more complex types
+    patchComplex:
+      docs: Update with JSON merge patch - complex types
+      method: PATCH
+      path: /complex/{id}
+      path-parameters:
+        id: string
+      request:
+        body:
+          properties:
+            name: optional<string>
+            email: optional<nullable<string>>
+            age: optional<integer>
+            active: optional<boolean>
+            metadata: optional<map<string, unknown>>
+            tags: optional<list<string>>
+        content-type: application/merge-patch+json
+        name: PatchComplexRequest
+    
+    # Regular PATCH without merge-patch content type (should use Optional)
+    regularPatch:
+      docs: Regular PATCH endpoint without merge-patch semantics
+      method: PATCH
+      path: /regular/{id}
+      path-parameters:
+        id: string
+      request:
+        body:
+          properties:
+            field1: optional<string>
+            field2: optional<integer>
+        name: RegularPatchRequest

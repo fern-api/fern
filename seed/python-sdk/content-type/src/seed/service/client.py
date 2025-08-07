@@ -63,6 +63,117 @@ class ServiceClient:
         )
         return _response.data
 
+    def patch_complex(
+        self,
+        id: str,
+        *,
+        name: typing.Optional[str] = OMIT,
+        email: typing.Optional[str] = OMIT,
+        age: typing.Optional[int] = OMIT,
+        active: typing.Optional[bool] = OMIT,
+        metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        tags: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Update with JSON merge patch - complex types
+
+        Parameters
+        ----------
+        id : str
+
+        name : typing.Optional[str]
+
+        email : typing.Optional[str]
+
+        age : typing.Optional[int]
+
+        active : typing.Optional[bool]
+
+        metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+
+        tags : typing.Optional[typing.Sequence[str]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from seed import SeedContentTypes
+
+        client = SeedContentTypes(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.patch_complex(
+            id="id",
+            name="name",
+            email="email",
+            age=1,
+            active=True,
+            metadata={"metadata": {"key": "value"}},
+            tags=["tags", "tags"],
+        )
+        """
+        _response = self._raw_client.patch_complex(
+            id,
+            name=name,
+            email=email,
+            age=age,
+            active=active,
+            metadata=metadata,
+            tags=tags,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def regular_patch(
+        self,
+        id: str,
+        *,
+        field_1: typing.Optional[str] = OMIT,
+        field_2: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Regular PATCH endpoint without merge-patch semantics
+
+        Parameters
+        ----------
+        id : str
+
+        field_1 : typing.Optional[str]
+
+        field_2 : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from seed import SeedContentTypes
+
+        client = SeedContentTypes(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.regular_patch(
+            id="id",
+            field_1="field1",
+            field_2=1,
+        )
+        """
+        _response = self._raw_client.regular_patch(
+            id, field_1=field_1, field_2=field_2, request_options=request_options
+        )
+        return _response.data
+
 
 class AsyncServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -122,5 +233,132 @@ class AsyncServiceClient:
         """
         _response = await self._raw_client.patch(
             application=application, require_auth=require_auth, request_options=request_options
+        )
+        return _response.data
+
+    async def patch_complex(
+        self,
+        id: str,
+        *,
+        name: typing.Optional[str] = OMIT,
+        email: typing.Optional[str] = OMIT,
+        age: typing.Optional[int] = OMIT,
+        active: typing.Optional[bool] = OMIT,
+        metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        tags: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Update with JSON merge patch - complex types
+
+        Parameters
+        ----------
+        id : str
+
+        name : typing.Optional[str]
+
+        email : typing.Optional[str]
+
+        age : typing.Optional[int]
+
+        active : typing.Optional[bool]
+
+        metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+
+        tags : typing.Optional[typing.Sequence[str]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedContentTypes
+
+        client = AsyncSeedContentTypes(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.service.patch_complex(
+                id="id",
+                name="name",
+                email="email",
+                age=1,
+                active=True,
+                metadata={"metadata": {"key": "value"}},
+                tags=["tags", "tags"],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.patch_complex(
+            id,
+            name=name,
+            email=email,
+            age=age,
+            active=active,
+            metadata=metadata,
+            tags=tags,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def regular_patch(
+        self,
+        id: str,
+        *,
+        field_1: typing.Optional[str] = OMIT,
+        field_2: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Regular PATCH endpoint without merge-patch semantics
+
+        Parameters
+        ----------
+        id : str
+
+        field_1 : typing.Optional[str]
+
+        field_2 : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedContentTypes
+
+        client = AsyncSeedContentTypes(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.service.regular_patch(
+                id="id",
+                field_1="field1",
+                field_2=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.regular_patch(
+            id, field_1=field_1, field_2=field_2, request_options=request_options
         )
         return _response.data
