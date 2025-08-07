@@ -112,10 +112,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         subpackage: Subpackage | undefined;
         streamingResponse: StreamingResponse;
     }): go.CodeBlock {
-        // this.context.logger.debug("signature: ", JSON.stringify(signature, null, 2), "\n");
-        this.context.logger.debug("endpoint: ", JSON.stringify(endpoint, null, 2), "\n");
-        // this.context.logger.debug("subpackage: ", JSON.stringify(subpackage, null, 2), "\n");
-        this.context.logger.debug("streamingResponse: ", JSON.stringify(streamingResponse, null, 2), "\n");
         const errorDecoder = this.buildErrorDecoder({ endpoint });
         const streamPayload = this.context.getStreamPayload(streamingResponse);
         const streamerVariable = go.codeblock("streamer");
