@@ -300,10 +300,10 @@ func (s *SseStreamReader) nextEvent() (*SseEvent, error) {
 
 func (s *SseStreamReader) parseSseLine(_bytes []byte, event *SseEvent) error {
 	if bytes.HasPrefix(_bytes, sseDataPrefix) {
-		event.data = append(event.data, _bytes[len(sseDataPrefix):]...)
 		if len(event.data) > 0 {
 			event.data = append(event.data, s.options.delimiter...)
 		}
+		event.data = append(event.data, _bytes[len(sseDataPrefix):]...)
 	} else if bytes.HasPrefix(_bytes, sseIdPrefix) {
 		event.id = append(event.id, _bytes[len(sseIdPrefix):]...)
 	} else if bytes.HasPrefix(_bytes, sseEventPrefix) {
