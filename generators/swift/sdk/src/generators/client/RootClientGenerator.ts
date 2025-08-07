@@ -37,7 +37,6 @@ export class RootClientGenerator {
     }
 
     public generate(): swift.Class {
-        const initializerParams = this.getInitializerParams();
         return swift.class_({
             name: this.clientName,
             final: true,
@@ -47,23 +46,17 @@ export class RootClientGenerator {
                 ...this.clientGeneratorContext.subClients.map(({ property }) => property),
                 this.clientGeneratorContext.httpClient.property
             ],
-            initializers: [this.generateInitializer()],
+            initializers: [this.generateDesignatedInitializer()],
             methods: this.generateMethods(),
             docs: swift.docComment({
                 summary:
-                    "Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.",
-                parameters: initializerParams
-                    .map((p) => ({
-                        name: p.unsafeName,
-                        description: p.docsContent ?? ""
-                    }))
-                    .filter((p) => p.description !== "")
+                    "Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions."
             })
         });
     }
 
-    private generateInitializer(): swift.Initializer {
-        const initializerParams = this.getInitializerParams();
+    private generateDesignatedInitializer(): swift.Initializer {
+        const initializerParams = this.getDesignatedInitializerParams();
         return swift.initializer({
             accessLevel: swift.AccessLevel.Public,
             parameters: initializerParams,
@@ -94,6 +87,10 @@ export class RootClientGenerator {
                                 value: swift.Expression.reference("timeout")
                             }),
                             swift.functionArgument({
+                                label: "maxRetries",
+                                value: swift.Expression.reference("maxRetries")
+                            }),
+                            swift.functionArgument({
                                 label: "urlSession",
                                 value: swift.Expression.reference("urlSession")
                             })
@@ -122,11 +119,20 @@ export class RootClientGenerator {
                     })
                 )
             ]),
-            multiline: true
+            multiline: true,
+            docs: swift.docComment({
+                summary: "Initialize the client with the specified configuration.",
+                parameters: initializerParams
+                    .map((p) => ({
+                        name: p.unsafeName,
+                        description: p.docsContent ?? ""
+                    }))
+                    .filter((p) => p.description !== "")
+            })
         });
     }
 
-    private getInitializerParams(): swift.FunctionParameter[] {
+    private getDesignatedInitializerParams(): swift.FunctionParameter[] {
         return [
             swift.functionParameter({
                 argumentLabel: "baseURL",
@@ -139,10 +145,9 @@ export class RootClientGenerator {
             swift.functionParameter({
                 argumentLabel: "apiKey",
                 unsafeName: "apiKey",
-                type: swift.Type.string(),
+                type: swift.Type.optional(swift.Type.string()),
                 docsContent: "The API key for authentication."
             }),
-
             swift.functionParameter({
                 argumentLabel: "token",
                 unsafeName: "token",
