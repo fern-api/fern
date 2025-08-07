@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { swift } from "@fern-api/swift-codegen";
-import { Package } from "@fern-fern/ir-sdk/api";
+import { AuthScheme, Package } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { ClientGeneratorContext } from "./ClientGeneratorContext";
@@ -133,7 +133,7 @@ export class RootClientGenerator {
     }
 
     private getDesignatedInitializerParams(): swift.FunctionParameter[] {
-        return [
+        const params: swift.FunctionParameter[] = [
             swift.functionParameter({
                 argumentLabel: "baseURL",
                 unsafeName: "baseURL",
@@ -141,28 +141,21 @@ export class RootClientGenerator {
                 defaultValue: this.getDefaultBaseUrl(),
                 docsContent:
                     "The base URL to use for requests from the client. If not provided, the default base URL will be used."
-            }),
-            swift.functionParameter({
-                argumentLabel: "apiKey",
-                unsafeName: "apiKey",
-                type: swift.Type.optional(swift.Type.string()),
-                docsContent: "The API key for authentication."
-            }),
-            swift.functionParameter({
-                argumentLabel: "token",
-                unsafeName: "token",
-                type: swift.Type.optional(swift.Type.string()),
-                defaultValue: swift.Expression.rawValue("nil"),
-                docsContent: `Bearer token for authentication. If provided, will be sent as "Bearer {token}" in Authorization header.`
-            }),
+            })
+        ];
+
+        for (const scheme of this.sdkGeneratorContext.ir.auth.schemes) {
+            params.push(...this.getParametersForAuthScheme(scheme));
+        }
+
+        params.push(
             swift.functionParameter({
                 argumentLabel: "headers",
                 unsafeName: "headers",
                 type: swift.Type.optional(swift.Type.dictionary(swift.Type.string(), swift.Type.string())),
-                defaultValue: swift.Expression.rawValue("[:]"),
+                defaultValue: swift.Expression.dictionaryLiteral({ entries: [] }),
                 docsContent: "Additional headers to send with each request."
             }),
-
             swift.functionParameter({
                 argumentLabel: "timeout",
                 unsafeName: "timeout",
@@ -186,7 +179,9 @@ export class RootClientGenerator {
                 docsContent:
                     "Custom `URLSession` to use for requests. If not provided, a default session will be created with the specified timeout."
             })
-        ];
+        );
+
+        return params;
     }
 
     private getDefaultBaseUrl() {
@@ -215,6 +210,36 @@ export class RootClientGenerator {
             return undefined;
         } else {
             assertNever(this.sdkGeneratorContext.ir.environments.environments);
+        }
+    }
+
+    private getParametersForAuthScheme(scheme: AuthScheme): swift.FunctionParameter[] {
+        const { isAuthMandatory } = this.sdkGeneratorContext.ir.sdkConfig;
+        if (scheme.type === "header") {
+            const schemeName = scheme.name.name.camelCase.unsafeName;
+            return [
+                swift.functionParameter({
+                    argumentLabel: schemeName,
+                    unsafeName: schemeName,
+                    type: isAuthMandatory ? swift.Type.string() : swift.Type.optional(swift.Type.string()),
+                    docsContent: scheme.docs ?? `The ${schemeName} to use for authentication.`
+                })
+            ];
+        } else if (scheme.type === "bearer") {
+            return [
+                swift.functionParameter({
+                    argumentLabel: "token",
+                    unsafeName: "token",
+                    type: swift.Type.optional(swift.Type.string()),
+                    defaultValue: swift.Expression.rawValue("nil"),
+                    docsContent:
+                        scheme.docs ??
+                        `Bearer token for authentication. If provided, will be sent as "Bearer {token}" in Authorization header.`
+                })
+            ];
+        } else {
+            // TODO(kafkas): Implement
+            return [];
         }
     }
 
