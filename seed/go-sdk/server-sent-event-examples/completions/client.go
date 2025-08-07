@@ -64,6 +64,7 @@ func (c *Client) Stream(
 			Client:          options.HTTPClient,
 			Prefix:          internal.DefaultSSEDataPrefix,
 			Terminator:      "[[DONE]]",
+			Format:          core.StreamFormatSSE,
 			Request:         request,
 		},
 	)
