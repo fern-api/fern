@@ -101,10 +101,17 @@ export class DocComment extends AstNode {
 
     /**
      * Sanitizes text content to ensure it doesn't break Swift doc comment syntax.
-     * Currently only normalizes line endings (converts \r\n and \r to \n).
+     * Handles line endings and binary content that cause compilation issues.
      */
     private static sanitizeText(text: string): string {
-        // Only normalize line endings - carriage returns break doc comment format
-        return text.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+        // Step 1: Normalize line endings - carriage returns break doc comment format
+        text = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+
+        // Step 2: Remove null bytes - they cause "nul character embedded in middle of file" warnings
+        // This cause a compiler warning (not error) but we should remove it nevertheless
+        // biome-ignore lint/suspicious/noControlCharactersInRegex: allow
+        text = text.replace(/\x00/g, "");
+
+        return text;
     }
 }

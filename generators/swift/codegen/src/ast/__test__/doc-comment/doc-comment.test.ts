@@ -175,6 +175,21 @@ describe("DocComment", () => {
             await expect(docComment.toString()).toMatchFileSnapshot("snapshots/sanitized_control_chars.swift");
         });
 
+        it("should correctly handle null bytes and binary content", async () => {
+            const docComment = swift.docComment({
+                summary: "Summary with\x00null bytes and\x01\x02\x03binary content",
+                description: "Description with\x7Fdelete char and\x1Bescape sequences",
+                parameters: [
+                    {
+                        name: "param",
+                        description: "Param with\x00\x01\x02\x03\x04\x05\x06\x07various control chars"
+                    }
+                ]
+            });
+
+            await expect(docComment.toString()).toMatchFileSnapshot("snapshots/sanitized_null_bytes.swift");
+        });
+
         it("should correctly handle mixed malicious content", async () => {
             const docComment = swift.docComment({
                 summary: "/// Malicious summary with /* comments */ and \\ backslashes\tand tabs",
