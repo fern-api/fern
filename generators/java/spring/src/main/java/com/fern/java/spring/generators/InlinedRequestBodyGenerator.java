@@ -39,7 +39,6 @@ public final class InlinedRequestBodyGenerator extends AbstractFileGenerator {
     private final InlinedRequestBody inlinedRequestBody;
     private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
     private final List<GeneratedJavaInterface> extendedInterfaces;
-    private final boolean isMergePatch;
 
     public InlinedRequestBodyGenerator(
             HttpService httpService,
@@ -57,11 +56,6 @@ public final class InlinedRequestBodyGenerator extends AbstractFileGenerator {
                 .map(DeclaredTypeName::getTypeId)
                 .map(allGeneratedInterfaces::get)
                 .collect(Collectors.toList());
-        // Check if this is a JSON merge patch request
-        this.isMergePatch = inlinedRequestBody
-                .getContentType()
-                .map(ct -> ct.equals("application/merge-patch+json"))
-                .orElse(false);
     }
 
     @Override
@@ -71,26 +65,17 @@ public final class InlinedRequestBodyGenerator extends AbstractFileGenerator {
                 .addAllExtends(inlinedRequestBody.getExtends())
                 .addAllProperties(RequestBodyUtils.convertToObjectProperties(inlinedRequestBody))
                 .build();
-
-        // Use MergePatchObjectGenerator for merge patch requests
-        if (isMergePatch) {
-            MergePatchObjectGenerator mergePatchGenerator =
-                    new MergePatchObjectGenerator(objectTypeDeclaration, className, generatorContext);
-            return mergePatchGenerator.generateFile();
-        } else {
-            // Use regular ObjectGenerator for non-merge-patch requests
-            ObjectGenerator objectGenerator = new ObjectGenerator(
-                    objectTypeDeclaration,
-                    Optional.empty(),
-                    extendedInterfaces,
-                    generatorContext,
-                    allGeneratedInterfaces,
-                    className,
-                    Set.of(className.simpleName()),
-                    true,
-                    Collections.emptyList(),
-                    Collections.emptyList());
-            return objectGenerator.generateObject();
-        }
+        ObjectGenerator objectGenerator = new ObjectGenerator(
+                objectTypeDeclaration,
+                Optional.empty(),
+                extendedInterfaces,
+                generatorContext,
+                allGeneratedInterfaces,
+                className,
+                Set.of(className.simpleName()),
+                true,
+                Collections.emptyList(),
+                Collections.emptyList());
+        return objectGenerator.generateObject();
     }
 }

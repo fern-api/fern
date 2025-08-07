@@ -5,58 +5,58 @@
 package resources.service.requests;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
-import core.TriStateOptional;
 import java.lang.Boolean;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
+import java.util.Objects;
+import java.util.Optional;
 
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = PatchProxyRequest.Builder.class
 )
 public final class PatchProxyRequest {
-  private final TriStateOptional<String> application;
+  private final Optional<String> application;
 
-  private final TriStateOptional<Boolean> requireAuth;
+  private final Optional<Boolean> requireAuth;
 
-  private PatchProxyRequest(TriStateOptional<String> application,
-      TriStateOptional<Boolean> requireAuth) {
+  private PatchProxyRequest(Optional<String> application, Optional<Boolean> requireAuth) {
     this.application = application;
     this.requireAuth = requireAuth;
   }
 
   @JsonProperty("application")
-  public TriStateOptional<String> getApplication() {
+  public Optional<String> getApplication() {
     return application;
   }
 
   @JsonProperty("require_auth")
-  public TriStateOptional<Boolean> getRequireAuth() {
+  public Optional<Boolean> getRequireAuth() {
     return requireAuth;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
-    if (this == other) {
-      return true;
-    }
-    if (other == null || getClass() != other.getClass()) {
-      return false;
-    }
-    PatchProxyRequest that = (PatchProxyRequest) other;
-    return java.util.Objects.equals(this.application, that.application);
+    if (this == other) return true;
+    return other instanceof PatchProxyRequest && equalTo((PatchProxyRequest) other);
   }
 
-  @Override
+  private boolean equalTo(PatchProxyRequest other) {
+    return application.equals(other.application) && requireAuth.equals(other.requireAuth);
+  }
+
+  @java.lang.Override
   public int hashCode() {
-    return java.util.Objects.hash(this.application, this.requireAuth);
+    return Objects.hash(this.application, this.requireAuth);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -69,22 +69,44 @@ public final class PatchProxyRequest {
       ignoreUnknown = true
   )
   public static final class Builder {
-    private TriStateOptional<String> application = TriStateOptional.absent();
+    private Optional<String> application = Optional.empty();
 
-    private TriStateOptional<Boolean> requireAuth = TriStateOptional.absent();
+    private Optional<Boolean> requireAuth = Optional.empty();
 
     private Builder() {
     }
 
-    @JsonSetter("application")
-    public Builder application(String value) {
-      this.application = TriStateOptional.ofNullable(value);
+    public Builder from(PatchProxyRequest other) {
+      application(other.getApplication());
+      requireAuth(other.getRequireAuth());
       return this;
     }
 
-    @JsonSetter("require_auth")
-    public Builder requireAuth(Boolean value) {
-      this.requireAuth = TriStateOptional.ofNullable(value);
+    @JsonSetter(
+        value = "application",
+        nulls = Nulls.SKIP
+    )
+    public Builder application(Optional<String> application) {
+      this.application = application;
+      return this;
+    }
+
+    public Builder application(String application) {
+      this.application = Optional.ofNullable(application);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "require_auth",
+        nulls = Nulls.SKIP
+    )
+    public Builder requireAuth(Optional<Boolean> requireAuth) {
+      this.requireAuth = requireAuth;
+      return this;
+    }
+
+    public Builder requireAuth(Boolean requireAuth) {
+      this.requireAuth = Optional.ofNullable(requireAuth);
       return this;
     }
 

@@ -10,28 +10,6 @@
                 "type": "go",
                 "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/content-type/fern\"\n\tfernclient \"github.com/content-type/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Service.Patch(\n\tcontext.TODO(),\n\t\u0026fern.PatchProxyRequest{\n\t\tApplication: fern.String(\n\t\t\t\"application\",\n\t\t),\n\t\tRequireAuth: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t},\n)\n"
             }
-        },
-        {
-            "id": {
-                "path": "/complex/{id}",
-                "method": "PATCH",
-                "identifier_override": "endpoint_service.patchComplex"
-            },
-            "snippet": {
-                "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/content-type/fern\"\n\tfernclient \"github.com/content-type/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Service.PatchComplex(\n\tcontext.TODO(),\n\t\"id\",\n\t\u0026fern.PatchComplexRequest{\n\t\tName: fern.String(\n\t\t\t\"name\",\n\t\t),\n\t\tEmail: fern.String(\n\t\t\t\"email\",\n\t\t),\n\t\tAge: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tActive: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t\tMetadata: map[string]interface{}{\n\t\t\t\"metadata\": map[string]interface{}{\n\t\t\t\t\"key\": \"value\",\n\t\t\t},\n\t\t},\n\t\tTags: []string{\n\t\t\t\"tags\",\n\t\t\t\"tags\",\n\t\t},\n\t},\n)\n"
-            }
-        },
-        {
-            "id": {
-                "path": "/regular/{id}",
-                "method": "PATCH",
-                "identifier_override": "endpoint_service.regularPatch"
-            },
-            "snippet": {
-                "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/content-type/fern\"\n\tfernclient \"github.com/content-type/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Service.RegularPatch(\n\tcontext.TODO(),\n\t\"id\",\n\t\u0026fern.RegularPatchRequest{\n\t\tField1: fern.String(\n\t\t\t\"field1\",\n\t\t),\n\t\tField2: fern.Int(\n\t\t\t1,\n\t\t),\n\t},\n)\n"
-            }
         }
     ]
 }

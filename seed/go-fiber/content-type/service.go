@@ -6,17 +6,3 @@ type PatchProxyRequest struct {
 	Application *string `json:"application,omitempty" url:"-"`
 	RequireAuth *bool   `json:"require_auth,omitempty" url:"-"`
 }
-
-type PatchComplexRequest struct {
-	Name     *string                `json:"name,omitempty" url:"-"`
-	Email    *string                `json:"email,omitempty" url:"-"`
-	Age      *int                   `json:"age,omitempty" url:"-"`
-	Active   *bool                  `json:"active,omitempty" url:"-"`
-	Metadata map[string]interface{} `json:"metadata,omitempty" url:"-"`
-	Tags     []string               `json:"tags,omitempty" url:"-"`
-}
-
-type RegularPatchRequest struct {
-	Field1 *string `json:"field1,omitempty" url:"-"`
-	Field2 *int    `json:"field2,omitempty" url:"-"`
-}
