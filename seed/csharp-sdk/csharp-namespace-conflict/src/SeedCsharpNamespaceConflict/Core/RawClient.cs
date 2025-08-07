@@ -19,16 +19,16 @@ internal partial class RawClient(ClientOptions clientOptions)
     internal readonly ClientOptions Options = clientOptions;
 
     [Obsolete("Use SendRequestAsync instead.")]
-    internal Task<SeedCsharpNamespaceConflict.Core.ApiResponse> MakeRequestAsync(
-        SeedCsharpNamespaceConflict.Core.BaseRequest request,
+    internal Task<global::SeedCsharpNamespaceConflict.Core.ApiResponse> MakeRequestAsync(
+        global::SeedCsharpNamespaceConflict.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
         return SendRequestAsync(request, cancellationToken);
     }
 
-    internal async Task<SeedCsharpNamespaceConflict.Core.ApiResponse> SendRequestAsync(
-        SeedCsharpNamespaceConflict.Core.BaseRequest request,
+    internal async Task<global::SeedCsharpNamespaceConflict.Core.ApiResponse> SendRequestAsync(
+        global::SeedCsharpNamespaceConflict.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
@@ -43,7 +43,7 @@ internal partial class RawClient(ClientOptions clientOptions)
             .ConfigureAwait(false);
     }
 
-    internal async Task<SeedCsharpNamespaceConflict.Core.ApiResponse> SendRequestAsync(
+    internal async Task<global::SeedCsharpNamespaceConflict.Core.ApiResponse> SendRequestAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken = default
@@ -109,7 +109,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     /// Sends the request with retries, unless the request content is not retryable,
     /// such as stream requests and multipart form data with stream content.
     /// </summary>
-    private async Task<SeedCsharpNamespaceConflict.Core.ApiResponse> SendWithRetriesAsync(
+    private async Task<global::SeedCsharpNamespaceConflict.Core.ApiResponse> SendWithRetriesAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken
@@ -122,7 +122,7 @@ internal partial class RawClient(ClientOptions clientOptions)
 
         if (!isRetryableContent)
         {
-            return new SeedCsharpNamespaceConflict.Core.ApiResponse
+            return new global::SeedCsharpNamespaceConflict.Core.ApiResponse
             {
                 StatusCode = (int)response.StatusCode,
                 Raw = response,
@@ -144,7 +144,7 @@ internal partial class RawClient(ClientOptions clientOptions)
                 .ConfigureAwait(false);
         }
 
-        return new SeedCsharpNamespaceConflict.Core.ApiResponse
+        return new global::SeedCsharpNamespaceConflict.Core.ApiResponse
         {
             StatusCode = (int)response.StatusCode,
             Raw = response,
@@ -169,7 +169,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     internal HttpRequestMessage CreateHttpRequest(
-        SeedCsharpNamespaceConflict.Core.BaseRequest request
+        global::SeedCsharpNamespaceConflict.Core.BaseRequest request
     )
     {
         var url = BuildUrl(request);
@@ -186,7 +186,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         return httpRequest;
     }
 
-    private static string BuildUrl(SeedCsharpNamespaceConflict.Core.BaseRequest request)
+    private static string BuildUrl(global::SeedCsharpNamespaceConflict.Core.BaseRequest request)
     {
         var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl;
         var trimmedBaseUrl = baseUrl.TrimEnd('/');
@@ -233,7 +233,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     private static List<KeyValuePair<string, string>> GetQueryParameters(
-        SeedCsharpNamespaceConflict.Core.BaseRequest request
+        global::SeedCsharpNamespaceConflict.Core.BaseRequest request
     )
     {
         var result = TransformToKeyValuePairs(request.Query);
@@ -389,27 +389,29 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     /// <inheritdoc />
-    [Obsolete("Use SeedCsharpNamespaceConflict.Core.ApiResponse instead.")]
-    internal record ApiResponse : SeedCsharpNamespaceConflict.Core.ApiResponse;
+    [Obsolete("Use global::SeedCsharpNamespaceConflict.Core.ApiResponse instead.")]
+    internal record ApiResponse : global::SeedCsharpNamespaceConflict.Core.ApiResponse;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedCsharpNamespaceConflict.Core.BaseRequest instead.")]
-    internal abstract record BaseApiRequest : SeedCsharpNamespaceConflict.Core.BaseRequest;
+    [Obsolete("Use global::SeedCsharpNamespaceConflict.Core.BaseRequest instead.")]
+    internal abstract record BaseApiRequest : global::SeedCsharpNamespaceConflict.Core.BaseRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedCsharpNamespaceConflict.Core.EmptyRequest instead.")]
-    internal abstract record EmptyApiRequest : SeedCsharpNamespaceConflict.Core.EmptyRequest;
+    [Obsolete("Use global::SeedCsharpNamespaceConflict.Core.EmptyRequest instead.")]
+    internal abstract record EmptyApiRequest
+        : global::SeedCsharpNamespaceConflict.Core.EmptyRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedCsharpNamespaceConflict.Core.JsonRequest instead.")]
-    internal abstract record JsonApiRequest : SeedCsharpNamespaceConflict.Core.JsonRequest;
+    [Obsolete("Use global::SeedCsharpNamespaceConflict.Core.JsonRequest instead.")]
+    internal abstract record JsonApiRequest : global::SeedCsharpNamespaceConflict.Core.JsonRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedCsharpNamespaceConflict.Core.MultipartFormRequest instead.")]
+    [Obsolete("Use global::SeedCsharpNamespaceConflict.Core.MultipartFormRequest instead.")]
     internal abstract record MultipartFormRequest
-        : SeedCsharpNamespaceConflict.Core.MultipartFormRequest;
+        : global::SeedCsharpNamespaceConflict.Core.MultipartFormRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedCsharpNamespaceConflict.Core.StreamRequest instead.")]
-    internal abstract record StreamApiRequest : SeedCsharpNamespaceConflict.Core.StreamRequest;
+    [Obsolete("Use global::SeedCsharpNamespaceConflict.Core.StreamRequest instead.")]
+    internal abstract record StreamApiRequest
+        : global::SeedCsharpNamespaceConflict.Core.StreamRequest;
 }

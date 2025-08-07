@@ -13,13 +13,18 @@ public readonly record struct KeyType : IStringEnum
 
     public KeyType(string value)
     {
-        Value = value;
+        Value_ = value;
     }
 
     /// <summary>
     /// The string value of the enum.
     /// </summary>
-    public string Value { get; }
+    string IStringEnum.Value => Value_;
+
+    /// <summary>
+    /// The string value of the enum.
+    /// </summary>
+    public string Value_ { get; }
 
     /// <summary>
     /// Create a string enum with the given value.
@@ -31,7 +36,7 @@ public readonly record struct KeyType : IStringEnum
 
     public bool Equals(string? other)
     {
-        return Value.Equals(other);
+        return Value_.Equals(other);
     }
 
     /// <summary>
@@ -39,14 +44,14 @@ public readonly record struct KeyType : IStringEnum
     /// </summary>
     public override string ToString()
     {
-        return Value;
+        return Value_;
     }
 
-    public static bool operator ==(KeyType value1, string value2) => value1.Value.Equals(value2);
+    public static bool operator ==(KeyType value1, string value2) => value1.Value_.Equals(value2);
 
-    public static bool operator !=(KeyType value1, string value2) => !value1.Value.Equals(value2);
+    public static bool operator !=(KeyType value1, string value2) => !value1.Value_.Equals(value2);
 
-    public static explicit operator string(KeyType value) => value.Value;
+    public static explicit operator string(KeyType value) => value.Value_;
 
     public static explicit operator KeyType(string value) => new(value);
 

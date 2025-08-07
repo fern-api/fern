@@ -19,16 +19,16 @@ internal partial class RawClient(ClientOptions clientOptions)
     internal readonly ClientOptions Options = clientOptions;
 
     [Obsolete("Use SendRequestAsync instead.")]
-    internal Task<SeedCrossPackageTypeNames.Core.ApiResponse> MakeRequestAsync(
-        SeedCrossPackageTypeNames.Core.BaseRequest request,
+    internal Task<global::SeedCrossPackageTypeNames.Core.ApiResponse> MakeRequestAsync(
+        global::SeedCrossPackageTypeNames.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
         return SendRequestAsync(request, cancellationToken);
     }
 
-    internal async Task<SeedCrossPackageTypeNames.Core.ApiResponse> SendRequestAsync(
-        SeedCrossPackageTypeNames.Core.BaseRequest request,
+    internal async Task<global::SeedCrossPackageTypeNames.Core.ApiResponse> SendRequestAsync(
+        global::SeedCrossPackageTypeNames.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
@@ -43,7 +43,7 @@ internal partial class RawClient(ClientOptions clientOptions)
             .ConfigureAwait(false);
     }
 
-    internal async Task<SeedCrossPackageTypeNames.Core.ApiResponse> SendRequestAsync(
+    internal async Task<global::SeedCrossPackageTypeNames.Core.ApiResponse> SendRequestAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken = default
@@ -109,7 +109,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     /// Sends the request with retries, unless the request content is not retryable,
     /// such as stream requests and multipart form data with stream content.
     /// </summary>
-    private async Task<SeedCrossPackageTypeNames.Core.ApiResponse> SendWithRetriesAsync(
+    private async Task<global::SeedCrossPackageTypeNames.Core.ApiResponse> SendWithRetriesAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken
@@ -122,7 +122,7 @@ internal partial class RawClient(ClientOptions clientOptions)
 
         if (!isRetryableContent)
         {
-            return new SeedCrossPackageTypeNames.Core.ApiResponse
+            return new global::SeedCrossPackageTypeNames.Core.ApiResponse
             {
                 StatusCode = (int)response.StatusCode,
                 Raw = response,
@@ -144,7 +144,7 @@ internal partial class RawClient(ClientOptions clientOptions)
                 .ConfigureAwait(false);
         }
 
-        return new SeedCrossPackageTypeNames.Core.ApiResponse
+        return new global::SeedCrossPackageTypeNames.Core.ApiResponse
         {
             StatusCode = (int)response.StatusCode,
             Raw = response,
@@ -169,7 +169,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     internal HttpRequestMessage CreateHttpRequest(
-        SeedCrossPackageTypeNames.Core.BaseRequest request
+        global::SeedCrossPackageTypeNames.Core.BaseRequest request
     )
     {
         var url = BuildUrl(request);
@@ -186,7 +186,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         return httpRequest;
     }
 
-    private static string BuildUrl(SeedCrossPackageTypeNames.Core.BaseRequest request)
+    private static string BuildUrl(global::SeedCrossPackageTypeNames.Core.BaseRequest request)
     {
         var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl;
         var trimmedBaseUrl = baseUrl.TrimEnd('/');
@@ -233,7 +233,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     private static List<KeyValuePair<string, string>> GetQueryParameters(
-        SeedCrossPackageTypeNames.Core.BaseRequest request
+        global::SeedCrossPackageTypeNames.Core.BaseRequest request
     )
     {
         var result = TransformToKeyValuePairs(request.Query);
@@ -389,27 +389,28 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     /// <inheritdoc />
-    [Obsolete("Use SeedCrossPackageTypeNames.Core.ApiResponse instead.")]
-    internal record ApiResponse : SeedCrossPackageTypeNames.Core.ApiResponse;
+    [Obsolete("Use global::SeedCrossPackageTypeNames.Core.ApiResponse instead.")]
+    internal record ApiResponse : global::SeedCrossPackageTypeNames.Core.ApiResponse;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedCrossPackageTypeNames.Core.BaseRequest instead.")]
-    internal abstract record BaseApiRequest : SeedCrossPackageTypeNames.Core.BaseRequest;
+    [Obsolete("Use global::SeedCrossPackageTypeNames.Core.BaseRequest instead.")]
+    internal abstract record BaseApiRequest : global::SeedCrossPackageTypeNames.Core.BaseRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedCrossPackageTypeNames.Core.EmptyRequest instead.")]
-    internal abstract record EmptyApiRequest : SeedCrossPackageTypeNames.Core.EmptyRequest;
+    [Obsolete("Use global::SeedCrossPackageTypeNames.Core.EmptyRequest instead.")]
+    internal abstract record EmptyApiRequest : global::SeedCrossPackageTypeNames.Core.EmptyRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedCrossPackageTypeNames.Core.JsonRequest instead.")]
-    internal abstract record JsonApiRequest : SeedCrossPackageTypeNames.Core.JsonRequest;
+    [Obsolete("Use global::SeedCrossPackageTypeNames.Core.JsonRequest instead.")]
+    internal abstract record JsonApiRequest : global::SeedCrossPackageTypeNames.Core.JsonRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedCrossPackageTypeNames.Core.MultipartFormRequest instead.")]
+    [Obsolete("Use global::SeedCrossPackageTypeNames.Core.MultipartFormRequest instead.")]
     internal abstract record MultipartFormRequest
-        : SeedCrossPackageTypeNames.Core.MultipartFormRequest;
+        : global::SeedCrossPackageTypeNames.Core.MultipartFormRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedCrossPackageTypeNames.Core.StreamRequest instead.")]
-    internal abstract record StreamApiRequest : SeedCrossPackageTypeNames.Core.StreamRequest;
+    [Obsolete("Use global::SeedCrossPackageTypeNames.Core.StreamRequest instead.")]
+    internal abstract record StreamApiRequest
+        : global::SeedCrossPackageTypeNames.Core.StreamRequest;
 }

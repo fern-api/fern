@@ -37,10 +37,10 @@ public class ListUsernamesTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var pager = await Client.Users.ListUsernamesAsync(
+        var items = await Client.Users.ListUsernamesAsync(
             new ListUsernamesRequest { StartingAfter = "starting_after" }
         );
-        await foreach (var item in pager)
+        await foreach (var item in items)
         {
             Assert.That(item, Is.Not.Null);
             break; // Only check the first item

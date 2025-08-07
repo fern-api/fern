@@ -113,11 +113,11 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     throw new Error("Endpoint snippet is null");
                 }
                 if (this.endpoint.pagination) {
-                    writer.write("var pager = ");
+                    writer.write("var items = ");
                     writer.writeNode(endpointSnippet);
                     writer.write(";");
                     writer.newLine();
-                    writer.write("await foreach (var item in pager)");
+                    writer.write("await foreach (var item in items)");
                     writer.newLine();
                     writer.write("{");
                     writer.newLine();

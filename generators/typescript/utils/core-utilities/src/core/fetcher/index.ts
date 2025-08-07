@@ -6,4 +6,4 @@ export { Supplier } from "./Supplier";
 export { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse";
 export type { RawResponse, WithRawResponse } from "./RawResponse";
 export { HttpResponsePromise } from "./HttpResponsePromise";
-export { BinaryResponse } from "./BinaryResponse";
+export type { BinaryResponse } from "./BinaryResponse";

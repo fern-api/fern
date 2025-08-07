@@ -19,16 +19,16 @@ internal partial class RawClient(ClientOptions clientOptions)
     internal readonly ClientOptions Options = clientOptions;
 
     [Obsolete("Use SendRequestAsync instead.")]
-    internal Task<SeedOauthClientCredentialsDefault.Core.ApiResponse> MakeRequestAsync(
-        SeedOauthClientCredentialsDefault.Core.BaseRequest request,
+    internal Task<global::SeedOauthClientCredentialsDefault.Core.ApiResponse> MakeRequestAsync(
+        global::SeedOauthClientCredentialsDefault.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
         return SendRequestAsync(request, cancellationToken);
     }
 
-    internal async Task<SeedOauthClientCredentialsDefault.Core.ApiResponse> SendRequestAsync(
-        SeedOauthClientCredentialsDefault.Core.BaseRequest request,
+    internal async Task<global::SeedOauthClientCredentialsDefault.Core.ApiResponse> SendRequestAsync(
+        global::SeedOauthClientCredentialsDefault.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
@@ -43,7 +43,7 @@ internal partial class RawClient(ClientOptions clientOptions)
             .ConfigureAwait(false);
     }
 
-    internal async Task<SeedOauthClientCredentialsDefault.Core.ApiResponse> SendRequestAsync(
+    internal async Task<global::SeedOauthClientCredentialsDefault.Core.ApiResponse> SendRequestAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken = default
@@ -109,7 +109,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     /// Sends the request with retries, unless the request content is not retryable,
     /// such as stream requests and multipart form data with stream content.
     /// </summary>
-    private async Task<SeedOauthClientCredentialsDefault.Core.ApiResponse> SendWithRetriesAsync(
+    private async Task<global::SeedOauthClientCredentialsDefault.Core.ApiResponse> SendWithRetriesAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken
@@ -122,7 +122,7 @@ internal partial class RawClient(ClientOptions clientOptions)
 
         if (!isRetryableContent)
         {
-            return new SeedOauthClientCredentialsDefault.Core.ApiResponse
+            return new global::SeedOauthClientCredentialsDefault.Core.ApiResponse
             {
                 StatusCode = (int)response.StatusCode,
                 Raw = response,
@@ -144,7 +144,7 @@ internal partial class RawClient(ClientOptions clientOptions)
                 .ConfigureAwait(false);
         }
 
-        return new SeedOauthClientCredentialsDefault.Core.ApiResponse
+        return new global::SeedOauthClientCredentialsDefault.Core.ApiResponse
         {
             StatusCode = (int)response.StatusCode,
             Raw = response,
@@ -169,7 +169,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     internal HttpRequestMessage CreateHttpRequest(
-        SeedOauthClientCredentialsDefault.Core.BaseRequest request
+        global::SeedOauthClientCredentialsDefault.Core.BaseRequest request
     )
     {
         var url = BuildUrl(request);
@@ -186,7 +186,9 @@ internal partial class RawClient(ClientOptions clientOptions)
         return httpRequest;
     }
 
-    private static string BuildUrl(SeedOauthClientCredentialsDefault.Core.BaseRequest request)
+    private static string BuildUrl(
+        global::SeedOauthClientCredentialsDefault.Core.BaseRequest request
+    )
     {
         var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl;
         var trimmedBaseUrl = baseUrl.TrimEnd('/');
@@ -233,7 +235,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     private static List<KeyValuePair<string, string>> GetQueryParameters(
-        SeedOauthClientCredentialsDefault.Core.BaseRequest request
+        global::SeedOauthClientCredentialsDefault.Core.BaseRequest request
     )
     {
         var result = TransformToKeyValuePairs(request.Query);
@@ -389,28 +391,31 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     /// <inheritdoc />
-    [Obsolete("Use SeedOauthClientCredentialsDefault.Core.ApiResponse instead.")]
-    internal record ApiResponse : SeedOauthClientCredentialsDefault.Core.ApiResponse;
+    [Obsolete("Use global::SeedOauthClientCredentialsDefault.Core.ApiResponse instead.")]
+    internal record ApiResponse : global::SeedOauthClientCredentialsDefault.Core.ApiResponse;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedOauthClientCredentialsDefault.Core.BaseRequest instead.")]
-    internal abstract record BaseApiRequest : SeedOauthClientCredentialsDefault.Core.BaseRequest;
+    [Obsolete("Use global::SeedOauthClientCredentialsDefault.Core.BaseRequest instead.")]
+    internal abstract record BaseApiRequest
+        : global::SeedOauthClientCredentialsDefault.Core.BaseRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedOauthClientCredentialsDefault.Core.EmptyRequest instead.")]
-    internal abstract record EmptyApiRequest : SeedOauthClientCredentialsDefault.Core.EmptyRequest;
+    [Obsolete("Use global::SeedOauthClientCredentialsDefault.Core.EmptyRequest instead.")]
+    internal abstract record EmptyApiRequest
+        : global::SeedOauthClientCredentialsDefault.Core.EmptyRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedOauthClientCredentialsDefault.Core.JsonRequest instead.")]
-    internal abstract record JsonApiRequest : SeedOauthClientCredentialsDefault.Core.JsonRequest;
+    [Obsolete("Use global::SeedOauthClientCredentialsDefault.Core.JsonRequest instead.")]
+    internal abstract record JsonApiRequest
+        : global::SeedOauthClientCredentialsDefault.Core.JsonRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedOauthClientCredentialsDefault.Core.MultipartFormRequest instead.")]
+    [Obsolete("Use global::SeedOauthClientCredentialsDefault.Core.MultipartFormRequest instead.")]
     internal abstract record MultipartFormRequest
-        : SeedOauthClientCredentialsDefault.Core.MultipartFormRequest;
+        : global::SeedOauthClientCredentialsDefault.Core.MultipartFormRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedOauthClientCredentialsDefault.Core.StreamRequest instead.")]
+    [Obsolete("Use global::SeedOauthClientCredentialsDefault.Core.StreamRequest instead.")]
     internal abstract record StreamApiRequest
-        : SeedOauthClientCredentialsDefault.Core.StreamRequest;
+        : global::SeedOauthClientCredentialsDefault.Core.StreamRequest;
 }

@@ -130,14 +130,16 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             this.writeUnpagedMethodBody(endpointSignatureInfo, writer, rawClient, endpoint, rawClientReference);
         });
 
+        // is the endpoint is streaming or has a stream parameter (ie, determined at runtime)
+        // we need to return an async enumerable regardless.
         const isAsyncEnumerable =
             endpoint.response?.body?._visit({
                 streaming: () => true,
+                streamParameter: () => true,
                 json: () => false,
                 fileDownload: () => false,
                 text: () => false,
                 bytes: () => false,
-                streamParameter: () => false,
                 _other: () => false
             }) ?? false;
 
@@ -305,10 +307,106 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 writer.writeLine("}");
             });
         }
+
         const body = endpoint.response.body;
+        const context = this.context;
+
+        function handleStreaming(writer: csharp.Writer) {
+            return (value: FernIr.StreamingResponse) => {
+                function readLineFromResponse() {
+                    writer.writeLine(`if (${RESPONSE_VARIABLE_NAME}.StatusCode is >= 200 and < 400) {`);
+                    writer.writeNewLineIfLastLineNot();
+                    writer.indent();
+
+                    writer.writeTextStatement(`string? line`);
+                    writer.writeTextStatement(
+                        `using var reader = new StreamReader(await ${RESPONSE_VARIABLE_NAME}.Raw.Content.ReadAsStreamAsync())`
+                    );
+                    writer.writeLine("while (!string.IsNullOrEmpty(line = await reader.ReadLineAsync())) {");
+                    writer.indent();
+                }
+
+                function yieldBreak() {
+                    writer.dedent();
+                    writer.writeLine("}");
+                    writer.writeLine("yield break;");
+                    writer.dedent();
+                    writer.writeLine("}");
+                }
+
+                function deserializeJsonChunk(
+                    payloadType: csharp.Type,
+                    jsonUtils: csharp.ClassReference,
+                    exceptionClass: csharp.ClassReference
+                ) {
+                    writer.write("var chunk = (");
+                    writer.writeNode(payloadType);
+                    writer.writeTextStatement("?)null");
+                    writer.writeLine("try");
+                    writer.writeLine("{");
+                    writer.indent();
+
+                    writer.write("chunk = ");
+                    writer.writeNode(jsonUtils);
+                    writer.write(".Deserialize<");
+                    writer.writeNode(payloadType);
+                    writer.writeTextStatement(">(line)");
+                    writer.dedent();
+                    writer.writeLine("}");
+                    writer.writeLine("catch (System.Text.Json.JsonException)");
+                    writer.writeLine("{");
+                    writer.indent();
+                    writer.write("throw new ");
+                    writer.writeNode(exceptionClass);
+                    writer.writeTextStatement(`($"Unable to deserialize JSON response '{line}'")`);
+
+                    writer.dedent();
+                    writer.writeLine("}");
+                }
+
+                function yieldValue(variableName: string) {
+                    writer.writeLine(`if (${variableName} is not null)`);
+                    writer.writeLine("{");
+                    writer.indent();
+                    writer.writeTextStatement(`yield return ${variableName}`);
+                    writer.dedent();
+                    writer.writeLine("}");
+                }
+
+                value._visit({
+                    json: (jsonChunk) => {
+                        readLineFromResponse();
+                        const payloadType = context.csharpTypeMapper.convert({ reference: jsonChunk.payload });
+                        deserializeJsonChunk(
+                            payloadType,
+                            context.getJsonUtilsClassReference(),
+                            context.getBaseExceptionClassReference()
+                        );
+                        yieldValue("chunk");
+                        yieldBreak();
+                    },
+                    text: () => {
+                        readLineFromResponse();
+                        yieldValue("line");
+                        yieldBreak();
+                    },
+                    sse: (sseChunk) => {
+                        // todo: implement SSE - this is a placeholder for now
+                        // const payloadType = this.context.csharpTypeMapper.convert({ reference: sseChunk.payload });
+                        writer.writeLine("/* SSE Not currently implemented */");
+                    },
+                    _other: () => {
+                        writer.write('/* "Other" Streaming not currently implemented */');
+                    }
+                });
+            };
+        }
+
         return csharp.codeblock((writer) => {
             body._visit({
-                streamParameter: () => this.context.logger.error("Stream parameters not supported"),
+                streamParameter: (ref) => {
+                    return handleStreaming(writer)(ref.streamResponse);
+                },
                 fileDownload: (value) => {
                     writer.writeLine(`if (${RESPONSE_VARIABLE_NAME}.StatusCode is >= 200 and < 400) {`);
                     writer.writeNewLineIfLastLineNot();
@@ -353,66 +451,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeLine("}");
                     writer.writeLine();
                 },
-                streaming: (value) => {
-                    writer.writeLine(`if (${RESPONSE_VARIABLE_NAME}.StatusCode is >= 200 and < 400) {`);
-                    writer.writeNewLineIfLastLineNot();
-                    writer.indent();
-
-                    writer.writeTextStatement(`string? line`);
-                    writer.writeTextStatement(
-                        `using var reader = new StreamReader(await ${RESPONSE_VARIABLE_NAME}.Raw.Content.ReadAsStreamAsync())`
-                    );
-                    writer.writeLine("while (!string.IsNullOrEmpty(line = await reader.ReadLineAsync())) {");
-                    writer.indent();
-
-                    const payloadType = value._visit({
-                        json: (jsonChunk) => {
-                            return this.context.csharpTypeMapper.convert({ reference: jsonChunk.payload });
-                        },
-                        text: () => {
-                            return csharp.Type.string();
-                        },
-                        sse: (sseChunk) => {
-                            return this.context.csharpTypeMapper.convert({ reference: sseChunk.payload });
-                        },
-                        _other: () => csharp.Type.object()
-                    });
-
-                    writer.write("var chunk = (");
-                    writer.writeNode(payloadType);
-                    writer.writeTextStatement("?)null");
-                    writer.writeLine("try");
-                    writer.writeLine("{");
-                    writer.indent();
-
-                    writer.write("chunk = ");
-                    writer.writeNode(this.context.getJsonUtilsClassReference());
-                    writer.write(".Deserialize<");
-                    writer.writeNode(payloadType);
-                    writer.writeTextStatement(">(line)");
-                    writer.dedent();
-                    writer.writeLine("}");
-                    writer.writeLine("catch (JsonException)");
-                    writer.writeLine("{");
-                    writer.indent();
-                    writer.write("throw new ");
-                    writer.writeNode(this.context.getBaseExceptionClassReference());
-                    writer.writeTextStatement(`($"Unable to deserialize JSON response '{line}'")`);
-
-                    writer.dedent();
-                    writer.writeLine("}");
-                    writer.writeLine("if (chunk is not null)");
-                    writer.writeLine("{");
-                    writer.indent();
-                    writer.writeTextStatement(`yield return chunk`);
-                    writer.dedent();
-                    writer.writeLine("}");
-                    writer.dedent();
-                    writer.writeLine("}");
-                    writer.writeLine("yield break;");
-                    writer.dedent();
-                    writer.writeLine("}");
-                },
+                streaming: (ref) => handleStreaming(writer)(ref),
                 text: () => {
                     writer.writeLine(`if (${RESPONSE_VARIABLE_NAME}.StatusCode is >= 200 and < 400) {`);
                     writer.writeNewLineIfLastLineNot();

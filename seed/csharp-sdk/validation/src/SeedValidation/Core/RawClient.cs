@@ -19,16 +19,16 @@ internal partial class RawClient(ClientOptions clientOptions)
     internal readonly ClientOptions Options = clientOptions;
 
     [Obsolete("Use SendRequestAsync instead.")]
-    internal Task<SeedValidation.Core.ApiResponse> MakeRequestAsync(
-        SeedValidation.Core.BaseRequest request,
+    internal Task<global::SeedValidation.Core.ApiResponse> MakeRequestAsync(
+        global::SeedValidation.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
         return SendRequestAsync(request, cancellationToken);
     }
 
-    internal async Task<SeedValidation.Core.ApiResponse> SendRequestAsync(
-        SeedValidation.Core.BaseRequest request,
+    internal async Task<global::SeedValidation.Core.ApiResponse> SendRequestAsync(
+        global::SeedValidation.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
@@ -43,7 +43,7 @@ internal partial class RawClient(ClientOptions clientOptions)
             .ConfigureAwait(false);
     }
 
-    internal async Task<SeedValidation.Core.ApiResponse> SendRequestAsync(
+    internal async Task<global::SeedValidation.Core.ApiResponse> SendRequestAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken = default
@@ -109,7 +109,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     /// Sends the request with retries, unless the request content is not retryable,
     /// such as stream requests and multipart form data with stream content.
     /// </summary>
-    private async Task<SeedValidation.Core.ApiResponse> SendWithRetriesAsync(
+    private async Task<global::SeedValidation.Core.ApiResponse> SendWithRetriesAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken
@@ -122,7 +122,7 @@ internal partial class RawClient(ClientOptions clientOptions)
 
         if (!isRetryableContent)
         {
-            return new SeedValidation.Core.ApiResponse
+            return new global::SeedValidation.Core.ApiResponse
             {
                 StatusCode = (int)response.StatusCode,
                 Raw = response,
@@ -144,7 +144,7 @@ internal partial class RawClient(ClientOptions clientOptions)
                 .ConfigureAwait(false);
         }
 
-        return new SeedValidation.Core.ApiResponse
+        return new global::SeedValidation.Core.ApiResponse
         {
             StatusCode = (int)response.StatusCode,
             Raw = response,
@@ -168,7 +168,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         };
     }
 
-    internal HttpRequestMessage CreateHttpRequest(SeedValidation.Core.BaseRequest request)
+    internal HttpRequestMessage CreateHttpRequest(global::SeedValidation.Core.BaseRequest request)
     {
         var url = BuildUrl(request);
         var httpRequest = new HttpRequestMessage(request.Method, url);
@@ -184,7 +184,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         return httpRequest;
     }
 
-    private static string BuildUrl(SeedValidation.Core.BaseRequest request)
+    private static string BuildUrl(global::SeedValidation.Core.BaseRequest request)
     {
         var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl;
         var trimmedBaseUrl = baseUrl.TrimEnd('/');
@@ -231,7 +231,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     private static List<KeyValuePair<string, string>> GetQueryParameters(
-        SeedValidation.Core.BaseRequest request
+        global::SeedValidation.Core.BaseRequest request
     )
     {
         var result = TransformToKeyValuePairs(request.Query);
@@ -387,26 +387,27 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     /// <inheritdoc />
-    [Obsolete("Use SeedValidation.Core.ApiResponse instead.")]
-    internal record ApiResponse : SeedValidation.Core.ApiResponse;
+    [Obsolete("Use global::SeedValidation.Core.ApiResponse instead.")]
+    internal record ApiResponse : global::SeedValidation.Core.ApiResponse;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedValidation.Core.BaseRequest instead.")]
-    internal abstract record BaseApiRequest : SeedValidation.Core.BaseRequest;
+    [Obsolete("Use global::SeedValidation.Core.BaseRequest instead.")]
+    internal abstract record BaseApiRequest : global::SeedValidation.Core.BaseRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedValidation.Core.EmptyRequest instead.")]
-    internal abstract record EmptyApiRequest : SeedValidation.Core.EmptyRequest;
+    [Obsolete("Use global::SeedValidation.Core.EmptyRequest instead.")]
+    internal abstract record EmptyApiRequest : global::SeedValidation.Core.EmptyRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedValidation.Core.JsonRequest instead.")]
-    internal abstract record JsonApiRequest : SeedValidation.Core.JsonRequest;
+    [Obsolete("Use global::SeedValidation.Core.JsonRequest instead.")]
+    internal abstract record JsonApiRequest : global::SeedValidation.Core.JsonRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedValidation.Core.MultipartFormRequest instead.")]
-    internal abstract record MultipartFormRequest : SeedValidation.Core.MultipartFormRequest;
+    [Obsolete("Use global::SeedValidation.Core.MultipartFormRequest instead.")]
+    internal abstract record MultipartFormRequest
+        : global::SeedValidation.Core.MultipartFormRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use SeedValidation.Core.StreamRequest instead.")]
-    internal abstract record StreamApiRequest : SeedValidation.Core.StreamRequest;
+    [Obsolete("Use global::SeedValidation.Core.StreamRequest instead.")]
+    internal abstract record StreamApiRequest : global::SeedValidation.Core.StreamRequest;
 }
