@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.5.6
+  changelogEntry:
+    - summary: |
+        Publishing new version after reverting bad commit that released an rc version 1.5.5-rc0.
+      type: chore
+  createdAt: '2025-08-07'
+  irVersion: 58
+
 - version: 1.5.4
   changelogEntry:
     - summary: |
