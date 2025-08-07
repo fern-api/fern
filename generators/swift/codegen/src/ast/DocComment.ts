@@ -90,8 +90,8 @@ export class DocComment extends AstNode {
         }
     }
 
-    private writeMultilineText(writer: Writer, text: string) {
-        const lines = text.split("\n");
+    private writeMultilineText(writer: Writer, sanitizedText: string) {
+        const lines = sanitizedText.split("\n");
         for (const line of lines) {
             writer.write("/// ");
             writer.write(line);
