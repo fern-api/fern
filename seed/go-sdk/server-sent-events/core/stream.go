@@ -5,8 +5,10 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"net/http"
+	"slices"
 	"strings"
 )
 
@@ -15,6 +17,10 @@ type StreamFormat string
 const (
 	StreamFormatSSE   StreamFormat = "sse"
 	StreamFormatEmpty StreamFormat = ""
+)
+
+const (
+	defaultMaxBufSize = 32 * 1024 // 32KB
 )
 
 // defaultStreamDelimiter is the default stream delimiter used to split messages.
@@ -109,6 +115,9 @@ type streamReader interface {
 // split on custom delimiters.
 func newStreamReader(reader io.Reader, options *streamOptions) streamReader {
 	if !options.isEmpty() {
+		if options.maxBufSize == 0 {
+			options.maxBufSize = defaultMaxBufSize
+		}
 		if options.delimiter == "" {
 			options.delimiter = string(defaultStreamDelimiter)
 		}
@@ -205,10 +214,11 @@ type streamOptions struct {
 	prefix     string
 	terminator string
 	format     StreamFormat
+	maxBufSize int
 }
 
 func (s *streamOptions) isEmpty() bool {
-	return s.delimiter == "" && s.prefix == "" && s.terminator == ""
+	return s.delimiter == "" && s.prefix == "" && s.terminator == "" && s.format == StreamFormatEmpty
 }
 
 // SseStreamReader reads data from a *bufio.Scanner, which allows for
@@ -227,6 +237,7 @@ func newSseStreamReader(
 		scanner: scanner,
 		options: options,
 	}
+	scanner.Buffer(make([]byte, slices.Min([]int{4096, options.maxBufSize})), options.maxBufSize)
 	scanner.Split(func(bytes []byte, atEOF bool) (int, []byte, error) {
 		if atEOF && len(bytes) == 0 {
 			return 0, nil, nil
@@ -272,21 +283,45 @@ func (s *SseStreamReader) nextEvent() (*SseEvent, error) {
 	event := SseEvent{}
 	for s.scanner.Scan() {
 		_bytes := s.scanner.Bytes()
-		if bytes.HasPrefix(_bytes, sseDataPrefix) {
-			event.data = append(event.data, _bytes[len(sseDataPrefix):]...)
-		} else if bytes.HasPrefix(_bytes, sseIdPrefix) {
-			event.id = append(event.id, _bytes[len(sseIdPrefix):]...)
-		} else if bytes.HasPrefix(_bytes, sseEventPrefix) {
-			event.event = append(event.event, _bytes[len(sseEventPrefix):]...)
-		} else if bytes.HasPrefix(_bytes, sseRetryPrefix) {
-			event.retry = append(event.retry, _bytes[len(sseRetryPrefix):]...)
-		} else if string(_bytes) == "" {
+		if string(_bytes) == "" {
 			return &event, nil
-		} else {
-			return nil, errors.New("sseStreamReader.ReadFromStream: unknown line type: " + string(_bytes))
+		}
+
+		if err := s.parseSseLine(_bytes, &event); err != nil {
+			return nil, err
+		}
+
+		if event.size() > s.options.maxBufSize {
+			return nil, errors.New("SseStreamReader.ReadFromStream: buffer limit exceeded")
 		}
 	}
 	return &event, io.EOF
+}
+
+func (s *SseStreamReader) parseSseLine(_bytes []byte, event *SseEvent) error {
+	if bytes.HasPrefix(_bytes, sseDataPrefix) {
+		event.data = append(event.data, _bytes[len(sseDataPrefix):]...)
+		if len(event.data) > 0 {
+			event.data = append(event.data, s.options.delimiter...)
+		}
+	} else if bytes.HasPrefix(_bytes, sseIdPrefix) {
+		event.id = append(event.id, _bytes[len(sseIdPrefix):]...)
+	} else if bytes.HasPrefix(_bytes, sseEventPrefix) {
+		event.event = append(event.event, _bytes[len(sseEventPrefix):]...)
+	} else if bytes.HasPrefix(_bytes, sseRetryPrefix) {
+		event.retry = append(event.retry, _bytes[len(sseRetryPrefix):]...)
+	} else {
+		return errors.New("SseStreamReader.ReadFromStream: unknown line type: " + string(_bytes))
+	}
+	return nil
+}
+
+func (event *SseEvent) size() int {
+	return len(event.id) + len(event.data) + len(event.event) + len(event.retry)
+}
+
+func (event *SseEvent) String() string {
+	return fmt.Sprintf("SseEvent{id: %q, event: %q, data: %q, retry: %q}", event.id, event.event, event.data, event.retry)
 }
 
 type SseEvent struct {
