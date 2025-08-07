@@ -174,5 +174,26 @@ describe("DocComment", () => {
 
             await expect(docComment.toString()).toMatchFileSnapshot("snapshots/sanitized_control_chars.swift");
         });
+
+        it("should correctly handle mixed malicious content", async () => {
+            const docComment = swift.docComment({
+                summary: "/// Malicious summary with /* comments */ and \\ backslashes\tand tabs",
+                description: "Description with\nnewlines and /// markers /* and */ block comments // line comments",
+                parameters: [
+                    {
+                        name: "evil",
+                        description:
+                            "/// Parameter /* with */ all // sorts \\ of \t malicious \r content\n on multiple lines"
+                    }
+                ],
+                returns: "/// Returns /* malicious */ content // with \\ everything \t\r\n combined",
+                throws: [
+                    "/// Error /* with */ everything // bad \\ combined \t\r\n",
+                    "Another error with\nnewlines and /// comments"
+                ]
+            });
+
+            await expect(docComment.toString()).toMatchFileSnapshot("snapshots/sanitized_mixed_malicious.swift");
+        });
     });
 });
