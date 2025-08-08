@@ -97,10 +97,13 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         await writeFile(
             csprojPath,
             csprojContents
-                .replace(/<TargetFrameworks>.*<\/TargetFrameworks>/,`<TargetFrameworks>netstandard2.0</TargetFrameworks>`)
+                .replace(
+                    /<TargetFrameworks>.*<\/TargetFrameworks>/,
+                    `<TargetFrameworks>netstandard2.0</TargetFrameworks>`
+                )
                 .replace(/<ImplicitUsings>enable<\/ImplicitUsings>/, `<ImplicitUsings>disable</ImplicitUsings>`)
                 .replace(/<LangVersion>12<\/LangVersion>/, `<LangVersion>11</LangVersion>`)
-                .replace(/<\/Project>/,`<ItemGroup><Using Include="System" /></ItemGroup></Project>`)
+                .replace(/<\/Project>/, `<ItemGroup><Using Include="System" /></ItemGroup></Project>`)
         );
 
         // call dotnet format
