@@ -73,6 +73,7 @@ type MethodCallWithTrailingClosure = {
     target: Expression;
     methodName: string;
     closureBody: Expression;
+    multiline?: true;
 };
 
 type ContextualMethodCall = {
@@ -198,9 +199,21 @@ export class Expression extends AstNode {
                 this.internalExpression.target.write(writer);
                 writer.write(".");
                 writer.write(this.internalExpression.methodName);
-                writer.write(" { ");
+                writer.write(" {");
+                if (this.internalExpression.multiline) {
+                    writer.newLine();
+                    writer.indent();
+                } else {
+                    writer.write(" ");
+                }
                 this.internalExpression.closureBody.write(writer);
-                writer.write(" }");
+                if (this.internalExpression.multiline) {
+                    writer.newLine();
+                    writer.dedent();
+                } else {
+                    writer.write(" ");
+                }
+                writer.write("}");
                 break;
             case "contextual-method-call":
                 writer.write(".");
