@@ -27,7 +27,9 @@ public final class AnyAuthClient: Sendable {
             headerAuth: apiKey.map {
                 .init(key: $0, header: "X-API-Key")
             },
-            bearerAuth: token.map { .init(token: $0) },
+            bearerAuth: token.map {
+                .init(token: $0)
+            },
             headers: headers,
             timeout: timeout,
             maxRetries: maxRetries,

@@ -21,7 +21,7 @@ public final class BearerTokenEnvironmentVariableClient: Sendable {
     ) {
         let config = ClientConfig(
             baseURL: baseURL,
-            bearerAuth: apiKey.map { .init(token: $0) },
+            bearerAuth: .init(token: apiKey),
             headers: headers,
             timeout: timeout,
             maxRetries: maxRetries,

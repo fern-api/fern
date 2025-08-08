@@ -22,7 +22,7 @@ public final class MultiUrlEnvironmentClient: Sendable {
     ) {
         let config = ClientConfig(
             baseURL: baseURL,
-            bearerAuth: token.map { .init(token: $0) },
+            bearerAuth: .init(token: token),
             headers: headers,
             timeout: timeout,
             maxRetries: maxRetries,

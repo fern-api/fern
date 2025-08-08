@@ -30,7 +30,9 @@ public final class TraceClient: Sendable {
     ) {
         let config = ClientConfig(
             baseURL: baseURL,
-            bearerAuth: token.map { .init(token: $0) },
+            bearerAuth: token.map {
+                .init(token: $0)
+            },
             headers: headers,
             timeout: timeout,
             maxRetries: maxRetries,
