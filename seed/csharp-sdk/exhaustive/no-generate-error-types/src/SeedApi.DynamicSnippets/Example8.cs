@@ -1,4 +1,4 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedExhaustive;
 using SeedExhaustive.Types;
 using System.Globalization;
@@ -7,16 +7,19 @@ namespace Usage;
 
 public class Example8
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do()
+    {
         var client = new SeedExhaustiveClient(
             token: "<token>",
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions
+            {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Endpoints.ContentType.PostJsonPatchContentWithCharsetTypeAsync(
-            new ObjectWithOptionalField{
+            new ObjectWithOptionalField
+            {
                 String = "string",
                 Integer = 1,
                 Long = 1000000l,
@@ -33,7 +36,8 @@ public class Example8
                 Set = new HashSet<string>(){
                     "set",
                 },
-                Map = new Dictionary<int, string>(){
+                Map = new Dictionary<int, string>()
+                {
                     [1] = "map",
                 },
                 Bigint = "1000000"

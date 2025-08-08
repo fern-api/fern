@@ -1,4 +1,4 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedEnum;
 using OneOf;
 
@@ -6,15 +6,18 @@ namespace Usage;
 
 public class Example7
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do()
+    {
         var client = new SeedEnumClient(
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions
+            {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.QueryParam.SendListAsync(
-            new SendEnumListAsQueryParamRequest{
+            new SendEnumListAsQueryParamRequest
+            {
                 Operand = new List<Operand>(){
                     Operand.GreaterThan,
                 },

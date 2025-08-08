@@ -10,7 +10,7 @@ public partial class ClientOptions
     /// <summary>
     /// The http headers sent with the request.
     /// </summary>
-    internal Headers Headers { get; init; } = new();
+    internal SeedExamples.Core.Headers Headers { get; init; } = new();
 
     /// <summary>
     /// The Base URL for the API.
@@ -71,7 +71,7 @@ public partial class ClientOptions
     /// <summary>
     /// Clones this and returns a new instance
     /// </summary>
-    internal ClientOptions Clone()
+    internal SeedExamples.ClientOptions Clone()
     {
         return new ClientOptions
         {

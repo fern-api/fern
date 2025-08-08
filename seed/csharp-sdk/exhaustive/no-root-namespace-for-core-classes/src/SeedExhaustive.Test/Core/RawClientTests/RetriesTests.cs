@@ -1,8 +1,7 @@
-using global::System.Net.Http;
 using NUnit.Framework;
 using SeedExhaustive.Core;
 using WireMock.Server;
-using SystemTask = global::System.Threading.Tasks.Task;
+using SystemTask = System.Threading.Tasks.Task;
 using WireMockRequest = WireMock.RequestBuilders.Request;
 using WireMockResponse = WireMock.ResponseBuilders.Response;
 

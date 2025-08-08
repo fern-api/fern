@@ -1,20 +1,17 @@
-using SeedExamples.Core;
-using SeedExamples.File.Notification;
-
 namespace SeedExamples.File;
 
 public partial class FileClient
 {
-    private RawClient _client;
+    private SeedExamples.Core.RawClient _client;
 
-    internal FileClient(RawClient client)
+    internal FileClient(SeedExamples.Core.RawClient client)
     {
         _client = client;
-        Notification = new NotificationClient(_client);
-        Service = new ServiceClient(_client);
+        Notification = new SeedExamples.File.Notification.NotificationClient(_client);
+        Service = new SeedExamples.File.ServiceClient(_client);
     }
 
-    public NotificationClient Notification { get; }
+    public SeedExamples.File.Notification.NotificationClient Notification { get; }
 
-    public ServiceClient Service { get; }
+    public SeedExamples.File.ServiceClient Service { get; }
 }

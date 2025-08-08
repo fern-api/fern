@@ -1,13 +1,15 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedPathParameters;
 
 namespace Usage;
 
 public class Example6
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do()
+    {
         var client = new SeedPathParametersClient(
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions
+            {
                 BaseUrl = "https://api.fern.com"
             }
         );
@@ -15,7 +17,8 @@ public class Example6
         await client.User.SearchUsersAsync(
             "tenant_id",
             "user_id",
-            new SearchUsersRequest{
+            new SearchUsersRequest
+            {
                 Limit = 1
             }
         );

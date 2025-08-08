@@ -22,8 +22,11 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedPackageYml;
 
-var client = new SeedPackageYmlClient();
-await client.EchoAsync("id-ksfd9c1", new EchoRequest { Name = "Hello world!", Size = 20 });
+var client = new SeedPackageYml.SeedPackageYmlClient();
+await client.EchoAsync(
+    "id-ksfd9c1",
+    new SeedPackageYml.EchoRequest { Name = "Hello world!", Size = 20 }
+);
 ```
 
 ## Exception Handling

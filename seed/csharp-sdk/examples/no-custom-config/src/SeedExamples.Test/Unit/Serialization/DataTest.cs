@@ -1,14 +1,12 @@
 using System.Text.Json;
 using NUnit.Framework;
-using SeedExamples.Commons;
-using SeedExamples.Core;
 
 namespace SeedExamples.Test;
 
 [TestFixture]
 public class DataTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public void TestDeserialization()
     {
         var json = """
@@ -17,12 +15,16 @@ public class DataTest
               "value": "data"
             }
             """;
-        var expectedObject = new Data(new Data.String("data"));
-        var deserializedObject = JsonUtils.Deserialize<Data>(json);
+        var expectedObject = new SeedExamples.Commons.Data(
+            new SeedExamples.Commons.Data.String("data")
+        );
+        var deserializedObject = SeedExamples.Core.JsonUtils.Deserialize<SeedExamples.Commons.Data>(
+            json
+        );
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestSerialization()
     {
         var expectedJson = """
@@ -31,9 +33,9 @@ public class DataTest
               "value": "data"
             }
             """;
-        var actualObj = new Data(new Data.String("data"));
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        var actualObj = new SeedExamples.Commons.Data(new SeedExamples.Commons.Data.String("data"));
+        var actualElement = SeedExamples.Core.JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = SeedExamples.Core.JsonUtils.Deserialize<JsonElement>(expectedJson);
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

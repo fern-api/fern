@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.FooAsync();\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApi.SeedApiClient();\nawait client.FooAsync();\n"
             }
         },
         {
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.A.B.FooAsync();\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApi.SeedApiClient();\nawait client.A.B.FooAsync();\n"
             }
         },
         {
@@ -34,7 +34,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.A.C.FooAsync();\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApi.SeedApiClient();\nawait client.A.C.FooAsync();\n"
             }
         },
         {
@@ -46,7 +46,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Folder.FooAsync();\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApi.SeedApiClient();\nawait client.Folder.FooAsync();\n"
             }
         },
         {
@@ -58,7 +58,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Folder.Service.EndpointAsync();\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApi.SeedApiClient();\nawait client.Folder.Service.EndpointAsync();\n"
             }
         },
         {
@@ -70,7 +70,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Folder.Service.UnknownRequestAsync(\n    new Dictionary<object, object?>() { { \"key\", \"value\" } }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApi.SeedApiClient();\nawait client.Folder.Service.UnknownRequestAsync(\n    new Dictionary<object, object?>() { { \"key\", \"value\" } }\n);\n"
             }
         }
     ]

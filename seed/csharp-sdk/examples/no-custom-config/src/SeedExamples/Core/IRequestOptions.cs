@@ -30,7 +30,7 @@ internal interface IRequestOptions
     /// <summary>
     /// The http headers sent with the request.
     /// </summary>
-    internal Headers Headers { get; init; }
+    internal SeedExamples.Core.Headers Headers { get; init; }
 
     /// <summary>
     /// Additional headers to be sent with the request.

@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedValidation/SeedValidationClient.cs">CreateAsync</a>(CreateRequest { ... }) -> Type</code></summary>
+<details><summary><code>client.<a href="/src/SeedValidation/SeedValidationClient.cs">CreateAsync</a>(SeedValidation.CreateRequest { ... }) -> SeedValidation.Type</code></summary>
 <dl>
 <dd>
 
@@ -13,12 +13,12 @@
 
 ```csharp
 await client.CreateAsync(
-    new CreateRequest
+    new SeedValidation.CreateRequest
     {
         Decimal = 2.2,
         Even = 100,
         Name = "fern",
-        Shape = Shape.Square,
+        Shape = SeedValidation.Shape.Square,
     }
 );
 ```
@@ -35,7 +35,7 @@ await client.CreateAsync(
 <dl>
 <dd>
 
-**request:** `CreateRequest` 
+**request:** `SeedValidation.CreateRequest` 
     
 </dd>
 </dl>
@@ -47,7 +47,7 @@ await client.CreateAsync(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/SeedValidation/SeedValidationClient.cs">GetAsync</a>(GetRequest { ... }) -> Type</code></summary>
+<details><summary><code>client.<a href="/src/SeedValidation/SeedValidationClient.cs">GetAsync</a>(SeedValidation.GetRequest { ... }) -> SeedValidation.Type</code></summary>
 <dl>
 <dd>
 
@@ -61,7 +61,7 @@ await client.CreateAsync(
 
 ```csharp
 await client.GetAsync(
-    new GetRequest
+    new SeedValidation.GetRequest
     {
         Decimal = 2.2,
         Even = 100,
@@ -82,7 +82,7 @@ await client.GetAsync(
 <dl>
 <dd>
 
-**request:** `GetRequest` 
+**request:** `SeedValidation.GetRequest` 
     
 </dd>
 </dl>

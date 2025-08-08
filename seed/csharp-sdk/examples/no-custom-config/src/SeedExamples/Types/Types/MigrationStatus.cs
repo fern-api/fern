@@ -1,23 +1,22 @@
 using System.Text.Json.Serialization;
-using SeedExamples.Core;
 
 namespace SeedExamples;
 
-[JsonConverter(typeof(StringEnumSerializer<MigrationStatus>))]
+[JsonConverter(typeof(SeedExamples.Core.StringEnumSerializer<SeedExamples.MigrationStatus>))]
 [Serializable]
-public readonly record struct MigrationStatus : IStringEnum
+public readonly record struct MigrationStatus : SeedExamples.Core.IStringEnum
 {
     /// <summary>
     /// The migration is running.
     /// </summary>
-    public static readonly MigrationStatus Running = new(Values.Running);
+    public static readonly SeedExamples.MigrationStatus Running = new(Values.Running);
 
     /// <summary>
     /// The migration failed.
     /// </summary>
-    public static readonly MigrationStatus Failed = new(Values.Failed);
+    public static readonly SeedExamples.MigrationStatus Failed = new(Values.Failed);
 
-    public static readonly MigrationStatus Finished = new(Values.Finished);
+    public static readonly SeedExamples.MigrationStatus Finished = new(Values.Finished);
 
     public MigrationStatus(string value)
     {
@@ -32,9 +31,9 @@ public readonly record struct MigrationStatus : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static MigrationStatus FromCustom(string value)
+    public static SeedExamples.MigrationStatus FromCustom(string value)
     {
-        return new MigrationStatus(value);
+        return new SeedExamples.MigrationStatus(value);
     }
 
     public bool Equals(string? other)
@@ -50,32 +49,33 @@ public readonly record struct MigrationStatus : IStringEnum
         return Value;
     }
 
-    public static bool operator ==(MigrationStatus value1, string value2) =>
-        value1.Value.Equals(value2);
+    public static bool operator ==(SeedExamples.MigrationStatus value1, string value2) => value1.Value.Equals(value2);
 
-    public static bool operator !=(MigrationStatus value1, string value2) =>
-        !value1.Value.Equals(value2);
+    public static bool operator !=(SeedExamples.MigrationStatus value1, string value2) => !value1.Value.Equals(value2);
 
-    public static explicit operator string(MigrationStatus value) => value.Value;
+    public static explicit operator string(SeedExamples.MigrationStatus value) => value.Value;
 
-    public static explicit operator MigrationStatus(string value) => new(value);
+    public static explicit operator SeedExamples.MigrationStatus(string value) => new(value);
+
+    namespace SeedExamples;
+
+/// <summary>
+/// Constant strings for enum values
+/// </summary>
+[Serializable]
+public static class Values
+{
+    /// <summary>
+    /// The migration is running.
+    /// </summary>
+    public const string Running = "RUNNING";
 
     /// <summary>
-    /// Constant strings for enum values
+    /// The migration failed.
     /// </summary>
-    [Serializable]
-    public static class Values
-    {
-        /// <summary>
-        /// The migration is running.
-        /// </summary>
-        public const string Running = "RUNNING";
+    public const string Failed = "FAILED";
 
-        /// <summary>
-        /// The migration failed.
-        /// </summary>
-        public const string Failed = "FAILED";
+    public const string Finished = "FINISHED";
+}
 
-        public const string Finished = "FINISHED";
-    }
 }

@@ -1,7 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -21,11 +21,11 @@ public partial class PlaylistClient
     /// <example><code>
     /// await client.Playlist.CreatePlaylistAsync(
     ///     1,
-    ///     new CreatePlaylistRequest
+    ///     new SeedTrace.CreatePlaylistRequest
     ///     {
     ///         Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
     ///         OptionalDatetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-    ///         Body = new PlaylistCreateRequest
+    ///         Body = new SeedTrace.PlaylistCreateRequest
     ///         {
     ///             Name = "name",
     ///             Problems = new List&lt;string&gt;() { "problems", "problems" },
@@ -94,7 +94,7 @@ public partial class PlaylistClient
     /// <example><code>
     /// await client.Playlist.GetPlaylistsAsync(
     ///     1,
-    ///     new GetPlaylistsRequest
+    ///     new SeedTrace.GetPlaylistsRequest
     ///     {
     ///         Limit = 1,
     ///         OtherField = "otherField",
@@ -218,7 +218,7 @@ public partial class PlaylistClient
     /// await client.Playlist.UpdatePlaylistAsync(
     ///     1,
     ///     "playlistId",
-    ///     new UpdatePlaylistRequest
+    ///     new SeedTrace.UpdatePlaylistRequest
     ///     {
     ///         Name = "name",
     ///         Problems = new List&lt;string&gt;() { "problems", "problems" },
@@ -279,7 +279,7 @@ public partial class PlaylistClient
     /// <example><code>
     /// await client.Playlist.DeletePlaylistAsync(1, "playlist_id");
     /// </code></example>
-    public async global::System.Threading.Tasks.Task DeletePlaylistAsync(
+    public async Task DeletePlaylistAsync(
         int serviceParam,
         string playlistId,
         RequestOptions? options = null,

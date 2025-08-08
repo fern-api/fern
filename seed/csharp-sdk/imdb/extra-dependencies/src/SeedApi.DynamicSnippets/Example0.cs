@@ -1,20 +1,23 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedApi;
 
 namespace Usage;
 
 public class Example0
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do()
+    {
         var client = new SeedApiClient(
             token: "<token>",
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions
+            {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Imdb.CreateMovieAsync(
-            new CreateMovieRequest{
+            new CreateMovieRequest
+            {
                 Title = "title",
                 Rating = 1.1
             }

@@ -1,14 +1,12 @@
 using System.Text.Json;
 using NUnit.Framework;
-using SeedExamples;
-using SeedExamples.Core;
 
 namespace SeedExamples.Test;
 
 [TestFixture]
 public class NodeTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public void TestDeserialization_1()
     {
         var json = """
@@ -36,31 +34,31 @@ public class NodeTest
               ]
             }
             """;
-        var expectedObject = new Node
+        var expectedObject = new SeedExamples.Node
         {
             Name = "root",
-            Nodes = new List<Node>()
+            Nodes = new List<SeedExamples.Node>()
             {
-                new Node { Name = "left" },
-                new Node { Name = "right" },
+                new SeedExamples.Node { Name = "left" },
+                new SeedExamples.Node { Name = "right" },
             },
-            Trees = new List<Tree>()
+            Trees = new List<SeedExamples.Tree>()
             {
-                new Tree
+                new SeedExamples.Tree
                 {
-                    Nodes = new List<Node>()
+                    Nodes = new List<SeedExamples.Node>()
                     {
-                        new Node { Name = "left" },
-                        new Node { Name = "right" },
+                        new SeedExamples.Node { Name = "left" },
+                        new SeedExamples.Node { Name = "right" },
                     },
                 },
             },
         };
-        var deserializedObject = JsonUtils.Deserialize<Node>(json);
+        var deserializedObject = SeedExamples.Core.JsonUtils.Deserialize<SeedExamples.Node>(json);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestSerialization_1()
     {
         var expectedJson = """
@@ -88,32 +86,32 @@ public class NodeTest
               ]
             }
             """;
-        var actualObj = new Node
+        var actualObj = new SeedExamples.Node
         {
             Name = "root",
-            Nodes = new List<Node>()
+            Nodes = new List<SeedExamples.Node>()
             {
-                new Node { Name = "left" },
-                new Node { Name = "right" },
+                new SeedExamples.Node { Name = "left" },
+                new SeedExamples.Node { Name = "right" },
             },
-            Trees = new List<Tree>()
+            Trees = new List<SeedExamples.Tree>()
             {
-                new Tree
+                new SeedExamples.Tree
                 {
-                    Nodes = new List<Node>()
+                    Nodes = new List<SeedExamples.Node>()
                     {
-                        new Node { Name = "left" },
-                        new Node { Name = "right" },
+                        new SeedExamples.Node { Name = "left" },
+                        new SeedExamples.Node { Name = "right" },
                     },
                 },
             },
         };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        var actualElement = SeedExamples.Core.JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = SeedExamples.Core.JsonUtils.Deserialize<JsonElement>(expectedJson);
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestDeserialization_2()
     {
         var json = """
@@ -121,12 +119,12 @@ public class NodeTest
               "name": "left"
             }
             """;
-        var expectedObject = new Node { Name = "left" };
-        var deserializedObject = JsonUtils.Deserialize<Node>(json);
+        var expectedObject = new SeedExamples.Node { Name = "left" };
+        var deserializedObject = SeedExamples.Core.JsonUtils.Deserialize<SeedExamples.Node>(json);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestSerialization_2()
     {
         var expectedJson = """
@@ -134,13 +132,13 @@ public class NodeTest
               "name": "left"
             }
             """;
-        var actualObj = new Node { Name = "left" };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        var actualObj = new SeedExamples.Node { Name = "left" };
+        var actualElement = SeedExamples.Core.JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = SeedExamples.Core.JsonUtils.Deserialize<JsonElement>(expectedJson);
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestDeserialization_3()
     {
         var json = """
@@ -148,12 +146,12 @@ public class NodeTest
               "name": "right"
             }
             """;
-        var expectedObject = new Node { Name = "right" };
-        var deserializedObject = JsonUtils.Deserialize<Node>(json);
+        var expectedObject = new SeedExamples.Node { Name = "right" };
+        var deserializedObject = SeedExamples.Core.JsonUtils.Deserialize<SeedExamples.Node>(json);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestSerialization_3()
     {
         var expectedJson = """
@@ -161,9 +159,9 @@ public class NodeTest
               "name": "right"
             }
             """;
-        var actualObj = new Node { Name = "right" };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        var actualObj = new SeedExamples.Node { Name = "right" };
+        var actualElement = SeedExamples.Core.JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = SeedExamples.Core.JsonUtils.Deserialize<JsonElement>(expectedJson);
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

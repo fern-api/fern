@@ -16,7 +16,7 @@ public partial class QueryClient
 
     /// <example><code>
     /// await client.Query.SendAsync(
-    ///     new SendLiteralsInQueryRequest
+    ///     new SeedLiteral.SendLiteralsInQueryRequest
     ///     {
     ///         Prompt = "You are a helpful assistant",
     ///         OptionalPrompt = "You are a helpful assistant",

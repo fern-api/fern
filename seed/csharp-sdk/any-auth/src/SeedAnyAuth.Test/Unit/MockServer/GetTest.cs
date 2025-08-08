@@ -1,6 +1,4 @@
-using global::System.Threading.Tasks;
 using NUnit.Framework;
-using SeedAnyAuth;
 using SeedAnyAuth.Core;
 
 namespace SeedAnyAuth.Test.Unit.MockServer;
@@ -9,7 +7,7 @@ namespace SeedAnyAuth.Test.Unit.MockServer;
 public class GetTest : BaseMockServerTest
 {
     [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    public async Task MockServerTest()
     {
         const string mockResponse = """
             [

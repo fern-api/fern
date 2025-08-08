@@ -1,6 +1,6 @@
 # Reference
 ## Headers
-<details><summary><code>client.Headers.<a href="/src/SeedEnum/Headers/HeadersClient.cs">SendAsync</a>(SendEnumAsHeaderRequest { ... })</code></summary>
+<details><summary><code>client.Headers.<a href="/src/SeedEnum/Headers/HeadersClient.cs">SendAsync</a>(SeedEnum.SendEnumAsHeaderRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -14,11 +14,11 @@
 
 ```csharp
 await client.Headers.SendAsync(
-    new SendEnumAsHeaderRequest
+    new SeedEnum.SendEnumAsHeaderRequest
     {
-        Operand = Operand.GreaterThan,
-        MaybeOperand = Operand.GreaterThan,
-        OperandOrColor = Color.Red,
+        Operand = SeedEnum.Operand.GreaterThan,
+        MaybeOperand = SeedEnum.Operand.GreaterThan,
+        OperandOrColor = SeedEnum.Color.Red,
         MaybeOperandOrColor = null,
     }
 );
@@ -36,7 +36,7 @@ await client.Headers.SendAsync(
 <dl>
 <dd>
 
-**request:** `SendEnumAsHeaderRequest` 
+**request:** `SeedEnum.SendEnumAsHeaderRequest` 
     
 </dd>
 </dl>
@@ -49,7 +49,7 @@ await client.Headers.SendAsync(
 </details>
 
 ## InlinedRequest
-<details><summary><code>client.InlinedRequest.<a href="/src/SeedEnum/InlinedRequest/InlinedRequestClient.cs">SendAsync</a>(SendEnumInlinedRequest { ... })</code></summary>
+<details><summary><code>client.InlinedRequest.<a href="/src/SeedEnum/InlinedRequest/InlinedRequestClient.cs">SendAsync</a>(SeedEnum.SendEnumInlinedRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -63,7 +63,11 @@ await client.Headers.SendAsync(
 
 ```csharp
 await client.InlinedRequest.SendAsync(
-    new SendEnumInlinedRequest { Operand = Operand.GreaterThan, OperandOrColor = Color.Red }
+    new SeedEnum.SendEnumInlinedRequest
+    {
+        Operand = SeedEnum.Operand.GreaterThan,
+        OperandOrColor = SeedEnum.Color.Red,
+    }
 );
 ```
 </dd>
@@ -79,7 +83,7 @@ await client.InlinedRequest.SendAsync(
 <dl>
 <dd>
 
-**request:** `SendEnumInlinedRequest` 
+**request:** `SeedEnum.SendEnumInlinedRequest` 
     
 </dd>
 </dl>
@@ -105,7 +109,7 @@ await client.InlinedRequest.SendAsync(
 <dd>
 
 ```csharp
-await client.PathParam.SendAsync(Operand.GreaterThan, Color.Red);
+await client.PathParam.SendAsync(SeedEnum.Operand.GreaterThan, SeedEnum.Color.Red);
 ```
 </dd>
 </dl>
@@ -120,7 +124,7 @@ await client.PathParam.SendAsync(Operand.GreaterThan, Color.Red);
 <dl>
 <dd>
 
-**operand:** `Operand` 
+**operand:** `SeedEnum.Operand` 
     
 </dd>
 </dl>
@@ -128,7 +132,7 @@ await client.PathParam.SendAsync(Operand.GreaterThan, Color.Red);
 <dl>
 <dd>
 
-**operandOrColor:** `OneOf<Color, Operand>` 
+**operandOrColor:** `OneOf<SeedEnum.Color, SeedEnum.Operand>` 
     
 </dd>
 </dl>
@@ -141,7 +145,7 @@ await client.PathParam.SendAsync(Operand.GreaterThan, Color.Red);
 </details>
 
 ## QueryParam
-<details><summary><code>client.QueryParam.<a href="/src/SeedEnum/QueryParam/QueryParamClient.cs">SendAsync</a>(SendEnumAsQueryParamRequest { ... })</code></summary>
+<details><summary><code>client.QueryParam.<a href="/src/SeedEnum/QueryParam/QueryParamClient.cs">SendAsync</a>(SeedEnum.SendEnumAsQueryParamRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -155,54 +159,10 @@ await client.PathParam.SendAsync(Operand.GreaterThan, Color.Red);
 
 ```csharp
 await client.QueryParam.SendAsync(
-    new SendEnumAsQueryParamRequest { Operand = Operand.GreaterThan, OperandOrColor = Color.Red }
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SendEnumAsQueryParamRequest` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.QueryParam.<a href="/src/SeedEnum/QueryParam/QueryParamClient.cs">SendListAsync</a>(SendEnumListAsQueryParamRequest { ... })</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```csharp
-await client.QueryParam.SendListAsync(
-    new SendEnumListAsQueryParamRequest
+    new SeedEnum.SendEnumAsQueryParamRequest
     {
-        Operand = [Operand.GreaterThan],
-        MaybeOperand = [Operand.GreaterThan],
-        OperandOrColor = [Color.Red],
-        MaybeOperandOrColor = [Color.Red],
+        Operand = SeedEnum.Operand.GreaterThan,
+        OperandOrColor = SeedEnum.Color.Red,
     }
 );
 ```
@@ -219,7 +179,55 @@ await client.QueryParam.SendListAsync(
 <dl>
 <dd>
 
-**request:** `SendEnumListAsQueryParamRequest` 
+**request:** `SeedEnum.SendEnumAsQueryParamRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.QueryParam.<a href="/src/SeedEnum/QueryParam/QueryParamClient.cs">SendListAsync</a>(SeedEnum.SendEnumListAsQueryParamRequest { ... })</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.QueryParam.SendListAsync(
+    new SeedEnum.SendEnumListAsQueryParamRequest
+    {
+        Operand = [SeedEnum.Operand.GreaterThan],
+        MaybeOperand = [SeedEnum.Operand.GreaterThan],
+        OperandOrColor = [SeedEnum.Color.Red],
+        MaybeOperandOrColor = [SeedEnum.Color.Red],
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedEnum.SendEnumListAsQueryParamRequest` 
     
 </dd>
 </dl>

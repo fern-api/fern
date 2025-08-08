@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using SeedExhaustive;
 using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Endpoints;
@@ -16,7 +15,7 @@ public partial class PutClient
     }
 
     /// <example><code>
-    /// await client.Endpoints.Put.AddAsync(new PutRequest { Id = "id" });
+    /// await client.Endpoints.Put.AddAsync(new SeedExhaustive.Endpoints.PutRequest { Id = "id" });
     /// </code></example>
     public async Task<PutResponse> AddAsync(
         PutRequest request,

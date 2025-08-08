@@ -1,13 +1,12 @@
 using System.Text.Json;
 using NUnit.Framework;
-using SeedExamples.Core;
 
 namespace SeedExamples.Test;
 
 [TestFixture]
 public class FileTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public void TestDeserialization_1()
     {
         var json = """
@@ -17,11 +16,11 @@ public class FileTest
             }
             """;
         var expectedObject = new SeedExamples.File { Name = "file.txt", Contents = "..." };
-        var deserializedObject = JsonUtils.Deserialize<SeedExamples.File>(json);
+        var deserializedObject = SeedExamples.Core.JsonUtils.Deserialize<SeedExamples.File>(json);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestSerialization_1()
     {
         var expectedJson = """
@@ -31,12 +30,12 @@ public class FileTest
             }
             """;
         var actualObj = new SeedExamples.File { Name = "file.txt", Contents = "..." };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        var actualElement = SeedExamples.Core.JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = SeedExamples.Core.JsonUtils.Deserialize<JsonElement>(expectedJson);
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestDeserialization_2()
     {
         var json = """
@@ -46,11 +45,11 @@ public class FileTest
             }
             """;
         var expectedObject = new SeedExamples.File { Name = "another_file.txt", Contents = "..." };
-        var deserializedObject = JsonUtils.Deserialize<SeedExamples.File>(json);
+        var deserializedObject = SeedExamples.Core.JsonUtils.Deserialize<SeedExamples.File>(json);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestSerialization_2()
     {
         var expectedJson = """
@@ -60,8 +59,8 @@ public class FileTest
             }
             """;
         var actualObj = new SeedExamples.File { Name = "another_file.txt", Contents = "..." };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        var actualElement = SeedExamples.Core.JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = SeedExamples.Core.JsonUtils.Deserialize<JsonElement>(expectedJson);
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedMixedFileDirectory;\n\nvar client = new SeedMixedFileDirectoryClient();\nawait client.Organization.CreateAsync(new CreateOrganizationRequest { Name = \"name\" });\n"
+                "client": "using SeedMixedFileDirectory;\n\nvar client = new SeedMixedFileDirectory.SeedMixedFileDirectoryClient();\nawait client.Organization.CreateAsync(\n    new SeedMixedFileDirectory.CreateOrganizationRequest { Name = \"name\" }\n);\n"
             }
         },
         {
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedMixedFileDirectory;\n\nvar client = new SeedMixedFileDirectoryClient();\nawait client.User.ListAsync(new ListUsersRequest { Limit = 1 });\n"
+                "client": "using SeedMixedFileDirectory;\n\nvar client = new SeedMixedFileDirectory.SeedMixedFileDirectoryClient();\nawait client.User.ListAsync(new SeedMixedFileDirectory.ListUsersRequest { Limit = 1 });\n"
             }
         },
         {
@@ -34,7 +34,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedMixedFileDirectory.User;\nusing SeedMixedFileDirectory;\n\nvar client = new SeedMixedFileDirectoryClient();\nawait client.User.Events.ListEventsAsync(new ListUserEventsRequest { Limit = 1 });\n"
+                "client": "using SeedMixedFileDirectory.User;\nusing SeedMixedFileDirectory;\n\nvar client = new SeedMixedFileDirectory.SeedMixedFileDirectoryClient();\nawait client.User.Events.ListEventsAsync(\n    new SeedMixedFileDirectory.User.ListUserEventsRequest { Limit = 1 }\n);\n"
             }
         },
         {
@@ -46,7 +46,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedMixedFileDirectory.User.Events;\nusing SeedMixedFileDirectory;\n\nvar client = new SeedMixedFileDirectoryClient();\nawait client.User.Events.Metadata.GetMetadataAsync(new GetEventMetadataRequest { Id = \"id\" });\n"
+                "client": "using SeedMixedFileDirectory.User.Events;\nusing SeedMixedFileDirectory;\n\nvar client = new SeedMixedFileDirectory.SeedMixedFileDirectoryClient();\nawait client.User.Events.Metadata.GetMetadataAsync(\n    new SeedMixedFileDirectory.User.Events.GetEventMetadataRequest { Id = \"id\" }\n);\n"
             }
         }
     ]

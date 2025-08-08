@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using SeedExamples.Core;
 
 namespace SeedExamples;
 
@@ -18,6 +17,6 @@ public record GetMetadataRequest
     /// <inheritdoc />
     public override string ToString()
     {
-        return JsonUtils.Serialize(this);
+        return SeedExamples.Core.JsonUtils.Serialize(this);
     }
 }

@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.<a href="/src/SeedContentTypes/Service/ServiceClient.cs">PatchAsync</a>(PatchProxyRequest { ... })</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedContentTypes/Service/ServiceClient.cs">PatchAsync</a>(SeedContentTypes.PatchProxyRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,7 @@
 
 ```csharp
 await client.Service.PatchAsync(
-    new PatchProxyRequest { Application = "application", RequireAuth = true }
+    new SeedContentTypes.PatchProxyRequest { Application = "application", RequireAuth = true }
 );
 ```
 </dd>
@@ -30,7 +30,7 @@ await client.Service.PatchAsync(
 <dl>
 <dd>
 
-**request:** `PatchProxyRequest` 
+**request:** `SeedContentTypes.PatchProxyRequest` 
     
 </dd>
 </dl>

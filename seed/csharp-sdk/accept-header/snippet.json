@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedAccept;\n\nvar client = new SeedAcceptClient(\"TOKEN\");\nawait client.Service.EndpointAsync();\n"
+                "client": "using SeedAccept;\n\nvar client = new SeedAccept.SeedAcceptClient(\"TOKEN\");\nawait client.Service.EndpointAsync();\n"
             }
         }
     ]

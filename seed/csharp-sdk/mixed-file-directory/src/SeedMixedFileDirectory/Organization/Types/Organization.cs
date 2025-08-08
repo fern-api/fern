@@ -18,7 +18,8 @@ public record Organization : IJsonOnDeserialized
     public required string Name { get; set; }
 
     [JsonPropertyName("users")]
-    public IEnumerable<User> Users { get; set; } = new List<User>();
+    public IEnumerable<SeedMixedFileDirectory.User> Users { get; set; } =
+        new List<SeedMixedFileDirectory.User>();
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();

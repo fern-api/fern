@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedCsharpNamespaceConflict;\n\nvar client = new SeedCsharpNamespaceConflictClient();\nawait client.Tasktest.HelloAsync();\n"
+                "client": "using SeedCsharpNamespaceConflict;\n\nvar client = new SeedCsharpNamespaceConflict.SeedCsharpNamespaceConflictClient();\nawait client.Tasktest.HelloAsync();\n"
             }
         }
     ]

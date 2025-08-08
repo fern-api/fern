@@ -1,17 +1,19 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedMultiUrlEnvironment;
 
 namespace Usage;
 
 public class Example1
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do()
+    {
         var client = new SeedMultiUrlEnvironmentClient(
             token: "<token>"
         );
 
         await client.S3.GetPresignedUrlAsync(
-            new GetPresignedUrlRequest{
+            new GetPresignedUrlRequest
+            {
                 S3Key = "s3Key"
             }
         );

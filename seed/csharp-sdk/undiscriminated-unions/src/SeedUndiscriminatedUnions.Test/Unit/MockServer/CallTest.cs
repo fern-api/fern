@@ -1,6 +1,4 @@
-using global::System.Threading.Tasks;
 using NUnit.Framework;
-using SeedUndiscriminatedUnions;
 using SeedUndiscriminatedUnions.Core;
 
 namespace SeedUndiscriminatedUnions.Test.Unit.MockServer;
@@ -9,7 +7,7 @@ namespace SeedUndiscriminatedUnions.Test.Unit.MockServer;
 public class CallTest : BaseMockServerTest
 {
     [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    public async Task MockServerTest()
     {
         const string requestJson = """
             {

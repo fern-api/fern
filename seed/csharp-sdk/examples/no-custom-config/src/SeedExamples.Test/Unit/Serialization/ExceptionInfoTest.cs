@@ -1,14 +1,12 @@
 using System.Text.Json;
 using NUnit.Framework;
-using SeedExamples;
-using SeedExamples.Core;
 
 namespace SeedExamples.Test;
 
 [TestFixture]
 public class ExceptionInfoTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public void TestDeserialization()
     {
         var json = """
@@ -18,17 +16,18 @@ public class ExceptionInfoTest
               "exceptionStacktrace": "<logs>"
             }
             """;
-        var expectedObject = new ExceptionInfo
+        var expectedObject = new SeedExamples.ExceptionInfo
         {
             ExceptionType = "Unavailable",
             ExceptionMessage = "This component is unavailable!",
             ExceptionStacktrace = "<logs>",
         };
-        var deserializedObject = JsonUtils.Deserialize<ExceptionInfo>(json);
+        var deserializedObject =
+            SeedExamples.Core.JsonUtils.Deserialize<SeedExamples.ExceptionInfo>(json);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestSerialization()
     {
         var expectedJson = """
@@ -38,14 +37,14 @@ public class ExceptionInfoTest
               "exceptionStacktrace": "<logs>"
             }
             """;
-        var actualObj = new ExceptionInfo
+        var actualObj = new SeedExamples.ExceptionInfo
         {
             ExceptionType = "Unavailable",
             ExceptionMessage = "This component is unavailable!",
             ExceptionStacktrace = "<logs>",
         };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        var actualElement = SeedExamples.Core.JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = SeedExamples.Core.JsonUtils.Deserialize<JsonElement>(expectedJson);
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

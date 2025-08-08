@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedSingleUrlEnvironmentDefault;
 
-var client = new SeedSingleUrlEnvironmentDefaultClient("TOKEN");
+var client = new SeedSingleUrlEnvironmentDefault.SeedSingleUrlEnvironmentDefaultClient("TOKEN");
 await client.Dummy.GetDummyAsync();
 ```
 

@@ -1,16 +1,14 @@
-using SeedExamples.Core;
-
 namespace SeedExamples.Health;
 
 public partial class HealthClient
 {
-    private RawClient _client;
+    private SeedExamples.Core.RawClient _client;
 
-    internal HealthClient(RawClient client)
+    internal HealthClient(SeedExamples.Core.RawClient client)
     {
         _client = client;
-        Service = new ServiceClient(_client);
+        Service = new SeedExamples.Health.ServiceClient(_client);
     }
 
-    public ServiceClient Service { get; }
+    public SeedExamples.Health.ServiceClient Service { get; }
 }

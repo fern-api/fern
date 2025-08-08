@@ -4,11 +4,10 @@
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
-using SeedExamples.Core;
 
 namespace SeedExamples;
 
-[JsonConverter(typeof(Metadata.JsonConverter))]
+[JsonConverter(typeof(SeedExamples.Metadata.JsonConverter))]
 [Serializable]
 public record Metadata
 {
@@ -19,18 +18,18 @@ public record Metadata
     }
 
     /// <summary>
-    /// Create an instance of Metadata with <see cref="Metadata.Html"/>.
+    /// Create an instance of Metadata with <see cref="SeedExamples.Metadata.Html"/>.
     /// </summary>
-    public Metadata(Metadata.Html value)
+    public Metadata(SeedExamples.Metadata.Html value)
     {
         Type = "html";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of Metadata with <see cref="Metadata.Markdown"/>.
+    /// Create an instance of Metadata with <see cref="SeedExamples.Metadata.Markdown"/>.
     /// </summary>
-    public Metadata(Metadata.Markdown value)
+    public Metadata(SeedExamples.Metadata.Markdown value)
     {
         Type = "markdown";
         Value = value.Value;
@@ -68,14 +67,16 @@ public record Metadata
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'html'.</exception>
     public string AsHtml() =>
-        IsHtml ? (string)Value! : throw new Exception("Metadata.Type is not 'html'");
+        IsHtml ? (string)Value! : throw new Exception("SeedExamples.Metadata.Type is not 'html'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'markdown', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'markdown'.</exception>
     public string AsMarkdown() =>
-        IsMarkdown ? (string)Value! : throw new Exception("Metadata.Type is not 'markdown'");
+        IsMarkdown
+            ? (string)Value!
+            : throw new Exception("SeedExamples.Metadata.Type is not 'markdown'");
 
     public T Match<T>(
         Func<string, T> onHtml,
@@ -139,7 +140,7 @@ public record Metadata
         return false;
     }
 
-    public override string ToString() => JsonUtils.Serialize(this);
+    public override string ToString() => SeedExamples.Core.JsonUtils.Serialize(this);
 
     /// <summary>
     /// Base properties for the discriminated union
@@ -155,14 +156,14 @@ public record Metadata
     }
 
     [Serializable]
-    internal sealed class JsonConverter : JsonConverter<Metadata>
+    internal sealed class JsonConverter : JsonConverter<SeedExamples.Metadata>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
-            typeof(Metadata).IsAssignableFrom(typeToConvert);
+        public override bool CanConvert(Type typeToConvert) =>
+            typeof(SeedExamples.Metadata).IsAssignableFrom(typeToConvert);
 
-        public override Metadata Read(
+        public override SeedExamples.Metadata Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -196,9 +197,11 @@ public record Metadata
                 _ => json.Deserialize<object?>(options),
             };
             var baseProperties =
-                json.Deserialize<Metadata.BaseProperties>(options)
-                ?? throw new JsonException("Failed to deserialize Metadata.BaseProperties");
-            return new Metadata(discriminator, value)
+                json.Deserialize<SeedExamples.Metadata.BaseProperties>(options)
+                ?? throw new JsonException(
+                    "Failed to deserialize SeedExamples.Metadata.BaseProperties"
+                );
+            return new SeedExamples.Metadata(discriminator, value)
             {
                 Extra = baseProperties.Extra,
                 Tags = baseProperties.Tags,
@@ -207,7 +210,7 @@ public record Metadata
 
         public override void Write(
             Utf8JsonWriter writer,
-            Metadata value,
+            SeedExamples.Metadata value,
             JsonSerializerOptions options
         )
         {
@@ -227,9 +230,16 @@ public record Metadata
             json["type"] = value.Type;
             var basePropertiesJson =
                 JsonSerializer.SerializeToNode(
-                    new Metadata.BaseProperties { Extra = value.Extra, Tags = value.Tags },
+                    new SeedExamples.Metadata.BaseProperties
+                    {
+                        Extra = value.Extra,
+                        Tags = value.Tags,
+                    },
                     options
-                ) ?? throw new JsonException("Failed to serialize Metadata.BaseProperties");
+                )
+                ?? throw new JsonException(
+                    "Failed to serialize SeedExamples.Metadata.BaseProperties"
+                );
             foreach (var property in basePropertiesJson.AsObject())
             {
                 json[property.Key] = property.Value;
@@ -253,7 +263,7 @@ public record Metadata
 
         public override string ToString() => Value;
 
-        public static implicit operator Html(string value) => new(value);
+        public static implicit operator SeedExamples.Metadata.Html(string value) => new(value);
     }
 
     /// <summary>
@@ -271,6 +281,6 @@ public record Metadata
 
         public override string ToString() => Value;
 
-        public static implicit operator Markdown(string value) => new(value);
+        public static implicit operator SeedExamples.Metadata.Markdown(string value) => new(value);
     }
 }

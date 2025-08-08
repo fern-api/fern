@@ -1,14 +1,16 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedTrace;
 
 namespace Usage;
 
 public class Example5
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do()
+    {
         var client = new SeedTraceClient(
             token: "<token>",
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions
+            {
                 BaseUrl = "https://api.fern.com"
             }
         );
@@ -16,9 +18,12 @@ public class Example5
         await client.Admin.StoreTracedTestCaseAsync(
             "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             "testCaseId",
-            new StoreTracedTestCaseRequest{
-                Result = new TestCaseResultWithStdout{
-                    Result = new TestCaseResult{
+            new StoreTracedTestCaseRequest
+            {
+                Result = new TestCaseResultWithStdout
+                {
+                    Result = new TestCaseResult
+                    {
                         ExpectedResult = new VariableValue(
 
                         ),

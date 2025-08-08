@@ -1,6 +1,6 @@
 # Reference
 ## Completions
-<details><summary><code>client.Completions.<a href="/src/SeedServerSentEvents/Completions/CompletionsClient.cs">StreamAsync</a>(StreamCompletionRequest { ... })</code></summary>
+<details><summary><code>client.Completions.<a href="/src/SeedServerSentEvents/Completions/CompletionsClient.cs">StreamAsync</a>(SeedServerSentEvents.StreamCompletionRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,9 @@
 <dd>
 
 ```csharp
-await client.Completions.StreamAsync(new StreamCompletionRequest { Query = "query" });
+await client.Completions.StreamAsync(
+    new SeedServerSentEvents.StreamCompletionRequest { Query = "query" }
+);
 ```
 </dd>
 </dl>
@@ -28,7 +30,7 @@ await client.Completions.StreamAsync(new StreamCompletionRequest { Query = "quer
 <dl>
 <dd>
 
-**request:** `StreamCompletionRequest` 
+**request:** `SeedServerSentEvents.StreamCompletionRequest` 
     
 </dd>
 </dl>

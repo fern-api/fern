@@ -1,6 +1,4 @@
-using global::System.Threading.Tasks;
 using NUnit.Framework;
-using SeedLiteral;
 using SeedLiteral.Core;
 
 namespace SeedLiteral.Test.Unit.MockServer;
@@ -9,7 +7,7 @@ namespace SeedLiteral.Test.Unit.MockServer;
 public class SendTest : BaseMockServerTest
 {
     [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest_1()
+    public async Task MockServerTest_1()
     {
         const string requestJson = """
             {
@@ -95,7 +93,7 @@ public class SendTest : BaseMockServerTest
     }
 
     [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest_2()
+    public async Task MockServerTest_2()
     {
         const string requestJson = """
             {

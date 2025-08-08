@@ -1,4 +1,4 @@
-import { mkdir, writeFile } from "fs/promises";
+import { mkdir, readFile, unlink, writeFile } from "fs/promises";
 import path from "path";
 
 import { Style } from "@fern-api/browser-compatible-base-generator";
@@ -11,6 +11,7 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
 import { convertIr } from "../utils/convertIr";
+import { loggingExeca } from "@fern-api/logging-execa";
 
 const PROJECT_FILE_CONTENT = `
 <Project Sdk="Microsoft.NET.Sdk">
@@ -70,7 +71,74 @@ export class DynamicSnippetsCsharpTestGenerator {
                 );
             }
         }
+
+        await this.dotnetFormat(
+            absolutePathToOutputDir,
+            `[*.cs]
+dotnet_diagnostic.IDE0001.severity = error
+dotnet_diagnostic.IDE0002.severity = error
+dotnet_diagnostic.IDE0003.severity = error
+dotnet_diagnostic.IDE0004.severity = error
+dotnet_diagnostic.IDE0007.severity = error
+dotnet_diagnostic.IDE0017.severity = error
+dotnet_diagnostic.IDE0018.severity = error         
+          `
+        );
+        await this.dotnetFormat(
+            absolutePathToOutputDir,
+            `[*.cs]
+dotnet_diagnostic.IDE0005.severity = error          
+          `
+        );
+
         this.context.logger.debug("Done generating dynamic snippet tests");
+    }
+
+    private async dotnetFormat(absolutePathToSrcDirectory: AbsoluteFilePath, editorConfig: string): Promise<void> {
+        // write a temporary '.editorconfig' file to the absolutePathToSrcDirectory
+        // so we can use dotnet format to pre-format the project (ie, optimize namespace usage, scoping, etc)
+        const editorConfigPath = join(absolutePathToSrcDirectory, RelativeFilePath.of(".editorconfig"));
+        await writeFile(editorConfigPath, editorConfig);
+
+        // patch the csproj file to only target net8.0 (dotnet format gets weird with multiple target frameworks)
+        const csprojPath = join(absolutePathToSrcDirectory, RelativeFilePath.of(`SeedApi.DynamicSnippets.csproj`));
+        const csprojContents = (await readFile(csprojPath)).toString();
+
+        // write modified csproj file
+        await writeFile(
+            csprojPath,
+            csprojContents
+                .replace(
+                    /<TargetFrameworks>.*<\/TargetFrameworks>/,
+                    `<TargetFrameworks>netstandard2.0</TargetFrameworks>`
+                )
+                .replace(/<ImplicitUsings>enable<\/ImplicitUsings>/, `<ImplicitUsings>disable</ImplicitUsings>`)
+                .replace(/<LangVersion>12<\/LangVersion>/, `<LangVersion>11</LangVersion>`)
+                .replace(
+                    /<\/Project>/,
+                    `    <ItemGroup>
+      <Using Include="System" />
+  </ItemGroup>
+</Project>`
+                )
+        );
+
+        // call dotnet format
+        await loggingExeca(
+            this.context.logger,
+            "dotnet",
+            ["format", "--verbosity", "detailed", "--severity", "error"],
+            {
+                doNotPipeOutput: true,
+                cwd: absolutePathToSrcDirectory
+            }
+        );
+
+        await writeFile(csprojPath, csprojContents);
+        // remove the temporary editorconfig file
+        await unlink(editorConfigPath);
+
+        await writeFile(csprojPath, csprojContents);
     }
 
     private async initializeProject(outputDir: AbsoluteFilePath): Promise<AbsoluteFilePath> {

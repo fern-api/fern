@@ -1,14 +1,12 @@
 using System.Text.Json;
 using NUnit.Framework;
-using SeedExamples;
-using SeedExamples.Core;
 
 namespace SeedExamples.Test;
 
 [TestFixture]
 public class DirectoryTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public void TestDeserialization()
     {
         var json = """
@@ -33,16 +31,16 @@ public class DirectoryTest
               ]
             }
             """;
-        var expectedObject = new Directory
+        var expectedObject = new SeedExamples.Directory
         {
             Name = "root",
             Files = new List<SeedExamples.File>()
             {
                 new SeedExamples.File { Name = "file.txt", Contents = "..." },
             },
-            Directories = new List<Directory>()
+            Directories = new List<SeedExamples.Directory>()
             {
-                new Directory
+                new SeedExamples.Directory
                 {
                     Name = "tmp",
                     Files = new List<SeedExamples.File>()
@@ -52,11 +50,13 @@ public class DirectoryTest
                 },
             },
         };
-        var deserializedObject = JsonUtils.Deserialize<Directory>(json);
+        var deserializedObject = SeedExamples.Core.JsonUtils.Deserialize<SeedExamples.Directory>(
+            json
+        );
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestSerialization()
     {
         var expectedJson = """
@@ -81,16 +81,16 @@ public class DirectoryTest
               ]
             }
             """;
-        var actualObj = new Directory
+        var actualObj = new SeedExamples.Directory
         {
             Name = "root",
             Files = new List<SeedExamples.File>()
             {
                 new SeedExamples.File { Name = "file.txt", Contents = "..." },
             },
-            Directories = new List<Directory>()
+            Directories = new List<SeedExamples.Directory>()
             {
-                new Directory
+                new SeedExamples.Directory
                 {
                     Name = "tmp",
                     Files = new List<SeedExamples.File>()
@@ -100,8 +100,8 @@ public class DirectoryTest
                 },
             },
         };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        var actualElement = SeedExamples.Core.JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = SeedExamples.Core.JsonUtils.Deserialize<JsonElement>(expectedJson);
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

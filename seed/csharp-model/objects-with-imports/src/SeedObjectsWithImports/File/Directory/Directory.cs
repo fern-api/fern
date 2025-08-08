@@ -1,6 +1,5 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using SeedObjectsWithImports;
 using SeedObjectsWithImports.Core;
 
 namespace SeedObjectsWithImports.File;
@@ -19,7 +18,7 @@ public record Directory : IJsonOnDeserialized
     public IEnumerable<SeedObjectsWithImports.File>? Files { get; set; }
 
     [JsonPropertyName("directories")]
-    public IEnumerable<Directory>? Directories { get; set; }
+    public IEnumerable<SeedObjectsWithImports.File.Directory>? Directories { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();

@@ -1,7 +1,5 @@
-using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedExhaustive.Core;
-using SeedExhaustive.Test.Unit.MockServer;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Primitive;
 
@@ -9,7 +7,7 @@ namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Primitive;
 public class GetAndReturnUuidTest : BaseMockServerTest
 {
     [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    public async Task MockServerTest()
     {
         const string requestJson = """
             "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"

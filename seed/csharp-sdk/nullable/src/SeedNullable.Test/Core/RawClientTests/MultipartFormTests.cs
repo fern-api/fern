@@ -1,9 +1,8 @@
-using global::System.Net.Http;
-using global::System.Text;
-using global::System.Text.Json.Serialization;
+using System.Text;
+using System.Text.Json.Serialization;
 using NUnit.Framework;
 using SeedNullable.Core;
-using SystemTask = global::System.Threading.Tasks.Task;
+using SystemTask = System.Threading.Tasks.Task;
 
 namespace SeedNullable.Test.Core.RawClientTests;
 

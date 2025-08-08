@@ -1,14 +1,12 @@
 using System.Text.Json;
 using NUnit.Framework;
-using SeedExamples;
-using SeedExamples.Core;
 
 namespace SeedExamples.Test;
 
 [TestFixture]
 public class ResponseTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public void TestDeserialization()
     {
         var json = """
@@ -28,30 +26,32 @@ public class ResponseTest
               ]
             }
             """;
-        var expectedObject = new Response
+        var expectedObject = new SeedExamples.Response
         {
             Response_ = "Initializing...",
-            Identifiers = new List<Identifier>()
+            Identifiers = new List<SeedExamples.Identifier>()
             {
-                new Identifier
+                new SeedExamples.Identifier
                 {
-                    Type = BasicType.Primitive,
+                    Type = SeedExamples.BasicType.Primitive,
                     Value = "example",
                     Label = "Primitive",
                 },
-                new Identifier
+                new SeedExamples.Identifier
                 {
-                    Type = ComplexType.Unknown,
+                    Type = SeedExamples.ComplexType.Unknown,
                     Value = "{}",
                     Label = "Unknown",
                 },
             },
         };
-        var deserializedObject = JsonUtils.Deserialize<Response>(json);
+        var deserializedObject = SeedExamples.Core.JsonUtils.Deserialize<SeedExamples.Response>(
+            json
+        );
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestSerialization()
     {
         var expectedJson = """
@@ -71,27 +71,27 @@ public class ResponseTest
               ]
             }
             """;
-        var actualObj = new Response
+        var actualObj = new SeedExamples.Response
         {
             Response_ = "Initializing...",
-            Identifiers = new List<Identifier>()
+            Identifiers = new List<SeedExamples.Identifier>()
             {
-                new Identifier
+                new SeedExamples.Identifier
                 {
-                    Type = BasicType.Primitive,
+                    Type = SeedExamples.BasicType.Primitive,
                     Value = "example",
                     Label = "Primitive",
                 },
-                new Identifier
+                new SeedExamples.Identifier
                 {
-                    Type = ComplexType.Unknown,
+                    Type = SeedExamples.ComplexType.Unknown,
                     Value = "{}",
                     Label = "Unknown",
                 },
             },
         };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        var actualElement = SeedExamples.Core.JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = SeedExamples.Core.JsonUtils.Deserialize<JsonElement>(expectedJson);
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

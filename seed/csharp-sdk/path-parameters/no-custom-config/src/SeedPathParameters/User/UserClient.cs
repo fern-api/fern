@@ -15,7 +15,9 @@ public partial class UserClient
     }
 
     /// <example><code>
-    /// await client.User.GetUserAsync(new GetUsersRequest { TenantId = "tenant_id", UserId = "user_id" });
+    /// await client.User.GetUserAsync(
+    ///     new SeedPathParameters.GetUsersRequest { TenantId = "tenant_id", UserId = "user_id" }
+    /// );
     /// </code></example>
     public async Task<User> GetUserAsync(
         GetUsersRequest request,
@@ -65,7 +67,7 @@ public partial class UserClient
     /// <example><code>
     /// await client.User.CreateUserAsync(
     ///     "tenant_id",
-    ///     new User
+    ///     new SeedPathParameters.User
     ///     {
     ///         Name = "name",
     ///         Tags = new List&lt;string&gt;() { "tags", "tags" },
@@ -120,11 +122,11 @@ public partial class UserClient
 
     /// <example><code>
     /// await client.User.UpdateUserAsync(
-    ///     new UpdateUserRequest
+    ///     new SeedPathParameters.UpdateUserRequest
     ///     {
     ///         TenantId = "tenant_id",
     ///         UserId = "user_id",
-    ///         Body = new User
+    ///         Body = new SeedPathParameters.User
     ///         {
     ///             Name = "name",
     ///             Tags = new List&lt;string&gt;() { "tags", "tags" },
@@ -180,7 +182,7 @@ public partial class UserClient
 
     /// <example><code>
     /// await client.User.SearchUsersAsync(
-    ///     new SearchUsersRequest
+    ///     new SeedPathParameters.SearchUsersRequest
     ///     {
     ///         TenantId = "tenant_id",
     ///         UserId = "user_id",

@@ -1,6 +1,5 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using SeedCsharpNamespaceConflict;
 using SeedCsharpNamespaceConflict.Core;
 
 namespace SeedCsharpNamespaceConflict.A.Aa;

@@ -1,21 +1,26 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedUndiscriminatedUnions;
 
 namespace Usage;
 
 public class Example4
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do()
+    {
         var client = new SeedUndiscriminatedUnionsClient(
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions
+            {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Union.CallAsync(
-            new Request{
-                Union = new Dictionary<string, object>(){
-                    ["union"] = new Dictionary<string, object>() {
+            new Request
+            {
+                Union = new Dictionary<string, object>()
+                {
+                    ["union"] = new Dictionary<string, object>()
+                    {
                         ["key"] = "value",
                     },
                 }

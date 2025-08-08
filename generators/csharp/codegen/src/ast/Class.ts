@@ -32,7 +32,7 @@ export class Class extends AstNode {
     public readonly reference: ClassReference;
     public readonly parentClassReference: AstNode | undefined;
     public readonly interfaceReferences: ClassReference[];
-    public readonly isNestedClass: boolean;
+    public readonly enclosingType: ClassReference | undefined;
     public readonly type: Class.ClassType;
     public readonly summary: string | undefined;
     private readonly doc: XmlDocBlock;
@@ -57,7 +57,7 @@ export class Class extends AstNode {
         readonly,
         parentClassReference,
         interfaceReferences,
-        isNestedClass,
+        enclosingType,
         type,
         summary,
         doc,
@@ -73,7 +73,7 @@ export class Class extends AstNode {
         this.sealed = sealed ?? false;
         this.readonly = readonly ?? false;
         this.partial = partial ?? false;
-        this.isNestedClass = isNestedClass ?? false;
+        this.enclosingType = enclosingType;
         this.type = type ?? Class.ClassType.Class;
         this.summary = summary;
         this.doc = XmlDocBlock.of(doc ?? { summary });
@@ -82,9 +82,14 @@ export class Class extends AstNode {
         this.annotations = annotations ?? [];
         this.reference = new ClassReference({
             name: this.name,
-            namespace: this.namespace
+            namespace: this.namespace,
+            enclosingType: this.enclosingType
         });
         this.primaryConstructor = primaryConstructor;
+    }
+
+    public get isNestedClass(): boolean {
+        return this.enclosingType != null;
     }
 
     public addField(field: Field): void {
@@ -112,6 +117,11 @@ export class Class extends AstNode {
     }
 
     public addNestedClass(subClass: Class): void {
+        if (!subClass.isNestedClass) {
+            throw new Error(
+                `Set the enclosingType of the class ${this.name} to add the nested class ${subClass.name}.`
+            );
+        }
         this.nestedClasses.push(subClass);
     }
 
@@ -412,8 +422,8 @@ export namespace Class {
         parentClassReference?: AstNode;
         /* Any interfaces the class extends */
         interfaceReferences?: ClassReference[];
-        /* Defaults to false */
-        isNestedClass?: boolean;
+        /* The type that this class is nested in */
+        enclosingType?: ClassReference;
         /* Any annotations to add to the class */
         annotations?: Annotation[];
         /* Any annotations to add to the class */

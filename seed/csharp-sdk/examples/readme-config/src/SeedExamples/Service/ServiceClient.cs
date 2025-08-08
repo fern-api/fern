@@ -1,16 +1,15 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using global::System.Threading.Tasks;
-using SeedExamples.Core;
+using System.Threading.Tasks;
 
 namespace SeedExamples;
 
 public partial class ServiceClient
 {
-    private RawClient _client;
+    private SeedExamples.Core.RawClient _client;
 
-    internal ServiceClient(RawClient client)
+    internal ServiceClient(SeedExamples.Core.RawClient client)
     {
         _client = client;
     }
@@ -18,19 +17,22 @@ public partial class ServiceClient
     /// <example><code>
     /// await client.Service.GetMovieAsync("movie-c06a4ad7");
     /// </code></example>
-    public async Task<Movie> GetMovieAsync(
+    public async Task<SeedExamples.Movie> GetMovieAsync(
         string movieId,
-        RequestOptions? options = null,
+        SeedExamples.RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new JsonRequest
+                new SeedExamples.Core.JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = string.Format("/movie/{0}", ValueConvert.ToPathParameterString(movieId)),
+                    Path = string.Format(
+                        "/movie/{0}",
+                        SeedExamples.Core.ValueConvert.ToPathParameterString(movieId)
+                    ),
                     Options = options,
                 },
                 cancellationToken
@@ -41,17 +43,17 @@ public partial class ServiceClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<Movie>(responseBody)!;
+                return SeedExamples.Core.JsonUtils.Deserialize<SeedExamples.Movie>(responseBody)!;
             }
             catch (JsonException e)
             {
-                throw new SeedExamplesException("Failed to deserialize response", e);
+                throw new SeedExamples.SeedExamplesException("Failed to deserialize response", e);
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExamplesApiException(
+            throw new SeedExamples.SeedExamplesApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -61,7 +63,7 @@ public partial class ServiceClient
 
     /// <example><code>
     /// await client.Service.CreateMovieAsync(
-    ///     new Movie
+    ///     new SeedExamples.Movie
     ///     {
     ///         Id = "movie-c06a4ad7",
     ///         Prequel = "movie-cv9b914f",
@@ -87,14 +89,14 @@ public partial class ServiceClient
     /// );
     /// </code></example>
     public async Task<string> CreateMovieAsync(
-        Movie request,
-        RequestOptions? options = null,
+        SeedExamples.Movie request,
+        SeedExamples.RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new JsonRequest
+                new SeedExamples.Core.JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -110,17 +112,17 @@ public partial class ServiceClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<string>(responseBody)!;
+                return SeedExamples.Core.JsonUtils.Deserialize<string>(responseBody)!;
             }
             catch (JsonException e)
             {
-                throw new SeedExamplesException("Failed to deserialize response", e);
+                throw new SeedExamples.SeedExamplesException("Failed to deserialize response", e);
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExamplesApiException(
+            throw new SeedExamples.SeedExamplesApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -130,7 +132,7 @@ public partial class ServiceClient
 
     /// <example><code>
     /// await client.Service.GetMetadataAsync(
-    ///     new GetMetadataRequest
+    ///     new SeedExamples.GetMetadataRequest
     ///     {
     ///         Shallow = false,
     ///         Tag = ["development"],
@@ -138,9 +140,9 @@ public partial class ServiceClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<Metadata> GetMetadataAsync(
-        GetMetadataRequest request,
-        RequestOptions? options = null,
+    public async Task<SeedExamples.Metadata> GetMetadataAsync(
+        SeedExamples.GetMetadataRequest request,
+        SeedExamples.RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
@@ -148,14 +150,14 @@ public partial class ServiceClient
         _query["tag"] = request.Tag;
         if (request.Shallow != null)
         {
-            _query["shallow"] = JsonUtils.Serialize(request.Shallow.Value);
+            _query["shallow"] = SeedExamples.Core.JsonUtils.Serialize(request.Shallow.Value);
         }
-        var _headers = new Headers(
+        var _headers = new SeedExamples.Core.Headers(
             new Dictionary<string, string>() { { "X-API-Version", request.XApiVersion } }
         );
         var response = await _client
             .SendRequestAsync(
-                new JsonRequest
+                new SeedExamples.Core.JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
@@ -172,17 +174,19 @@ public partial class ServiceClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<Metadata>(responseBody)!;
+                return SeedExamples.Core.JsonUtils.Deserialize<SeedExamples.Metadata>(
+                    responseBody
+                )!;
             }
             catch (JsonException e)
             {
-                throw new SeedExamplesException("Failed to deserialize response", e);
+                throw new SeedExamples.SeedExamplesException("Failed to deserialize response", e);
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExamplesApiException(
+            throw new SeedExamples.SeedExamplesApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -192,10 +196,10 @@ public partial class ServiceClient
 
     /// <example><code>
     /// await client.Service.CreateBigEntityAsync(
-    ///     new BigEntity
+    ///     new SeedExamples.BigEntity
     ///     {
-    ///         CastMember = new Actor { Name = "name", Id = "id" },
-    ///         ExtendedMovie = new ExtendedMovie
+    ///         CastMember = new SeedExamples.Actor { Name = "name", Id = "id" },
+    ///         ExtendedMovie = new SeedExamples.ExtendedMovie
     ///         {
     ///             Cast = new List&lt;string&gt;() { "cast", "cast" },
     ///             Id = "id",
@@ -215,17 +219,17 @@ public partial class ServiceClient
     ///             },
     ///             Revenue = 1000000,
     ///         },
-    ///         Entity = new Entity { Type = BasicType.Primitive, Name = "name" },
-    ///         Metadata = new Metadata(new Metadata.Html("metadata")),
-    ///         CommonMetadata = new Metadata
+    ///         Entity = new SeedExamples.Entity { Type = SeedExamples.BasicType.Primitive, Name = "name" },
+    ///         Metadata = new SeedExamples.Metadata(new SeedExamples.Metadata.Html("metadata")),
+    ///         CommonMetadata = new SeedExamples.Commons.Metadata
     ///         {
     ///             Id = "id",
     ///             Data = new Dictionary&lt;string, string&gt;() { { "data", "data" } },
     ///             JsonString = "jsonString",
     ///         },
-    ///         EventInfo = new EventInfo(
-    ///             new EventInfo.Metadata(
-    ///                 new Metadata
+    ///         EventInfo = new SeedExamples.Commons.EventInfo(
+    ///             new SeedExamples.Commons.EventInfo.Metadata(
+    ///                 new SeedExamples.Commons.Metadata
     ///                 {
     ///                     Id = "id",
     ///                     Data = new Dictionary&lt;string, string&gt;() { { "data", "data" } },
@@ -233,11 +237,15 @@ public partial class ServiceClient
     ///                 }
     ///             )
     ///         ),
-    ///         Data = new Data(new Data.String("data")),
-    ///         Migration = new Migration { Name = "name", Status = MigrationStatus.Running },
-    ///         Exception = new Exception(
-    ///             new Exception.Generic(
-    ///                 new ExceptionInfo
+    ///         Data = new SeedExamples.Commons.Data(new SeedExamples.Commons.Data.String("data")),
+    ///         Migration = new SeedExamples.Migration
+    ///         {
+    ///             Name = "name",
+    ///             Status = SeedExamples.MigrationStatus.Running,
+    ///         },
+    ///         Exception = new SeedExamples.Exception(
+    ///             new SeedExamples.Exception.Generic(
+    ///                 new SeedExamples.ExceptionInfo
     ///                 {
     ///                     ExceptionType = "exceptionType",
     ///                     ExceptionMessage = "exceptionMessage",
@@ -245,102 +253,102 @@ public partial class ServiceClient
     ///                 }
     ///             )
     ///         ),
-    ///         Test = new Test(new Test.And(true)),
-    ///         Node = new Node
+    ///         Test = new SeedExamples.Test(new SeedExamples.Test.And(true)),
+    ///         Node = new SeedExamples.Node
     ///         {
     ///             Name = "name",
-    ///             Nodes = new List&lt;Node&gt;()
+    ///             Nodes = new List&lt;SeedExamples.Node&gt;()
     ///             {
-    ///                 new Node
+    ///                 new SeedExamples.Node
     ///                 {
     ///                     Name = "name",
-    ///                     Nodes = new List&lt;Node&gt;()
+    ///                     Nodes = new List&lt;SeedExamples.Node&gt;()
     ///                     {
-    ///                         new Node
+    ///                         new SeedExamples.Node
     ///                         {
     ///                             Name = "name",
-    ///                             Nodes = new List&lt;Node&gt;() { },
-    ///                             Trees = new List&lt;Tree&gt;() { },
+    ///                             Nodes = new List&lt;SeedExamples.Node&gt;() { },
+    ///                             Trees = new List&lt;SeedExamples.Tree&gt;() { },
     ///                         },
-    ///                         new Node
+    ///                         new SeedExamples.Node
     ///                         {
     ///                             Name = "name",
-    ///                             Nodes = new List&lt;Node&gt;() { },
-    ///                             Trees = new List&lt;Tree&gt;() { },
+    ///                             Nodes = new List&lt;SeedExamples.Node&gt;() { },
+    ///                             Trees = new List&lt;SeedExamples.Tree&gt;() { },
     ///                         },
     ///                     },
-    ///                     Trees = new List&lt;Tree&gt;()
+    ///                     Trees = new List&lt;SeedExamples.Tree&gt;()
     ///                     {
-    ///                         new Tree { Nodes = new List&lt;Node&gt;() { } },
-    ///                         new Tree { Nodes = new List&lt;Node&gt;() { } },
+    ///                         new SeedExamples.Tree { Nodes = new List&lt;SeedExamples.Node&gt;() { } },
+    ///                         new SeedExamples.Tree { Nodes = new List&lt;SeedExamples.Node&gt;() { } },
     ///                     },
     ///                 },
-    ///                 new Node
+    ///                 new SeedExamples.Node
     ///                 {
     ///                     Name = "name",
-    ///                     Nodes = new List&lt;Node&gt;()
+    ///                     Nodes = new List&lt;SeedExamples.Node&gt;()
     ///                     {
-    ///                         new Node
+    ///                         new SeedExamples.Node
     ///                         {
     ///                             Name = "name",
-    ///                             Nodes = new List&lt;Node&gt;() { },
-    ///                             Trees = new List&lt;Tree&gt;() { },
+    ///                             Nodes = new List&lt;SeedExamples.Node&gt;() { },
+    ///                             Trees = new List&lt;SeedExamples.Tree&gt;() { },
     ///                         },
-    ///                         new Node
+    ///                         new SeedExamples.Node
     ///                         {
     ///                             Name = "name",
-    ///                             Nodes = new List&lt;Node&gt;() { },
-    ///                             Trees = new List&lt;Tree&gt;() { },
+    ///                             Nodes = new List&lt;SeedExamples.Node&gt;() { },
+    ///                             Trees = new List&lt;SeedExamples.Tree&gt;() { },
     ///                         },
     ///                     },
-    ///                     Trees = new List&lt;Tree&gt;()
+    ///                     Trees = new List&lt;SeedExamples.Tree&gt;()
     ///                     {
-    ///                         new Tree { Nodes = new List&lt;Node&gt;() { } },
-    ///                         new Tree { Nodes = new List&lt;Node&gt;() { } },
+    ///                         new SeedExamples.Tree { Nodes = new List&lt;SeedExamples.Node&gt;() { } },
+    ///                         new SeedExamples.Tree { Nodes = new List&lt;SeedExamples.Node&gt;() { } },
     ///                     },
     ///                 },
     ///             },
-    ///             Trees = new List&lt;Tree&gt;()
+    ///             Trees = new List&lt;SeedExamples.Tree&gt;()
     ///             {
-    ///                 new Tree
+    ///                 new SeedExamples.Tree
     ///                 {
-    ///                     Nodes = new List&lt;Node&gt;()
+    ///                     Nodes = new List&lt;SeedExamples.Node&gt;()
     ///                     {
-    ///                         new Node
+    ///                         new SeedExamples.Node
     ///                         {
     ///                             Name = "name",
-    ///                             Nodes = new List&lt;Node&gt;() { },
-    ///                             Trees = new List&lt;Tree&gt;() { },
+    ///                             Nodes = new List&lt;SeedExamples.Node&gt;() { },
+    ///                             Trees = new List&lt;SeedExamples.Tree&gt;() { },
     ///                         },
-    ///                         new Node
+    ///                         new SeedExamples.Node
     ///                         {
     ///                             Name = "name",
-    ///                             Nodes = new List&lt;Node&gt;() { },
-    ///                             Trees = new List&lt;Tree&gt;() { },
+    ///                             Nodes = new List&lt;SeedExamples.Node&gt;() { },
+    ///                             Trees = new List&lt;SeedExamples.Tree&gt;() { },
     ///                         },
     ///                     },
     ///                 },
-    ///                 new Tree
+    ///                 new SeedExamples.Tree
     ///                 {
-    ///                     Nodes = new List&lt;Node&gt;()
+    ///                     Nodes = new List&lt;SeedExamples.Node&gt;()
     ///                     {
-    ///                         new Node
+    ///                         new SeedExamples.Node
     ///                         {
     ///                             Name = "name",
-    ///                             Nodes = new List&lt;Node&gt;() { },
-    ///                             Trees = new List&lt;Tree&gt;() { },
+    ///                             Nodes = new List&lt;SeedExamples.Node&gt;() { },
+    ///                             Trees = new List&lt;SeedExamples.Tree&gt;() { },
     ///                         },
-    ///                         new Node
+    ///                         new SeedExamples.Node
     ///                         {
     ///                             Name = "name",
-    ///                             Nodes = new List&lt;Node&gt;() { },
-    ///                             Trees = new List&lt;Tree&gt;() { },
+    ///                             Nodes = new List&lt;SeedExamples.Node&gt;() { },
+    ///                             Trees = new List&lt;SeedExamples.Tree&gt;() { },
     ///                         },
     ///                     },
     ///                 },
     ///             },
     ///         },
-    ///         Directory = new Directory
+    ///         Directory = new SeedExamples.Directory
     ///         {
     ///             Name = "name",
     ///             Files = new List&lt;SeedExamples.File&gt;()
@@ -348,9 +356,9 @@ public partial class ServiceClient
     ///                 new SeedExamples.File { Name = "name", Contents = "contents" },
     ///                 new SeedExamples.File { Name = "name", Contents = "contents" },
     ///             },
-    ///             Directories = new List&lt;Directory&gt;()
+    ///             Directories = new List&lt;SeedExamples.Directory&gt;()
     ///             {
-    ///                 new Directory
+    ///                 new SeedExamples.Directory
     ///                 {
     ///                     Name = "name",
     ///                     Files = new List&lt;SeedExamples.File&gt;()
@@ -358,23 +366,23 @@ public partial class ServiceClient
     ///                         new SeedExamples.File { Name = "name", Contents = "contents" },
     ///                         new SeedExamples.File { Name = "name", Contents = "contents" },
     ///                     },
-    ///                     Directories = new List&lt;Directory&gt;()
+    ///                     Directories = new List&lt;SeedExamples.Directory&gt;()
     ///                     {
-    ///                         new Directory
+    ///                         new SeedExamples.Directory
     ///                         {
     ///                             Name = "name",
     ///                             Files = new List&lt;SeedExamples.File&gt;() { },
-    ///                             Directories = new List&lt;Directory&gt;() { },
+    ///                             Directories = new List&lt;SeedExamples.Directory&gt;() { },
     ///                         },
-    ///                         new Directory
+    ///                         new SeedExamples.Directory
     ///                         {
     ///                             Name = "name",
     ///                             Files = new List&lt;SeedExamples.File&gt;() { },
-    ///                             Directories = new List&lt;Directory&gt;() { },
+    ///                             Directories = new List&lt;SeedExamples.Directory&gt;() { },
     ///                         },
     ///                     },
     ///                 },
-    ///                 new Directory
+    ///                 new SeedExamples.Directory
     ///                 {
     ///                     Name = "name",
     ///                     Files = new List&lt;SeedExamples.File&gt;()
@@ -382,25 +390,25 @@ public partial class ServiceClient
     ///                         new SeedExamples.File { Name = "name", Contents = "contents" },
     ///                         new SeedExamples.File { Name = "name", Contents = "contents" },
     ///                     },
-    ///                     Directories = new List&lt;Directory&gt;()
+    ///                     Directories = new List&lt;SeedExamples.Directory&gt;()
     ///                     {
-    ///                         new Directory
+    ///                         new SeedExamples.Directory
     ///                         {
     ///                             Name = "name",
     ///                             Files = new List&lt;SeedExamples.File&gt;() { },
-    ///                             Directories = new List&lt;Directory&gt;() { },
+    ///                             Directories = new List&lt;SeedExamples.Directory&gt;() { },
     ///                         },
-    ///                         new Directory
+    ///                         new SeedExamples.Directory
     ///                         {
     ///                             Name = "name",
     ///                             Files = new List&lt;SeedExamples.File&gt;() { },
-    ///                             Directories = new List&lt;Directory&gt;() { },
+    ///                             Directories = new List&lt;SeedExamples.Directory&gt;() { },
     ///                         },
     ///                     },
     ///                 },
     ///             },
     ///         },
-    ///         Moment = new Moment
+    ///         Moment = new SeedExamples.Moment
     ///         {
     ///             Id = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///             Date = new DateOnly(2023, 1, 15),
@@ -409,15 +417,15 @@ public partial class ServiceClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<Response> CreateBigEntityAsync(
-        BigEntity request,
-        RequestOptions? options = null,
+    public async Task<SeedExamples.Response> CreateBigEntityAsync(
+        SeedExamples.BigEntity request,
+        SeedExamples.RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new JsonRequest
+                new SeedExamples.Core.JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -433,17 +441,19 @@ public partial class ServiceClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<Response>(responseBody)!;
+                return SeedExamples.Core.JsonUtils.Deserialize<SeedExamples.Response>(
+                    responseBody
+                )!;
             }
             catch (JsonException e)
             {
-                throw new SeedExamplesException("Failed to deserialize response", e);
+                throw new SeedExamples.SeedExamplesException("Failed to deserialize response", e);
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExamplesApiException(
+            throw new SeedExamples.SeedExamplesApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -454,15 +464,15 @@ public partial class ServiceClient
     /// <example><code>
     /// await client.Service.RefreshTokenAsync(null);
     /// </code></example>
-    public async global::System.Threading.Tasks.Task RefreshTokenAsync(
-        RefreshTokenRequest? request,
-        RequestOptions? options = null,
+    public async Task RefreshTokenAsync(
+        SeedExamples.RefreshTokenRequest? request,
+        SeedExamples.RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new JsonRequest
+                new SeedExamples.Core.JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -479,7 +489,7 @@ public partial class ServiceClient
         }
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExamplesApiException(
+            throw new SeedExamples.SeedExamplesApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody

@@ -8,7 +8,7 @@ using SeedUnions.Core;
 
 namespace SeedUnions;
 
-[JsonConverter(typeof(UnionWithSingleElement.JsonConverter))]
+[JsonConverter(typeof(JsonConverter))]
 [Serializable]
 public record UnionWithSingleElement
 {
@@ -19,9 +19,9 @@ public record UnionWithSingleElement
     }
 
     /// <summary>
-    /// Create an instance of UnionWithSingleElement with <see cref="UnionWithSingleElement.Foo"/>.
+    /// Create an instance of UnionWithSingleElement with <see cref="Foo"/>.
     /// </summary>
-    public UnionWithSingleElement(UnionWithSingleElement.Foo value)
+    public UnionWithSingleElement(Foo value)
     {
         Type = "foo";
         Value = value.Value;
@@ -50,7 +50,7 @@ public record UnionWithSingleElement
     public SeedUnions.Foo AsFoo() =>
         IsFoo
             ? (SeedUnions.Foo)Value!
-            : throw new Exception("UnionWithSingleElement.Type is not 'foo'");
+            : throw new Exception("SeedUnions.UnionWithSingleElement.Type is not 'foo'");
 
     public T Match<T>(Func<SeedUnions.Foo, T> onFoo, Func<string, object?, T> onUnknown_)
     {
@@ -90,18 +90,17 @@ public record UnionWithSingleElement
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator UnionWithSingleElement(UnionWithSingleElement.Foo value) =>
-        new(value);
+    public static implicit operator UnionWithSingleElement(Foo value) => new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithSingleElement>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(Type typeToConvert) =>
             typeof(UnionWithSingleElement).IsAssignableFrom(typeToConvert);
 
         public override UnionWithSingleElement Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            Type typeToConvert,
             JsonSerializerOptions options
         )
         {

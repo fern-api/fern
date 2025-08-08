@@ -68,7 +68,7 @@ public partial class ServiceClient
     /// </summary>
     /// <example><code>
     /// await client.Service.GetWithHeaderAsync(
-    ///     new HeaderAuthRequest { XEndpointHeader = "X-Endpoint-Header" }
+    ///     new SeedAuthEnvironmentVariables.HeaderAuthRequest { XEndpointHeader = "X-Endpoint-Header" }
     /// );
     /// </code></example>
     public async Task<string> GetWithHeaderAsync(

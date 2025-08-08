@@ -1,7 +1,5 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using SeedExamples;
-using SeedExamples.Core;
 
 namespace SeedExamples.Commons;
 
@@ -22,7 +20,8 @@ public record Metadata : IJsonOnDeserialized
     public string? JsonString { get; set; }
 
     [JsonIgnore]
-    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+    public SeedExamples.ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } =
+        new();
 
     void IJsonOnDeserialized.OnDeserialized() =>
         AdditionalProperties.CopyFromExtensionData(_extensionData);
@@ -30,6 +29,6 @@ public record Metadata : IJsonOnDeserialized
     /// <inheritdoc />
     public override string ToString()
     {
-        return JsonUtils.Serialize(this);
+        return SeedExamples.Core.JsonUtils.Serialize(this);
     }
 }

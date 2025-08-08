@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedAuthEnvironmentVariables;
 
-var client = new SeedAuthEnvironmentVariablesClient("X_ANOTHER_HEADER");
+var client = new SeedAuthEnvironmentVariables.SeedAuthEnvironmentVariablesClient("X_ANOTHER_HEADER");
 await client.Service.GetWithApiKeyAsync();
 ```
 

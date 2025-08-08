@@ -1,7 +1,7 @@
-using global::System.Net.Http;
-using global::System.Net.Http.Headers;
-using global::System.Text;
-using SystemTask = global::System.Threading.Tasks.Task;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using SystemTask = System.Threading.Tasks.Task;
 
 namespace SeedUndiscriminatedUnions.Core;
 
@@ -19,16 +19,16 @@ internal partial class RawClient(ClientOptions clientOptions)
     internal readonly ClientOptions Options = clientOptions;
 
     [Obsolete("Use SendRequestAsync instead.")]
-    internal Task<global::SeedUndiscriminatedUnions.Core.ApiResponse> MakeRequestAsync(
-        global::SeedUndiscriminatedUnions.Core.BaseRequest request,
+    internal Task<Core.ApiResponse> MakeRequestAsync(
+        BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
         return SendRequestAsync(request, cancellationToken);
     }
 
-    internal async Task<global::SeedUndiscriminatedUnions.Core.ApiResponse> SendRequestAsync(
-        global::SeedUndiscriminatedUnions.Core.BaseRequest request,
+    internal async Task<Core.ApiResponse> SendRequestAsync(
+        BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
@@ -43,7 +43,7 @@ internal partial class RawClient(ClientOptions clientOptions)
             .ConfigureAwait(false);
     }
 
-    internal async Task<global::SeedUndiscriminatedUnions.Core.ApiResponse> SendRequestAsync(
+    internal async Task<Core.ApiResponse> SendRequestAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken = default
@@ -60,8 +60,10 @@ internal partial class RawClient(ClientOptions clientOptions)
 
     private static async Task<HttpRequestMessage> CloneRequestAsync(HttpRequestMessage request)
     {
-        var clonedRequest = new HttpRequestMessage(request.Method, request.RequestUri);
-        clonedRequest.Version = request.Version;
+        var clonedRequest = new HttpRequestMessage(request.Method, request.RequestUri)
+        {
+            Version = request.Version,
+        };
         switch (request.Content)
         {
             case MultipartContent oldMultipartFormContent:
@@ -109,7 +111,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     /// Sends the request with retries, unless the request content is not retryable,
     /// such as stream requests and multipart form data with stream content.
     /// </summary>
-    private async Task<global::SeedUndiscriminatedUnions.Core.ApiResponse> SendWithRetriesAsync(
+    private async Task<Core.ApiResponse> SendWithRetriesAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken
@@ -122,11 +124,7 @@ internal partial class RawClient(ClientOptions clientOptions)
 
         if (!isRetryableContent)
         {
-            return new global::SeedUndiscriminatedUnions.Core.ApiResponse
-            {
-                StatusCode = (int)response.StatusCode,
-                Raw = response,
-            };
+            return new Core.ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
         }
 
         for (var i = 0; i < maxRetries; i++)
@@ -144,11 +142,7 @@ internal partial class RawClient(ClientOptions clientOptions)
                 .ConfigureAwait(false);
         }
 
-        return new global::SeedUndiscriminatedUnions.Core.ApiResponse
-        {
-            StatusCode = (int)response.StatusCode,
-            Raw = response,
-        };
+        return new Core.ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
     }
 
     private static bool ShouldRetry(HttpResponseMessage response)
@@ -168,13 +162,13 @@ internal partial class RawClient(ClientOptions clientOptions)
         };
     }
 
-    internal HttpRequestMessage CreateHttpRequest(
-        global::SeedUndiscriminatedUnions.Core.BaseRequest request
-    )
+    internal HttpRequestMessage CreateHttpRequest(BaseRequest request)
     {
         var url = BuildUrl(request);
-        var httpRequest = new HttpRequestMessage(request.Method, url);
-        httpRequest.Content = request.CreateContent();
+        var httpRequest = new HttpRequestMessage(request.Method, url)
+        {
+            Content = request.CreateContent(),
+        };
         var mergedHeaders = new Dictionary<string, List<string>>();
         MergeHeaders(mergedHeaders, Options.Headers);
         MergeAdditionalHeaders(mergedHeaders, Options.AdditionalHeaders);
@@ -186,7 +180,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         return httpRequest;
     }
 
-    private static string BuildUrl(global::SeedUndiscriminatedUnions.Core.BaseRequest request)
+    private static string BuildUrl(BaseRequest request)
     {
         var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl;
         var trimmedBaseUrl = baseUrl.TrimEnd('/');
@@ -202,11 +196,7 @@ internal partial class RawClient(ClientOptions clientOptions)
             url,
             (current, queryItem) =>
             {
-                if (
-                    queryItem.Value
-                    is global::System.Collections.IEnumerable collection
-                        and not string
-                )
+                if (queryItem.Value is System.Collections.IEnumerable collection and not string)
                 {
                     var items = collection
                         .Cast<object>()
@@ -232,9 +222,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         return url;
     }
 
-    private static List<KeyValuePair<string, string>> GetQueryParameters(
-        global::SeedUndiscriminatedUnions.Core.BaseRequest request
-    )
+    private static List<KeyValuePair<string, string>> GetQueryParameters(BaseRequest request)
     {
         var result = TransformToKeyValuePairs(request.Query);
         if (
@@ -390,27 +378,25 @@ internal partial class RawClient(ClientOptions clientOptions)
 
     /// <inheritdoc />
     [Obsolete("Use global::SeedUndiscriminatedUnions.Core.ApiResponse instead.")]
-    internal record ApiResponse : global::SeedUndiscriminatedUnions.Core.ApiResponse;
+    internal record ApiResponse : Core.ApiResponse;
 
     /// <inheritdoc />
     [Obsolete("Use global::SeedUndiscriminatedUnions.Core.BaseRequest instead.")]
-    internal abstract record BaseApiRequest : global::SeedUndiscriminatedUnions.Core.BaseRequest;
+    internal abstract record BaseApiRequest : BaseRequest;
 
     /// <inheritdoc />
     [Obsolete("Use global::SeedUndiscriminatedUnions.Core.EmptyRequest instead.")]
-    internal abstract record EmptyApiRequest : global::SeedUndiscriminatedUnions.Core.EmptyRequest;
+    internal abstract record EmptyApiRequest : EmptyRequest;
 
     /// <inheritdoc />
     [Obsolete("Use global::SeedUndiscriminatedUnions.Core.JsonRequest instead.")]
-    internal abstract record JsonApiRequest : global::SeedUndiscriminatedUnions.Core.JsonRequest;
+    internal abstract record JsonApiRequest : JsonRequest;
 
     /// <inheritdoc />
     [Obsolete("Use global::SeedUndiscriminatedUnions.Core.MultipartFormRequest instead.")]
-    internal abstract record MultipartFormRequest
-        : global::SeedUndiscriminatedUnions.Core.MultipartFormRequest;
+    internal abstract record MultipartFormRequest : Core.MultipartFormRequest;
 
     /// <inheritdoc />
     [Obsolete("Use global::SeedUndiscriminatedUnions.Core.StreamRequest instead.")]
-    internal abstract record StreamApiRequest
-        : global::SeedUndiscriminatedUnions.Core.StreamRequest;
+    internal abstract record StreamApiRequest : StreamRequest;
 }

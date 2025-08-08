@@ -38,10 +38,7 @@ public partial class ClientOptions
     /// Additional headers to be sent with HTTP requests.
     /// Headers with matching keys will be overwritten by headers set on the request.
     /// </summary>
-    public IEnumerable<System.Collections.Generic.KeyValuePair<
-        string,
-        string?
-    >> AdditionalHeaders { get;
+    public IEnumerable<KeyValuePair<string, string?>> AdditionalHeaders { get;
 #if NET5_0_OR_GREATER
         init;
 #else

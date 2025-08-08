@@ -1,6 +1,5 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using SeedExamples.Core;
 
 namespace SeedExamples;
 
@@ -48,7 +47,8 @@ public record ExtendedMovie : IJsonOnDeserialized
     public required long Revenue { get; set; }
 
     [JsonIgnore]
-    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+    public SeedExamples.ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } =
+        new();
 
     void IJsonOnDeserialized.OnDeserialized() =>
         AdditionalProperties.CopyFromExtensionData(_extensionData);
@@ -56,6 +56,6 @@ public record ExtendedMovie : IJsonOnDeserialized
     /// <inheritdoc />
     public override string ToString()
     {
-        return JsonUtils.Serialize(this);
+        return SeedExamples.Core.JsonUtils.Serialize(this);
     }
 }

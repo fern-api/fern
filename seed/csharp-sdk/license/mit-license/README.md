@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedLicense;
 
-var client = new SeedLicenseClient();
+var client = new SeedLicense.SeedLicenseClient();
 await client.GetAsync();
 ```
 

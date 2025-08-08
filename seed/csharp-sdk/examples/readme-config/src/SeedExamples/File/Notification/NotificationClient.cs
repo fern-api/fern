@@ -1,16 +1,14 @@
-using SeedExamples.Core;
-
 namespace SeedExamples.File.Notification;
 
 public partial class NotificationClient
 {
-    private RawClient _client;
+    private SeedExamples.Core.RawClient _client;
 
-    internal NotificationClient(RawClient client)
+    internal NotificationClient(SeedExamples.Core.RawClient client)
     {
         _client = client;
-        Service = new ServiceClient(_client);
+        Service = new SeedExamples.File.Notification.ServiceClient(_client);
     }
 
-    public ServiceClient Service { get; }
+    public SeedExamples.File.Notification.ServiceClient Service { get; }
 }

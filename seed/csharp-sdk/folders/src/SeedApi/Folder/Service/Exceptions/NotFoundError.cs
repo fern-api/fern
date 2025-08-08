@@ -1,5 +1,3 @@
-using SeedApi;
-
 namespace SeedApi.Folder;
 
 /// <summary>

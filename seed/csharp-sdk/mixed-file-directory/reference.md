@@ -1,6 +1,6 @@
 # Reference
 ## Organization
-<details><summary><code>client.Organization.<a href="/src/SeedMixedFileDirectory/Organization/OrganizationClient.cs">CreateAsync</a>(CreateOrganizationRequest { ... }) -> Organization</code></summary>
+<details><summary><code>client.Organization.<a href="/src/SeedMixedFileDirectory/Organization/OrganizationClient.cs">CreateAsync</a>(SeedMixedFileDirectory.CreateOrganizationRequest { ... }) -> SeedMixedFileDirectory.Organization</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,9 @@ Create a new organization.
 <dd>
 
 ```csharp
-await client.Organization.CreateAsync(new CreateOrganizationRequest { Name = "name" });
+await client.Organization.CreateAsync(
+    new SeedMixedFileDirectory.CreateOrganizationRequest { Name = "name" }
+);
 ```
 </dd>
 </dl>
@@ -42,7 +44,7 @@ await client.Organization.CreateAsync(new CreateOrganizationRequest { Name = "na
 <dl>
 <dd>
 
-**request:** `CreateOrganizationRequest` 
+**request:** `SeedMixedFileDirectory.CreateOrganizationRequest` 
     
 </dd>
 </dl>
@@ -55,7 +57,7 @@ await client.Organization.CreateAsync(new CreateOrganizationRequest { Name = "na
 </details>
 
 ## User
-<details><summary><code>client.User.<a href="/src/SeedMixedFileDirectory/User/UserClient.cs">ListAsync</a>(ListUsersRequest { ... }) -> IEnumerable<User></code></summary>
+<details><summary><code>client.User.<a href="/src/SeedMixedFileDirectory/User/UserClient.cs">ListAsync</a>(SeedMixedFileDirectory.ListUsersRequest { ... }) -> IEnumerable<SeedMixedFileDirectory.User></code></summary>
 <dl>
 <dd>
 
@@ -82,7 +84,7 @@ List all users.
 <dd>
 
 ```csharp
-await client.User.ListAsync(new ListUsersRequest { Limit = 1 });
+await client.User.ListAsync(new SeedMixedFileDirectory.ListUsersRequest { Limit = 1 });
 ```
 </dd>
 </dl>
@@ -97,7 +99,7 @@ await client.User.ListAsync(new ListUsersRequest { Limit = 1 });
 <dl>
 <dd>
 
-**request:** `ListUsersRequest` 
+**request:** `SeedMixedFileDirectory.ListUsersRequest` 
     
 </dd>
 </dl>
@@ -110,7 +112,7 @@ await client.User.ListAsync(new ListUsersRequest { Limit = 1 });
 </details>
 
 ## User Events
-<details><summary><code>client.User.Events.<a href="/src/SeedMixedFileDirectory/User/Events/EventsClient.cs">ListEventsAsync</a>(User.ListUserEventsRequest { ... }) -> IEnumerable<User.Event></code></summary>
+<details><summary><code>client.User.Events.<a href="/src/SeedMixedFileDirectory/User/Events/EventsClient.cs">ListEventsAsync</a>(SeedMixedFileDirectory.User.ListUserEventsRequest { ... }) -> IEnumerable<SeedMixedFileDirectory.User.Event></code></summary>
 <dl>
 <dd>
 
@@ -137,7 +139,9 @@ List all user events.
 <dd>
 
 ```csharp
-await client.User.Events.ListEventsAsync(new ListUserEventsRequest { Limit = 1 });
+await client.User.Events.ListEventsAsync(
+    new SeedMixedFileDirectory.User.ListUserEventsRequest { Limit = 1 }
+);
 ```
 </dd>
 </dl>
@@ -152,7 +156,7 @@ await client.User.Events.ListEventsAsync(new ListUserEventsRequest { Limit = 1 }
 <dl>
 <dd>
 
-**request:** `User.ListUserEventsRequest` 
+**request:** `SeedMixedFileDirectory.User.ListUserEventsRequest` 
     
 </dd>
 </dl>
@@ -165,7 +169,7 @@ await client.User.Events.ListEventsAsync(new ListUserEventsRequest { Limit = 1 }
 </details>
 
 ## User Events Metadata
-<details><summary><code>client.User.Events.Metadata.<a href="/src/SeedMixedFileDirectory/User/Events/Metadata/MetadataClient.cs">GetMetadataAsync</a>(User.Events.GetEventMetadataRequest { ... }) -> User.Events.Metadata</code></summary>
+<details><summary><code>client.User.Events.Metadata.<a href="/src/SeedMixedFileDirectory/User/Events/Metadata/MetadataClient.cs">GetMetadataAsync</a>(SeedMixedFileDirectory.User.Events.GetEventMetadataRequest { ... }) -> SeedMixedFileDirectory.User.Events.Metadata</code></summary>
 <dl>
 <dd>
 
@@ -192,7 +196,9 @@ Get event metadata.
 <dd>
 
 ```csharp
-await client.User.Events.Metadata.GetMetadataAsync(new GetEventMetadataRequest { Id = "id" });
+await client.User.Events.Metadata.GetMetadataAsync(
+    new SeedMixedFileDirectory.User.Events.GetEventMetadataRequest { Id = "id" }
+);
 ```
 </dd>
 </dl>
@@ -207,7 +213,7 @@ await client.User.Events.Metadata.GetMetadataAsync(new GetEventMetadataRequest {
 <dl>
 <dd>
 
-**request:** `User.Events.GetEventMetadataRequest` 
+**request:** `SeedMixedFileDirectory.User.Events.GetEventMetadataRequest` 
     
 </dd>
 </dl>

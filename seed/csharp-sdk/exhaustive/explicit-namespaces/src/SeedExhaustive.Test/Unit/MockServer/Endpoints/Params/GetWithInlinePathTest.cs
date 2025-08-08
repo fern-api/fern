@@ -1,8 +1,6 @@
-using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedExhaustive.Core;
 using SeedExhaustive.Endpoints.Params;
-using SeedExhaustive.Test.Unit.MockServer;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Params;
 
@@ -10,7 +8,7 @@ namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Params;
 public class GetWithInlinePathTest : BaseMockServerTest
 {
     [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    public async Task MockServerTest()
     {
         const string mockResponse = """
             "string"

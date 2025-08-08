@@ -8,7 +8,7 @@ using SeedUnions.Core;
 
 namespace SeedUnions;
 
-[JsonConverter(typeof(UnionWithTime.JsonConverter))]
+[JsonConverter(typeof(JsonConverter))]
 [Serializable]
 public record UnionWithTime
 {
@@ -19,27 +19,27 @@ public record UnionWithTime
     }
 
     /// <summary>
-    /// Create an instance of UnionWithTime with <see cref="UnionWithTime.ValueInner"/>.
+    /// Create an instance of UnionWithTime with <see cref="ValueInner"/>.
     /// </summary>
-    public UnionWithTime(UnionWithTime.ValueInner value)
+    public UnionWithTime(ValueInner value)
     {
         Type = "value";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of UnionWithTime with <see cref="UnionWithTime.Date"/>.
+    /// Create an instance of UnionWithTime with <see cref="Date"/>.
     /// </summary>
-    public UnionWithTime(UnionWithTime.Date value)
+    public UnionWithTime(Date value)
     {
         Type = "date";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of UnionWithTime with <see cref="UnionWithTime.Datetime"/>.
+    /// Create an instance of UnionWithTime with <see cref="Datetime"/>.
     /// </summary>
-    public UnionWithTime(UnionWithTime.Datetime value)
+    public UnionWithTime(Datetime value)
     {
         Type = "datetime";
         Value = value.Value;
@@ -76,21 +76,25 @@ public record UnionWithTime
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'value'.</exception>
     public int AsValue() =>
-        IsValue ? (int)Value! : throw new Exception("UnionWithTime.Type is not 'value'");
+        IsValue ? (int)Value! : throw new Exception("SeedUnions.UnionWithTime.Type is not 'value'");
 
     /// <summary>
     /// Returns the value as a <see cref="DateOnly"/> if <see cref="Type"/> is 'date', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'date'.</exception>
     public DateOnly AsDate() =>
-        IsDate ? (DateOnly)Value! : throw new Exception("UnionWithTime.Type is not 'date'");
+        IsDate
+            ? (DateOnly)Value!
+            : throw new Exception("SeedUnions.UnionWithTime.Type is not 'date'");
 
     /// <summary>
     /// Returns the value as a <see cref="DateTime"/> if <see cref="Type"/> is 'datetime', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'datetime'.</exception>
     public DateTime AsDatetime() =>
-        IsDatetime ? (DateTime)Value! : throw new Exception("UnionWithTime.Type is not 'datetime'");
+        IsDatetime
+            ? (DateTime)Value!
+            : throw new Exception("SeedUnions.UnionWithTime.Type is not 'datetime'");
 
     public T Match<T>(
         Func<int, T> onValue,
@@ -176,21 +180,21 @@ public record UnionWithTime
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator UnionWithTime(UnionWithTime.ValueInner value) => new(value);
+    public static implicit operator UnionWithTime(ValueInner value) => new(value);
 
-    public static implicit operator UnionWithTime(UnionWithTime.Date value) => new(value);
+    public static implicit operator UnionWithTime(Date value) => new(value);
 
-    public static implicit operator UnionWithTime(UnionWithTime.Datetime value) => new(value);
+    public static implicit operator UnionWithTime(Datetime value) => new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithTime>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(Type typeToConvert) =>
             typeof(UnionWithTime).IsAssignableFrom(typeToConvert);
 
         public override UnionWithTime Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            Type typeToConvert,
             JsonSerializerOptions options
         )
         {

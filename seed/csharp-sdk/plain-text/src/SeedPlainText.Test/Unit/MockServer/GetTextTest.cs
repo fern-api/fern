@@ -1,4 +1,3 @@
-using global::System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace SeedPlainText.Test.Unit.MockServer;
@@ -7,7 +6,7 @@ namespace SeedPlainText.Test.Unit.MockServer;
 public class GetTextTest : BaseMockServerTest
 {
     [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    public async Task MockServerTest()
     {
         const string mockResponse = "string";
 

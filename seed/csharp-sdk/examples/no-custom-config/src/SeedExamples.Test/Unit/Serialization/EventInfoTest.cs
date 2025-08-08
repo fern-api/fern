@@ -1,14 +1,12 @@
 using System.Text.Json;
 using NUnit.Framework;
-using SeedExamples.Commons;
-using SeedExamples.Core;
 
 namespace SeedExamples.Test;
 
 [TestFixture]
 public class EventInfoTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public void TestDeserialization()
     {
         var json = """
@@ -21,9 +19,9 @@ public class EventInfoTest
               "jsonString": "{\"one\": \"two\"}"
             }
             """;
-        var expectedObject = new EventInfo(
-            new EventInfo.Metadata(
-                new Commons.Metadata
+        var expectedObject = new SeedExamples.Commons.EventInfo(
+            new SeedExamples.Commons.EventInfo.Metadata(
+                new SeedExamples.Commons.Metadata
                 {
                     Id = "metadata-alskjfg8",
                     Data = new Dictionary<string, string>() { { "one", "two" } },
@@ -31,11 +29,12 @@ public class EventInfoTest
                 }
             )
         );
-        var deserializedObject = JsonUtils.Deserialize<EventInfo>(json);
+        var deserializedObject =
+            SeedExamples.Core.JsonUtils.Deserialize<SeedExamples.Commons.EventInfo>(json);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestSerialization()
     {
         var expectedJson = """
@@ -48,9 +47,9 @@ public class EventInfoTest
               "jsonString": "{\"one\": \"two\"}"
             }
             """;
-        var actualObj = new EventInfo(
-            new EventInfo.Metadata(
-                new Commons.Metadata
+        var actualObj = new SeedExamples.Commons.EventInfo(
+            new SeedExamples.Commons.EventInfo.Metadata(
+                new SeedExamples.Commons.Metadata
                 {
                     Id = "metadata-alskjfg8",
                     Data = new Dictionary<string, string>() { { "one", "two" } },
@@ -58,8 +57,8 @@ public class EventInfoTest
                 }
             )
         );
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        var actualElement = SeedExamples.Core.JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = SeedExamples.Core.JsonUtils.Deserialize<JsonElement>(expectedJson);
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

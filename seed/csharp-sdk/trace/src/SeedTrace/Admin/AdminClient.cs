@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -17,10 +17,10 @@ public partial class AdminClient
     /// <example><code>
     /// await client.Admin.UpdateTestSubmissionStatusAsync(
     ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ///     new TestSubmissionStatus(new TestSubmissionStatus.Stopped())
+    ///     new SeedTrace.TestSubmissionStatus(new SeedTrace.TestSubmissionStatus.Stopped())
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task UpdateTestSubmissionStatusAsync(
+    public async Task UpdateTestSubmissionStatusAsync(
         string submissionId,
         TestSubmissionStatus request,
         RequestOptions? options = null,
@@ -60,16 +60,18 @@ public partial class AdminClient
     /// <example><code>
     /// await client.Admin.SendTestSubmissionUpdateAsync(
     ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ///     new TestSubmissionUpdate
+    ///     new SeedTrace.TestSubmissionUpdate
     ///     {
     ///         UpdateTime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-    ///         UpdateInfo = new TestSubmissionUpdateInfo(
-    ///             new TestSubmissionUpdateInfo.Running(RunningSubmissionState.QueueingSubmission)
+    ///         UpdateInfo = new SeedTrace.TestSubmissionUpdateInfo(
+    ///             new SeedTrace.TestSubmissionUpdateInfo.Running(
+    ///                 SeedTrace.RunningSubmissionState.QueueingSubmission
+    ///             )
     ///         ),
     ///     }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task SendTestSubmissionUpdateAsync(
+    public async Task SendTestSubmissionUpdateAsync(
         string submissionId,
         TestSubmissionUpdate request,
         RequestOptions? options = null,
@@ -109,10 +111,10 @@ public partial class AdminClient
     /// <example><code>
     /// await client.Admin.UpdateWorkspaceSubmissionStatusAsync(
     ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ///     new WorkspaceSubmissionStatus(new WorkspaceSubmissionStatus.Stopped())
+    ///     new SeedTrace.WorkspaceSubmissionStatus(new SeedTrace.WorkspaceSubmissionStatus.Stopped())
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task UpdateWorkspaceSubmissionStatusAsync(
+    public async Task UpdateWorkspaceSubmissionStatusAsync(
         string submissionId,
         WorkspaceSubmissionStatus request,
         RequestOptions? options = null,
@@ -152,16 +154,18 @@ public partial class AdminClient
     /// <example><code>
     /// await client.Admin.SendWorkspaceSubmissionUpdateAsync(
     ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ///     new WorkspaceSubmissionUpdate
+    ///     new SeedTrace.WorkspaceSubmissionUpdate
     ///     {
     ///         UpdateTime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-    ///         UpdateInfo = new WorkspaceSubmissionUpdateInfo(
-    ///             new WorkspaceSubmissionUpdateInfo.Running(RunningSubmissionState.QueueingSubmission)
+    ///         UpdateInfo = new SeedTrace.WorkspaceSubmissionUpdateInfo(
+    ///             new SeedTrace.WorkspaceSubmissionUpdateInfo.Running(
+    ///                 SeedTrace.RunningSubmissionState.QueueingSubmission
+    ///             )
     ///         ),
     ///     }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task SendWorkspaceSubmissionUpdateAsync(
+    public async Task SendWorkspaceSubmissionUpdateAsync(
         string submissionId,
         WorkspaceSubmissionUpdate request,
         RequestOptions? options = null,
@@ -202,59 +206,63 @@ public partial class AdminClient
     /// await client.Admin.StoreTracedTestCaseAsync(
     ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///     "testCaseId",
-    ///     new StoreTracedTestCaseRequest
+    ///     new SeedTrace.StoreTracedTestCaseRequest
     ///     {
-    ///         Result = new TestCaseResultWithStdout
+    ///         Result = new SeedTrace.TestCaseResultWithStdout
     ///         {
-    ///             Result = new TestCaseResult
+    ///             Result = new SeedTrace.TestCaseResult
     ///             {
-    ///                 ExpectedResult = new VariableValue(new VariableValue.IntegerValue(1)),
-    ///                 ActualResult = new ActualResult(
-    ///                     new ActualResult.ValueInner(
-    ///                         new VariableValue(new VariableValue.IntegerValue(1))
+    ///                 ExpectedResult = new SeedTrace.VariableValue(
+    ///                     new SeedTrace.VariableValue.IntegerValue(1)
+    ///                 ),
+    ///                 ActualResult = new SeedTrace.ActualResult(
+    ///                     new SeedTrace.ActualResult.ValueInner(
+    ///                         new SeedTrace.VariableValue(new SeedTrace.VariableValue.IntegerValue(1))
     ///                     )
     ///                 ),
     ///                 Passed = true,
     ///             },
     ///             Stdout = "stdout",
     ///         },
-    ///         TraceResponses = new List&lt;TraceResponse&gt;()
+    ///         TraceResponses = new List&lt;SeedTrace.TraceResponse&gt;()
     ///         {
-    ///             new TraceResponse
+    ///             new SeedTrace.TraceResponse
     ///             {
     ///                 SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///                 LineNumber = 1,
-    ///                 ReturnValue = new DebugVariableValue(new DebugVariableValue.IntegerValue(1)),
-    ///                 ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
-    ///                 Stack = new StackInformation
+    ///                 ReturnValue = new SeedTrace.DebugVariableValue(
+    ///                     new SeedTrace.DebugVariableValue.IntegerValue(1)
+    ///                 ),
+    ///                 ExpressionLocation = new SeedTrace.ExpressionLocation { Start = 1, Offset = 1 },
+    ///                 Stack = new SeedTrace.StackInformation
     ///                 {
     ///                     NumStackFrames = 1,
-    ///                     TopStackFrame = new StackFrame
+    ///                     TopStackFrame = new SeedTrace.StackFrame
     ///                     {
     ///                         MethodName = "methodName",
     ///                         LineNumber = 1,
-    ///                         Scopes = new List&lt;Scope&gt;()
+    ///                         Scopes = new List&lt;SeedTrace.Scope&gt;()
     ///                         {
-    ///                             new Scope
+    ///                             new SeedTrace.Scope
     ///                             {
-    ///                                 Variables = new Dictionary&lt;string, DebugVariableValue&gt;()
+    ///                                 Variables = new Dictionary&lt;string, SeedTrace.DebugVariableValue&gt;()
     ///                                 {
     ///                                     {
     ///                                         "variables",
-    ///                                         new DebugVariableValue(
-    ///                                             new DebugVariableValue.IntegerValue(1)
+    ///                                         new SeedTrace.DebugVariableValue(
+    ///                                             new SeedTrace.DebugVariableValue.IntegerValue(1)
     ///                                         )
     ///                                     },
     ///                                 },
     ///                             },
-    ///                             new Scope
+    ///                             new SeedTrace.Scope
     ///                             {
-    ///                                 Variables = new Dictionary&lt;string, DebugVariableValue&gt;()
+    ///                                 Variables = new Dictionary&lt;string, SeedTrace.DebugVariableValue&gt;()
     ///                                 {
     ///                                     {
     ///                                         "variables",
-    ///                                         new DebugVariableValue(
-    ///                                             new DebugVariableValue.IntegerValue(1)
+    ///                                         new SeedTrace.DebugVariableValue(
+    ///                                             new SeedTrace.DebugVariableValue.IntegerValue(1)
     ///                                         )
     ///                                     },
     ///                                 },
@@ -264,41 +272,43 @@ public partial class AdminClient
     ///                 },
     ///                 Stdout = "stdout",
     ///             },
-    ///             new TraceResponse
+    ///             new SeedTrace.TraceResponse
     ///             {
     ///                 SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///                 LineNumber = 1,
-    ///                 ReturnValue = new DebugVariableValue(new DebugVariableValue.IntegerValue(1)),
-    ///                 ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
-    ///                 Stack = new StackInformation
+    ///                 ReturnValue = new SeedTrace.DebugVariableValue(
+    ///                     new SeedTrace.DebugVariableValue.IntegerValue(1)
+    ///                 ),
+    ///                 ExpressionLocation = new SeedTrace.ExpressionLocation { Start = 1, Offset = 1 },
+    ///                 Stack = new SeedTrace.StackInformation
     ///                 {
     ///                     NumStackFrames = 1,
-    ///                     TopStackFrame = new StackFrame
+    ///                     TopStackFrame = new SeedTrace.StackFrame
     ///                     {
     ///                         MethodName = "methodName",
     ///                         LineNumber = 1,
-    ///                         Scopes = new List&lt;Scope&gt;()
+    ///                         Scopes = new List&lt;SeedTrace.Scope&gt;()
     ///                         {
-    ///                             new Scope
+    ///                             new SeedTrace.Scope
     ///                             {
-    ///                                 Variables = new Dictionary&lt;string, DebugVariableValue&gt;()
+    ///                                 Variables = new Dictionary&lt;string, SeedTrace.DebugVariableValue&gt;()
     ///                                 {
     ///                                     {
     ///                                         "variables",
-    ///                                         new DebugVariableValue(
-    ///                                             new DebugVariableValue.IntegerValue(1)
+    ///                                         new SeedTrace.DebugVariableValue(
+    ///                                             new SeedTrace.DebugVariableValue.IntegerValue(1)
     ///                                         )
     ///                                     },
     ///                                 },
     ///                             },
-    ///                             new Scope
+    ///                             new SeedTrace.Scope
     ///                             {
-    ///                                 Variables = new Dictionary&lt;string, DebugVariableValue&gt;()
+    ///                                 Variables = new Dictionary&lt;string, SeedTrace.DebugVariableValue&gt;()
     ///                                 {
     ///                                     {
     ///                                         "variables",
-    ///                                         new DebugVariableValue(
-    ///                                             new DebugVariableValue.IntegerValue(1)
+    ///                                         new SeedTrace.DebugVariableValue(
+    ///                                             new SeedTrace.DebugVariableValue.IntegerValue(1)
     ///                                         )
     ///                                     },
     ///                                 },
@@ -312,7 +322,7 @@ public partial class AdminClient
     ///     }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task StoreTracedTestCaseAsync(
+    public async Task StoreTracedTestCaseAsync(
         string submissionId,
         string testCaseId,
         StoreTracedTestCaseRequest request,
@@ -355,41 +365,47 @@ public partial class AdminClient
     /// await client.Admin.StoreTracedTestCaseV2Async(
     ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///     "testCaseId",
-    ///     new List&lt;TraceResponseV2&gt;()
+    ///     new List&lt;SeedTrace.TraceResponseV2&gt;()
     ///     {
-    ///         new TraceResponseV2
+    ///         new SeedTrace.TraceResponseV2
     ///         {
     ///             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///             LineNumber = 1,
-    ///             File = new TracedFile { Filename = "filename", Directory = "directory" },
-    ///             ReturnValue = new DebugVariableValue(new DebugVariableValue.IntegerValue(1)),
-    ///             ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
-    ///             Stack = new StackInformation
+    ///             File = new SeedTrace.TracedFile { Filename = "filename", Directory = "directory" },
+    ///             ReturnValue = new SeedTrace.DebugVariableValue(
+    ///                 new SeedTrace.DebugVariableValue.IntegerValue(1)
+    ///             ),
+    ///             ExpressionLocation = new SeedTrace.ExpressionLocation { Start = 1, Offset = 1 },
+    ///             Stack = new SeedTrace.StackInformation
     ///             {
     ///                 NumStackFrames = 1,
-    ///                 TopStackFrame = new StackFrame
+    ///                 TopStackFrame = new SeedTrace.StackFrame
     ///                 {
     ///                     MethodName = "methodName",
     ///                     LineNumber = 1,
-    ///                     Scopes = new List&lt;Scope&gt;()
+    ///                     Scopes = new List&lt;SeedTrace.Scope&gt;()
     ///                     {
-    ///                         new Scope
+    ///                         new SeedTrace.Scope
     ///                         {
-    ///                             Variables = new Dictionary&lt;string, DebugVariableValue&gt;()
+    ///                             Variables = new Dictionary&lt;string, SeedTrace.DebugVariableValue&gt;()
     ///                             {
     ///                                 {
     ///                                     "variables",
-    ///                                     new DebugVariableValue(new DebugVariableValue.IntegerValue(1))
+    ///                                     new SeedTrace.DebugVariableValue(
+    ///                                         new SeedTrace.DebugVariableValue.IntegerValue(1)
+    ///                                     )
     ///                                 },
     ///                             },
     ///                         },
-    ///                         new Scope
+    ///                         new SeedTrace.Scope
     ///                         {
-    ///                             Variables = new Dictionary&lt;string, DebugVariableValue&gt;()
+    ///                             Variables = new Dictionary&lt;string, SeedTrace.DebugVariableValue&gt;()
     ///                             {
     ///                                 {
     ///                                     "variables",
-    ///                                     new DebugVariableValue(new DebugVariableValue.IntegerValue(1))
+    ///                                     new SeedTrace.DebugVariableValue(
+    ///                                         new SeedTrace.DebugVariableValue.IntegerValue(1)
+    ///                                     )
     ///                                 },
     ///                             },
     ///                         },
@@ -398,39 +414,45 @@ public partial class AdminClient
     ///             },
     ///             Stdout = "stdout",
     ///         },
-    ///         new TraceResponseV2
+    ///         new SeedTrace.TraceResponseV2
     ///         {
     ///             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///             LineNumber = 1,
-    ///             File = new TracedFile { Filename = "filename", Directory = "directory" },
-    ///             ReturnValue = new DebugVariableValue(new DebugVariableValue.IntegerValue(1)),
-    ///             ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
-    ///             Stack = new StackInformation
+    ///             File = new SeedTrace.TracedFile { Filename = "filename", Directory = "directory" },
+    ///             ReturnValue = new SeedTrace.DebugVariableValue(
+    ///                 new SeedTrace.DebugVariableValue.IntegerValue(1)
+    ///             ),
+    ///             ExpressionLocation = new SeedTrace.ExpressionLocation { Start = 1, Offset = 1 },
+    ///             Stack = new SeedTrace.StackInformation
     ///             {
     ///                 NumStackFrames = 1,
-    ///                 TopStackFrame = new StackFrame
+    ///                 TopStackFrame = new SeedTrace.StackFrame
     ///                 {
     ///                     MethodName = "methodName",
     ///                     LineNumber = 1,
-    ///                     Scopes = new List&lt;Scope&gt;()
+    ///                     Scopes = new List&lt;SeedTrace.Scope&gt;()
     ///                     {
-    ///                         new Scope
+    ///                         new SeedTrace.Scope
     ///                         {
-    ///                             Variables = new Dictionary&lt;string, DebugVariableValue&gt;()
+    ///                             Variables = new Dictionary&lt;string, SeedTrace.DebugVariableValue&gt;()
     ///                             {
     ///                                 {
     ///                                     "variables",
-    ///                                     new DebugVariableValue(new DebugVariableValue.IntegerValue(1))
+    ///                                     new SeedTrace.DebugVariableValue(
+    ///                                         new SeedTrace.DebugVariableValue.IntegerValue(1)
+    ///                                     )
     ///                                 },
     ///                             },
     ///                         },
-    ///                         new Scope
+    ///                         new SeedTrace.Scope
     ///                         {
-    ///                             Variables = new Dictionary&lt;string, DebugVariableValue&gt;()
+    ///                             Variables = new Dictionary&lt;string, SeedTrace.DebugVariableValue&gt;()
     ///                             {
     ///                                 {
     ///                                     "variables",
-    ///                                     new DebugVariableValue(new DebugVariableValue.IntegerValue(1))
+    ///                                     new SeedTrace.DebugVariableValue(
+    ///                                         new SeedTrace.DebugVariableValue.IntegerValue(1)
+    ///                                     )
     ///                                 },
     ///                             },
     ///                         },
@@ -442,7 +464,7 @@ public partial class AdminClient
     ///     }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task StoreTracedTestCaseV2Async(
+    public async Task StoreTracedTestCaseV2Async(
         string submissionId,
         string testCaseId,
         IEnumerable<TraceResponseV2> request,
@@ -484,13 +506,13 @@ public partial class AdminClient
     /// <example><code>
     /// await client.Admin.StoreTracedWorkspaceAsync(
     ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ///     new StoreTracedWorkspaceRequest
+    ///     new SeedTrace.StoreTracedWorkspaceRequest
     ///     {
-    ///         WorkspaceRunDetails = new WorkspaceRunDetails
+    ///         WorkspaceRunDetails = new SeedTrace.WorkspaceRunDetails
     ///         {
-    ///             ExceptionV2 = new ExceptionV2(
-    ///                 new ExceptionV2.Generic(
-    ///                     new ExceptionInfo
+    ///             ExceptionV2 = new SeedTrace.ExceptionV2(
+    ///                 new SeedTrace.ExceptionV2.Generic(
+    ///                     new SeedTrace.ExceptionInfo
     ///                     {
     ///                         ExceptionType = "exceptionType",
     ///                         ExceptionMessage = "exceptionMessage",
@@ -498,7 +520,7 @@ public partial class AdminClient
     ///                     }
     ///                 )
     ///             ),
-    ///             Exception = new ExceptionInfo
+    ///             Exception = new SeedTrace.ExceptionInfo
     ///             {
     ///                 ExceptionType = "exceptionType",
     ///                 ExceptionMessage = "exceptionMessage",
@@ -506,43 +528,45 @@ public partial class AdminClient
     ///             },
     ///             Stdout = "stdout",
     ///         },
-    ///         TraceResponses = new List&lt;TraceResponse&gt;()
+    ///         TraceResponses = new List&lt;SeedTrace.TraceResponse&gt;()
     ///         {
-    ///             new TraceResponse
+    ///             new SeedTrace.TraceResponse
     ///             {
     ///                 SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///                 LineNumber = 1,
-    ///                 ReturnValue = new DebugVariableValue(new DebugVariableValue.IntegerValue(1)),
-    ///                 ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
-    ///                 Stack = new StackInformation
+    ///                 ReturnValue = new SeedTrace.DebugVariableValue(
+    ///                     new SeedTrace.DebugVariableValue.IntegerValue(1)
+    ///                 ),
+    ///                 ExpressionLocation = new SeedTrace.ExpressionLocation { Start = 1, Offset = 1 },
+    ///                 Stack = new SeedTrace.StackInformation
     ///                 {
     ///                     NumStackFrames = 1,
-    ///                     TopStackFrame = new StackFrame
+    ///                     TopStackFrame = new SeedTrace.StackFrame
     ///                     {
     ///                         MethodName = "methodName",
     ///                         LineNumber = 1,
-    ///                         Scopes = new List&lt;Scope&gt;()
+    ///                         Scopes = new List&lt;SeedTrace.Scope&gt;()
     ///                         {
-    ///                             new Scope
+    ///                             new SeedTrace.Scope
     ///                             {
-    ///                                 Variables = new Dictionary&lt;string, DebugVariableValue&gt;()
+    ///                                 Variables = new Dictionary&lt;string, SeedTrace.DebugVariableValue&gt;()
     ///                                 {
     ///                                     {
     ///                                         "variables",
-    ///                                         new DebugVariableValue(
-    ///                                             new DebugVariableValue.IntegerValue(1)
+    ///                                         new SeedTrace.DebugVariableValue(
+    ///                                             new SeedTrace.DebugVariableValue.IntegerValue(1)
     ///                                         )
     ///                                     },
     ///                                 },
     ///                             },
-    ///                             new Scope
+    ///                             new SeedTrace.Scope
     ///                             {
-    ///                                 Variables = new Dictionary&lt;string, DebugVariableValue&gt;()
+    ///                                 Variables = new Dictionary&lt;string, SeedTrace.DebugVariableValue&gt;()
     ///                                 {
     ///                                     {
     ///                                         "variables",
-    ///                                         new DebugVariableValue(
-    ///                                             new DebugVariableValue.IntegerValue(1)
+    ///                                         new SeedTrace.DebugVariableValue(
+    ///                                             new SeedTrace.DebugVariableValue.IntegerValue(1)
     ///                                         )
     ///                                     },
     ///                                 },
@@ -552,41 +576,43 @@ public partial class AdminClient
     ///                 },
     ///                 Stdout = "stdout",
     ///             },
-    ///             new TraceResponse
+    ///             new SeedTrace.TraceResponse
     ///             {
     ///                 SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///                 LineNumber = 1,
-    ///                 ReturnValue = new DebugVariableValue(new DebugVariableValue.IntegerValue(1)),
-    ///                 ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
-    ///                 Stack = new StackInformation
+    ///                 ReturnValue = new SeedTrace.DebugVariableValue(
+    ///                     new SeedTrace.DebugVariableValue.IntegerValue(1)
+    ///                 ),
+    ///                 ExpressionLocation = new SeedTrace.ExpressionLocation { Start = 1, Offset = 1 },
+    ///                 Stack = new SeedTrace.StackInformation
     ///                 {
     ///                     NumStackFrames = 1,
-    ///                     TopStackFrame = new StackFrame
+    ///                     TopStackFrame = new SeedTrace.StackFrame
     ///                     {
     ///                         MethodName = "methodName",
     ///                         LineNumber = 1,
-    ///                         Scopes = new List&lt;Scope&gt;()
+    ///                         Scopes = new List&lt;SeedTrace.Scope&gt;()
     ///                         {
-    ///                             new Scope
+    ///                             new SeedTrace.Scope
     ///                             {
-    ///                                 Variables = new Dictionary&lt;string, DebugVariableValue&gt;()
+    ///                                 Variables = new Dictionary&lt;string, SeedTrace.DebugVariableValue&gt;()
     ///                                 {
     ///                                     {
     ///                                         "variables",
-    ///                                         new DebugVariableValue(
-    ///                                             new DebugVariableValue.IntegerValue(1)
+    ///                                         new SeedTrace.DebugVariableValue(
+    ///                                             new SeedTrace.DebugVariableValue.IntegerValue(1)
     ///                                         )
     ///                                     },
     ///                                 },
     ///                             },
-    ///                             new Scope
+    ///                             new SeedTrace.Scope
     ///                             {
-    ///                                 Variables = new Dictionary&lt;string, DebugVariableValue&gt;()
+    ///                                 Variables = new Dictionary&lt;string, SeedTrace.DebugVariableValue&gt;()
     ///                                 {
     ///                                     {
     ///                                         "variables",
-    ///                                         new DebugVariableValue(
-    ///                                             new DebugVariableValue.IntegerValue(1)
+    ///                                         new SeedTrace.DebugVariableValue(
+    ///                                             new SeedTrace.DebugVariableValue.IntegerValue(1)
     ///                                         )
     ///                                     },
     ///                                 },
@@ -600,7 +626,7 @@ public partial class AdminClient
     ///     }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task StoreTracedWorkspaceAsync(
+    public async Task StoreTracedWorkspaceAsync(
         string submissionId,
         StoreTracedWorkspaceRequest request,
         RequestOptions? options = null,
@@ -640,41 +666,47 @@ public partial class AdminClient
     /// <example><code>
     /// await client.Admin.StoreTracedWorkspaceV2Async(
     ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ///     new List&lt;TraceResponseV2&gt;()
+    ///     new List&lt;SeedTrace.TraceResponseV2&gt;()
     ///     {
-    ///         new TraceResponseV2
+    ///         new SeedTrace.TraceResponseV2
     ///         {
     ///             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///             LineNumber = 1,
-    ///             File = new TracedFile { Filename = "filename", Directory = "directory" },
-    ///             ReturnValue = new DebugVariableValue(new DebugVariableValue.IntegerValue(1)),
-    ///             ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
-    ///             Stack = new StackInformation
+    ///             File = new SeedTrace.TracedFile { Filename = "filename", Directory = "directory" },
+    ///             ReturnValue = new SeedTrace.DebugVariableValue(
+    ///                 new SeedTrace.DebugVariableValue.IntegerValue(1)
+    ///             ),
+    ///             ExpressionLocation = new SeedTrace.ExpressionLocation { Start = 1, Offset = 1 },
+    ///             Stack = new SeedTrace.StackInformation
     ///             {
     ///                 NumStackFrames = 1,
-    ///                 TopStackFrame = new StackFrame
+    ///                 TopStackFrame = new SeedTrace.StackFrame
     ///                 {
     ///                     MethodName = "methodName",
     ///                     LineNumber = 1,
-    ///                     Scopes = new List&lt;Scope&gt;()
+    ///                     Scopes = new List&lt;SeedTrace.Scope&gt;()
     ///                     {
-    ///                         new Scope
+    ///                         new SeedTrace.Scope
     ///                         {
-    ///                             Variables = new Dictionary&lt;string, DebugVariableValue&gt;()
+    ///                             Variables = new Dictionary&lt;string, SeedTrace.DebugVariableValue&gt;()
     ///                             {
     ///                                 {
     ///                                     "variables",
-    ///                                     new DebugVariableValue(new DebugVariableValue.IntegerValue(1))
+    ///                                     new SeedTrace.DebugVariableValue(
+    ///                                         new SeedTrace.DebugVariableValue.IntegerValue(1)
+    ///                                     )
     ///                                 },
     ///                             },
     ///                         },
-    ///                         new Scope
+    ///                         new SeedTrace.Scope
     ///                         {
-    ///                             Variables = new Dictionary&lt;string, DebugVariableValue&gt;()
+    ///                             Variables = new Dictionary&lt;string, SeedTrace.DebugVariableValue&gt;()
     ///                             {
     ///                                 {
     ///                                     "variables",
-    ///                                     new DebugVariableValue(new DebugVariableValue.IntegerValue(1))
+    ///                                     new SeedTrace.DebugVariableValue(
+    ///                                         new SeedTrace.DebugVariableValue.IntegerValue(1)
+    ///                                     )
     ///                                 },
     ///                             },
     ///                         },
@@ -683,39 +715,45 @@ public partial class AdminClient
     ///             },
     ///             Stdout = "stdout",
     ///         },
-    ///         new TraceResponseV2
+    ///         new SeedTrace.TraceResponseV2
     ///         {
     ///             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///             LineNumber = 1,
-    ///             File = new TracedFile { Filename = "filename", Directory = "directory" },
-    ///             ReturnValue = new DebugVariableValue(new DebugVariableValue.IntegerValue(1)),
-    ///             ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
-    ///             Stack = new StackInformation
+    ///             File = new SeedTrace.TracedFile { Filename = "filename", Directory = "directory" },
+    ///             ReturnValue = new SeedTrace.DebugVariableValue(
+    ///                 new SeedTrace.DebugVariableValue.IntegerValue(1)
+    ///             ),
+    ///             ExpressionLocation = new SeedTrace.ExpressionLocation { Start = 1, Offset = 1 },
+    ///             Stack = new SeedTrace.StackInformation
     ///             {
     ///                 NumStackFrames = 1,
-    ///                 TopStackFrame = new StackFrame
+    ///                 TopStackFrame = new SeedTrace.StackFrame
     ///                 {
     ///                     MethodName = "methodName",
     ///                     LineNumber = 1,
-    ///                     Scopes = new List&lt;Scope&gt;()
+    ///                     Scopes = new List&lt;SeedTrace.Scope&gt;()
     ///                     {
-    ///                         new Scope
+    ///                         new SeedTrace.Scope
     ///                         {
-    ///                             Variables = new Dictionary&lt;string, DebugVariableValue&gt;()
+    ///                             Variables = new Dictionary&lt;string, SeedTrace.DebugVariableValue&gt;()
     ///                             {
     ///                                 {
     ///                                     "variables",
-    ///                                     new DebugVariableValue(new DebugVariableValue.IntegerValue(1))
+    ///                                     new SeedTrace.DebugVariableValue(
+    ///                                         new SeedTrace.DebugVariableValue.IntegerValue(1)
+    ///                                     )
     ///                                 },
     ///                             },
     ///                         },
-    ///                         new Scope
+    ///                         new SeedTrace.Scope
     ///                         {
-    ///                             Variables = new Dictionary&lt;string, DebugVariableValue&gt;()
+    ///                             Variables = new Dictionary&lt;string, SeedTrace.DebugVariableValue&gt;()
     ///                             {
     ///                                 {
     ///                                     "variables",
-    ///                                     new DebugVariableValue(new DebugVariableValue.IntegerValue(1))
+    ///                                     new SeedTrace.DebugVariableValue(
+    ///                                         new SeedTrace.DebugVariableValue.IntegerValue(1)
+    ///                                     )
     ///                                 },
     ///                             },
     ///                         },
@@ -727,7 +765,7 @@ public partial class AdminClient
     ///     }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task StoreTracedWorkspaceV2Async(
+    public async Task StoreTracedWorkspaceV2Async(
         string submissionId,
         IEnumerable<TraceResponseV2> request,
         RequestOptions? options = null,

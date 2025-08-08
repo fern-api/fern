@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.Auth.<a href="/src/SeedOauthClientCredentialsEnvironmentVariables/Auth/AuthClient.cs">GetTokenWithClientCredentialsAsync</a>(GetTokenRequest { ... }) -> TokenResponse</code></summary>
+<details><summary><code>client.Auth.<a href="/src/SeedOauthClientCredentialsEnvironmentVariables/Auth/AuthClient.cs">GetTokenWithClientCredentialsAsync</a>(SeedOauthClientCredentialsEnvironmentVariables.GetTokenRequest { ... }) -> SeedOauthClientCredentialsEnvironmentVariables.TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,7 @@
 
 ```csharp
 await client.Auth.GetTokenWithClientCredentialsAsync(
-    new GetTokenRequest
+    new SeedOauthClientCredentialsEnvironmentVariables.GetTokenRequest
     {
         ClientId = "client_id",
         ClientSecret = "client_secret",
@@ -37,7 +37,7 @@ await client.Auth.GetTokenWithClientCredentialsAsync(
 <dl>
 <dd>
 
-**request:** `GetTokenRequest` 
+**request:** `SeedOauthClientCredentialsEnvironmentVariables.GetTokenRequest` 
     
 </dd>
 </dl>
@@ -49,7 +49,7 @@ await client.Auth.GetTokenWithClientCredentialsAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Auth.<a href="/src/SeedOauthClientCredentialsEnvironmentVariables/Auth/AuthClient.cs">RefreshTokenAsync</a>(RefreshTokenRequest { ... }) -> TokenResponse</code></summary>
+<details><summary><code>client.Auth.<a href="/src/SeedOauthClientCredentialsEnvironmentVariables/Auth/AuthClient.cs">RefreshTokenAsync</a>(SeedOauthClientCredentialsEnvironmentVariables.RefreshTokenRequest { ... }) -> SeedOauthClientCredentialsEnvironmentVariables.TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -63,7 +63,7 @@ await client.Auth.GetTokenWithClientCredentialsAsync(
 
 ```csharp
 await client.Auth.RefreshTokenAsync(
-    new RefreshTokenRequest
+    new SeedOauthClientCredentialsEnvironmentVariables.RefreshTokenRequest
     {
         ClientId = "client_id",
         ClientSecret = "client_secret",
@@ -87,7 +87,7 @@ await client.Auth.RefreshTokenAsync(
 <dl>
 <dd>
 
-**request:** `RefreshTokenRequest` 
+**request:** `SeedOauthClientCredentialsEnvironmentVariables.RefreshTokenRequest` 
     
 </dd>
 </dl>

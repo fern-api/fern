@@ -4,11 +4,10 @@
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
-using SeedExamples.Core;
 
 namespace SeedExamples.Commons;
 
-[JsonConverter(typeof(Data.JsonConverter))]
+[JsonConverter(typeof(SeedExamples.Commons.Data.JsonConverter))]
 [Serializable]
 public record Data
 {
@@ -19,18 +18,18 @@ public record Data
     }
 
     /// <summary>
-    /// Create an instance of Data with <see cref="Data.String"/>.
+    /// Create an instance of Data with <see cref="SeedExamples.Commons.Data.String"/>.
     /// </summary>
-    public Data(Data.String value)
+    public Data(SeedExamples.Commons.Data.String value)
     {
         Type = "string";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of Data with <see cref="Data.Base64"/>.
+    /// Create an instance of Data with <see cref="SeedExamples.Commons.Data.Base64"/>.
     /// </summary>
-    public Data(Data.Base64 value)
+    public Data(SeedExamples.Commons.Data.Base64 value)
     {
         Type = "base64";
         Value = value.Value;
@@ -62,14 +61,18 @@ public record Data
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'string'.</exception>
     public string AsString() =>
-        IsString ? (string)Value! : throw new Exception("Data.Type is not 'string'");
+        IsString
+            ? (string)Value!
+            : throw new Exception("SeedExamples.Commons.Data.Type is not 'string'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'base64', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'base64'.</exception>
     public string AsBase64() =>
-        IsBase64 ? (string)Value! : throw new Exception("Data.Type is not 'base64'");
+        IsBase64
+            ? (string)Value!
+            : throw new Exception("SeedExamples.Commons.Data.Type is not 'base64'");
 
     public T Match<T>(
         Func<string, T> onString,
@@ -133,21 +136,25 @@ public record Data
         return false;
     }
 
-    public override string ToString() => JsonUtils.Serialize(this);
+    public override string ToString() => SeedExamples.Core.JsonUtils.Serialize(this);
 
-    public static implicit operator Data(Data.String value) => new(value);
+    public static implicit operator SeedExamples.Commons.Data(
+        SeedExamples.Commons.Data.String value
+    ) => new(value);
 
-    public static implicit operator Data(Data.Base64 value) => new(value);
+    public static implicit operator SeedExamples.Commons.Data(
+        SeedExamples.Commons.Data.Base64 value
+    ) => new(value);
 
     [Serializable]
-    internal sealed class JsonConverter : JsonConverter<Data>
+    internal sealed class JsonConverter : JsonConverter<SeedExamples.Commons.Data>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
-            typeof(Data).IsAssignableFrom(typeToConvert);
+        public override bool CanConvert(Type typeToConvert) =>
+            typeof(SeedExamples.Commons.Data).IsAssignableFrom(typeToConvert);
 
-        public override Data Read(
+        public override SeedExamples.Commons.Data Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -180,10 +187,14 @@ public record Data
                     ?? throw new JsonException("Failed to deserialize string"),
                 _ => json.Deserialize<object?>(options),
             };
-            return new Data(discriminator, value);
+            return new SeedExamples.Commons.Data(discriminator, value);
         }
 
-        public override void Write(Utf8JsonWriter writer, Data value, JsonSerializerOptions options)
+        public override void Write(
+            Utf8JsonWriter writer,
+            SeedExamples.Commons.Data value,
+            JsonSerializerOptions options
+        )
         {
             JsonNode json =
                 value.Type switch
@@ -218,7 +229,8 @@ public record Data
 
         public override string ToString() => Value;
 
-        public static implicit operator String(string value) => new(value);
+        public static implicit operator SeedExamples.Commons.Data.String(string value) =>
+            new(value);
     }
 
     /// <summary>
@@ -236,6 +248,7 @@ public record Data
 
         public override string ToString() => Value;
 
-        public static implicit operator Base64(string value) => new(value);
+        public static implicit operator SeedExamples.Commons.Data.Base64(string value) =>
+            new(value);
     }
 }

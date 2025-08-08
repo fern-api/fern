@@ -1,20 +1,23 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedAuthEnvironmentVariables;
 
 namespace Usage;
 
 public class Example1
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do()
+    {
         var client = new SeedAuthEnvironmentVariablesClient(
             apiKey: "<value>",
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions
+            {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Service.GetWithHeaderAsync(
-            new HeaderAuthRequest{
+            new HeaderAuthRequest
+            {
                 XEndpointHeader = "X-Endpoint-Header"
             }
         );

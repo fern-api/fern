@@ -1,5 +1,5 @@
 using System.Threading;
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedContentTypes.Core;
 
 namespace SeedContentTypes;
@@ -15,10 +15,10 @@ public partial class ServiceClient
 
     /// <example><code>
     /// await client.Service.PatchAsync(
-    ///     new PatchProxyRequest { Application = "application", RequireAuth = true }
+    ///     new SeedContentTypes.PatchProxyRequest { Application = "application", RequireAuth = true }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task PatchAsync(
+    public async Task PatchAsync(
         PatchProxyRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

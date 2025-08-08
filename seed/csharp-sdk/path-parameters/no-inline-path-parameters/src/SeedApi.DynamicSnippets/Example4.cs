@@ -1,20 +1,23 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedPathParameters;
 
 namespace Usage;
 
 public class Example4
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do()
+    {
         var client = new SeedPathParametersClient(
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions
+            {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.User.CreateUserAsync(
             "tenant_id",
-            new User{
+            new User
+            {
                 Name = "name",
                 Tags = new List<string>(){
                     "tags",

@@ -1,13 +1,15 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedPathParameters;
 
 namespace Usage;
 
 public class Example5
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do()
+    {
         var client = new SeedPathParametersClient(
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions
+            {
                 BaseUrl = "https://api.fern.com"
             }
         );
@@ -15,8 +17,10 @@ public class Example5
         await client.User.UpdateUserAsync(
             "tenant_id",
             "user_id",
-            new UpdateUserRequest{
-                Body = new User{
+            new UpdateUserRequest
+            {
+                Body = new User
+                {
                     Name = "name",
                     Tags = new List<string>(){
                         "tags",

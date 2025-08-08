@@ -1,30 +1,36 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedTrace;
 
 namespace Usage;
 
 public class Example7
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do()
+    {
         var client = new SeedTraceClient(
             token: "<token>",
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions
+            {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Admin.StoreTracedWorkspaceAsync(
             "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            new StoreTracedWorkspaceRequest{
-                WorkspaceRunDetails = new WorkspaceRunDetails{
+            new StoreTracedWorkspaceRequest
+            {
+                WorkspaceRunDetails = new WorkspaceRunDetails
+                {
                     ExceptionV2 = new ExceptionV2(
-                        new ExceptionInfo{
+                        new ExceptionInfo
+                        {
                             ExceptionType = "exceptionType",
                             ExceptionMessage = "exceptionMessage",
                             ExceptionStacktrace = "exceptionStacktrace"
                         }
                     ),
-                    Exception = new ExceptionInfo{
+                    Exception = new ExceptionInfo
+                    {
                         ExceptionType = "exceptionType",
                         ExceptionMessage = "exceptionMessage",
                         ExceptionStacktrace = "exceptionStacktrace"

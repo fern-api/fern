@@ -4,11 +4,10 @@
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
-using SeedExamples.Core;
 
 namespace SeedExamples;
 
-[JsonConverter(typeof(Exception.JsonConverter))]
+[JsonConverter(typeof(SeedExamples.Exception.JsonConverter))]
 [Serializable]
 public record Exception
 {
@@ -19,18 +18,18 @@ public record Exception
     }
 
     /// <summary>
-    /// Create an instance of Exception with <see cref="Exception.Generic"/>.
+    /// Create an instance of Exception with <see cref="SeedExamples.Exception.Generic"/>.
     /// </summary>
-    public Exception(Exception.Generic value)
+    public Exception(SeedExamples.Exception.Generic value)
     {
         Type = "generic";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of Exception with <see cref="Exception.Timeout"/>.
+    /// Create an instance of Exception with <see cref="SeedExamples.Exception.Timeout"/>.
     /// </summary>
-    public Exception(Exception.Timeout value)
+    public Exception(SeedExamples.Exception.Timeout value)
     {
         Type = "timeout";
         Value = value.Value;
@@ -64,14 +63,14 @@ public record Exception
     public SeedExamples.ExceptionInfo AsGeneric() =>
         IsGeneric
             ? (SeedExamples.ExceptionInfo)Value!
-            : throw new Exception("Exception.Type is not 'generic'");
+            : throw new Exception("SeedExamples.Exception.Type is not 'generic'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'timeout', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'timeout'.</exception>
     public object AsTimeout() =>
-        IsTimeout ? Value! : throw new Exception("Exception.Type is not 'timeout'");
+        IsTimeout ? Value! : throw new Exception("SeedExamples.Exception.Type is not 'timeout'");
 
     public T Match<T>(
         Func<SeedExamples.ExceptionInfo, T> onGeneric,
@@ -135,19 +134,20 @@ public record Exception
         return false;
     }
 
-    public override string ToString() => JsonUtils.Serialize(this);
+    public override string ToString() => SeedExamples.Core.JsonUtils.Serialize(this);
 
-    public static implicit operator Exception(Exception.Generic value) => new(value);
+    public static implicit operator SeedExamples.Exception(SeedExamples.Exception.Generic value) =>
+        new(value);
 
     [Serializable]
-    internal sealed class JsonConverter : JsonConverter<Exception>
+    internal sealed class JsonConverter : JsonConverter<SeedExamples.Exception>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
-            typeof(Exception).IsAssignableFrom(typeToConvert);
+        public override bool CanConvert(Type typeToConvert) =>
+            typeof(SeedExamples.Exception).IsAssignableFrom(typeToConvert);
 
-        public override Exception Read(
+        public override SeedExamples.Exception Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -179,12 +179,12 @@ public record Exception
                 "timeout" => new { },
                 _ => json.Deserialize<object?>(options),
             };
-            return new Exception(discriminator, value);
+            return new SeedExamples.Exception(discriminator, value);
         }
 
         public override void Write(
             Utf8JsonWriter writer,
-            Exception value,
+            SeedExamples.Exception value,
             JsonSerializerOptions options
         )
         {
@@ -215,7 +215,9 @@ public record Exception
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Generic(SeedExamples.ExceptionInfo value) => new(value);
+        public static implicit operator SeedExamples.Exception.Generic(
+            SeedExamples.ExceptionInfo value
+        ) => new(value);
     }
 
     /// <summary>

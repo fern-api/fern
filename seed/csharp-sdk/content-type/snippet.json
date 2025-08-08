@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedContentTypes;\n\nvar client = new SeedContentTypesClient();\nawait client.Service.PatchAsync(\n    new PatchProxyRequest { Application = \"application\", RequireAuth = true }\n);\n"
+                "client": "using SeedContentTypes;\n\nvar client = new SeedContentTypes.SeedContentTypesClient();\nawait client.Service.PatchAsync(\n    new SeedContentTypes.PatchProxyRequest { Application = \"application\", RequireAuth = true }\n);\n"
             }
         },
         {

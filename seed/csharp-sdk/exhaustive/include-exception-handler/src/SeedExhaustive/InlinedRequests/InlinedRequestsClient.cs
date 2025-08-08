@@ -20,11 +20,11 @@ public partial class InlinedRequestsClient
     /// </summary>
     /// <example><code>
     /// await client.InlinedRequests.PostWithObjectBodyandResponseAsync(
-    ///     new PostWithObjectBody
+    ///     new SeedExhaustive.PostWithObjectBody
     ///     {
     ///         String = "string",
     ///         Integer = 1,
-    ///         NestedObject = new ObjectWithOptionalField
+    ///         NestedObject = new SeedExhaustive.Types.ObjectWithOptionalField
     ///         {
     ///             String = "string",
     ///             Integer = 1,

@@ -1,4 +1,4 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedApi;
 using System.Globalization;
 
@@ -6,21 +6,25 @@ namespace Usage;
 
 public class Example0
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do()
+    {
         var client = new SeedApiClient(
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions
+            {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.SearchAsync(
-            new SearchRequest{
+            new SearchRequest
+            {
                 Limit = 1,
                 Id = "id",
                 Date = "date",
                 Deadline = DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal),
                 Bytes = "bytes",
-                User = new User{
+                User = new User
+                {
                     Name = "name",
                     Tags = new List<string>(){
                         "tags",
@@ -37,13 +41,16 @@ public class Example0
                     },
                 },
                 OptionalDeadline = DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal),
-                KeyValue = new Dictionary<string, string?>(){
+                KeyValue = new Dictionary<string, string?>()
+                {
                     ["keyValue"] = "keyValue",
                 },
                 OptionalString = "optionalString",
-                NestedUser = new NestedUser{
+                NestedUser = new NestedUser
+                {
                     Name = "name",
-                    User = new User{
+                    User = new User
+                    {
                         Name = "name",
                         Tags = new List<string>(){
                             "tags",
@@ -51,7 +58,8 @@ public class Example0
                         }
                     }
                 },
-                OptionalUser = new User{
+                OptionalUser = new User
+                {
                     Name = "name",
                     Tags = new List<string>(){
                         "tags",
@@ -70,14 +78,16 @@ public class Example0
                 Filter = new List<string>(){
                     "filter",
                 },
-                Neighbor = new User{
+                Neighbor = new User
+                {
                     Name = "name",
                     Tags = new List<string>(){
                         "tags",
                         "tags",
                     }
                 },
-                NeighborRequired = new User{
+                NeighborRequired = new User
+                {
                     Name = "name",
                     Tags = new List<string>(){
                         "tags",

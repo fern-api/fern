@@ -1,6 +1,5 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using SeedExamples.Core;
 
 namespace SeedExamples;
 
@@ -15,13 +14,14 @@ public record Directory : IJsonOnDeserialized
     public required string Name { get; set; }
 
     [JsonPropertyName("files")]
-    public IEnumerable<File>? Files { get; set; }
+    public IEnumerable<SeedExamples.File>? Files { get; set; }
 
     [JsonPropertyName("directories")]
-    public IEnumerable<Directory>? Directories { get; set; }
+    public IEnumerable<SeedExamples.Directory>? Directories { get; set; }
 
     [JsonIgnore]
-    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+    public SeedExamples.ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } =
+        new();
 
     void IJsonOnDeserialized.OnDeserialized() =>
         AdditionalProperties.CopyFromExtensionData(_extensionData);
@@ -29,6 +29,6 @@ public record Directory : IJsonOnDeserialized
     /// <inheritdoc />
     public override string ToString()
     {
-        return JsonUtils.Serialize(this);
+        return SeedExamples.Core.JsonUtils.Serialize(this);
     }
 }

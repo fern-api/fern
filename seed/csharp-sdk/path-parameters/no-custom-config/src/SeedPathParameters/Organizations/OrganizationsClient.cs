@@ -65,7 +65,7 @@ public partial class OrganizationsClient
 
     /// <example><code>
     /// await client.Organizations.GetOrganizationUserAsync(
-    ///     new GetOrganizationUserRequest
+    ///     new SeedPathParameters.GetOrganizationUserRequest
     ///     {
     ///         TenantId = "tenant_id",
     ///         OrganizationId = "organization_id",
@@ -123,7 +123,7 @@ public partial class OrganizationsClient
     /// await client.Organizations.SearchOrganizationsAsync(
     ///     "tenant_id",
     ///     "organization_id",
-    ///     new SearchOrganizationsRequest { Limit = 1 }
+    ///     new SeedPathParameters.SearchOrganizationsRequest { Limit = 1 }
     /// );
     /// </code></example>
     public async Task<IEnumerable<Organization>> SearchOrganizationsAsync(

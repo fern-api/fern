@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedAlias;\n\nvar client = new SeedAliasClient();\nawait client.GetAsync(\"typeId\");\n"
+                "client": "using SeedAlias;\n\nvar client = new SeedAlias.SeedAliasClient();\nawait client.GetAsync(\"typeId\");\n"
             }
         }
     ]

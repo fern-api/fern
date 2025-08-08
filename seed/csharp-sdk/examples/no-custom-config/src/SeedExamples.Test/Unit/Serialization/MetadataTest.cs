@@ -1,13 +1,12 @@
 using System.Text.Json;
 using NUnit.Framework;
-using SeedExamples.Core;
 
 namespace SeedExamples.Test;
 
 [TestFixture]
 public class MetadataTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public void TestDeserialization()
     {
         var json = """
@@ -20,17 +19,18 @@ public class MetadataTest
               "jsonString": "{\"foo\": \"bar\", \"baz\": \"qux\"}"
             }
             """;
-        var expectedObject = new Commons.Metadata
+        var expectedObject = new SeedExamples.Commons.Metadata
         {
             Id = "metadata-js8dg24b",
             Data = new Dictionary<string, string>() { { "foo", "bar" }, { "baz", "qux" } },
             JsonString = "{\"foo\": \"bar\", \"baz\": \"qux\"}",
         };
-        var deserializedObject = JsonUtils.Deserialize<Commons.Metadata>(json);
+        var deserializedObject =
+            SeedExamples.Core.JsonUtils.Deserialize<SeedExamples.Commons.Metadata>(json);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestSerialization()
     {
         var expectedJson = """
@@ -43,14 +43,14 @@ public class MetadataTest
               "jsonString": "{\"foo\": \"bar\", \"baz\": \"qux\"}"
             }
             """;
-        var actualObj = new Commons.Metadata
+        var actualObj = new SeedExamples.Commons.Metadata
         {
             Id = "metadata-js8dg24b",
             Data = new Dictionary<string, string>() { { "foo", "bar" }, { "baz", "qux" } },
             JsonString = "{\"foo\": \"bar\", \"baz\": \"qux\"}",
         };
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        var actualElement = SeedExamples.Core.JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = SeedExamples.Core.JsonUtils.Deserialize<JsonElement>(expectedJson);
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

@@ -25,7 +25,7 @@ await client.User.HeadAsync();
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedHttpHead/User/UserClient.cs">ListAsync</a>(ListUsersRequest { ... }) -> IEnumerable<User></code></summary>
+<details><summary><code>client.User.<a href="/src/SeedHttpHead/User/UserClient.cs">ListAsync</a>(SeedHttpHead.ListUsersRequest { ... }) -> IEnumerable<SeedHttpHead.User></code></summary>
 <dl>
 <dd>
 
@@ -38,7 +38,7 @@ await client.User.HeadAsync();
 <dd>
 
 ```csharp
-await client.User.ListAsync(new ListUsersRequest { Limit = 1 });
+await client.User.ListAsync(new SeedHttpHead.ListUsersRequest { Limit = 1 });
 ```
 </dd>
 </dl>
@@ -53,7 +53,7 @@ await client.User.ListAsync(new ListUsersRequest { Limit = 1 });
 <dl>
 <dd>
 
-**request:** `ListUsersRequest` 
+**request:** `SeedHttpHead.ListUsersRequest` 
     
 </dd>
 </dl>

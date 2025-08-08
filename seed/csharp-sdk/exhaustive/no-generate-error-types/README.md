@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedExhaustive;
 
-var client = new SeedExhaustiveClient("TOKEN");
+var client = new SeedExhaustive.SeedExhaustiveClient("TOKEN");
 await client.Endpoints.Container.GetAndReturnListOfPrimitivesAsync(
     new List<string>() { "string", "string" }
 );

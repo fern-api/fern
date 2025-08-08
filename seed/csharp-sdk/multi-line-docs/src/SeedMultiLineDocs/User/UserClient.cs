@@ -1,7 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedMultiLineDocs.Core;
 
 namespace SeedMultiLineDocs;
@@ -22,7 +22,7 @@ public partial class UserClient
     /// <example><code>
     /// await client.User.GetUserAsync("userId");
     /// </code></example>
-    public async global::System.Threading.Tasks.Task GetUserAsync(
+    public async Task GetUserAsync(
         string userId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -59,7 +59,9 @@ public partial class UserClient
     /// This endpoint is used to create a new user.
     /// </summary>
     /// <example><code>
-    /// await client.User.CreateUserAsync(new CreateUserRequest { Name = "name", Age = 1 });
+    /// await client.User.CreateUserAsync(
+    ///     new SeedMultiLineDocs.CreateUserRequest { Name = "name", Age = 1 }
+    /// );
     /// </code></example>
     public async Task<User> CreateUserAsync(
         CreateUserRequest request,

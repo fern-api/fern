@@ -1,6 +1,5 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using SeedExamples.Core;
 
 namespace SeedExamples;
 
@@ -15,10 +14,12 @@ public record Response : IJsonOnDeserialized
     public required object Response_ { get; set; }
 
     [JsonPropertyName("identifiers")]
-    public IEnumerable<Identifier> Identifiers { get; set; } = new List<Identifier>();
+    public IEnumerable<SeedExamples.Identifier> Identifiers { get; set; } =
+        new List<SeedExamples.Identifier>();
 
     [JsonIgnore]
-    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+    public SeedExamples.ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } =
+        new();
 
     void IJsonOnDeserialized.OnDeserialized() =>
         AdditionalProperties.CopyFromExtensionData(_extensionData);
@@ -26,6 +27,6 @@ public record Response : IJsonOnDeserialized
     /// <inheritdoc />
     public override string ToString()
     {
-        return JsonUtils.Serialize(this);
+        return SeedExamples.Core.JsonUtils.Serialize(this);
     }
 }

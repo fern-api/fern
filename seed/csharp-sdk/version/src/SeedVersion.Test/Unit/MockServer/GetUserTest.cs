@@ -1,6 +1,4 @@
-using global::System.Threading.Tasks;
 using NUnit.Framework;
-using SeedVersion;
 using SeedVersion.Core;
 
 namespace SeedVersion.Test.Unit.MockServer;
@@ -9,7 +7,7 @@ namespace SeedVersion.Test.Unit.MockServer;
 public class GetUserTest : BaseMockServerTest
 {
     [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    public async Task MockServerTest()
     {
         const string mockResponse = """
             {

@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedBasicAuthEnvironmentVariables;\n\nvar client = new SeedBasicAuthEnvironmentVariablesClient();\nawait client.BasicAuth.GetWithBasicAuthAsync();\n"
+                "client": "using SeedBasicAuthEnvironmentVariables;\n\nvar client = new SeedBasicAuthEnvironmentVariables.SeedBasicAuthEnvironmentVariablesClient();\nawait client.BasicAuth.GetWithBasicAuthAsync();\n"
             }
         },
         {
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedBasicAuthEnvironmentVariables;\n\nvar client = new SeedBasicAuthEnvironmentVariablesClient();\nawait client.BasicAuth.PostWithBasicAuthAsync(\n    new Dictionary<object, object?>() { { \"key\", \"value\" } }\n);\n"
+                "client": "using SeedBasicAuthEnvironmentVariables;\n\nvar client = new SeedBasicAuthEnvironmentVariables.SeedBasicAuthEnvironmentVariablesClient();\nawait client.BasicAuth.PostWithBasicAuthAsync(\n    new Dictionary<object, object?>() { { \"key\", \"value\" } }\n);\n"
             }
         }
     ]

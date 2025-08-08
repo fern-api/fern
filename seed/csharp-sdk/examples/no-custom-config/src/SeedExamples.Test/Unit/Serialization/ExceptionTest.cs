@@ -1,14 +1,12 @@
 using System.Text.Json;
 using NUnit.Framework;
-using SeedExamples;
-using SeedExamples.Core;
 
 namespace SeedExamples.Test;
 
 [TestFixture]
 public class ExceptionTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public void TestDeserialization()
     {
         var json = """
@@ -19,9 +17,9 @@ public class ExceptionTest
               "exceptionStacktrace": "<logs>"
             }
             """;
-        var expectedObject = new Exception(
-            new Exception.Generic(
-                new ExceptionInfo
+        var expectedObject = new SeedExamples.Exception(
+            new SeedExamples.Exception.Generic(
+                new SeedExamples.ExceptionInfo
                 {
                     ExceptionType = "Unavailable",
                     ExceptionMessage = "This component is unavailable!",
@@ -29,11 +27,13 @@ public class ExceptionTest
                 }
             )
         );
-        var deserializedObject = JsonUtils.Deserialize<Exception>(json);
+        var deserializedObject = SeedExamples.Core.JsonUtils.Deserialize<SeedExamples.Exception>(
+            json
+        );
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestSerialization()
     {
         var expectedJson = """
@@ -44,9 +44,9 @@ public class ExceptionTest
               "exceptionStacktrace": "<logs>"
             }
             """;
-        var actualObj = new Exception(
-            new Exception.Generic(
-                new ExceptionInfo
+        var actualObj = new SeedExamples.Exception(
+            new SeedExamples.Exception.Generic(
+                new SeedExamples.ExceptionInfo
                 {
                     ExceptionType = "Unavailable",
                     ExceptionMessage = "This component is unavailable!",
@@ -54,8 +54,8 @@ public class ExceptionTest
                 }
             )
         );
-        var actualElement = JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        var actualElement = SeedExamples.Core.JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = SeedExamples.Core.JsonUtils.Deserialize<JsonElement>(expectedJson);
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

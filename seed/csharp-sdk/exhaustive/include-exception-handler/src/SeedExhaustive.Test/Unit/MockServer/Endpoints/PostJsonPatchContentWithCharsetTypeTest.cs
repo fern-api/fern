@@ -1,6 +1,5 @@
 using System.Globalization;
 using NUnit.Framework;
-using SeedExhaustive.Test.Unit.MockServer;
 using SeedExhaustive.Types;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints;

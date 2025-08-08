@@ -1,4 +1,4 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedExhaustive;
 using SeedExhaustive.Core;
 
@@ -6,16 +6,19 @@ namespace Usage;
 
 public class Example4
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do()
+    {
         var client = new SeedExhaustiveClient(
             token: "<token>",
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions
+            {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Endpoints.Container.GetAndReturnMapPrimToPrimAsync(
-            new Dictionary<string, string>(){
+            new Dictionary<string, string>()
+            {
                 ["string"] = "string",
             }
         );

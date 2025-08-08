@@ -6,12 +6,12 @@ using SeedExamples.Core;
 namespace SeedExamples;
 
 [Serializable]
-public partial class RequestOptions : IRequestOptions
+public partial class RequestOptions : SeedExamples.Core.IRequestOptions
 {
     /// <summary>
     /// The http headers sent with the request.
     /// </summary>
-    Headers IRequestOptions.Headers { get; init; } = new();
+    SeedExamples.Core.Headers IRequestOptions.Headers { get; init; } = new();
 
     /// <summary>
     /// The Base URL for the API.

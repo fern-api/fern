@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedHttpHead;\n\nvar client = new SeedHttpHeadClient();\nawait client.User.HeadAsync();\n"
+                "client": "using SeedHttpHead;\n\nvar client = new SeedHttpHead.SeedHttpHeadClient();\nawait client.User.HeadAsync();\n"
             }
         },
         {
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedHttpHead;\n\nvar client = new SeedHttpHeadClient();\nawait client.User.ListAsync(new ListUsersRequest { Limit = 1 });\n"
+                "client": "using SeedHttpHead;\n\nvar client = new SeedHttpHead.SeedHttpHeadClient();\nawait client.User.ListAsync(new SeedHttpHead.ListUsersRequest { Limit = 1 });\n"
             }
         }
     ]

@@ -4,11 +4,10 @@
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
-using SeedExamples.Core;
 
 namespace SeedExamples;
 
-[JsonConverter(typeof(Test.JsonConverter))]
+[JsonConverter(typeof(SeedExamples.Test.JsonConverter))]
 [Serializable]
 public record Test
 {
@@ -19,18 +18,18 @@ public record Test
     }
 
     /// <summary>
-    /// Create an instance of Test with <see cref="Test.And"/>.
+    /// Create an instance of Test with <see cref="SeedExamples.Test.And"/>.
     /// </summary>
-    public Test(Test.And value)
+    public Test(SeedExamples.Test.And value)
     {
         Type = "and";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of Test with <see cref="Test.Or"/>.
+    /// Create an instance of Test with <see cref="SeedExamples.Test.Or"/>.
     /// </summary>
-    public Test(Test.Or value)
+    public Test(SeedExamples.Test.Or value)
     {
         Type = "or";
         Value = value.Value;
@@ -61,13 +60,15 @@ public record Test
     /// Returns the value as a <see cref="bool"/> if <see cref="Type"/> is 'and', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'and'.</exception>
-    public bool AsAnd() => IsAnd ? (bool)Value! : throw new Exception("Test.Type is not 'and'");
+    public bool AsAnd() =>
+        IsAnd ? (bool)Value! : throw new Exception("SeedExamples.Test.Type is not 'and'");
 
     /// <summary>
     /// Returns the value as a <see cref="bool"/> if <see cref="Type"/> is 'or', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'or'.</exception>
-    public bool AsOr() => IsOr ? (bool)Value! : throw new Exception("Test.Type is not 'or'");
+    public bool AsOr() =>
+        IsOr ? (bool)Value! : throw new Exception("SeedExamples.Test.Type is not 'or'");
 
     public T Match<T>(Func<bool, T> onAnd, Func<bool, T> onOr, Func<string, object?, T> onUnknown_)
     {
@@ -123,21 +124,21 @@ public record Test
         return false;
     }
 
-    public override string ToString() => JsonUtils.Serialize(this);
+    public override string ToString() => SeedExamples.Core.JsonUtils.Serialize(this);
 
-    public static implicit operator Test(Test.And value) => new(value);
+    public static implicit operator SeedExamples.Test(SeedExamples.Test.And value) => new(value);
 
-    public static implicit operator Test(Test.Or value) => new(value);
+    public static implicit operator SeedExamples.Test(SeedExamples.Test.Or value) => new(value);
 
     [Serializable]
-    internal sealed class JsonConverter : JsonConverter<Test>
+    internal sealed class JsonConverter : JsonConverter<SeedExamples.Test>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
-            typeof(Test).IsAssignableFrom(typeToConvert);
+        public override bool CanConvert(Type typeToConvert) =>
+            typeof(SeedExamples.Test).IsAssignableFrom(typeToConvert);
 
-        public override Test Read(
+        public override SeedExamples.Test Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -168,10 +169,14 @@ public record Test
                 "or" => json.GetProperty("value").Deserialize<bool>(options),
                 _ => json.Deserialize<object?>(options),
             };
-            return new Test(discriminator, value);
+            return new SeedExamples.Test(discriminator, value);
         }
 
-        public override void Write(Utf8JsonWriter writer, Test value, JsonSerializerOptions options)
+        public override void Write(
+            Utf8JsonWriter writer,
+            SeedExamples.Test value,
+            JsonSerializerOptions options
+        )
         {
             JsonNode json =
                 value.Type switch
@@ -206,7 +211,7 @@ public record Test
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator And(bool value) => new(value);
+        public static implicit operator SeedExamples.Test.And(bool value) => new(value);
     }
 
     /// <summary>
@@ -224,6 +229,6 @@ public record Test
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Or(bool value) => new(value);
+        public static implicit operator SeedExamples.Test.Or(bool value) => new(value);
     }
 }

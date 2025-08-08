@@ -1,4 +1,5 @@
 import { csharp } from "..";
+import { ClassReference } from "./ClassReference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
@@ -117,14 +118,14 @@ export class PrimitiveInstantiation extends AstNode {
             }
             case "dateTime": {
                 if (this.internalType.parse) {
-                    writer.write(`DateTime.Parse("${this.internalType.value.toISOString()}", null, DateTimeStyles.`);
+                    writer.write(`DateTime.Parse("${this.internalType.value.toISOString()}", null, `);
                     writer.writeNode(
-                        csharp.classReference({
-                            name: "AdjustToUniversal",
+                        new ClassReference({
+                            name: "DateTimeStyles",
                             namespace: "System.Globalization"
                         })
                     );
-                    writer.write(")");
+                    writer.write(".AdjustToUniversal)");
                 } else {
                     writer.write(this.constructDatetimeWithoutParse(this.internalType.value));
                 }

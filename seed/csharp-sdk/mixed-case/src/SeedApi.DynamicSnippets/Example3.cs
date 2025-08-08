@@ -1,19 +1,22 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedMixedCase;
 
 namespace Usage;
 
 public class Example3
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do()
+    {
         var client = new SeedMixedCaseClient(
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions
+            {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Service.ListResourcesAsync(
-            new ListResourcesRequest{
+            new ListResourcesRequest
+            {
                 PageLimit = 1,
                 BeforeDate = DateOnly.Parse("2023-01-15")
             }

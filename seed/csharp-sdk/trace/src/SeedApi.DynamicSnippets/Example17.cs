@@ -1,22 +1,26 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedTrace;
 
 namespace Usage;
 
 public class Example17
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do()
+    {
         var client = new SeedTraceClient(
             token: "<token>",
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions
+            {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Problem.CreateProblemAsync(
-            new CreateProblemRequest{
+            new CreateProblemRequest
+            {
                 ProblemName = "problemName",
-                ProblemDescription = new ProblemDescription{
+                ProblemDescription = new ProblemDescription
+                {
                     Boards = new List<ProblemDescriptionBoard>(){
                         new ProblemDescriptionBoard(
 
@@ -26,9 +30,12 @@ public class Example17
                         ),
                     }
                 },
-                Files = new Dictionary<Language, ProblemFiles>(){
-                    [Language.Java] = new ProblemFiles{
-                        SolutionFile = new FileInfo{
+                Files = new Dictionary<Language, ProblemFiles>()
+                {
+                    [Language.Java] = new ProblemFiles
+                    {
+                        SolutionFile = new FileInfo
+                        {
                             Filename = "filename",
                             Contents = "contents"
                         },
