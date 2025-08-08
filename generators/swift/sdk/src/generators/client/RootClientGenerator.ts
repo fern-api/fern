@@ -111,20 +111,30 @@ export class RootClientGenerator {
             clientConfigArgs.push(
                 swift.functionArgument({
                     label: "bearerAuth",
-                    // TODO(kafkas): No .map when it's not optional
-                    value: swift.Expression.methodCallWithTrailingClosure({
-                        target: swift.Expression.reference(authSchemes.bearer.param.unsafeName),
-                        methodName: "map",
-                        closureBody: swift.Expression.contextualMethodCall({
-                            methodName: "init",
-                            arguments_: [
-                                swift.functionArgument({
-                                    label: "token",
-                                    value: swift.Expression.rawValue("$0")
-                                })
-                            ]
-                        })
-                    })
+                    value: authSchemes.bearer.param.type.isOptional
+                        ? swift.Expression.methodCallWithTrailingClosure({
+                              target: swift.Expression.reference(authSchemes.bearer.param.unsafeName),
+                              methodName: "map",
+                              closureBody: swift.Expression.contextualMethodCall({
+                                  methodName: "init",
+                                  arguments_: [
+                                      swift.functionArgument({
+                                          label: "token",
+                                          value: swift.Expression.rawValue("$0")
+                                      })
+                                  ]
+                              }),
+                              multiline: true
+                          })
+                        : swift.Expression.contextualMethodCall({
+                              methodName: "init",
+                              arguments_: [
+                                  swift.functionArgument({
+                                      label: "token",
+                                      value: swift.Expression.reference(authSchemes.bearer.param.unsafeName)
+                                  })
+                              ]
+                          })
                 })
             );
         }
