@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- changelogEntry:
+    - summary: |
+        Handle end of line comments in .fernignore
+      type: feat
+  irVersion: 58
+  createdAt: "2025-08-08"
+  version: 0.65.48
 
 - changelogEntry:
     - summary: |
