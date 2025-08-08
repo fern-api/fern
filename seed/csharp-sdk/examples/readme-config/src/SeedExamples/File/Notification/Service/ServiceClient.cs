@@ -1,14 +1,15 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
+using SeedExamples.Core;
 
 namespace SeedExamples.File.Notification;
 
 public partial class ServiceClient
 {
-    private SeedExamples.Core.RawClient _client;
+    private RawClient _client;
 
-    internal ServiceClient(SeedExamples.Core.RawClient client)
+    internal ServiceClient(RawClient client)
     {
         _client = client;
     }
@@ -16,21 +17,21 @@ public partial class ServiceClient
     /// <example><code>
     /// await client.File.Notification.Service.GetExceptionAsync("notification-hsy129x");
     /// </code></example>
-    public async Task<SeedExamples.Exception> GetExceptionAsync(
+    public async Task<Exception> GetExceptionAsync(
         string notificationId,
-        SeedExamples.RequestOptions? options = null,
+        RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new SeedExamples.Core.JsonRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "/file/notification/{0}",
-                        SeedExamples.Core.ValueConvert.ToPathParameterString(notificationId)
+                        ValueConvert.ToPathParameterString(notificationId)
                     ),
                     Options = options,
                 },
@@ -42,19 +43,17 @@ public partial class ServiceClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return SeedExamples.Core.JsonUtils.Deserialize<SeedExamples.Exception>(
-                    responseBody
-                )!;
+                return JsonUtils.Deserialize<Exception>(responseBody)!;
             }
             catch (JsonException e)
             {
-                throw new SeedExamples.SeedExamplesException("Failed to deserialize response", e);
+                throw new SeedExamplesException("Failed to deserialize response", e);
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExamples.SeedExamplesApiException(
+            throw new SeedExamplesApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody

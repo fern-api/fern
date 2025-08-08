@@ -4,10 +4,11 @@
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
+using SeedExamples.Core;
 
 namespace SeedExamples;
 
-[JsonConverter(typeof(SeedExamples.Exception.JsonConverter))]
+[JsonConverter(typeof(JsonConverter))]
 [Serializable]
 public record Exception
 {
@@ -18,18 +19,18 @@ public record Exception
     }
 
     /// <summary>
-    /// Create an instance of Exception with <see cref="SeedExamples.Exception.Generic"/>.
+    /// Create an instance of Exception with <see cref="Generic"/>.
     /// </summary>
-    public Exception(SeedExamples.Exception.Generic value)
+    public Exception(Generic value)
     {
         Type = "generic";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of Exception with <see cref="SeedExamples.Exception.Timeout"/>.
+    /// Create an instance of Exception with <see cref="Timeout"/>.
     /// </summary>
-    public Exception(SeedExamples.Exception.Timeout value)
+    public Exception(Timeout value)
     {
         Type = "timeout";
         Value = value.Value;
@@ -57,12 +58,12 @@ public record Exception
     public bool IsTimeout => Type == "timeout";
 
     /// <summary>
-    /// Returns the value as a <see cref="SeedExamples.ExceptionInfo"/> if <see cref="Type"/> is 'generic', otherwise throws an exception.
+    /// Returns the value as a <see cref="ExceptionInfo"/> if <see cref="Type"/> is 'generic', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'generic'.</exception>
-    public SeedExamples.ExceptionInfo AsGeneric() =>
+    public ExceptionInfo AsGeneric() =>
         IsGeneric
-            ? (SeedExamples.ExceptionInfo)Value!
+            ? (ExceptionInfo)Value!
             : throw new Exception("SeedExamples.Exception.Type is not 'generic'");
 
     /// <summary>
@@ -73,7 +74,7 @@ public record Exception
         IsTimeout ? Value! : throw new Exception("SeedExamples.Exception.Type is not 'timeout'");
 
     public T Match<T>(
-        Func<SeedExamples.ExceptionInfo, T> onGeneric,
+        Func<ExceptionInfo, T> onGeneric,
         Func<object, T> onTimeout,
         Func<string, object?, T> onUnknown_
     )
@@ -87,7 +88,7 @@ public record Exception
     }
 
     public void Visit(
-        Action<SeedExamples.ExceptionInfo> onGeneric,
+        Action<ExceptionInfo> onGeneric,
         Action<object> onTimeout,
         Action<string, object?> onUnknown_
     )
@@ -107,13 +108,13 @@ public record Exception
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="SeedExamples.ExceptionInfo"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="ExceptionInfo"/> and returns true if successful.
     /// </summary>
-    public bool TryAsGeneric(out SeedExamples.ExceptionInfo? value)
+    public bool TryAsGeneric(out ExceptionInfo? value)
     {
         if (Type == "generic")
         {
-            value = (SeedExamples.ExceptionInfo)Value!;
+            value = (ExceptionInfo)Value!;
             return true;
         }
         value = null;
@@ -134,18 +135,17 @@ public record Exception
         return false;
     }
 
-    public override string ToString() => SeedExamples.Core.JsonUtils.Serialize(this);
+    public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator SeedExamples.Exception(SeedExamples.Exception.Generic value) =>
-        new(value);
+    public static implicit operator Exception(Generic value) => new(value);
 
     [Serializable]
-    internal sealed class JsonConverter : JsonConverter<SeedExamples.Exception>
+    internal sealed class JsonConverter : JsonConverter<Exception>
     {
         public override bool CanConvert(Type typeToConvert) =>
-            typeof(SeedExamples.Exception).IsAssignableFrom(typeToConvert);
+            typeof(Exception).IsAssignableFrom(typeToConvert);
 
-        public override SeedExamples.Exception Read(
+        public override Exception Read(
             ref Utf8JsonReader reader,
             Type typeToConvert,
             JsonSerializerOptions options
@@ -174,17 +174,17 @@ public record Exception
 
             var value = discriminator switch
             {
-                "generic" => json.Deserialize<SeedExamples.ExceptionInfo>(options)
+                "generic" => json.Deserialize<ExceptionInfo>(options)
                     ?? throw new JsonException("Failed to deserialize SeedExamples.ExceptionInfo"),
                 "timeout" => new { },
                 _ => json.Deserialize<object?>(options),
             };
-            return new SeedExamples.Exception(discriminator, value);
+            return new Exception(discriminator, value);
         }
 
         public override void Write(
             Utf8JsonWriter writer,
-            SeedExamples.Exception value,
+            Exception value,
             JsonSerializerOptions options
         )
         {
@@ -206,18 +206,16 @@ public record Exception
     [Serializable]
     public struct Generic
     {
-        public Generic(SeedExamples.ExceptionInfo value)
+        public Generic(ExceptionInfo value)
         {
             Value = value;
         }
 
-        internal SeedExamples.ExceptionInfo Value { get; set; }
+        internal ExceptionInfo Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator SeedExamples.Exception.Generic(
-            SeedExamples.ExceptionInfo value
-        ) => new(value);
+        public static implicit operator Generic(ExceptionInfo value) => new(value);
     }
 
     /// <summary>

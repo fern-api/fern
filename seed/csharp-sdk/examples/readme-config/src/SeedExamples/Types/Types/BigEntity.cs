@@ -1,6 +1,8 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using OneOf;
+using SeedExamples.Commons;
+using SeedExamples.Core;
 
 namespace SeedExamples;
 
@@ -12,51 +14,46 @@ public record BigEntity : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     [JsonPropertyName("castMember")]
-    public OneOf<
-        SeedExamples.Actor,
-        SeedExamples.Actress,
-        SeedExamples.StuntDouble
-    >? CastMember { get; set; }
+    public OneOf<Actor, Actress, StuntDouble>? CastMember { get; set; }
 
     [JsonPropertyName("extendedMovie")]
-    public SeedExamples.ExtendedMovie? ExtendedMovie { get; set; }
+    public ExtendedMovie? ExtendedMovie { get; set; }
 
     [JsonPropertyName("entity")]
-    public SeedExamples.Entity? Entity { get; set; }
+    public Entity? Entity { get; set; }
 
     [JsonPropertyName("metadata")]
-    public SeedExamples.Metadata? Metadata { get; set; }
+    public Metadata? Metadata { get; set; }
 
     [JsonPropertyName("commonMetadata")]
-    public SeedExamples.Commons.Metadata? CommonMetadata { get; set; }
+    public Commons.Metadata? CommonMetadata { get; set; }
 
     [JsonPropertyName("eventInfo")]
-    public SeedExamples.Commons.EventInfo? EventInfo { get; set; }
+    public EventInfo? EventInfo { get; set; }
 
     [JsonPropertyName("data")]
-    public SeedExamples.Commons.Data? Data { get; set; }
+    public Data? Data { get; set; }
 
     [JsonPropertyName("migration")]
-    public SeedExamples.Migration? Migration { get; set; }
+    public Migration? Migration { get; set; }
 
     [JsonPropertyName("exception")]
-    public SeedExamples.Exception? Exception { get; set; }
+    public Exception? Exception { get; set; }
 
     [JsonPropertyName("test")]
-    public SeedExamples.Test? Test { get; set; }
+    public Test? Test { get; set; }
 
     [JsonPropertyName("node")]
-    public SeedExamples.Node? Node { get; set; }
+    public Node? Node { get; set; }
 
     [JsonPropertyName("directory")]
-    public SeedExamples.Directory? Directory { get; set; }
+    public Directory? Directory { get; set; }
 
     [JsonPropertyName("moment")]
-    public SeedExamples.Moment? Moment { get; set; }
+    public Moment? Moment { get; set; }
 
     [JsonIgnore]
-    public SeedExamples.ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } =
-        new();
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
     void IJsonOnDeserialized.OnDeserialized() =>
         AdditionalProperties.CopyFromExtensionData(_extensionData);
@@ -64,6 +61,6 @@ public record BigEntity : IJsonOnDeserialized
     /// <inheritdoc />
     public override string ToString()
     {
-        return SeedExamples.Core.JsonUtils.Serialize(this);
+        return JsonUtils.Serialize(this);
     }
 }

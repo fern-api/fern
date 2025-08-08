@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using SeedExamples.Core;
 
 namespace SeedExamples;
 
@@ -14,8 +15,7 @@ public record RefreshTokenRequest : IJsonOnDeserialized
     public required int Ttl { get; set; }
 
     [JsonIgnore]
-    public SeedExamples.ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } =
-        new();
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
     void IJsonOnDeserialized.OnDeserialized() =>
         AdditionalProperties.CopyFromExtensionData(_extensionData);
@@ -23,6 +23,6 @@ public record RefreshTokenRequest : IJsonOnDeserialized
     /// <inheritdoc />
     public override string ToString()
     {
-        return SeedExamples.Core.JsonUtils.Serialize(this);
+        return JsonUtils.Serialize(this);
     }
 }

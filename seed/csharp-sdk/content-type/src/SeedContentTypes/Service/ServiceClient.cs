@@ -58,7 +58,7 @@ public partial class ServiceClient
     /// <example><code>
     /// await client.Service.PatchComplexAsync(
     ///     "id",
-    ///     new PatchComplexRequest
+    ///     new SeedContentTypes.PatchComplexRequest
     ///     {
     ///         Name = "name",
     ///         Email = "email",
@@ -75,7 +75,7 @@ public partial class ServiceClient
     ///     }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task PatchComplexAsync(
+    public async Task PatchComplexAsync(
         string id,
         PatchComplexRequest request,
         RequestOptions? options = null,
@@ -116,10 +116,10 @@ public partial class ServiceClient
     /// <example><code>
     /// await client.Service.RegularPatchAsync(
     ///     "id",
-    ///     new RegularPatchRequest { Field1 = "field1", Field2 = 1 }
+    ///     new SeedContentTypes.RegularPatchRequest { Field1 = "field1", Field2 = 1 }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task RegularPatchAsync(
+    public async Task RegularPatchAsync(
         string id,
         RegularPatchRequest request,
         RequestOptions? options = null,

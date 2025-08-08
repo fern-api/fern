@@ -1,14 +1,15 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
+using SeedExamples.Core;
 
 namespace SeedExamples.File;
 
 public partial class ServiceClient
 {
-    private SeedExamples.Core.RawClient _client;
+    private RawClient _client;
 
-    internal ServiceClient(SeedExamples.Core.RawClient client)
+    internal ServiceClient(RawClient client)
     {
         _client = client;
     }
@@ -25,23 +26,20 @@ public partial class ServiceClient
     public async Task<SeedExamples.File> GetFileAsync(
         string filename,
         SeedExamples.File.GetFileRequest request,
-        SeedExamples.RequestOptions? options = null,
+        RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = new SeedExamples.Core.Headers(
+        var _headers = new Headers(
             new Dictionary<string, string>() { { "X-File-API-Version", request.XFileApiVersion } }
         );
         var response = await _client
             .SendRequestAsync(
-                new SeedExamples.Core.JsonRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = string.Format(
-                        "/file/{0}",
-                        SeedExamples.Core.ValueConvert.ToPathParameterString(filename)
-                    ),
+                    Path = string.Format("/file/{0}", ValueConvert.ToPathParameterString(filename)),
                     Headers = _headers,
                     Options = options,
                 },
@@ -53,11 +51,11 @@ public partial class ServiceClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return SeedExamples.Core.JsonUtils.Deserialize<SeedExamples.File>(responseBody)!;
+                return JsonUtils.Deserialize<SeedExamples.File>(responseBody)!;
             }
             catch (JsonException e)
             {
-                throw new SeedExamples.SeedExamplesException("Failed to deserialize response", e);
+                throw new SeedExamplesException("Failed to deserialize response", e);
             }
         }
 
@@ -68,16 +66,14 @@ public partial class ServiceClient
                 switch (response.StatusCode)
                 {
                     case 404:
-                        throw new SeedExamples.NotFoundError(
-                            SeedExamples.Core.JsonUtils.Deserialize<string>(responseBody)
-                        );
+                        throw new NotFoundError(JsonUtils.Deserialize<string>(responseBody));
                 }
             }
             catch (JsonException)
             {
                 // unable to map error response, throwing generic error
             }
-            throw new SeedExamples.SeedExamplesApiException(
+            throw new SeedExamplesApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody

@@ -1,5 +1,6 @@
 using System.Text.Json;
 using NUnit.Framework;
+using SeedExamples.Core;
 
 namespace SeedExamples.Test;
 
@@ -15,12 +16,8 @@ public class EntityTest
               "name": "unknown"
             }
             """;
-        var expectedObject = new SeedExamples.Entity
-        {
-            Type = SeedExamples.ComplexType.Unknown,
-            Name = "unknown",
-        };
-        var deserializedObject = SeedExamples.Core.JsonUtils.Deserialize<SeedExamples.Entity>(json);
+        var expectedObject = new Entity { Type = ComplexType.Unknown, Name = "unknown" };
+        var deserializedObject = JsonUtils.Deserialize<Entity>(json);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
@@ -33,13 +30,9 @@ public class EntityTest
               "name": "unknown"
             }
             """;
-        var actualObj = new SeedExamples.Entity
-        {
-            Type = SeedExamples.ComplexType.Unknown,
-            Name = "unknown",
-        };
-        var actualElement = SeedExamples.Core.JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = SeedExamples.Core.JsonUtils.Deserialize<JsonElement>(expectedJson);
+        var actualObj = new Entity { Type = ComplexType.Unknown, Name = "unknown" };
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

@@ -1,5 +1,6 @@
 using System.Text.Json;
 using NUnit.Framework;
+using SeedExamples.Core;
 
 namespace SeedExamples.Test;
 
@@ -17,9 +18,9 @@ public class ExceptionTest
               "exceptionStacktrace": "<logs>"
             }
             """;
-        var expectedObject = new SeedExamples.Exception(
-            new SeedExamples.Exception.Generic(
-                new SeedExamples.ExceptionInfo
+        var expectedObject = new Exception(
+            new Exception.Generic(
+                new ExceptionInfo
                 {
                     ExceptionType = "Unavailable",
                     ExceptionMessage = "This component is unavailable!",
@@ -27,9 +28,7 @@ public class ExceptionTest
                 }
             )
         );
-        var deserializedObject = SeedExamples.Core.JsonUtils.Deserialize<SeedExamples.Exception>(
-            json
-        );
+        var deserializedObject = JsonUtils.Deserialize<Exception>(json);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
@@ -44,9 +43,9 @@ public class ExceptionTest
               "exceptionStacktrace": "<logs>"
             }
             """;
-        var actualObj = new SeedExamples.Exception(
-            new SeedExamples.Exception.Generic(
-                new SeedExamples.ExceptionInfo
+        var actualObj = new Exception(
+            new Exception.Generic(
+                new ExceptionInfo
                 {
                     ExceptionType = "Unavailable",
                     ExceptionMessage = "This component is unavailable!",
@@ -54,8 +53,8 @@ public class ExceptionTest
                 }
             )
         );
-        var actualElement = SeedExamples.Core.JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = SeedExamples.Core.JsonUtils.Deserialize<JsonElement>(expectedJson);
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

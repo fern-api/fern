@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedExamples.Core;
 
 namespace SeedExamples.File;
 
@@ -11,6 +12,6 @@ public record GetFileRequest
     /// <inheritdoc />
     public override string ToString()
     {
-        return SeedExamples.Core.JsonUtils.Serialize(this);
+        return JsonUtils.Serialize(this);
     }
 }

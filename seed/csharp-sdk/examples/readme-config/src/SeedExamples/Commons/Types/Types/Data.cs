@@ -4,10 +4,11 @@
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
+using SeedExamples.Core;
 
 namespace SeedExamples.Commons;
 
-[JsonConverter(typeof(SeedExamples.Commons.Data.JsonConverter))]
+[JsonConverter(typeof(JsonConverter))]
 [Serializable]
 public record Data
 {
@@ -18,18 +19,18 @@ public record Data
     }
 
     /// <summary>
-    /// Create an instance of Data with <see cref="SeedExamples.Commons.Data.String"/>.
+    /// Create an instance of Data with <see cref="String"/>.
     /// </summary>
-    public Data(SeedExamples.Commons.Data.String value)
+    public Data(String value)
     {
         Type = "string";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of Data with <see cref="SeedExamples.Commons.Data.Base64"/>.
+    /// Create an instance of Data with <see cref="Base64"/>.
     /// </summary>
-    public Data(SeedExamples.Commons.Data.Base64 value)
+    public Data(Base64 value)
     {
         Type = "base64";
         Value = value.Value;
@@ -136,23 +137,19 @@ public record Data
         return false;
     }
 
-    public override string ToString() => SeedExamples.Core.JsonUtils.Serialize(this);
+    public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator SeedExamples.Commons.Data(
-        SeedExamples.Commons.Data.String value
-    ) => new(value);
+    public static implicit operator Data(String value) => new(value);
 
-    public static implicit operator SeedExamples.Commons.Data(
-        SeedExamples.Commons.Data.Base64 value
-    ) => new(value);
+    public static implicit operator Data(Base64 value) => new(value);
 
     [Serializable]
-    internal sealed class JsonConverter : JsonConverter<SeedExamples.Commons.Data>
+    internal sealed class JsonConverter : JsonConverter<Data>
     {
         public override bool CanConvert(Type typeToConvert) =>
-            typeof(SeedExamples.Commons.Data).IsAssignableFrom(typeToConvert);
+            typeof(Data).IsAssignableFrom(typeToConvert);
 
-        public override SeedExamples.Commons.Data Read(
+        public override Data Read(
             ref Utf8JsonReader reader,
             Type typeToConvert,
             JsonSerializerOptions options
@@ -187,14 +184,10 @@ public record Data
                     ?? throw new JsonException("Failed to deserialize string"),
                 _ => json.Deserialize<object?>(options),
             };
-            return new SeedExamples.Commons.Data(discriminator, value);
+            return new Data(discriminator, value);
         }
 
-        public override void Write(
-            Utf8JsonWriter writer,
-            SeedExamples.Commons.Data value,
-            JsonSerializerOptions options
-        )
+        public override void Write(Utf8JsonWriter writer, Data value, JsonSerializerOptions options)
         {
             JsonNode json =
                 value.Type switch
@@ -229,8 +222,7 @@ public record Data
 
         public override string ToString() => Value;
 
-        public static implicit operator SeedExamples.Commons.Data.String(string value) =>
-            new(value);
+        public static implicit operator String(string value) => new(value);
     }
 
     /// <summary>
@@ -248,7 +240,6 @@ public record Data
 
         public override string ToString() => Value;
 
-        public static implicit operator SeedExamples.Commons.Data.Base64(string value) =>
-            new(value);
+        public static implicit operator Base64(string value) => new(value);
     }
 }

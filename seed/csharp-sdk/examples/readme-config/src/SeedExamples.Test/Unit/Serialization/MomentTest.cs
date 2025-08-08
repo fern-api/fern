@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Text.Json;
 using NUnit.Framework;
+using SeedExamples.Core;
 
 namespace SeedExamples.Test;
 
@@ -17,7 +18,7 @@ public class MomentTest
               "datetime": "1994-01-01T01:01:01Z"
             }
             """;
-        var expectedObject = new SeedExamples.Moment
+        var expectedObject = new Moment
         {
             Id = "656f12d6-f592-444c-a1d3-a3cfd46d5b39",
             Date = new DateOnly(1994, 1, 1),
@@ -27,7 +28,7 @@ public class MomentTest
                 DateTimeStyles.AdjustToUniversal
             ),
         };
-        var deserializedObject = SeedExamples.Core.JsonUtils.Deserialize<SeedExamples.Moment>(json);
+        var deserializedObject = JsonUtils.Deserialize<Moment>(json);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
@@ -41,7 +42,7 @@ public class MomentTest
               "datetime": "1994-01-01T01:01:01Z"
             }
             """;
-        var actualObj = new SeedExamples.Moment
+        var actualObj = new Moment
         {
             Id = "656f12d6-f592-444c-a1d3-a3cfd46d5b39",
             Date = new DateOnly(1994, 1, 1),
@@ -51,8 +52,8 @@ public class MomentTest
                 DateTimeStyles.AdjustToUniversal
             ),
         };
-        var actualElement = SeedExamples.Core.JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = SeedExamples.Core.JsonUtils.Deserialize<JsonElement>(expectedJson);
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

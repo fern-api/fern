@@ -2,26 +2,28 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using OneOf;
+using SeedExamples.Core;
+using SeedExamples.Health;
 
 namespace SeedExamples;
 
 public partial class SeedExamplesClient
 {
-    private readonly SeedExamples.Core.RawClient _client;
+    private readonly RawClient _client;
 
-    public SeedExamplesClient(string token, SeedExamples.ClientOptions? clientOptions = null)
+    public SeedExamplesClient(string token, ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new SeedExamples.Core.Headers(
+        var defaultHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "Authorization", $"Bearer {token}" },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedExamples" },
-                { "X-Fern-SDK-Version", SeedExamples.Version.Current },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernexamples/0.0.1" },
             }
         );
-        clientOptions ??= new SeedExamples.ClientOptions();
+        clientOptions ??= new ClientOptions();
         foreach (var header in defaultHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
@@ -29,30 +31,30 @@ public partial class SeedExamplesClient
                 clientOptions.Headers[header.Key] = header.Value;
             }
         }
-        _client = new SeedExamples.Core.RawClient(clientOptions);
+        _client = new RawClient(clientOptions);
         File = new SeedExamples.File.FileClient(_client);
-        Health = new SeedExamples.Health.HealthClient(_client);
-        Service = new SeedExamples.ServiceClient(_client);
+        Health = new HealthClient(_client);
+        Service = new ServiceClient(_client);
     }
 
     public SeedExamples.File.FileClient File { get; }
 
-    public SeedExamples.Health.HealthClient Health { get; }
+    public HealthClient Health { get; }
 
-    public SeedExamples.ServiceClient Service { get; }
+    public ServiceClient Service { get; }
 
     /// <example><code>
     /// await client.EchoAsync("Hello world!\\n\\nwith\\n\\tnewlines");
     /// </code></example>
     public async Task<string> EchoAsync(
         string request,
-        SeedExamples.RequestOptions? options = null,
+        RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new SeedExamples.Core.JsonRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -68,17 +70,17 @@ public partial class SeedExamplesClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return SeedExamples.Core.JsonUtils.Deserialize<string>(responseBody)!;
+                return JsonUtils.Deserialize<string>(responseBody)!;
             }
             catch (JsonException e)
             {
-                throw new SeedExamples.SeedExamplesException("Failed to deserialize response", e);
+                throw new SeedExamplesException("Failed to deserialize response", e);
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExamples.SeedExamplesApiException(
+            throw new SeedExamplesApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -89,15 +91,15 @@ public partial class SeedExamplesClient
     /// <example><code>
     /// await client.CreateTypeAsync(SeedExamples.BasicType.Primitive);
     /// </code></example>
-    public async Task<SeedExamples.Identifier> CreateTypeAsync(
-        OneOf<SeedExamples.BasicType, SeedExamples.ComplexType> request,
-        SeedExamples.RequestOptions? options = null,
+    public async Task<Identifier> CreateTypeAsync(
+        OneOf<BasicType, ComplexType> request,
+        RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new SeedExamples.Core.JsonRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -113,19 +115,17 @@ public partial class SeedExamplesClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return SeedExamples.Core.JsonUtils.Deserialize<SeedExamples.Identifier>(
-                    responseBody
-                )!;
+                return JsonUtils.Deserialize<Identifier>(responseBody)!;
             }
             catch (JsonException e)
             {
-                throw new SeedExamples.SeedExamplesException("Failed to deserialize response", e);
+                throw new SeedExamplesException("Failed to deserialize response", e);
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExamples.SeedExamplesApiException(
+            throw new SeedExamplesApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody

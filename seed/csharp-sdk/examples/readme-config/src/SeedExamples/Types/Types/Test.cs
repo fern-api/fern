@@ -4,10 +4,11 @@
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
+using SeedExamples.Core;
 
 namespace SeedExamples;
 
-[JsonConverter(typeof(SeedExamples.Test.JsonConverter))]
+[JsonConverter(typeof(JsonConverter))]
 [Serializable]
 public record Test
 {
@@ -18,18 +19,18 @@ public record Test
     }
 
     /// <summary>
-    /// Create an instance of Test with <see cref="SeedExamples.Test.And"/>.
+    /// Create an instance of Test with <see cref="And"/>.
     /// </summary>
-    public Test(SeedExamples.Test.And value)
+    public Test(And value)
     {
         Type = "and";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of Test with <see cref="SeedExamples.Test.Or"/>.
+    /// Create an instance of Test with <see cref="Or"/>.
     /// </summary>
-    public Test(SeedExamples.Test.Or value)
+    public Test(Or value)
     {
         Type = "or";
         Value = value.Value;
@@ -124,19 +125,19 @@ public record Test
         return false;
     }
 
-    public override string ToString() => SeedExamples.Core.JsonUtils.Serialize(this);
+    public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator SeedExamples.Test(SeedExamples.Test.And value) => new(value);
+    public static implicit operator Test(And value) => new(value);
 
-    public static implicit operator SeedExamples.Test(SeedExamples.Test.Or value) => new(value);
+    public static implicit operator Test(Or value) => new(value);
 
     [Serializable]
-    internal sealed class JsonConverter : JsonConverter<SeedExamples.Test>
+    internal sealed class JsonConverter : JsonConverter<Test>
     {
         public override bool CanConvert(Type typeToConvert) =>
-            typeof(SeedExamples.Test).IsAssignableFrom(typeToConvert);
+            typeof(Test).IsAssignableFrom(typeToConvert);
 
-        public override SeedExamples.Test Read(
+        public override Test Read(
             ref Utf8JsonReader reader,
             Type typeToConvert,
             JsonSerializerOptions options
@@ -169,14 +170,10 @@ public record Test
                 "or" => json.GetProperty("value").Deserialize<bool>(options),
                 _ => json.Deserialize<object?>(options),
             };
-            return new SeedExamples.Test(discriminator, value);
+            return new Test(discriminator, value);
         }
 
-        public override void Write(
-            Utf8JsonWriter writer,
-            SeedExamples.Test value,
-            JsonSerializerOptions options
-        )
+        public override void Write(Utf8JsonWriter writer, Test value, JsonSerializerOptions options)
         {
             JsonNode json =
                 value.Type switch
@@ -211,7 +208,7 @@ public record Test
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator SeedExamples.Test.And(bool value) => new(value);
+        public static implicit operator And(bool value) => new(value);
     }
 
     /// <summary>
@@ -229,6 +226,6 @@ public record Test
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator SeedExamples.Test.Or(bool value) => new(value);
+        public static implicit operator Or(bool value) => new(value);
     }
 }

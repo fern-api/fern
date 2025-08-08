@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using OneOf;
+using SeedExamples.Core;
 
 namespace SeedExamples;
 
@@ -12,7 +13,7 @@ public record Identifier : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     [JsonPropertyName("type")]
-    public required OneOf<SeedExamples.BasicType, SeedExamples.ComplexType> Type { get; set; }
+    public required OneOf<BasicType, ComplexType> Type { get; set; }
 
     [JsonPropertyName("value")]
     public required string Value { get; set; }
@@ -21,8 +22,7 @@ public record Identifier : IJsonOnDeserialized
     public required string Label { get; set; }
 
     [JsonIgnore]
-    public SeedExamples.ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } =
-        new();
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
     void IJsonOnDeserialized.OnDeserialized() =>
         AdditionalProperties.CopyFromExtensionData(_extensionData);
@@ -30,6 +30,6 @@ public record Identifier : IJsonOnDeserialized
     /// <inheritdoc />
     public override string ToString()
     {
-        return SeedExamples.Core.JsonUtils.Serialize(this);
+        return JsonUtils.Serialize(this);
     }
 }

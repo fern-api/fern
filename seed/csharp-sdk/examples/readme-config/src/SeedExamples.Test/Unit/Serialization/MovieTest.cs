@@ -1,5 +1,6 @@
 using System.Text.Json;
 using NUnit.Framework;
+using SeedExamples.Core;
 
 namespace SeedExamples.Test;
 
@@ -33,7 +34,7 @@ public class MovieTest
               "revenue": 1000000
             }
             """;
-        var expectedObject = new SeedExamples.Movie
+        var expectedObject = new Movie
         {
             Id = "movie-c06a4ad7",
             Prequel = "movie-cv9b914f",
@@ -56,7 +57,7 @@ public class MovieTest
             },
             Revenue = 1000000,
         };
-        var deserializedObject = SeedExamples.Core.JsonUtils.Deserialize<SeedExamples.Movie>(json);
+        var deserializedObject = JsonUtils.Deserialize<Movie>(json);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
@@ -87,7 +88,7 @@ public class MovieTest
               "revenue": 1000000
             }
             """;
-        var actualObj = new SeedExamples.Movie
+        var actualObj = new Movie
         {
             Id = "movie-c06a4ad7",
             Prequel = "movie-cv9b914f",
@@ -110,8 +111,8 @@ public class MovieTest
             },
             Revenue = 1000000,
         };
-        var actualElement = SeedExamples.Core.JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = SeedExamples.Core.JsonUtils.Deserialize<JsonElement>(expectedJson);
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

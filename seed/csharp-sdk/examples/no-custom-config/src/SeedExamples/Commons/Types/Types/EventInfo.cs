@@ -4,10 +4,11 @@
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
+using SeedExamples.Core;
 
 namespace SeedExamples.Commons;
 
-[JsonConverter(typeof(SeedExamples.Commons.EventInfo.JsonConverter))]
+[JsonConverter(typeof(JsonConverter))]
 [Serializable]
 public record EventInfo
 {
@@ -18,18 +19,18 @@ public record EventInfo
     }
 
     /// <summary>
-    /// Create an instance of EventInfo with <see cref="SeedExamples.Commons.EventInfo.Metadata"/>.
+    /// Create an instance of EventInfo with <see cref="Metadata"/>.
     /// </summary>
-    public EventInfo(SeedExamples.Commons.EventInfo.Metadata value)
+    public EventInfo(Metadata value)
     {
         Type = "metadata";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of EventInfo with <see cref="SeedExamples.Commons.EventInfo.Tag"/>.
+    /// Create an instance of EventInfo with <see cref="Tag"/>.
     /// </summary>
-    public EventInfo(SeedExamples.Commons.EventInfo.Tag value)
+    public EventInfo(Tag value)
     {
         Type = "tag";
         Value = value.Value;
@@ -57,12 +58,12 @@ public record EventInfo
     public bool IsTag => Type == "tag";
 
     /// <summary>
-    /// Returns the value as a <see cref="SeedExamples.Commons.Metadata"/> if <see cref="Type"/> is 'metadata', otherwise throws an exception.
+    /// Returns the value as a <see cref="Commons.Metadata"/> if <see cref="Type"/> is 'metadata', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'metadata'.</exception>
-    public SeedExamples.Commons.Metadata AsMetadata() =>
+    public Commons.Metadata AsMetadata() =>
         IsMetadata
-            ? (SeedExamples.Commons.Metadata)Value!
+            ? (Commons.Metadata)Value!
             : throw new Exception("SeedExamples.Commons.EventInfo.Type is not 'metadata'");
 
     /// <summary>
@@ -75,7 +76,7 @@ public record EventInfo
             : throw new Exception("SeedExamples.Commons.EventInfo.Type is not 'tag'");
 
     public T Match<T>(
-        Func<SeedExamples.Commons.Metadata, T> onMetadata,
+        Func<Commons.Metadata, T> onMetadata,
         Func<string, T> onTag,
         Func<string, object?, T> onUnknown_
     )
@@ -89,7 +90,7 @@ public record EventInfo
     }
 
     public void Visit(
-        Action<SeedExamples.Commons.Metadata> onMetadata,
+        Action<Commons.Metadata> onMetadata,
         Action<string> onTag,
         Action<string, object?> onUnknown_
     )
@@ -109,13 +110,13 @@ public record EventInfo
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="SeedExamples.Commons.Metadata"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="Commons.Metadata"/> and returns true if successful.
     /// </summary>
-    public bool TryAsMetadata(out SeedExamples.Commons.Metadata? value)
+    public bool TryAsMetadata(out Commons.Metadata? value)
     {
         if (Type == "metadata")
         {
-            value = (SeedExamples.Commons.Metadata)Value!;
+            value = (Commons.Metadata)Value!;
             return true;
         }
         value = null;
@@ -136,23 +137,19 @@ public record EventInfo
         return false;
     }
 
-    public override string ToString() => SeedExamples.Core.JsonUtils.Serialize(this);
+    public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator SeedExamples.Commons.EventInfo(
-        SeedExamples.Commons.EventInfo.Metadata value
-    ) => new(value);
+    public static implicit operator EventInfo(Metadata value) => new(value);
 
-    public static implicit operator SeedExamples.Commons.EventInfo(
-        SeedExamples.Commons.EventInfo.Tag value
-    ) => new(value);
+    public static implicit operator EventInfo(Tag value) => new(value);
 
     [Serializable]
-    internal sealed class JsonConverter : JsonConverter<SeedExamples.Commons.EventInfo>
+    internal sealed class JsonConverter : JsonConverter<EventInfo>
     {
         public override bool CanConvert(Type typeToConvert) =>
-            typeof(SeedExamples.Commons.EventInfo).IsAssignableFrom(typeToConvert);
+            typeof(EventInfo).IsAssignableFrom(typeToConvert);
 
-        public override SeedExamples.Commons.EventInfo Read(
+        public override EventInfo Read(
             ref Utf8JsonReader reader,
             Type typeToConvert,
             JsonSerializerOptions options
@@ -181,7 +178,7 @@ public record EventInfo
 
             var value = discriminator switch
             {
-                "metadata" => json.Deserialize<SeedExamples.Commons.Metadata>(options)
+                "metadata" => json.Deserialize<Commons.Metadata>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedExamples.Commons.Metadata"
                     ),
@@ -189,12 +186,12 @@ public record EventInfo
                     ?? throw new JsonException("Failed to deserialize string"),
                 _ => json.Deserialize<object?>(options),
             };
-            return new SeedExamples.Commons.EventInfo(discriminator, value);
+            return new EventInfo(discriminator, value);
         }
 
         public override void Write(
             Utf8JsonWriter writer,
-            SeedExamples.Commons.EventInfo value,
+            EventInfo value,
             JsonSerializerOptions options
         )
         {
@@ -219,18 +216,16 @@ public record EventInfo
     [Serializable]
     public struct Metadata
     {
-        public Metadata(SeedExamples.Commons.Metadata value)
+        public Metadata(Commons.Metadata value)
         {
             Value = value;
         }
 
-        internal SeedExamples.Commons.Metadata Value { get; set; }
+        internal Commons.Metadata Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator SeedExamples.Commons.EventInfo.Metadata(
-            SeedExamples.Commons.Metadata value
-        ) => new(value);
+        public static implicit operator Metadata(Commons.Metadata value) => new(value);
     }
 
     /// <summary>
@@ -248,7 +243,6 @@ public record EventInfo
 
         public override string ToString() => Value;
 
-        public static implicit operator SeedExamples.Commons.EventInfo.Tag(string value) =>
-            new(value);
+        public static implicit operator Tag(string value) => new(value);
     }
 }

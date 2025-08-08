@@ -1,5 +1,6 @@
 using System.Text.Json;
 using NUnit.Framework;
+using SeedExamples.Core;
 
 namespace SeedExamples.Test;
 
@@ -14,13 +15,8 @@ public class RequestTest
               "request": {}
             }
             """;
-        var expectedObject = new SeedExamples.Request
-        {
-            Request_ = new Dictionary<object, object?>() { },
-        };
-        var deserializedObject = SeedExamples.Core.JsonUtils.Deserialize<SeedExamples.Request>(
-            json
-        );
+        var expectedObject = new Request { Request_ = new Dictionary<object, object?>() { } };
+        var deserializedObject = JsonUtils.Deserialize<Request>(json);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
@@ -32,12 +28,9 @@ public class RequestTest
               "request": {}
             }
             """;
-        var actualObj = new SeedExamples.Request
-        {
-            Request_ = new Dictionary<object, object?>() { },
-        };
-        var actualElement = SeedExamples.Core.JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = SeedExamples.Core.JsonUtils.Deserialize<JsonElement>(expectedJson);
+        var actualObj = new Request { Request_ = new Dictionary<object, object?>() { } };
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using SeedExamples.Core;
 
 namespace SeedExamples;
 
@@ -14,14 +15,13 @@ public record Node : IJsonOnDeserialized
     public required string Name { get; set; }
 
     [JsonPropertyName("nodes")]
-    public IEnumerable<SeedExamples.Node>? Nodes { get; set; }
+    public IEnumerable<Node>? Nodes { get; set; }
 
     [JsonPropertyName("trees")]
-    public IEnumerable<SeedExamples.Tree>? Trees { get; set; }
+    public IEnumerable<Tree>? Trees { get; set; }
 
     [JsonIgnore]
-    public SeedExamples.ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } =
-        new();
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
     void IJsonOnDeserialized.OnDeserialized() =>
         AdditionalProperties.CopyFromExtensionData(_extensionData);
@@ -29,6 +29,6 @@ public record Node : IJsonOnDeserialized
     /// <inheritdoc />
     public override string ToString()
     {
-        return SeedExamples.Core.JsonUtils.Serialize(this);
+        return JsonUtils.Serialize(this);
     }
 }

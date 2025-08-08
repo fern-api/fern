@@ -2,14 +2,15 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using SeedExamples.Core;
 
 namespace SeedExamples.Health;
 
 public partial class ServiceClient
 {
-    private SeedExamples.Core.RawClient _client;
+    private RawClient _client;
 
-    internal ServiceClient(SeedExamples.Core.RawClient client)
+    internal ServiceClient(RawClient client)
     {
         _client = client;
     }
@@ -22,20 +23,17 @@ public partial class ServiceClient
     /// </code></example>
     public async Task CheckAsync(
         string id,
-        SeedExamples.RequestOptions? options = null,
+        RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new SeedExamples.Core.JsonRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = string.Format(
-                        "/check/{0}",
-                        SeedExamples.Core.ValueConvert.ToPathParameterString(id)
-                    ),
+                    Path = string.Format("/check/{0}", ValueConvert.ToPathParameterString(id)),
                     Options = options,
                 },
                 cancellationToken
@@ -47,7 +45,7 @@ public partial class ServiceClient
         }
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExamples.SeedExamplesApiException(
+            throw new SeedExamplesApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody
@@ -62,13 +60,13 @@ public partial class ServiceClient
     /// await client.Health.Service.PingAsync();
     /// </code></example>
     public async Task<bool> PingAsync(
-        SeedExamples.RequestOptions? options = null,
+        RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
             .SendRequestAsync(
-                new SeedExamples.Core.JsonRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
@@ -83,17 +81,17 @@ public partial class ServiceClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return SeedExamples.Core.JsonUtils.Deserialize<bool>(responseBody)!;
+                return JsonUtils.Deserialize<bool>(responseBody)!;
             }
             catch (JsonException e)
             {
-                throw new SeedExamples.SeedExamplesException("Failed to deserialize response", e);
+                throw new SeedExamplesException("Failed to deserialize response", e);
             }
         }
 
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExamples.SeedExamplesApiException(
+            throw new SeedExamplesApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
                 responseBody

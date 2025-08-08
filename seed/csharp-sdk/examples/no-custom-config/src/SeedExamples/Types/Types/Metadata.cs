@@ -4,10 +4,11 @@
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
+using SeedExamples.Core;
 
 namespace SeedExamples;
 
-[JsonConverter(typeof(SeedExamples.Metadata.JsonConverter))]
+[JsonConverter(typeof(JsonConverter))]
 [Serializable]
 public record Metadata
 {
@@ -18,18 +19,18 @@ public record Metadata
     }
 
     /// <summary>
-    /// Create an instance of Metadata with <see cref="SeedExamples.Metadata.Html"/>.
+    /// Create an instance of Metadata with <see cref="Html"/>.
     /// </summary>
-    public Metadata(SeedExamples.Metadata.Html value)
+    public Metadata(Html value)
     {
         Type = "html";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of Metadata with <see cref="SeedExamples.Metadata.Markdown"/>.
+    /// Create an instance of Metadata with <see cref="Markdown"/>.
     /// </summary>
-    public Metadata(SeedExamples.Metadata.Markdown value)
+    public Metadata(Markdown value)
     {
         Type = "markdown";
         Value = value.Value;
@@ -140,7 +141,7 @@ public record Metadata
         return false;
     }
 
-    public override string ToString() => SeedExamples.Core.JsonUtils.Serialize(this);
+    public override string ToString() => JsonUtils.Serialize(this);
 
     /// <summary>
     /// Base properties for the discriminated union
@@ -156,12 +157,12 @@ public record Metadata
     }
 
     [Serializable]
-    internal sealed class JsonConverter : JsonConverter<SeedExamples.Metadata>
+    internal sealed class JsonConverter : JsonConverter<Metadata>
     {
         public override bool CanConvert(Type typeToConvert) =>
-            typeof(SeedExamples.Metadata).IsAssignableFrom(typeToConvert);
+            typeof(Metadata).IsAssignableFrom(typeToConvert);
 
-        public override SeedExamples.Metadata Read(
+        public override Metadata Read(
             ref Utf8JsonReader reader,
             Type typeToConvert,
             JsonSerializerOptions options
@@ -197,11 +198,11 @@ public record Metadata
                 _ => json.Deserialize<object?>(options),
             };
             var baseProperties =
-                json.Deserialize<SeedExamples.Metadata.BaseProperties>(options)
+                json.Deserialize<BaseProperties>(options)
                 ?? throw new JsonException(
                     "Failed to deserialize SeedExamples.Metadata.BaseProperties"
                 );
-            return new SeedExamples.Metadata(discriminator, value)
+            return new Metadata(discriminator, value)
             {
                 Extra = baseProperties.Extra,
                 Tags = baseProperties.Tags,
@@ -210,7 +211,7 @@ public record Metadata
 
         public override void Write(
             Utf8JsonWriter writer,
-            SeedExamples.Metadata value,
+            Metadata value,
             JsonSerializerOptions options
         )
         {
@@ -230,11 +231,7 @@ public record Metadata
             json["type"] = value.Type;
             var basePropertiesJson =
                 JsonSerializer.SerializeToNode(
-                    new SeedExamples.Metadata.BaseProperties
-                    {
-                        Extra = value.Extra,
-                        Tags = value.Tags,
-                    },
+                    new BaseProperties { Extra = value.Extra, Tags = value.Tags },
                     options
                 )
                 ?? throw new JsonException(
@@ -263,7 +260,7 @@ public record Metadata
 
         public override string ToString() => Value;
 
-        public static implicit operator SeedExamples.Metadata.Html(string value) => new(value);
+        public static implicit operator Html(string value) => new(value);
     }
 
     /// <summary>
@@ -281,6 +278,6 @@ public record Metadata
 
         public override string ToString() => Value;
 
-        public static implicit operator SeedExamples.Metadata.Markdown(string value) => new(value);
+        public static implicit operator Markdown(string value) => new(value);
     }
 }

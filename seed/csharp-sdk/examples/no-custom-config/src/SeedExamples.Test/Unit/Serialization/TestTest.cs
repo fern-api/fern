@@ -1,5 +1,6 @@
 using System.Text.Json;
 using NUnit.Framework;
+using SeedExamples.Core;
 
 namespace SeedExamples.Test;
 
@@ -15,8 +16,8 @@ public class TestTest
               "value": true
             }
             """;
-        var expectedObject = new SeedExamples.Test(new SeedExamples.Test.And(true));
-        var deserializedObject = SeedExamples.Core.JsonUtils.Deserialize<SeedExamples.Test>(json);
+        var expectedObject = new Test(new Test.And(true));
+        var deserializedObject = JsonUtils.Deserialize<Test>(json);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
@@ -29,9 +30,9 @@ public class TestTest
               "value": true
             }
             """;
-        var actualObj = new SeedExamples.Test(new SeedExamples.Test.And(true));
-        var actualElement = SeedExamples.Core.JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = SeedExamples.Core.JsonUtils.Deserialize<JsonElement>(expectedJson);
+        var actualObj = new Test(new Test.And(true));
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 
@@ -44,8 +45,8 @@ public class TestTest
               "value": true
             }
             """;
-        var expectedObject = new SeedExamples.Test(new SeedExamples.Test.Or(true));
-        var deserializedObject = SeedExamples.Core.JsonUtils.Deserialize<SeedExamples.Test>(json);
+        var expectedObject = new Test(new Test.Or(true));
+        var deserializedObject = JsonUtils.Deserialize<Test>(json);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
@@ -58,9 +59,9 @@ public class TestTest
               "value": true
             }
             """;
-        var actualObj = new SeedExamples.Test(new SeedExamples.Test.Or(true));
-        var actualElement = SeedExamples.Core.JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = SeedExamples.Core.JsonUtils.Deserialize<JsonElement>(expectedJson);
+        var actualObj = new Test(new Test.Or(true));
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

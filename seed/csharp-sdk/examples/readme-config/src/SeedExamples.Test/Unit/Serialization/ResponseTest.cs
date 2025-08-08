@@ -1,5 +1,6 @@
 using System.Text.Json;
 using NUnit.Framework;
+using SeedExamples.Core;
 
 namespace SeedExamples.Test;
 
@@ -26,28 +27,26 @@ public class ResponseTest
               ]
             }
             """;
-        var expectedObject = new SeedExamples.Response
+        var expectedObject = new Response
         {
             Response_ = "Initializing...",
-            Identifiers = new List<SeedExamples.Identifier>()
+            Identifiers = new List<Identifier>()
             {
-                new SeedExamples.Identifier
+                new Identifier
                 {
-                    Type = SeedExamples.BasicType.Primitive,
+                    Type = BasicType.Primitive,
                     Value = "example",
                     Label = "Primitive",
                 },
-                new SeedExamples.Identifier
+                new Identifier
                 {
-                    Type = SeedExamples.ComplexType.Unknown,
+                    Type = ComplexType.Unknown,
                     Value = "{}",
                     Label = "Unknown",
                 },
             },
         };
-        var deserializedObject = SeedExamples.Core.JsonUtils.Deserialize<SeedExamples.Response>(
-            json
-        );
+        var deserializedObject = JsonUtils.Deserialize<Response>(json);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
@@ -71,27 +70,27 @@ public class ResponseTest
               ]
             }
             """;
-        var actualObj = new SeedExamples.Response
+        var actualObj = new Response
         {
             Response_ = "Initializing...",
-            Identifiers = new List<SeedExamples.Identifier>()
+            Identifiers = new List<Identifier>()
             {
-                new SeedExamples.Identifier
+                new Identifier
                 {
-                    Type = SeedExamples.BasicType.Primitive,
+                    Type = BasicType.Primitive,
                     Value = "example",
                     Label = "Primitive",
                 },
-                new SeedExamples.Identifier
+                new Identifier
                 {
-                    Type = SeedExamples.ComplexType.Unknown,
+                    Type = ComplexType.Unknown,
                     Value = "{}",
                     Label = "Unknown",
                 },
             },
         };
-        var actualElement = SeedExamples.Core.JsonUtils.SerializeToElement(actualObj);
-        var expectedElement = SeedExamples.Core.JsonUtils.Deserialize<JsonElement>(expectedJson);
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }
