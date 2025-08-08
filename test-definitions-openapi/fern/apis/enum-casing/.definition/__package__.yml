@@ -1,0 +1,47 @@
+types:
+  ExampleResponse:
+    properties:
+      custom_fields: optional<map<string, string>>
+      message: optional<string>
+      status: optional<ExampleResponseStatus>
+    source:
+      openapi: openapi.yml
+  ExampleResponseStatus:
+    enum:
+      - success
+      - failure
+    inline: true
+    source:
+      openapi: openapi.yml
+  GrantTypeEnum:
+    enum:
+      - name: UrnDevrevParamsOauthGrantTypeTokenIssue
+        value: urn:devrev:params:oauth:grant-type:token-issue
+      - name: UrnIetfParamsOauthGrantTypeTokenExchange
+        value: urn:ietf:params:oauth:grant-type:token-exchange
+    source:
+      openapi: openapi.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getExample:
+      auth: false
+      display-name: Get Example
+      examples:
+        - response:
+            body:
+              custom_fields:
+                key: value
+              message: message
+              status: success
+      method: GET
+      path: /example
+      response:
+        docs: Successful response
+        status-code: 200
+        type: ExampleResponse
+      source:
+        openapi: openapi.yml
+  source:
+    openapi: openapi.yml

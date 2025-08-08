@@ -153,3 +153,26 @@ types:
       - value: |-
           transcript[transcriptType='final']
         name: GG
+
+  EnumGroupResponse:
+    properties:
+      data: EnumGroup
+
+  EnumGroup:
+    properties:
+      enum: RegularEnum
+      optionalEnum: optional<RegularEnum>
+      inlineEnum: InlineEnum
+      optionalInlineEnum: optional<InlineEnum>
+
+
+  RegularEnum:
+    enum:
+      - foo
+      - bar
+
+  InlineEnum:
+    inline: true
+    enum:
+      - foo
+      - bar

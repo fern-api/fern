@@ -1,0 +1,44 @@
+imports:
+  infraTelemetry: infra/telemetry.yml
+types:
+  TelemetryGetTelemetryDataResponse:
+    properties:
+      result: optional<infraTelemetry.TelemetryData>
+      status: optional<string>
+      time:
+        docs: Time spent to process this request
+        type: optional<float>
+    source:
+      openapi: openapi.json
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getTelemetryData:
+      auth: false
+      display-name: Collect telemetry data
+      examples:
+        - response:
+            body:
+              result:
+                cpu: 1.1
+                memory: 1.1
+                network: 1.1
+              status: status
+              time: 1.1
+      method: GET
+      path: /telemetry
+      request:
+        name: TelemetryGetTelemetryDataRequest
+        query-parameters:
+          anonymize:
+            docs: If true, anonymize result
+            type: optional<boolean>
+      response:
+        docs: successful operation
+        status-code: 200
+        type: TelemetryGetTelemetryDataResponse
+      source:
+        openapi: openapi.json
+  source:
+    openapi: openapi.json

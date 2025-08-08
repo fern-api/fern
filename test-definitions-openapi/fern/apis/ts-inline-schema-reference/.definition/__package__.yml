@@ -1,0 +1,178 @@
+types:
+  GetExampleResponse:
+    discriminated: false
+    source:
+      openapi: openapi.yml
+    union:
+      - Schema1
+      - Schema2
+  PostRootRequestBar:
+    inline: true
+    properties:
+      foo: optional<string>
+      inner_bar: optional<PostRootRequestBarInnerBar>
+    source:
+      openapi: openapi.yml
+  PostRootRequestBarInnerBar:
+    inline: true
+    properties:
+      bar: optional<string>
+      foo: optional<string>
+    source:
+      openapi: openapi.yml
+  PostRootResponse:
+    properties:
+      bar: optional<PostRootResponseBar>
+      foo: optional<string>
+    source:
+      openapi: openapi.yml
+  PostRootResponseBar:
+    inline: true
+    properties:
+      foo: optional<string>
+      inner_bar: optional<PostRootResponseBarInnerBar>
+    source:
+      openapi: openapi.yml
+  PostRootResponseBarInnerBar:
+    inline: true
+    properties:
+      bar: optional<string>
+      foo: optional<string>
+    source:
+      openapi: openapi.yml
+  RootUnionMap: map<string, RootUnionMapValue>
+  RootUnionMapValue:
+    discriminated: false
+    inline: true
+    source:
+      openapi: openapi.yml
+    union:
+      - optional<string>
+      - double
+      - boolean
+      - list<unknown>
+  Schema1:
+    properties:
+      id: optional<integer>
+      inline_union_map: optional<map<string, Schema1InlineUnionMapValue>>
+      name: optional<string>
+    source:
+      openapi: openapi.yml
+  Schema1InlineUnionMapValue:
+    discriminated: false
+    inline: true
+    source:
+      openapi: openapi.yml
+    union:
+      - optional<string>
+      - double
+      - boolean
+      - list<unknown>
+  Schema2:
+    properties:
+      age: optional<integer>
+      email: optional<string>
+      testDiscriminatedUnion: optional<Schema2TestDiscriminatedUnion>
+      testEnum: optional<Schema2TestEnum>
+      testUnion: optional<Schema2TestUnion>
+    source:
+      openapi: openapi.yml
+  Schema2TestDiscriminatedUnion:
+    discriminated: false
+    inline: true
+    source:
+      openapi: openapi.yml
+    union:
+      - Schema2TestDiscriminatedUnionZero
+      - Schema2TestDiscriminatedUnionOne
+  Schema2TestDiscriminatedUnionOne:
+    inline: true
+    properties:
+      objectType: optional<string>
+    source:
+      openapi: openapi.yml
+  Schema2TestDiscriminatedUnionZero:
+    inline: true
+    properties:
+      objectType: optional<string>
+    source:
+      openapi: openapi.yml
+  Schema2TestEnum:
+    enum:
+      - test1
+      - test2
+      - test3
+    inline: true
+    source:
+      openapi: openapi.yml
+  Schema2TestUnion:
+    discriminated: false
+    inline: true
+    source:
+      openapi: openapi.yml
+    union:
+      - Schema2TestUnionA
+      - Schema2TestUnionB
+  Schema2TestUnionA:
+    inline: true
+    properties:
+      a: optional<string>
+    source:
+      openapi: openapi.yml
+  Schema2TestUnionB:
+    inline: true
+    properties:
+      b: optional<string>
+    source:
+      openapi: openapi.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getExample:
+      auth: false
+      display-name: Get Example
+      examples:
+        - response:
+            body:
+              id: 1
+              inline_union_map:
+                key: value
+              name: name
+      method: GET
+      path: /example
+      response:
+        docs: Successful response
+        status-code: 200
+        type: GetExampleResponse
+      source:
+        openapi: openapi.yml
+    postRoot:
+      auth: false
+      examples:
+        - request: {}
+          response:
+            body:
+              bar:
+                foo: foo
+                inner_bar:
+                  bar: bar
+                  foo: foo
+              foo: foo
+      method: POST
+      path: /root
+      request:
+        body:
+          properties:
+            bar: optional<PostRootRequestBar>
+            foo: optional<string>
+        content-type: application/json
+        name: PostRootRequest
+      response:
+        docs: Successful response
+        status-code: 200
+        type: PostRootResponse
+      source:
+        openapi: openapi.yml
+  source:
+    openapi: openapi.yml

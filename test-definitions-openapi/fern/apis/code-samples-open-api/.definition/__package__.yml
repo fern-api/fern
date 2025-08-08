@@ -1,0 +1,94 @@
+types:
+  TelemetryData:
+    properties:
+      cpu:
+        docs: CPU usage
+        type: optional<float>
+      memory:
+        docs: Memory usage
+        type: optional<float>
+      network:
+        docs: Network usage
+        type: optional<float>
+    source:
+      openapi: openapi.json
+  TelemetryResponse:
+    properties:
+      result: optional<TelemetryData>
+      status: optional<string>
+      time:
+        docs: Time spent to process this request
+        type: optional<float>
+    source:
+      openapi: openapi.json
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    telemetry:
+      auth: false
+      display-name: Collect telemetry data
+      examples:
+        - code-samples:
+            - code: >-
+                curl -X GET
+                "http://localhost-custom:8080/telemetry?anonymize=true"
+                  -H "accept: application/json"
+                  -H "Authorization: Bearer token"
+              sdk: curl
+            - code: >-
+                import requests
+
+                url = "http://localhost-custom:8080/telemetry"
+
+                querystring = {"anonymize":"true"}
+
+                headers = {
+                    "accept": "application/json",
+                    "Authorization": "Bearer token"
+                }
+
+                response = requests.request("GET", url, headers=headers,
+                params=querystring)
+
+                print(response.text)
+              sdk: python
+            - code: |-
+                import axios from 'axios';
+                const options = {
+                  method: 'GET',
+                  url: 'http://localhost-custom:8080/telemetry',
+                  params: {anonymize: 'true'},
+                  headers: {
+                    accept: 'application/json',
+                    Authorization: 'Bearer token'
+                  }
+                };
+                axios.request(options).then(function (response) {
+                  console.log(response.data);
+                });
+              sdk: typescript
+          response:
+            body:
+              result:
+                cpu: 1.1
+                memory: 1.1
+                network: 1.1
+              status: status
+              time: 1.1
+      method: GET
+      path: /telemetry
+      request:
+        name: TelemetryRequest
+        query-parameters:
+          anonymize:
+            docs: If true, anonymize result
+            type: optional<boolean>
+      response:
+        docs: successful operation
+        status-code: 200
+        type: TelemetryResponse
+      source:
+        openapi: openapi.json
+  source:
+    openapi: openapi.json

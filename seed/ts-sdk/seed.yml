@@ -263,6 +263,12 @@ fixtures:
     - customConfig:
         retainOriginalCasing: true
       outputFolder: retain-original-casing
+  enum:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        noSerdeLayer: false
+      outputFolder: serde
   oauth-client-credentials:
     - customConfig: null
       outputFolder: no-custom-config

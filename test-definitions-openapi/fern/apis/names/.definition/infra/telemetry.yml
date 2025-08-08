@@ -1,0 +1,14 @@
+types:
+  TelemetryData:
+    properties:
+      cpu:
+        docs: CPU usage
+        type: optional<float>
+      memory:
+        docs: Memory usage
+        type: optional<float>
+      network:
+        docs: Network usage
+        type: optional<float>
+    source:
+      openapi: openapi.json

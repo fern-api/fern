@@ -1,0 +1,15 @@
+imports: 
+  root: __package__.yml
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    response:
+      path: /path/response
+      method: GET
+      response:
+        docs: enum group retreived
+        property: data
+        status-code: 200
+        type: root.EnumGroupResponse
