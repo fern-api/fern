@@ -13,7 +13,7 @@ public final class SimpleApiClient: Sendable {
     /// - Parameter urlSession: Custom `URLSession` to use for requests. If not provided, a default session will be created with the specified timeout.
     public init(
         baseURL: String = SimpleApiEnvironment.production.rawValue,
-        token: String? = nil,
+        token: String,
         headers: [String: String]? = [:],
         timeout: Int? = nil,
         maxRetries: Int? = nil,
@@ -21,7 +21,7 @@ public final class SimpleApiClient: Sendable {
     ) {
         let config = ClientConfig(
             baseURL: baseURL,
-            token: token,
+            bearerAuth: token.map { .init(token: $0) },
             headers: headers,
             timeout: timeout,
             maxRetries: maxRetries,

@@ -183,11 +183,14 @@ final class HTTPClient: Sendable {
     ) -> [String: String] {
         var headers = clientConfig.headers ?? [:]
         headers["Content-Type"] = requestContentType.rawValue
-        if let apiKeyConfig = clientConfig.apiKey {
-            headers[apiKeyConfig.header] = requestOptions?.apiKey ?? apiKeyConfig.key
+        if let headerAuth = clientConfig.headerAuth {
+            headers[headerAuth.header] = requestOptions?.apiKey ?? headerAuth.key
         }
-        if let token = requestOptions?.token ?? clientConfig.token {
-            headers["Authorization"] = "Bearer \(token)"
+        if let basicAuth = clientConfig.basicAuth {
+            headers["Authorization"] = "Basic \(basicAuth.token)"
+        }
+        if let bearerToken = requestOptions?.token ?? clientConfig.bearerAuth?.token {
+            headers["Authorization"] = "Bearer \(bearerToken)"
         }
         for (key, value) in requestHeaders {
             headers[key] = value

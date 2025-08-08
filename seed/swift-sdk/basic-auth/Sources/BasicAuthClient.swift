@@ -7,12 +7,16 @@ public final class BasicAuthClient: Sendable {
     /// Initialize the client with the specified configuration.
     ///
     /// - Parameter baseURL: The base URL to use for requests from the client. If not provided, the default base URL will be used.
+    /// - Parameter username: The username to use for authentication.
+    /// - Parameter password: The password to use for authentication.
     /// - Parameter headers: Additional headers to send with each request.
     /// - Parameter timeout: Request timeout in seconds. Defaults to 60 seconds. Ignored if a custom `urlSession` is provided.
     /// - Parameter maxRetries: Maximum number of retries for failed requests. Defaults to 2.
     /// - Parameter urlSession: Custom `URLSession` to use for requests. If not provided, a default session will be created with the specified timeout.
     public init(
         baseURL: String,
+        username: String,
+        password: String,
         headers: [String: String]? = [:],
         timeout: Int? = nil,
         maxRetries: Int? = nil,
@@ -20,6 +24,7 @@ public final class BasicAuthClient: Sendable {
     ) {
         let config = ClientConfig(
             baseURL: baseURL,
+            basicAuth: .init(username: username, password: password),
             headers: headers,
             timeout: timeout,
             maxRetries: maxRetries,

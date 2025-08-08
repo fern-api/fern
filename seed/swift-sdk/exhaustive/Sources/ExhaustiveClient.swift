@@ -27,7 +27,7 @@ public final class ExhaustiveClient: Sendable {
     ) {
         let config = ClientConfig(
             baseURL: baseURL,
-            token: token,
+            bearerAuth: token.map { .init(token: $0) },
             headers: headers,
             timeout: timeout,
             maxRetries: maxRetries,

@@ -15,7 +15,7 @@ public final class AnyAuthClient: Sendable {
     /// - Parameter urlSession: Custom `URLSession` to use for requests. If not provided, a default session will be created with the specified timeout.
     public init(
         baseURL: String,
-        apiKey: String?,
+        apiKey: String? = nil,
         token: String? = nil,
         headers: [String: String]? = [:],
         timeout: Int? = nil,
@@ -24,11 +24,11 @@ public final class AnyAuthClient: Sendable {
     ) {
         let config = ClientConfig(
             baseURL: baseURL,
-            apiKey: .init(
+            headerAuth: .init(
                 key: apiKey,
                 header: "X-API-Key"
             ),
-            token: token,
+            bearerAuth: token.map { .init(token: $0) },
             headers: headers,
             timeout: timeout,
             maxRetries: maxRetries,

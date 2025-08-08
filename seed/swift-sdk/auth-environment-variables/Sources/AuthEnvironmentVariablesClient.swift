@@ -13,7 +13,7 @@ public final class AuthEnvironmentVariablesClient: Sendable {
     /// - Parameter urlSession: Custom `URLSession` to use for requests. If not provided, a default session will be created with the specified timeout.
     public init(
         baseURL: String,
-        apiKey: String?,
+        apiKey: String? = nil,
         headers: [String: String]? = [:],
         timeout: Int? = nil,
         maxRetries: Int? = nil,
@@ -21,7 +21,7 @@ public final class AuthEnvironmentVariablesClient: Sendable {
     ) {
         let config = ClientConfig(
             baseURL: baseURL,
-            apiKey: .init(
+            headerAuth: .init(
                 key: apiKey,
                 header: "X-FERN-API-KEY"
             ),

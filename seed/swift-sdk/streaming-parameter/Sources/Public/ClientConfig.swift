@@ -4,14 +4,30 @@ public final class ClientConfig: Sendable {
         static let maxRetries: Int = 2
     }
 
-    struct ApiKeyConfig {
+    struct HeaderAuth {
         let key: String
         let header: String
     }
 
+    struct BearerAuth {
+        let token: String
+    }
+
+    struct BasicAuth {
+        let username: String
+        let password: String
+
+        var token: String {
+            let credentials: String = "\(username):\(password)"
+            let data = credentials.data(using: .utf8) ?? Data()
+            return data.base64EncodedString()
+        }
+    }
+
     let baseURL: String
-    let apiKey: ApiKeyConfig?
-    let token: String?
+    let headerAuth: HeaderAuth?
+    let bearerAuth: BearerAuth?
+    let basicAuth: BasicAuth?
     let headers: [String: String]?
     let timeout: Int
     let maxRetries: Int
@@ -19,16 +35,18 @@ public final class ClientConfig: Sendable {
 
     init(
         baseURL: String,
-        apiKey: ApiKeyConfig? = nil,
-        token: String? = nil,
+        headerAuth: HeaderAuth? = nil,
+        bearerAuth: BearerAuth? = nil,
+        basicAuth: BasicAuth? = nil,
         headers: [String: String]? = nil,
         timeout: Int? = nil,
         maxRetries: Int? = nil,
         urlSession: URLSession? = nil
     ) {
         self.baseURL = baseURL
-        self.apiKey = apiKey
-        self.token = token
+        self.headerAuth = headerAuth
+        self.bearerAuth = bearerAuth
+        self.basicAuth = basicAuth
         self.headers = headers
         self.timeout = timeout ?? Defaults.timeout
         self.maxRetries = maxRetries ?? Defaults.maxRetries

@@ -22,7 +22,7 @@ public final class CustomAuthClient: Sendable {
     ) {
         let config = ClientConfig(
             baseURL: baseURL,
-            apiKey: .init(
+            headerAuth: .init(
                 key: customAuthScheme,
                 header: "X-API-KEY"
             ),
