@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/fern-api/fern-go/internal/generator/sdk/core"
+	"github.com/fern-api/stream-go/v2/core"
 )
 
 const (
@@ -39,11 +39,12 @@ type StreamParams struct {
 	Terminator      string
 	MaxAttempts     uint
 	Headers         http.Header
-	BodyProperties  map[string]any
+	BodyProperties  map[string]interface{}
 	QueryParameters url.Values
 	Client          HTTPClient
-	Request         any
+	Request         interface{}
 	ErrorDecoder    ErrorDecoder
+	Format          core.StreamFormat
 }
 
 // Stream issues an API streaming call according to the given stream parameters.
@@ -108,6 +109,9 @@ func (s *Streamer[T]) Stream(ctx context.Context, params *StreamParams) (*core.S
 	}
 	if params.Terminator != "" {
 		opts = append(opts, core.WithTerminator(params.Terminator))
+	}
+	if params.Format != core.StreamFormatEmpty {
+		opts = append(opts, core.WithFormat(params.Format))
 	}
 
 	return core.NewStream[T](resp, opts...), nil
