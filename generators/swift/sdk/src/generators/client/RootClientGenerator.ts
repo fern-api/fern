@@ -57,6 +57,65 @@ export class RootClientGenerator {
 
     private generateDesignatedInitializer(): swift.Initializer {
         const initializerParams = this.getDesignatedInitializerParams();
+        const authSchemes = this.getAuthSchemeParameters();
+
+        const clientConfigArgs: swift.FunctionArgument[] = [
+            swift.functionArgument({
+                label: "baseURL",
+                value: swift.Expression.reference("baseURL")
+            })
+        ];
+
+        if (authSchemes.header) {
+            clientConfigArgs.push(
+                swift.functionArgument({
+                    label: "apiKey",
+                    value: swift.Expression.contextualMethodCall({
+                        methodName: "init",
+                        arguments_: [
+                            swift.functionArgument({
+                                label: "key",
+                                value: swift.Expression.reference(authSchemes.header.param.unsafeName)
+                            }),
+                            swift.functionArgument({
+                                label: "header",
+                                value: swift.Expression.rawStringValue(authSchemes.header.wireValue)
+                            })
+                        ],
+                        multiline: true
+                    })
+                })
+            );
+        }
+
+        if (authSchemes.bearer) {
+            clientConfigArgs.push(
+                swift.functionArgument({
+                    label: "token",
+                    value: swift.Expression.reference(authSchemes.bearer.param.unsafeName)
+                })
+            );
+        }
+
+        clientConfigArgs.push(
+            swift.functionArgument({
+                label: "headers",
+                value: swift.Expression.reference("headers")
+            }),
+            swift.functionArgument({
+                label: "timeout",
+                value: swift.Expression.reference("timeout")
+            }),
+            swift.functionArgument({
+                label: "maxRetries",
+                value: swift.Expression.reference("maxRetries")
+            }),
+            swift.functionArgument({
+                label: "urlSession",
+                value: swift.Expression.reference("urlSession")
+            })
+        );
+
         return swift.initializer({
             accessLevel: swift.AccessLevel.Public,
             parameters: initializerParams,
@@ -65,36 +124,7 @@ export class RootClientGenerator {
                     unsafeName: "config",
                     value: swift.Expression.classInitialization({
                         unsafeName: "ClientConfig",
-                        arguments_: [
-                            swift.functionArgument({
-                                label: "baseURL",
-                                value: swift.Expression.reference("baseURL")
-                            }),
-                            swift.functionArgument({
-                                label: "apiKey",
-                                value: swift.Expression.reference("apiKey")
-                            }),
-                            swift.functionArgument({
-                                label: "token",
-                                value: swift.Expression.reference("token")
-                            }),
-                            swift.functionArgument({
-                                label: "headers",
-                                value: swift.Expression.reference("headers")
-                            }),
-                            swift.functionArgument({
-                                label: "timeout",
-                                value: swift.Expression.reference("timeout")
-                            }),
-                            swift.functionArgument({
-                                label: "maxRetries",
-                                value: swift.Expression.reference("maxRetries")
-                            }),
-                            swift.functionArgument({
-                                label: "urlSession",
-                                value: swift.Expression.reference("urlSession")
-                            })
-                        ],
+                        arguments_: clientConfigArgs,
                         multiline: true
                     })
                 }),
@@ -144,8 +174,14 @@ export class RootClientGenerator {
             })
         ];
 
-        for (const scheme of this.sdkGeneratorContext.ir.auth.schemes) {
-            params.push(...this.getParametersForAuthScheme(scheme));
+        const authSchemes = this.getAuthSchemeParameters();
+
+        if (authSchemes.header) {
+            params.push(authSchemes.header.param);
+        }
+
+        if (authSchemes.bearer) {
+            params.push(authSchemes.bearer.param);
         }
 
         params.push(
@@ -213,34 +249,52 @@ export class RootClientGenerator {
         }
     }
 
-    private getParametersForAuthScheme(scheme: AuthScheme): swift.FunctionParameter[] {
-        const { isAuthMandatory } = this.sdkGeneratorContext.ir.sdkConfig;
-        if (scheme.type === "header") {
-            const schemeName = scheme.name.name.camelCase.unsafeName;
-            return [
-                swift.functionParameter({
-                    argumentLabel: schemeName,
-                    unsafeName: schemeName,
-                    type: isAuthMandatory ? swift.Type.string() : swift.Type.optional(swift.Type.string()),
-                    docsContent: scheme.docs ?? `The ${schemeName} to use for authentication.`
-                })
-            ];
-        } else if (scheme.type === "bearer") {
-            return [
-                swift.functionParameter({
-                    argumentLabel: "token",
-                    unsafeName: "token",
-                    type: swift.Type.optional(swift.Type.string()),
-                    defaultValue: swift.Expression.rawValue("nil"),
-                    docsContent:
-                        scheme.docs ??
-                        `Bearer token for authentication. If provided, will be sent as "Bearer {token}" in Authorization header.`
-                })
-            ];
-        } else {
-            // TODO(kafkas): Implement
-            return [];
+    private getAuthSchemeParameters() {
+        type ParamsByScheme = {
+            header?: {
+                param: swift.FunctionParameter;
+                wireValue: string;
+            };
+            bearer?: {
+                param: swift.FunctionParameter;
+            };
+        };
+
+        const paramsByScheme: ParamsByScheme = {};
+
+        const { ir } = this.sdkGeneratorContext;
+        const { isAuthMandatory } = ir.sdkConfig;
+        const { schemes: authSchemes } = ir.auth;
+
+        for (const scheme of authSchemes) {
+            if (scheme.type === "header") {
+                paramsByScheme.header = {
+                    param: swift.functionParameter({
+                        argumentLabel: scheme.name.name.camelCase.unsafeName,
+                        unsafeName: scheme.name.name.camelCase.unsafeName,
+                        type: isAuthMandatory ? swift.Type.string() : swift.Type.optional(swift.Type.string()),
+                        docsContent: scheme.docs ?? `The API key to use for authentication.`
+                    }),
+                    wireValue: scheme.name.wireValue
+                };
+            } else if (scheme.type === "bearer") {
+                paramsByScheme.bearer = {
+                    param: swift.functionParameter({
+                        argumentLabel: scheme.token.camelCase.unsafeName,
+                        unsafeName: scheme.token.camelCase.unsafeName,
+                        type: swift.Type.optional(swift.Type.string()),
+                        defaultValue: swift.Expression.rawValue("nil"),
+                        docsContent:
+                            scheme.docs ??
+                            `Bearer token for authentication. If provided, will be sent as "Bearer {token}" in Authorization header.`
+                    })
+                };
+            } else {
+                // TODO(kafkas): Implement
+            }
         }
+
+        return paramsByScheme;
     }
 
     private generateMethods(): swift.Method[] {
