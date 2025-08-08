@@ -24,10 +24,9 @@ public final class AnyAuthClient: Sendable {
     ) {
         let config = ClientConfig(
             baseURL: baseURL,
-            headerAuth: .init(
-                key: apiKey,
-                header: "X-API-Key"
-            ),
+            headerAuth: apiKey.map {
+                .init(key: $0, header: "X-API-Key")
+            },
             bearerAuth: token.map { .init(token: $0) },
             headers: headers,
             timeout: timeout,

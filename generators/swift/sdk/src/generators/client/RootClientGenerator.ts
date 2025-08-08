@@ -70,20 +70,39 @@ export class RootClientGenerator {
             clientConfigArgs.push(
                 swift.functionArgument({
                     label: "headerAuth",
-                    value: swift.Expression.contextualMethodCall({
-                        methodName: "init",
-                        arguments_: [
-                            swift.functionArgument({
-                                label: "key",
-                                value: swift.Expression.reference(authSchemes.header.param.unsafeName)
-                            }),
-                            swift.functionArgument({
-                                label: "header",
-                                value: swift.Expression.rawStringValue(authSchemes.header.wireValue)
-                            })
-                        ],
-                        multiline: true
-                    })
+                    value: authSchemes.header.param.type.isOptional
+                        ? swift.Expression.methodCallWithTrailingClosure({
+                              target: swift.Expression.reference(authSchemes.header.param.unsafeName),
+                              methodName: "map",
+                              closureBody: swift.Expression.contextualMethodCall({
+                                  methodName: "init",
+                                  arguments_: [
+                                      swift.functionArgument({
+                                          label: "key",
+                                          value: swift.Expression.rawValue("$0")
+                                      }),
+                                      swift.functionArgument({
+                                          label: "header",
+                                          value: swift.Expression.rawStringValue(authSchemes.header.wireValue)
+                                      })
+                                  ]
+                              }),
+                              multiline: true
+                          })
+                        : swift.Expression.contextualMethodCall({
+                              methodName: "init",
+                              arguments_: [
+                                  swift.functionArgument({
+                                      label: "key",
+                                      value: swift.Expression.reference(authSchemes.header.param.unsafeName)
+                                  }),
+                                  swift.functionArgument({
+                                      label: "header",
+                                      value: swift.Expression.rawStringValue(authSchemes.header.wireValue)
+                                  })
+                              ],
+                              multiline: true
+                          })
                 })
             );
         }

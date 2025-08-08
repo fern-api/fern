@@ -21,10 +21,9 @@ public final class AuthEnvironmentVariablesClient: Sendable {
     ) {
         let config = ClientConfig(
             baseURL: baseURL,
-            headerAuth: .init(
-                key: apiKey,
-                header: "X-FERN-API-KEY"
-            ),
+            headerAuth: apiKey.map {
+                .init(key: $0, header: "X-FERN-API-KEY")
+            },
             headers: headers,
             timeout: timeout,
             maxRetries: maxRetries,
