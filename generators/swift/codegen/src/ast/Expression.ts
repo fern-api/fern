@@ -382,6 +382,10 @@ export class Expression extends AstNode {
         return new this({ type: "raw-value", value: `"${value}"` });
     }
 
+    public static nil(): Expression {
+        return new this({ type: "raw-value", value: "nil" });
+    }
+
     public static rawValue(value: string): Expression {
         return new this({ type: "raw-value", value });
     }

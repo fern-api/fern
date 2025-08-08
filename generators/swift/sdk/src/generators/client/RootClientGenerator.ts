@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { swift } from "@fern-api/swift-codegen";
-import { AuthScheme, Package } from "@fern-fern/ir-sdk/api";
+import { Package } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { ClientGeneratorContext } from "./ClientGeneratorContext";
@@ -69,7 +69,7 @@ export class RootClientGenerator {
         if (authSchemes.header) {
             clientConfigArgs.push(
                 swift.functionArgument({
-                    label: "apiKey",
+                    label: "headerAuth",
                     value: swift.Expression.contextualMethodCall({
                         methodName: "init",
                         arguments_: [
@@ -91,8 +91,42 @@ export class RootClientGenerator {
         if (authSchemes.bearer) {
             clientConfigArgs.push(
                 swift.functionArgument({
-                    label: "token",
-                    value: swift.Expression.reference(authSchemes.bearer.param.unsafeName)
+                    label: "bearerAuth",
+                    // TODO(kafkas): No .map when it's not optional
+                    value: swift.Expression.methodCallWithTrailingClosure({
+                        target: swift.Expression.reference(authSchemes.bearer.param.unsafeName),
+                        methodName: "map",
+                        closureBody: swift.Expression.contextualMethodCall({
+                            methodName: "init",
+                            arguments_: [
+                                swift.functionArgument({
+                                    label: "token",
+                                    value: swift.Expression.rawValue("$0")
+                                })
+                            ]
+                        })
+                    })
+                })
+            );
+        }
+
+        if (authSchemes.basic) {
+            clientConfigArgs.push(
+                swift.functionArgument({
+                    label: "basicAuth",
+                    value: swift.Expression.contextualMethodCall({
+                        methodName: "init",
+                        arguments_: [
+                            swift.functionArgument({
+                                label: "username",
+                                value: swift.Expression.reference(authSchemes.basic.usernameParam.unsafeName)
+                            }),
+                            swift.functionArgument({
+                                label: "password",
+                                value: swift.Expression.reference(authSchemes.basic.passwordParam.unsafeName)
+                            })
+                        ]
+                    })
                 })
             );
         }
@@ -184,6 +218,11 @@ export class RootClientGenerator {
             params.push(authSchemes.bearer.param);
         }
 
+        if (authSchemes.basic) {
+            params.push(authSchemes.basic.usernameParam);
+            params.push(authSchemes.basic.passwordParam);
+        }
+
         params.push(
             swift.functionParameter({
                 argumentLabel: "headers",
@@ -258,6 +297,10 @@ export class RootClientGenerator {
             bearer?: {
                 param: swift.FunctionParameter;
             };
+            basic?: {
+                usernameParam: swift.FunctionParameter;
+                passwordParam: swift.FunctionParameter;
+            };
         };
 
         const paramsByScheme: ParamsByScheme = {};
@@ -273,6 +316,7 @@ export class RootClientGenerator {
                         argumentLabel: scheme.name.name.camelCase.unsafeName,
                         unsafeName: scheme.name.name.camelCase.unsafeName,
                         type: isAuthMandatory ? swift.Type.string() : swift.Type.optional(swift.Type.string()),
+                        defaultValue: isAuthMandatory ? undefined : swift.Expression.nil(),
                         docsContent: scheme.docs ?? `The API key to use for authentication.`
                     }),
                     wireValue: scheme.name.wireValue
@@ -282,15 +326,34 @@ export class RootClientGenerator {
                     param: swift.functionParameter({
                         argumentLabel: scheme.token.camelCase.unsafeName,
                         unsafeName: scheme.token.camelCase.unsafeName,
-                        type: swift.Type.optional(swift.Type.string()),
-                        defaultValue: swift.Expression.rawValue("nil"),
+                        type: isAuthMandatory ? swift.Type.string() : swift.Type.optional(swift.Type.string()),
+                        defaultValue: isAuthMandatory ? undefined : swift.Expression.nil(),
                         docsContent:
                             scheme.docs ??
                             `Bearer token for authentication. If provided, will be sent as "Bearer {token}" in Authorization header.`
                     })
                 };
+            } else if (scheme.type === "basic") {
+                paramsByScheme.basic = {
+                    usernameParam: swift.functionParameter({
+                        argumentLabel: scheme.username.camelCase.unsafeName,
+                        unsafeName: scheme.username.camelCase.unsafeName,
+                        type: isAuthMandatory ? swift.Type.string() : swift.Type.optional(swift.Type.string()),
+                        defaultValue: isAuthMandatory ? undefined : swift.Expression.nil(),
+                        docsContent: `The username to use for authentication.`
+                    }),
+                    passwordParam: swift.functionParameter({
+                        argumentLabel: scheme.password.camelCase.unsafeName,
+                        unsafeName: scheme.password.camelCase.unsafeName,
+                        type: isAuthMandatory ? swift.Type.string() : swift.Type.optional(swift.Type.string()),
+                        defaultValue: isAuthMandatory ? undefined : swift.Expression.nil(),
+                        docsContent: `The password to use for authentication.`
+                    })
+                };
+            } else if (scheme.type === "oauth") {
+                // TODO(kafkas): Implement this
             } else {
-                // TODO(kafkas): Implement
+                assertNever(scheme);
             }
         }
 
