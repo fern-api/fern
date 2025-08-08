@@ -14,13 +14,16 @@ public final class ClientConfig: Sendable {
     }
 
     struct BasicAuth {
-        let username: String
-        let password: String
+        let username: String?
+        let password: String?
 
-        var token: String {
-            let credentials: String = "\(username):\(password)"
-            let data = credentials.data(using: .utf8) ?? Data()
-            return data.base64EncodedString()
+        var token: String? {
+            if let username, let password {
+                let credentials: String = "\(username):\(password)"
+                let data = credentials.data(using: .utf8) ?? Data()
+                return data.base64EncodedString()
+            }
+            return nil
         }
     }
 
