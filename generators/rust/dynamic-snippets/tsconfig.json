@@ -5,7 +5,7 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*"],
   "references": [
     { "path": "../../browser-compatible-base" },
     { "path": "../../../packages/commons/core-utils" },

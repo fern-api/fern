@@ -1,7 +1,8 @@
-import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractRustGeneratorCli, RustFile } from "@fern-api/rust-base";
 import { Module, ModuleDeclaration, UseStatement } from "@fern-api/rust-codegen";
+import { DynamicSnippetsGenerator } from "@fern-api/rust-dynamic-snippets";
 import { generateModels } from "@fern-api/rust-model";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -336,19 +337,52 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     private generateSnippets(context: SdkGeneratorContext): Endpoint[] {
         const endpointSnippets: Endpoint[] = [];
 
-        // Generate a basic example snippet for README
-        // In the future, this will use the dynamic IR to generate real snippets
         try {
-            // Find the first endpoint to use as an example
+            // TODO: Use DynamicSnippetsGenerator for proper snippet generation once it's stable
+            context.logger.debug("Using fallback snippet generation for Rust snippets");
+
+            // Generate basic snippets for each endpoint
             const services = Object.values(context.ir.services);
-            const firstService = services[0];
-            const firstEndpoint = firstService?.endpoints[0];
+            for (const service of services) {
+                for (const endpoint of service.endpoints) {
+                    try {
+                        const packageName = context.configManager.get("packageName") ?? "api_client";
+                        const hasAuth = context.ir.auth != null;
 
-            if (firstService && firstEndpoint) {
-                const packageName = context.configManager.get("packageName") ?? "api_client";
+                        // Build a basic snippet for this endpoint
+                        const snippet = this.buildBasicEndpointSnippet(endpoint, packageName, hasAuth);
 
-                // Generate a basic snippet
-                const snippet = `use ${packageName}::ApiClientBuilder;
+                        endpointSnippets.push({
+                            exampleIdentifier: `${service.name.fernFilepath.allParts.join("_")}_${endpoint.name.originalName}`,
+                            id: {
+                                method: endpoint.method,
+                                path: FernGeneratorExec.EndpointPath(endpoint.fullPath.head),
+                                identifierOverride: endpoint.id
+                            },
+                            snippet: {
+                                type: "rust",
+                                client: snippet
+                            } as any
+                        });
+
+                        context.logger.debug(`Generated basic snippet for ${endpoint.name.originalName}`);
+                    } catch (endpointError) {
+                        context.logger.debug(
+                            `Error generating snippet for ${endpoint.name.originalName}: ${endpointError}`
+                        );
+                    }
+                }
+            }
+
+            // If no snippets were generated, add a fallback basic snippet
+            if (endpointSnippets.length === 0) {
+                const firstService = services[0];
+                const firstEndpoint = firstService?.endpoints[0];
+
+                if (firstService && firstEndpoint) {
+                    const packageName = context.configManager.get("packageName") ?? "api_client";
+
+                    const snippet = `use ${packageName}::ApiClientBuilder;
 
 #[tokio::main]
 async fn main() {
@@ -365,21 +399,22 @@ async fn main() {
     println!("Response: {:?}", response);
 }`;
 
-                endpointSnippets.push({
-                    exampleIdentifier: "example_1",
-                    id: {
-                        method: firstEndpoint.method,
-                        path: FernGeneratorExec.EndpointPath(firstEndpoint.path.head),
-                        identifierOverride: firstEndpoint.id
-                    },
-                    snippet: {
-                        type: "typescript", // Use typescript as fallback until rust is properly supported
-                        client: snippet
-                    } as any
-                });
+                    endpointSnippets.push({
+                        exampleIdentifier: "fallback_example",
+                        id: {
+                            method: firstEndpoint.method,
+                            path: FernGeneratorExec.EndpointPath(firstEndpoint.fullPath.head),
+                            identifierOverride: firstEndpoint.id
+                        },
+                        snippet: {
+                            type: "rust",
+                            client: snippet
+                        } as any
+                    });
+                }
             }
         } catch (error) {
-            context.logger.debug(`Error generating example snippet: ${error}`);
+            context.logger.debug(`Error generating snippet: ${error}`);
         }
 
         return endpointSnippets;
@@ -407,5 +442,25 @@ async fn main() {
 
     private getFileContents(file: RustFile): string {
         return typeof file.fileContents === "string" ? file.fileContents : file.fileContents.toString();
+    }
+
+    private buildBasicEndpointSnippet(endpoint: any, packageName: string, hasAuth: boolean): string {
+        const methodName = endpoint.name.camelCase.unsafeName.toLowerCase();
+        const authSetup = hasAuth ? '.api_key("your-api-key")' : '';
+        
+        return `use ${packageName}::ApiClientBuilder;
+
+#[tokio::main]
+async fn main() {
+    let client = ApiClientBuilder::new("https://api.example.com")${authSetup}
+        .build()
+        .expect("Failed to build client");
+
+    let response = client.${methodName}()
+        .await
+        .expect("API call failed");
+
+    println!("Response: {:?}", response);
+}`;
     }
 }

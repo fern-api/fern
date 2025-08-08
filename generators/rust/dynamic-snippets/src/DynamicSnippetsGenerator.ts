@@ -1,27 +1,43 @@
 import {
     AbstractDynamicSnippetsGenerator,
-    AbstractDynamicSnippetsGeneratorContext,
-    Result
+    AbstractFormatter,
+    FernGeneratorExec
 } from "@fern-api/browser-compatible-base-generator";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
-import { EndpointSnippetGenerator } from "./EndpointSnippetGenerator";
+import { FernIr } from "@fern-api/dynamic-ir-sdk";
 
-export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<DynamicSnippetsGeneratorContext> {
-    protected initializeContext({
+import { EndpointSnippetGenerator } from "./EndpointSnippetGenerator";
+import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
+
+export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<
+    DynamicSnippetsGeneratorContext,
+    EndpointSnippetGenerator
+> {
+    private formatter: AbstractFormatter | undefined;
+
+    constructor({
         ir,
-        config
+        config,
+        formatter
     }: {
-        ir: FernGeneratorExec.dynamic.IntermediateRepresentation;
+        ir: FernIr.dynamic.DynamicIntermediateRepresentation;
         config: FernGeneratorExec.GeneratorConfig;
-    }): AbstractDynamicSnippetsGeneratorContext<DynamicSnippetsGeneratorContext> {
-        return new DynamicSnippetsGeneratorContext({ ir, config });
+        formatter?: AbstractFormatter;
+    }) {
+        super(new DynamicSnippetsGeneratorContext({ ir, config }));
+        this.formatter = formatter;
     }
 
-    public generate(
-        request: FernGeneratorExec.dynamic.EndpointSnippetRequest
-    ): Result<FernGeneratorExec.Snippet, FernGeneratorExec.SnippetGenerationFailure> {
-        const generator = new EndpointSnippetGenerator({ context: this.context });
-        return generator.generate(request);
+    public async generate(
+        request: FernIr.dynamic.EndpointSnippetRequest
+    ): Promise<FernIr.dynamic.EndpointSnippetResponse> {
+        return super.generate(request);
+    }
+
+    public generateSync(request: FernIr.dynamic.EndpointSnippetRequest): FernIr.dynamic.EndpointSnippetResponse {
+        return super.generateSync(request);
+    }
+
+    protected createSnippetGenerator(context: DynamicSnippetsGeneratorContext): EndpointSnippetGenerator {
+        return new EndpointSnippetGenerator({ context, formatter: this.formatter });
     }
 }
