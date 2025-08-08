@@ -21,7 +21,6 @@ public final class SimpleApiClient: Sendable {
     ) {
         let config = ClientConfig(
             baseURL: baseURL,
-            apiKey: apiKey,
             token: token,
             headers: headers,
             timeout: timeout,

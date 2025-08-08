@@ -7,7 +7,7 @@ public final class CustomAuthClient: Sendable {
     /// Initialize the client with the specified configuration.
     ///
     /// - Parameter baseURL: The base URL to use for requests from the client. If not provided, the default base URL will be used.
-    /// - Parameter customAuthScheme: The customAuthScheme to use for authentication.
+    /// - Parameter customAuthScheme: The API key to use for authentication.
     /// - Parameter headers: Additional headers to send with each request.
     /// - Parameter timeout: Request timeout in seconds. Defaults to 60 seconds. Ignored if a custom `urlSession` is provided.
     /// - Parameter maxRetries: Maximum number of retries for failed requests. Defaults to 2.
@@ -22,8 +22,10 @@ public final class CustomAuthClient: Sendable {
     ) {
         let config = ClientConfig(
             baseURL: baseURL,
-            apiKey: apiKey,
-            token: token,
+            apiKey: .init(
+                key: customAuthScheme,
+                header: "X-API-KEY"
+            ),
             headers: headers,
             timeout: timeout,
             maxRetries: maxRetries,

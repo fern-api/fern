@@ -19,8 +19,6 @@ public final class ServerSentEventsClient: Sendable {
     ) {
         let config = ClientConfig(
             baseURL: baseURL,
-            apiKey: apiKey,
-            token: token,
             headers: headers,
             timeout: timeout,
             maxRetries: maxRetries,

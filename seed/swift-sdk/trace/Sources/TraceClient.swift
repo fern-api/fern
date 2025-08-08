@@ -30,7 +30,6 @@ public final class TraceClient: Sendable {
     ) {
         let config = ClientConfig(
             baseURL: baseURL,
-            apiKey: apiKey,
             token: token,
             headers: headers,
             timeout: timeout,

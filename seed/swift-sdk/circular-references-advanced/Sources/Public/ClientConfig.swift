@@ -4,8 +4,13 @@ public final class ClientConfig: Sendable {
         static let maxRetries: Int = 2
     }
 
+    struct ApiKeyConfig {
+        let key: String
+        let header: String
+    }
+
     let baseURL: String
-    let apiKey: String?
+    let apiKey: ApiKeyConfig?
     let token: String?
     let headers: [String: String]?
     let timeout: Int
@@ -14,7 +19,7 @@ public final class ClientConfig: Sendable {
 
     init(
         baseURL: String,
-        apiKey: String? = nil,
+        apiKey: ApiKeyConfig? = nil,
         token: String? = nil,
         headers: [String: String]? = nil,
         timeout: Int? = nil,
