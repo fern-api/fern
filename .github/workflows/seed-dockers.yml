@@ -56,13 +56,13 @@ jobs:
         # Parse JSON array containing names of all filters matching any of changed files
         # e.g. ['package1', 'package2'] if both package folders contains changes
         package: ${{ fromJSON(needs.changes.outputs.packages) }}
-        runner: [ubuntu-latest, ubuntu-24.04-arm]
+        runner: [ubuntu-latest, blacksmith-4vcpu-ubuntu-2404-arm]
         arch: [amd64, arm64]
         exclude:
           # Avoid building arm64 on amd64 runner and vice versa
           - runner: ubuntu-latest
             arch: arm64
-          - runner: ubuntu-24.04-arm
+          - runner: blacksmith-4vcpu-ubuntu-2404-arm
             arch: amd64
     runs-on: ${{ matrix.runner }}
     needs: [changes, generate-sha]
@@ -101,7 +101,6 @@ jobs:
           push: true
           # use short SHA if modded, or just use latest if nothing changed
           tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
     outputs:
       image_sha: ${{ steps.meta.outputs.version }}  # This gets the SHA tag
 
