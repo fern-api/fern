@@ -6,6 +6,9 @@ import httpx
 from .auth.client import AsyncAuthClient, AuthClient
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.oauth_token_provider import OAuthTokenProvider
+from .nested.client import AsyncNestedClient, NestedClient
+from .nested_no_auth.client import AsyncNestedNoAuthClient, NestedNoAuthClient
+from .simple.client import AsyncSimpleClient, SimpleClient
 
 
 class SeedOauthClientCredentialsDefault:
@@ -76,6 +79,9 @@ class SeedOauthClientCredentialsDefault:
             timeout=_defaulted_timeout,
         )
         self.auth = AuthClient(client_wrapper=self._client_wrapper)
+        self.nested_no_auth = NestedNoAuthClient(client_wrapper=self._client_wrapper)
+        self.nested = NestedClient(client_wrapper=self._client_wrapper)
+        self.simple = SimpleClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncSeedOauthClientCredentialsDefault:
@@ -146,3 +152,6 @@ class AsyncSeedOauthClientCredentialsDefault:
             timeout=_defaulted_timeout,
         )
         self.auth = AsyncAuthClient(client_wrapper=self._client_wrapper)
+        self.nested_no_auth = AsyncNestedNoAuthClient(client_wrapper=self._client_wrapper)
+        self.nested = AsyncNestedClient(client_wrapper=self._client_wrapper)
+        self.simple = AsyncSimpleClient(client_wrapper=self._client_wrapper)
