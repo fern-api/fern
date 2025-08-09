@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedHttpHead;
 
-var client = new SeedHttpHeadClient();
+var client = new SeedHttpHead.SeedHttpHeadClient();
 await client.User.HeadAsync();
 ```
 

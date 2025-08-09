@@ -1,6 +1,5 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using SeedExamples;
 using SeedExamples.Core;
 
 namespace SeedExamples.Commons;

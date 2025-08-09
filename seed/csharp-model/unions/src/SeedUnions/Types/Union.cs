@@ -11,7 +11,7 @@ namespace SeedUnions;
 /// <summary>
 /// This is a simple union.
 /// </summary>
-[JsonConverter(typeof(Union.JsonConverter))]
+[JsonConverter(typeof(JsonConverter))]
 [Serializable]
 public record Union
 {
@@ -22,18 +22,18 @@ public record Union
     }
 
     /// <summary>
-    /// Create an instance of Union with <see cref="Union.Foo"/>.
+    /// Create an instance of Union with <see cref="Foo"/>.
     /// </summary>
-    public Union(Union.Foo value)
+    public Union(Foo value)
     {
         Type = "foo";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of Union with <see cref="Union.Bar"/>.
+    /// Create an instance of Union with <see cref="Bar"/>.
     /// </summary>
-    public Union(Union.Bar value)
+    public Union(Bar value)
     {
         Type = "bar";
         Value = value.Value;
@@ -65,14 +65,14 @@ public record Union
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'foo'.</exception>
     public SeedUnions.Foo AsFoo() =>
-        IsFoo ? (SeedUnions.Foo)Value! : throw new Exception("Union.Type is not 'foo'");
+        IsFoo ? (SeedUnions.Foo)Value! : throw new Exception("SeedUnions.Union.Type is not 'foo'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.Bar"/> if <see cref="Type"/> is 'bar', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'bar'.</exception>
     public SeedUnions.Bar AsBar() =>
-        IsBar ? (SeedUnions.Bar)Value! : throw new Exception("Union.Type is not 'bar'");
+        IsBar ? (SeedUnions.Bar)Value! : throw new Exception("SeedUnions.Union.Type is not 'bar'");
 
     public T Match<T>(
         Func<SeedUnions.Foo, T> onFoo,
@@ -138,19 +138,19 @@ public record Union
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator Union(Union.Foo value) => new(value);
+    public static implicit operator Union(Foo value) => new(value);
 
-    public static implicit operator Union(Union.Bar value) => new(value);
+    public static implicit operator Union(Bar value) => new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<Union>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(Type typeToConvert) =>
             typeof(Union).IsAssignableFrom(typeToConvert);
 
         public override Union Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            Type typeToConvert,
             JsonSerializerOptions options
         )
         {

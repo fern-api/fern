@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedAliasExtends;\n\nvar client = new SeedAliasExtendsClient();\nawait client.ExtendedInlineRequestBodyAsync(\n    new InlinedChildRequest { Child = \"child\", Parent = \"parent\" }\n);\n"
+                "client": "using SeedAliasExtends;\n\nvar client = new SeedAliasExtends.SeedAliasExtendsClient();\nawait client.ExtendedInlineRequestBodyAsync(\n    new SeedAliasExtends.InlinedChildRequest { Child = \"child\", Parent = \"parent\" }\n);\n"
             }
         }
     ]

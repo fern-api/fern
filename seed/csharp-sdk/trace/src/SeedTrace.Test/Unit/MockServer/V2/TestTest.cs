@@ -1,12 +1,11 @@
 using NUnit.Framework;
-using SeedTrace.Test.Unit.MockServer;
 
 namespace SeedTrace.Test.Unit.MockServer.V2;
 
 [TestFixture]
 public class TestTest : BaseMockServerTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public void MockServerTest()
     {
         Server

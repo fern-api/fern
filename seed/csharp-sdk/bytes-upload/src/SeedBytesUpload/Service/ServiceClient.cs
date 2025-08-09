@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedBytesUpload.Core;
 
 namespace SeedBytesUpload;
@@ -14,7 +14,7 @@ public partial class ServiceClient
         _client = client;
     }
 
-    public async global::System.Threading.Tasks.Task UploadAsync(
+    public async Task UploadAsync(
         Stream request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

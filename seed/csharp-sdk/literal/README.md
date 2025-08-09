@@ -22,9 +22,9 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedLiteral;
 
-var client = new SeedLiteralClient();
+var client = new SeedLiteral.SeedLiteralClient();
 await client.Headers.SendAsync(
-    new SendLiteralsInHeadersRequest
+    new SeedLiteral.SendLiteralsInHeadersRequest
     {
         EndpointVersion = "02-12-2024",
         Async = true,

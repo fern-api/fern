@@ -1,6 +1,5 @@
 using System.Text.Json;
 using NUnit.Framework;
-using SeedMixedCase;
 using SeedMixedCase.Core;
 
 namespace SeedMixedCase.Test;

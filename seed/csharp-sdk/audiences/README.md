@@ -22,9 +22,9 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedAudiences;
 
-var client = new SeedAudiencesClient();
+var client = new SeedAudiences.SeedAudiencesClient();
 await client.Foo.FindAsync(
-    new FindRequest
+    new SeedAudiences.FindRequest
     {
         OptionalString = "optionalString",
         PublicProperty = "publicProperty",

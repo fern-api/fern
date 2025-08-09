@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedNullable;\n\nvar client = new SeedNullableClient();\nawait client.Nullable.GetUsersAsync(\n    new GetUsersRequest\n    {\n        Usernames = [\"usernames\"],\n        Avatar = \"avatar\",\n        Activated = [true],\n        Tags = [\"tags\"],\n        Extra = true,\n    }\n);\n"
+                "client": "using SeedNullable;\n\nvar client = new SeedNullable.SeedNullableClient();\nawait client.Nullable.GetUsersAsync(\n    new SeedNullable.GetUsersRequest\n    {\n        Usernames = [\"usernames\"],\n        Avatar = \"avatar\",\n        Activated = [true],\n        Tags = [\"tags\"],\n        Extra = true,\n    }\n);\n"
             }
         },
         {
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedNullable;\n\nvar client = new SeedNullableClient();\nawait client.Nullable.CreateUserAsync(\n    new CreateUserRequest\n    {\n        Username = \"username\",\n        Tags = new List<string>() { \"tags\", \"tags\" },\n        Metadata = new Metadata\n        {\n            CreatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n            UpdatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n            Avatar = \"avatar\",\n            Activated = true,\n            Status = new Status(new Status.Active()),\n            Values = new Dictionary<string, string?>() { { \"values\", \"values\" } },\n        },\n        Avatar = \"avatar\",\n    }\n);\n"
+                "client": "using SeedNullable;\n\nvar client = new SeedNullable.SeedNullableClient();\nawait client.Nullable.CreateUserAsync(\n    new SeedNullable.CreateUserRequest\n    {\n        Username = \"username\",\n        Tags = new List<string>() { \"tags\", \"tags\" },\n        Metadata = new SeedNullable.Metadata\n        {\n            CreatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n            UpdatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n            Avatar = \"avatar\",\n            Activated = true,\n            Status = new SeedNullable.Status(new SeedNullable.Status.Active()),\n            Values = new Dictionary<string, string?>() { { \"values\", \"values\" } },\n        },\n        Avatar = \"avatar\",\n    }\n);\n"
             }
         },
         {
@@ -34,7 +34,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedNullable;\n\nvar client = new SeedNullableClient();\nawait client.Nullable.DeleteUserAsync(new DeleteUserRequest { Username = \"xy\" });\n"
+                "client": "using SeedNullable;\n\nvar client = new SeedNullable.SeedNullableClient();\nawait client.Nullable.DeleteUserAsync(new SeedNullable.DeleteUserRequest { Username = \"xy\" });\n"
             }
         }
     ]

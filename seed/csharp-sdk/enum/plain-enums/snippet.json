@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedEnum;\n\nvar client = new SeedEnumClient();\nawait client.Headers.SendAsync(\n    new SendEnumAsHeaderRequest\n    {\n        Operand = Operand.GreaterThan,\n        MaybeOperand = Operand.GreaterThan,\n        OperandOrColor = Color.Red,\n        MaybeOperandOrColor = null,\n    }\n);\n"
+                "client": "using SeedEnum;\n\nvar client = new SeedEnum.SeedEnumClient();\nawait client.Headers.SendAsync(\n    new SeedEnum.SendEnumAsHeaderRequest\n    {\n        Operand = SeedEnum.Operand.GreaterThan,\n        MaybeOperand = SeedEnum.Operand.GreaterThan,\n        OperandOrColor = SeedEnum.Color.Red,\n        MaybeOperandOrColor = null,\n    }\n);\n"
             }
         },
         {
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedEnum;\n\nvar client = new SeedEnumClient();\nawait client.InlinedRequest.SendAsync(\n    new SendEnumInlinedRequest { Operand = Operand.GreaterThan, OperandOrColor = Color.Red }\n);\n"
+                "client": "using SeedEnum;\n\nvar client = new SeedEnum.SeedEnumClient();\nawait client.InlinedRequest.SendAsync(\n    new SeedEnum.SendEnumInlinedRequest\n    {\n        Operand = SeedEnum.Operand.GreaterThan,\n        OperandOrColor = SeedEnum.Color.Red,\n    }\n);\n"
             }
         },
         {
@@ -34,7 +34,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedEnum;\n\nvar client = new SeedEnumClient();\nawait client.PathParam.SendAsync(Operand.GreaterThan, Color.Red);\n"
+                "client": "using SeedEnum;\n\nvar client = new SeedEnum.SeedEnumClient();\nawait client.PathParam.SendAsync(SeedEnum.Operand.GreaterThan, SeedEnum.Color.Red);\n"
             }
         },
         {
@@ -46,7 +46,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedEnum;\n\nvar client = new SeedEnumClient();\nawait client.QueryParam.SendAsync(\n    new SendEnumAsQueryParamRequest { Operand = Operand.GreaterThan, OperandOrColor = Color.Red }\n);\n"
+                "client": "using SeedEnum;\n\nvar client = new SeedEnum.SeedEnumClient();\nawait client.QueryParam.SendAsync(\n    new SeedEnum.SendEnumAsQueryParamRequest\n    {\n        Operand = SeedEnum.Operand.GreaterThan,\n        OperandOrColor = SeedEnum.Color.Red,\n    }\n);\n"
             }
         },
         {
@@ -58,7 +58,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedEnum;\n\nvar client = new SeedEnumClient();\nawait client.QueryParam.SendListAsync(\n    new SendEnumListAsQueryParamRequest\n    {\n        Operand = [Operand.GreaterThan],\n        MaybeOperand = [Operand.GreaterThan],\n        OperandOrColor = [Color.Red],\n        MaybeOperandOrColor = [Color.Red],\n    }\n);\n"
+                "client": "using SeedEnum;\n\nvar client = new SeedEnum.SeedEnumClient();\nawait client.QueryParam.SendListAsync(\n    new SeedEnum.SendEnumListAsQueryParamRequest\n    {\n        Operand = [SeedEnum.Operand.GreaterThan],\n        MaybeOperand = [SeedEnum.Operand.GreaterThan],\n        OperandOrColor = [SeedEnum.Color.Red],\n        MaybeOperandOrColor = [SeedEnum.Color.Red],\n    }\n);\n"
             }
         }
     ]

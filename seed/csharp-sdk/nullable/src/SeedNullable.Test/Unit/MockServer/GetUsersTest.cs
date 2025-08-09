@@ -1,6 +1,4 @@
-using global::System.Threading.Tasks;
 using NUnit.Framework;
-using SeedNullable;
 using SeedNullable.Core;
 
 namespace SeedNullable.Test.Unit.MockServer;
@@ -9,7 +7,7 @@ namespace SeedNullable.Test.Unit.MockServer;
 public class GetUsersTest : BaseMockServerTest
 {
     [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    public async Task MockServerTest()
     {
         const string mockResponse = """
             [

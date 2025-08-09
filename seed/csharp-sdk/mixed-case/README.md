@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedMixedCase;
 
-var client = new SeedMixedCaseClient();
+var client = new SeedMixedCase.SeedMixedCaseClient();
 await client.Service.GetResourceAsync("rsc-xyz");
 ```
 

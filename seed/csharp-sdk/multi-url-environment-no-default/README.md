@@ -22,8 +22,10 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedMultiUrlEnvironmentNoDefault;
 
-var client = new SeedMultiUrlEnvironmentNoDefaultClient("TOKEN");
-await client.Ec2.BootInstanceAsync(new BootInstanceRequest { Size = "size" });
+var client = new SeedMultiUrlEnvironmentNoDefault.SeedMultiUrlEnvironmentNoDefaultClient("TOKEN");
+await client.Ec2.BootInstanceAsync(
+    new SeedMultiUrlEnvironmentNoDefault.BootInstanceRequest { Size = "size" }
+);
 ```
 
 ## Exception Handling

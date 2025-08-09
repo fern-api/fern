@@ -1,4 +1,4 @@
-using global::System.Globalization;
+using System.Globalization;
 
 namespace SeedWebsocket.Core;
 

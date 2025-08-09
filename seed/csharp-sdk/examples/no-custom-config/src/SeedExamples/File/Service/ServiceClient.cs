@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using SeedExamples;
 using SeedExamples.Core;
 
 namespace SeedExamples.File;
@@ -21,12 +20,12 @@ public partial class ServiceClient
     /// <example><code>
     /// await client.File.Service.GetFileAsync(
     ///     "file.txt",
-    ///     new GetFileRequest { XFileApiVersion = "0.0.2" }
+    ///     new SeedExamples.File.GetFileRequest { XFileApiVersion = "0.0.2" }
     /// );
     /// </code></example>
     public async Task<SeedExamples.File> GetFileAsync(
         string filename,
-        GetFileRequest request,
+        SeedExamples.File.GetFileRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

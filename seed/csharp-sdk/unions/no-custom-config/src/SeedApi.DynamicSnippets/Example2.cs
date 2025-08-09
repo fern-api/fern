@@ -1,4 +1,4 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedUnions;
 using System.Globalization;
 
@@ -6,9 +6,11 @@ namespace Usage;
 
 public class Example2
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do()
+    {
         var client = new SeedUnionsClient(
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions
+            {
                 BaseUrl = "https://api.fern.com"
             }
         );

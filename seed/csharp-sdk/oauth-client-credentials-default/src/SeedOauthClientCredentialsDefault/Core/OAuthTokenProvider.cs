@@ -1,5 +1,3 @@
-using SeedOauthClientCredentialsDefault;
-
 namespace SeedOauthClientCredentialsDefault.Core;
 
 public partial class OAuthTokenProvider

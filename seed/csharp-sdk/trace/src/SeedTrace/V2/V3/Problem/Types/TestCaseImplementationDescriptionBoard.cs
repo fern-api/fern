@@ -8,7 +8,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace.V2.V3;
 
-[JsonConverter(typeof(TestCaseImplementationDescriptionBoard.JsonConverter))]
+[JsonConverter(typeof(JsonConverter))]
 [Serializable]
 public record TestCaseImplementationDescriptionBoard
 {
@@ -19,20 +19,18 @@ public record TestCaseImplementationDescriptionBoard
     }
 
     /// <summary>
-    /// Create an instance of TestCaseImplementationDescriptionBoard with <see cref="TestCaseImplementationDescriptionBoard.Html"/>.
+    /// Create an instance of TestCaseImplementationDescriptionBoard with <see cref="Html"/>.
     /// </summary>
-    public TestCaseImplementationDescriptionBoard(TestCaseImplementationDescriptionBoard.Html value)
+    public TestCaseImplementationDescriptionBoard(Html value)
     {
         Type = "html";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of TestCaseImplementationDescriptionBoard with <see cref="TestCaseImplementationDescriptionBoard.ParamId"/>.
+    /// Create an instance of TestCaseImplementationDescriptionBoard with <see cref="ParamId"/>.
     /// </summary>
-    public TestCaseImplementationDescriptionBoard(
-        TestCaseImplementationDescriptionBoard.ParamId value
-    )
+    public TestCaseImplementationDescriptionBoard(ParamId value)
     {
         Type = "paramId";
         Value = value.Value;
@@ -66,7 +64,9 @@ public record TestCaseImplementationDescriptionBoard
     public string AsHtml() =>
         IsHtml
             ? (string)Value!
-            : throw new Exception("TestCaseImplementationDescriptionBoard.Type is not 'html'");
+            : throw new Exception(
+                "SeedTrace.V2.V3.TestCaseImplementationDescriptionBoard.Type is not 'html'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'paramId', otherwise throws an exception.
@@ -75,7 +75,9 @@ public record TestCaseImplementationDescriptionBoard
     public string AsParamId() =>
         IsParamId
             ? (string)Value!
-            : throw new Exception("TestCaseImplementationDescriptionBoard.Type is not 'paramId'");
+            : throw new Exception(
+                "SeedTrace.V2.V3.TestCaseImplementationDescriptionBoard.Type is not 'paramId'"
+            );
 
     public T Match<T>(
         Func<string, T> onHtml,
@@ -141,23 +143,21 @@ public record TestCaseImplementationDescriptionBoard
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator TestCaseImplementationDescriptionBoard(
-        TestCaseImplementationDescriptionBoard.Html value
-    ) => new(value);
+    public static implicit operator TestCaseImplementationDescriptionBoard(Html value) =>
+        new(value);
 
-    public static implicit operator TestCaseImplementationDescriptionBoard(
-        TestCaseImplementationDescriptionBoard.ParamId value
-    ) => new(value);
+    public static implicit operator TestCaseImplementationDescriptionBoard(ParamId value) =>
+        new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<TestCaseImplementationDescriptionBoard>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(Type typeToConvert) =>
             typeof(TestCaseImplementationDescriptionBoard).IsAssignableFrom(typeToConvert);
 
         public override TestCaseImplementationDescriptionBoard Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            Type typeToConvert,
             JsonSerializerOptions options
         )
         {

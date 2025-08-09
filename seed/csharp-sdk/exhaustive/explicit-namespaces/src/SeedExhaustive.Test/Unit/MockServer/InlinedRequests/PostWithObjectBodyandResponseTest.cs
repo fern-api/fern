@@ -1,9 +1,7 @@
 using System.Globalization;
-using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedExhaustive.Core;
 using SeedExhaustive.InlinedRequests;
-using SeedExhaustive.Test.Unit.MockServer;
 using SeedExhaustive.Types.Object;
 
 namespace SeedExhaustive.Test.Unit.MockServer.InlinedRequests;
@@ -12,7 +10,7 @@ namespace SeedExhaustive.Test.Unit.MockServer.InlinedRequests;
 public class PostWithObjectBodyandResponseTest : BaseMockServerTest
 {
     [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    public async Task MockServerTest()
     {
         const string requestJson = """
             {

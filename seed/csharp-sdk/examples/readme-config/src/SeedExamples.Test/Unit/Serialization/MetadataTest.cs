@@ -7,7 +7,7 @@ namespace SeedExamples.Test;
 [TestFixture]
 public class MetadataTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public void TestDeserialization()
     {
         var json = """
@@ -30,7 +30,7 @@ public class MetadataTest
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestSerialization()
     {
         var expectedJson = """

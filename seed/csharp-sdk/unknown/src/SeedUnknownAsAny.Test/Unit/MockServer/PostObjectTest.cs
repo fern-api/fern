@@ -1,6 +1,4 @@
-using global::System.Threading.Tasks;
 using NUnit.Framework;
-using SeedUnknownAsAny;
 using SeedUnknownAsAny.Core;
 
 namespace SeedUnknownAsAny.Test.Unit.MockServer;
@@ -9,7 +7,7 @@ namespace SeedUnknownAsAny.Test.Unit.MockServer;
 public class PostObjectTest : BaseMockServerTest
 {
     [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    public async Task MockServerTest()
     {
         const string requestJson = """
             {

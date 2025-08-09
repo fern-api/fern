@@ -8,7 +8,7 @@ using SeedMixedCase.Core;
 
 namespace SeedMixedCase;
 
-[JsonConverter(typeof(Resource.JsonConverter))]
+[JsonConverter(typeof(JsonConverter))]
 [Serializable]
 public record Resource
 {
@@ -19,18 +19,18 @@ public record Resource
     }
 
     /// <summary>
-    /// Create an instance of Resource with <see cref="Resource.User"/>.
+    /// Create an instance of Resource with <see cref="User"/>.
     /// </summary>
-    public Resource(Resource.User value)
+    public Resource(User value)
     {
         ResourceType = "user";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of Resource with <see cref="Resource.Organization"/>.
+    /// Create an instance of Resource with <see cref="Organization"/>.
     /// </summary>
-    public Resource(Resource.Organization value)
+    public Resource(Organization value)
     {
         ResourceType = "Organization";
         Value = value.Value;
@@ -67,7 +67,7 @@ public record Resource
     public SeedMixedCase.User AsUser() =>
         IsUser
             ? (SeedMixedCase.User)Value!
-            : throw new Exception("Resource.ResourceType is not 'user'");
+            : throw new Exception("SeedMixedCase.Resource.ResourceType is not 'user'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedMixedCase.Organization"/> if <see cref="ResourceType"/> is 'Organization', otherwise throws an exception.
@@ -76,7 +76,7 @@ public record Resource
     public SeedMixedCase.Organization AsOrganization() =>
         IsOrganization
             ? (SeedMixedCase.Organization)Value!
-            : throw new Exception("Resource.ResourceType is not 'Organization'");
+            : throw new Exception("SeedMixedCase.Resource.ResourceType is not 'Organization'");
 
     public T Match<T>(
         Func<SeedMixedCase.User, T> onUser,
@@ -155,12 +155,12 @@ public record Resource
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<Resource>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(Type typeToConvert) =>
             typeof(Resource).IsAssignableFrom(typeToConvert);
 
         public override Resource Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -194,8 +194,10 @@ public record Resource
                 _ => json.Deserialize<object?>(options),
             };
             var baseProperties =
-                json.Deserialize<Resource.BaseProperties>(options)
-                ?? throw new JsonException("Failed to deserialize Resource.BaseProperties");
+                json.Deserialize<BaseProperties>(options)
+                ?? throw new JsonException(
+                    "Failed to deserialize SeedMixedCase.Resource.BaseProperties"
+                );
             return new Resource(discriminator, value) { Status = baseProperties.Status };
         }
 
@@ -215,9 +217,12 @@ public record Resource
             json["resource_type"] = value.ResourceType;
             var basePropertiesJson =
                 JsonSerializer.SerializeToNode(
-                    new Resource.BaseProperties { Status = value.Status },
+                    new BaseProperties { Status = value.Status },
                     options
-                ) ?? throw new JsonException("Failed to serialize Resource.BaseProperties");
+                )
+                ?? throw new JsonException(
+                    "Failed to serialize SeedMixedCase.Resource.BaseProperties"
+                );
             foreach (var property in basePropertiesJson.AsObject())
             {
                 json[property.Key] = property.Value;

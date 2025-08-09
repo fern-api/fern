@@ -1,19 +1,22 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedApi;
 
 namespace Usage;
 
 public class Example5
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do()
+    {
         var client = new SeedApiClient(
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions
+            {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Folder.Service.UnknownRequestAsync(
-            new Dictionary<string, object>() {
+            new Dictionary<string, object>()
+            {
                 ["key"] = "value",
             }
         );

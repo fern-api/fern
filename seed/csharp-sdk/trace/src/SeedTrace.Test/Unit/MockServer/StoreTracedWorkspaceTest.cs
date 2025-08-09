@@ -1,12 +1,11 @@
 using NUnit.Framework;
-using SeedTrace;
 
 namespace SeedTrace.Test.Unit.MockServer;
 
 [TestFixture]
 public class StoreTracedWorkspaceTest : BaseMockServerTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public void MockServerTest()
     {
         const string requestJson = """

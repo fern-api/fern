@@ -1,4 +1,3 @@
-using global::System.Threading.Tasks;
 using NUnit.Framework;
 using OneOf;
 using SeedUndiscriminatedUnions.Core;
@@ -9,7 +8,7 @@ namespace SeedUndiscriminatedUnions.Test.Unit.MockServer;
 public class DuplicateTypesUnionTest : BaseMockServerTest
 {
     [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    public async Task MockServerTest()
     {
         const string requestJson = """
             "string"

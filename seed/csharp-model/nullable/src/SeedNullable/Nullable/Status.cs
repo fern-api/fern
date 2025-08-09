@@ -8,7 +8,7 @@ using SeedNullable.Core;
 
 namespace SeedNullable;
 
-[JsonConverter(typeof(Status.JsonConverter))]
+[JsonConverter(typeof(JsonConverter))]
 [Serializable]
 public record Status
 {
@@ -19,27 +19,27 @@ public record Status
     }
 
     /// <summary>
-    /// Create an instance of Status with <see cref="Status.Active"/>.
+    /// Create an instance of Status with <see cref="Active"/>.
     /// </summary>
-    public Status(Status.Active value)
+    public Status(Active value)
     {
         Type = "active";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of Status with <see cref="Status.Archived"/>.
+    /// Create an instance of Status with <see cref="Archived"/>.
     /// </summary>
-    public Status(Status.Archived value)
+    public Status(Archived value)
     {
         Type = "archived";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of Status with <see cref="Status.SoftDeleted"/>.
+    /// Create an instance of Status with <see cref="SoftDeleted"/>.
     /// </summary>
-    public Status(Status.SoftDeleted value)
+    public Status(SoftDeleted value)
     {
         Type = "soft-deleted";
         Value = value.Value;
@@ -76,14 +76,16 @@ public record Status
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'active'.</exception>
     public object AsActive() =>
-        IsActive ? Value! : throw new Exception("Status.Type is not 'active'");
+        IsActive ? Value! : throw new Exception("SeedNullable.Status.Type is not 'active'");
 
     /// <summary>
     /// Returns the value as a <see cref="DateTime?"/> if <see cref="Type"/> is 'archived', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'archived'.</exception>
     public DateTime? AsArchived() =>
-        IsArchived ? (DateTime?)Value! : throw new Exception("Status.Type is not 'archived'");
+        IsArchived
+            ? (DateTime?)Value!
+            : throw new Exception("SeedNullable.Status.Type is not 'archived'");
 
     /// <summary>
     /// Returns the value as a <see cref="DateTime?"/> if <see cref="Type"/> is 'soft-deleted', otherwise throws an exception.
@@ -92,7 +94,7 @@ public record Status
     public DateTime? AsSoftDeleted() =>
         IsSoftDeleted
             ? (DateTime?)Value!
-            : throw new Exception("Status.Type is not 'soft-deleted'");
+            : throw new Exception("SeedNullable.Status.Type is not 'soft-deleted'");
 
     public T Match<T>(
         Func<object, T> onActive,
@@ -178,19 +180,19 @@ public record Status
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator Status(Status.Archived value) => new(value);
+    public static implicit operator Status(Archived value) => new(value);
 
-    public static implicit operator Status(Status.SoftDeleted value) => new(value);
+    public static implicit operator Status(SoftDeleted value) => new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<Status>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(Type typeToConvert) =>
             typeof(Status).IsAssignableFrom(typeToConvert);
 
         public override Status Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            Type typeToConvert,
             JsonSerializerOptions options
         )
         {

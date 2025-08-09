@@ -1,8 +1,5 @@
-using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedMixedFileDirectory.Core;
-using SeedMixedFileDirectory.Test.Unit.MockServer;
-using SeedMixedFileDirectory.User;
 
 namespace SeedMixedFileDirectory.Test.Unit.MockServer.User;
 
@@ -10,7 +7,7 @@ namespace SeedMixedFileDirectory.Test.Unit.MockServer.User;
 public class ListEventsTest : BaseMockServerTest
 {
     [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    public async Task MockServerTest()
     {
         const string mockResponse = """
             [
@@ -41,11 +38,16 @@ public class ListEventsTest : BaseMockServerTest
             );
 
         var response = await Client.User.Events.ListEventsAsync(
-            new ListUserEventsRequest { Limit = 1 }
+            new SeedMixedFileDirectory.User.ListUserEventsRequest { Limit = 1 }
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<Event>>(mockResponse)).UsingDefaults()
+            Is.EqualTo(
+                    JsonUtils.Deserialize<IEnumerable<SeedMixedFileDirectory.User.Event>>(
+                        mockResponse
+                    )
+                )
+                .UsingDefaults()
         );
     }
 }

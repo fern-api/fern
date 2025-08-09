@@ -8,7 +8,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-[JsonConverter(typeof(Test.JsonConverter))]
+[JsonConverter(typeof(JsonConverter))]
 [Serializable]
 public record Test
 {
@@ -19,18 +19,18 @@ public record Test
     }
 
     /// <summary>
-    /// Create an instance of Test with <see cref="Test.And"/>.
+    /// Create an instance of Test with <see cref="And"/>.
     /// </summary>
-    public Test(Test.And value)
+    public Test(And value)
     {
         Type = "and";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of Test with <see cref="Test.Or"/>.
+    /// Create an instance of Test with <see cref="Or"/>.
     /// </summary>
-    public Test(Test.Or value)
+    public Test(Or value)
     {
         Type = "or";
         Value = value.Value;
@@ -61,13 +61,15 @@ public record Test
     /// Returns the value as a <see cref="bool"/> if <see cref="Type"/> is 'and', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'and'.</exception>
-    public bool AsAnd() => IsAnd ? (bool)Value! : throw new Exception("Test.Type is not 'and'");
+    public bool AsAnd() =>
+        IsAnd ? (bool)Value! : throw new Exception("SeedTrace.Test.Type is not 'and'");
 
     /// <summary>
     /// Returns the value as a <see cref="bool"/> if <see cref="Type"/> is 'or', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'or'.</exception>
-    public bool AsOr() => IsOr ? (bool)Value! : throw new Exception("Test.Type is not 'or'");
+    public bool AsOr() =>
+        IsOr ? (bool)Value! : throw new Exception("SeedTrace.Test.Type is not 'or'");
 
     public T Match<T>(Func<bool, T> onAnd, Func<bool, T> onOr, Func<string, object?, T> onUnknown_)
     {
@@ -125,19 +127,19 @@ public record Test
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator Test(Test.And value) => new(value);
+    public static implicit operator Test(And value) => new(value);
 
-    public static implicit operator Test(Test.Or value) => new(value);
+    public static implicit operator Test(Or value) => new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<Test>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(Type typeToConvert) =>
             typeof(Test).IsAssignableFrom(typeToConvert);
 
         public override Test Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            Type typeToConvert,
             JsonSerializerOptions options
         )
         {

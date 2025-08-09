@@ -1,20 +1,22 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedMixedFileDirectory;
-using SeedMixedFileDirectory.User;
 
 namespace Usage;
 
 public class Example2
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do()
+    {
         var client = new SeedMixedFileDirectoryClient(
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions
+            {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.User.Events.ListEventsAsync(
-            new ListUserEventsRequest{
+            new SeedMixedFileDirectory.User.ListUserEventsRequest
+            {
                 Limit = 1
             }
         );

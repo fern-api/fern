@@ -1,8 +1,6 @@
 using System.Globalization;
-using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedExhaustive.Core;
-using SeedExhaustive.Test.Unit.MockServer;
 using SeedExhaustive.Types;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints;
@@ -11,7 +9,7 @@ namespace SeedExhaustive.Test.Unit.MockServer.Endpoints;
 public class GetAndReturnNestedWithRequiredFieldTest : BaseMockServerTest
 {
     [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    public async Task MockServerTest()
     {
         const string requestJson = """
             {

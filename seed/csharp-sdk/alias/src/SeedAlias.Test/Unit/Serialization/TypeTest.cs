@@ -1,6 +1,5 @@
 using System.Text.Json;
 using NUnit.Framework;
-using SeedAlias;
 using SeedAlias.Core;
 
 namespace SeedAlias.Test;

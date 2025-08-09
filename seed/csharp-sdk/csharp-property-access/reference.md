@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedCsharpAccess/SeedCsharpAccessClient.cs">CreateUserAsync</a>(User { ... }) -> User</code></summary>
+<details><summary><code>client.<a href="/src/SeedCsharpAccess/SeedCsharpAccessClient.cs">CreateUserAsync</a>(SeedCsharpAccess.User { ... }) -> SeedCsharpAccess.User</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 
 ```csharp
 await client.CreateUserAsync(
-    new User
+    new SeedCsharpAccess.User
     {
         Id = "id",
         Name = "name",
@@ -35,7 +35,7 @@ await client.CreateUserAsync(
 <dl>
 <dd>
 
-**request:** `User` 
+**request:** `SeedCsharpAccess.User` 
     
 </dd>
 </dl>

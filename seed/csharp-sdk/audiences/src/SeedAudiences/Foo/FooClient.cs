@@ -16,7 +16,7 @@ public partial class FooClient
 
     /// <example><code>
     /// await client.Foo.FindAsync(
-    ///     new FindRequest
+    ///     new SeedAudiences.FindRequest
     ///     {
     ///         OptionalString = "optionalString",
     ///         PublicProperty = "publicProperty",

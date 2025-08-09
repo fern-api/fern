@@ -5,7 +5,7 @@ namespace SeedTrace.Test.Unit.MockServer;
 [TestFixture]
 public class SetHomepageProblemsTest : BaseMockServerTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public void MockServerTest()
     {
         const string requestJson = """

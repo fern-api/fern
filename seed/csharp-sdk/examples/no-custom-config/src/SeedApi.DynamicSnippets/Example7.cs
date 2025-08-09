@@ -1,14 +1,16 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedExamples;
 
 namespace Usage;
 
 public class Example7
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do()
+    {
         var client = new SeedExamplesClient(
             token: "<token>",
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions
+            {
                 BaseUrl = "https://api.fern.com"
             }
         );

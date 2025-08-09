@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedNoEnvironment;
 
-var client = new SeedNoEnvironmentClient("TOKEN");
+var client = new SeedNoEnvironment.SeedNoEnvironmentClient("TOKEN");
 await client.Dummy.GetDummyAsync();
 ```
 

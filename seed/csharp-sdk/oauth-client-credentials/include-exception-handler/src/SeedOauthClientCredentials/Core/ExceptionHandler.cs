@@ -1,4 +1,4 @@
-using SystemTask = global::System.Threading.Tasks.Task;
+using SystemTask = System.Threading.Tasks.Task;
 
 namespace SeedOauthClientCredentials.Core;
 

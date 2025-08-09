@@ -1,6 +1,4 @@
-using global::System.Threading.Tasks;
 using NUnit.Framework;
-using SeedAuthEnvironmentVariables;
 using SeedAuthEnvironmentVariables.Core;
 
 namespace SeedAuthEnvironmentVariables.Test.Unit.MockServer;
@@ -9,7 +7,7 @@ namespace SeedAuthEnvironmentVariables.Test.Unit.MockServer;
 public class GetWithHeaderTest : BaseMockServerTest
 {
     [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    public async Task MockServerTest()
     {
         const string mockResponse = """
             "string"

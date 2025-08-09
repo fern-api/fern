@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.GetAsync(\"string\");\n"
+                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnions.SeedUndiscriminatedUnionsClient();\nawait client.Union.GetAsync(\"string\");\n"
             }
         },
         {
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.GetMetadataAsync();\n"
+                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnions.SeedUndiscriminatedUnionsClient();\nawait client.Union.GetMetadataAsync();\n"
             }
         },
         {
@@ -34,7 +34,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.UpdateMetadataAsync(\n    new Dictionary<string, object>()\n    {\n        {\n            \"string\",\n            new Dictionary<object, object?>() { { \"key\", \"value\" } }\n        },\n    }\n);\n"
+                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnions.SeedUndiscriminatedUnionsClient();\nawait client.Union.UpdateMetadataAsync(\n    new Dictionary<string, object>()\n    {\n        {\n            \"string\",\n            new Dictionary<object, object?>() { { \"key\", \"value\" } }\n        },\n    }\n);\n"
             }
         },
         {
@@ -46,7 +46,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.CallAsync(\n    new Request\n    {\n        Union = new Dictionary<string, object>()\n        {\n            {\n                \"union\",\n                new Dictionary<object, object?>() { { \"key\", \"value\" } }\n            },\n        },\n    }\n);\n"
+                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnions.SeedUndiscriminatedUnionsClient();\nawait client.Union.CallAsync(\n    new SeedUndiscriminatedUnions.Request\n    {\n        Union = new Dictionary<string, object>()\n        {\n            {\n                \"union\",\n                new Dictionary<object, object?>() { { \"key\", \"value\" } }\n            },\n        },\n    }\n);\n"
             }
         },
         {
@@ -58,7 +58,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.DuplicateTypesUnionAsync(\"string\");\n"
+                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnions.SeedUndiscriminatedUnionsClient();\nawait client.Union.DuplicateTypesUnionAsync(\"string\");\n"
             }
         },
         {
@@ -70,7 +70,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.NestedUnionsAsync(\"string\");\n"
+                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnions.SeedUndiscriminatedUnionsClient();\nawait client.Union.NestedUnionsAsync(\"string\");\n"
             }
         }
     ]

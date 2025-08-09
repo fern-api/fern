@@ -1,15 +1,17 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedBasicAuthEnvironmentVariables;
 
 namespace Usage;
 
 public class Example0
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do()
+    {
         var client = new SeedBasicAuthEnvironmentVariablesClient(
             username: "<username>",
             accessToken: "<password>",
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions
+            {
                 BaseUrl = "https://api.fern.com"
             }
         );

@@ -1,6 +1,4 @@
-using global::System.Threading.Tasks;
 using NUnit.Framework;
-using SeedIdempotencyHeaders;
 using SeedIdempotencyHeaders.Core;
 
 namespace SeedIdempotencyHeaders.Test.Unit.MockServer;
@@ -9,7 +7,7 @@ namespace SeedIdempotencyHeaders.Test.Unit.MockServer;
 public class CreateTest : BaseMockServerTest
 {
     [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    public async Task MockServerTest()
     {
         const string requestJson = """
             {

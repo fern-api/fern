@@ -1,20 +1,23 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedCustomAuth;
 
 namespace Usage;
 
 public class Example1
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do()
+    {
         var client = new SeedCustomAuthClient(
             customAuthScheme: "<value>",
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions
+            {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.CustomAuth.PostWithCustomAuthAsync(
-            new Dictionary<string, object>() {
+            new Dictionary<string, object>()
+            {
                 ["key"] = "value",
             }
         );

@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedPagination.Core;
-using SystemTask = global::System.Threading.Tasks.Task;
+using SystemTask = System.Threading.Tasks.Task;
 
 namespace SeedPagination.Test.Core.Pagination;
 

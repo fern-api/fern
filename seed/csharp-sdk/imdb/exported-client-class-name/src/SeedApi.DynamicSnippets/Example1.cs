@@ -1,14 +1,16 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedApi;
 
 namespace Usage;
 
 public class Example1
 {
-    public async global::System.Threading.Tasks.Task Do() {
-        var client = new CustomClient(
+    public async Task Do()
+    {
+        var client = new SeedApi.CustomClient(
             token: "<token>",
-            clientOptions: new ClientOptions{
+            clientOptions: new ClientOptions
+            {
                 BaseUrl = "https://api.fern.com"
             }
         );

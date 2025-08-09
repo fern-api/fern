@@ -1,8 +1,5 @@
-using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedMixedFileDirectory.Core;
-using SeedMixedFileDirectory.Test.Unit.MockServer;
-using SeedMixedFileDirectory.User.Events;
 
 namespace SeedMixedFileDirectory.Test.Unit.MockServer.User.Events;
 
@@ -10,7 +7,7 @@ namespace SeedMixedFileDirectory.Test.Unit.MockServer.User.Events;
 public class GetMetadataTest : BaseMockServerTest
 {
     [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    public async Task MockServerTest()
     {
         const string mockResponse = """
             {
@@ -37,11 +34,14 @@ public class GetMetadataTest : BaseMockServerTest
             );
 
         var response = await Client.User.Events.Metadata.GetMetadataAsync(
-            new GetEventMetadataRequest { Id = "id" }
+            new SeedMixedFileDirectory.User.Events.GetEventMetadataRequest { Id = "id" }
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<Metadata>(mockResponse)).UsingDefaults()
+            Is.EqualTo(
+                    JsonUtils.Deserialize<SeedMixedFileDirectory.User.Events.Metadata>(mockResponse)
+                )
+                .UsingDefaults()
         );
     }
 }

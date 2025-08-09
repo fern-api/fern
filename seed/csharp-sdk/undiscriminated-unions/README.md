@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedUndiscriminatedUnions;
 
-var client = new SeedUndiscriminatedUnionsClient();
+var client = new SeedUndiscriminatedUnions.SeedUndiscriminatedUnionsClient();
 await client.Union.GetAsync("string");
 ```
 

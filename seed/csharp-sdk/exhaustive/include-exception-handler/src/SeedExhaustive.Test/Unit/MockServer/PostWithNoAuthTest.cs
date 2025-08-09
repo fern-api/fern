@@ -1,4 +1,3 @@
-using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedExhaustive.Core;
 
@@ -8,7 +7,7 @@ namespace SeedExhaustive.Test.Unit.MockServer;
 public class PostWithNoAuthTest : BaseMockServerTest
 {
     [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    public async Task MockServerTest()
     {
         const string requestJson = """
             {

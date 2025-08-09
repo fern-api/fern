@@ -1,7 +1,6 @@
 using System.Globalization;
 using System.Text.Json;
 using NUnit.Framework;
-using SeedObject;
 using SeedObject.Core;
 
 namespace SeedObject.Test;

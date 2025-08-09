@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedFileDownload;\n\nvar client = new SeedFileDownloadClient();\nawait client.Service.SimpleAsync();\n"
+                "client": "using SeedFileDownload;\n\nvar client = new SeedFileDownload.SeedFileDownloadClient();\nawait client.Service.SimpleAsync();\n"
             }
         }
     ]

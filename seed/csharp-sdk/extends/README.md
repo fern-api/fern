@@ -22,9 +22,9 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedExtends;
 
-var client = new SeedExtendsClient();
+var client = new SeedExtends.SeedExtendsClient();
 await client.ExtendedInlineRequestBodyAsync(
-    new Inlined
+    new SeedExtends.Inlined
     {
         Unique = "unique",
         Name = "name",

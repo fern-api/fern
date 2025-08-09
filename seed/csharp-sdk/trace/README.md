@@ -22,10 +22,10 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedTrace;
 
-var client = new SeedTraceClient("TOKEN");
+var client = new SeedTrace.SeedTraceClient("TOKEN");
 await client.Admin.UpdateTestSubmissionStatusAsync(
     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    new TestSubmissionStatus(new TestSubmissionStatus.Stopped())
+    new SeedTrace.TestSubmissionStatus(new SeedTrace.TestSubmissionStatus.Stopped())
 );
 ```
 

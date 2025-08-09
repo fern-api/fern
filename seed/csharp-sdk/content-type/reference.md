@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.<a href="/src/SeedContentTypes/Service/ServiceClient.cs">PatchAsync</a>(PatchProxyRequest { ... })</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedContentTypes/Service/ServiceClient.cs">PatchAsync</a>(SeedContentTypes.PatchProxyRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,7 @@
 
 ```csharp
 await client.Service.PatchAsync(
-    new PatchProxyRequest { Application = "application", RequireAuth = true }
+    new SeedContentTypes.PatchProxyRequest { Application = "application", RequireAuth = true }
 );
 ```
 </dd>
@@ -30,7 +30,7 @@ await client.Service.PatchAsync(
 <dl>
 <dd>
 
-**request:** `PatchProxyRequest` 
+**request:** `SeedContentTypes.PatchProxyRequest` 
     
 </dd>
 </dl>
@@ -42,7 +42,7 @@ await client.Service.PatchAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedContentTypes/Service/ServiceClient.cs">PatchComplexAsync</a>(id, PatchComplexRequest { ... })</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedContentTypes/Service/ServiceClient.cs">PatchComplexAsync</a>(id, SeedContentTypes.PatchComplexRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -71,7 +71,7 @@ Update with JSON merge patch - complex types
 ```csharp
 await client.Service.PatchComplexAsync(
     "id",
-    new PatchComplexRequest
+    new SeedContentTypes.PatchComplexRequest
     {
         Name = "name",
         Email = "email",
@@ -109,7 +109,7 @@ await client.Service.PatchComplexAsync(
 <dl>
 <dd>
 
-**request:** `PatchComplexRequest` 
+**request:** `SeedContentTypes.PatchComplexRequest` 
     
 </dd>
 </dl>
@@ -121,7 +121,7 @@ await client.Service.PatchComplexAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedContentTypes/Service/ServiceClient.cs">RegularPatchAsync</a>(id, RegularPatchRequest { ... })</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedContentTypes/Service/ServiceClient.cs">RegularPatchAsync</a>(id, SeedContentTypes.RegularPatchRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -150,7 +150,7 @@ Regular PATCH endpoint without merge-patch semantics
 ```csharp
 await client.Service.RegularPatchAsync(
     "id",
-    new RegularPatchRequest { Field1 = "field1", Field2 = 1 }
+    new SeedContentTypes.RegularPatchRequest { Field1 = "field1", Field2 = 1 }
 );
 ```
 </dd>
@@ -174,7 +174,7 @@ await client.Service.RegularPatchAsync(
 <dl>
 <dd>
 
-**request:** `RegularPatchRequest` 
+**request:** `SeedContentTypes.RegularPatchRequest` 
     
 </dd>
 </dl>

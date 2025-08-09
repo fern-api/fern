@@ -1,7 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -61,7 +61,7 @@ public partial class HomepageClient
     /// <example><code>
     /// await client.Homepage.SetHomepageProblemsAsync(new List&lt;string&gt;() { "string", "string" });
     /// </code></example>
-    public async global::System.Threading.Tasks.Task SetHomepageProblemsAsync(
+    public async Task SetHomepageProblemsAsync(
         IEnumerable<string> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

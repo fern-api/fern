@@ -22,23 +22,23 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedApi;
 
-var client = new SeedApiClient();
+var client = new SeedApi.SeedApiClient();
 await client.SearchAsync(
-    new SearchRequest
+    new SeedApi.SearchRequest
     {
         Limit = 1,
         Id = "id",
         Date = "date",
         Deadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
         Bytes = "bytes",
-        User = new User
+        User = new SeedApi.User
         {
             Name = "name",
             Tags = new List<string>() { "tags", "tags" },
         },
         UserList =
         [
-            new User
+            new SeedApi.User
             {
                 Name = "name",
                 Tags = new List<string>() { "tags", "tags" },
@@ -47,35 +47,35 @@ await client.SearchAsync(
         OptionalDeadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
         KeyValue = new Dictionary<string, string?>() { { "keyValue", "keyValue" } },
         OptionalString = "optionalString",
-        NestedUser = new NestedUser
+        NestedUser = new SeedApi.NestedUser
         {
             Name = "name",
-            User = new User
+            User = new SeedApi.User
             {
                 Name = "name",
                 Tags = new List<string>() { "tags", "tags" },
             },
         },
-        OptionalUser = new User
+        OptionalUser = new SeedApi.User
         {
             Name = "name",
             Tags = new List<string>() { "tags", "tags" },
         },
         ExcludeUser =
         [
-            new User
+            new SeedApi.User
             {
                 Name = "name",
                 Tags = new List<string>() { "tags", "tags" },
             },
         ],
         Filter = ["filter"],
-        Neighbor = new User
+        Neighbor = new SeedApi.User
         {
             Name = "name",
             Tags = new List<string>() { "tags", "tags" },
         },
-        NeighborRequired = new User
+        NeighborRequired = new SeedApi.User
         {
             Name = "name",
             Tags = new List<string>() { "tags", "tags" },

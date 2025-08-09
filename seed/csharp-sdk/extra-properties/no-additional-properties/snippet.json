@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExtraProperties;\n\nvar client = new SeedExtraPropertiesClient();\nawait client.User.CreateUserAsync(\n    new CreateUserRequest\n    {\n        Type = \"CreateUserRequest\",\n        Version = \"v1\",\n        Name = \"name\",\n    }\n);\n"
+                "client": "using SeedExtraProperties;\n\nvar client = new SeedExtraProperties.SeedExtraPropertiesClient();\nawait client.User.CreateUserAsync(\n    new SeedExtraProperties.CreateUserRequest\n    {\n        Type = \"CreateUserRequest\",\n        Version = \"v1\",\n        Name = \"name\",\n    }\n);\n"
             }
         }
     ]
