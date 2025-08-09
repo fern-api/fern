@@ -1,0 +1,11 @@
+description: |
+  This error is returned when a resource is not found. This could be because:
+    - The endpoint does not exist
+    - The resource does not exist eg model id, dataset id
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        data:
+          type: string
