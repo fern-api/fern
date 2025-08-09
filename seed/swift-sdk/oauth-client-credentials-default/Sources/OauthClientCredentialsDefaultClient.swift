@@ -1,6 +1,9 @@
 /// Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 public final class OauthClientCredentialsDefaultClient: Sendable {
     public let auth: AuthClient
+    public let nestedNoAuth: NestedNoAuthClient
+    public let nested: NestedClient
+    public let simple: SimpleClient
     private let httpClient: HTTPClient
 
     /// Initialize the client with the specified configuration.
@@ -25,6 +28,9 @@ public final class OauthClientCredentialsDefaultClient: Sendable {
             urlSession: urlSession
         )
         self.auth = AuthClient(config: config)
+        self.nestedNoAuth = NestedNoAuthClient(config: config)
+        self.nested = NestedClient(config: config)
+        self.simple = SimpleClient(config: config)
         self.httpClient = HTTPClient(config: config)
     }
 }

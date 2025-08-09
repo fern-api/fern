@@ -10,7 +10,23 @@ public final class ClientConfig: Sendable {
     }
 
     struct BearerAuth {
-        let token: String
+        let token: Token
+
+        typealias TokenProvider = @Sendable () async throws -> String
+
+        enum Token: Sendable {
+            case staticToken(String)
+            case provider(TokenProvider)
+
+            func retrieve() async throws -> String {
+                switch self {
+                case .staticToken(let token):
+                    return token
+                case .provider(let provider):
+                    return try await provider()
+                }
+            }
+        }
     }
 
     struct BasicAuth {

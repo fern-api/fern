@@ -26,7 +26,7 @@ public final class ApiClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func search(limit: Int, id: String, date: String, deadline: Date, bytes: String, user: User, userList: User? = nil, optionalDeadline: Date? = nil, keyValue: [String: String?]? = nil, optionalString: String? = nil, nestedUser: NestedUser? = nil, optionalUser: User? = nil, excludeUser: User? = nil, filter: String? = nil, neighbor: User? = nil, neighborRequired: SearchRequestNeighborRequired, requestOptions: RequestOptions? = nil) async throws -> SearchResponse {
+    public func search(limit: Int, id: String, date: String, deadline: Date, bytes: String, user: User, userList: User? = nil, optionalDeadline: Date? = nil, keyValue: [String: String?]? = nil, optionalString: String? = nil, nestedUser: NestedUser? = nil, optionalUser: User? = nil, excludeUser: User? = nil, filter: String? = nil, neighbor: SearchRequestNeighbor? = nil, neighborRequired: SearchRequestNeighborRequired, requestOptions: RequestOptions? = nil) async throws -> SearchResponse {
         return try await httpClient.performRequest(
             method: .get,
             path: "/user/getUsername",
