@@ -192,6 +192,14 @@ async function getFernIgnorePaths({
         ...fernIgnoreFileContents
             .trim()
             .split(NEW_LINE_REGEX)
-            .filter((line) => !line.startsWith("#") && line.length > 0)
+            .map((line) => {
+                // Remove comments at the end of the line
+                const commentIndex = line.indexOf("#");
+                if (commentIndex !== -1) {
+                    return line.slice(0, commentIndex).trim();
+                }
+                return line.trim();
+            })
+            .filter((line) => line.length > 0)
     ];
 }

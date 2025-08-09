@@ -4,30 +4,61 @@ public final class ClientConfig: Sendable {
         static let maxRetries: Int = 2
     }
 
+    struct HeaderAuth {
+        let key: String
+        let header: String
+    }
+
+    struct BearerAuth {
+        let token: String
+    }
+
+    struct BasicAuth {
+        let username: String?
+        let password: String?
+
+        var token: String? {
+            if let username, let password {
+                let credentials: String = "\(username):\(password)"
+                let data = credentials.data(using: .utf8) ?? Data()
+                return data.base64EncodedString()
+            }
+            return nil
+        }
+    }
+
     let baseURL: String
-    let apiKey: String?
-    let token: String?
+    let headerAuth: HeaderAuth?
+    let bearerAuth: BearerAuth?
+    let basicAuth: BasicAuth?
     let headers: [String: String]?
+    let timeout: Int
+    let maxRetries: Int
     let urlSession: URLSession
 
     init(
         baseURL: String,
-        apiKey: String? = nil,
-        token: String? = nil,
+        headerAuth: HeaderAuth? = nil,
+        bearerAuth: BearerAuth? = nil,
+        basicAuth: BasicAuth? = nil,
         headers: [String: String]? = nil,
         timeout: Int? = nil,
+        maxRetries: Int? = nil,
         urlSession: URLSession? = nil
     ) {
         self.baseURL = baseURL
-        self.apiKey = apiKey
-        self.token = token
+        self.headerAuth = headerAuth
+        self.bearerAuth = bearerAuth
+        self.basicAuth = basicAuth
         self.headers = headers
-        self.urlSession = urlSession ?? buildURLSession(timeoutSeconds: timeout)
+        self.timeout = timeout ?? Defaults.timeout
+        self.maxRetries = maxRetries ?? Defaults.maxRetries
+        self.urlSession = urlSession ?? buildURLSession(timeoutSeconds: self.timeout)
     }
 }
 
-private func buildURLSession(timeoutSeconds: Int?) -> URLSession {
+private func buildURLSession(timeoutSeconds: Int) -> URLSession {
     let configuration = URLSessionConfiguration.default
-    configuration.timeoutIntervalForRequest = .init(timeoutSeconds ?? ClientConfig.Defaults.timeout)
+    configuration.timeoutIntervalForRequest = .init(timeoutSeconds)
     return .init(configuration: configuration)
 }
