@@ -41,7 +41,46 @@ const client = new SeedOauthClientCredentialsWithVariablesClient({
   clientId: "YOUR_AUTHORIZATION",
   clientSecret: "YOUR_AUTHORIZATION",
 });
+await client.nestedNoAuth.api.getSomething();
+
+```
+
+
+```typescript
+import { SeedOauthClientCredentialsWithVariablesClient } from "@fern/oauth-client-credentials-with-variables";
+
+const client = new SeedOauthClientCredentialsWithVariablesClient({
+  environment: "YOUR_BASE_URL",
+  clientId: "YOUR_AUTHORIZATION",
+  clientSecret: "YOUR_AUTHORIZATION",
+});
+await client.nested.api.getSomething();
+
+```
+
+
+```typescript
+import { SeedOauthClientCredentialsWithVariablesClient } from "@fern/oauth-client-credentials-with-variables";
+
+const client = new SeedOauthClientCredentialsWithVariablesClient({
+  environment: "YOUR_BASE_URL",
+  clientId: "YOUR_AUTHORIZATION",
+  clientSecret: "YOUR_AUTHORIZATION",
+});
 await client.service.post("endpointParam");
+
+```
+
+
+```typescript
+import { SeedOauthClientCredentialsWithVariablesClient } from "@fern/oauth-client-credentials-with-variables";
+
+const client = new SeedOauthClientCredentialsWithVariablesClient({
+  environment: "YOUR_BASE_URL",
+  clientId: "YOUR_AUTHORIZATION",
+  clientSecret: "YOUR_AUTHORIZATION",
+});
+await client.simple.getSomething();
 
 ```
 
