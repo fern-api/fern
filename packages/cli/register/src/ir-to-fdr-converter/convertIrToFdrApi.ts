@@ -16,7 +16,7 @@ export function convertIrToFdrApi({
     ir: IntermediateRepresentation;
     snippetsConfig: FdrCjsSdk.api.v1.register.SnippetsConfig;
     playgroundConfig?: PlaygroundConfig;
-    context: TaskContext
+    context: TaskContext;
 }): FdrCjsSdk.api.v1.register.ApiDefinition {
     const fdrApi: FdrCjsSdk.api.v1.register.ApiDefinition = {
         types: {},

@@ -1,6 +1,6 @@
 // service_auth
 "/token"
-"/token"
+"/token/refresh"
 
 // service_nested-no-auth/api
 "/nested-no-auth/get-something"
