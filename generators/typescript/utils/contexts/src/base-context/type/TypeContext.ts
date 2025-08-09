@@ -9,7 +9,7 @@ import {
     TypeDeclaration,
     TypeId,
     TypeReference
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-fern/ir-sdk";
 
 import { GeneratedType } from "./GeneratedType";
 import { GeneratedTypeReferenceExample } from "./GeneratedTypeReferenceExample";
@@ -37,5 +37,6 @@ export interface TypeContext {
     getGeneratedExample: (example: ExampleTypeReference) => GeneratedTypeReferenceExample;
     isNullable: (typeReference: TypeReference) => boolean;
     isOptional: (typeReference: TypeReference) => boolean;
+    isLiteral: (typeReference: TypeReference) => boolean;
     hasDefaultValue: (typeReference: TypeReference) => boolean;
 }

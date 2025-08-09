@@ -1,6 +1,6 @@
 import { Reference, TypeReferenceNode, Zurg } from "@fern-typescript/commons";
 
-import { DeclaredTypeName, TypeReference } from "@fern-fern/ir-sdk/api";
+import { DeclaredTypeName, TypeReference } from "@fern-fern/ir-sdk";
 
 import { GeneratedTypeSchema } from "./GeneratedTypeSchema";
 

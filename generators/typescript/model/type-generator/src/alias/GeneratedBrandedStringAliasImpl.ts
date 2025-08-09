@@ -18,7 +18,7 @@ import {
     ts
 } from "ts-morph";
 
-import { ExampleTypeShape, TypeReference } from "@fern-fern/ir-sdk/api";
+import { ExampleTypeShape, TypeReference } from "@fern-fern/ir-sdk";
 
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 

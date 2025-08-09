@@ -4,7 +4,7 @@ import { PackageResolver } from "@fern-typescript/resolvers";
 import { WebsocketClassGenerator } from "@fern-typescript/sdk-client-class-generator";
 import { SourceFile } from "ts-morph";
 
-import { SubpackageId, WebSocketChannel, WebSocketChannelId } from "@fern-fern/ir-sdk/api";
+import { SubpackageId, WebSocketChannel, WebSocketChannelId } from "@fern-fern/ir-sdk";
 
 import { WebsocketSocketDeclarationReferencer } from "../../declaration-referencers/WebsocketSocketDeclarationReferencer";
 

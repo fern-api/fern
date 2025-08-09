@@ -9,7 +9,7 @@ import { PackageResolver } from "@fern-typescript/resolvers";
 import { entries } from "@fern-api/core-utils";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { FernFilepath } from "@fern-fern/ir-sdk/api";
+import { FernFilepath } from "@fern-fern/ir-sdk";
 
 import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
 

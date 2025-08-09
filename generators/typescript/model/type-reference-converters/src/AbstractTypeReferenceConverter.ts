@@ -11,7 +11,7 @@ import {
     PrimitiveTypeV1,
     ShapeType,
     TypeReference
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-fern/ir-sdk";
 
 export declare namespace AbstractTypeReferenceConverter {
     export interface Init {

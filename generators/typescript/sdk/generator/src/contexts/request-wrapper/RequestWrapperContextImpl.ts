@@ -6,7 +6,7 @@ import { SourceFile, ts } from "ts-morph";
 
 import { assertNever } from "@fern-api/core-utils";
 
-import { Name, SdkRequest } from "@fern-fern/ir-sdk/api";
+import { Name, SdkRequest } from "@fern-fern/ir-sdk";
 
 import { RequestWrapperDeclarationReferencer } from "../../declaration-referencers/RequestWrapperDeclarationReferencer";
 

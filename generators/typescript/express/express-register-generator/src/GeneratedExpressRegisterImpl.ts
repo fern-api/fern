@@ -4,7 +4,7 @@ import { PackageResolver } from "@fern-typescript/resolvers";
 import { partition } from "lodash-es";
 import { ts } from "ts-morph";
 
-import { IntermediateRepresentation, Name, Package } from "@fern-fern/ir-sdk/api";
+import { IntermediateRepresentation, Name, Package } from "@fern-fern/ir-sdk";
 
 export declare namespace GeneratedExpressRegisterImpl {
     export interface Init {

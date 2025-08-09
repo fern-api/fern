@@ -9,6 +9,7 @@ import {
     CoreUtilities
 } from "@fern-typescript/commons";
 import {
+    AuthProviderContext,
     EnvironmentsContext,
     GenericAPISdkErrorContext,
     JsonContext,
@@ -38,7 +39,7 @@ import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { Logger } from "@fern-api/logger";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { Constants, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { Constants, IntermediateRepresentation } from "@fern-fern/ir-sdk";
 
 import { EndpointDeclarationReferencer } from "../declaration-referencers/EndpointDeclarationReferencer";
 import { EnvironmentsDeclarationReferencer } from "../declaration-referencers/EnvironmentsDeclarationReferencer";
@@ -184,6 +185,7 @@ export class SdkContextImpl implements SdkContext {
     public readonly exportsManager: ExportsManager;
     public readonly relativePackagePath: string;
     public readonly relativeTestPath: string;
+    public readonly authProvider: AuthProviderContext;
 
     constructor({
         logger,
@@ -436,6 +438,9 @@ export class SdkContextImpl implements SdkContext {
             exportsManager,
             timeoutSdkErrorDeclarationReferencer,
             timeoutSdkErrorGenerator
+        });
+        this.authProvider = new AuthProviderContext({
+            context: this
         });
     }
     version: string | undefined;

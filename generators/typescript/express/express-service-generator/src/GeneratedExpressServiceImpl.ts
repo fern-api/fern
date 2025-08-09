@@ -17,7 +17,7 @@ import {
     JsonResponse,
     Package,
     PathParameter
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-fern/ir-sdk";
 
 export declare namespace GeneratedExpressServiceImpl {
     export interface Init {

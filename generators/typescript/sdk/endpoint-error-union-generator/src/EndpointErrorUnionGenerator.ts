@@ -2,7 +2,7 @@ import { PackageId } from "@fern-typescript/commons";
 import { GeneratedEndpointErrorUnion } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 
-import { HttpEndpoint, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, IntermediateRepresentation } from "@fern-fern/ir-sdk";
 
 import { GeneratedEndpointErrorUnionImpl } from "./GeneratedEndpointErrorUnionImpl";
 

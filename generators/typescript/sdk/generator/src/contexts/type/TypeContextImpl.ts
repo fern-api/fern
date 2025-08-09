@@ -15,7 +15,7 @@ import {
     ResolvedTypeReference,
     TypeDeclaration,
     TypeReference
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-fern/ir-sdk";
 
 import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
 
@@ -286,6 +286,11 @@ export class TypeContextImpl implements TypeContext {
             default:
                 return false;
         }
+    }
+
+    public isLiteral(typeReference: TypeReference): boolean {
+        const resolvedType = this.resolveTypeReference(typeReference);
+        return resolvedType.type === "container" && resolvedType.container.type === "literal";
     }
 
     public hasDefaultValue(typeReference: TypeReference): boolean {

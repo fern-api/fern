@@ -16,12 +16,12 @@ import {
     HttpRequestBody,
     HttpService,
     IntermediateRepresentation
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-fern/ir-sdk";
 
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams";
 import { appendPropertyToFormData } from "../endpoints/utils/appendPropertyToFormData";
-import { generateHeaders } from "../endpoints/utils/generateHeaders";
+import { generateHeaders, HEADERS_VAR_NAME } from "../endpoints/utils/generateHeaders";
 import { getParameterNameForFile } from "../endpoints/utils/getParameterNameForFile";
 import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature";
 import { FileUploadRequestParameter } from "../request-parameter/FileUploadRequestParameter";
@@ -345,6 +345,8 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
             )
         );
 
+        statements.push(...this.initializeHeaders(context));
+
         return statements;
     }
 
@@ -353,7 +355,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
     ): Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType" | "requestType" | "duplex"> {
         const queryParams = this.getQueryParams(context);
         return {
-            headers: this.getHeaders(context),
+            headers: ts.factory.createIdentifier(HEADERS_VAR_NAME),
             queryParameters: queryParams != null ? queryParams.getReferenceTo() : undefined,
             requestType: "file",
             body: context.coreUtilities.formDataUtils.getBody({
@@ -369,7 +371,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         };
     }
 
-    private getHeaders(context: SdkContext): ts.Expression {
+    private initializeHeaders(context: SdkContext): ts.Statement[] {
         return generateHeaders({
             context,
             intermediateRepresentation: this.ir,

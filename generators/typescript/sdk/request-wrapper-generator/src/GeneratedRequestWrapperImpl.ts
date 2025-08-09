@@ -35,7 +35,7 @@ import {
     PathParameter,
     QueryParameter,
     TypeReference
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-fern/ir-sdk";
 
 import { RequestWrapperExampleGenerator } from "./RequestWrapperExampleGenerator";
 import { FernIr } from "@fern-fern/ir-sdk";

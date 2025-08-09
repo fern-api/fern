@@ -1,7 +1,7 @@
 import { PackageId } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 
-import { Name, SdkRequest } from "@fern-fern/ir-sdk/api";
+import { Name, SdkRequest } from "@fern-fern/ir-sdk";
 
 import { GeneratedRequestWrapper } from "./GeneratedRequestWrapper";
 

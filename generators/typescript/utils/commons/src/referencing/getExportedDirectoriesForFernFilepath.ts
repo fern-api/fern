@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 
-import { FernFilepath, Name } from "@fern-fern/ir-sdk/api";
+import { FernFilepath, Name } from "@fern-fern/ir-sdk";
 
 import { ExportDeclaration } from "../exports-manager";
 import { ExportedDirectory } from "../exports-manager";

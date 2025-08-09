@@ -1,6 +1,5 @@
 import { ts } from "ts-morph";
 
-import { DependencyManager } from "../dependency-manager/DependencyManager";
 import { MANIFEST as Base64Manifest } from "./Base64Utils";
 import { CoreUtility } from "./CoreUtility";
 
@@ -22,6 +21,19 @@ export interface Auth {
     OAuthTokenProvider: {
         _getExpression: () => ts.Expression;
         _getReferenceToType: () => ts.TypeNode;
+    };
+
+    AuthRequest: {
+        _getReferenceToType: () => ts.TypeNode;
+        getHeaders: (instanceExpression: ts.Expression) => ts.Expression;
+    };
+
+    AbstractAuthProvider: {
+        _getReferenceToType: () => ts.TypeNode;
+        getAuthRequest: {
+            invoke: (instanceExpression: ts.Expression) => ts.Expression;
+            getReturnTypeNode: () => ts.TypeNode;
+        };
     };
 }
 
@@ -124,5 +136,46 @@ export class AuthImpl extends CoreUtility implements Auth {
             "OAuthTokenProvider",
             (OAuthTokenProvider) => () => OAuthTokenProvider.getTypeNode()
         )
+    };
+
+    public readonly AuthRequest = {
+        _getReferenceToType: this.withExportedName("AuthRequest", (AuthRequest) => () => AuthRequest.getTypeNode()),
+        getHeaders: (instanceExpression: ts.Expression): ts.Expression => {
+            return ts.factory.createAwaitExpression(
+                ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(
+                        instanceExpression,
+                        ts.factory.createIdentifier("getHeaders")
+                    ),
+                    undefined,
+                    []
+                )
+            );
+        }
+    };
+
+    public readonly AbstractAuthProvider = {
+        _getReferenceToType: this.withExportedName(
+            "AbstractAuthProvider",
+            (AbstractAuthProvider) => () => AbstractAuthProvider.getTypeNode()
+        ),
+        getAuthRequest: {
+            invoke: (instanceExpression: ts.Expression) => {
+                return ts.factory.createAwaitExpression(
+                    ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            instanceExpression,
+                            ts.factory.createIdentifier("getAuthRequest")
+                        ),
+                        undefined,
+                        []
+                    )
+                );
+            },
+            getReturnTypeNode: () =>
+                ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
+                    this.AuthRequest._getReferenceToType()
+                ])
+        }
     };
 }

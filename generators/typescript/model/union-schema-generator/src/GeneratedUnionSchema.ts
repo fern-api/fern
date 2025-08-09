@@ -3,7 +3,7 @@ import { Reference, Zurg, getPropertyKey, getTextOfTsNode } from "@fern-typescri
 import { GeneratedUnion, ModelContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, VariableDeclarationKind, ts } from "ts-morph";
 
-import { NameAndWireValue, ObjectProperty } from "@fern-fern/ir-sdk/api";
+import { NameAndWireValue, ObjectProperty } from "@fern-fern/ir-sdk";
 
 import { RawSingleUnionType } from "./RawSingleUnionType";
 

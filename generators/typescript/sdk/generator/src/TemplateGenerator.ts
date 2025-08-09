@@ -22,7 +22,7 @@ import {
     TypeReference,
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-fern/ir-sdk";
 import { FdrSnippetTemplate } from "@fern-fern/snippet-sdk";
 import { TemplateInput } from "@fern-fern/snippet-sdk/api";
 import * as FDRAPIV1Read from "@fern-fern/snippet-sdk/api/resources/api/resources/v1/resources/read";
@@ -1100,6 +1100,10 @@ export class TemplateGenerator {
                             })
                         )
                     );
+                },
+                inferred: () => {
+                    return;
+                    // TODO: Handle inferred auth scheme
                 },
                 _other: () => {
                     throw new Error("Unknown auth scheme: " + authScheme.type);

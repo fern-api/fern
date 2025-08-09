@@ -33,8 +33,8 @@
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {
+    "@fern-fern/ir-sdk": "file:/Users/niels/fern/packages/ir-sdk",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-fern/ir-sdk": "58.2.0",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
     "ts-morph": "^15.1.0"

@@ -8,7 +8,7 @@ import {
     HttpRequestBody,
     Name,
     TypeReference
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-fern/ir-sdk";
 
 export declare namespace GeneratedRequestWrapperExampleImpl {
     export interface Init {

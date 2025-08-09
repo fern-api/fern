@@ -9,7 +9,7 @@ import {
     HttpService,
     QueryParameter,
     SdkRequest
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-fern/ir-sdk";
 
 import { RequestParameter } from "./RequestParameter";
 
