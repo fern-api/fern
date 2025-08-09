@@ -1,8 +1,9 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractRustGeneratorCli, RustFile } from "@fern-api/rust-base";
 import { Module, ModuleDeclaration, UseStatement } from "@fern-api/rust-codegen";
-import { DynamicSnippetsGenerator } from "@fern-api/rust-dynamic-snippets";
+import { DynamicSnippetsGenerator, DynamicSnippetsGeneratorContext } from "@fern-api/rust-dynamic-snippets";
 import { generateModels } from "@fern-api/rust-model";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -13,6 +14,7 @@ import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { ErrorGenerator } from "./error/ErrorGenerator";
 import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
+import { convertIr, convertDynamicEndpointSnippetRequest } from "./utils";
 import { ClientConfigGenerator } from "./generators/ClientConfigGenerator";
 import { RootClientGenerator } from "./generators/RootClientGenerator";
 import { SubClientGenerator } from "./generators/SubClientGenerator";
@@ -337,10 +339,53 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     private generateSnippets(context: SdkGeneratorContext): Endpoint[] {
         const endpointSnippets: Endpoint[] = [];
 
-        try {
-            // TODO: Use DynamicSnippetsGenerator for proper snippet generation once it's stable
-            context.logger.debug("Using fallback snippet generation for Rust snippets");
+        const dynamicIr = context.ir.dynamic;
+        if (dynamicIr == null) {
+            context.logger.warn("Cannot generate dynamic snippets without dynamic IR - falling back to basic snippets");
+            return this.generateBasicSnippets(context);
+        }
 
+        try {
+            context.logger.info("Using DynamicSnippetsGenerator for Rust snippet generation");
+            
+            const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
+                ir: convertIr(dynamicIr),
+                config: context.config
+            });
+
+            for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
+                const path = FernGeneratorExec.EndpointPath(endpoint.location.path);
+                for (const endpointExample of endpoint.examples ?? []) {
+                    endpointSnippets.push({
+                        exampleIdentifier: endpointExample.id,
+                        id: {
+                            method: endpoint.location.method,
+                            path,
+                            identifierOverride: endpointId
+                        },
+                        snippet: {
+                            type: "rust",
+                            client: dynamicSnippetsGenerator.generateSync(
+                                convertDynamicEndpointSnippetRequest(endpointExample)
+                            ).snippet
+                        } as any
+                    });
+                }
+            }
+
+            context.logger.info(`Generated ${endpointSnippets.length} dynamic snippets`);
+            return endpointSnippets;
+        } catch (error) {
+            context.logger.error(`Failed to generate dynamic snippets: ${error}`);
+            context.logger.info("Falling back to basic snippet generation");
+            return this.generateBasicSnippets(context);
+        }
+    }
+
+    private generateBasicSnippets(context: SdkGeneratorContext): Endpoint[] {
+        const endpointSnippets: Endpoint[] = [];
+
+        try {
             // Generate basic snippets for each endpoint
             const services = Object.values(context.ir.services);
             for (const service of services) {
@@ -427,6 +472,8 @@ async fn main() {
             .replace(/^_/, "")
             .replace(/-/g, "_");
     }
+
+
 
     // ===========================
     // UTILITY METHODS
