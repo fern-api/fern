@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use std::fmt;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub enum SingleFilterSearchRequestOperator {
@@ -22,4 +23,21 @@ pub enum SingleFilterSearchRequestOperator {
     StartsWith,
     #[serde(rename = "$")]
     EndsWith,
+}
+impl fmt::Display for SingleFilterSearchRequestOperator {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let s = match self {
+            Self::Equals => "=",
+            Self::NotEquals => "!=",
+            Self::In => "IN",
+            Self::NotIn => "NIN",
+            Self::LessThan => "<",
+            Self::GreaterThan => ">",
+            Self::Contains => "~",
+            Self::DoesNotContain => "!~",
+            Self::StartsWith => "^",
+            Self::EndsWith => "$",
+        };
+        write!(f, "{}", s)
+    }
 }

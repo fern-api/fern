@@ -1,5 +1,5 @@
 use crate::name::Name;
-use chrono::{DateTime, Utc};
+use chrono::{DateTime, NaiveDate, Utc};
 use std::collections::HashMap;
 use uuid::Uuid;
 use serde_json::Value;
@@ -14,7 +14,6 @@ pub struct Type {
     pub five: i64,
     #[serde(with = "chrono::serde::ts_seconds")]
     pub six: chrono::DateTime<chrono::Utc>,
-    #[serde(with = "chrono::serde::ts_seconds")]
     pub seven: chrono::NaiveDate,
     pub eight: uuid::Uuid,
     pub nine: String,
@@ -33,10 +32,9 @@ pub struct Type {
     pub twentyone: u64,
     pub twentytwo: f32,
     pub twentythree: num_bigint::BigInt,
-    #[serde(with = "chrono::serde::ts_seconds")]
+    #[serde(with = "chrono::serde::ts_seconds_option")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub twentyfour: Option<chrono::DateTime<chrono::Utc>>,
-    #[serde(with = "chrono::serde::ts_seconds")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub twentyfive: Option<chrono::NaiveDate>,
 }

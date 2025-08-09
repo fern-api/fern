@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use std::fmt;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub enum SpecialEnum {
@@ -66,4 +67,43 @@ pub enum SpecialEnum {
     Ff,
     #[serde(rename = "transcript[transcriptType='final']")]
     Gg,
+}
+impl fmt::Display for SpecialEnum {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let s = match self {
+            Self::A => "",
+            Self::B => "Hello \"World\"",
+            Self::C => "Hello 'World'",
+            Self::D => "Hello\\World",
+            Self::E => "Hello\nWorld",
+            Self::F => "Hello\rWorld",
+            Self::H => "Hello\tWorld",
+            Self::I => "Hello\fWorld",
+            Self::J => "Hello\u0008World",
+            Self::K => "Hello\vWorld",
+            Self::L => "Hello\x00World",
+            Self::M => "Hello\u0007World",
+            Self::N => "Hello\u0001World",
+            Self::O => "Hello\u0002World",
+            Self::P => "Hello\u001FWorld",
+            Self::Q => "Hello\u007FWorld",
+            Self::R => "Hello\u009FWorld",
+            Self::S => "Line 1\n"Quote"\tTab\\Backslash\r\nLine 2\0Null",
+            Self::T => "\n\r\t\x00\u0008\f\v\u0007",
+            Self::U => "Hello 世界",
+            Self::V => "café",
+            Self::W => "🚀",
+            Self::X => "\\n",
+            Self::Y => "\\",
+            Self::Z => "{"name": "John", "age": 30, "city": "New York"}",
+            Self::Aa => "SELECT * FROM users WHERE name = 'John O\\'Reilly'",
+            Self::Bb => "C:\\Users\\John\\Documents\\file.txt",
+            Self::Cc => "/usr/local/bin/app",
+            Self::Dd => "\\d{3}-\\d{2}-\\d{4}",
+            Self::Ee => "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}",
+            Self::Ff => "transcript[transcriptType="final"]",
+            Self::Gg => "transcript[transcriptType='final']",
+        };
+        write!(f, "{}", s)
+    }
 }

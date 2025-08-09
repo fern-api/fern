@@ -7,6 +7,8 @@ import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration, TypeReference }
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference";
 import {
     isDateTimeType,
+    isDateType,
+    isDateTimeOnlyType,
     isUuidType,
     isCollectionType,
     isUnknownType,
@@ -80,7 +82,7 @@ export class StructGenerator {
 
         // Add chrono if we have datetime fields
         if (this.hasDateTimeFields()) {
-            writer.writeLine("use chrono::{DateTime, Utc};");
+            writer.writeLine("use chrono::{DateTime, NaiveDate, Utc};");
         }
 
         // Add std::collections if we have maps or sets
@@ -183,12 +185,23 @@ export class StructGenerator {
         }
 
         // Add special serde handling for datetime fields
-        if (this.isDateTimeProperty(property)) {
-            attributes.push(Attribute.serde.with("chrono::serde::ts_seconds"));
+        const isOptional = isOptionalType(property.valueType);
+        const innerType = isOptional ? getInnerTypeFromOptional(property.valueType) : property.valueType;
+
+        if (isDateTimeOnlyType(innerType)) {
+            // DateTime<Utc> fields need chrono serializers
+            if (isOptional) {
+                // Optional DateTime<Utc> needs ts_seconds_option
+                attributes.push(Attribute.serde.with("chrono::serde::ts_seconds_option"));
+            } else {
+                // Non-optional DateTime<Utc> needs ts_seconds
+                attributes.push(Attribute.serde.with("chrono::serde::ts_seconds"));
+            }
         }
+        // Note: NaiveDate (date type) fields don't need any special serializer
 
         // Add skip_serializing_if for optional fields to omit null values
-        if (isOptionalType(property.valueType)) {
+        if (isOptional) {
             attributes.push(Attribute.serde.skipSerializingIf('"Option::is_none"'));
         }
 

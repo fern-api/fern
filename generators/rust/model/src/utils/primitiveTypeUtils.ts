@@ -27,6 +27,52 @@ export function isDateTimeType(typeRef: TypeReference): boolean {
     });
 }
 
+export function isDateType(typeRef: TypeReference): boolean {
+    if (typeRef.type !== "primitive") {
+        return false;
+    }
+
+    return PrimitiveTypeV1._visit(typeRef.primitive.v1, {
+        string: () => false,
+        boolean: () => false,
+        integer: () => false,
+        uint: () => false,
+        uint64: () => false,
+        long: () => false,
+        float: () => false,
+        double: () => false,
+        bigInteger: () => false,
+        date: () => true,
+        dateTime: () => false,
+        base64: () => false,
+        uuid: () => false,
+        _other: () => false
+    });
+}
+
+export function isDateTimeOnlyType(typeRef: TypeReference): boolean {
+    if (typeRef.type !== "primitive") {
+        return false;
+    }
+
+    return PrimitiveTypeV1._visit(typeRef.primitive.v1, {
+        string: () => false,
+        boolean: () => false,
+        integer: () => false,
+        uint: () => false,
+        uint64: () => false,
+        long: () => false,
+        float: () => false,
+        double: () => false,
+        bigInteger: () => false,
+        date: () => false,
+        dateTime: () => true,
+        base64: () => false,
+        uuid: () => false,
+        _other: () => false
+    });
+}
+
 export function isUuidType(typeRef: TypeReference): boolean {
     if (typeRef.type !== "primitive") {
         return false;
