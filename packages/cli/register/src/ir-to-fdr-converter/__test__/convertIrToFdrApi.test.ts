@@ -83,7 +83,8 @@ describe("fdr", async () => {
                 },
                 playgroundConfig: {
                     oauth: true
-                }
+                },
+                context: createMockTaskContext()
             });
 
             it(workspace.workspaceName ?? "", () => {
@@ -147,7 +148,8 @@ describe("oas-ir-fdr", async () => {
                     },
                     playgroundConfig: {
                         oauth: true
-                    }
+                    },
+                    context: createMockTaskContext()
                 });
 
                 await expect(JSON.stringify(fdr, undefined, 2)).toMatchFileSnapshot(

@@ -3,6 +3,7 @@ import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { convertIrToFdrApi } from "@fern-api/register";
 
 import { PlaygroundConfig } from "../DocsDefinitionResolver";
+import { TaskContext } from "@fern-api/task-context";
 
 const EMPTY_SNIPPET_HOLDER = new SDKSnippetHolder({
     snippetsBySdkId: {},
@@ -12,11 +13,17 @@ const EMPTY_SNIPPET_HOLDER = new SDKSnippetHolder({
     snippetTemplatesByEndpointId: {}
 });
 
-export function convertIrToApiDefinition(
-    ir: IntermediateRepresentation,
-    apiDefinitionId: string,
-    playgroundConfig?: PlaygroundConfig
-): APIV1Read.ApiDefinition {
+export function convertIrToApiDefinition({
+    ir,
+    apiDefinitionId,
+    playgroundConfig,
+    context
+}: {
+    ir: IntermediateRepresentation;
+    apiDefinitionId: string;
+    playgroundConfig?: PlaygroundConfig;
+    context: TaskContext;
+}): APIV1Read.ApiDefinition {
     // the navigation constructor doesn't need to know about snippets, so we can pass an empty object
     return convertDbAPIDefinitionToRead(
         convertAPIDefinitionToDb(
@@ -30,7 +37,8 @@ export function convertIrToApiDefinition(
                     goSdk: undefined,
                     csharpSdk: undefined
                 },
-                playgroundConfig
+                playgroundConfig,
+                context
             }),
             APIV1Read.ApiDefinitionId(apiDefinitionId),
             EMPTY_SNIPPET_HOLDER
