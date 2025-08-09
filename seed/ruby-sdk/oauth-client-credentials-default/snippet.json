@@ -21,6 +21,116 @@
                 "client": "require \"fern_oauth_client_credentials_default\"\n\noauth_client_credentials_default = SeedOauthClientCredentialsDefaultClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials_default.auth.get_token(client_id: \"client_id\", client_secret: \"client_secret\")",
                 "type": "ruby"
             }
+        },
+        {
+            "id": {
+                "path": "/nested-no-auth/get-something",
+                "method": "GET",
+                "identifierOverride": "endpoint_nested-no-auth/api.getSomething"
+            },
+            "snippet": {
+                "client": "require \"fern_oauth_client_credentials_default\"\n\noauth_client_credentials_default = SeedOauthClientCredentialsDefaultClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials_default.nested_no_auth.api.get_something",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/nested-no-auth/get-something",
+                "method": "GET",
+                "identifierOverride": "endpoint_nested-no-auth/api.getSomething"
+            },
+            "snippet": {
+                "client": "require \"fern_oauth_client_credentials_default\"\n\noauth_client_credentials_default = SeedOauthClientCredentialsDefaultClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials_default.nested_no_auth.api.get_something",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/nested-no-auth/get-something",
+                "method": "GET",
+                "identifierOverride": "endpoint_nested-no-auth/api.getSomething"
+            },
+            "snippet": {
+                "client": "require \"fern_oauth_client_credentials_default\"\n\noauth_client_credentials_default = SeedOauthClientCredentialsDefaultClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials_default.nested_no_auth.api.get_something",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/nested-no-auth/get-something",
+                "method": "GET",
+                "identifierOverride": "endpoint_nested-no-auth/api.getSomething"
+            },
+            "snippet": {
+                "client": "require \"fern_oauth_client_credentials_default\"\n\noauth_client_credentials_default = SeedOauthClientCredentialsDefaultClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials_default.nested_no_auth.api.get_something",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/nested/get-something",
+                "method": "GET",
+                "identifierOverride": "endpoint_nested/api.getSomething"
+            },
+            "snippet": {
+                "client": "require \"fern_oauth_client_credentials_default\"\n\noauth_client_credentials_default = SeedOauthClientCredentialsDefaultClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials_default.nested.api.get_something",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/nested/get-something",
+                "method": "GET",
+                "identifierOverride": "endpoint_nested/api.getSomething"
+            },
+            "snippet": {
+                "client": "require \"fern_oauth_client_credentials_default\"\n\noauth_client_credentials_default = SeedOauthClientCredentialsDefaultClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials_default.nested.api.get_something",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/nested/get-something",
+                "method": "GET",
+                "identifierOverride": "endpoint_nested/api.getSomething"
+            },
+            "snippet": {
+                "client": "require \"fern_oauth_client_credentials_default\"\n\noauth_client_credentials_default = SeedOauthClientCredentialsDefaultClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials_default.nested.api.get_something",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/nested/get-something",
+                "method": "GET",
+                "identifierOverride": "endpoint_nested/api.getSomething"
+            },
+            "snippet": {
+                "client": "require \"fern_oauth_client_credentials_default\"\n\noauth_client_credentials_default = SeedOauthClientCredentialsDefaultClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials_default.nested.api.get_something",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/get-something",
+                "method": "GET",
+                "identifierOverride": "endpoint_simple.getSomething"
+            },
+            "snippet": {
+                "client": "require \"fern_oauth_client_credentials_default\"\n\noauth_client_credentials_default = SeedOauthClientCredentialsDefaultClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials_default.simple.get_something",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/get-something",
+                "method": "GET",
+                "identifierOverride": "endpoint_simple.getSomething"
+            },
+            "snippet": {
+                "client": "require \"fern_oauth_client_credentials_default\"\n\noauth_client_credentials_default = SeedOauthClientCredentialsDefaultClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials_default.simple.get_something",
+                "type": "ruby"
+            }
         }
     ],
     "types": {}
