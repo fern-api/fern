@@ -171,6 +171,58 @@ client.auth().refreshToken(
 </dl>
 </details>
 
+## NestedNoAuth Api
+<details><summary><code>client.nestedNoAuth.api.getSomething()</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.nestedNoAuth().api().getSomething();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Nested Api
+<details><summary><code>client.nested.api.getSomething()</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.nested().api().getSomething();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Service
 <details><summary><code>client.service.post(endpointParam)</code></summary>
 <dl>
@@ -202,6 +254,32 @@ client.service().post("endpointParam");
 
 **endpointParam:** `String` 
     
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Simple
+<details><summary><code>client.simple.getSomething()</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.simple().getSomething();
+```
 </dd>
 </dl>
 </dd>

@@ -25,6 +25,45 @@
                 "sync_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentialsEnvironmentVariables.SeedOauthClientCredentialsEnvironmentVariablesClient;\nimport com.seed.oauthClientCredentialsEnvironmentVariables.resources.auth.requests.RefreshTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsEnvironmentVariablesClient client = SeedOauthClientCredentialsEnvironmentVariablesClient\n            .builder()\n            .clientId(\"<clientId>\")\n            .clientSecret(\"<clientSecret>\")\n            .build();\n\n        client.auth().refreshToken(\n            RefreshTokenRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .refreshToken(\"refresh_token\")\n                .audience(\"https://api.example.com\")\n                .grantType(\"refresh_token\")\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n",
                 "async_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentialsEnvironmentVariables.SeedOauthClientCredentialsEnvironmentVariablesClient;\nimport com.seed.oauthClientCredentialsEnvironmentVariables.resources.auth.requests.RefreshTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsEnvironmentVariablesClient client = SeedOauthClientCredentialsEnvironmentVariablesClient\n            .builder()\n            .clientId(\"<clientId>\")\n            .clientSecret(\"<clientSecret>\")\n            .build();\n\n        client.auth().refreshToken(\n            RefreshTokenRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .refreshToken(\"refresh_token\")\n                .audience(\"https://api.example.com\")\n                .grantType(\"refresh_token\")\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n"
             }
+        },
+        {
+            "example_identifier": "82444d62",
+            "id": {
+                "method": "GET",
+                "path": "/nested-no-auth/get-something",
+                "identifier_override": "endpoint_nested-no-auth/api.getSomething"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentialsEnvironmentVariables.SeedOauthClientCredentialsEnvironmentVariablesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsEnvironmentVariablesClient client = SeedOauthClientCredentialsEnvironmentVariablesClient\n            .builder()\n            .clientId(\"<clientId>\")\n            .clientSecret(\"<clientSecret>\")\n            .build();\n\n        client.nestedNoAuth().api().getSomething();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentialsEnvironmentVariables.SeedOauthClientCredentialsEnvironmentVariablesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsEnvironmentVariablesClient client = SeedOauthClientCredentialsEnvironmentVariablesClient\n            .builder()\n            .clientId(\"<clientId>\")\n            .clientSecret(\"<clientSecret>\")\n            .build();\n\n        client.nestedNoAuth().api().getSomething();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "82444d62",
+            "id": {
+                "method": "GET",
+                "path": "/nested/get-something",
+                "identifier_override": "endpoint_nested/api.getSomething"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentialsEnvironmentVariables.SeedOauthClientCredentialsEnvironmentVariablesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsEnvironmentVariablesClient client = SeedOauthClientCredentialsEnvironmentVariablesClient\n            .builder()\n            .clientId(\"<clientId>\")\n            .clientSecret(\"<clientSecret>\")\n            .build();\n\n        client.nested().api().getSomething();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentialsEnvironmentVariables.SeedOauthClientCredentialsEnvironmentVariablesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsEnvironmentVariablesClient client = SeedOauthClientCredentialsEnvironmentVariablesClient\n            .builder()\n            .clientId(\"<clientId>\")\n            .clientSecret(\"<clientSecret>\")\n            .build();\n\n        client.nested().api().getSomething();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "82444d62",
+            "id": {
+                "method": "GET",
+                "path": "/get-something",
+                "identifier_override": "endpoint_simple.getSomething"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentialsEnvironmentVariables.SeedOauthClientCredentialsEnvironmentVariablesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsEnvironmentVariablesClient client = SeedOauthClientCredentialsEnvironmentVariablesClient\n            .builder()\n            .clientId(\"<clientId>\")\n            .clientSecret(\"<clientSecret>\")\n            .build();\n\n        client.simple().getSomething();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentialsEnvironmentVariables.SeedOauthClientCredentialsEnvironmentVariablesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsEnvironmentVariablesClient client = SeedOauthClientCredentialsEnvironmentVariablesClient\n            .builder()\n            .clientId(\"<clientId>\")\n            .clientSecret(\"<clientSecret>\")\n            .build();\n\n        client.simple().getSomething();\n    }\n}\n"
+            }
         }
     ],
     "types": {}
