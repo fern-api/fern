@@ -1,4 +1,6 @@
 using SeedOauthClientCredentialsEnvironmentVariables.Core;
+using SeedOauthClientCredentialsEnvironmentVariables.Nested;
+using SeedOauthClientCredentialsEnvironmentVariables.NestedNoAuth;
 
 namespace SeedOauthClientCredentialsEnvironmentVariables;
 
@@ -47,9 +49,18 @@ public partial class SeedOauthClientCredentialsEnvironmentVariablesClient
         );
         _client = new RawClient(clientOptions);
         Auth = new AuthClient(_client);
+        NestedNoAuth = new NestedNoAuthClient(_client);
+        Nested = new NestedClient(_client);
+        Simple = new SimpleClient(_client);
     }
 
     public AuthClient Auth { get; }
+
+    public NestedNoAuthClient NestedNoAuth { get; }
+
+    public NestedClient Nested { get; }
+
+    public SimpleClient Simple { get; }
 
     private static string GetFromEnvironmentOrThrow(string env, string message)
     {
