@@ -1,6 +1,6 @@
 {
   "info": {
-    "name": "Oauth Client Credentials",
+    "name": "Inferred Auth Explicit",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "description": null
   },
@@ -9,23 +9,9 @@
       "key": "baseUrl",
       "value": "",
       "type": "string"
-    },
-    {
-      "key": "token",
-      "value": "",
-      "type": "string"
     }
   ],
-  "auth": {
-    "type": "bearer",
-    "bearer": [
-      {
-        "key": "token",
-        "value": "{{token}}",
-        "type": "string"
-      }
-    ]
-  },
+  "auth": null,
   "item": [
     {
       "_type": "container",
@@ -116,12 +102,13 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/token",
+              "raw": "{{baseUrl}}/token/refresh",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
-                "token"
+                "token",
+                "refresh"
               ],
               "query": [],
               "variable": []
@@ -153,12 +140,13 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/token",
+                  "raw": "{{baseUrl}}/token/refresh",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
-                    "token"
+                    "token",
+                    "refresh"
                   ],
                   "query": [],
                   "variable": []
