@@ -896,7 +896,7 @@ export class DocsDefinitionResolver {
             playgroundConfig: { oauth: item.playground?.oauth },
             apiName: item.apiName
         });
-        const api = convertIrToApiDefinition(ir, apiDefinitionId, { oauth: item.playground?.oauth });
+        const api = convertIrToApiDefinition({ ir, apiDefinitionId, playgroundConfig: { oauth: item.playground?.oauth }, context: this.taskContext });
 
         const node = new ApiReferenceNodeConverter(
             item,

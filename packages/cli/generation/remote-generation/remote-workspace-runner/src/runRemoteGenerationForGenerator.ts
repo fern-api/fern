@@ -98,7 +98,8 @@ export async function runRemoteGenerationForGenerator({
             rubySdk: undefined,
             goSdk: undefined,
             csharpSdk: undefined
-        }
+        },
+        context: interactiveTaskContext,
     });
     const response = await fdr.api.v1.register.registerApiDefinition({
         orgId: FdrAPI.OrgId(organization),
