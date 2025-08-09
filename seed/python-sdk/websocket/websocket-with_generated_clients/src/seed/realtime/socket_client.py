@@ -8,6 +8,9 @@ import websockets
 import websockets.sync.connection as websockets_sync_connection
 from ..core.events import EventEmitterMixin, EventType
 from ..core.pydantic_utilities import parse_obj_as
+from .types.address import Address
+from .types.animal import Animal
+from .types.person import Person
 from .types.receive_event import ReceiveEvent
 from .types.receive_event_2 import ReceiveEvent2
 from .types.receive_event_3 import ReceiveEvent3
@@ -54,26 +57,64 @@ class AsyncRealtimeSocketClient(EventEmitterMixin):
         finally:
             await self._emit_async(EventType.CLOSE, None)
 
-    async def send_send(self, message: SendEvent) -> None:
+    async def send_send(self, *, send_text: str, send_param: int) -> None:
         """
         Send a message to the websocket connection.
-        The message will be sent as a SendEvent.
+
+        Parameters
+        ----------
+        send_text : str
+
+        send_param : int
         """
+        message = SendEvent(send_text=send_text, send_param=send_param, send_version="v1")
         await self._send_model(message)
 
-    async def send_send_snake_case(self, message: SendSnakeCase) -> None:
+    async def send_send_snake_case(self, *, send_text: str, send_param: int) -> None:
         """
         Send a message to the websocket connection.
-        The message will be sent as a SendSnakeCase.
+
+        Parameters
+        ----------
+        send_text : str
+
+        send_param : int
         """
+        message = SendSnakeCase(send_text=send_text, send_param=send_param)
         await self._send_model(message)
 
-    async def send_send_2(self, message: SendEvent2) -> None:
+    async def send_send_2(self, *, send_text_2: str, send_param_2: bool) -> None:
         """
         Send a message to the websocket connection.
-        The message will be sent as a SendEvent2.
+
+        Parameters
+        ----------
+        send_text_2 : str
+
+        send_param_2 : bool
         """
+        message = SendEvent2(send_text_2=send_text_2, send_param_2=send_param_2)
         await self._send_model(message)
+
+    async def send_person(self, *, name: str, address: Address) -> None:
+        """
+        Send a message to the websocket connection.
+
+        Parameters
+        ----------
+        name : str
+
+        address : Address
+        """
+        message = Person(name=name, address=address)
+        await self._send_model(message)
+
+    async def send_animal(self, animal: Animal) -> None:
+        """
+        Send a message to the websocket connection.
+        The message will be sent as a Animal.
+        """
+        await self._send_model(animal)
 
     async def recv(self) -> RealtimeSocketClientResponse:
         """
@@ -128,26 +169,64 @@ class RealtimeSocketClient(EventEmitterMixin):
         finally:
             self._emit(EventType.CLOSE, None)
 
-    def send_send(self, message: SendEvent) -> None:
+    def send_send(self, *, send_text: str, send_param: int) -> None:
         """
         Send a message to the websocket connection.
-        The message will be sent as a SendEvent.
+
+        Parameters
+        ----------
+        send_text : str
+
+        send_param : int
         """
+        message = SendEvent(send_text=send_text, send_param=send_param, send_version="v1")
         self._send_model(message)
 
-    def send_send_snake_case(self, message: SendSnakeCase) -> None:
+    def send_send_snake_case(self, *, send_text: str, send_param: int) -> None:
         """
         Send a message to the websocket connection.
-        The message will be sent as a SendSnakeCase.
+
+        Parameters
+        ----------
+        send_text : str
+
+        send_param : int
         """
+        message = SendSnakeCase(send_text=send_text, send_param=send_param)
         self._send_model(message)
 
-    def send_send_2(self, message: SendEvent2) -> None:
+    def send_send_2(self, *, send_text_2: str, send_param_2: bool) -> None:
         """
         Send a message to the websocket connection.
-        The message will be sent as a SendEvent2.
+
+        Parameters
+        ----------
+        send_text_2 : str
+
+        send_param_2 : bool
         """
+        message = SendEvent2(send_text_2=send_text_2, send_param_2=send_param_2)
         self._send_model(message)
+
+    def send_person(self, *, name: str, address: Address) -> None:
+        """
+        Send a message to the websocket connection.
+
+        Parameters
+        ----------
+        name : str
+
+        address : Address
+        """
+        message = Person(name=name, address=address)
+        self._send_model(message)
+
+    def send_animal(self, animal: Animal) -> None:
+        """
+        Send a message to the websocket connection.
+        The message will be sent as a Animal.
+        """
+        self._send_model(animal)
 
     def recv(self) -> RealtimeSocketClientResponse:
         """

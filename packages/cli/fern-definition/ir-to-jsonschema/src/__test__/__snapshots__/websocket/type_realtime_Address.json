@@ -1,20 +1,20 @@
 {
   "type": "object",
   "properties": {
-    "sendText": {
+    "line1": {
       "type": "string"
     },
-    "sendParam": {
-      "type": "integer"
+    "city": {
+      "type": "string"
     },
-    "sendVersion": {
-      "const": "v1"
+    "zip": {
+      "type": "string"
     }
   },
   "required": [
-    "sendText",
-    "sendParam",
-    "sendVersion"
+    "line1",
+    "city",
+    "zip"
   ],
   "additionalProperties": false,
   "definitions": {}
