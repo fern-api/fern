@@ -1,0 +1,27 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/users/{id}",
+                "method": "GET",
+                "identifierOverride": "endpoint_user.get"
+            },
+            "snippet": {
+                "client": "require \"fern_simple_api\"\n\nsimple_api = SeedSimpleApiClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nsimple_api.user.get(id: \"id\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users/{id}",
+                "method": "GET",
+                "identifierOverride": "endpoint_user.get"
+            },
+            "snippet": {
+                "client": "require \"fern_simple_api\"\n\nsimple_api = SeedSimpleApiClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nsimple_api.user.get(id: \"id\")",
+                "type": "ruby"
+            }
+        }
+    ],
+    "types": {}
+}
