@@ -4,9 +4,9 @@
     - summary: Add support for generating inferred auth in IR and expand bearer auth in Fern Definition for inference.
       type: feat
   irVersion: 59
-  createdAt: "2025-08-07"
+  createdAt: "2025-08-08"
   version: 0.66.00
-  
+
 - changelogEntry:
     - summary: |
         Handle end of line comments in .fernignore
