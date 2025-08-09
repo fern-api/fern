@@ -1,11 +1,11 @@
 openapi: 3.0.1
 info:
-  title: oauth-client-credentials
+  title: inferred-auth-explicit
   version: ''
 paths:
   /token:
     post:
-      operationId: auth_getToken
+      operationId: auth_getTokenWithClientCredentials
       tags:
         - Auth
       parameters: []
@@ -15,7 +15,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/authTokenResponse'
+                $ref: '#/components/schemas/TokenResponse'
       requestBody:
         required: true
         content:
@@ -41,6 +41,47 @@ paths:
                 - client_secret
                 - audience
                 - grant_type
+  /token/refresh:
+    post:
+      operationId: auth_refreshToken
+      tags:
+        - Auth
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: string
+                client_secret:
+                  type: string
+                refresh_token:
+                  type: string
+                audience:
+                  type: string
+                  const: https://api.example.com
+                grant_type:
+                  type: string
+                  const: refresh_token
+                scope:
+                  type: string
+                  nullable: true
+              required:
+                - client_id
+                - client_secret
+                - refresh_token
+                - audience
+                - grant_type
   /nested-no-auth/get-something:
     get:
       operationId: nestedNoAuth_api_getSomething
@@ -60,7 +101,7 @@ paths:
         '204':
           description: ''
       security:
-        - BearerAuth: []
+        - {}
   /get-something:
     get:
       operationId: simple_getSomething
@@ -71,11 +112,11 @@ paths:
         '204':
           description: ''
       security:
-        - BearerAuth: []
+        - {}
 components:
   schemas:
-    authTokenResponse:
-      title: authTokenResponse
+    TokenResponse:
+      title: TokenResponse
       type: object
       description: An OAuth token response.
       properties:
@@ -89,7 +130,4 @@ components:
       required:
         - access_token
         - expires_in
-  securitySchemes:
-    BearerAuth:
-      type: http
-      scheme: bearer
+  securitySchemes: {}
