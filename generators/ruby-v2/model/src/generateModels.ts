@@ -1,5 +1,6 @@
 import { RubyFile } from "@fern-api/ruby-base";
 
+import { EnumGenerator } from "./enum/EnumGenerator";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { ObjectGenerator } from "./object/ObjectGenerator";
 
@@ -9,8 +10,7 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
         const file = typeDeclaration.shape._visit<RubyFile | undefined>({
             alias: () => undefined,
             enum: (etd) => {
-                return undefined;
-                // return new EnumGenerator(context, typeDeclaration, etd).generate();
+                return new EnumGenerator(context, typeDeclaration, etd).generate();
             },
             object: (otd) => {
                 return new ObjectGenerator(context, typeDeclaration, otd).generate();

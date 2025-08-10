@@ -19,12 +19,10 @@ import {
 
 export {
     ClassInstantiation,
-    ClassReference,
-    CodeBlock,
+    ClassReference, Class_, CodeBlock,
     KeywordArgument,
     Method,
-    MethodInvocation,
-    Parameter,
+    MethodInvocation, Module_, Parameter,
     TypeLiteral,
     TypeParameter
 } from "./ast";

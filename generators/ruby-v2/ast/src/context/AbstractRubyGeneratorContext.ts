@@ -8,8 +8,8 @@ import { IntermediateRepresentation, TypeDeclaration, TypeId } from "@fern-fern/
 import { BaseRubyCustomConfigSchema } from "../custom-config/BaseRubyCustomConfigSchema";
 
 import { RelativeFilePath } from "@fern-api/path-utils";
-import { snakeCase } from "lodash-es";
-import { Module_ } from "../ast/Module";
+import { capitalize, snakeCase } from "lodash-es";
+import * as ruby from "../ruby";
 
 export abstract class AbstractRubyGeneratorContext<
     CustomConfig extends BaseRubyCustomConfigSchema
@@ -44,15 +44,15 @@ export abstract class AbstractRubyGeneratorContext<
         return this.customConfig.module ?? snakeCase(this.config.organization);
     }
 
-    public getRootModule(): Module_ {
-        return new Module_({
-            name: this.getRootFolderName(),
+    public getRootModule(): ruby.Module_ {
+        return ruby.module({
+            name: capitalize(this.getRootFolderName()),
             statements: []
         });
     }
 
-    public getTypesModule(): Module_ {
-        return new Module_({
+    public getTypesModule(): ruby.Module_ {
+        return ruby.module({
             name: "Types",
             statements: []
         });
