@@ -9,5 +9,5 @@
 export interface CratesOutputLocationSchema {
     url?: string;
     "package-name": string;
-    "api-key"?: string;
+    token?: string;
 }

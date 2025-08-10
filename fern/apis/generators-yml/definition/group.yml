@@ -189,4 +189,4 @@ types:
     properties:
       url: optional<string>
       package-name: string
-      api-key: optional<string>
+      token: optional<string>

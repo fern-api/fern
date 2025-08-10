@@ -12,13 +12,13 @@ export const CratesOutputLocationSchema: core.serialization.ObjectSchema<
 > = core.serialization.object({
     url: core.serialization.string().optional(),
     "package-name": core.serialization.string(),
-    "api-key": core.serialization.string().optional(),
+    token: core.serialization.string().optional(),
 });
 
 export declare namespace CratesOutputLocationSchema {
     export interface Raw {
         url?: string | null;
         "package-name": string;
-        "api-key"?: string | null;
+        token?: string | null;
     }
 }
