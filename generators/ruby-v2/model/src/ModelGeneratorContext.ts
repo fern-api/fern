@@ -1,4 +1,4 @@
-import { AbstractFormatter, FernGeneratorExec, GeneratorNotificationService  } from "@fern-api/base-generator";
+import { AbstractFormatter, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractRubyGeneratorContext } from "@fern-api/ruby-ast";
 import { AsIsFiles } from "@fern-api/ruby-base";
 import { RelativeFilePath } from "@fern-api/fs-utils";
@@ -6,7 +6,6 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 
 export class ModelGeneratorContext extends AbstractRubyGeneratorContext<ModelCustomConfigSchema> {
-
     public getCoreAsIsFiles(): string[] {
         const files = [
             // Errors
