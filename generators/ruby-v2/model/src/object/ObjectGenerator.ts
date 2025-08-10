@@ -1,14 +1,16 @@
-import { RelativeFilePath, join } from "@fern-api/fs-utils";
-import { RubyFile, FileGenerator } from "@fern-api/ruby-base";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
-import { NameAndWireValue, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
+import { ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { generateFields } from "../generateFields";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { generateFields } from "../generateFields";
 
 export interface GeneratorContextLike {
     customConfig: unknown;
 }
+
+const TYPES_MODULE_NAME = "Types";
 
 export class ObjectGenerator extends FileGenerator<RubyFile, ModelCustomConfigSchema, ModelGeneratorContext> {
     private readonly typeDeclaration: TypeDeclaration;
@@ -25,26 +27,19 @@ export class ObjectGenerator extends FileGenerator<RubyFile, ModelCustomConfigSc
     }
 
     protected getFilepath(): RelativeFilePath {
-        return RelativeFilePath.of("lib");
+        return this.context.getLocationForTypeId(this.typeDeclaration.name.typeId);
     }
 
     public doGenerate(): RubyFile {
-        // Extract properties from the object declaration
         const properties = this.objectDeclaration.properties || [];
 
-        // Generate field declarations using the helper function
         const statements = generateFields({
             properties,
             context: this.context
         });
 
-        // Get module names from IR data or config
-        const fernFilepath = this.typeDeclaration.name.fernFilepath;
-        const clientModuleName =
-            this.context.customConfig.clientModuleName || fernFilepath.allParts[0]?.pascalCase.safeName || "Api";
-        const typesModuleName = this.context.customConfig.typesModuleName || "Types";
+        const clientModuleName = this.context.customConfig.module || "Api";
 
-        // Create the class with hardcoded superclass
         const classNode = ruby.class_({
             name: this.typeDeclaration.name.name.pascalCase.safeName,
             superclass: ruby.classReference({
@@ -55,22 +50,18 @@ export class ObjectGenerator extends FileGenerator<RubyFile, ModelCustomConfigSc
             statements: statements
         });
 
-        // Create the Types module
         const typesModule = ruby.module({
-            name: typesModuleName,
+            name: TYPES_MODULE_NAME,
             statements: [classNode]
         });
 
-        // Create the client module
         const clientModule = ruby.module({
             name: clientModuleName,
             statements: [typesModule]
         });
 
-        // Create a comment node for frozen_string_literal
         const frozenComment = ruby.comment({ docs: "frozen_string_literal: true" });
 
-        // Combine comment and module
         const fileContent = ruby.codeblock((writer) => {
             frozenComment.write(writer);
             writer.newLine();

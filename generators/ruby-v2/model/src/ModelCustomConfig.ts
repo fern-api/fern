@@ -1,8 +1,5 @@
-import { z } from "zod";
+import { BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
 
-export const ModelCustomConfigSchema = z.object({
-    clientModuleName: z.optional(z.string()),
-    typesModuleName: z.optional(z.string()).default("Types")
-});
+export const ModelCustomConfigSchema: typeof BaseRubyCustomConfigSchema = BaseRubyCustomConfigSchema;
 
-export type ModelCustomConfigSchema = z.infer<typeof ModelCustomConfigSchema>;
+export type ModelCustomConfigSchema = BaseRubyCustomConfigSchema;
