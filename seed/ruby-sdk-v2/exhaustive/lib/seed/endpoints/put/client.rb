@@ -3,7 +3,15 @@ module Seed
     module Endpoints
         module Put
             class Client
-                def initialize(client); end
+                # @option client [Seed::Internal::Http::RawClient]
+                #
+                # @return [Seed::Endpoints::Put::Client]
+                def initialize(client)
+                    @client = client
+                end
+
+                # @return [void]
+                def add; end
             end
         end
     end

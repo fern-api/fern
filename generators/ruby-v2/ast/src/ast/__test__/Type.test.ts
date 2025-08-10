@@ -1,4 +1,3 @@
-import { ruby } from "../..";
 import { BaseRubyCustomConfigSchema } from "../../custom-config/BaseRubyCustomConfigSchema";
 import { Type } from "../Type";
 import { Writer } from "../core/Writer";
@@ -23,7 +22,10 @@ describe("Type", () => {
     });
 
     test("class", () => {
-        const classType = Type.class_();
+        const classType = Type.class_({
+            name: "Client",
+            modules: ["MyApi", "V1"],
+        });
 
         expect(classType.typeDefinitionToString(writerConfig)).toMatchSnapshot();
     });
