@@ -9,6 +9,7 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
+import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
 
 export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -50,6 +51,22 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
         for (const file of models) {
             context.project.addRawFiles(file);
         }
+
+        Object.entries(context.ir.subpackages).forEach(([subpackageId, subpackage]) => {
+            const service = subpackage.service != null ? context.getHttpServiceOrThrow(subpackage.service) : undefined;
+            // skip subpackages that have no endpoints (recursively)
+            if (!context.subPackageHasEndpoints(subpackage)) {
+                return;
+            }
+
+            const subClient = new SubPackageClientGenerator({
+                subpackageId,
+                context,
+                subpackage,
+                service
+            });
+            context.project.addRawFiles(subClient.generate());
+        });
 
         await context.project.persist();
     }

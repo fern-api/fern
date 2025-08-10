@@ -1,6 +1,5 @@
-# frozen_string_literal: true
 
-module Types
+module Seed
     module Types
         class ObjectWithRequiredField < Internal::Types::Model
             field :string, String, optional: true, nullable: true

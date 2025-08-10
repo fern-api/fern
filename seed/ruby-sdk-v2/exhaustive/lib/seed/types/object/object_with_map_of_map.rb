@@ -1,6 +1,5 @@
-# frozen_string_literal: true
 
-module Types
+module Seed
     module Types
         class ObjectWithMapOfMap < Internal::Types::Model
             field :map, Array, optional: true, nullable: true
