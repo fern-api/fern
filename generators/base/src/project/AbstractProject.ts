@@ -7,7 +7,7 @@ export abstract class AbstractProject<GeneratorContext extends AbstractGenerator
     public readonly absolutePathToOutputDirectory: AbsoluteFilePath;
     public readonly rawFiles: File[] = [];
 
-    public constructor(public readonly context: AbstractRuby) {
+    public constructor(public readonly context: GeneratorContext) {
         this.absolutePathToOutputDirectory = AbsoluteFilePath.of(this.context.config.output.path);
     }
 

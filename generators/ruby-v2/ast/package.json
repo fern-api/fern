@@ -40,6 +40,7 @@
   "devDependencies": {
     "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
+    "@fern-fern/ir-sdk": "58.2.0",
     "@fern-api/core-utils": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",

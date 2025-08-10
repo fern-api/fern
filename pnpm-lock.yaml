@@ -1489,6 +1489,9 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
+      '@fern-fern/ir-sdk':
+        specifier: 58.2.0
+        version: 58.2.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
