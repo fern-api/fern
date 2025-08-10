@@ -1678,9 +1678,6 @@ importers:
       typescript:
         specifier: 5.8.3
         version: 5.8.3
-      url-join:
-        specifier: ^5.0.0
-        version: 5.0.0
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
