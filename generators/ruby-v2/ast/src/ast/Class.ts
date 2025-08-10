@@ -1,17 +1,18 @@
 import { Comment } from "./Comment";
 import { Module } from "./Module";
+import { ClassReference } from "./ClassReference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
 export declare namespace Class_ {
     export interface Args extends Module.Args {
         /* The superclass of this class. */
-        superclass?: Class_;
+        superclass?: ClassReference;
     }
 }
 
 export class Class_ extends Module {
-    public readonly superclass: Class_ | undefined;
+    public readonly superclass: ClassReference | undefined;
     public readonly statements: AstNode[];
 
     constructor({ name, superclass, typeParameters, docstring, statements }: Class_.Args) {
@@ -29,7 +30,8 @@ export class Class_ extends Module {
         writer.write(`class ${this.name}`);
 
         if (this.superclass) {
-            writer.write(` < ${this.superclass.name}`);
+            writer.write(" < ");
+            this.superclass.write(writer);
         }
 
         if (this.statements.length) {
@@ -67,7 +69,8 @@ export class Class_ extends Module {
         }
 
         if (this.superclass) {
-            writer.write(` < ${this.superclass.name}`);
+            writer.write(" < ");
+            this.superclass.write(writer);
         }
 
         writer.newLine();
