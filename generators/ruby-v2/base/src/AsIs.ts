@@ -33,5 +33,5 @@ export const AsIsFiles = {
     TypesType: "types/type.Template.rb",
     TypesUnion: "types/union.Template.rb",
     TypesUnknown: "types/unknown.Template.rb",
-    TypesUtils: "types/utils.Template.rb",
+    TypesUtils: "types/utils.Template.rb"
 } as const;

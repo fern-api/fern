@@ -1,11 +1,11 @@
 import dedent from "dedent";
-import { mkdir, writeFile, readFile } from "fs/promises";
-import { join as pathJoin } from "path";
+import { mkdir, readFile, writeFile } from "fs/promises";
 import { template } from "lodash-es";
+import { join as pathJoin } from "path";
 
 import { AbstractProject, File } from "@fern-api/base-generator";
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
-import { AbstractRubyGeneratorContext, BaseRubyCustomConfigSchema, RubyFile } from "@fern-api/ruby-ast";
+import { AbstractRubyGeneratorContext, BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
 
 const GEMFILE_FILENAME = "Gemfile";
 const RAKEFILE_FILENAME = "Rakefile";
@@ -15,9 +15,11 @@ const RAKEFILE_FILENAME = "Rakefile";
  */
 export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>> {
     private coreFiles: File[] = [];
+    private rubyContext: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
 
     public constructor({ context }: { context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema> }) {
         super(context);
+        this.rubyContext = context;
     }
 
     public async persist(): Promise<void> {
@@ -45,23 +47,26 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
     }
 
     private async createAsIsFiles(): Promise<void> {
-        // Check if context has getCoreAsIsFiles method
-        if (typeof (this.context as any).getCoreAsIsFiles === 'function') {
-            const asIsFiles = (this.context as any).getCoreAsIsFiles();
-            this.context.logger.debug(`Found ${asIsFiles.length} as-is files to copy: ${asIsFiles.join(', ')}`);
-            
-            for (const filename of asIsFiles) {
-                this.coreFiles.push(await this.createAsIsFile({ 
+        const asIsFiles = this.rubyContext.getCoreAsIsFiles();
+        this.context.logger.debug(`Found ${asIsFiles.length} as-is files to copy: ${asIsFiles.join(", ")}`);
+
+        for (const filename of asIsFiles) {
+            this.coreFiles.push(
+                await this.createAsIsFile({
                     filename,
-                    gemNamespace: this.context.config.organization || 'fern'
-                }));
-            }
-        } else {
-            this.context.logger.debug('Context does not have getCoreAsIsFiles method');
+                    gemNamespace: this.context.config.organization || "fern"
+                })
+            );
         }
     }
 
-    private async createAsIsFile({ filename, gemNamespace }: { filename: string; gemNamespace: string }): Promise<File> {
+    private async createAsIsFile({
+        filename,
+        gemNamespace
+    }: {
+        filename: string;
+        gemNamespace: string;
+    }): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
         return new File(
             filename.replace(".Template", ""),

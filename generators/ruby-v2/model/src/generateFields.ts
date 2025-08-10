@@ -12,7 +12,7 @@ export function generateFields({
     return properties.map((prop, index) => {
         const fieldName = prop.name.name.snakeCase.safeName;
         const rubyType = toRubyType(prop.valueType);
-        
+
         return ruby.codeblock((writer) => {
             writer.write(`field :${fieldName}, ${rubyType}, optional: true, nullable: true`);
             // Only add newline for the last statement to ensure 'end' appears on its own line
@@ -54,4 +54,4 @@ function toRubyType(typeReference: TypeReference): string {
         unknown: () => "Object",
         _other: () => "Object"
     });
-} 
+}

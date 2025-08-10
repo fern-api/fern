@@ -23,25 +23,34 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     public getCoreAsIsFiles(): string[] {
         const files = [
             // Errors
-            AsIsFiles.ErrorsConstraint, AsIsFiles.ErrorsType, 
-            
+            AsIsFiles.ErrorsConstraint,
+            AsIsFiles.ErrorsType,
+
             // HTTP
-            AsIsFiles.HttpBaseRequest, AsIsFiles.HttpRawClient,
+            AsIsFiles.HttpBaseRequest,
+            AsIsFiles.HttpRawClient,
 
             // JSON
-            AsIsFiles.JsonRequest, 
-            AsIsFiles.JsonSerializable, 
-            
+            AsIsFiles.JsonRequest,
+            AsIsFiles.JsonSerializable,
+
             // Multipart
-            AsIsFiles.MultipartEncoder, 
+            AsIsFiles.MultipartEncoder,
             AsIsFiles.MultipartFormDataPart,
-            AsIsFiles.MultipartFormData, 
-            AsIsFiles.MultipartRequest, 
-            
+            AsIsFiles.MultipartFormData,
+            AsIsFiles.MultipartRequest,
+
             // Types
-            AsIsFiles.TypesModelField, AsIsFiles.TypesArray,
-            AsIsFiles.TypesBoolean, AsIsFiles.TypesEnum, AsIsFiles.TypesHash, AsIsFiles.TypesModel, AsIsFiles.TypesType,
-            AsIsFiles.TypesUnion, AsIsFiles.TypesUnknown, AsIsFiles.TypesUtils
+            AsIsFiles.TypesModelField,
+            AsIsFiles.TypesArray,
+            AsIsFiles.TypesBoolean,
+            AsIsFiles.TypesEnum,
+            AsIsFiles.TypesHash,
+            AsIsFiles.TypesModel,
+            AsIsFiles.TypesType,
+            AsIsFiles.TypesUnion,
+            AsIsFiles.TypesUnknown,
+            AsIsFiles.TypesUtils
         ];
 
         return files;

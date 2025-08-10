@@ -3,7 +3,6 @@ import { RubyFile } from "@fern-api/ruby-base";
 import { ObjectGenerator } from "./object/ObjectGenerator";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 
-
 export function generateModels({ context }: { context: ModelGeneratorContext }): RubyFile[] {
     const files: RubyFile[] = [];
     for (const [typeId, typeDeclaration] of Object.entries(context.ir.types)) {
