@@ -10,8 +10,6 @@ export interface GeneratorContextLike {
     customConfig: unknown;
 }
 
-const TYPES_MODULE_NAME = "Types";
-
 export class ObjectGenerator extends FileGenerator<RubyFile, ModelCustomConfigSchema, ModelGeneratorContext> {
     private readonly typeDeclaration: TypeDeclaration;
     private readonly objectDeclaration: ObjectTypeDeclaration;
@@ -38,8 +36,6 @@ export class ObjectGenerator extends FileGenerator<RubyFile, ModelCustomConfigSc
             context: this.context
         });
 
-        const clientModuleName = this.context.customConfig.module || "Api";
-
         const classNode = ruby.class_({
             name: this.typeDeclaration.name.name.pascalCase.safeName,
             superclass: ruby.classReference({
@@ -49,27 +45,19 @@ export class ObjectGenerator extends FileGenerator<RubyFile, ModelCustomConfigSc
             docstring: this.typeDeclaration.docs ?? undefined,
             statements: statements
         });
+        
+        const classWithTypesModule = this.context.getTypesModule();
+        classWithTypesModule.addStatement(classNode);
 
-        const typesModule = ruby.module({
-            name: TYPES_MODULE_NAME,
-            statements: [classNode]
-        });
-
-        const clientModule = ruby.module({
-            name: clientModuleName,
-            statements: [typesModule]
-        });
-
-        const frozenComment = ruby.comment({ docs: "frozen_string_literal: true" });
-
-        const fileContent = ruby.codeblock((writer) => {
-            frozenComment.write(writer);
-            writer.newLine();
-            clientModule.write(writer);
-        });
+        const classWithRootModule = this.context.getRootModule();
+        classWithRootModule.addStatement(classWithTypesModule);
 
         return new RubyFile({
-            node: fileContent,
+            node: ruby.codeblock((writer) => {
+                ruby.comment({ docs: "frozen_string_literal: true" })
+                writer.newLine();
+                classWithRootModule.write(writer);
+            }),
             directory: this.getFilepath(),
             filename: `${this.typeDeclaration.name.name.snakeCase.safeName}.rb`,
             customConfig: this.context.customConfig

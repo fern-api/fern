@@ -9,7 +9,7 @@ import {
     KeywordSplatParameter,
     Method,
     MethodInvocation,
-    Module,
+    Module_,
     PositionalArgument,
     PositionalParameter,
     PositionalSplatParameter,
@@ -60,8 +60,8 @@ export function class_(args: Class_.Args): Class_ {
     return new Class_(args);
 }
 
-export function module(args: Module.Args): Module {
-    return new Module(args);
+export function module(args: Module_.Args): Module_ {
+    return new Module_(args);
 }
 
 export function method(args: Method.Args): Method {

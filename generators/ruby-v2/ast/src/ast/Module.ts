@@ -4,12 +4,12 @@ import { TypeParameter } from "./TypeParameter";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
-export declare namespace Module {
+export declare namespace Module_ {
     export interface Args {
         /* The module's name. */
         name: string;
         /* This module's namespace (i.e., the modules/classes it is wrapped in). */
-        namespace?: Set<Module | Class_>;
+        namespace?: Set<Module_ | Class_>;
         /* If this module is generic, it takes a type parameter. */
         typeParameters?: TypeParameter[];
         /* The docstring for the module. */
@@ -19,14 +19,14 @@ export declare namespace Module {
     }
 }
 
-export class Module extends AstNode {
+export class Module_ extends AstNode {
     public readonly name: string;
-    public namespace: Set<Module | Class_>;
+    public namespace: Set<Module_ | Class_>;
     public readonly typeParameters: TypeParameter[];
     public readonly docstring: string | undefined;
     public readonly statements: AstNode[];
 
-    constructor({ name, namespace, typeParameters, docstring, statements }: Module.Args) {
+    constructor({ name, namespace, typeParameters, docstring, statements }: Module_.Args) {
         super();
 
         this.name = name;
@@ -36,6 +36,10 @@ export class Module extends AstNode {
         this.statements = statements ?? [];
 
         this.populateChildNamespaces();
+    }
+
+    public addStatement(statement: AstNode): void {
+        this.statements.push(statement);
     }
 
     public write(writer: Writer): void {
@@ -98,9 +102,9 @@ export class Module extends AstNode {
      */
     public populateChildNamespaces(): void {
         this.statements
-            .filter((statement) => statement instanceof Module || statement instanceof Class_)
+            .filter((statement) => statement instanceof Module_ || statement instanceof Class_)
             .forEach((child) => {
-                child.namespace = new Set<Module | Class_>([...this.namespace, this]);
+                child.namespace = new Set<Module_ | Class_>([...this.namespace, this]);
                 child.populateChildNamespaces();
             });
     }

@@ -9,6 +9,7 @@ import { BaseRubyCustomConfigSchema } from "../custom-config/BaseRubyCustomConfi
 
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { snakeCase } from "lodash-es";
+import { Module_ } from "../ast/Module";
 
 export abstract class AbstractRubyGeneratorContext<
     CustomConfig extends BaseRubyCustomConfigSchema
@@ -41,6 +42,20 @@ export abstract class AbstractRubyGeneratorContext<
 
     public getRootFolderName(): string {
         return this.customConfig.module ?? snakeCase(this.config.organization);
+    }
+
+    public getRootModule(): Module_ {
+        return new Module_({
+            name: this.getRootFolderName(),
+            statements: []
+        });
+    }
+
+    public getTypesModule(): Module_ {
+        return new Module_({
+            name: "Types",
+            statements: []
+        });
     }
 
     public abstract getCoreAsIsFiles(): string[];

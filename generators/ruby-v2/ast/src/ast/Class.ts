@@ -1,17 +1,17 @@
-import { Comment } from "./Comment";
-import { Module } from "./Module";
 import { ClassReference } from "./ClassReference";
+import { Comment } from "./Comment";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+import { Module_ } from "./Module";
 
 export declare namespace Class_ {
-    export interface Args extends Module.Args {
+    export interface Args extends Module_.Args {
         /* The superclass of this class. */
         superclass?: ClassReference;
     }
 }
 
-export class Class_ extends Module {
+export class Class_ extends Module_ {
     public readonly superclass: ClassReference | undefined;
     public readonly statements: AstNode[];
 
