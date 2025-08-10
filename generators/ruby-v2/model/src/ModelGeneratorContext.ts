@@ -1,11 +1,19 @@
-import { AbstractFormatter, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractRubyGeneratorContext } from "@fern-api/ruby-ast";
 import { AsIsFiles } from "@fern-api/ruby-base";
-import { RelativeFilePath } from "@fern-api/fs-utils";
 
+import { TypeId } from "@fern-fern/ir-sdk/api";
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 
 export class ModelGeneratorContext extends AbstractRubyGeneratorContext<ModelCustomConfigSchema> {
+
+    public getLocationForTypeId(typeId: TypeId): RelativeFilePath {
+        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
+        return RelativeFilePath.of(
+            ["lib", this.getRootFolderName(), ...typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/")
+        );
+    }
+
     public getCoreAsIsFiles(): string[] {
         const files = [
             // Errors

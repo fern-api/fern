@@ -70,7 +70,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
         return new File(
             filename.replace(".Template", ""),
-            RelativeFilePath.of("lib/internal/types"),
+            RelativeFilePath.of(`lib/${this.context.getRootFolderName()}/internal/types`),
             replaceTemplate({
                 contents,
                 variables: getTemplateVariables({

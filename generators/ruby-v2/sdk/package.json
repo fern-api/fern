@@ -40,6 +40,7 @@
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "devDependencies": {
+    "@fern-api/path-utils": "workspace:*",
     "@fern-api/ruby-model": "workspace:*",
     "@fern-api/ruby-ast": "workspace:*",
     "@fern-api/base-generator": "workspace:*",

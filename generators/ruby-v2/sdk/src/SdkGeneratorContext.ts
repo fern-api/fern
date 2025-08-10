@@ -1,11 +1,14 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractRubyGeneratorContext } from "@fern-api/ruby-ast";
-import { RubyProject, AsIsFiles } from "@fern-api/ruby-base";
+import { AsIsFiles, RubyProject } from "@fern-api/ruby-base";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { IntermediateRepresentation, TypeId } from "@fern-fern/ir-sdk/api";
 
+import { RelativeFilePath } from "@fern-api/path-utils";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
+
+const ROOT_TYPES_FOLDER = "types";
 
 export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomConfigSchema> {
     public readonly project: RubyProject;
@@ -18,6 +21,13 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     ) {
         super(ir, config, customConfig, generatorNotificationService);
         this.project = new RubyProject({ context: this });
+    }
+
+    public getLocationForTypeId(typeId: TypeId): RelativeFilePath {
+        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
+        return RelativeFilePath.of(
+            ["lib", this.getRootFolderName(), ...typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName), ROOT_TYPES_FOLDER].join("/")
+        );
     }
 
     public getCoreAsIsFiles(): string[] {
