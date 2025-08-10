@@ -22,19 +22,37 @@ const CLIENT_CLASS_NAME = "Client";
 
 export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private subpackageId: SubpackageId;
+    private subpackage: Subpackage;
 
     constructor({ subpackage, context, subpackageId, service }: SubClientGenerator.Args) {
         super(context);
         this.subpackageId = subpackageId;
+        this.subpackage = subpackage;
     }
 
     public doGenerate(): RubyFile {
         const clientClass = ruby.class_({
             name: CLIENT_CLASS_NAME,
         });
-        
+
         const rootModule = this.context.getRootModule();
-        rootModule.addStatement(clientClass);
+
+        let nestedModule = rootModule;
+        for (const filepath of this.subpackage.fernFilepath.allParts) {
+            const module = ruby.module({
+                name: filepath.pascalCase.safeName,
+            });
+            nestedModule.addStatement(module);
+            nestedModule = module;
+        }
+        nestedModule.addStatement(clientClass);
+
+        clientClass.addStatement(ruby.method({
+            name: "initialize",
+            parameters: { positional: [ruby.parameters.positional({ name: "client", type: ruby.Type.class_() })] },
+            returnType: ruby.Type.class_()
+        }));
+
 
         return new RubyFile({
             node: ruby.codeblock((writer) => {

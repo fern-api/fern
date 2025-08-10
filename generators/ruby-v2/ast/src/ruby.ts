@@ -24,7 +24,8 @@ export {
     Method,
     MethodInvocation, Module_, Parameter,
     TypeLiteral,
-    TypeParameter
+    TypeParameter,
+    Type,
 } from "./ast";
 export { AstNode } from "./ast/core/AstNode";
 

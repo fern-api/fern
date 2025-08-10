@@ -1,6 +1,5 @@
-# frozen_string_literal: true
 
-module Types
+module Seed
     module Types
         class DoubleOptional < Internal::Types::Model
             field :optional_alias, Array, optional: true, nullable: true

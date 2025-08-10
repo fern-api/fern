@@ -1,6 +1,5 @@
-# frozen_string_literal: true
 
-module Types
+module Seed
     module Types
         class Cat < Internal::Types::Model
             field :name, String, optional: true, nullable: true

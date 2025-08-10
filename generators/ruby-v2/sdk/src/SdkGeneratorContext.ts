@@ -25,8 +25,11 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
 
     public getLocationForTypeId(typeId: TypeId): RelativeFilePath {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
+        if (typeDeclaration.name.fernFilepath.allParts.length === 0) {
+            return RelativeFilePath.of(["lib", this.getRootFolderName(), ROOT_TYPES_FOLDER].join("/"));
+        }
         return RelativeFilePath.of(
-            ["lib", this.getRootFolderName(), ...typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName), ROOT_TYPES_FOLDER].join("/")
+            ["lib", this.getRootFolderName(), ...typeDeclaration.name.fernFilepath.allParts.map((path) => path.snakeCase.safeName)].join("/")
         );
     }
 

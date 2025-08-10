@@ -1,6 +1,5 @@
-# frozen_string_literal: true
 
-module Endpoints
+module Seed
     module Types
         class Error < Internal::Types::Model
             field :category, ErrorCategory, optional: true, nullable: true
