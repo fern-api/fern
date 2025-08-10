@@ -61,6 +61,7 @@ types:
       local-file-system: LocalFileSystemOutputLocationSchema
       nuget: NugetOutputLocationSchema
       rubygems: RubyGemsOutputLocationSchema
+      crates: CratesOutputLocationSchema
   
   GithubConfigurationSchema:
     discriminated: false
@@ -176,6 +177,15 @@ types:
       Ideally it is also permissioned with index and yank rubygem permissions.
       Additionally if the creator of the API key has MFA enabled, they must be sure to update their MFA
       settings to not require MFA for API key usage ("UI and gem signin").
+    properties:
+      url: optional<string>
+      package-name: string
+      api-key: optional<string>
+
+  CratesOutputLocationSchema:
+    docs: |
+      Configuration for publishing Rust crates to crates.io or a custom registry.
+      API tokens can be created at https://crates.io/settings/tokens with appropriate permissions.
     properties:
       url: optional<string>
       package-name: string
