@@ -26,6 +26,10 @@ export class Class_ extends Module_ {
         this.statements.push(statement);
     }
 
+    public addStatements(statements: AstNode[]): void {
+        this.statements.push(...statements);
+    }
+
     public write(writer: Writer): void {
         if (this.docstring) {
             new Comment({ docs: this.docstring }).write(writer);

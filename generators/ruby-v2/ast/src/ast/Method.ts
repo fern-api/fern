@@ -42,6 +42,8 @@ export declare namespace Method {
         parameters?: ParameterArgs;
         /* The return type of the method. */
         returnType?: Type;
+        /* The statements of the method. */
+        statements?: AstNode[];
     }
 }
 
@@ -55,10 +57,10 @@ export class Method extends AstNode {
     public readonly keywordSplatParameter: KeywordSplatParameter | undefined;
     public readonly yieldParameter: YieldParameter | undefined;
     private readonly visibility: MethodVisibility;
-    private readonly statements: AstNode[] = [];
+    private readonly statements: AstNode[];
     public readonly returnType: Type;
 
-    constructor({ name, docstring, kind, visibility, parameters, returnType }: Method.Args) {
+    constructor({ name, docstring, kind, visibility, parameters, returnType, statements }: Method.Args) {
         super();
 
         this.name = name;
@@ -71,11 +73,32 @@ export class Method extends AstNode {
         this.keywordSplatParameter = parameters?.keywordSplat;
         this.yieldParameter = parameters?.yield;
         this.returnType = returnType ?? Type.untyped();
+        this.statements = statements ?? [];
     }
 
     public write(writer: Writer): void {
         if (this.docstring) {
             new Comment({ docs: this.docstring }).write(writer);
+        }
+
+        for (const positionalParameter of this.positionalParameters) {
+            if (this.docstring) {
+                writer.writeLine("#");
+            }
+            writer.write(`# @option ${positionalParameter.name} [`);
+            positionalParameter.type.writeTypeDefinition(writer);
+            writer.write("]");
+            writer.newLine();
+        }
+
+        if (this.returnType != null) {
+            if (this.positionalParameters.length > 0 || this.docstring) {
+                writer.writeLine("#");
+            }
+            writer.write(`# @return [`);
+            this.returnType.writeTypeDefinition(writer);
+            writer.write("]");
+            writer.newLine();
         }
 
         if (this.visibility !== MethodVisibility.Public) {
@@ -120,6 +143,8 @@ export class Method extends AstNode {
                     writer.newLine();
                 }
             });
+            writer.writeNewLineIfLastLineNot();
+
             writer.dedent();
 
             writer.write("end");

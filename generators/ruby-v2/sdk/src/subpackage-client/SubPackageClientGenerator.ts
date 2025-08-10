@@ -14,7 +14,6 @@ export declare namespace SubClientGenerator {
         subpackageId: SubpackageId;
         subpackage: Subpackage;
         context: SdkGeneratorContext;
-        service?: HttpService;
     }
 }
 
@@ -24,7 +23,7 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
     private subpackageId: SubpackageId;
     private subpackage: Subpackage;
 
-    constructor({ subpackage, context, subpackageId, service }: SubClientGenerator.Args) {
+    constructor({ subpackage, context, subpackageId }: SubClientGenerator.Args) {
         super(context);
         this.subpackageId = subpackageId;
         this.subpackage = subpackage;
@@ -50,10 +49,24 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
         clientClass.addStatement(
             ruby.method({
                 name: "initialize",
-                parameters: { positional: [ruby.parameters.positional({ name: "client", type: ruby.Type.class_() })] },
-                returnType: ruby.Type.class_()
+                parameters: {
+                    positional: [
+                        ruby.parameters.positional({
+                            name: "client",
+                            type: ruby.Type.class_(this.context.getRawClientClassReference())
+                        })
+                    ]
+                },
+                returnType: ruby.Type.class_(this.getClientClassReference()),
+                statements: [ruby.codeblock("@client = client")]
             })
         );
+
+        if (this.subpackage.service != null) {
+            const service = this.context.getHttpServiceOrThrow(this.subpackage.service);
+            const methods = this.generateEndpoints(service);
+            clientClass.addStatements(methods);
+        }
 
         return new RubyFile({
             node: ruby.codeblock((writer) => {
@@ -69,5 +82,29 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
 
     protected getFilepath(): RelativeFilePath {
         return this.context.getLocationForSubpackageId(this.subpackageId);
+    }
+
+    private getClientClassReference(): ruby.ClassReference {
+        return ruby.classReference({
+            name: CLIENT_CLASS_NAME,
+            modules: [
+                this.context.getRootModule().name,
+                ...this.subpackage.fernFilepath.allParts.map((path) => path.pascalCase.safeName)
+            ],
+            fullyQualified: true
+        });
+    }
+
+    private generateEndpoints(service: HttpService): ruby.Method[] {
+        const methods: ruby.Method[] = [];
+        for (const endpoint of service.endpoints) {
+            const method = ruby.method({
+                name: endpoint.name.snakeCase.safeName,
+                returnType: ruby.Type.void()
+            });
+            methods.push(method);
+        }
+
+        return methods;
     }
 }

@@ -61,8 +61,7 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
             const subClient = new SubPackageClientGenerator({
                 subpackageId,
                 context,
-                subpackage,
-                service
+                subpackage
             });
             context.project.addRawFiles(subClient.generate());
         });

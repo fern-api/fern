@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 
+import { ClassReference } from "./ClassReference";
 import { TypeParameter } from "./TypeParameter";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
@@ -10,6 +11,7 @@ interface Self {
 
 interface Class_ {
     type: "class";
+    reference: ClassReference;
 }
 
 interface Instance {
@@ -115,7 +117,7 @@ export class Type extends AstNode {
                     writer.write("self");
                     break;
                 case "class":
-                    writer.write("class");
+                    writer.write(this.internalType.reference.toString(writer));
                     break;
                 case "instance":
                     writer.write("instance");
@@ -214,9 +216,14 @@ export class Type extends AstNode {
         });
     }
 
-    public static class_(): Type {
+    public static class_(args: { name: string; modules?: string[] }): Type {
         return new this({
-            type: "class"
+            type: "class",
+            reference: new ClassReference({
+                name: args.name,
+                modules: args.modules,
+                fullyQualified: true
+            })
         });
     }
 

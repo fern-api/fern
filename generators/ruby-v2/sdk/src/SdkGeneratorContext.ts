@@ -1,5 +1,5 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { AbstractRubyGeneratorContext } from "@fern-api/ruby-ast";
+import { AbstractRubyGeneratorContext, ruby } from "@fern-api/ruby-ast";
 import { AsIsFiles, RubyProject } from "@fern-api/ruby-base";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -13,6 +13,7 @@ import {
 } from "@fern-fern/ir-sdk/api";
 
 import { RelativeFilePath } from "@fern-api/path-utils";
+import { ClassReference } from "@fern-api/ruby-ast/src/ast/ClassReference";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 
 const ROOT_TYPES_FOLDER = "types";
@@ -89,6 +90,14 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             subpackage.hasEndpointsInTree ||
             subpackage.subpackages.some((pkg) => this.subPackageHasEndpoints(this.getSubpackageOrThrow(pkg)))
         );
+    }
+
+    public getRawClientClassReference(): ClassReference {
+        return ruby.classReference({
+            name: "RawClient",
+            modules: [this.getRootModule().name, "Internal", "Http"],
+            fullyQualified: true
+        });
     }
 
     public getCoreAsIsFiles(): string[] {
