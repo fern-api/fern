@@ -61,5 +61,4 @@ export abstract class AbstractRubyGeneratorContext<
     public abstract getCoreAsIsFiles(): string[];
 
     public abstract getLocationForTypeId(typeId: TypeId): RelativeFilePath;
-
 }

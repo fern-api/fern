@@ -6,11 +6,14 @@ import { TypeId } from "@fern-fern/ir-sdk/api";
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 
 export class ModelGeneratorContext extends AbstractRubyGeneratorContext<ModelCustomConfigSchema> {
-
     public getLocationForTypeId(typeId: TypeId): RelativeFilePath {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
         return RelativeFilePath.of(
-            ["lib", this.getRootFolderName(), ...typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/")
+            [
+                "lib",
+                this.getRootFolderName(),
+                ...typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName)
+            ].join("/")
         );
     }
 
