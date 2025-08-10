@@ -3,7 +3,14 @@ import { AbstractRubyGeneratorContext } from "@fern-api/ruby-ast";
 import { AsIsFiles, RubyProject } from "@fern-api/ruby-base";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { HttpService, IntermediateRepresentation, ServiceId, Subpackage, SubpackageId, TypeId } from "@fern-fern/ir-sdk/api";
+import {
+    HttpService,
+    IntermediateRepresentation,
+    ServiceId,
+    Subpackage,
+    SubpackageId,
+    TypeId
+} from "@fern-fern/ir-sdk/api";
 
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
@@ -29,14 +36,22 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             return RelativeFilePath.of(["lib", this.getRootFolderName(), ROOT_TYPES_FOLDER].join("/"));
         }
         return RelativeFilePath.of(
-            ["lib", this.getRootFolderName(), ...typeDeclaration.name.fernFilepath.allParts.map((path) => path.snakeCase.safeName)].join("/")
+            [
+                "lib",
+                this.getRootFolderName(),
+                ...typeDeclaration.name.fernFilepath.allParts.map((path) => path.snakeCase.safeName)
+            ].join("/")
         );
     }
 
     public getLocationForSubpackageId(subpackageId: SubpackageId): RelativeFilePath {
         const subpackage = this.getSubpackageOrThrow(subpackageId);
         return RelativeFilePath.of(
-            ["lib", this.getRootFolderName(), ...subpackage.fernFilepath.allParts.map((path) => path.snakeCase.safeName)].join("/")
+            [
+                "lib",
+                this.getRootFolderName(),
+                ...subpackage.fernFilepath.allParts.map((path) => path.snakeCase.safeName)
+            ].join("/")
         );
     }
 
@@ -55,7 +70,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         }
         return service;
     }
-    
+
     /**
      * Recursively checks if a subpackage has endpoints.
      * @param subpackage - The subpackage to check.

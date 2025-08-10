@@ -1639,9 +1639,6 @@ importers:
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
-      zod:
-        specifier: ^3.22.4
-        version: 3.25.76
 
   generators/ruby-v2/sdk:
     devDependencies:

@@ -25,12 +25,14 @@ export class EnumGenerator extends FileGenerator<RubyFile, ModelCustomConfigSche
 
     public doGenerate(): RubyFile {
         const enumModule = ruby.module({
-            name: this.typeDeclaration.name.name.pascalCase.safeName,
+            name: this.typeDeclaration.name.name.pascalCase.safeName
         });
         enumModule.addStatement(ruby.codeblock(`extends ${this.context.getRootModule().name}::Internal::Types::Enum`));
 
         for (const enumValue of this.enumDeclaration.values) {
-            enumModule.addStatement(ruby.codeblock(`${enumValue.name.name.screamingSnakeCase.safeName} = "${enumValue.name.wireValue}"`))
+            enumModule.addStatement(
+                ruby.codeblock(`${enumValue.name.name.screamingSnakeCase.safeName} = "${enumValue.name.wireValue}"`)
+            );
         }
 
         const typesModule = this.context.getTypesModule();
@@ -41,7 +43,7 @@ export class EnumGenerator extends FileGenerator<RubyFile, ModelCustomConfigSche
 
         return new RubyFile({
             node: ruby.codeblock((writer) => {
-                ruby.comment({ docs: "frozen_string_literal: true" })
+                ruby.comment({ docs: "frozen_string_literal: true" });
                 writer.newLine();
                 rootModule.write(writer);
             }),

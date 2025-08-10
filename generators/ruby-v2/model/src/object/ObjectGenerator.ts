@@ -45,7 +45,7 @@ export class ObjectGenerator extends FileGenerator<RubyFile, ModelCustomConfigSc
             docstring: this.typeDeclaration.docs ?? undefined,
             statements: statements
         });
-        
+
         const classWithTypesModule = this.context.getTypesModule();
         classWithTypesModule.addStatement(classNode);
 
@@ -54,7 +54,7 @@ export class ObjectGenerator extends FileGenerator<RubyFile, ModelCustomConfigSc
 
         return new RubyFile({
             node: ruby.codeblock((writer) => {
-                ruby.comment({ docs: "frozen_string_literal: true" })
+                ruby.comment({ docs: "frozen_string_literal: true" });
                 writer.newLine();
                 classWithRootModule.write(writer);
             }),

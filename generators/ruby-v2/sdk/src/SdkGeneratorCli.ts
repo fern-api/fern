@@ -1,4 +1,3 @@
-
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractRubyGeneratorCli } from "@fern-api/ruby-base";
 

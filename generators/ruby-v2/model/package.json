@@ -45,7 +45,6 @@
     "@fern-api/ruby-ast": "workspace:*",
     "@fern-api/ruby-base": "workspace:*",
     "@fern-fern/ir-sdk": "^58.2.0",
-    "zod": "^3.22.4",
     "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",

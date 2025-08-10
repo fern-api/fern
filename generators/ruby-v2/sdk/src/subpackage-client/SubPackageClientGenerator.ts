@@ -32,7 +32,7 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
 
     public doGenerate(): RubyFile {
         const clientClass = ruby.class_({
-            name: CLIENT_CLASS_NAME,
+            name: CLIENT_CLASS_NAME
         });
 
         const rootModule = this.context.getRootModule();
@@ -40,23 +40,24 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
         let nestedModule = rootModule;
         for (const filepath of this.subpackage.fernFilepath.allParts) {
             const module = ruby.module({
-                name: filepath.pascalCase.safeName,
+                name: filepath.pascalCase.safeName
             });
             nestedModule.addStatement(module);
             nestedModule = module;
         }
         nestedModule.addStatement(clientClass);
 
-        clientClass.addStatement(ruby.method({
-            name: "initialize",
-            parameters: { positional: [ruby.parameters.positional({ name: "client", type: ruby.Type.class_() })] },
-            returnType: ruby.Type.class_()
-        }));
-
+        clientClass.addStatement(
+            ruby.method({
+                name: "initialize",
+                parameters: { positional: [ruby.parameters.positional({ name: "client", type: ruby.Type.class_() })] },
+                returnType: ruby.Type.class_()
+            })
+        );
 
         return new RubyFile({
             node: ruby.codeblock((writer) => {
-                ruby.comment({ docs: "frozen_string_literal: true" })
+                ruby.comment({ docs: "frozen_string_literal: true" });
                 writer.newLine();
                 rootModule.write(writer);
             }),
@@ -65,7 +66,6 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
             customConfig: this.context.customConfig
         });
     }
-
 
     protected getFilepath(): RelativeFilePath {
         return this.context.getLocationForSubpackageId(this.subpackageId);
