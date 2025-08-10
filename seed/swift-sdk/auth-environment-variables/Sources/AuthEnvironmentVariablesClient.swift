@@ -11,19 +11,41 @@ public final class AuthEnvironmentVariablesClient: Sendable {
     /// - Parameter timeout: Request timeout in seconds. Defaults to 60 seconds. Ignored if a custom `urlSession` is provided.
     /// - Parameter maxRetries: Maximum number of retries for failed requests. Defaults to 2.
     /// - Parameter urlSession: Custom `URLSession` to use for requests. If not provided, a default session will be created with the specified timeout.
-    public init(
+    public convenience init(
         baseURL: String,
         apiKey: String? = nil,
-        headers: [String: String]? = [:],
+        headers: [String: String]? = nil,
+        timeout: Int? = nil,
+        maxRetries: Int? = nil,
+        urlSession: URLSession? = nil
+    ) {
+        self.init(
+            baseURL: baseURL,
+            headerAuth: apiKey.map {
+                .init(key: $0, header: "X-FERN-API-KEY")
+            },
+            headers: headers,
+            timeout: timeout,
+            maxRetries: maxRetries,
+            urlSession: urlSession
+        )
+    }
+
+    init(
+        baseURL: String,
+        headerAuth: ClientConfig.HeaderAuth? = nil,
+        bearerAuth: ClientConfig.BearerAuth? = nil,
+        basicAuth: ClientConfig.BasicAuth? = nil,
+        headers: [String: String]? = nil,
         timeout: Int? = nil,
         maxRetries: Int? = nil,
         urlSession: URLSession? = nil
     ) {
         let config = ClientConfig(
             baseURL: baseURL,
-            headerAuth: apiKey.map {
-                .init(key: $0, header: "X-FERN-API-KEY")
-            },
+            headerAuth: headerAuth,
+            bearerAuth: bearerAuth,
+            basicAuth: basicAuth,
             headers: headers,
             timeout: timeout,
             maxRetries: maxRetries,

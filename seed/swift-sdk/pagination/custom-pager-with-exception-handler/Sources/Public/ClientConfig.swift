@@ -1,4 +1,6 @@
 public final class ClientConfig: Sendable {
+    public typealias CredentialProvider = @Sendable () async throws -> String
+
     struct Defaults {
         static let timeout: Int = 60
         static let maxRetries: Int = 2
@@ -12,11 +14,9 @@ public final class ClientConfig: Sendable {
     struct BearerAuth {
         let token: Token
 
-        typealias TokenProvider = @Sendable () async throws -> String
-
         enum Token: Sendable {
             case staticToken(String)
-            case provider(TokenProvider)
+            case provider(CredentialProvider)
 
             func retrieve() async throws -> String {
                 switch self {

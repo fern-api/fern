@@ -3,7 +3,7 @@ public final class BearerTokenEnvironmentVariableClient: Sendable {
     public let service: ServiceClient
     private let httpClient: HTTPClient
 
-    /// Initialize the client with the specified configuration.
+    /// Initialize the client with the specified configuration and a static bearer token.
     ///
     /// - Parameter baseURL: The base URL to use for requests from the client. If not provided, the default base URL will be used.
     /// - Parameter apiKey: Bearer token for authentication. If provided, will be sent as "Bearer {token}" in Authorization header.
@@ -11,17 +11,65 @@ public final class BearerTokenEnvironmentVariableClient: Sendable {
     /// - Parameter timeout: Request timeout in seconds. Defaults to 60 seconds. Ignored if a custom `urlSession` is provided.
     /// - Parameter maxRetries: Maximum number of retries for failed requests. Defaults to 2.
     /// - Parameter urlSession: Custom `URLSession` to use for requests. If not provided, a default session will be created with the specified timeout.
-    public init(
+    public convenience init(
         baseURL: String,
         apiKey: String,
-        headers: [String: String]? = [:],
+        headers: [String: String]? = nil,
+        timeout: Int? = nil,
+        maxRetries: Int? = nil,
+        urlSession: URLSession? = nil
+    ) {
+        self.init(
+            baseURL: baseURL,
+            bearerAuth: .init(token: apiKey),
+            headers: headers,
+            timeout: timeout,
+            maxRetries: maxRetries,
+            urlSession: urlSession
+        )
+    }
+
+    /// Initialize the client with the specified configuration and an async bearer token provider.
+    ///
+    /// - Parameter baseURL: The base URL to use for requests from the client. If not provided, the default base URL will be used.
+    /// - Parameter apiKey: An async function that returns the bearer token for authentication. If provided, will be sent as "Bearer {token}" in Authorization header.
+    /// - Parameter headers: Additional headers to send with each request.
+    /// - Parameter timeout: Request timeout in seconds. Defaults to 60 seconds. Ignored if a custom `urlSession` is provided.
+    /// - Parameter maxRetries: Maximum number of retries for failed requests. Defaults to 2.
+    /// - Parameter urlSession: Custom `URLSession` to use for requests. If not provided, a default session will be created with the specified timeout.
+    public convenience init(
+        baseURL: String,
+        apiKey: ClientConfig.CredentialProvider,
+        headers: [String: String]? = nil,
+        timeout: Int? = nil,
+        maxRetries: Int? = nil,
+        urlSession: URLSession? = nil
+    ) {
+        self.init(
+            baseURL: baseURL,
+            bearerAuth: .init(token: apiKey),
+            headers: headers,
+            timeout: timeout,
+            maxRetries: maxRetries,
+            urlSession: urlSession
+        )
+    }
+
+    init(
+        baseURL: String,
+        headerAuth: ClientConfig.HeaderAuth? = nil,
+        bearerAuth: ClientConfig.BearerAuth? = nil,
+        basicAuth: ClientConfig.BasicAuth? = nil,
+        headers: [String: String]? = nil,
         timeout: Int? = nil,
         maxRetries: Int? = nil,
         urlSession: URLSession? = nil
     ) {
         let config = ClientConfig(
             baseURL: baseURL,
-            bearerAuth: .init(token: apiKey),
+            headerAuth: headerAuth,
+            bearerAuth: bearerAuth,
+            basicAuth: basicAuth,
             headers: headers,
             timeout: timeout,
             maxRetries: maxRetries,
