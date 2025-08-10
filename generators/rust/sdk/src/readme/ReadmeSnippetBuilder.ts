@@ -1,7 +1,6 @@
-import dedent from "dedent";
-
 import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
 import { isNonNullish } from "@fern-api/core-utils";
+import { rust, UseStatement, Expression, Statement, CodeBlock, Writer, PrimitiveType } from "@fern-api/rust-codegen";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -72,72 +71,26 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private buildErrorSnippets(): string[] {
         const errorEndpoints = this.getEndpointsForFeature(ReadmeSnippetBuilder.ERRORS_FEATURE_ID);
-        return errorEndpoints.map((endpoint) =>
-            this.writeCode(dedent`
-                use ${this.packageName}::{ClientError, ApiClientBuilder};
-
-                #[tokio::main]
-                async fn main() -> Result<(), ClientError> {
-                    let client = ApiClientBuilder::new("https://api.example.com")
-                        .api_key("your-api-key")
-                        .build()?;
-
-                    match ${this.getMethodCall(endpoint)}().await {
-                        Ok(response) => {
-                            println!("Success: {:?}", response);
-                        }
-                        Err(ClientError::ApiError { status_code, body, .. }) => {
-                            println!("API Error {}: {:?}", status_code, body);
-                        }
-                        Err(e) => {
-                            println!("Other error: {:?}", e);
-                        }
-                    }
-                    Ok(())
-                }
-            `)
-        );
+        return errorEndpoints.map((endpoint) => {
+            const codeString = this.buildErrorHandlingCode(endpoint);
+            return this.writeCode(codeString);
+        });
     }
 
     private buildRetrySnippets(): string[] {
         const retryEndpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.Retries);
-        return retryEndpoints.map((endpoint) =>
-            this.writeCode(dedent`
-                use ${this.packageName}::ApiClientBuilder;
-                
-                #[tokio::main]
-                async fn main() {
-                    let client = ApiClientBuilder::new("https://api.example.com")
-                        .api_key("your-api-key")
-                        .max_retries(3)
-                        .build()
-                        .expect("Failed to build client");
-
-                    let response = ${this.getMethodCall(endpoint)}().await.expect("API call failed");
-                }
-            `)
-        );
+        return retryEndpoints.map((endpoint) => {
+            const codeString = this.buildRetryCode(endpoint);
+            return this.writeCode(codeString);
+        });
     }
 
     private buildTimeoutSnippets(): string[] {
         const timeoutEndpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.Timeouts);
-        return timeoutEndpoints.map((endpoint) =>
-            this.writeCode(dedent`
-                use ${this.packageName}::ApiClientBuilder;
-                use std::time::Duration;
-                
-                #[tokio::main]
-                async fn main() {
-                    let client = ApiClientBuilder::new("https://api.example.com")
-                        .api_key("your-api-key")
-                        .timeout(Duration::from_secs(30))
-                        .build()
-                        .expect("Failed to build client");
-
-                    let response = ${this.getMethodCall(endpoint)}().await.expect("API call failed");
-                }
-            `)
-        );
+        return timeoutEndpoints.map((endpoint) => {
+            const codeString = this.buildTimeoutCode(endpoint);
+            return this.writeCode(codeString);
+        });
     }
 
     private buildEndpointsById(): Record<EndpointId, EndpointWithFilepath> {
@@ -202,6 +155,261 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return clientAccessParts.length > 0
             ? `${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME}.${clientAccessParts.join(".")}`
             : ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME;
+    }
+
+    private buildErrorHandlingCode(endpoint: EndpointWithFilepath): string {
+        const writer = new Writer();
+
+        // Use statements
+        const useStatements = [
+            new UseStatement({ path: this.packageName, items: ["ClientError", "ApiClientBuilder"] })
+        ];
+
+        // Main function with error handling
+        const mainFunction = rust.method({
+            name: "main",
+            parameters: [],
+            isAsync: true,
+            attributes: [rust.attribute({ name: "tokio::main" })],
+            returnType: rust.Type.result(
+                rust.Type.reference(rust.reference({ name: "()" })),
+                rust.Type.reference(rust.reference({ name: "ClientError" }))
+            ),
+            body: CodeBlock.fromStatements(this.buildErrorHandlingBody(endpoint))
+        });
+
+        // Write use statements
+        useStatements.forEach((useStmt) => {
+            useStmt.write(writer);
+            writer.newLine();
+        });
+        writer.newLine();
+
+        // Write main function
+        mainFunction.write(writer);
+
+        return writer.toString();
+    }
+
+    private buildErrorHandlingBody(endpoint: EndpointWithFilepath): Statement[] {
+        // Build client
+        const clientBuild = Expression.methodChain(
+            Expression.methodCall({
+                target: Expression.reference("ApiClientBuilder"),
+                method: "new",
+                args: [Expression.stringLiteral("https://api.example.com")]
+            }),
+            [
+                { method: "api_key", args: [Expression.stringLiteral("your-api-key")] },
+                { method: "build", args: [] }
+            ]
+        );
+
+        const clientVar = Statement.let({
+            name: "client",
+            value: Expression.try(clientBuild)
+        });
+
+        // Method call with match - parse the method chain
+        const methodCallParts = this.getMethodCall(endpoint).split(".");
+        let methodTarget = Expression.reference(methodCallParts[0] || "client");
+
+        for (let i = 1; i < methodCallParts.length - 1; i++) {
+            methodTarget = Expression.fieldAccess(methodTarget, methodCallParts[i] || "");
+        }
+
+        const methodCall = Expression.await(
+            Expression.methodCall({
+                target: methodTarget,
+                method: methodCallParts[methodCallParts.length - 1] || "call",
+                args: []
+            })
+        );
+
+        const matchStatement = Statement.match(methodCall, [
+            {
+                pattern: "Ok(response)",
+                body: [
+                    Statement.expression(
+                        Expression.macroCall("println!", [
+                            Expression.stringLiteral("Success: {:?}"),
+                            Expression.reference("response")
+                        ])
+                    )
+                ]
+            },
+            {
+                pattern: "Err(ClientError::ApiError { status_code, body, .. })",
+                body: [
+                    Statement.expression(
+                        Expression.macroCall("println!", [
+                            Expression.stringLiteral("API Error {}: {:?}"),
+                            Expression.reference("status_code"),
+                            Expression.reference("body")
+                        ])
+                    )
+                ]
+            },
+            {
+                pattern: "Err(e)",
+                body: [
+                    Statement.expression(
+                        Expression.macroCall("println!", [
+                            Expression.stringLiteral("Other error: {:?}"),
+                            Expression.reference("e")
+                        ])
+                    )
+                ]
+            }
+        ]);
+
+        return [clientVar, matchStatement, Statement.return(Expression.ok(Expression.raw("()")))];
+    }
+
+    private buildRetryCode(endpoint: EndpointWithFilepath): string {
+        const writer = new Writer();
+
+        const useStatements = [new UseStatement({ path: this.packageName, items: ["ApiClientBuilder"] })];
+
+        // Write use statements
+        useStatements.forEach((useStmt) => {
+            useStmt.write(writer);
+            writer.newLine();
+        });
+        writer.newLine();
+
+        const mainFunction = rust.method({
+            name: "main",
+            parameters: [],
+            isAsync: true,
+            attributes: [rust.attribute({ name: "tokio::main" })],
+            body: CodeBlock.fromStatements(this.buildRetryBody(endpoint))
+        });
+
+        mainFunction.write(writer);
+        return writer.toString();
+    }
+
+    private buildRetryBody(endpoint: EndpointWithFilepath): Statement[] {
+        const clientBuild = Expression.methodChain(
+            Expression.methodCall({
+                target: Expression.reference("ApiClientBuilder"),
+                method: "new",
+                args: [Expression.stringLiteral("https://api.example.com")]
+            }),
+            [
+                { method: "api_key", args: [Expression.stringLiteral("your-api-key")] },
+                { method: "max_retries", args: [Expression.numberLiteral(3)] },
+                { method: "build", args: [] },
+                { method: "expect", args: [Expression.stringLiteral("Failed to build client")] }
+            ]
+        );
+
+        const clientVar = Statement.let({
+            name: "client",
+            value: clientBuild
+        });
+
+        // Method call
+        const methodCallParts = this.getMethodCall(endpoint).split(".");
+        let methodTarget = Expression.reference(methodCallParts[0] || "client");
+
+        for (let i = 1; i < methodCallParts.length - 1; i++) {
+            methodTarget = Expression.fieldAccess(methodTarget, methodCallParts[i] || "");
+        }
+
+        const responseVar = Statement.let({
+            name: "response",
+            value: Expression.methodCall({
+                target: Expression.await(
+                    Expression.methodCall({
+                        target: methodTarget,
+                        method: methodCallParts[methodCallParts.length - 1] || "call",
+                        args: []
+                    })
+                ),
+                method: "expect",
+                args: [Expression.stringLiteral("API call failed")]
+            })
+        });
+
+        return [clientVar, responseVar];
+    }
+
+    private buildTimeoutCode(endpoint: EndpointWithFilepath): string {
+        const useStatements = [
+            new UseStatement({ path: this.packageName, items: ["ApiClientBuilder"] }),
+            new UseStatement({ path: "std::time", items: ["Duration"] })
+        ];
+
+        const writer = new Writer();
+
+        // Write use statements
+        useStatements.forEach((useStmt) => {
+            useStmt.write(writer);
+            writer.newLine();
+        });
+        writer.newLine();
+
+        const mainFunction = rust.method({
+            name: "main",
+            parameters: [],
+            isAsync: true,
+            attributes: [rust.attribute({ name: "tokio::main" })],
+            body: CodeBlock.fromStatements(this.buildTimeoutBody(endpoint))
+        });
+
+        mainFunction.write(writer);
+        return writer.toString();
+    }
+
+    private buildTimeoutBody(endpoint: EndpointWithFilepath): Statement[] {
+        const clientBuild = Expression.methodChain(
+            Expression.methodCall({
+                target: Expression.reference("ApiClientBuilder"),
+                method: "new",
+                args: [Expression.stringLiteral("https://api.example.com")]
+            }),
+            [
+                { method: "api_key", args: [Expression.stringLiteral("your-api-key")] },
+                {
+                    method: "timeout",
+                    args: [Expression.functionCall("Duration::from_secs", [Expression.numberLiteral(30)])]
+                },
+                { method: "build", args: [] },
+                { method: "expect", args: [Expression.stringLiteral("Failed to build client")] }
+            ]
+        );
+
+        const clientVar = Statement.let({
+            name: "client",
+            value: clientBuild
+        });
+
+        // Method call
+        const methodCallParts = this.getMethodCall(endpoint).split(".");
+        let methodTarget = Expression.reference(methodCallParts[0] || "client");
+
+        for (let i = 1; i < methodCallParts.length - 1; i++) {
+            methodTarget = Expression.fieldAccess(methodTarget, methodCallParts[i] || "");
+        }
+
+        const responseVar = Statement.let({
+            name: "response",
+            value: Expression.methodCall({
+                target: Expression.await(
+                    Expression.methodCall({
+                        target: methodTarget,
+                        method: methodCallParts[methodCallParts.length - 1] || "call",
+                        args: []
+                    })
+                ),
+                method: "expect",
+                args: [Expression.stringLiteral("API call failed")]
+            })
+        });
+
+        return [clientVar, responseVar];
     }
 
     private writeCode(code: string): string {

@@ -3,7 +3,11 @@ import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractRustGeneratorCli, RustFile } from "@fern-api/rust-base";
 import { Module, ModuleDeclaration, UseStatement } from "@fern-api/rust-codegen";
-import { DynamicSnippetsGenerator, DynamicSnippetsGeneratorContext } from "@fern-api/rust-dynamic-snippets";
+import {
+    DynamicSnippetsGenerator,
+    DynamicSnippetsGeneratorContext,
+    EndpointSnippetGenerator
+} from "@fern-api/rust-dynamic-snippets";
 import { generateModels } from "@fern-api/rust-model";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -347,7 +351,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
         try {
             context.logger.info("Using DynamicSnippetsGenerator for Rust snippet generation");
-            
+
             const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
                 ir: convertIr(dynamicIr),
                 config: context.config
@@ -363,12 +367,11 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
                             path,
                             identifierOverride: endpointId
                         },
-                        snippet: {
-                            type: "rust",
+                        snippet: FernGeneratorExec.EndpointSnippet.go({
                             client: dynamicSnippetsGenerator.generateSync(
                                 convertDynamicEndpointSnippetRequest(endpointExample)
                             ).snippet
-                        } as any
+                        })
                     });
                 }
             }
@@ -386,16 +389,27 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         const endpointSnippets: Endpoint[] = [];
 
         try {
-            // Generate basic snippets for each endpoint
+            // Create an EndpointSnippetGenerator to use AST-based generation
+            const snippetGenerator = new EndpointSnippetGenerator({
+                context: this.createDynamicSnippetsContext(context)
+            });
+
+            // Generate basic snippets for each endpoint using AST
             const services = Object.values(context.ir.services);
             for (const service of services) {
                 for (const endpoint of service.endpoints) {
                     try {
-                        const packageName = context.configManager.get("packageName") ?? "api_client";
-                        const hasAuth = context.ir.auth != null;
+                        // Create a basic endpoint snippet request
+                        const basicSnippetRequest = this.createBasicSnippetRequest(endpoint, context);
 
-                        // Build a basic snippet for this endpoint
-                        const snippet = this.buildBasicEndpointSnippet(endpoint, packageName, hasAuth);
+                        // Convert IR endpoint to dynamic endpoint format
+                        const dynamicEndpoint = this.convertEndpointToDynamic(endpoint, service);
+
+                        // Generate snippet using AST
+                        const snippet = snippetGenerator.generateSnippetSync({
+                            endpoint: dynamicEndpoint,
+                            request: basicSnippetRequest
+                        });
 
                         endpointSnippets.push({
                             exampleIdentifier: `${service.name.fernFilepath.allParts.join("_")}_${endpoint.name.originalName}`,
@@ -404,62 +418,29 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
                                 path: FernGeneratorExec.EndpointPath(endpoint.fullPath.head),
                                 identifierOverride: endpoint.id
                             },
-                            snippet: {
-                                type: "rust",
+                            snippet: FernGeneratorExec.EndpointSnippet.go({
                                 client: snippet
-                            } as any
+                            })
                         });
 
-                        context.logger.debug(`Generated basic snippet for ${endpoint.name.originalName}`);
+                        context.logger.debug(`Generated AST-based snippet for ${endpoint.name.originalName}`);
                     } catch (endpointError) {
                         context.logger.debug(
-                            `Error generating snippet for ${endpoint.name.originalName}: ${endpointError}`
+                            `Error generating AST snippet for ${endpoint.name.originalName}: ${endpointError}`
                         );
                     }
                 }
             }
 
-            // If no snippets were generated, add a fallback basic snippet
+            // If no snippets were generated, create a simple fallback using AST
             if (endpointSnippets.length === 0) {
-                const firstService = services[0];
-                const firstEndpoint = firstService?.endpoints[0];
-
-                if (firstService && firstEndpoint) {
-                    const packageName = context.configManager.get("packageName") ?? "api_client";
-
-                    const snippet = `use ${packageName}::ApiClientBuilder;
-
-#[tokio::main]
-async fn main() {
-    let client = ApiClientBuilder::new("https://api.example.com")
-        .api_key("your-api-key")
-        .build()
-        .expect("Failed to build client");
-    
-    // Example API call
-    let response = client.${this.toSnakeCase(firstEndpoint.name.originalName)}()
-        .await
-        .expect("API call failed");
-    
-    println!("Response: {:?}", response);
-}`;
-
-                    endpointSnippets.push({
-                        exampleIdentifier: "fallback_example",
-                        id: {
-                            method: firstEndpoint.method,
-                            path: FernGeneratorExec.EndpointPath(firstEndpoint.fullPath.head),
-                            identifierOverride: firstEndpoint.id
-                        },
-                        snippet: {
-                            type: "rust",
-                            client: snippet
-                        } as any
-                    });
+                const fallbackSnippet = this.createFallbackSnippetWithAST(context);
+                if (fallbackSnippet) {
+                    endpointSnippets.push(fallbackSnippet);
                 }
             }
         } catch (error) {
-            context.logger.debug(`Error generating snippet: ${error}`);
+            context.logger.debug(`Error generating AST-based snippets: ${error}`);
         }
 
         return endpointSnippets;
@@ -472,8 +453,6 @@ async fn main() {
             .replace(/^_/, "")
             .replace(/-/g, "_");
     }
-
-
 
     // ===========================
     // UTILITY METHODS
@@ -491,23 +470,152 @@ async fn main() {
         return typeof file.fileContents === "string" ? file.fileContents : file.fileContents.toString();
     }
 
-    private buildBasicEndpointSnippet(endpoint: any, packageName: string, hasAuth: boolean): string {
-        const methodName = endpoint.name.camelCase.unsafeName.toLowerCase();
-        const authSetup = hasAuth ? '.api_key("your-api-key")' : '';
-        
-        return `use ${packageName}::ApiClientBuilder;
+    private createDynamicSnippetsContext(context: SdkGeneratorContext): DynamicSnippetsGeneratorContext {
+        // Use the dynamic IR if available, otherwise skip
+        if (context.ir.dynamic == null) {
+            throw new Error("Dynamic IR is required for AST-based snippet generation");
+        }
+        const dynamicIr = convertIr(context.ir.dynamic);
+        return new DynamicSnippetsGeneratorContext({
+            ir: dynamicIr,
+            config: context.config
+        });
+    }
+
+    private createBasicSnippetRequest(
+        endpoint: any,
+        context: SdkGeneratorContext
+    ): FernIr.dynamic.EndpointSnippetRequest {
+        // Create a basic snippet request with minimal required fields
+        return {
+            endpoint: {
+                method: endpoint.method,
+                path: endpoint.fullPath.head
+            },
+            baseURL: "https://api.example.com",
+            environment: undefined,
+            auth: context.ir.auth ? this.createBasicAuthValues(context.ir.auth) : undefined,
+            pathParameters: {},
+            queryParameters: {},
+            headers: {},
+            requestBody: undefined
+        };
+    }
+
+    private createBasicAuthValues(auth: any): FernIr.dynamic.AuthValues | undefined {
+        // Create basic auth values based on auth type
+        if (auth.scheme?.type === "bearer") {
+            return {
+                type: "bearer",
+                token: "your-api-token"
+            };
+        } else if (auth.scheme?.type === "basic") {
+            return {
+                type: "basic",
+                username: "your-username",
+                password: "your-password"
+            };
+        } else if (auth.scheme?.type === "header") {
+            return {
+                type: "header",
+                value: "your-api-key"
+            };
+        }
+        return undefined;
+    }
+
+    private convertEndpointToDynamic(endpoint: any, service: any): FernIr.dynamic.Endpoint {
+        // Convert regular IR endpoint to dynamic endpoint format
+        return {
+            declaration: {
+                name: endpoint.name,
+                fernFilepath: service.name.fernFilepath
+            },
+            location: {
+                method: endpoint.method,
+                path: endpoint.fullPath.head
+            },
+            auth: endpoint.auth ? this.convertAuthToDynamic(endpoint.auth) : undefined,
+            request: this.convertRequestToDynamic(endpoint.request),
+            response: endpoint.response,
+            examples: []
+        };
+    }
+
+    private convertAuthToDynamic(auth: any): FernIr.dynamic.Auth | undefined {
+        // Convert auth to dynamic format
+        if (auth.scheme?.type === "bearer") {
+            return { type: "bearer", token: auth.token };
+        } else if (auth.scheme?.type === "basic") {
+            return { type: "basic", username: auth.username, password: auth.password };
+        } else if (auth.scheme?.type === "header") {
+            return { type: "header", header: auth.header };
+        }
+        return undefined;
+    }
+
+    private convertRequestToDynamic(request: any): FernIr.dynamic.Request {
+        // Convert request to dynamic format - simplified
+        return {
+            type: "inlined",
+            declaration: {
+                name: request.name || "Request",
+                fernFilepath: {
+                    allParts: [],
+                    packagePath: [],
+                    file: {
+                        originalName: "",
+                        camelCase: { unsafeName: "", safeName: "" },
+                        snakeCase: { unsafeName: "", safeName: "" },
+                        screamingSnakeCase: { unsafeName: "", safeName: "" },
+                        pascalCase: { unsafeName: "", safeName: "" }
+                    }
+                }
+            },
+            metadata: { includePathParameters: false, onlyPathParameters: false },
+            pathParameters: request.pathParameters || [],
+            queryParameters: request.queryParameters || [],
+            headers: request.headers || [],
+            body: request.body ? { type: "properties", value: [] } : undefined
+        };
+    }
+
+    private createFallbackSnippetWithAST(context: SdkGeneratorContext): Endpoint | undefined {
+        // Create a simple fallback snippet using basic client initialization
+        const packageName = context.configManager.get("packageName") ?? "api_client";
+        const clientName = `${packageName
+            .split("_")
+            .map((p) => p.charAt(0).toUpperCase() + p.slice(1))
+            .join("")}Client`;
+
+        const snippet = `use ${packageName}::{ClientConfig, ${clientName}};
 
 #[tokio::main]
-async fn main() {
-    let client = ApiClientBuilder::new("https://api.example.com")${authSetup}
-        .build()
-        .expect("Failed to build client");
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // Create client configuration
+    let config = ClientConfig {
+        ..Default::default()
+    };
 
-    let response = client.${methodName}()
-        .await
-        .expect("API call failed");
+    // Initialize the client
+    let client = ${clientName}::new(config)?;
 
-    println!("Response: {:?}", response);
+    // Example usage would go here
+    println!("Client initialized successfully!");
+
+    Ok(())
 }`;
+
+        return {
+            exampleIdentifier: "fallback_example",
+            id: {
+                method: "GET",
+                path: FernGeneratorExec.EndpointPath("/"),
+                identifierOverride: "fallback"
+            },
+            snippet: FernGeneratorExec.EndpointSnippet.go({
+                client: snippet
+            })
+        };
     }
 }

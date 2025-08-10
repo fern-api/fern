@@ -1979,9 +1979,6 @@ importers:
       '@fern-api/rust-dynamic-snippets':
         specifier: workspace:*
         version: link:../dynamic-snippets
-      dedent:
-        specifier: ^1.5.1
-        version: 1.6.0(babel-plugin-macros@3.1.0)
     devDependencies:
       '@fern-api/base-generator':
         specifier: workspace:*

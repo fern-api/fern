@@ -41,7 +41,7 @@ export class DynamicTypeInstantiationMapper {
             case "unknown":
                 return this.convertUnknown({ value: args.value });
             default:
-                return rust.Expression.raw("todo!(\"Unhandled type reference\")");
+                return rust.Expression.raw('todo!("Unhandled type reference")');
         }
     }
 
@@ -76,7 +76,7 @@ export class DynamicTypeInstantiationMapper {
         } else if (typeof literal?.value === "string") {
             return rust.Expression.stringLiteral(literal.value);
         }
-        return rust.Expression.raw("todo!(\"Unknown literal type\")");
+        return rust.Expression.raw('todo!("Unknown literal type")');
     }
 
     private convertUnknown({ value }: { value: unknown }): rust.Expression {

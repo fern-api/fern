@@ -64,7 +64,7 @@ export class FilePropertyMapper {
     }): rust.Expression {
         const fileValue = this.context.getSingleFileValue({ property, record });
         if (fileValue == null) {
-            return rust.Expression.raw("todo!(\"Missing file value\")");
+            return rust.Expression.raw('todo!("Missing file value")');
         }
         return this.createFileExpression(fileValue);
     }
@@ -80,9 +80,7 @@ export class FilePropertyMapper {
         if (fileValues == null) {
             return rust.Expression.vec([]);
         }
-        return rust.Expression.vec(
-            fileValues.map((value) => this.createFileExpression(value))
-        );
+        return rust.Expression.vec(fileValues.map((value) => this.createFileExpression(value)));
     }
 
     private getBodyProperty({
@@ -94,7 +92,7 @@ export class FilePropertyMapper {
     }): rust.Expression {
         const bodyPropertyValue = record[property.name.wireValue];
         if (bodyPropertyValue == null) {
-            return rust.Expression.raw("todo!(\"Missing body property value\")");
+            return rust.Expression.raw('todo!("Missing body property value")');
         }
         return this.context.dynamicTypeInstantiationMapper.convert({
             typeReference: property.typeReference,
@@ -104,23 +102,20 @@ export class FilePropertyMapper {
 
     private createFileExpression(fileContent: string): rust.Expression {
         // For Rust, create a multipart part expression
-        return rust.Expression.methodChain(
-            rust.Expression.reference("multipart::Part"),
-            [
-                {
-                    method: "text",
-                    args: [rust.Expression.stringLiteral(fileContent)]
-                },
-                {
-                    method: "file_name", 
-                    args: [rust.Expression.stringLiteral("file.txt")]
-                },
-                {
-                    method: "mime_str",
-                    args: [rust.Expression.stringLiteral("text/plain")]
-                }
-            ]
-        );
+        return rust.Expression.methodChain(rust.Expression.reference("multipart::Part"), [
+            {
+                method: "text",
+                args: [rust.Expression.stringLiteral(fileContent)]
+            },
+            {
+                method: "file_name",
+                args: [rust.Expression.stringLiteral("file.txt")]
+            },
+            {
+                method: "mime_str",
+                args: [rust.Expression.stringLiteral("text/plain")]
+            }
+        ]);
     }
 
     private getMimeType(filename: string): string {

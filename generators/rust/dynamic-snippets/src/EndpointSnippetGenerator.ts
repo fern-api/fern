@@ -54,11 +54,11 @@ export class EndpointSnippetGenerator {
 async fn main() {
     let ${CLIENT_VAR_NAME} = ${this.getClientBuilderCall(this.getConstructorArgs({ endpoint, snippet })).toString()};
     ${rust.Expression.methodCall({
-                target: rust.Expression.reference(CLIENT_VAR_NAME),
-                method: this.getMethodName({ endpoint }),
-                args: this.getMethodArgs({ endpoint, snippet }),
-                isAsync: true
-            }).toString()};
+        target: rust.Expression.reference(CLIENT_VAR_NAME),
+        method: this.getMethodName({ endpoint }),
+        args: this.getMethodArgs({ endpoint, snippet }),
+        isAsync: true
+    }).toString()};
 }`)
         ]);
     }
@@ -128,7 +128,7 @@ async fn main() {
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): rust.Expression[] {
         const args: rust.Expression[] = [];
-        
+
         // Add base URL
         const baseUrlArg = this.getConstructorBaseUrlArg({
             baseUrl: snippet.baseURL,
@@ -231,7 +231,7 @@ async fn main() {
                         severity: Severity.Critical,
                         message: this.context.newAuthMismatchError({ auth, values }).message
                     });
-                    return rust.Expression.raw("todo!(\"Auth mismatch error\")");
+                    return rust.Expression.raw('todo!("Auth mismatch error")');
                 }
                 return this.getConstructorBasicAuthArg({ auth, values });
             case "bearer":
@@ -240,7 +240,7 @@ async fn main() {
                         severity: Severity.Critical,
                         message: this.context.newAuthMismatchError({ auth, values }).message
                     });
-                    return rust.Expression.raw("todo!(\"Auth mismatch error\")");
+                    return rust.Expression.raw('todo!("Auth mismatch error")');
                 }
                 return this.getConstructorBearerAuthArg({ auth, values });
             case "header":
@@ -249,7 +249,7 @@ async fn main() {
                         severity: Severity.Critical,
                         message: this.context.newAuthMismatchError({ auth, values }).message
                     });
-                    return rust.Expression.raw("todo!(\"Auth mismatch error\")");
+                    return rust.Expression.raw('todo!("Auth mismatch error")');
                 }
                 return this.getConstructorHeaderAuthArg({ auth, values });
             case "oauth":
@@ -258,13 +258,13 @@ async fn main() {
                         severity: Severity.Critical,
                         message: this.context.newAuthMismatchError({ auth, values }).message
                     });
-                    return rust.Expression.raw("todo!(\"Auth mismatch error\")");
+                    return rust.Expression.raw('todo!("Auth mismatch error")');
                 }
                 this.context.errors.add({
                     severity: Severity.Warning,
                     message: "OAuth client credentials are not supported yet"
                 });
-                return rust.Expression.raw("todo!(\"OAuth not implemented\")");
+                return rust.Expression.raw('todo!("OAuth not implemented")');
             default:
                 assertNever(auth);
         }
@@ -280,10 +280,7 @@ async fn main() {
         return rust.Expression.methodCall({
             target: rust.Expression.reference("BasicAuth"),
             method: "new",
-            args: [
-                rust.Expression.stringLiteral(values.username),
-                rust.Expression.stringLiteral(values.password)
-            ]
+            args: [rust.Expression.stringLiteral(values.username), rust.Expression.stringLiteral(values.password)]
         });
     }
 
@@ -349,14 +346,11 @@ async fn main() {
             typeReference: header.typeReference,
             value
         });
-        
+
         return rust.Expression.methodCall({
             target: rust.Expression.reference("HeaderValue"),
             method: "new",
-            args: [
-                rust.Expression.stringLiteral(header.name.name.snakeCase.safeName),
-                headerValue
-            ]
+            args: [rust.Expression.stringLiteral(header.name.name.snakeCase.safeName), headerValue]
         });
     }
 
@@ -413,7 +407,7 @@ async fn main() {
     }): rust.Expression[] {
         const args: rust.Expression[] = [];
 
-        // Path parameters  
+        // Path parameters
         this.context.errors.scope(Scope.PathParameters);
         const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
         if (pathParameters.length > 0) {
@@ -450,7 +444,7 @@ async fn main() {
                 severity: Severity.Critical,
                 message: `Expected bytes value to be a string, got ${typeof value}`
             });
-            return rust.Expression.raw("todo!(\"Invalid bytes value\")");
+            return rust.Expression.raw('todo!("Invalid bytes value")');
         }
         return rust.Expression.stringLiteral(value as string);
     }
@@ -503,10 +497,7 @@ async fn main() {
         }
         this.context.errors.unscope();
 
-        return rust.Expression.structLiteral(
-            this.context.getStructName(request.declaration.name),
-            structFields
-        );
+        return rust.Expression.structLiteral(this.context.getStructName(request.declaration.name), structFields);
     }
 
     private getInlinedRequestBodyStructFields({
@@ -590,18 +581,22 @@ async fn main() {
     }): Array<{ name: string; value: rust.Expression }> {
         const fields: Array<{ name: string; value: rust.Expression }> = [];
         const filePropertyInfo = this.context.filePropertyMapper.getFilePropertyInfo({ body, value });
-        
+
         // Add file fields
-        fields.push(...filePropertyInfo.fileFields.map(field => ({
-            name: field.name,
-            value: field.value
-        })));
+        fields.push(
+            ...filePropertyInfo.fileFields.map((field) => ({
+                name: field.name,
+                value: field.value
+            }))
+        );
 
         // Add body property fields
-        fields.push(...filePropertyInfo.bodyPropertyFields.map(field => ({
-            name: field.name,
-            value: field.value
-        })));
+        fields.push(
+            ...filePropertyInfo.bodyPropertyFields.map((field) => ({
+                name: field.name,
+                value: field.value
+            }))
+        );
 
         return fields;
     }
@@ -636,12 +631,9 @@ async fn main() {
     }
 
     private getClientBuilderCall(arguments_: rust.Expression[]): rust.Expression {
-        return rust.Expression.methodChain(
-            rust.Expression.reference(this.context.getClientBuilderName()),
-            [
-                ...arguments_.map(arg => ({ method: "with_arg", args: [arg] })),
-                { method: "build", args: [] }
-            ]
-        );
+        return rust.Expression.methodChain(rust.Expression.reference(this.context.getClientBuilderName()), [
+            ...arguments_.map((arg) => ({ method: "with_arg", args: [arg] })),
+            { method: "build", args: [] }
+        ]);
     }
 }

@@ -1,3 +1,3 @@
 export { convertIr } from "./convertIr";
-export { convertEndpoints } from "./convertEndpoints";  
+export { convertEndpoints } from "./convertEndpoints";
 export { convertDynamicEndpointSnippetRequest } from "./convertEndpointSnippetRequest";

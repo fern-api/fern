@@ -9,13 +9,13 @@ export interface Endpoint extends Omit<dynamic.Endpoint, "id"> {
  */
 export function convertEndpoints(endpoints: Record<EndpointId, dynamic.Endpoint>): Record<EndpointId, Endpoint> {
     const convertedEndpoints: Record<EndpointId, Endpoint> = {};
-    
+
     for (const [endpointId, endpoint] of Object.entries(endpoints)) {
         convertedEndpoints[endpointId] = {
             ...endpoint,
             id: endpointId
         };
     }
-    
+
     return convertedEndpoints;
 }

@@ -12,7 +12,9 @@ export type DynamicIntermediateRepresentation = Omit<dynamic.DynamicIntermediate
  * convention doesn't match. This converts from the ir.dynamic field to the format
  * expected by DynamicSnippetsGenerator.
  */
-export function convertIr(ir: dynamic.DynamicIntermediateRepresentation): FernIr.dynamic.DynamicIntermediateRepresentation {
+export function convertIr(
+    ir: dynamic.DynamicIntermediateRepresentation
+): FernIr.dynamic.DynamicIntermediateRepresentation {
     return {
         ...ir,
         endpoints: convertEndpoints(ir.endpoints) as any
