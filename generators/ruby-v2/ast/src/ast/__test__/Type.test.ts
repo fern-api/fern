@@ -24,7 +24,7 @@ describe("Type", () => {
     test("class", () => {
         const classType = Type.class_({
             name: "Client",
-            modules: ["MyApi", "V1"],
+            modules: ["MyApi", "V1"]
         });
 
         expect(classType.typeDefinitionToString(writerConfig)).toMatchSnapshot();

@@ -216,13 +216,13 @@ export class Type extends AstNode {
         });
     }
 
-    public static class_(args: { name: string, modules?: string[]}): Type {
+    public static class_(args: { name: string; modules?: string[] }): Type {
         return new this({
             type: "class",
             reference: new ClassReference({
                 name: args.name,
                 modules: args.modules,
-                fullyQualified: true,
+                fullyQualified: true
             })
         });
     }

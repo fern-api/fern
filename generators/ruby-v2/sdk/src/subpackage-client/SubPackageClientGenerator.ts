@@ -49,11 +49,16 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
         clientClass.addStatement(
             ruby.method({
                 name: "initialize",
-                parameters: { positional: [ruby.parameters.positional({ name: "client", type: ruby.Type.class_(this.context.getRawClientClassReference()) })] },
+                parameters: {
+                    positional: [
+                        ruby.parameters.positional({
+                            name: "client",
+                            type: ruby.Type.class_(this.context.getRawClientClassReference())
+                        })
+                    ]
+                },
                 returnType: ruby.Type.class_(this.getClientClassReference()),
-                statements: [
-                    ruby.codeblock("@client = client")
-                ]
+                statements: [ruby.codeblock("@client = client")]
             })
         );
 
@@ -82,8 +87,11 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
     private getClientClassReference(): ruby.ClassReference {
         return ruby.classReference({
             name: CLIENT_CLASS_NAME,
-            modules: [this.context.getRootModule().name, ...this.subpackage.fernFilepath.allParts.map((path) => path.pascalCase.safeName)],
-            fullyQualified: true,
+            modules: [
+                this.context.getRootModule().name,
+                ...this.subpackage.fernFilepath.allParts.map((path) => path.pascalCase.safeName)
+            ],
+            fullyQualified: true
         });
     }
 
@@ -92,7 +100,7 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
         for (const endpoint of service.endpoints) {
             const method = ruby.method({
                 name: endpoint.name.snakeCase.safeName,
-                returnType: ruby.Type.void(),
+                returnType: ruby.Type.void()
             });
             methods.push(method);
         }

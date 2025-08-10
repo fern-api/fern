@@ -96,7 +96,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         return ruby.classReference({
             name: "RawClient",
             modules: [this.getRootModule().name, "Internal", "Http"],
-            fullyQualified: true,
+            fullyQualified: true
         });
     }
 
