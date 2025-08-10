@@ -27,7 +27,6 @@
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
-    "depcheck": "depcheck",
     "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-ruby-sdk-v2:latest ../../..",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
@@ -43,10 +42,8 @@
   "devDependencies": {
     "@fern-api/ruby-model": "workspace:*",
     "@fern-api/ruby-ast": "workspace:*",
-    "@fern-api/ruby-base": "workspace:*",
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
-    "@fern-api/ruby-ast": "workspace:*",
     "@fern-api/ruby-base": "workspace:*",
     "@fern-fern/generator-exec-sdk": "^0.0.1045",
     "@fern-fern/ir-sdk": "^58.2.0",

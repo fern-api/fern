@@ -48,7 +48,6 @@
     "zod": "^3.22.4",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
     "esbuild": "^0.25.0",
-    "tsup": "^8.0.2",
     "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
