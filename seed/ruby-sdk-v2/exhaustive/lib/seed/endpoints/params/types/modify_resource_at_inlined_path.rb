@@ -1,0 +1,2 @@
+
+class ModifyResourceAtInlinedPath; end

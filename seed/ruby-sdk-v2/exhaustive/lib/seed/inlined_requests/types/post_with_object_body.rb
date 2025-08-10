@@ -1,0 +1,2 @@
+
+class PostWithObjectBody; end

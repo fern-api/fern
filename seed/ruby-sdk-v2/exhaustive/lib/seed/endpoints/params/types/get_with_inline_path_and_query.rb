@@ -1,0 +1,2 @@
+
+class GetWithInlinePathAndQuery; end

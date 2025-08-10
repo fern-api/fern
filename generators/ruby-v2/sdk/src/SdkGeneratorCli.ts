@@ -4,11 +4,12 @@ import { AbstractRubyGeneratorCli } from "@fern-api/ruby-base";
 import { generateModels } from "@fern-api/ruby-model";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
+import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator";
 
 export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -64,8 +65,28 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
                 subpackage
             });
             context.project.addRawFiles(subClient.generate());
+
+            if (subpackage.service != null && service != null) {
+                this.generateRequests(context, service, subpackage.service);
+            }
         });
 
         await context.project.persist();
     }
+
+    private generateRequests(context: SdkGeneratorContext, service: HttpService, serviceId: string) {
+        service.endpoints.forEach((endpoint) => {
+            if (endpoint.sdkRequest != null && endpoint.sdkRequest.shape.type === "wrapper") {
+                const wrappedRequestGenerator = new WrappedRequestGenerator({
+                    wrapper: endpoint.sdkRequest.shape,
+                    context,
+                    endpoint,
+                    serviceId
+                });
+                const wrappedRequest = wrappedRequestGenerator.generate();
+                context.project.addRawFiles(wrappedRequest);
+            }
+        });
+    }
+
 }
