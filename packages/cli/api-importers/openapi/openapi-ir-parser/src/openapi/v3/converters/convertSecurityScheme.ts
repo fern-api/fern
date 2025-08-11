@@ -52,7 +52,7 @@ function convertSecuritySchemeHelper(
             tokenEnvVar: bearerNames?.env
         });
     } else if (securityScheme.type === "http" && securityScheme.scheme?.toLowerCase() === "basic") {
-      // ^ case insensitivity for securityScheme.scheme required in OAS
+        // ^ case insensitivity for securityScheme.scheme required in OAS
         const basicSecuritySchemeNamingAndEnvvar = getBasicSecuritySchemeNameAndEnvvar(securityScheme);
         const basicSecuritySchemeNaming = getBasicSecuritySchemeNames(securityScheme);
         return SecurityScheme.basic({
