@@ -1,7 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { UseStatement, rust } from "@fern-api/rust-codegen";
-import { generateRustTypeForTypeReference } from "@fern-api/rust-model";
+import { generateRustTypeForTypeReference } from "@fern-api/fern-rust-model";
 
 import {
     ApiAuth,
