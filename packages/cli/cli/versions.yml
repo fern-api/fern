@@ -1,4 +1,10 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- changelogEntry:
+    - summary: Add 'vendor' to set of reservved keywords for go.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-08-11"
+  version: 0.66.1
 
 - changelogEntry:
     - summary: Add support for generating inferred auth in IR and expand bearer auth in Fern Definition for inference.
