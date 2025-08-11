@@ -258,6 +258,9 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             AsIsFiles.Test.RawClientTests.RetriesTests,
             AsIsFiles.Test.RawClientTests.QueryParameterTests
         ];
+        if (this.hasIdempotencyHeaders()) {
+            files.push(AsIsFiles.Test.RawClientTests.IdempotentHeadersTests);
+        }
         if (this.generateNewAdditionalProperties()) {
             files.push(AsIsFiles.Test.Json.AdditionalPropertiesTests);
         }
