@@ -1,7 +1,7 @@
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { RootClientGenerator } from "../client";
+import { SdkGeneratorContext } from "../../../SdkGeneratorContext";
+import { RootClientGenerator } from "../../client";
 
 export class SnippetJsonGenerator {
     private readonly context: SdkGeneratorContext;
