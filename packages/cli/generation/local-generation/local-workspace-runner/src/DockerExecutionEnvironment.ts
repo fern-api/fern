@@ -27,7 +27,8 @@ export class DockerExecutionEnvironment implements ExecutionEnvironment {
         snippetPath,
         snippetTemplatePath,
         context,
-        inspect
+        inspect,
+        runner
     }: ExecutionEnvironment.ExecuteArgs): Promise<void> {
         context.logger.info(`Executing generator ${generatorName} using Docker image: ${this.dockerImage}`);
 
@@ -59,7 +60,7 @@ export class DockerExecutionEnvironment implements ExecutionEnvironment {
             envVars,
             ports,
             removeAfterCompletion: !this.keepDocker,
-            runner: undefined
+            runner
         });
     }
 }
