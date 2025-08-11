@@ -42,7 +42,8 @@ function convertSecuritySchemeHelper(
                 headerNames?.name ?? getExtension<string>(securityScheme, FernOpenAPIExtension.HEADER_VARIABLE_NAME),
             headerEnvVar: headerNames?.env
         });
-    } else if (securityScheme.type === "http" && securityScheme.scheme?.toLowerCase() === "bearer") { // case insensitivity required in OAS
+    } else if (securityScheme.type === "http" && securityScheme.scheme?.toLowerCase() === "bearer") {
+        // ^ case insensitivity for securityScheme.scheme required in OAS
         const bearerNames = getExtension<SecuritySchemeNames>(securityScheme, FernOpenAPIExtension.FERN_BEARER_TOKEN);
         return SecurityScheme.bearer({
             tokenVariableName:
@@ -50,7 +51,8 @@ function convertSecuritySchemeHelper(
                 getExtension<string>(securityScheme, FernOpenAPIExtension.BEARER_TOKEN_VARIABLE_NAME),
             tokenEnvVar: bearerNames?.env
         });
-    } else if (securityScheme.type === "http" && securityScheme.scheme?.toLowerCase() === "basic") { // case insensitivity required in OAS
+    } else if (securityScheme.type === "http" && securityScheme.scheme?.toLowerCase() === "basic") {
+      // ^ case insensitivity for securityScheme.scheme required in OAS
         const basicSecuritySchemeNamingAndEnvvar = getBasicSecuritySchemeNameAndEnvvar(securityScheme);
         const basicSecuritySchemeNaming = getBasicSecuritySchemeNames(securityScheme);
         return SecurityScheme.basic({
