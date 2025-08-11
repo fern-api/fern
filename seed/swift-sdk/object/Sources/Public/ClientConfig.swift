@@ -1,7 +1,5 @@
 import Foundation
 
-import Foundation
-
 public final class ClientConfig: Sendable {
     public typealias CredentialProvider = @Sendable () async throws -> String
 

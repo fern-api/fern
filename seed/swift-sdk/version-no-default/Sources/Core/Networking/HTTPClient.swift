@@ -1,7 +1,5 @@
 import Foundation
 
-import Foundation
-
 final class HTTPClient: Sendable {
     private let clientConfig: ClientConfig
     private let jsonEncoder = Serde.jsonEncoder

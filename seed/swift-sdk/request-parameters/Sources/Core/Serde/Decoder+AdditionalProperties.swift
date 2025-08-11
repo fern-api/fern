@@ -1,7 +1,5 @@
 import Foundation
 
-import Foundation
-
 extension Decoder {
     func decodeAdditionalProperties<T: Decodable, C: CaseIterable & RawRepresentable>(
         using codingKeysType: C.Type
