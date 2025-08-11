@@ -92,7 +92,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                 context.project.addSourceFile({
                     nameCandidateWithoutExtension: def.filenameWithoutExtension,
                     directory: def.directory,
-                    fileContents: await def.loadContents()
+                    fileContents: [await def.loadContents()]
                 });
             })
         );

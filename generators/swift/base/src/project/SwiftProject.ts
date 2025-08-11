@@ -44,14 +44,14 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
     }: {
         nameCandidateWithoutExtension: string;
         directory: RelativeFilePath;
-        fileContents: string | swift.FileComponent[];
+        fileContents: swift.FileComponent[];
     }): SwiftFile {
         let filenameWithoutExt = nameCandidateWithoutExtension;
         while (this.srcFileNamesWithoutExtension.has(filenameWithoutExt)) {
             filenameWithoutExt += "_";
         }
         this.srcFileNamesWithoutExtension.add(filenameWithoutExt);
-        const file = new SwiftFile({
+        const file = SwiftFile.createWithFoundation({
             filename: filenameWithoutExt + ".swift",
             directory,
             fileContents
