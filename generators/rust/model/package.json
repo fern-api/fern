@@ -1,5 +1,5 @@
 {
-  "name": "@fern-api/fern-rust-model",
+  "name": "@fern-api/rust-model",
   "version": "0.0.0",
   "repository": {
     "type": "git",

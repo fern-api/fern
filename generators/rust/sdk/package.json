@@ -1,5 +1,5 @@
 {
-  "name": "@fern-api/fern-rust-sdk",
+  "name": "@fern-api/rust-sdk",
   "version": "0.0.0",
   "repository": {
     "type": "git",
@@ -45,7 +45,7 @@
     "@fern-api/logger": "workspace:*",
     "@fern-api/rust-base": "workspace:*",
     "@fern-api/rust-codegen": "workspace:*",
-    "@fern-api/fern-rust-model": "workspace:*",
+    "@fern-api/rust-model": "workspace:*",
     "@fern-fern/generator-cli-sdk": "0.0.28",
     "@fern-fern/generator-exec-sdk": "^0.0.1045",
     "@fern-fern/ir-sdk": "58.2.0",

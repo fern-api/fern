@@ -1,6 +1,6 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractRustGeneratorContext, AsIsFileDefinition, AsIsFiles } from "@fern-api/rust-base";
-import { ModelCustomConfigSchema, ModelGeneratorContext } from "@fern-api/fern-rust-model";
+import { ModelCustomConfigSchema, ModelGeneratorContext } from "@fern-api/rust-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { HttpService, IntermediateRepresentation, ServiceId, Subpackage, SubpackageId } from "@fern-fern/ir-sdk/api";
 import { RustGeneratorAgent } from "./RustGeneratorAgent";
