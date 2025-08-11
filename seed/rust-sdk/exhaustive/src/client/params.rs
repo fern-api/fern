@@ -4,22 +4,12 @@ use crate::{types::*};
 
 pub struct ParamsClient {
     pub http_client: HttpClient,
-    pub api_key: Option<String>,
-    pub bearer_token: Option<String>,
-    pub username: Option<String>,
-    pub password: Option<String>,
 }
 
 impl ParamsClient {
-    pub fn new(config: ClientConfig, api_key: Option<String>, bearer_token: Option<String>, username: Option<String>, password: Option<String>) -> Result<Self, ClientError> {
+    pub fn new(config: ClientConfig) -> Result<Self, ClientError> {
         let http_client = HttpClient::new(config)?;
-        Ok(Self { 
-            http_client, 
-            api_key, 
-            bearer_token, 
-            username, 
-            password 
-        })
+        Ok(Self { http_client })
     }
 
     pub async fn get_with_path(&self, param: &String, options: Option<RequestOptions>) -> Result<String, ClientError> {
@@ -42,7 +32,7 @@ impl ParamsClient {
         ).await
     }
 
-    pub async fn get_with_query(&self, query: Option<&String>, number: Option<i32>, options: Option<RequestOptions>) -> Result<(), ClientError> {
+    pub async fn get_with_query(&self, query: Option<String>, number: Option<i32>, options: Option<RequestOptions>) -> Result<(), ClientError> {
         self.http_client.execute_request(
             Method::GET,
             "/params",
@@ -61,7 +51,7 @@ impl ParamsClient {
         ).await
     }
 
-    pub async fn get_with_allow_multiple_query(&self, query: Option<&String>, number: Option<i32>, options: Option<RequestOptions>) -> Result<(), ClientError> {
+    pub async fn get_with_allow_multiple_query(&self, query: Option<String>, number: Option<i32>, options: Option<RequestOptions>) -> Result<(), ClientError> {
         self.http_client.execute_request(
             Method::GET,
             "/params",
@@ -80,7 +70,7 @@ impl ParamsClient {
         ).await
     }
 
-    pub async fn get_with_path_and_query(&self, param: &String, query: Option<&String>, options: Option<RequestOptions>) -> Result<(), ClientError> {
+    pub async fn get_with_path_and_query(&self, param: &String, query: Option<String>, options: Option<RequestOptions>) -> Result<(), ClientError> {
         self.http_client.execute_request(
             Method::GET,
             &format!("/params/path-query/{}", param),
@@ -96,7 +86,7 @@ impl ParamsClient {
         ).await
     }
 
-    pub async fn get_with_inline_path_and_query(&self, param: &String, query: Option<&String>, options: Option<RequestOptions>) -> Result<(), ClientError> {
+    pub async fn get_with_inline_path_and_query(&self, param: &String, query: Option<String>, options: Option<RequestOptions>) -> Result<(), ClientError> {
         self.http_client.execute_request(
             Method::GET,
             &format!("/params/path-query/{}", param),

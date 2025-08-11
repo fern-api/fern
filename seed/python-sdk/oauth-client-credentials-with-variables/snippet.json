@@ -30,6 +30,32 @@
         {
             "example_identifier": "default",
             "id": {
+                "path": "/nested-no-auth/get-something",
+                "method": "GET",
+                "identifier_override": "endpoint_nested-no-auth/api.getSomething"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedOauthClientCredentialsWithVariables\n\nclient = SeedOauthClientCredentialsWithVariables(\n    root_variable=\"YOUR_ROOT_VARIABLE\",\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\nclient.nested_no_auth.api.get_something()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedOauthClientCredentialsWithVariables\n\nclient = AsyncSeedOauthClientCredentialsWithVariables(\n    root_variable=\"YOUR_ROOT_VARIABLE\",\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\n\n\nasync def main() -> None:\n    await client.nested_no_auth.api.get_something()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/nested/get-something",
+                "method": "GET",
+                "identifier_override": "endpoint_nested/api.getSomething"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedOauthClientCredentialsWithVariables\n\nclient = SeedOauthClientCredentialsWithVariables(\n    root_variable=\"YOUR_ROOT_VARIABLE\",\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\nclient.nested.api.get_something()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedOauthClientCredentialsWithVariables\n\nclient = AsyncSeedOauthClientCredentialsWithVariables(\n    root_variable=\"YOUR_ROOT_VARIABLE\",\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\n\n\nasync def main() -> None:\n    await client.nested.api.get_something()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
                 "path": "/service/{endpointParam}",
                 "method": "POST",
                 "identifier_override": "endpoint_service.post"
@@ -37,6 +63,19 @@
             "snippet": {
                 "sync_client": "from seed import SeedOauthClientCredentialsWithVariables\n\nclient = SeedOauthClientCredentialsWithVariables(\n    root_variable=\"YOUR_ROOT_VARIABLE\",\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\nclient.service.post()\n",
                 "async_client": "import asyncio\n\nfrom seed import AsyncSeedOauthClientCredentialsWithVariables\n\nclient = AsyncSeedOauthClientCredentialsWithVariables(\n    root_variable=\"YOUR_ROOT_VARIABLE\",\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\n\n\nasync def main() -> None:\n    await client.service.post()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/get-something",
+                "method": "GET",
+                "identifier_override": "endpoint_simple.getSomething"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedOauthClientCredentialsWithVariables\n\nclient = SeedOauthClientCredentialsWithVariables(\n    root_variable=\"YOUR_ROOT_VARIABLE\",\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\nclient.simple.get_something()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedOauthClientCredentialsWithVariables\n\nclient = AsyncSeedOauthClientCredentialsWithVariables(\n    root_variable=\"YOUR_ROOT_VARIABLE\",\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\n\n\nasync def main() -> None:\n    await client.simple.get_something()\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

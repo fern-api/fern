@@ -2,6 +2,7 @@ public struct TestCaseTemplateType: Codable, Hashable, Sendable {
     public let templateId: TestCaseTemplateIdType
     public let name: String
     public let implementation: TestCaseImplementationType
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -32,6 +33,7 @@ public struct TestCaseTemplateType: Codable, Hashable, Sendable {
         try container.encode(self.implementation, forKey: .implementation)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case templateId
         case name

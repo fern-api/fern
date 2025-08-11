@@ -6,6 +6,9 @@ package com.seed.oauthClientCredentialsEnvironmentVariables;
 import com.seed.oauthClientCredentialsEnvironmentVariables.core.ClientOptions;
 import com.seed.oauthClientCredentialsEnvironmentVariables.core.Suppliers;
 import com.seed.oauthClientCredentialsEnvironmentVariables.resources.auth.AuthClient;
+import com.seed.oauthClientCredentialsEnvironmentVariables.resources.nested.NestedClient;
+import com.seed.oauthClientCredentialsEnvironmentVariables.resources.nestednoauth.NestedNoAuthClient;
+import com.seed.oauthClientCredentialsEnvironmentVariables.resources.simple.SimpleClient;
 import java.util.function.Supplier;
 
 public class SeedOauthClientCredentialsEnvironmentVariablesClient {
@@ -13,13 +16,34 @@ public class SeedOauthClientCredentialsEnvironmentVariablesClient {
 
     protected final Supplier<AuthClient> authClient;
 
+    protected final Supplier<NestedNoAuthClient> nestedNoAuthClient;
+
+    protected final Supplier<NestedClient> nestedClient;
+
+    protected final Supplier<SimpleClient> simpleClient;
+
     public SeedOauthClientCredentialsEnvironmentVariablesClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.authClient = Suppliers.memoize(() -> new AuthClient(clientOptions));
+        this.nestedNoAuthClient = Suppliers.memoize(() -> new NestedNoAuthClient(clientOptions));
+        this.nestedClient = Suppliers.memoize(() -> new NestedClient(clientOptions));
+        this.simpleClient = Suppliers.memoize(() -> new SimpleClient(clientOptions));
     }
 
     public AuthClient auth() {
         return this.authClient.get();
+    }
+
+    public NestedNoAuthClient nestedNoAuth() {
+        return this.nestedNoAuthClient.get();
+    }
+
+    public NestedClient nested() {
+        return this.nestedClient.get();
+    }
+
+    public SimpleClient simple() {
+        return this.simpleClient.get();
     }
 
     public static SeedOauthClientCredentialsEnvironmentVariablesClientBuilder builder() {

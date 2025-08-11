@@ -1,9 +1,10 @@
 import { AccessLevel } from "./AccessLevel";
+import { AstNode, Writer } from "./core";
+import { DocComment } from "./DocComment";
 import { Initializer } from "./Initializer";
 import { Method } from "./Method";
 import { Property } from "./Property";
 import { Protocol } from "./Protocol";
-import { AstNode, Writer } from "./core";
 
 export declare namespace Class {
     interface Args {
@@ -14,6 +15,7 @@ export declare namespace Class {
         properties: Property[];
         initializers?: Initializer[];
         methods?: Method[];
+        docs?: DocComment;
     }
 }
 
@@ -25,8 +27,18 @@ export class Class extends AstNode {
     public readonly properties: Property[];
     public readonly initializers: Initializer[];
     public readonly methods: Method[];
+    public readonly docs?: DocComment;
 
-    public constructor({ accessLevel, name, final, conformances, properties, initializers, methods }: Class.Args) {
+    public constructor({
+        accessLevel,
+        name,
+        final,
+        conformances,
+        properties,
+        initializers,
+        methods,
+        docs
+    }: Class.Args) {
         super();
         this.name = name;
         this.final = final;
@@ -35,9 +47,13 @@ export class Class extends AstNode {
         this.properties = properties;
         this.initializers = initializers ?? [];
         this.methods = methods ?? [];
+        this.docs = docs;
     }
 
     public write(writer: Writer): void {
+        if (this.docs != null) {
+            this.docs.write(writer);
+        }
         if (this.accessLevel != null) {
             writer.write(this.accessLevel);
             writer.write(" ");

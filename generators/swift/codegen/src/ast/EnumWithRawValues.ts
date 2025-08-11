@@ -1,12 +1,14 @@
 import { AccessLevel } from "./AccessLevel";
-import { Protocol } from "./Protocol";
 import { AstNode, Writer } from "./core";
+import { DocComment } from "./DocComment";
+import { Protocol } from "./Protocol";
 import { escapeSwiftStringLiteral, isReservedKeyword } from "./syntax";
 
 export declare namespace EnumWithRawValues {
     interface Case {
         unsafeName: string;
         rawValue: string;
+        docs?: DocComment;
     }
 
     interface Args {
@@ -14,6 +16,7 @@ export declare namespace EnumWithRawValues {
         accessLevel?: AccessLevel;
         conformances?: (Protocol | "String")[];
         cases: Case[];
+        docs?: DocComment;
     }
 }
 
@@ -22,16 +25,21 @@ export class EnumWithRawValues extends AstNode {
     public readonly accessLevel?: AccessLevel;
     public readonly conformances: (Protocol | "String")[];
     public readonly cases: EnumWithRawValues.Case[];
+    public readonly docs?: DocComment;
 
-    public constructor({ accessLevel, name, conformances, cases }: EnumWithRawValues.Args) {
+    public constructor({ accessLevel, name, conformances, cases, docs }: EnumWithRawValues.Args) {
         super();
         this.name = name;
         this.accessLevel = accessLevel;
         this.conformances = conformances ?? [];
         this.cases = cases;
+        this.docs = docs;
     }
 
     public write(writer: Writer): void {
+        if (this.docs != null) {
+            this.docs.write(writer);
+        }
         if (this.accessLevel != null) {
             writer.write(this.accessLevel);
             writer.write(" ");
@@ -49,6 +57,9 @@ export class EnumWithRawValues extends AstNode {
         writer.newLine();
         writer.indent();
         this.cases.forEach((case_) => {
+            if (case_.docs != null) {
+                case_.docs.write(writer);
+            }
             writer.write("case ");
             if (isReservedKeyword(case_.unsafeName)) {
                 writer.write(`\`${case_.unsafeName}\``);

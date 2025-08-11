@@ -9,7 +9,8 @@
     "./src/**/*"
   ],
   "exclude": [
-    "./src/**/__test__/**/generated"
+    "./src/**/__test__/**/generated",
+    "./src/tests/generate/fixtures/**",
   ],
   "references": [
     {

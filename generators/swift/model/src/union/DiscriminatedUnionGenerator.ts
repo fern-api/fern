@@ -9,6 +9,7 @@ export declare namespace DiscriminatedUnionGenerator {
     interface Args {
         name: string;
         unionTypeDeclaration: UnionTypeDeclaration;
+        docsContent?: string;
         context: ModelGeneratorContext;
     }
 }
@@ -16,11 +17,13 @@ export declare namespace DiscriminatedUnionGenerator {
 export class DiscriminatedUnionGenerator {
     private readonly name: string;
     private readonly unionTypeDeclaration: UnionTypeDeclaration;
+    private readonly docsContent?: string;
     private readonly context: ModelGeneratorContext;
 
-    public constructor({ name, unionTypeDeclaration, context }: DiscriminatedUnionGenerator.Args) {
+    public constructor({ name, unionTypeDeclaration, docsContent, context }: DiscriminatedUnionGenerator.Args) {
         this.name = name;
         this.unionTypeDeclaration = unionTypeDeclaration;
+        this.docsContent = docsContent;
         this.context = context;
     }
 
@@ -36,7 +39,8 @@ export class DiscriminatedUnionGenerator {
             cases: this.generateCasesForTypeDeclaration(),
             initializers: this.generateInitializers(),
             methods: this.generateMethods(),
-            nestedTypes: this.generateNestedTypesForTypeDeclaration()
+            nestedTypes: this.generateNestedTypesForTypeDeclaration(),
+            docs: this.docsContent ? swift.docComment({ summary: this.docsContent }) : undefined
         });
     }
 
@@ -44,7 +48,8 @@ export class DiscriminatedUnionGenerator {
         return this.unionTypeDeclaration.types.map((singleUnionType) => {
             return {
                 unsafeName: singleUnionType.discriminantValue.name.camelCase.unsafeName,
-                associatedValue: [swift.Type.custom(singleUnionType.discriminantValue.name.pascalCase.unsafeName)]
+                associatedValue: [swift.Type.custom(singleUnionType.discriminantValue.name.pascalCase.unsafeName)],
+                docs: singleUnionType.docs ? swift.docComment({ summary: singleUnionType.docs }) : undefined
             };
         });
     }
@@ -252,7 +257,8 @@ export class DiscriminatedUnionGenerator {
                     ...variantProperties.map((p) => ({
                         unsafeName: p.name.name.camelCase.unsafeName,
                         rawName: p.name.wireValue,
-                        type: this.context.getSwiftTypeForTypeReference(p.valueType)
+                        type: this.context.getSwiftTypeForTypeReference(p.valueType),
+                        docsContent: p.docs
                     }))
                 );
             } else if (singleUnionType.shape.propertiesType === "noProperties") {
@@ -265,7 +271,8 @@ export class DiscriminatedUnionGenerator {
                 name: singleUnionType.discriminantValue.name.pascalCase.unsafeName,
                 constantPropertyDefinitions,
                 dataPropertyDefinitions,
-                additionalProperties: true
+                additionalProperties: true,
+                docsContent: singleUnionType.docs
             }).generate();
         });
 

@@ -2,6 +2,7 @@ public struct NestedObjectWithLiterals: Codable, Hashable, Sendable {
     public let literal1: JSONValue
     public let literal2: JSONValue
     public let strProp: String
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -32,6 +33,7 @@ public struct NestedObjectWithLiterals: Codable, Hashable, Sendable {
         try container.encode(self.strProp, forKey: .strProp)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case literal1
         case literal2

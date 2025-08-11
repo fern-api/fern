@@ -20,10 +20,15 @@ end"
 
 exports[`Class > writes class with a body 1`] = `
 "class Foobar
+    # @option name [String]
+    #
+    # @return [void]
     def initialize(name); end
 
+    # @return [instance]
     def self.build(name:); end
 
+    # @return [String]
     def call; end
 end
 "

@@ -5,6 +5,7 @@ public struct Address: Codable, Hashable, Sendable {
     public let state: String
     public let zip: String
     public let country: JSONValue
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -47,6 +48,7 @@ public struct Address: Codable, Hashable, Sendable {
         try container.encode(self.country, forKey: .country)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case line1
         case line2

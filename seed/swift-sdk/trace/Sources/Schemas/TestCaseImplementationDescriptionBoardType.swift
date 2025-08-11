@@ -32,6 +32,7 @@ public enum TestCaseImplementationDescriptionBoardType: Codable, Hashable, Senda
     public struct Html: Codable, Hashable, Sendable {
         public let type: String = "html"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -55,6 +56,7 @@ public enum TestCaseImplementationDescriptionBoardType: Codable, Hashable, Senda
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -64,6 +66,7 @@ public enum TestCaseImplementationDescriptionBoardType: Codable, Hashable, Senda
     public struct ParamId: Codable, Hashable, Sendable {
         public let type: String = "paramId"
         public let value: ParameterIdType
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -87,6 +90,7 @@ public enum TestCaseImplementationDescriptionBoardType: Codable, Hashable, Senda
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value

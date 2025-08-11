@@ -115,7 +115,8 @@ public final class TriStateOptionalGenerator extends AbstractFileGenerator {
                 .returns(boolean.class)
                 .addJavadoc("Returns true if the field was absent from the request.\n")
                 .addStatement(
-                        "return state == $T.ABSENT", ClassName.get(className.packageName(), "TriStateOptional", "State"))
+                        "return state == $T.ABSENT",
+                        ClassName.get(className.packageName(), "TriStateOptional", "State"))
                 .build();
 
         MethodSpec isNull = MethodSpec.methodBuilder("isNull")
@@ -131,7 +132,8 @@ public final class TriStateOptionalGenerator extends AbstractFileGenerator {
                 .returns(boolean.class)
                 .addJavadoc("Returns true if the field has a value.\n")
                 .addStatement(
-                        "return state == $T.PRESENT", ClassName.get(className.packageName(), "TriStateOptional", "State"))
+                        "return state == $T.PRESENT",
+                        ClassName.get(className.packageName(), "TriStateOptional", "State"))
                 .build();
 
         MethodSpec wasSpecified = MethodSpec.methodBuilder("wasSpecified")
@@ -139,7 +141,8 @@ public final class TriStateOptionalGenerator extends AbstractFileGenerator {
                 .returns(boolean.class)
                 .addJavadoc("Returns true if the field was present in the request (either null or with a value).\n")
                 .addStatement(
-                        "return state != $T.ABSENT", ClassName.get(className.packageName(), "TriStateOptional", "State"))
+                        "return state != $T.ABSENT",
+                        ClassName.get(className.packageName(), "TriStateOptional", "State"))
                 .build();
 
         MethodSpec get = MethodSpec.methodBuilder("get")
@@ -173,7 +176,8 @@ public final class TriStateOptionalGenerator extends AbstractFileGenerator {
                 .addModifiers(Modifier.PUBLIC)
                 .returns(typeVariable)
                 .addParameter(typeVariable, "defaultValue")
-                .addJavadoc("Gets the value if present, returns null if explicitly set to null, or returns the provided default if absent.\n")
+                .addJavadoc(
+                        "Gets the value if present, returns null if explicitly set to null, or returns the provided default if absent.\n")
                 .beginControlFlow(
                         "if (state == $T.PRESENT)", ClassName.get(className.packageName(), "TriStateOptional", "State"))
                 .addStatement("return value")
@@ -205,10 +209,7 @@ public final class TriStateOptionalGenerator extends AbstractFileGenerator {
                 .beginControlFlow(
                         "if (state == $T.ABSENT)", ClassName.get(className.packageName(), "TriStateOptional", "State"))
                 .addComment("Should not be serialized - handled by custom inclusion")
-                .addStatement(
-                        "throw new $T($S)",
-                        IllegalStateException.class,
-                        "Absent values should not be serialized")
+                .addStatement("throw new $T($S)", IllegalStateException.class, "Absent values should not be serialized")
                 .endControlFlow()
                 .addStatement(
                         "return state == $T.NULL ? null : value",

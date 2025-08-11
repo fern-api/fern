@@ -97,6 +97,7 @@
     "@fern-fern/ir-v55-sdk": "0.0.1",
     "@fern-fern/ir-v56-sdk": "0.0.1",
     "@fern-fern/ir-v57-sdk": "0.0.2",
+    "@fern-fern/ir-v58-sdk": "0.0.2",
     "@fern-fern/ir-v6-model": "0.0.33",
     "@fern-fern/ir-v7-model": "0.0.2",
     "@fern-fern/ir-v8-model": "0.0.1",

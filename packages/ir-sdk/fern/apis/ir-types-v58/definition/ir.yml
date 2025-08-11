@@ -1,0 +1,184 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  audience: audience.yml
+  auth: auth.yml
+  commons: commons.yml
+  constants: constants.yml
+  dynamic: dynamic/ir.yml
+  environment: environment.yml
+  errors: errors.yml
+  generator: generator-exec/config.yml
+  http: http.yml
+  proto: proto.yml
+  publish: publish.yml
+  types: types.yml
+  variables: variables.yml
+  webhooks: webhooks.yml
+  websocket: websocket.yml
+
+types:
+  IntermediateRepresentation:
+    docs: "Complete representation of the API schema"
+    properties:
+      fdrApiDefinitionId:
+        type: optional<string>
+        docs: The unique identifier for the API definition used within FDR. This is retrieved once a definition has been registered.
+      apiVersion: optional<ApiVersionScheme>
+      apiName:
+        type: commons.Name
+        docs: This is the human readable unique id for the API.
+      apiDisplayName: optional<string>
+      apiDocs: optional<string>
+      auth: auth.ApiAuth
+      headers:
+        docs: API Wide headers that are sent on every request
+        type: list<http.HttpHeader>
+      idempotencyHeaders:
+        docs: Headers that are sent for idempotent endpoints
+        type: list<http.HttpHeader>
+      types:
+        docs: "The types described by this API"
+        type: map<commons.TypeId, types.TypeDeclaration>
+      services:
+        docs: "The services exposed by this API"
+        type: map<commons.ServiceId, http.HttpService>
+      webhookGroups:
+        docs: "The webhooks sent by this API"
+        type: map<commons.WebhookGroupId, webhooks.WebhookGroup>
+      websocketChannels:
+        docs: "The websocket channels served by this API"
+        type: optional<map<commons.WebSocketChannelId, websocket.WebSocketChannel>>
+      errors: map<commons.ErrorId, errors.ErrorDeclaration>
+      subpackages: map<commons.SubpackageId, Subpackage>
+      rootPackage: Package
+      constants: constants.Constants
+      environments: optional<environment.EnvironmentsConfig>
+      basePath: optional<http.HttpPath>
+      pathParameters: list<http.PathParameter>
+      errorDiscriminationStrategy: ErrorDiscriminationStrategy
+      sdkConfig: SdkConfig
+      variables: list<variables.VariableDeclaration>
+      serviceTypeReferenceInfo: ServiceTypeReferenceInfo
+      readmeConfig: optional<ReadmeConfig>
+      sourceConfig: optional<SourceConfig>
+      publishConfig: optional<publish.PublishingConfig>
+      dynamic: optional<dynamic.DynamicIntermediateRepresentation>
+      selfHosted: optional<boolean>
+      audiences: optional<list<audience.AudienceDefinition>>
+
+  ReadmeConfig:
+    docs: |
+      The configuration used to generate a README.md file. If present, the generator
+      should call the generator-cli to produce a README.md.
+    properties:
+      defaultEndpoint:
+        docs: |
+          If specified, this endpoint should be used in every snippet (if possible).
+          Note that some endpoints aren't suitable for every feature (e.g. a non-list
+          endpoint for pagination), so the default is a no-op in those cases.
+        type: optional<commons.EndpointId>
+      bannerLink: optional<string>
+      introduction: optional<string>
+      apiReferenceLink: optional<string>
+      features:
+        docs: |
+          If specified, configures the list of endpoints to associate
+          with each feature.
+        type: optional<map<commons.FeatureId, list<commons.EndpointId>>>
+  SourceConfig:
+    properties:
+      sources:
+        docs: The raw API definitions that produced the IR.
+        type: list<ApiDefinitionSource>
+  ApiDefinitionSourceId:
+    docs: |
+      Uniquely identifies a specific API definition source. This allows us to clearly identify
+      what source a given type, endpoint, etc was derived from.
+    type: string
+  ApiDefinitionSource:
+    union:
+      proto: ProtoSource
+      openapi: {}
+  ProtoSource:
+    properties:
+      id: ApiDefinitionSourceId
+      protoRootUrl:
+        docs: |
+          The URL containing the `.proto` root directory source. This can be used
+          to pull down the original `.proto` source files during code generation.
+        type: string
+  SdkConfig:
+    properties:
+      isAuthMandatory: boolean
+      hasStreamingEndpoints: boolean
+      hasPaginatedEndpoints: boolean
+      hasFileDownloadEndpoints: boolean
+      platformHeaders: PlatformHeaders
+  PlatformHeaders:
+    properties:
+      language: string
+      sdkName: string
+      sdkVersion: string
+      userAgent: optional<UserAgent>
+  UserAgent:
+    properties:
+      header:
+        type: literal<"User-Agent">
+        docs: The user agent header for ease of access to generators.
+      value:
+        type: string
+        docs: Formatted as "<package>/<version>"
+
+  ApiVersionScheme:
+    docs: |
+      The available set of versions for the API. This is used to generate a special
+      enum that can be used to specify the version of the API to use.
+    union:
+      header: HeaderApiVersionScheme
+  HeaderApiVersionScheme:
+    docs: |
+      The version information is sent as an HTTP header (e.g. X-API-Version) on every request.
+
+      If the enum does _not_ define a default value, the version should be treated like
+      a required global header parameter. The version header should also support any
+      environment variable scanning specified by the header.
+    properties:
+      header: http.HttpHeader
+      value: types.EnumTypeDeclaration
+  ErrorDiscriminationStrategy:
+    union:
+      statusCode: {}
+      property: ErrorDiscriminationByPropertyStrategy
+  ErrorDiscriminationByPropertyStrategy:
+    properties:
+      discriminant: commons.NameAndWireValue
+      contentProperty: commons.NameAndWireValue
+  Package:
+    extends: commons.WithDocs
+    properties:
+      fernFilepath: commons.FernFilepath
+      service: optional<commons.ServiceId>
+      types: list<commons.TypeId>
+      errors: list<commons.ErrorId>
+      webhooks: optional<commons.WebhookGroupId>
+      websocket: optional<commons.WebSocketChannelId>
+      subpackages: list<commons.SubpackageId>
+      hasEndpointsInTree: boolean
+      navigationConfig: optional<PackageNavigationConfig>
+  Subpackage:
+    extends: Package
+    properties:
+      name: commons.Name
+      displayName: optional<commons.DisplayName>
+  PackageNavigationConfig:
+    properties:
+      pointsTo: commons.SubpackageId
+  ServiceTypeReferenceInfo:
+    properties:
+      typesReferencedOnlyByService:
+        docs: "Types referenced by exactly one service."
+        type: map<commons.ServiceId, list<commons.TypeId>>
+      sharedTypes:
+        docs: "Types referenced by either zero or multiple services."
+        type: list<commons.TypeId>

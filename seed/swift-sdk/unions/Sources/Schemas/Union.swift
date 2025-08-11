@@ -1,3 +1,4 @@
+/// This is a simple union.
 public enum Union: Codable, Hashable, Sendable {
     case foo(Foo)
     case bar(Bar)
@@ -32,6 +33,7 @@ public enum Union: Codable, Hashable, Sendable {
     public struct Foo: Codable, Hashable, Sendable {
         public let type: String = "foo"
         public let foo: Foo
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -55,6 +57,7 @@ public enum Union: Codable, Hashable, Sendable {
             try container.encode(self.foo, forKey: .foo)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case foo
@@ -64,6 +67,7 @@ public enum Union: Codable, Hashable, Sendable {
     public struct Bar: Codable, Hashable, Sendable {
         public let type: String = "bar"
         public let bar: Bar
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -87,6 +91,7 @@ public enum Union: Codable, Hashable, Sendable {
             try container.encode(self.bar, forKey: .bar)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case bar

@@ -167,6 +167,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
     public struct NormalSweet: Codable, Hashable, Sendable {
         public let type: String = "normalSweet"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -190,6 +191,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -199,6 +201,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
     public struct ThankfulFactor: Codable, Hashable, Sendable {
         public let type: String = "thankfulFactor"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -222,6 +225,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -231,6 +235,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
     public struct JumboEnd: Codable, Hashable, Sendable {
         public let type: String = "jumboEnd"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -254,6 +259,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -263,6 +269,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
     public struct HastyPain: Codable, Hashable, Sendable {
         public let type: String = "hastyPain"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -286,6 +293,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -295,6 +303,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
     public struct MistySnow: Codable, Hashable, Sendable {
         public let type: String = "mistySnow"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -318,6 +327,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -327,6 +337,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
     public struct DistinctFailure: Codable, Hashable, Sendable {
         public let type: String = "distinctFailure"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -350,6 +361,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -359,6 +371,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
     public struct PracticalPrinciple: Codable, Hashable, Sendable {
         public let type: String = "practicalPrinciple"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -382,6 +395,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -391,6 +405,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
     public struct LimpingStep: Codable, Hashable, Sendable {
         public let type: String = "limpingStep"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -414,6 +429,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -423,6 +439,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
     public struct VibrantExcitement: Codable, Hashable, Sendable {
         public let type: String = "vibrantExcitement"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -446,6 +463,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -455,6 +473,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
     public struct ActiveDiamond: Codable, Hashable, Sendable {
         public let type: String = "activeDiamond"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -478,6 +497,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -487,6 +507,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
     public struct PopularLimit: Codable, Hashable, Sendable {
         public let type: String = "popularLimit"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -510,6 +531,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -519,6 +541,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
     public struct FalseMirror: Codable, Hashable, Sendable {
         public let type: String = "falseMirror"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -542,6 +565,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -551,6 +575,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
     public struct PrimaryBlock: Codable, Hashable, Sendable {
         public let type: String = "primaryBlock"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -574,6 +599,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -583,6 +609,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
     public struct RotatingRatio: Codable, Hashable, Sendable {
         public let type: String = "rotatingRatio"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -606,6 +633,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -615,6 +643,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
     public struct ColorfulCover: Codable, Hashable, Sendable {
         public let type: String = "colorfulCover"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -638,6 +667,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -647,6 +677,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
     public struct DisloyalValue: Codable, Hashable, Sendable {
         public let type: String = "disloyalValue"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -670,6 +701,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -679,6 +711,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
     public struct GruesomeCoach: Codable, Hashable, Sendable {
         public let type: String = "gruesomeCoach"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -702,6 +735,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -711,6 +745,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
     public struct TotalWork: Codable, Hashable, Sendable {
         public let type: String = "totalWork"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -734,6 +769,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -743,6 +779,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
     public struct HarmoniousPlay: Codable, Hashable, Sendable {
         public let type: String = "harmoniousPlay"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -766,6 +803,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -775,6 +813,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
     public struct UniqueStress: Codable, Hashable, Sendable {
         public let type: String = "uniqueStress"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -798,6 +837,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -807,6 +847,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
     public struct UnwillingSmoke: Codable, Hashable, Sendable {
         public let type: String = "unwillingSmoke"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -830,6 +871,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -839,6 +881,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
     public struct FrozenSleep: Codable, Hashable, Sendable {
         public let type: String = "frozenSleep"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -862,6 +905,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -871,6 +915,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
     public struct DiligentDeal: Codable, Hashable, Sendable {
         public let type: String = "diligentDeal"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -894,6 +939,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -903,6 +949,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
     public struct AttractiveScript: Codable, Hashable, Sendable {
         public let type: String = "attractiveScript"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -926,6 +973,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -935,6 +983,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
     public struct HoarseMouse: Codable, Hashable, Sendable {
         public let type: String = "hoarseMouse"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -958,6 +1007,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -967,6 +1017,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
     public struct CircularCard: Codable, Hashable, Sendable {
         public let type: String = "circularCard"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -990,6 +1041,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -999,6 +1051,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
     public struct PotableBad: Codable, Hashable, Sendable {
         public let type: String = "potableBad"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -1022,6 +1075,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -1031,6 +1085,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
     public struct TriangularRepair: Codable, Hashable, Sendable {
         public let type: String = "triangularRepair"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -1054,6 +1109,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -1063,6 +1119,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
     public struct GaseousRoad: Codable, Hashable, Sendable {
         public let type: String = "gaseousRoad"
         public let value: String
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -1086,6 +1143,7 @@ public enum BigUnion: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value

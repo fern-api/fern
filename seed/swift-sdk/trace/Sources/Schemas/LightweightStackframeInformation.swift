@@ -1,6 +1,7 @@
 public struct LightweightStackframeInformation: Codable, Hashable, Sendable {
     public let numStackFrames: Int
     public let topStackFrameMethodName: String
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +28,7 @@ public struct LightweightStackframeInformation: Codable, Hashable, Sendable {
         try container.encode(self.topStackFrameMethodName, forKey: .topStackFrameMethodName)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case numStackFrames
         case topStackFrameMethodName

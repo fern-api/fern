@@ -1,5 +1,6 @@
 {
   "ignores": [
+    "@fern-api/base-generator"
   ],
   "ignore-patterns": [
     "lib",

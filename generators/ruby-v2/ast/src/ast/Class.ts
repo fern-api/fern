@@ -1,17 +1,18 @@
+import { ClassReference } from "./ClassReference";
 import { Comment } from "./Comment";
-import { Module } from "./Module";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+import { Module_ } from "./Module";
 
 export declare namespace Class_ {
-    export interface Args extends Module.Args {
+    export interface Args extends Module_.Args {
         /* The superclass of this class. */
-        superclass?: Class_;
+        superclass?: ClassReference;
     }
 }
 
-export class Class_ extends Module {
-    public readonly superclass: Class_ | undefined;
+export class Class_ extends Module_ {
+    public readonly superclass: ClassReference | undefined;
     public readonly statements: AstNode[];
 
     constructor({ name, superclass, typeParameters, docstring, statements }: Class_.Args) {
@@ -19,6 +20,14 @@ export class Class_ extends Module {
 
         this.superclass = superclass;
         this.statements = statements ?? [];
+    }
+
+    public addStatement(statement: AstNode): void {
+        this.statements.push(statement);
+    }
+
+    public addStatements(statements: AstNode[]): void {
+        this.statements.push(...statements);
     }
 
     public write(writer: Writer): void {
@@ -29,7 +38,8 @@ export class Class_ extends Module {
         writer.write(`class ${this.name}`);
 
         if (this.superclass) {
-            writer.write(` < ${this.superclass.name}`);
+            writer.write(" < ");
+            this.superclass.write(writer);
         }
 
         if (this.statements.length) {
@@ -67,7 +77,8 @@ export class Class_ extends Module {
         }
 
         if (this.superclass) {
-            writer.write(` < ${this.superclass.name}`);
+            writer.write(" < ");
+            this.superclass.write(writer);
         }
 
         writer.newLine();

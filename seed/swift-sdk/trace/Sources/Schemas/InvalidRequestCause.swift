@@ -1,6 +1,8 @@
 public enum InvalidRequestCause: Codable, Hashable, Sendable {
+    /// The submission request references a submission id that doesn't exist.
     case submissionIdNotFound(SubmissionIdNotFound)
     case customTestCasesUnsupported(CustomTestCasesUnsupported)
+    /// The submission request was routed to an incorrect language executor.
     case unexpectedLanguage(UnexpectedLanguage)
 
     public init(from decoder: Decoder) throws {
@@ -34,9 +36,11 @@ public enum InvalidRequestCause: Codable, Hashable, Sendable {
         }
     }
 
+    /// The submission request references a submission id that doesn't exist.
     public struct SubmissionIdNotFound: Codable, Hashable, Sendable {
         public let type: String = "submissionIdNotFound"
         public let missingSubmissionId: SubmissionId
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -60,6 +64,7 @@ public enum InvalidRequestCause: Codable, Hashable, Sendable {
             try container.encode(self.missingSubmissionId, forKey: .missingSubmissionId)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case missingSubmissionId
@@ -70,6 +75,7 @@ public enum InvalidRequestCause: Codable, Hashable, Sendable {
         public let type: String = "customTestCasesUnsupported"
         public let problemId: ProblemId
         public let submissionId: SubmissionId
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -97,6 +103,7 @@ public enum InvalidRequestCause: Codable, Hashable, Sendable {
             try container.encode(self.submissionId, forKey: .submissionId)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case problemId
@@ -104,10 +111,12 @@ public enum InvalidRequestCause: Codable, Hashable, Sendable {
         }
     }
 
+    /// The submission request was routed to an incorrect language executor.
     public struct UnexpectedLanguage: Codable, Hashable, Sendable {
         public let type: String = "unexpectedLanguage"
         public let expectedLanguage: Language
         public let actualLanguage: Language
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -135,6 +144,7 @@ public enum InvalidRequestCause: Codable, Hashable, Sendable {
             try container.encode(self.actualLanguage, forKey: .actualLanguage)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case expectedLanguage

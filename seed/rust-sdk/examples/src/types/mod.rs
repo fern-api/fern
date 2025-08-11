@@ -31,6 +31,7 @@ pub mod test;
 pub mod entity;
 pub mod big_entity;
 pub mod cron_job;
+pub mod refresh_token_request;
 
 pub use r#type::{*};
 pub use identifier::{*};
@@ -65,4 +66,5 @@ pub use test::{*};
 pub use entity::{*};
 pub use big_entity::{*};
 pub use cron_job::{*};
+pub use refresh_token_request::{*};
 

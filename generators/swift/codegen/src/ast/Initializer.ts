@@ -1,11 +1,13 @@
 import { AccessLevel } from "./AccessLevel";
 import { CodeBlock } from "./CodeBlock";
-import { FunctionParameter } from "./FunctionParameter";
 import { AstNode, Writer } from "./core";
+import { DocComment } from "./DocComment";
+import { FunctionParameter } from "./FunctionParameter";
 
 export declare namespace Initializer {
     interface Args {
         accessLevel?: AccessLevel;
+        convenience?: true;
         /** Whether the initializer can return `nil`. Initializers that return nil are said to be failable. */
         failable?: true;
         /** Whether the initializer can throw an error. */
@@ -13,31 +15,42 @@ export declare namespace Initializer {
         parameters?: FunctionParameter[];
         body?: CodeBlock;
         multiline?: true;
+        docs?: DocComment;
     }
 }
 
 export class Initializer extends AstNode {
     public readonly accessLevel?: AccessLevel;
+    public readonly convenience?: true;
     public readonly failable?: true;
     public readonly throws?: true;
     public readonly parameters: FunctionParameter[];
     public readonly body: CodeBlock;
     public readonly multiline?: true;
+    public readonly docs?: DocComment;
 
-    constructor({ accessLevel, failable, throws, parameters, body, multiline }: Initializer.Args) {
+    constructor({ accessLevel, convenience, failable, throws, parameters, body, multiline, docs }: Initializer.Args) {
         super();
         this.accessLevel = accessLevel;
+        this.convenience = convenience;
         this.failable = failable;
         this.throws = throws;
         this.parameters = parameters ?? [];
         this.body = body ?? CodeBlock.empty();
         this.multiline = multiline;
+        this.docs = docs;
     }
 
     public write(writer: Writer): void {
+        if (this.docs != null) {
+            this.docs.write(writer);
+        }
         if (this.accessLevel != null) {
             writer.write(this.accessLevel);
             writer.write(" ");
+        }
+        if (this.convenience) {
+            writer.write("convenience ");
         }
         writer.write("init");
         if (this.failable) {

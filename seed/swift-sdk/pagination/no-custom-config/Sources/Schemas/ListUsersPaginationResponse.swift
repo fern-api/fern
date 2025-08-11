@@ -1,8 +1,10 @@
 public struct ListUsersPaginationResponse: Codable, Hashable, Sendable {
     public let hasNextPage: Bool?
     public let page: Page?
+    /// The totall number of /users
     public let totalCount: Int
     public let data: [User]
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -37,6 +39,7 @@ public struct ListUsersPaginationResponse: Codable, Hashable, Sendable {
         try container.encode(self.data, forKey: .data)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case hasNextPage
         case page

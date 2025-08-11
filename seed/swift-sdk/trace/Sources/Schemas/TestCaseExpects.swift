@@ -1,5 +1,6 @@
 public struct TestCaseExpects: Codable, Hashable, Sendable {
     public let expectedStdout: String?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -22,6 +23,7 @@ public struct TestCaseExpects: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.expectedStdout, forKey: .expectedStdout)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case expectedStdout
     }

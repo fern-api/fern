@@ -7,6 +7,7 @@ public struct SendLiteralsInlinedRequest: Codable, Hashable, Sendable {
     public let aliasedContext: SomeAliasedLiteral
     public let maybeContext: SomeAliasedLiteral?
     public let objectWithLiteral: ATopLevelLiteral
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -57,6 +58,7 @@ public struct SendLiteralsInlinedRequest: Codable, Hashable, Sendable {
         try container.encode(self.objectWithLiteral, forKey: .objectWithLiteral)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case prompt
         case context

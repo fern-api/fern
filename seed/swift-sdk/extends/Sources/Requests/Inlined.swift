@@ -2,6 +2,7 @@ public struct Inlined: Codable, Hashable, Sendable {
     public let name: String
     public let docs: String
     public let unique: String
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -32,6 +33,7 @@ public struct Inlined: Codable, Hashable, Sendable {
         try container.encode(self.unique, forKey: .unique)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case name
         case docs

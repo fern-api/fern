@@ -6,6 +6,7 @@ public struct Account: Codable, Hashable, Sendable {
     public let name: String
     public let patient: Patient?
     public let practitioner: Practitioner?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -52,6 +53,7 @@ public struct Account: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.practitioner, forKey: .practitioner)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case relatedResources = "related_resources"

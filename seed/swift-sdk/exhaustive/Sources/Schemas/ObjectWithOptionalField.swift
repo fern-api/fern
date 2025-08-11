@@ -1,4 +1,5 @@
 public struct ObjectWithOptionalField: Codable, Hashable, Sendable {
+    /// This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
     public let string: String?
     public let integer: Int?
     public let long: Int64?
@@ -12,6 +13,7 @@ public struct ObjectWithOptionalField: Codable, Hashable, Sendable {
     public let set: JSONValue?
     public let map: [Int: String]?
     public let bigint: String?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -82,6 +84,7 @@ public struct ObjectWithOptionalField: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.bigint, forKey: .bigint)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case string
         case integer

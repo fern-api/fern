@@ -2,6 +2,7 @@ public struct GetTokenRequest: Codable, Hashable, Sendable {
     public let clientId: String
     public let clientSecret: String
     public let grantType: JSONValue
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -32,6 +33,7 @@ public struct GetTokenRequest: Codable, Hashable, Sendable {
         try container.encode(self.grantType, forKey: .grantType)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case clientId = "client_id"
         case clientSecret = "client_secret"

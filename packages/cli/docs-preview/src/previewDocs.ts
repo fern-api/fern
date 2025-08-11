@@ -174,7 +174,7 @@ class ReferencedAPICollector {
             const id = uuidv4();
 
             const dbApiDefinition = convertAPIDefinitionToDb(
-                convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig }),
+                convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context: this.context }),
                 FdrAPI.ApiDefinitionId(id),
                 new SDKSnippetHolder({
                     snippetsConfigWithSdkId: {},

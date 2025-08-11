@@ -2,8 +2,16 @@
 
 # isort: skip_file
 
-from . import auth
+from . import auth, nested, nested_no_auth, simple
 from .client import AsyncSeedOauthClientCredentials, SeedOauthClientCredentials
 from .version import __version__
 
-__all__ = ["AsyncSeedOauthClientCredentials", "SeedOauthClientCredentials", "__version__", "auth"]
+__all__ = [
+    "AsyncSeedOauthClientCredentials",
+    "SeedOauthClientCredentials",
+    "__version__",
+    "auth",
+    "nested",
+    "nested_no_auth",
+    "simple",
+]

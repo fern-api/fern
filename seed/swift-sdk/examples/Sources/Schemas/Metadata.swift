@@ -2,6 +2,7 @@ public struct Metadata: Codable, Hashable, Sendable {
     public let id: String
     public let data: [String: String]?
     public let jsonString: String?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -32,6 +33,7 @@ public struct Metadata: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.jsonString, forKey: .jsonString)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case data

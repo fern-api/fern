@@ -72,7 +72,7 @@ it.skip("converts to api reference node", async () => {
         sourceResolver: new SourceResolverImpl(context, apiWorkspace)
     });
 
-    const apiDefinition = convertIrToApiDefinition(ir, apiDefinitionId);
+    const apiDefinition = convertIrToApiDefinition({ ir, apiDefinitionId, context });
 
     const node = new ApiReferenceNodeConverter(
         apiSection,

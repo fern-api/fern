@@ -1,5 +1,6 @@
 public struct ReceiveEvent3: Codable, Hashable, Sendable {
     public let receiveText3: String
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -22,6 +23,7 @@ public struct ReceiveEvent3: Codable, Hashable, Sendable {
         try container.encode(self.receiveText3, forKey: .receiveText3)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case receiveText3
     }

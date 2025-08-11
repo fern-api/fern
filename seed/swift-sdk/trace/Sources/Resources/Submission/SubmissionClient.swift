@@ -5,6 +5,9 @@ public final class SubmissionClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// Returns sessionId and execution server URL for session. Spins up server.
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func createExecutionSession(language: String, requestOptions: RequestOptions? = nil) async throws -> ExecutionSessionResponse {
         return try await httpClient.performRequest(
             method: .post,
@@ -14,6 +17,9 @@ public final class SubmissionClient: Sendable {
         )
     }
 
+    /// Returns execution server URL for session. Returns empty if session isn't registered.
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getExecutionSession(sessionId: String, requestOptions: RequestOptions? = nil) async throws -> ExecutionSessionResponse? {
         return try await httpClient.performRequest(
             method: .get,
@@ -23,6 +29,9 @@ public final class SubmissionClient: Sendable {
         )
     }
 
+    /// Stops execution session.
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func stopExecutionSession(sessionId: String, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .delete,

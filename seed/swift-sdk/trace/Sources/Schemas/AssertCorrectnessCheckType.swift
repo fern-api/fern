@@ -32,6 +32,7 @@ public enum AssertCorrectnessCheckType: Codable, Hashable, Sendable {
     public struct DeepEquality: Codable, Hashable, Sendable {
         public let type: String = "deepEquality"
         public let expectedValueParameterId: ParameterIdType
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -55,6 +56,7 @@ public enum AssertCorrectnessCheckType: Codable, Hashable, Sendable {
             try container.encode(self.expectedValueParameterId, forKey: .expectedValueParameterId)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case expectedValueParameterId
@@ -65,6 +67,7 @@ public enum AssertCorrectnessCheckType: Codable, Hashable, Sendable {
         public let type: String = "custom"
         public let additionalParameters: [ParameterType]
         public let code: FunctionImplementationForMultipleLanguagesType
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -92,6 +95,7 @@ public enum AssertCorrectnessCheckType: Codable, Hashable, Sendable {
             try container.encode(self.code, forKey: .code)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case additionalParameters
