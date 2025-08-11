@@ -60,10 +60,6 @@ const AsIsFileSpecs = {
     },
 
     // Core
-    Prelude: {
-        relativePathToDir: "Core",
-        filenameWithoutExtension: "Prelude"
-    },
     StringPlusUrlEncoding: {
         relativePathToDir: "Core",
         filenameWithoutExtension: "String+URLEncoding"
