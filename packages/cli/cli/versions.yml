@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
 - changelogEntry:
+    - summary: Improved plumbing of the --runner arg for local SDK generation.
+      type: chore
+  irVersion: 59
+  createdAt: "2025-08-11"
+  version: 0.66.01
+
+
+- changelogEntry:
     - summary: Add support for generating inferred auth in IR and expand bearer auth in Fern Definition for inference.
       type: feat
   irVersion: 59
