@@ -1,3 +1,5 @@
+import Foundation
+
 public enum UnionWithDuplicateTypes: Codable, Hashable, Sendable {
     case foo1(Foo1)
     case foo2(Foo2)

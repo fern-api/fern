@@ -1,3 +1,5 @@
+import Foundation
+
 public struct DebugKeyValuePairs: Codable, Hashable, Sendable {
     public let key: DebugVariableValue
     public let value: DebugVariableValue

@@ -1,3 +1,5 @@
+import Foundation
+
 public struct CronJob: Codable, Hashable, Sendable {
     public let expression: String
     /// Additional properties that are not explicitly defined in the schema

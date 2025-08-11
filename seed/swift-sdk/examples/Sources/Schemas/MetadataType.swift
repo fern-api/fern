@@ -1,3 +1,5 @@
+import Foundation
+
 public enum MetadataType: Codable, Hashable, Sendable {
     case html(Html)
     case markdown(Markdown)

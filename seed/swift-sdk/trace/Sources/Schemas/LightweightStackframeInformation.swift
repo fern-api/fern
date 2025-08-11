@@ -1,3 +1,5 @@
+import Foundation
+
 public struct LightweightStackframeInformation: Codable, Hashable, Sendable {
     public let numStackFrames: Int
     public let topStackFrameMethodName: String

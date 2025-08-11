@@ -1,3 +1,5 @@
+import Foundation
+
 public struct MyObject: Codable, Hashable, Sendable {
     public let foo: String
     /// Additional properties that are not explicitly defined in the schema

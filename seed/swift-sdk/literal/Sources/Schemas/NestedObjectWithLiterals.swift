@@ -1,3 +1,5 @@
+import Foundation
+
 public struct NestedObjectWithLiterals: Codable, Hashable, Sendable {
     public let literal1: JSONValue
     public let literal2: JSONValue

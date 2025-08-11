@@ -1,3 +1,5 @@
+import Foundation
+
 public struct WithCursor: Codable, Hashable, Sendable {
     public let cursor: String?
     /// Additional properties that are not explicitly defined in the schema

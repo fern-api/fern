@@ -1,3 +1,5 @@
+import Foundation
+
 public struct Page: Codable, Hashable, Sendable {
     /// The current page
     public let page: Int

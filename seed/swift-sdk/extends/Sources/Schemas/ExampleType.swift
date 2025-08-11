@@ -1,3 +1,5 @@
+import Foundation
+
 public struct ExampleType: Codable, Hashable, Sendable {
     public let docs: String
     public let name: String

@@ -1,3 +1,7 @@
+import Foundation
+
+import Foundation
+
 extension Encoder {
     func encodeAdditionalProperties<T: Encodable>(_ additionalProperties: [String: T]) throws {
         guard !additionalProperties.isEmpty else { return }

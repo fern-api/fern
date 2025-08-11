@@ -1,3 +1,5 @@
+import Foundation
+
 public struct TestCaseMetadataType: Codable, Hashable, Sendable {
     public let id: TestCaseIdType
     public let name: String

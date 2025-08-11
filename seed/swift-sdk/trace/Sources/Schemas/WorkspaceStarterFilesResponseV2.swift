@@ -1,3 +1,5 @@
+import Foundation
+
 public struct WorkspaceStarterFilesResponseV2: Codable, Hashable, Sendable {
     public let filesByLanguage: [Language: Files]
     /// Additional properties that are not explicitly defined in the schema

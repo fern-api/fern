@@ -1,3 +1,7 @@
+import Foundation
+
+import Foundation
+
 final class Serde {
     static var jsonEncoder: JSONEncoder {
         let encoder = JSONEncoder()

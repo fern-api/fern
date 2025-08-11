@@ -1,3 +1,5 @@
+import Foundation
+
 public enum WorkspaceSubmissionStatus: Codable, Hashable, Sendable {
     case stopped(Stopped)
     case errored(Errored)

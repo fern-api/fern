@@ -1,3 +1,5 @@
+import Foundation
+
 public struct ExtendedMovie: Codable, Hashable, Sendable {
     public let id: MovieId
     public let prequel: MovieId?

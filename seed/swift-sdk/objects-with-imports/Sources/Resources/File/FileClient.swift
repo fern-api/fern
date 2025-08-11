@@ -1,3 +1,5 @@
+import Foundation
+
 public final class FileClient: Sendable {
     public let directory: DirectoryClient
     private let httpClient: HTTPClient

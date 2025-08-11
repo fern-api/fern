@@ -1,3 +1,5 @@
+import Foundation
+
 public struct TestSubmissionUpdate: Codable, Hashable, Sendable {
     public let updateTime: Date
     public let updateInfo: TestSubmissionUpdateInfo

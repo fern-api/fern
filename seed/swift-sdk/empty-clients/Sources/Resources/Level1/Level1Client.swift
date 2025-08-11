@@ -1,3 +1,5 @@
+import Foundation
+
 public final class Level1Client: Sendable {
     public let level2: Level2Client
     public let types: Level1TypesClient

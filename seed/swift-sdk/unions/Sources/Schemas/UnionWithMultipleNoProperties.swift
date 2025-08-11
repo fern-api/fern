@@ -1,3 +1,5 @@
+import Foundation
+
 public enum UnionWithMultipleNoProperties: Codable, Hashable, Sendable {
     case foo(Foo)
     case empty1(Empty1)

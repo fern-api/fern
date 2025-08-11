@@ -1,3 +1,7 @@
+import Foundation
+
+import Foundation
+
 /// Options for customizing an individual API request.
 ///
 /// Use this struct to override or supplement client-wide configuration for a single request.

@@ -1,3 +1,5 @@
+import Foundation
+
 public struct GetDefaultStarterFilesResponse: Codable, Hashable, Sendable {
     public let files: [Language: ProblemFiles]
     /// Additional properties that are not explicitly defined in the schema

@@ -1,3 +1,5 @@
+import Foundation
+
 public enum Resource: Codable, Hashable, Sendable {
     case user(User)
     case organization(Organization)

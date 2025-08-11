@@ -1,3 +1,5 @@
+import Foundation
+
 public struct Movie: Codable, Hashable, Sendable {
     public let id: String
     public let name: String

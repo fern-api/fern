@@ -1,3 +1,5 @@
+import Foundation
+
 public enum SearchRequestNeighborRequired: Codable, Hashable, Sendable {
     case user(User)
     case nestedUser(NestedUser)

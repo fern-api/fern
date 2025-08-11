@@ -1,3 +1,5 @@
+import Foundation
+
 public struct ResponseType: Codable, Hashable, Sendable {
     public let type: Type
     /// Additional properties that are not explicitly defined in the schema

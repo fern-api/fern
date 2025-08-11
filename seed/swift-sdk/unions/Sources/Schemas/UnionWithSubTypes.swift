@@ -1,3 +1,5 @@
+import Foundation
+
 public enum UnionWithSubTypes: Codable, Hashable, Sendable {
     case foo(Foo)
     case fooExtended(FooExtended)

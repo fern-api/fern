@@ -1,3 +1,5 @@
+import Foundation
+
 public struct Response: Codable, Hashable, Sendable {
     public let response: JSONValue
     public let identifiers: [Identifier]

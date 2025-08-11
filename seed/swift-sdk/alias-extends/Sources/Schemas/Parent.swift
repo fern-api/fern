@@ -1,3 +1,5 @@
+import Foundation
+
 public struct Parent: Codable, Hashable, Sendable {
     public let parent: String
     /// Additional properties that are not explicitly defined in the schema

@@ -1,3 +1,5 @@
+import Foundation
+
 public struct Person: Codable, Hashable, Sendable {
     public let name: String
     public let address: Address

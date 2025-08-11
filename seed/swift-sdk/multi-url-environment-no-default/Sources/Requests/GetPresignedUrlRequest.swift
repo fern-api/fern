@@ -1,3 +1,5 @@
+import Foundation
+
 public struct GetPresignedUrlRequest: Codable, Hashable, Sendable {
     public let s3Key: String
     /// Additional properties that are not explicitly defined in the schema

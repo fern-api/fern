@@ -1,3 +1,5 @@
+import Foundation
+
 public enum EventInfo: Codable, Hashable, Sendable {
     case metadata(Metadata)
     case tag(Tag)

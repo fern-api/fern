@@ -1,3 +1,5 @@
+import Foundation
+
 public final class ApiClient: Sendable {
     private let httpClient: HTTPClient
 

@@ -1,3 +1,5 @@
+import Foundation
+
 public struct ATopLevelLiteral: Codable, Hashable, Sendable {
     public let nestedLiteral: ANestedLiteral
     /// Additional properties that are not explicitly defined in the schema

@@ -1,3 +1,5 @@
+import Foundation
+
 public enum Animal: Codable, Hashable, Sendable {
     case dog(Dog)
     case cat(Cat)

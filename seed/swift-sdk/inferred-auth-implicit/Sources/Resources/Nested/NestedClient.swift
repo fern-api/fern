@@ -1,3 +1,5 @@
+import Foundation
+
 public final class NestedClient: Sendable {
     public let api: NestedApiClient
     private let httpClient: HTTPClient

@@ -1,3 +1,5 @@
+import Foundation
+
 /// This type allows us to test a circular reference with a union type (see FieldValue).
 public struct ObjectFieldValue: Codable, Hashable, Sendable {
     public let name: FieldName

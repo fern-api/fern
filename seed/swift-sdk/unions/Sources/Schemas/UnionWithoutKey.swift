@@ -1,3 +1,5 @@
+import Foundation
+
 public enum UnionWithoutKey: Codable, Hashable, Sendable {
     case foo(Foo)
     /// This is a bar field.

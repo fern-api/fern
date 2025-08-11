@@ -1,3 +1,5 @@
+import Foundation
+
 public enum Test: Codable, Hashable, Sendable {
     case and(And)
     case or(Or)

@@ -1,3 +1,5 @@
+import Foundation
+
 public enum SingleFilterSearchRequestOperator: String, Codable, Hashable, CaseIterable, Sendable {
     case equals = "="
     case notEquals = "!="

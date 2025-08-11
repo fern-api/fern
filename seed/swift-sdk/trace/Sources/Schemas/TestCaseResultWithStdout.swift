@@ -1,3 +1,5 @@
+import Foundation
+
 public struct TestCaseResultWithStdout: Codable, Hashable, Sendable {
     public let result: TestCaseResult
     public let stdout: String

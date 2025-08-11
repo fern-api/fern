@@ -1,3 +1,5 @@
+import Foundation
+
 public final class CompletionsClient: Sendable {
     private let httpClient: HTTPClient
 

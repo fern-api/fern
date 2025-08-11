@@ -1,3 +1,5 @@
+import Foundation
+
 public struct ProblemDescription: Codable, Hashable, Sendable {
     public let boards: [ProblemDescriptionBoard]
     /// Additional properties that are not explicitly defined in the schema

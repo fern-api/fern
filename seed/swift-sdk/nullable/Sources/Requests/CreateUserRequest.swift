@@ -1,3 +1,5 @@
+import Foundation
+
 public struct CreateUserRequest: Codable, Hashable, Sendable {
     public let username: String
     public let tags: [String]?

@@ -1,3 +1,5 @@
+import Foundation
+
 public final class PackageClient: Sendable {
     private let httpClient: HTTPClient
 

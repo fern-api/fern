@@ -1,3 +1,5 @@
+import Foundation
+
 public struct WorkspaceSubmissionUpdate: Codable, Hashable, Sendable {
     public let updateTime: Date
     public let updateInfo: WorkspaceSubmissionUpdateInfo

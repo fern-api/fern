@@ -1,3 +1,5 @@
+import Foundation
+
 public enum DiscriminatedLiteral: Codable, Hashable, Sendable {
     case customName(CustomName)
     case defaultName(DefaultName)

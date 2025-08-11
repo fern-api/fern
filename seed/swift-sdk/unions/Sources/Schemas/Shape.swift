@@ -1,3 +1,5 @@
+import Foundation
+
 public enum Shape: Codable, Hashable, Sendable {
     case circle(Circle)
     case square(Square)

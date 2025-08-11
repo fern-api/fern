@@ -1,3 +1,5 @@
+import Foundation
+
 public struct Failure: Codable, Hashable, Sendable {
     public let status: JSONValue
     /// Additional properties that are not explicitly defined in the schema

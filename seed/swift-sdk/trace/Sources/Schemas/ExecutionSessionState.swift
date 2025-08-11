@@ -1,3 +1,5 @@
+import Foundation
+
 public struct ExecutionSessionState: Codable, Hashable, Sendable {
     public let lastTimeContacted: String?
     /// The auto-generated session id. Formatted as a uuid.

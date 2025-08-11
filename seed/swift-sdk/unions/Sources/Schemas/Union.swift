@@ -1,3 +1,5 @@
+import Foundation
+
 /// This is a simple union.
 public enum Union: Codable, Hashable, Sendable {
     case foo(Foo)

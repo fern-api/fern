@@ -1,3 +1,5 @@
+import Foundation
+
 public enum VariableValue: Codable, Hashable, Sendable {
     case integerValue(IntegerValue)
     case booleanValue(BooleanValue)

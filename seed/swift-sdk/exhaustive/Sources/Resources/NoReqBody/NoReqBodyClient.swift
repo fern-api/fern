@@ -1,3 +1,5 @@
+import Foundation
+
 public final class NoReqBodyClient: Sendable {
     private let httpClient: HTTPClient
 

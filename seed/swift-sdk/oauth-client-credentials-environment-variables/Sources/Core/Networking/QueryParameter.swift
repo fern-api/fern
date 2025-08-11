@@ -1,3 +1,7 @@
+import Foundation
+
+import Foundation
+
 enum QueryParameter {
     case string(String)
     case bool(Bool)

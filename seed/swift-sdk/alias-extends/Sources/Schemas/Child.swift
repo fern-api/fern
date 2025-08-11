@@ -1,3 +1,5 @@
+import Foundation
+
 public struct Child: Codable, Hashable, Sendable {
     public let parent: String
     public let child: String

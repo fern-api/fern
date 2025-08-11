@@ -1,3 +1,5 @@
+import Foundation
+
 public struct Circle: Codable, Hashable, Sendable {
     public let radius: Double
     /// Additional properties that are not explicitly defined in the schema

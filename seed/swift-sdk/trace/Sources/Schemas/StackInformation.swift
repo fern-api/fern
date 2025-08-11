@@ -1,3 +1,5 @@
+import Foundation
+
 public struct StackInformation: Codable, Hashable, Sendable {
     public let numStackFrames: Int
     public let topStackFrame: StackFrame?

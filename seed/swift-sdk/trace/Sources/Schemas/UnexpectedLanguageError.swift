@@ -1,3 +1,5 @@
+import Foundation
+
 public struct UnexpectedLanguageError: Codable, Hashable, Sendable {
     public let expectedLanguage: Language
     public let actualLanguage: Language

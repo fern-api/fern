@@ -1,3 +1,5 @@
+import Foundation
+
 public final class AuthClient: Sendable {
     private let httpClient: HTTPClient
 

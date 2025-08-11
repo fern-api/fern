@@ -1,3 +1,5 @@
+import Foundation
+
 public struct CursorPages: Codable, Hashable, Sendable {
     public let next: StartingAfterPaging?
     public let page: Int?

@@ -1,3 +1,5 @@
+import Foundation
+
 public final class RealtimeClient: Sendable {
     private let httpClient: HTTPClient
 

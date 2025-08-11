@@ -1,3 +1,5 @@
+import Foundation
+
 public struct NonVoidFunctionDefinition: Codable, Hashable, Sendable {
     public let signature: NonVoidFunctionSignature
     public let code: FunctionImplementationForMultipleLanguages
