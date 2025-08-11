@@ -3,7 +3,7 @@
   createdAt: "2025-08-11"
   changelogEntry:
     - type: feat
-      summary: First stable release with core SDK functionality.
+      summary: First stable release with core SDK functionality
   irVersion: 58
 
 - version: 0.0.0
