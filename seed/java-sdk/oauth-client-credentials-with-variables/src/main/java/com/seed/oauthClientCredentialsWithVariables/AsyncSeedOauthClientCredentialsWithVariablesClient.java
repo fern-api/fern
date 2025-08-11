@@ -6,7 +6,10 @@ package com.seed.oauthClientCredentialsWithVariables;
 import com.seed.oauthClientCredentialsWithVariables.core.ClientOptions;
 import com.seed.oauthClientCredentialsWithVariables.core.Suppliers;
 import com.seed.oauthClientCredentialsWithVariables.resources.auth.AsyncAuthClient;
+import com.seed.oauthClientCredentialsWithVariables.resources.nested.AsyncNestedClient;
+import com.seed.oauthClientCredentialsWithVariables.resources.nestednoauth.AsyncNestedNoAuthClient;
 import com.seed.oauthClientCredentialsWithVariables.resources.service.AsyncServiceClient;
+import com.seed.oauthClientCredentialsWithVariables.resources.simple.AsyncSimpleClient;
 import java.util.function.Supplier;
 
 public class AsyncSeedOauthClientCredentialsWithVariablesClient {
@@ -14,20 +17,41 @@ public class AsyncSeedOauthClientCredentialsWithVariablesClient {
 
     protected final Supplier<AsyncAuthClient> authClient;
 
+    protected final Supplier<AsyncNestedNoAuthClient> nestedNoAuthClient;
+
+    protected final Supplier<AsyncNestedClient> nestedClient;
+
     protected final Supplier<AsyncServiceClient> serviceClient;
+
+    protected final Supplier<AsyncSimpleClient> simpleClient;
 
     public AsyncSeedOauthClientCredentialsWithVariablesClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.authClient = Suppliers.memoize(() -> new AsyncAuthClient(clientOptions));
+        this.nestedNoAuthClient = Suppliers.memoize(() -> new AsyncNestedNoAuthClient(clientOptions));
+        this.nestedClient = Suppliers.memoize(() -> new AsyncNestedClient(clientOptions));
         this.serviceClient = Suppliers.memoize(() -> new AsyncServiceClient(clientOptions));
+        this.simpleClient = Suppliers.memoize(() -> new AsyncSimpleClient(clientOptions));
     }
 
     public AsyncAuthClient auth() {
         return this.authClient.get();
     }
 
+    public AsyncNestedNoAuthClient nestedNoAuth() {
+        return this.nestedNoAuthClient.get();
+    }
+
+    public AsyncNestedClient nested() {
+        return this.nestedClient.get();
+    }
+
     public AsyncServiceClient service() {
         return this.serviceClient.get();
+    }
+
+    public AsyncSimpleClient simple() {
+        return this.simpleClient.get();
     }
 
     public static AsyncSeedOauthClientCredentialsWithVariablesClientBuilder builder() {

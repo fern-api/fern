@@ -24,6 +24,42 @@
                 "type": "csharp",
                 "client": "using SeedOauthClientCredentialsEnvironmentVariables;\n\nvar client = new SeedOauthClientCredentialsEnvironmentVariablesClient(\"CLIENT_ID\", \"CLIENT_SECRET\");\nawait client.Auth.RefreshTokenAsync(\n    new RefreshTokenRequest\n    {\n        ClientId = \"client_id\",\n        ClientSecret = \"client_secret\",\n        RefreshToken = \"refresh_token\",\n        Audience = \"https://api.example.com\",\n        GrantType = \"refresh_token\",\n        Scope = \"scope\",\n    }\n);\n"
             }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/nested-no-auth/get-something",
+                "method": "GET",
+                "identifier_override": "endpoint_nested-no-auth/api.getSomething"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedOauthClientCredentialsEnvironmentVariables;\n\nvar client = new SeedOauthClientCredentialsEnvironmentVariablesClient(\"CLIENT_ID\", \"CLIENT_SECRET\");\nawait client.NestedNoAuth.Api.GetSomethingAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/nested/get-something",
+                "method": "GET",
+                "identifier_override": "endpoint_nested/api.getSomething"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedOauthClientCredentialsEnvironmentVariables;\n\nvar client = new SeedOauthClientCredentialsEnvironmentVariablesClient(\"CLIENT_ID\", \"CLIENT_SECRET\");\nawait client.Nested.Api.GetSomethingAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/get-something",
+                "method": "GET",
+                "identifier_override": "endpoint_simple.getSomething"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedOauthClientCredentialsEnvironmentVariables;\n\nvar client = new SeedOauthClientCredentialsEnvironmentVariablesClient(\"CLIENT_ID\", \"CLIENT_SECRET\");\nawait client.Simple.GetSomethingAsync();\n"
+            }
         }
     ]
 }

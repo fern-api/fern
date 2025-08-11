@@ -1,7 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { UseStatement, rust } from "@fern-api/rust-codegen";
-import { generateRustTypeForTypeReference } from "@fern-api/rust-model";
+import { generateRustTypeForTypeReference } from "@fern-api/fern-rust-model";
 
 import {
     ApiAuth,
@@ -103,30 +103,6 @@ export class SubClientGenerator {
             }
         ];
 
-        // Always add standard auth fields for consistent API
-        fields.push(
-            {
-                name: "api_key",
-                type: "Option<String>",
-                visibility: "pub"
-            },
-            {
-                name: "bearer_token",
-                type: "Option<String>",
-                visibility: "pub"
-            },
-            {
-                name: "username",
-                type: "Option<String>",
-                visibility: "pub"
-            },
-            {
-                name: "password",
-                type: "Option<String>",
-                visibility: "pub"
-            }
-        );
-
         return fields;
     }
 
@@ -135,23 +111,11 @@ export class SubClientGenerator {
         const errorType = rust.Type.reference(rust.reference({ name: "ClientError" }));
         const returnType = rust.Type.result(selfType, errorType);
 
-        // Use consistent parameter signature for all auth types
-        const parameters = [
-            "config: ClientConfig",
-            "api_key: Option<String>",
-            "bearer_token: Option<String>",
-            "username: Option<String>",
-            "password: Option<String>"
-        ];
+        // Use simple parameter signature with just config
+        const parameters = ["config: ClientConfig"];
 
         const constructorBody = `let http_client = HttpClient::new(config)?;
-        Ok(Self { 
-            http_client, 
-            api_key, 
-            bearer_token, 
-            username, 
-            password 
-        })`;
+        Ok(Self { http_client })`;
 
         return {
             name: "new",
@@ -253,7 +217,7 @@ export class SubClientGenerator {
                 name: queryParam.name.name.snakeCase.safeName,
                 type: generateRustTypeForTypeReference(queryParam.valueType),
                 optional: true,
-                isRef: this.shouldPassByReference(queryParam.valueType)
+                isRef: false
             });
         });
     }
@@ -311,6 +275,26 @@ export class SubClientGenerator {
             container: () => true, // Collections passed by reference
             unknown: () => true,
             _other: () => true
+        });
+    }
+
+    private isOptionalType(typeRef: TypeReference): boolean {
+        return TypeReference._visit(typeRef, {
+            primitive: () => false,
+            named: () => false,
+            container: (container) => {
+                return container._visit({
+                    optional: () => true,
+                    nullable: () => true,
+                    list: () => false,
+                    set: () => false,
+                    map: () => false,
+                    literal: () => false,
+                    _other: () => false
+                });
+            },
+            unknown: () => false,
+            _other: () => false
         });
     }
 
@@ -416,7 +400,10 @@ export class SubClientGenerator {
         const queryParamStatements = queryParams.map((queryParam) => {
             const paramName = queryParam.name.name.snakeCase.safeName;
             const wireValue = queryParam.name.wireValue;
-            return `if let Some(value) = ${paramName} {
+            const isOptionalType = this.isOptionalType(queryParam.valueType);
+            const pattern = isOptionalType ? `Some(Some(value))` : `Some(value)`;
+
+            return `if let ${pattern} = ${paramName} {
                 query_params.push(("${wireValue}".to_string(), ${this.getQueryParameterConversion(queryParam, paramName)}));
             }`;
         });

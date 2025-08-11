@@ -46,6 +46,94 @@
         },
         {
             "id": {
+                "path": "/nested-no-auth/get-something",
+                "method": "GET",
+                "identifierOverride": "endpoint_nested-no-auth/api.getSomething"
+            },
+            "snippet": {
+                "client": "require \"fern_oauth_client_credentials_with_variables\"\n\noauth_client_credentials_with_variables = SeedOauthClientCredentialsWithVariablesClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials_with_variables.nested_no_auth.api.get_something",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/nested-no-auth/get-something",
+                "method": "GET",
+                "identifierOverride": "endpoint_nested-no-auth/api.getSomething"
+            },
+            "snippet": {
+                "client": "require \"fern_oauth_client_credentials_with_variables\"\n\noauth_client_credentials_with_variables = SeedOauthClientCredentialsWithVariablesClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials_with_variables.nested_no_auth.api.get_something",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/nested-no-auth/get-something",
+                "method": "GET",
+                "identifierOverride": "endpoint_nested-no-auth/api.getSomething"
+            },
+            "snippet": {
+                "client": "require \"fern_oauth_client_credentials_with_variables\"\n\noauth_client_credentials_with_variables = SeedOauthClientCredentialsWithVariablesClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials_with_variables.nested_no_auth.api.get_something",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/nested-no-auth/get-something",
+                "method": "GET",
+                "identifierOverride": "endpoint_nested-no-auth/api.getSomething"
+            },
+            "snippet": {
+                "client": "require \"fern_oauth_client_credentials_with_variables\"\n\noauth_client_credentials_with_variables = SeedOauthClientCredentialsWithVariablesClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials_with_variables.nested_no_auth.api.get_something",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/nested/get-something",
+                "method": "GET",
+                "identifierOverride": "endpoint_nested/api.getSomething"
+            },
+            "snippet": {
+                "client": "require \"fern_oauth_client_credentials_with_variables\"\n\noauth_client_credentials_with_variables = SeedOauthClientCredentialsWithVariablesClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials_with_variables.nested.api.get_something",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/nested/get-something",
+                "method": "GET",
+                "identifierOverride": "endpoint_nested/api.getSomething"
+            },
+            "snippet": {
+                "client": "require \"fern_oauth_client_credentials_with_variables\"\n\noauth_client_credentials_with_variables = SeedOauthClientCredentialsWithVariablesClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials_with_variables.nested.api.get_something",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/nested/get-something",
+                "method": "GET",
+                "identifierOverride": "endpoint_nested/api.getSomething"
+            },
+            "snippet": {
+                "client": "require \"fern_oauth_client_credentials_with_variables\"\n\noauth_client_credentials_with_variables = SeedOauthClientCredentialsWithVariablesClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials_with_variables.nested.api.get_something",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/nested/get-something",
+                "method": "GET",
+                "identifierOverride": "endpoint_nested/api.getSomething"
+            },
+            "snippet": {
+                "client": "require \"fern_oauth_client_credentials_with_variables\"\n\noauth_client_credentials_with_variables = SeedOauthClientCredentialsWithVariablesClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials_with_variables.nested.api.get_something",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
                 "path": "/service/{endpointParam}",
                 "method": "POST",
                 "identifierOverride": "endpoint_service.post"
@@ -63,6 +151,28 @@
             },
             "snippet": {
                 "client": "require \"fern_oauth_client_credentials_with_variables\"\n\noauth_client_credentials_with_variables = SeedOauthClientCredentialsWithVariablesClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials_with_variables.service.post(endpoint_param: \"endpointParam\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/get-something",
+                "method": "GET",
+                "identifierOverride": "endpoint_simple.getSomething"
+            },
+            "snippet": {
+                "client": "require \"fern_oauth_client_credentials_with_variables\"\n\noauth_client_credentials_with_variables = SeedOauthClientCredentialsWithVariablesClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials_with_variables.simple.get_something",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/get-something",
+                "method": "GET",
+                "identifierOverride": "endpoint_simple.getSomething"
+            },
+            "snippet": {
+                "client": "require \"fern_oauth_client_credentials_with_variables\"\n\noauth_client_credentials_with_variables = SeedOauthClientCredentialsWithVariablesClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials_with_variables.simple.get_something",
                 "type": "ruby"
             }
         }

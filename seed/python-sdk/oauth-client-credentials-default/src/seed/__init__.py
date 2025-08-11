@@ -2,7 +2,7 @@
 
 # isort: skip_file
 
-from . import auth
+from . import auth, nested, nested_no_auth, simple
 from .auth import TokenResponse
 from .client import AsyncSeedOauthClientCredentialsDefault, SeedOauthClientCredentialsDefault
 from .version import __version__
@@ -13,4 +13,7 @@ __all__ = [
     "TokenResponse",
     "__version__",
     "auth",
+    "nested",
+    "nested_no_auth",
+    "simple",
 ]
