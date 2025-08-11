@@ -1,6 +1,6 @@
 import { ts } from "ts-morph";
 
-import { EnvironmentBaseUrlId } from "@fern-fern/ir-sdk";
+import { EnvironmentBaseUrlId } from "@fern-fern/ir-sdk/api";
 
 import { GeneratedFile } from "../../commons/GeneratedFile";
 import { SdkContext } from "../SdkContext";

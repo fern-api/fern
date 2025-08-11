@@ -1,7 +1,7 @@
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkInlinedRequestBodySchema } from "@fern-typescript/contexts";
 
-import { HttpEndpoint } from "@fern-fern/ir-sdk";
+import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
 
 import { GeneratedSdkInlinedRequestBodySchemaImpl } from "./GeneratedSdkInlinedRequestBodySchemaImpl";
 

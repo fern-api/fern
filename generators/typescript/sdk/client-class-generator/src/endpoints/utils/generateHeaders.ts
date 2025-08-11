@@ -1,9 +1,14 @@
-import { ExportsManager, getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 import { FernIr } from "@fern-fern/ir-sdk";
-import { HeaderAuthScheme, HttpEndpoint, HttpHeader, HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk";
+import {
+    HeaderAuthScheme,
+    HttpEndpoint,
+    HttpHeader,
+    HttpService,
+    IntermediateRepresentation
+} from "@fern-fern/ir-sdk/api";
 
 import { GeneratedHeader } from "../../GeneratedHeader";
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";

@@ -1,4 +1,4 @@
-import { FileProperty } from "@fern-fern/ir-sdk";
+import { FileProperty } from "@fern-fern/ir-sdk/api";
 
 export function getParameterNameForFile({
     property,

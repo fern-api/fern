@@ -2,7 +2,7 @@ import { PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 
-import { HttpEndpoint, HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk";
+import { HttpEndpoint, HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { GeneratedSdkEndpointTypeSchemasImpl } from "./GeneratedSdkEndpointTypeSchemasImpl";
 

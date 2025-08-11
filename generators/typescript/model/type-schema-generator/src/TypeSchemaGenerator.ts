@@ -17,7 +17,7 @@ import {
     Type,
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
-} from "@fern-fern/ir-sdk";
+} from "@fern-fern/ir-sdk/api";
 
 import { GeneratedAliasTypeSchemaImpl } from "./alias/GeneratedAliasTypeSchemaImpl";
 import { GeneratedEnumTypeSchemaImpl } from "./enum/GeneratedEnumTypeSchemaImpl";

@@ -13,7 +13,7 @@ import {
     ts
 } from "ts-morph";
 
-import { WebSocketChannel, WebSocketMessage, WebSocketMessageBody } from "@fern-fern/ir-sdk";
+import { WebSocketChannel, WebSocketMessage, WebSocketMessageBody } from "@fern-fern/ir-sdk/api";
 
 export declare namespace GeneratedWebsocketSocketClassImpl {
     export interface Init {

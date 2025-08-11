@@ -3,7 +3,7 @@ import { EnvironmentsContext, GeneratedEnvironments } from "@fern-typescript/con
 import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
 import { SourceFile } from "ts-morph";
 
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk";
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { EnvironmentsDeclarationReferencer } from "../../declaration-referencers/EnvironmentsDeclarationReferencer";
 

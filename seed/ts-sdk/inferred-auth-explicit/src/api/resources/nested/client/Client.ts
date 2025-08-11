@@ -12,18 +12,21 @@ export declare namespace Nested {
         baseUrl?: core.Supplier<string>;
         /** Additional headers to include in requests. */
         headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        authProvider: core.AbstractAuthProvider;
     }
 }
 
 export class Nested {
     protected readonly _options: Nested.Options;
+    protected readonly _authProvider: core.AbstractAuthProvider;
     protected _api: Api | undefined;
 
     constructor(_options: Nested.Options) {
         this._options = _options;
+        this._authProvider = _options.authProvider;
     }
 
     public get api(): Api {
-        return (this._api ??= new Api(this._options));
+        return (this._api ??= new Api({ ...this._options, authProvider: this._authProvider }));
     }
 }

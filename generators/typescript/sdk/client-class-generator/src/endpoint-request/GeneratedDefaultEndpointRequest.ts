@@ -21,7 +21,7 @@ import {
     IntermediateRepresentation,
     SdkRequest,
     SdkRequestShape
-} from "@fern-fern/ir-sdk";
+} from "@fern-fern/ir-sdk/api";
 
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams";

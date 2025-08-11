@@ -36,7 +36,6 @@ import {
     BasicAuthScheme,
     BearerAuthScheme,
     ExampleEndpointCall,
-    FernIr,
     HeaderAuthScheme,
     HttpEndpoint,
     HttpHeader,
@@ -51,7 +50,8 @@ import {
     SubpackageId,
     VariableDeclaration,
     VariableId
-} from "@fern-fern/ir-sdk";
+} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 
 import { GeneratedHeader } from "./GeneratedHeader";
 import { GeneratedWrappedService } from "./GeneratedWrappedService";

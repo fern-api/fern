@@ -8,7 +8,7 @@ import {
     ExampleTypeShape,
     SingleUnionTypeProperty,
     UnionTypeDeclaration
-} from "@fern-fern/ir-sdk";
+} from "@fern-fern/ir-sdk/api";
 
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 import { ParsedSingleUnionTypeForUnion } from "./ParsedSingleUnionTypeForUnion";

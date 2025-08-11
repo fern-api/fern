@@ -4,7 +4,7 @@ import { ts } from "ts-morph";
 
 import { assertNever } from "@fern-api/core-utils";
 
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk";
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
 
 import { GeneratedEndpointTypeSchema } from "./GeneratedEndpointTypeSchema";
 import { GeneratedEndpointTypeSchemaImpl } from "./GeneratedEndpointTypeSchemaImpl";

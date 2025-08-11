@@ -3,7 +3,7 @@ import { Zurg, getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedUndiscriminatedUnionTypeSchema, ModelContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
 
-import { UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-sdk";
+import { UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
 

@@ -2,7 +2,7 @@ import { GetReferenceOpts } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 
-import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk";
+import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 
 import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse";
 

@@ -7,7 +7,7 @@ import { FernGeneratorExec } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { getNamespaceExport } from "@fern-api/typescript-base";
 
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk";
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { SdkCustomConfig } from "./custom-config/SdkCustomConfig";
 import { SdkCustomConfigSchema } from "./custom-config/schema/SdkCustomConfigSchema";

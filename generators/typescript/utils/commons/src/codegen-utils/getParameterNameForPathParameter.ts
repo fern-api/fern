@@ -1,4 +1,4 @@
-import { ExamplePathParameter, Name, PathParameter } from "@fern-fern/ir-sdk";
+import { ExamplePathParameter, Name, PathParameter } from "@fern-fern/ir-sdk/api";
 
 /**
  * Determines the casing of the path parameter when used as a positional function parameter

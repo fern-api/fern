@@ -4,7 +4,7 @@ import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-uni
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { SourceFile } from "ts-morph";
 
-import { Name } from "@fern-fern/ir-sdk";
+import { Name } from "@fern-fern/ir-sdk/api";
 
 import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer";
 

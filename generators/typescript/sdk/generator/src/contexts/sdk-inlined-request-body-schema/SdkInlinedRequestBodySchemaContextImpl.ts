@@ -4,7 +4,7 @@ import { PackageResolver } from "@fern-typescript/resolvers";
 import { SdkInlinedRequestBodySchemaGenerator } from "@fern-typescript/sdk-inlined-request-schema-generator";
 import { SourceFile } from "ts-morph";
 
-import { Name } from "@fern-fern/ir-sdk";
+import { Name } from "@fern-fern/ir-sdk/api";
 
 import { SdkInlinedRequestBodyDeclarationReferencer } from "../../declaration-referencers/SdkInlinedRequestBodyDeclarationReferencer";
 import { getSchemaImportStrategy } from "../getSchemaImportStrategy";

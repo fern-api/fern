@@ -8,7 +8,7 @@ import {
     EnvironmentId,
     MultipleBaseUrlsEnvironment,
     MultipleBaseUrlsEnvironments
-} from "@fern-fern/ir-sdk";
+} from "@fern-fern/ir-sdk/api";
 
 export declare namespace GeneratedMultipleUrlsEnvironmentsImpl {
     export interface Init {

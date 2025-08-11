@@ -1,7 +1,7 @@
 import { GetReferenceOpts } from "@fern-typescript/commons";
 import { InterfaceDeclarationStructure, PropertySignatureStructure, ts } from "ts-morph";
 
-import { ExampleTypeShape, TypeReference } from "@fern-fern/ir-sdk";
+import { ExampleTypeShape, TypeReference } from "@fern-fern/ir-sdk/api";
 
 import { BaseGeneratedType } from "./BaseGeneratedType";
 

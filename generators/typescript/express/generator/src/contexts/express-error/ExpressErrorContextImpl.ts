@@ -4,7 +4,7 @@ import { ExpressErrorGenerator } from "@fern-typescript/express-error-generator"
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { SourceFile } from "ts-morph";
 
-import { DeclaredErrorName, ErrorDeclaration } from "@fern-fern/ir-sdk";
+import { DeclaredErrorName, ErrorDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { ExpressErrorDeclarationReferencer } from "../../declaration-referencers/ExpressErrorDeclarationReferencer";
 

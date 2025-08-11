@@ -8,7 +8,7 @@ import {
     SubpackageId,
     WebSocketChannel,
     WebSocketChannelId
-} from "@fern-fern/ir-sdk";
+} from "@fern-fern/ir-sdk/api";
 
 export class PackageResolver {
     constructor(private readonly intermediateRepresentation: IntermediateRepresentation) {}

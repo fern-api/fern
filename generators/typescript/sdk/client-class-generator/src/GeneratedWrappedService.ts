@@ -4,7 +4,7 @@ import { ClassDeclarationStructure, Scope, ts } from "ts-morph";
 
 import { SetRequired } from "@fern-api/core-utils";
 
-import { Subpackage, SubpackageId } from "@fern-fern/ir-sdk";
+import { Subpackage, SubpackageId } from "@fern-fern/ir-sdk/api";
 
 import { GeneratedSdkClientClassImpl } from "./GeneratedSdkClientClassImpl";
 import { OAuthTokenProviderGenerator } from "./oauth-generator/OAuthTokenProviderGenerator";

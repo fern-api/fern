@@ -22,7 +22,7 @@ import {
     ts
 } from "ts-morph";
 
-import { ObjectProperty } from "@fern-fern/ir-sdk";
+import { ObjectProperty } from "@fern-fern/ir-sdk/api";
 
 import { KnownSingleUnionType } from "./known-single-union-type/KnownSingleUnionType";
 import { ParsedSingleUnionType } from "./parsed-single-union-type/ParsedSingleUnionType";

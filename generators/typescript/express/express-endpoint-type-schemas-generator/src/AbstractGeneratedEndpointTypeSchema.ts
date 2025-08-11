@@ -2,7 +2,7 @@ import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-genera
 import { PackageId, Reference } from "@fern-typescript/commons";
 import { ExpressContext } from "@fern-typescript/contexts";
 
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk";
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
 
 import { GeneratedEndpointTypeSchema } from "./GeneratedEndpointTypeSchema";
 

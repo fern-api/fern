@@ -4,6 +4,7 @@
 
 import * as core from "./core/index.js";
 import { mergeHeaders } from "./core/headers.js";
+import { InferredAuthProvider } from "./auth/InferredAuthProvider.js";
 import { Auth } from "./api/resources/auth/client/Client.js";
 import { NestedNoAuth } from "./api/resources/nestedNoAuth/client/Client.js";
 import { Nested } from "./api/resources/nested/client/Client.js";
@@ -14,6 +15,9 @@ export declare namespace SeedInferredAuthExplicitClient {
         environment: core.Supplier<string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
+        clientId: string;
+        clientSecret: string;
+        scope?: string;
         /** Additional headers to include in requests. */
         headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
@@ -34,6 +38,7 @@ export declare namespace SeedInferredAuthExplicitClient {
 
 export class SeedInferredAuthExplicitClient {
     protected readonly _options: SeedInferredAuthExplicitClient.Options;
+    protected readonly _authProvider: core.AbstractAuthProvider;
     protected _auth: Auth | undefined;
     protected _nestedNoAuth: NestedNoAuth | undefined;
     protected _nested: Nested | undefined;
@@ -54,6 +59,10 @@ export class SeedInferredAuthExplicitClient {
                 _options?.headers,
             ),
         };
+        this._authProvider = new InferredAuthProvider({
+            client: this,
+            authTokenParameters: { ...this._options },
+        });
     }
 
     public get auth(): Auth {
@@ -65,10 +74,10 @@ export class SeedInferredAuthExplicitClient {
     }
 
     public get nested(): Nested {
-        return (this._nested ??= new Nested(this._options));
+        return (this._nested ??= new Nested({ ...this._options, authProvider: this._authProvider }));
     }
 
     public get simple(): Simple {
-        return (this._simple ??= new Simple(this._options));
+        return (this._simple ??= new Simple({ ...this._options, authProvider: this._authProvider }));
     }
 }

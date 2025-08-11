@@ -15,7 +15,7 @@ import {
     ResolvedTypeReference,
     TypeDeclaration,
     TypeReference
-} from "@fern-fern/ir-sdk";
+} from "@fern-fern/ir-sdk/api";
 
 import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
 

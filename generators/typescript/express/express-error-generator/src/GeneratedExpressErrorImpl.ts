@@ -10,7 +10,7 @@ import {
     ts
 } from "ts-morph";
 
-import { ErrorDeclaration } from "@fern-fern/ir-sdk";
+import { ErrorDeclaration } from "@fern-fern/ir-sdk/api";
 
 export declare namespace GeneratedExpressErrorImpl {
     export interface Init {

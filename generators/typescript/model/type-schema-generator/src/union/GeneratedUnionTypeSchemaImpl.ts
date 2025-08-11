@@ -7,7 +7,7 @@ import {
 } from "@fern-typescript/union-schema-generator";
 import { ModuleDeclaration, ts } from "ts-morph";
 
-import { SingleUnionTypeProperties, UnionTypeDeclaration } from "@fern-fern/ir-sdk";
+import { SingleUnionTypeProperties, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
 import { RawSamePropertiesAsObjectSingleUnionType } from "./RawSamePropertiesAsObjectSingleUnionType";

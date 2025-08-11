@@ -3,7 +3,7 @@ import { GeneratedFile, SdkContext } from "@fern-typescript/contexts";
 
 import { assertNever } from "@fern-api/core-utils";
 
-import { AuthScheme, IntermediateRepresentation } from "@fern-fern/ir-sdk";
+import { AuthScheme, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { AuthProviderGenerator, InferredAuthProviderGenerator } from "./auth-provider";
 

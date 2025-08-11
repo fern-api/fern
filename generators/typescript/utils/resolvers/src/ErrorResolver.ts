@@ -1,4 +1,4 @@
-import { DeclaredErrorName, ErrorDeclaration, ErrorId, IntermediateRepresentation } from "@fern-fern/ir-sdk";
+import { DeclaredErrorName, ErrorDeclaration, ErrorId, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 type SimpleErrorName = string;
 

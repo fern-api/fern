@@ -7,7 +7,7 @@ import { ExpressInlinedRequestBodySchemaGenerator } from "@fern-typescript/expre
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { SourceFile } from "ts-morph";
 
-import { Name } from "@fern-fern/ir-sdk";
+import { Name } from "@fern-fern/ir-sdk/api";
 
 import { ExpressInlinedRequestBodyDeclarationReferencer } from "../../declaration-referencers/ExpressInlinedRequestBodyDeclarationReferencer";
 import { getSchemaImportStrategy } from "../getSchemaImportStrategy";

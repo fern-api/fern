@@ -4,7 +4,7 @@ import { ts } from "ts-morph";
 
 import { assertNever } from "@fern-api/core-utils";
 
-import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk";
+import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest";

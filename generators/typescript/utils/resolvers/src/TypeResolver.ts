@@ -7,7 +7,7 @@ import {
     TypeDeclaration,
     TypeId,
     TypeReference
-} from "@fern-fern/ir-sdk";
+} from "@fern-fern/ir-sdk/api";
 
 /**
  * TypeResolver converts a TypeName to a "resolved" value by following all

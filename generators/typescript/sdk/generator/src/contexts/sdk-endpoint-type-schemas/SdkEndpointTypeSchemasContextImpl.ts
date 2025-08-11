@@ -4,7 +4,7 @@ import { PackageResolver } from "@fern-typescript/resolvers";
 import { SdkEndpointTypeSchemasGenerator } from "@fern-typescript/sdk-endpoint-type-schemas-generator";
 import { SourceFile } from "ts-morph";
 
-import { Name } from "@fern-fern/ir-sdk";
+import { Name } from "@fern-fern/ir-sdk/api";
 
 import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer";
 import { getSchemaImportStrategy } from "../getSchemaImportStrategy";

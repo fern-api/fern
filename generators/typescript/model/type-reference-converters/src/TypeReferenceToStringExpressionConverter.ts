@@ -8,7 +8,7 @@ import {
     ResolvedTypeReference,
     ShapeType,
     TypeReference
-} from "@fern-fern/ir-sdk";
+} from "@fern-fern/ir-sdk/api";
 
 import { AbstractTypeReferenceConverter, ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter";
 

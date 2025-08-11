@@ -1,7 +1,7 @@
 import { NpmPackage } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 
-import { EndpointId, ExampleEndpointCall } from "@fern-fern/ir-sdk";
+import { EndpointId, ExampleEndpointCall } from "@fern-fern/ir-sdk/api";
 
 import { SdkContext } from "..";
 import { GeneratedFile } from "../../commons/GeneratedFile";

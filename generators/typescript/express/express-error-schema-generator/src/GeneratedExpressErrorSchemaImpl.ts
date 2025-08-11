@@ -5,7 +5,7 @@ import { ModuleDeclaration, ts } from "ts-morph";
 
 import { assertNever } from "@fern-api/core-utils";
 
-import { ErrorDeclaration, TypeReference } from "@fern-fern/ir-sdk";
+import { ErrorDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 
 export declare namespace GeneratedExpressErrorSchemaImpl {
     export interface Init {

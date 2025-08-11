@@ -4,12 +4,11 @@ import { ts } from "ts-morph";
 import {
     DeclaredTypeName,
     ExampleTypeReference,
-    ObjectProperty,
     ResolvedTypeReference,
     TypeDeclaration,
     TypeId,
     TypeReference
-} from "@fern-fern/ir-sdk";
+} from "@fern-fern/ir-sdk/api";
 
 import { GeneratedType } from "./GeneratedType";
 import { GeneratedTypeReferenceExample } from "./GeneratedTypeReferenceExample";

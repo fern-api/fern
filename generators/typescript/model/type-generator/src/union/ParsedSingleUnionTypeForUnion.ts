@@ -12,7 +12,7 @@ import {
     SingleUnionTypeProperties,
     SingleUnionTypeProperty,
     UnionTypeDeclaration
-} from "@fern-fern/ir-sdk";
+} from "@fern-fern/ir-sdk/api";
 
 import { SamePropertiesAsObjectSingleUnionTypeGenerator } from "./SamePropertiesAsObjectSingleUnionTypeGenerator";
 

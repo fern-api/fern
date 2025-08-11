@@ -17,14 +17,21 @@ import { Code, arrayOf, code, literalOf } from "ts-poet";
 
 import { assertNever } from "@fern-api/core-utils";
 
-import * as IR from "@fern-fern/ir-sdk";
-import { ExampleRequestBody } from "@fern-fern/ir-sdk";
+import {
+    ExampleRequestBody,
+    ExampleResponse,
+    ExampleTypeReference,
+    HttpEndpoint,
+    HttpMethod,
+    HttpService,
+    IntermediateRepresentation
+} from "@fern-fern/ir-sdk/api";
 
 const DEFAULT_PACKAGE_PATH = "src";
 
 export declare namespace JestTestGenerator {
     interface Args {
-        ir: IR.IntermediateRepresentation;
+        ir: IntermediateRepresentation;
         dependencyManager: DependencyManager;
         rootDirectory: Directory;
         includeSerdeLayer: boolean;
@@ -38,7 +45,7 @@ export declare namespace JestTestGenerator {
 }
 
 export class JestTestGenerator {
-    private readonly ir: IR.IntermediateRepresentation;
+    private readonly ir: IntermediateRepresentation;
     private readonly dependencyManager: DependencyManager;
     private readonly rootDirectory: Directory;
     private readonly writeUnitTests: boolean;
@@ -157,7 +164,7 @@ export class JestTestGenerator {
         }
     }
 
-    public getTestFile(service: IR.HttpService): ExportedFilePath {
+    public getTestFile(service: HttpService): ExportedFilePath {
         const folders = service.name.fernFilepath.packagePath.map((folder) => folder.originalName);
         const filename = `${service.name.fernFilepath.file?.camelCase.unsafeName ?? "main"}.test.ts`;
 
@@ -248,7 +255,7 @@ describe("test", () => {
 
     public buildFile(
         serviceName: string,
-        service: IR.HttpService,
+        service: HttpService,
         packageId: PackageId,
         serviceGenerator: GeneratedSdkClientClass,
         context: SdkContext
@@ -351,7 +358,7 @@ describe("${serviceName}", () => {
     }
 
     private buildTest(
-        endpoint: IR.HttpEndpoint,
+        endpoint: HttpEndpoint,
         serviceGenerator: GeneratedSdkClientClass,
         context: SdkContext,
         importStatement: Reference,
@@ -426,7 +433,7 @@ describe("${serviceName}", () => {
             ] = code`${literalOf(pathParameter.value.jsonExample)}`;
         });
 
-        const isHeadersResponse = endpoint.response?.body === undefined && endpoint.method === IR.HttpMethod.Head;
+        const isHeadersResponse = endpoint.response?.body === undefined && endpoint.method === HttpMethod.Head;
 
         return code`
     test("${endpoint.name.originalName}", async () => {
@@ -466,7 +473,7 @@ describe("${serviceName}", () => {
           `;
     }
 
-    private shouldBuildTest(endpoint: IR.HttpEndpoint): boolean {
+    private shouldBuildTest(endpoint: HttpEndpoint): boolean {
         if (
             this.ir.auth.schemes.some((scheme) => {
                 switch (scheme.type) {
@@ -546,7 +553,7 @@ describe("${serviceName}", () => {
         return requestExample;
     }
 
-    getResponseExample(response: IR.ExampleResponse | undefined): Code | undefined {
+    getResponseExample(response: ExampleResponse | undefined): Code | undefined {
         if (!response) {
             return undefined;
         }
@@ -591,7 +598,7 @@ describe("${serviceName}", () => {
         return responseExample;
     }
 
-    createRawJsonExample({ shape, jsonExample }: IR.ExampleTypeReference): Code {
+    createRawJsonExample({ shape, jsonExample }: ExampleTypeReference): Code {
         const createRawJsonExample = this.createRawJsonExample.bind(this);
         return shape._visit<Code>({
             primitive: (value) => {
@@ -720,7 +727,7 @@ describe("${serviceName}", () => {
     }
 }
 
-function getExampleResponseStatusCode(response: IR.ExampleResponse): number {
+function getExampleResponseStatusCode(response: ExampleResponse): number {
     return response._visit({
         ok: () => 200,
         error: () => 500,
@@ -730,7 +737,7 @@ function getExampleResponseStatusCode(response: IR.ExampleResponse): number {
     });
 }
 
-function getExpectedResponseBody(response: IR.ExampleResponse, context: SdkContext): Code {
+function getExpectedResponseBody(response: ExampleResponse, context: SdkContext): Code {
     return response._visit({
         ok: (response) => {
             return response._visit({

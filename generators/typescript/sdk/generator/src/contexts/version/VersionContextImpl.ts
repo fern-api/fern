@@ -2,7 +2,7 @@ import { ExportsManager, ImportsManager, Reference } from "@fern-typescript/comm
 import { GeneratedVersion, VersionContext } from "@fern-typescript/contexts";
 import { SourceFile } from "ts-morph";
 
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk";
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { VersionDeclarationReferencer } from "../../declaration-referencers/VersionDeclarationReferencer";
 import { VersionGenerator } from "../../version/VersionGenerator";

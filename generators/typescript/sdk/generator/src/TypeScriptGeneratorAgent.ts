@@ -6,7 +6,7 @@ import { Logger } from "@fern-api/logger";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation, PublishingConfig } from "@fern-fern/ir-sdk";
+import { IntermediateRepresentation, PublishingConfig } from "@fern-fern/ir-sdk/api";
 
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
 

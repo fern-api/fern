@@ -129,6 +129,8 @@ export class AuthProviderContext {
     }
 
     private getInferredAuthTokenService(authScheme: FernIr.InferredAuthScheme): FernIr.HttpService {
+        this.context.logger.info(`Inferred auth token service for scheme ${JSON.stringify(authScheme.tokenEndpoint.endpoint)}`);
+        this.context.logger.info(`IR services: ${Object.keys(this.context.ir.services).join(", ")}`);
         const service = this.context.ir.services[authScheme.tokenEndpoint.endpoint.serviceId];
         if (!service) {
             throw new Error(`failed to find service with id ${authScheme?.tokenEndpoint.endpoint.serviceId}`);

@@ -13,7 +13,7 @@ import {
     QueryParameter,
     StringType,
     TypeReference
-} from "@fern-fern/ir-sdk";
+} from "@fern-fern/ir-sdk/api";
 
 import { AbstractRequestParameter } from "./AbstractRequestParameter";
 

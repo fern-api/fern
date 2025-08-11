@@ -55,7 +55,7 @@ import {
     TypeDeclaration,
     TypeId,
     WebSocketChannel
-} from "@fern-fern/ir-sdk";
+} from "@fern-fern/ir-sdk/api";
 import { FdrSnippetTemplate, FdrSnippetTemplateClient, FdrSnippetTemplateEnvironment } from "@fern-fern/snippet-sdk";
 
 import { TemplateGenerator } from "./TemplateGenerator";

@@ -2,7 +2,7 @@ import { PackageId } from "@fern-typescript/commons";
 import { GeneratedExpressService } from "@fern-typescript/contexts";
 import { PackageResolver } from "@fern-typescript/resolvers";
 
-import { HttpService } from "@fern-fern/ir-sdk";
+import { HttpService } from "@fern-fern/ir-sdk/api";
 
 import { GeneratedExpressServiceImpl } from "./GeneratedExpressServiceImpl";
 

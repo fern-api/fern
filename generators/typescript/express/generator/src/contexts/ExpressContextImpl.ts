@@ -30,7 +30,7 @@ import { SourceFile } from "ts-morph";
 
 import { Logger } from "@fern-api/logger";
 
-import { Constants } from "@fern-fern/ir-sdk";
+import { Constants } from "@fern-fern/ir-sdk/api";
 
 import { EndpointDeclarationReferencer } from "../declaration-referencers/EndpointDeclarationReferencer";
 import { ExpressErrorDeclarationReferencer } from "../declaration-referencers/ExpressErrorDeclarationReferencer";

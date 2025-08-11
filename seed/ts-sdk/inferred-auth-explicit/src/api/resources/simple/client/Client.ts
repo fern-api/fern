@@ -13,6 +13,7 @@ export declare namespace Simple {
         baseUrl?: core.Supplier<string>;
         /** Additional headers to include in requests. */
         headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        authProvider: core.AbstractAuthProvider;
     }
 
     export interface RequestOptions {
@@ -31,9 +32,11 @@ export declare namespace Simple {
 
 export class Simple {
     protected readonly _options: Simple.Options;
+    protected readonly _authProvider: core.AbstractAuthProvider;
 
     constructor(_options: Simple.Options) {
         this._options = _options;
+        this._authProvider = _options.authProvider;
     }
 
     /**
@@ -47,6 +50,12 @@ export class Simple {
     }
 
     private async __getSomething(requestOptions?: Simple.RequestOptions): Promise<core.WithRawResponse<void>> {
+        var _authRequest: core.AuthRequest = await this._authProvider.getAuthRequest();
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -54,7 +63,7 @@ export class Simple {
                 "/get-something",
             ),
             method: "GET",
-            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
+            headers: _headers,
             queryParameters: requestOptions?.queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,

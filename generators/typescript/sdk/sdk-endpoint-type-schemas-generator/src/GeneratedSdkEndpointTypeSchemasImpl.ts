@@ -11,7 +11,7 @@ import {
     HttpService,
     PrimitiveTypeV1,
     TypeReference
-} from "@fern-fern/ir-sdk";
+} from "@fern-fern/ir-sdk/api";
 
 import { GeneratedEndpointErrorSchema } from "./GeneratedEndpointErrorSchema";
 import { GeneratedEndpointErrorSchemaImpl } from "./GeneratedEndpointErrorSchemaImpl";

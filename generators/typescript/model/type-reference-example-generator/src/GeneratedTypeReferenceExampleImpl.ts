@@ -11,7 +11,7 @@ import {
     ExampleTypeReferenceShape,
     ShapeType,
     TypeReference
-} from "@fern-fern/ir-sdk";
+} from "@fern-fern/ir-sdk/api";
 
 export declare namespace GeneratedTypeReferenceExampleImpl {
     export interface Init {
