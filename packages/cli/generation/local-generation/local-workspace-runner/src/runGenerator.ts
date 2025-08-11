@@ -27,6 +27,7 @@ import { ExecutionEnvironment } from "./ExecutionEnvironment";
 import { DockerExecutionEnvironment } from "./DockerExecutionEnvironment";
 import { GeneratorConfig } from "@fern-fern/generator-exec-sdk/serialization";
 import { join } from "path";
+import { ContainerRunner } from "@fern-api/core-utils/src/types";
 
 export interface GeneratorRunResponse {
     ir: IntermediateRepresentation;
@@ -56,6 +57,7 @@ export async function writeFilesToDiskAndRunGenerator({
     includeOptionalRequestPropertyExamples,
     inspect,
     executionEnvironment,
+    runner,
     ir
 }: {
     organization: string;
@@ -78,6 +80,7 @@ export async function writeFilesToDiskAndRunGenerator({
     includeOptionalRequestPropertyExamples: boolean;
     inspect: boolean;
     executionEnvironment?: ExecutionEnvironment;
+    runner: ContainerRunner | undefined;
     ir: IntermediateRepresentation;
 }): Promise<{ ir: IntermediateRepresentation; generatorConfig: FernGeneratorExec.GeneratorConfig }> {
     const { latest, migrated } = await getIntermediateRepresentation({
@@ -178,7 +181,8 @@ export async function writeFilesToDiskAndRunGenerator({
         snippetPath: absolutePathToTmpSnippetJSON,
         snippetTemplatePath: absolutePathToTmpSnippetTemplatesJSON,
         context,
-        inspect
+        inspect,
+        runner
     });
 
     const taskHandler = new LocalTaskHandler({
