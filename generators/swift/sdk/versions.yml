@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.2.0
+  createdAt: "2025-08-10"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Root client can now use an async token provider for bearer authentication.
+  irVersion: 58
+
 - version: 0.1.0
   createdAt: "2025-08-08"
   changelogEntry:
