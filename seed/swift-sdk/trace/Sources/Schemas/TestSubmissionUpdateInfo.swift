@@ -52,6 +52,7 @@ public enum TestSubmissionUpdateInfo: Codable, Hashable, Sendable {
     public struct Running: Codable, Hashable, Sendable {
         public let type: String = "running"
         public let value: RunningSubmissionState
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -75,6 +76,7 @@ public enum TestSubmissionUpdateInfo: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -82,6 +84,7 @@ public enum TestSubmissionUpdateInfo: Codable, Hashable, Sendable {
     }
 
     public struct Stopped: Codable, Hashable, Sendable {
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -102,6 +105,7 @@ public enum TestSubmissionUpdateInfo: Codable, Hashable, Sendable {
     public struct Errored: Codable, Hashable, Sendable {
         public let type: String = "errored"
         public let value: ErrorInfo
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -125,6 +129,7 @@ public enum TestSubmissionUpdateInfo: Codable, Hashable, Sendable {
             try container.encode(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -135,6 +140,7 @@ public enum TestSubmissionUpdateInfo: Codable, Hashable, Sendable {
         public let type: String = "gradedTestCase"
         public let testCaseId: TestCaseId
         public let grade: TestCaseGrade
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -162,6 +168,7 @@ public enum TestSubmissionUpdateInfo: Codable, Hashable, Sendable {
             try container.encode(self.grade, forKey: .grade)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case testCaseId
@@ -173,6 +180,7 @@ public enum TestSubmissionUpdateInfo: Codable, Hashable, Sendable {
         public let type: String = "recordedTestCase"
         public let testCaseId: TestCaseId
         public let traceResponsesSize: Int
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -200,6 +208,7 @@ public enum TestSubmissionUpdateInfo: Codable, Hashable, Sendable {
             try container.encode(self.traceResponsesSize, forKey: .traceResponsesSize)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case testCaseId
@@ -208,6 +217,7 @@ public enum TestSubmissionUpdateInfo: Codable, Hashable, Sendable {
     }
 
     public struct Finished: Codable, Hashable, Sendable {
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(

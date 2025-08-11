@@ -47,7 +47,7 @@ export async function registerApi({
         token: token.value
     });
 
-    const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig });
+    const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context });
     const response = await fdrService.api.v1.register.registerApiDefinition({
         orgId: FdrCjsSdk.OrgId(organization),
         apiId: FdrCjsSdk.ApiId(ir.apiName.originalName),

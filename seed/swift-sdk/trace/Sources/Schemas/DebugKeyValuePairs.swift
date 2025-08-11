@@ -1,6 +1,7 @@
 public struct DebugKeyValuePairs: Codable, Hashable, Sendable {
     public let key: DebugVariableValue
     public let value: DebugVariableValue
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +28,7 @@ public struct DebugKeyValuePairs: Codable, Hashable, Sendable {
         try container.encode(self.value, forKey: .value)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case key
         case value

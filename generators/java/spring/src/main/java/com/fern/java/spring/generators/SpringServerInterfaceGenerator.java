@@ -223,6 +223,9 @@ public final class SpringServerInterfaceGenerator extends AbstractFileGenerator 
         });
 
         // path params
+        httpService.getPathParameters().forEach(pathParameter -> {
+            parameters.add(springParameterSpecFactory.getPathParameterSpec(pathParameter));
+        });
         httpEndpoint.getPathParameters().forEach(pathParameter -> {
             parameters.add(springParameterSpecFactory.getPathParameterSpec(pathParameter));
         });

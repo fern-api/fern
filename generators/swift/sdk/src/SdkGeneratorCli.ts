@@ -2,6 +2,7 @@ import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { noop } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractSwiftGeneratorCli, SwiftFile } from "@fern-api/swift-base";
+import { swift } from "@fern-api/swift-codegen";
 import {
     AliasGenerator,
     DiscriminatedUnionGenerator,
@@ -125,6 +126,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         ),
                         properties: endpoint.requestBody.properties,
                         extendedProperties: endpoint.requestBody.extendedProperties,
+                        docsContent: endpoint.requestBody.docs,
                         context
                     });
                     const struct = generator.generate();
@@ -146,6 +148,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                     const generator = new AliasGenerator({
                         name: name,
                         typeDeclaration: atd,
+                        docsContent: typeDeclaration.docs,
                         context
                     });
                     const declaration = generator.generate();
@@ -158,7 +161,8 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                 enum: (etd) => {
                     const generator = new StringEnumGenerator({
                         name: context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
-                        enumTypeDeclaration: etd
+                        enumTypeDeclaration: etd,
+                        docsContent: typeDeclaration.docs
                     });
                     const enum_ = generator.generate();
                     context.project.addSourceFile({
@@ -172,6 +176,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         name: context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
                         properties: otd.properties,
                         extendedProperties: otd.extendedProperties,
+                        docsContent: typeDeclaration.docs,
                         context
                     });
                     const struct = generator.generate();
@@ -185,6 +190,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                     const generator = new UndiscriminatedUnionGenerator({
                         name: context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
                         typeDeclaration: uutd,
+                        docsContent: typeDeclaration.docs,
                         context
                     });
                     const enum_ = generator.generate();
@@ -198,6 +204,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                     const generator = new DiscriminatedUnionGenerator({
                         name: context.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeId),
                         unionTypeDeclaration: utd,
+                        docsContent: typeDeclaration.docs,
                         context
                     });
                     const enum_ = generator.generate();

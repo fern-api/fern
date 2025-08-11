@@ -46,113 +46,148 @@ export class RootClientGenerator {
                 ...this.clientGeneratorContext.subClients.map(({ property }) => property),
                 this.clientGeneratorContext.httpClient.property
             ],
-            initializers: [this.generateInitializer()],
-            methods: this.generateMethods()
+            initializers: [this.generateDesignatedInitializer()],
+            methods: this.generateMethods(),
+            docs: swift.docComment({
+                summary:
+                    "Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions."
+            })
         });
     }
 
-    private generateInitializer(): swift.Initializer {
-        let defaultBaseUrlValue: swift.Expression | undefined;
+    private generateDesignatedInitializer(): swift.Initializer {
+        const initializerParams = this.getDesignatedInitializerParams();
+        const authSchemes = this.getAuthSchemeParameters();
 
-        if (this.sdkGeneratorContext.ir.environments) {
-            if (this.sdkGeneratorContext.ir.environments.environments.type === "singleBaseUrl") {
-                const defaultEnvId = this.sdkGeneratorContext.ir.environments.defaultEnvironment;
+        const clientConfigArgs: swift.FunctionArgument[] = [
+            swift.functionArgument({
+                label: "baseURL",
+                value: swift.Expression.reference("baseURL")
+            })
+        ];
 
-                // If no default environment is specified, use the first environment
-                const defaultEnvironment = this.sdkGeneratorContext.ir.environments.environments.environments.find(
-                    (e, idx) => (defaultEnvId == null ? idx === 0 : e.id === defaultEnvId)
-                );
-                if (defaultEnvironment != null) {
-                    defaultBaseUrlValue = swift.Expression.memberAccess({
-                        target: swift.Expression.reference(
-                            this.sdkGeneratorContext.project.symbolRegistry.getEnvironmentSymbolOrThrow()
-                        ),
-                        memberName: `${defaultEnvironment.name.camelCase.unsafeName}.rawValue`
-                    });
-                }
-            } else if (this.sdkGeneratorContext.ir.environments.environments.type === "multipleBaseUrls") {
-                // TODO(kafkas): Handle multiple environments
-            } else {
-                assertNever(this.sdkGeneratorContext.ir.environments.environments);
-            }
+        if (authSchemes.header) {
+            clientConfigArgs.push(
+                swift.functionArgument({
+                    label: "headerAuth",
+                    value: authSchemes.header.param.type.isOptional
+                        ? swift.Expression.methodCallWithTrailingClosure({
+                              target: swift.Expression.reference(authSchemes.header.param.unsafeName),
+                              methodName: "map",
+                              closureBody: swift.Expression.contextualMethodCall({
+                                  methodName: "init",
+                                  arguments_: [
+                                      swift.functionArgument({
+                                          label: "key",
+                                          value: swift.Expression.rawValue("$0")
+                                      }),
+                                      swift.functionArgument({
+                                          label: "header",
+                                          value: swift.Expression.rawStringValue(authSchemes.header.wireValue)
+                                      })
+                                  ]
+                              }),
+                              multiline: true
+                          })
+                        : swift.Expression.contextualMethodCall({
+                              methodName: "init",
+                              arguments_: [
+                                  swift.functionArgument({
+                                      label: "key",
+                                      value: swift.Expression.reference(authSchemes.header.param.unsafeName)
+                                  }),
+                                  swift.functionArgument({
+                                      label: "header",
+                                      value: swift.Expression.rawStringValue(authSchemes.header.wireValue)
+                                  })
+                              ],
+                              multiline: true
+                          })
+                })
+            );
         }
+
+        if (authSchemes.bearer) {
+            clientConfigArgs.push(
+                swift.functionArgument({
+                    label: "bearerAuth",
+                    value: authSchemes.bearer.param.type.isOptional
+                        ? swift.Expression.methodCallWithTrailingClosure({
+                              target: swift.Expression.reference(authSchemes.bearer.param.unsafeName),
+                              methodName: "map",
+                              closureBody: swift.Expression.contextualMethodCall({
+                                  methodName: "init",
+                                  arguments_: [
+                                      swift.functionArgument({
+                                          label: "token",
+                                          value: swift.Expression.rawValue("$0")
+                                      })
+                                  ]
+                              }),
+                              multiline: true
+                          })
+                        : swift.Expression.contextualMethodCall({
+                              methodName: "init",
+                              arguments_: [
+                                  swift.functionArgument({
+                                      label: "token",
+                                      value: swift.Expression.reference(authSchemes.bearer.param.unsafeName)
+                                  })
+                              ]
+                          })
+                })
+            );
+        }
+
+        if (authSchemes.basic) {
+            clientConfigArgs.push(
+                swift.functionArgument({
+                    label: "basicAuth",
+                    value: swift.Expression.contextualMethodCall({
+                        methodName: "init",
+                        arguments_: [
+                            swift.functionArgument({
+                                label: "username",
+                                value: swift.Expression.reference(authSchemes.basic.usernameParam.unsafeName)
+                            }),
+                            swift.functionArgument({
+                                label: "password",
+                                value: swift.Expression.reference(authSchemes.basic.passwordParam.unsafeName)
+                            })
+                        ]
+                    })
+                })
+            );
+        }
+
+        clientConfigArgs.push(
+            swift.functionArgument({
+                label: "headers",
+                value: swift.Expression.reference("headers")
+            }),
+            swift.functionArgument({
+                label: "timeout",
+                value: swift.Expression.reference("timeout")
+            }),
+            swift.functionArgument({
+                label: "maxRetries",
+                value: swift.Expression.reference("maxRetries")
+            }),
+            swift.functionArgument({
+                label: "urlSession",
+                value: swift.Expression.reference("urlSession")
+            })
+        );
 
         return swift.initializer({
             accessLevel: swift.AccessLevel.Public,
-            parameters: [
-                swift.functionParameter({
-                    argumentLabel: "baseURL",
-                    unsafeName: "baseURL",
-                    type: swift.Type.string(),
-                    defaultValue: defaultBaseUrlValue
-                }),
-                swift.functionParameter({
-                    argumentLabel: "apiKey",
-                    unsafeName: "apiKey",
-                    type: swift.Type.string()
-                }),
-                swift.functionParameter({
-                    argumentLabel: "token",
-                    unsafeName: "token",
-                    type: swift.Type.optional(swift.Type.string()),
-                    defaultValue: swift.Expression.rawValue("nil")
-                }),
-                swift.functionParameter({
-                    argumentLabel: "headers",
-                    unsafeName: "headers",
-                    type: swift.Type.optional(swift.Type.dictionary(swift.Type.string(), swift.Type.string())),
-                    defaultValue: swift.Expression.rawValue("[:]")
-                }),
-                swift.functionParameter({
-                    argumentLabel: "timeout",
-                    unsafeName: "timeout",
-                    type: swift.Type.optional(swift.Type.int()),
-                    defaultValue: swift.Expression.rawValue("nil")
-                }),
-                swift.functionParameter({
-                    argumentLabel: "maxRetries",
-                    unsafeName: "maxRetries",
-                    type: swift.Type.optional(swift.Type.int()),
-                    defaultValue: swift.Expression.rawValue("nil")
-                }),
-                swift.functionParameter({
-                    argumentLabel: "urlSession",
-                    unsafeName: "urlSession",
-                    type: swift.Type.optional(swift.Type.custom("URLSession")),
-                    defaultValue: swift.Expression.rawValue("nil")
-                })
-            ],
+            parameters: initializerParams,
             body: swift.CodeBlock.withStatements([
                 swift.Statement.constantDeclaration({
                     unsafeName: "config",
                     value: swift.Expression.classInitialization({
                         unsafeName: "ClientConfig",
-                        arguments_: [
-                            swift.functionArgument({
-                                label: "baseURL",
-                                value: swift.Expression.reference("baseURL")
-                            }),
-                            swift.functionArgument({
-                                label: "apiKey",
-                                value: swift.Expression.reference("apiKey")
-                            }),
-                            swift.functionArgument({
-                                label: "token",
-                                value: swift.Expression.reference("token")
-                            }),
-                            swift.functionArgument({
-                                label: "headers",
-                                value: swift.Expression.reference("headers")
-                            }),
-                            swift.functionArgument({
-                                label: "timeout",
-                                value: swift.Expression.reference("timeout")
-                            }),
-                            swift.functionArgument({
-                                label: "urlSession",
-                                value: swift.Expression.reference("urlSession")
-                            })
-                        ],
+                        arguments_: clientConfigArgs,
                         multiline: true
                     })
                 }),
@@ -177,8 +212,181 @@ export class RootClientGenerator {
                     })
                 )
             ]),
-            multiline: true
+            multiline: true,
+            docs: swift.docComment({
+                summary: "Initialize the client with the specified configuration.",
+                parameters: initializerParams
+                    .map((p) => ({
+                        name: p.unsafeName,
+                        description: p.docsContent ?? ""
+                    }))
+                    .filter((p) => p.description !== "")
+            })
         });
+    }
+
+    private getDesignatedInitializerParams(): swift.FunctionParameter[] {
+        const params: swift.FunctionParameter[] = [
+            swift.functionParameter({
+                argumentLabel: "baseURL",
+                unsafeName: "baseURL",
+                type: swift.Type.string(),
+                defaultValue: this.getDefaultBaseUrl(),
+                docsContent:
+                    "The base URL to use for requests from the client. If not provided, the default base URL will be used."
+            })
+        ];
+
+        const authSchemes = this.getAuthSchemeParameters();
+
+        if (authSchemes.header) {
+            params.push(authSchemes.header.param);
+        }
+
+        if (authSchemes.bearer) {
+            params.push(authSchemes.bearer.param);
+        }
+
+        if (authSchemes.basic) {
+            params.push(authSchemes.basic.usernameParam);
+            params.push(authSchemes.basic.passwordParam);
+        }
+
+        params.push(
+            swift.functionParameter({
+                argumentLabel: "headers",
+                unsafeName: "headers",
+                type: swift.Type.optional(swift.Type.dictionary(swift.Type.string(), swift.Type.string())),
+                defaultValue: swift.Expression.dictionaryLiteral({ entries: [] }),
+                docsContent: "Additional headers to send with each request."
+            }),
+            swift.functionParameter({
+                argumentLabel: "timeout",
+                unsafeName: "timeout",
+                type: swift.Type.optional(swift.Type.int()),
+                defaultValue: swift.Expression.rawValue("nil"),
+                docsContent:
+                    "Request timeout in seconds. Defaults to 60 seconds. Ignored if a custom `urlSession` is provided."
+            }),
+            swift.functionParameter({
+                argumentLabel: "maxRetries",
+                unsafeName: "maxRetries",
+                type: swift.Type.optional(swift.Type.int()),
+                defaultValue: swift.Expression.rawValue("nil"),
+                docsContent: "Maximum number of retries for failed requests. Defaults to 2."
+            }),
+            swift.functionParameter({
+                argumentLabel: "urlSession",
+                unsafeName: "urlSession",
+                type: swift.Type.optional(swift.Type.custom("URLSession")),
+                defaultValue: swift.Expression.rawValue("nil"),
+                docsContent:
+                    "Custom `URLSession` to use for requests. If not provided, a default session will be created with the specified timeout."
+            })
+        );
+
+        return params;
+    }
+
+    private getDefaultBaseUrl() {
+        if (this.sdkGeneratorContext.ir.environments == null) {
+            return undefined;
+        }
+
+        if (this.sdkGeneratorContext.ir.environments.environments.type === "singleBaseUrl") {
+            const defaultEnvId = this.sdkGeneratorContext.ir.environments.defaultEnvironment;
+
+            // If no default environment is specified, use the first environment
+            const defaultEnvironment = this.sdkGeneratorContext.ir.environments.environments.environments.find(
+                (e, idx) => (defaultEnvId == null ? idx === 0 : e.id === defaultEnvId)
+            );
+            if (defaultEnvironment != null) {
+                return swift.Expression.memberAccess({
+                    target: swift.Expression.reference(
+                        this.sdkGeneratorContext.project.symbolRegistry.getEnvironmentSymbolOrThrow()
+                    ),
+                    memberName: `${defaultEnvironment.name.camelCase.unsafeName}.rawValue`
+                });
+            }
+            return undefined;
+        } else if (this.sdkGeneratorContext.ir.environments.environments.type === "multipleBaseUrls") {
+            // TODO(kafkas): Handle multiple environments
+            return undefined;
+        } else {
+            assertNever(this.sdkGeneratorContext.ir.environments.environments);
+        }
+    }
+
+    private getAuthSchemeParameters() {
+        type ParamsByScheme = {
+            header?: {
+                param: swift.FunctionParameter;
+                wireValue: string;
+            };
+            bearer?: {
+                param: swift.FunctionParameter;
+            };
+            basic?: {
+                usernameParam: swift.FunctionParameter;
+                passwordParam: swift.FunctionParameter;
+            };
+        };
+
+        const paramsByScheme: ParamsByScheme = {};
+
+        const { ir } = this.sdkGeneratorContext;
+        const { isAuthMandatory } = ir.sdkConfig;
+        const { schemes: authSchemes } = ir.auth;
+
+        for (const scheme of authSchemes) {
+            if (scheme.type === "header") {
+                paramsByScheme.header = {
+                    param: swift.functionParameter({
+                        argumentLabel: scheme.name.name.camelCase.unsafeName,
+                        unsafeName: scheme.name.name.camelCase.unsafeName,
+                        type: isAuthMandatory ? swift.Type.string() : swift.Type.optional(swift.Type.string()),
+                        defaultValue: isAuthMandatory ? undefined : swift.Expression.nil(),
+                        docsContent: scheme.docs ?? `The API key to use for authentication.`
+                    }),
+                    wireValue: scheme.name.wireValue
+                };
+            } else if (scheme.type === "bearer") {
+                paramsByScheme.bearer = {
+                    param: swift.functionParameter({
+                        argumentLabel: scheme.token.camelCase.unsafeName,
+                        unsafeName: scheme.token.camelCase.unsafeName,
+                        type: isAuthMandatory ? swift.Type.string() : swift.Type.optional(swift.Type.string()),
+                        defaultValue: isAuthMandatory ? undefined : swift.Expression.nil(),
+                        docsContent:
+                            scheme.docs ??
+                            `Bearer token for authentication. If provided, will be sent as "Bearer {token}" in Authorization header.`
+                    })
+                };
+            } else if (scheme.type === "basic") {
+                paramsByScheme.basic = {
+                    usernameParam: swift.functionParameter({
+                        argumentLabel: scheme.username.camelCase.unsafeName,
+                        unsafeName: scheme.username.camelCase.unsafeName,
+                        type: isAuthMandatory ? swift.Type.string() : swift.Type.optional(swift.Type.string()),
+                        defaultValue: isAuthMandatory ? undefined : swift.Expression.nil(),
+                        docsContent: `The username to use for authentication.`
+                    }),
+                    passwordParam: swift.functionParameter({
+                        argumentLabel: scheme.password.camelCase.unsafeName,
+                        unsafeName: scheme.password.camelCase.unsafeName,
+                        type: isAuthMandatory ? swift.Type.string() : swift.Type.optional(swift.Type.string()),
+                        defaultValue: isAuthMandatory ? undefined : swift.Expression.nil(),
+                        docsContent: `The password to use for authentication.`
+                    })
+                };
+            } else if (scheme.type === "oauth") {
+                // TODO(kafkas): Implement this
+            } else {
+                assertNever(scheme);
+            }
+        }
+
+        return paramsByScheme;
     }
 
     private generateMethods(): swift.Method[] {

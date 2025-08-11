@@ -1,5 +1,6 @@
 public struct TypeWithOptionalUnion: Codable, Hashable, Sendable {
     public let myUnion: MyUnion?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -22,6 +23,7 @@ public struct TypeWithOptionalUnion: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.myUnion, forKey: .myUnion)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case myUnion
     }

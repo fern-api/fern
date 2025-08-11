@@ -1,5 +1,6 @@
 public struct FunctionImplementationForMultipleLanguagesType: Codable, Hashable, Sendable {
     public let codeByLanguage: [Language: FunctionImplementationType]
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -22,6 +23,7 @@ public struct FunctionImplementationForMultipleLanguagesType: Codable, Hashable,
         try container.encode(self.codeByLanguage, forKey: .codeByLanguage)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case codeByLanguage
     }

@@ -3,16 +3,17 @@ import { assertNever } from "@fern-api/core-utils";
 import {
     AuthSchemeDeclarationSchema,
     BasicAuthSchemeSchema,
-    BearerAuthSchemeSchema,
-    HeaderAuthSchemeSchema
+    HeaderAuthSchemeSchema,
+    OAuthSchemeSchema
 } from "../schemas";
-import { OAuthSchemeSchema } from "../schemas";
+import { RawSchemas } from "..";
 
 export interface AuthSchemeDeclarationVisitor<R> {
     header: (authScheme: HeaderAuthSchemeSchema) => R;
     basic: (authScheme: BasicAuthSchemeSchema) => R;
-    bearer: (authScheme: BearerAuthSchemeSchema) => R;
+    tokenBearer: (authScheme: RawSchemas.TokenBearerAuthSchema) => R;
     oauth: (authScheme: OAuthSchemeSchema) => R;
+    inferredBearer: (authScheme: RawSchemas.InferredBearerAuthSchema) => R;
 }
 
 export function visitRawAuthSchemeDeclaration<R>(
@@ -26,7 +27,10 @@ export function visitRawAuthSchemeDeclaration<R>(
         case "basic":
             return visitor.basic(authScheme);
         case "bearer":
-            return visitor.bearer(authScheme);
+            if ("get-token" in authScheme) {
+                return visitor.inferredBearer(authScheme);
+            }
+            return visitor.tokenBearer(authScheme);
         case "oauth":
             return visitor.oauth(authScheme);
         default:

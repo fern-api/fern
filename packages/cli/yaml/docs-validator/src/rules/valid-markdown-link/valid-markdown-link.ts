@@ -151,7 +151,9 @@ export const ValidMarkdownLinks: Rule = {
                     context: NOOP_CONTEXT,
                     sourceResolver: new SourceResolverImpl(NOOP_CONTEXT, fernWorkspace)
                 });
-                const api = toLatest(convertIrToApiDefinition(ir, randomUUID()));
+                const api = toLatest(
+                    convertIrToApiDefinition({ ir, apiDefinitionId: randomUUID(), context: NOOP_CONTEXT })
+                );
 
                 const violations: RuleViolation[] = [];
 

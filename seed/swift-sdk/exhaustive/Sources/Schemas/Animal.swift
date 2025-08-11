@@ -33,6 +33,7 @@ public enum Animal: Codable, Hashable, Sendable {
         public let animal: String = "dog"
         public let name: String
         public let likesToWoof: Bool
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -60,6 +61,7 @@ public enum Animal: Codable, Hashable, Sendable {
             try container.encode(self.likesToWoof, forKey: .likesToWoof)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case animal
             case name
@@ -71,6 +73,7 @@ public enum Animal: Codable, Hashable, Sendable {
         public let animal: String = "cat"
         public let name: String
         public let likesToMeow: Bool
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -98,6 +101,7 @@ public enum Animal: Codable, Hashable, Sendable {
             try container.encode(self.likesToMeow, forKey: .likesToMeow)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case animal
             case name

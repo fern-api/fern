@@ -10,7 +10,7 @@ export { KeywordParameter } from "./KeywordParameter";
 export { KeywordSplatParameter } from "./KeywordSplatParameter";
 export { Method } from "./Method";
 export { MethodInvocation } from "./MethodInvocation";
-export { Module } from "./Module";
+export { Module_ } from "./Module";
 export { Parameter } from "./Parameter";
 export { PositionalArgument } from "./PositionalArgument";
 export { PositionalParameter } from "./PositionalParameter";

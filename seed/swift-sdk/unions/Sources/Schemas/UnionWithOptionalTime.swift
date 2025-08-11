@@ -32,6 +32,7 @@ public enum UnionWithOptionalTime: Codable, Hashable, Sendable {
     public struct Date: Codable, Hashable, Sendable {
         public let type: String = "date"
         public let value: Date?
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -55,6 +56,7 @@ public enum UnionWithOptionalTime: Codable, Hashable, Sendable {
             try container.encodeIfPresent(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value
@@ -64,6 +66,7 @@ public enum UnionWithOptionalTime: Codable, Hashable, Sendable {
     public struct Datetime: Codable, Hashable, Sendable {
         public let type: String = "datetime"
         public let value: Date?
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -87,6 +90,7 @@ public enum UnionWithOptionalTime: Codable, Hashable, Sendable {
             try container.encodeIfPresent(self.value, forKey: .value)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case value

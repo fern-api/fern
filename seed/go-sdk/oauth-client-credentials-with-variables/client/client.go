@@ -6,14 +6,20 @@ import (
 	auth "github.com/oauth-client-credentials-with-variables/fern/auth"
 	core "github.com/oauth-client-credentials-with-variables/fern/core"
 	internal "github.com/oauth-client-credentials-with-variables/fern/internal"
+	nestedclient "github.com/oauth-client-credentials-with-variables/fern/nested/client"
+	client "github.com/oauth-client-credentials-with-variables/fern/nestednoauth/client"
 	option "github.com/oauth-client-credentials-with-variables/fern/option"
 	service "github.com/oauth-client-credentials-with-variables/fern/service"
+	simple "github.com/oauth-client-credentials-with-variables/fern/simple"
 	http "net/http"
 )
 
 type Client struct {
-	Auth    *auth.Client
-	Service *service.Client
+	Auth         *auth.Client
+	NestedNoAuth *client.Client
+	Nested       *nestedclient.Client
+	Service      *service.Client
+	Simple       *simple.Client
 
 	baseURL string
 	caller  *internal.Caller
@@ -23,9 +29,12 @@ type Client struct {
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		Auth:    auth.NewClient(opts...),
-		Service: service.NewClient(opts...),
-		baseURL: options.BaseURL,
+		Auth:         auth.NewClient(opts...),
+		NestedNoAuth: client.NewClient(opts...),
+		Nested:       nestedclient.NewClient(opts...),
+		Service:      service.NewClient(opts...),
+		Simple:       simple.NewClient(opts...),
+		baseURL:      options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
 				Client:      options.HTTPClient,

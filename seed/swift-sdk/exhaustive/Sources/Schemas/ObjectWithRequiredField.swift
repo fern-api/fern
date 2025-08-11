@@ -1,5 +1,6 @@
 public struct ObjectWithRequiredField: Codable, Hashable, Sendable {
     public let string: String
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -22,6 +23,7 @@ public struct ObjectWithRequiredField: Codable, Hashable, Sendable {
         try container.encode(self.string, forKey: .string)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case string
     }

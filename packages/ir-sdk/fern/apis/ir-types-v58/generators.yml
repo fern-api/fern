@@ -1,0 +1,68 @@
+default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.45.1
+        output:
+          location: local-file-system
+          path: ../../../src/sdk
+        config:
+          outputSourceFiles: true
+          includeUtilsOnUnionMembers: true
+          noOptionalProperties: true
+  dynamic-ir:
+    audiences:
+      - dynamic
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.38.6
+        output:
+          location: npm
+          package-name: "@fern-api/dynamic-ir-sdk"
+          token: ${NPM_TOKEN}
+        config:
+          noOptionalProperties: true
+          noSerdeLayer: true
+  node:
+    generators:
+      - name: fernapi/fern-typescript-sdk
+        version: 0.51.4
+        output:
+          location: npm
+          url: npm.buildwithfern.com
+          package-name: "@fern-fern/ir-v58-sdk"
+        config:
+          includeUtilsOnUnionMembers: true
+          noOptionalProperties: true
+  java:
+    generators:
+      - name: fernapi/java-model
+        version: 0.5.20
+        output:
+          location: maven
+          url: maven.buildwithfern.com
+          coordinate: com.fern.fern:irV58
+        config:
+          wrapped-aliases: true
+          enable-forward-compatible-enums: true
+  python:
+    generators:
+      - name: fernapi/fern-pydantic-model
+        version: 1.4.2
+        output:
+          location: pypi
+          url: pypi.buildwithfern.com
+          package-name: fern_fern_ir_v58
+        config:
+          # wrapped_aliases: true
+          include_union_utils: true
+          frozen: true
+          version: v2
+          enum_type: python_enums
+  go:
+    generators:
+      - name: fernapi/fern-go-model
+        version: 0.9.3
+        github:
+          repository: fern-api/ir-go

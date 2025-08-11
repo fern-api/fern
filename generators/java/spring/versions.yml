@@ -1,6 +1,25 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix missing service-level path parameters in generated Spring interface methods. 
+        Service-level path parameters defined in the base-path are now correctly included 
+        in all endpoint method signatures, ensuring Spring can properly inject these values at runtime.
+      type: fix
+  createdAt: '2025-08-07'
+  irVersion: 58
+  version: 1.7.1
+- changelogEntry:
+    - summary: |
+        Add JSON Merge Patch (RFC 7396) support with `TriStateOptional<T>`. Endpoints with 
+        `content-type: application/merge-patch+json` now use `TriStateOptional<T>` instead of `Optional<T>` 
+        to distinguish between absent fields, explicit nulls, and present values. Includes `getValueOrNull()` 
+        method for update operations and proper tri-state semantics in `orElse()`.
+      type: feat
+  createdAt: '2025-08-07'
+  irVersion: 58
+  version: 1.7.0
+- changelogEntry:
+    - summary: |
         Upgrade to irV58
       type: fix
   createdAt: '2025-06-03'

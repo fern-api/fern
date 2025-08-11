@@ -161,7 +161,7 @@ export async function publishDocs({
             }
         },
         async ({ ir, snippetsConfig, playgroundConfig, apiName }) => {
-            const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig });
+            const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context });
             const response = await fdr.api.v1.register.registerApiDefinition({
                 orgId: CjsFdrSdk.OrgId(organization),
                 apiId: CjsFdrSdk.ApiId(ir.apiName.originalName),

@@ -1,7 +1,8 @@
 import { AccessLevel } from "./AccessLevel";
 import { CodeBlock } from "./CodeBlock";
-import { FunctionParameter } from "./FunctionParameter";
 import { AstNode, Writer } from "./core";
+import { DocComment } from "./DocComment";
+import { FunctionParameter } from "./FunctionParameter";
 
 export declare namespace Initializer {
     interface Args {
@@ -13,6 +14,7 @@ export declare namespace Initializer {
         parameters?: FunctionParameter[];
         body?: CodeBlock;
         multiline?: true;
+        docs?: DocComment;
     }
 }
 
@@ -23,8 +25,9 @@ export class Initializer extends AstNode {
     public readonly parameters: FunctionParameter[];
     public readonly body: CodeBlock;
     public readonly multiline?: true;
+    public readonly docs?: DocComment;
 
-    constructor({ accessLevel, failable, throws, parameters, body, multiline }: Initializer.Args) {
+    constructor({ accessLevel, failable, throws, parameters, body, multiline, docs }: Initializer.Args) {
         super();
         this.accessLevel = accessLevel;
         this.failable = failable;
@@ -32,9 +35,13 @@ export class Initializer extends AstNode {
         this.parameters = parameters ?? [];
         this.body = body ?? CodeBlock.empty();
         this.multiline = multiline;
+        this.docs = docs;
     }
 
     public write(writer: Writer): void {
+        if (this.docs != null) {
+            this.docs.write(writer);
+        }
         if (this.accessLevel != null) {
             writer.write(this.accessLevel);
             writer.write(" ");

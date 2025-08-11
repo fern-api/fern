@@ -8,7 +8,8 @@ export type Auth =
     | FernIr.dynamic.Auth.Basic
     | FernIr.dynamic.Auth.Bearer
     | FernIr.dynamic.Auth.Header
-    | FernIr.dynamic.Auth.Oauth;
+    | FernIr.dynamic.Auth.Oauth
+    | FernIr.dynamic.Auth.Inferred;
 
 export namespace Auth {
     export interface Basic extends FernIr.dynamic.BasicAuth, _Utils {
@@ -27,6 +28,10 @@ export namespace Auth {
         type: "oauth";
     }
 
+    export interface Inferred extends FernIr.dynamic.InferredAuth, _Utils {
+        type: "inferred";
+    }
+
     export interface _Utils {
         _visit: <_Result>(visitor: FernIr.dynamic.Auth._Visitor<_Result>) => _Result;
     }
@@ -36,6 +41,7 @@ export namespace Auth {
         bearer: (value: FernIr.dynamic.BearerAuth) => _Result;
         header: (value: FernIr.dynamic.HeaderAuth) => _Result;
         oauth: (value: FernIr.dynamic.OAuth) => _Result;
+        inferred: (value: FernIr.dynamic.InferredAuth) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -93,6 +99,19 @@ export const Auth = {
         };
     },
 
+    inferred: (value: FernIr.dynamic.InferredAuth): FernIr.dynamic.Auth.Inferred => {
+        return {
+            ...value,
+            type: "inferred",
+            _visit: function <_Result>(
+                this: FernIr.dynamic.Auth.Inferred,
+                visitor: FernIr.dynamic.Auth._Visitor<_Result>,
+            ) {
+                return FernIr.dynamic.Auth._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(value: FernIr.dynamic.Auth, visitor: FernIr.dynamic.Auth._Visitor<_Result>): _Result => {
         switch (value.type) {
             case "basic":
@@ -103,6 +122,8 @@ export const Auth = {
                 return visitor.header(value);
             case "oauth":
                 return visitor.oauth(value);
+            case "inferred":
+                return visitor.inferred(value);
             default:
                 return visitor._other(value as any);
         }

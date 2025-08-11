@@ -68,7 +68,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.auth.get_token()
+    client.auth.get_token(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -87,7 +87,7 @@ from seed import SeedOauthClientCredentialsDefault
 client = SeedOauthClientCredentialsDefault(
     ...,
 )
-response = client.auth.with_raw_response.get_token()
+response = client.auth.with_raw_response.get_token(...)
 print(response.headers)  # access the response headers
 print(response.data)  # access the underlying object
 ```
@@ -107,7 +107,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.auth.get_token(request_options={
+client.auth.get_token(..., request_options={
     "max_retries": 1
 })
 ```
@@ -127,7 +127,7 @@ client = SeedOauthClientCredentialsDefault(
 
 
 # Override timeout for a specific method
-client.auth.get_token(request_options={
+client.auth.get_token(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

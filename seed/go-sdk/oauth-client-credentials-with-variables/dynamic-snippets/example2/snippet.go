@@ -12,8 +12,7 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    client.Service.Post(
+    client.NestedNoAuth.Api.GetSomething(
         context.TODO(),
-        "endpointParam",
     )
 }

@@ -1,6 +1,8 @@
+/// This type allows us to test a circular reference with a union type (see FieldValue).
 public struct ObjectFieldValue: Codable, Hashable, Sendable {
     public let name: FieldName
     public let value: FieldValue
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +29,7 @@ public struct ObjectFieldValue: Codable, Hashable, Sendable {
         try container.encode(self.value, forKey: .value)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case name
         case value

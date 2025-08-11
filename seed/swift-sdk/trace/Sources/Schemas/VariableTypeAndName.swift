@@ -1,6 +1,7 @@
 public struct VariableTypeAndName: Codable, Hashable, Sendable {
     public let variableType: VariableType
     public let name: String
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +28,7 @@ public struct VariableTypeAndName: Codable, Hashable, Sendable {
         try container.encode(self.name, forKey: .name)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case variableType
         case name

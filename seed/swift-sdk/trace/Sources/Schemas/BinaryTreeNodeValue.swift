@@ -3,6 +3,7 @@ public struct BinaryTreeNodeValue: Codable, Hashable, Sendable {
     public let val: Double
     public let right: NodeId?
     public let left: NodeId?
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -37,6 +38,7 @@ public struct BinaryTreeNodeValue: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.left, forKey: .left)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case nodeId
         case val

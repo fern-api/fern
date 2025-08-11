@@ -1,6 +1,9 @@
 public struct TraceResponsesPageV2: Codable, Hashable, Sendable {
+    /// If present, use this to load subsequent pages.
+    /// The offset is the id of the next trace response to load.
     public let offset: Int?
     public let traceResponses: [TraceResponseV2]
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +30,7 @@ public struct TraceResponsesPageV2: Codable, Hashable, Sendable {
         try container.encode(self.traceResponses, forKey: .traceResponses)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case offset
         case traceResponses

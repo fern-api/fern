@@ -1,6 +1,7 @@
 public struct InvalidRequestResponse: Codable, Hashable, Sendable {
     public let request: SubmissionRequest
     public let cause: InvalidRequestCause
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -27,6 +28,7 @@ public struct InvalidRequestResponse: Codable, Hashable, Sendable {
         try container.encode(self.cause, forKey: .cause)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case request
         case cause

@@ -5,6 +5,7 @@ public struct Patient: Codable, Hashable, Sendable {
     public let resourceType: JSONValue
     public let name: String
     public let scripts: [Script]
+    /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
@@ -47,6 +48,7 @@ public struct Patient: Codable, Hashable, Sendable {
         try container.encode(self.scripts, forKey: .scripts)
     }
 
+    /// Keys for encoding/decoding struct properties.
     enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case relatedResources = "related_resources"

@@ -35,18 +35,20 @@
   "dependencies": {
     "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-fern/ir-sdk": "^58.2.0",
     "zod": "^3.22.3"
   },
   "devDependencies": {
     "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
+    "@fern-fern/ir-sdk": "58.2.0",
+    "@fern-api/path-utils": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-fern/ir-sdk": "^58.2.0",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "typescript": "5.8.3",
     "vitest": "^2.1.9",
+    "lodash-es": "^4.17.21",
+    "@types/lodash-es": "^4.17.12",
     "zod": "^3.22.3"
   }
 }

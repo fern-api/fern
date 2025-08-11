@@ -132,6 +132,13 @@ export class Streamer {
                 value: terminator
             });
         }
+        const format = this.getStreamFormat(args.streamingResponse);
+        if (format != null) {
+            arguments_.push({
+                name: "Format",
+                value: format
+            });
+        }
         if (args.request != null) {
             arguments_.push({
                 name: "Request",
@@ -188,6 +195,18 @@ export class Streamer {
         }
     }
 
+    private getStreamFormat(streamingResponse: StreamingResponse): go.TypeInstantiation | undefined {
+        switch (streamingResponse.type) {
+            case "sse":
+                return go.TypeInstantiation.reference(this.getStreamFormatSseTypeReference());
+            case "json":
+            case "text":
+                return undefined;
+            default:
+                assertNever(streamingResponse);
+        }
+    }
+
     private getSSETerminatorTypeReference(sse: SseStreamChunk): go.TypeInstantiation {
         if (sse.terminator != null) {
             return go.TypeInstantiation.string(sse.terminator);
@@ -206,6 +225,13 @@ export class Streamer {
         return go.typeReference({
             name: "DefaultSSEDataPrefix",
             importPath: this.context.getInternalImportPath()
+        });
+    }
+
+    private getStreamFormatSseTypeReference(): go.TypeReference {
+        return go.typeReference({
+            name: "StreamFormatSSE",
+            importPath: this.context.getCoreImportPath()
         });
     }
 }

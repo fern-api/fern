@@ -33,6 +33,7 @@ public enum TestCaseFunctionType: Codable, Hashable, Sendable {
         public let type: String = "withActualResult"
         public let getActualResult: NonVoidFunctionDefinitionType
         public let assertCorrectnessCheck: AssertCorrectnessCheckType
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -60,6 +61,7 @@ public enum TestCaseFunctionType: Codable, Hashable, Sendable {
             try container.encode(self.assertCorrectnessCheck, forKey: .assertCorrectnessCheck)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case getActualResult
@@ -71,6 +73,7 @@ public enum TestCaseFunctionType: Codable, Hashable, Sendable {
         public let type: String = "custom"
         public let parameters: [ParameterType]
         public let code: FunctionImplementationForMultipleLanguagesType
+        /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
@@ -98,6 +101,7 @@ public enum TestCaseFunctionType: Codable, Hashable, Sendable {
             try container.encode(self.code, forKey: .code)
         }
 
+        /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case parameters
