@@ -203,22 +203,6 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "email: $FERN_INPUT",
-                                        "isOptional": true,
-                                        "templateInputs": [
-                                            {
-                                                "location": "BODY",
-                                                "path": "email",
-                                                "type": "payload"
-                                            }
-                                        ],
-                                        "type": "generic"
-                                    },
-                                    "type": "template"
-                                },
-                                {
-                                    "value": {
-                                        "imports": [],
                                         "templateString": "age: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
@@ -312,6 +296,110 @@
                                             "type": "payload"
                                         },
                                         "type": "iterable"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "email: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "email",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "nickname: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "nickname",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "bio: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "bio",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "profileImageUrl: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "profileImageUrl",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "containerTemplateString": "settings: {\n\t\t\t$FERN_INPUT\n\t\t}",
+                                        "delimiter": ",\n\t\t\t",
+                                        "keyValueSeparator": ": ",
+                                        "keyTemplate": {
+                                            "imports": [],
+                                            "templateString": "$FERN_INPUT",
+                                            "isOptional": true,
+                                            "templateInputs": [
+                                                {
+                                                    "location": "RELATIVE",
+                                                    "type": "payload"
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        },
+                                        "valueTemplate": {
+                                            "imports": [],
+                                            "templateString": "$FERN_INPUT",
+                                            "isOptional": true,
+                                            "templateInputs": [
+                                                {
+                                                    "location": "RELATIVE",
+                                                    "type": "payload"
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        },
+                                        "templateInput": {
+                                            "location": "BODY",
+                                            "path": "settings",
+                                            "type": "payload"
+                                        },
+                                        "type": "dict"
                                     },
                                     "type": "template"
                                 }
