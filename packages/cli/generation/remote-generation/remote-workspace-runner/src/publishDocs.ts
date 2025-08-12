@@ -168,22 +168,22 @@ export async function publishDocs({
         async ({ ir, snippetsConfig, playgroundConfig, apiName }) => {
             const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context });
             
-            let dynamicIr: Record<string, DynamicIntermediateRepresentation> = {};
+            let dynamicIRbyLangauge: Record<string, DynamicIntermediateRepresentation> = {};
             const languages: GeneratorLanguage[] = ["typescript", "python"];
             for (const language of languages) {
                 try {
                     // generate language-specific dynamic irs
-                    dynamicIr[language] = convertIrToDynamicSnippetsIr({
+                    dynamicIRbyLangauge[language] = convertIrToDynamicSnippetsIr({
                         ir,
                         disableExamples: true,
                         generationLanguage: language
                     });
                 } catch (error) {
-                    context.logger.debug(`Failed to create dynamic IR for ${language}: ${error}`);
+                    context.logger.debug(`Failed to create dynamic IR for ${apiName ? `${apiName}:` : ""}${language}: ${error}`);
                 }
             }
             
-            if (Object.keys(dynamicIr).length > 0) {
+            if (Object.keys(dynamicIRbyLangauge).length > 0) {
                 // register dynamic ir separately
                 // so we can link it to a specific api name
                 const uploadDynamicIrResponse = await fdr.api.v1.register.registerApiDefinition({
@@ -194,7 +194,7 @@ export async function publishDocs({
                         snippetsConfiguration: preview ? undefined : apiDefinition.snippetsConfiguration
                     },
                     definitionV2: undefined,
-                    dynamicIr: Object.entries(dynamicIr).map(([language, dynamicIr]) => ({
+                    dynamicIr: Object.entries(dynamicIRbyLangauge).map(([language, dynamicIr]) => ({
                         language,
                         dynamicIr
                     }))
@@ -204,7 +204,7 @@ export async function publishDocs({
                     const responseSources = uploadDynamicIrResponse.body.sources;
                     if (responseSources) {
                         for (const [language, source] of Object.entries(responseSources)) {
-                            const sourceDynamicIr = dynamicIr[language];
+                            const sourceDynamicIr = dynamicIRbyLangauge[language];
 
                             if (sourceDynamicIr) {
                                 const response = await fetch(source.uploadUrl, {
