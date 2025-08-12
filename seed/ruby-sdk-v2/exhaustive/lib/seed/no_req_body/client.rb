@@ -9,11 +9,15 @@ module Seed
                 @client = client
             end
 
-            # @return [void]
-            def get_with_no_request_body; end
+            # @return [Seed::types::object::ObjectWithOptionalField]
+            def get_with_no_request_body
+                raise NotImplementedError, 'This method is not yet implemented.'
+            end
 
-            # @return [void]
-            def post_with_no_request_body; end
+            # @return [String]
+            def post_with_no_request_body
+                raise NotImplementedError, 'This method is not yet implemented.'
+            end
         end
     end
 end

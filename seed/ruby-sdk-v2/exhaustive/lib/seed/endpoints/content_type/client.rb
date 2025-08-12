@@ -10,11 +10,15 @@ module Seed
                     @client = client
                 end
 
-                # @return [void]
-                def post_json_patch_content_type; end
+                # @return [untyped]
+                def post_json_patch_content_type
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
 
-                # @return [void]
-                def post_json_patch_content_with_charset_type; end
+                # @return [untyped]
+                def post_json_patch_content_with_charset_type
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
             end
         end
     end

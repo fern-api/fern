@@ -10,17 +10,25 @@ module Seed
                     @client = client
                 end
 
-                # @return [void]
-                def with_mixed_case; end
+                # @return [String]
+                def with_mixed_case
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
 
-                # @return [void]
-                def no_ending_slash; end
+                # @return [String]
+                def no_ending_slash
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
 
-                # @return [void]
-                def with_ending_slash; end
+                # @return [String]
+                def with_ending_slash
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
 
-                # @return [void]
-                def with_underscores; end
+                # @return [String]
+                def with_underscores
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
             end
         end
     end

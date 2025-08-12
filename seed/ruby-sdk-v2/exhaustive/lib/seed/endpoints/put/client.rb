@@ -10,8 +10,10 @@ module Seed
                     @client = client
                 end
 
-                # @return [void]
-                def add; end
+                # @return [Seed::endpoints::put::PutResponse]
+                def add
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
             end
         end
     end
