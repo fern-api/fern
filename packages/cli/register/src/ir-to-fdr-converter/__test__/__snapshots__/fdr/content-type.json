@@ -83,7 +83,7 @@
         },
         {
           "auth": false,
-          "description": "Update with JSON merge patch - complex types",
+          "description": "Update with JSON merge patch - complex types.\nThis endpoint demonstrates the distinction between:\n- optional<T> fields (can be present or absent, but not null)\n- optional<nullable<T>> fields (can be present, absent, or null)",
           "method": "PATCH",
           "id": "patchComplex",
           "originalEndpointId": "endpoint_service.patchComplex",
@@ -142,21 +142,6 @@
                     }
                   },
                   {
-                    "key": "email",
-                    "valueType": {
-                      "type": "optional",
-                      "itemType": {
-                        "type": "nullable",
-                        "itemType": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
-                        }
-                      }
-                    }
-                  },
-                  {
                     "key": "age",
                     "valueType": {
                       "type": "optional",
@@ -208,6 +193,87 @@
                           "type": "primitive",
                           "value": {
                             "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "key": "email",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "nullable",
+                        "itemType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "key": "nickname",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "nullable",
+                        "itemType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "key": "bio",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "nullable",
+                        "itemType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "key": "profileImageUrl",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "nullable",
+                        "itemType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "key": "settings",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "nullable",
+                        "itemType": {
+                          "type": "map",
+                          "keyType": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          },
+                          "valueType": {
+                            "type": "unknown"
                           }
                         }
                       }

@@ -9,8 +9,6 @@
  *     }
  */
 export interface HeaderAuthRequest {
-    /**
-     * Specifies the endpoint key.
-     */
+    /** Specifies the endpoint key. */
     "X-Endpoint-Header": string;
 }

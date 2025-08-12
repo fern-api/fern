@@ -5,12 +5,14 @@
 /**
  * @example
  *     {
+ *         "X-Api-Key": "X-Api-Key",
  *         client_id: "client_id",
  *         client_secret: "client_secret",
  *         scope: "scope"
  *     }
  */
 export interface GetTokenRequest {
+    "X-Api-Key": string;
     client_id: string;
     client_secret: string;
     scope?: string;

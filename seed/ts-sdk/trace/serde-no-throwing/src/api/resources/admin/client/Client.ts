@@ -68,6 +68,14 @@ export class Admin {
         request: SeedTrace.TestSubmissionStatus,
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.updateTestSubmissionStatus.Error>>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Random-Header": requestOptions?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -76,14 +84,7 @@ export class Admin {
                 `/admin/store-test-submission-status/${encodeURIComponent(serializers.SubmissionId.jsonOrThrow(submissionId, { omitUndefined: true }))}`,
             ),
             method: "POST",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({
-                    Authorization: await this._getAuthorizationHeader(),
-                    "X-Random-Header": requestOptions?.xRandomHeader,
-                }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
@@ -146,6 +147,14 @@ export class Admin {
         request: SeedTrace.TestSubmissionUpdate,
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.sendTestSubmissionUpdate.Error>>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Random-Header": requestOptions?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -154,14 +163,7 @@ export class Admin {
                 `/admin/store-test-submission-status-v2/${encodeURIComponent(serializers.SubmissionId.jsonOrThrow(submissionId, { omitUndefined: true }))}`,
             ),
             method: "POST",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({
-                    Authorization: await this._getAuthorizationHeader(),
-                    "X-Random-Header": requestOptions?.xRandomHeader,
-                }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
@@ -220,6 +222,14 @@ export class Admin {
         request: SeedTrace.WorkspaceSubmissionStatus,
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.updateWorkspaceSubmissionStatus.Error>>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Random-Header": requestOptions?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -228,14 +238,7 @@ export class Admin {
                 `/admin/store-workspace-submission-status/${encodeURIComponent(serializers.SubmissionId.jsonOrThrow(submissionId, { omitUndefined: true }))}`,
             ),
             method: "POST",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({
-                    Authorization: await this._getAuthorizationHeader(),
-                    "X-Random-Header": requestOptions?.xRandomHeader,
-                }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
@@ -298,6 +301,14 @@ export class Admin {
         request: SeedTrace.WorkspaceSubmissionUpdate,
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.sendWorkspaceSubmissionUpdate.Error>>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Random-Header": requestOptions?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -306,14 +317,7 @@ export class Admin {
                 `/admin/store-workspace-submission-status-v2/${encodeURIComponent(serializers.SubmissionId.jsonOrThrow(submissionId, { omitUndefined: true }))}`,
             ),
             method: "POST",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({
-                    Authorization: await this._getAuthorizationHeader(),
-                    "X-Random-Header": requestOptions?.xRandomHeader,
-                }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
@@ -460,6 +464,14 @@ export class Admin {
         request: SeedTrace.StoreTracedTestCaseRequest,
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.storeTracedTestCase.Error>>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Random-Header": requestOptions?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -468,14 +480,7 @@ export class Admin {
                 `/admin/store-test-trace/submission/${encodeURIComponent(serializers.SubmissionId.jsonOrThrow(submissionId, { omitUndefined: true }))}/testCase/${encodeURIComponent(testCaseId)}`,
             ),
             method: "POST",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({
-                    Authorization: await this._getAuthorizationHeader(),
-                    "X-Random-Header": requestOptions?.xRandomHeader,
-                }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
@@ -611,6 +616,14 @@ export class Admin {
         request: SeedTrace.TraceResponseV2[],
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.storeTracedTestCaseV2.Error>>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Random-Header": requestOptions?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -619,14 +632,7 @@ export class Admin {
                 `/admin/store-test-trace-v2/submission/${encodeURIComponent(serializers.SubmissionId.jsonOrThrow(submissionId, { omitUndefined: true }))}/testCase/${encodeURIComponent(serializers.v2.TestCaseId.jsonOrThrow(testCaseId, { omitUndefined: true }))}`,
             ),
             method: "POST",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({
-                    Authorization: await this._getAuthorizationHeader(),
-                    "X-Random-Header": requestOptions?.xRandomHeader,
-                }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
@@ -765,6 +771,14 @@ export class Admin {
         request: SeedTrace.StoreTracedWorkspaceRequest,
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.storeTracedWorkspace.Error>>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Random-Header": requestOptions?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -773,14 +787,7 @@ export class Admin {
                 `/admin/store-workspace-trace/submission/${encodeURIComponent(serializers.SubmissionId.jsonOrThrow(submissionId, { omitUndefined: true }))}`,
             ),
             method: "POST",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({
-                    Authorization: await this._getAuthorizationHeader(),
-                    "X-Random-Header": requestOptions?.xRandomHeader,
-                }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
@@ -913,6 +920,14 @@ export class Admin {
         request: SeedTrace.TraceResponseV2[],
         requestOptions?: Admin.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.storeTracedWorkspaceV2.Error>>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Random-Header": requestOptions?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -921,14 +936,7 @@ export class Admin {
                 `/admin/store-workspace-trace-v2/submission/${encodeURIComponent(serializers.SubmissionId.jsonOrThrow(submissionId, { omitUndefined: true }))}`,
             ),
             method: "POST",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({
-                    Authorization: await this._getAuthorizationHeader(),
-                    "X-Random-Header": requestOptions?.xRandomHeader,
-                }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",

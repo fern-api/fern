@@ -72,6 +72,15 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         return service;
     }
 
+    public getSubpackageForServiceId(serviceId: ServiceId): Subpackage {
+        for (const [_, subpackage] of Object.entries(this.ir.subpackages)) {
+            if (subpackage.service === serviceId) {
+                return subpackage;
+            }
+        }
+        throw new Error(`No subpackage found for service ${serviceId}`);
+    }
+
     /**
      * Recursively checks if a subpackage has endpoints.
      * @param subpackage - The subpackage to check.

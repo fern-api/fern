@@ -56,6 +56,11 @@ export class Primitive {
         request: string,
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -63,11 +68,7 @@ export class Primitive {
                 "/primitive/string",
             ),
             method: "POST",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
@@ -135,6 +136,11 @@ export class Primitive {
         request: number,
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<number>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -142,11 +148,7 @@ export class Primitive {
                 "/primitive/integer",
             ),
             method: "POST",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
@@ -214,6 +216,11 @@ export class Primitive {
         request: bigint,
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<bigint>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -221,11 +228,7 @@ export class Primitive {
                 "/primitive/long",
             ),
             method: "POST",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
@@ -293,6 +296,11 @@ export class Primitive {
         request: number,
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<number>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -300,11 +308,7 @@ export class Primitive {
                 "/primitive/double",
             ),
             method: "POST",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
@@ -372,6 +376,11 @@ export class Primitive {
         request: boolean,
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -379,11 +388,7 @@ export class Primitive {
                 "/primitive/boolean",
             ),
             method: "POST",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
@@ -451,6 +456,11 @@ export class Primitive {
         request: Date,
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<Date>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -458,11 +468,7 @@ export class Primitive {
                 "/primitive/datetime",
             ),
             method: "POST",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
@@ -530,6 +536,11 @@ export class Primitive {
         request: string,
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -537,11 +548,7 @@ export class Primitive {
                 "/primitive/date",
             ),
             method: "POST",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
@@ -609,6 +616,11 @@ export class Primitive {
         request: string,
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -616,11 +628,7 @@ export class Primitive {
                 "/primitive/uuid",
             ),
             method: "POST",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
@@ -688,6 +696,11 @@ export class Primitive {
         request: string,
         requestOptions?: Primitive.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -695,11 +708,7 @@ export class Primitive {
                 "/primitive/base64",
             ),
             method: "POST",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",

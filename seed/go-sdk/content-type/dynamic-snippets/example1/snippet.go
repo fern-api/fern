@@ -20,9 +20,6 @@ func do() {
             Name: fern.String(
                 "name",
             ),
-            Email: fern.String(
-                "email",
-            ),
             Age: fern.Int(
                 1,
             ),
@@ -37,6 +34,23 @@ func do() {
             Tags: []string{
                 "tags",
                 "tags",
+            },
+            Email: fern.String(
+                "email",
+            ),
+            Nickname: fern.String(
+                "nickname",
+            ),
+            Bio: fern.String(
+                "bio",
+            ),
+            ProfileImageUrl: fern.String(
+                "profileImageUrl",
+            ),
+            Settings: map[string]any{
+                "settings": map[string]any{
+                    "key": "value",
+                },
             },
         },
     )

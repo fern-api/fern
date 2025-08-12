@@ -34,6 +34,7 @@ public class GetTokenWithClientCredentialsTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/token")
+                    .WithHeader("X-Api-Key", "X-Api-Key")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )
@@ -47,6 +48,7 @@ public class GetTokenWithClientCredentialsTest : BaseMockServerTest
         var response = await Client.Auth.GetTokenWithClientCredentialsAsync(
             new GetTokenRequest
             {
+                XApiKey = "X-Api-Key",
                 ClientId = "client_id",
                 ClientSecret = "client_secret",
                 Audience = "https://api.example.com",

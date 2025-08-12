@@ -58,12 +58,13 @@ export class Service {
         request: SeedContentTypes.PatchProxyRequest,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
                 (await core.Supplier.get(this._options.environment)),
             method: "PATCH",
-            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
+            headers: _headers,
             contentType: "application/merge-patch+json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
@@ -102,7 +103,10 @@ export class Service {
     }
 
     /**
-     * Update with JSON merge patch - complex types
+     * Update with JSON merge patch - complex types.
+     * This endpoint demonstrates the distinction between:
+     * - optional<T> fields (can be present or absent, but not null)
+     * - optional<nullable<T>> fields (can be present, absent, or null)
      *
      * @param {string} id
      * @param {SeedContentTypes.PatchComplexRequest} request
@@ -111,7 +115,6 @@ export class Service {
      * @example
      *     await client.service.patchComplex("id", {
      *         name: "name",
-     *         email: "email",
      *         age: 1,
      *         active: true,
      *         metadata: {
@@ -119,7 +122,16 @@ export class Service {
      *                 "key": "value"
      *             }
      *         },
-     *         tags: ["tags", "tags"]
+     *         tags: ["tags", "tags"],
+     *         email: "email",
+     *         nickname: "nickname",
+     *         bio: "bio",
+     *         profileImageUrl: "profileImageUrl",
+     *         settings: {
+     *             "settings": {
+     *                 "key": "value"
+     *             }
+     *         }
      *     })
      */
     public patchComplex(
@@ -135,6 +147,7 @@ export class Service {
         request: SeedContentTypes.PatchComplexRequest = {},
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -142,7 +155,7 @@ export class Service {
                 `complex/${encodeURIComponent(id)}`,
             ),
             method: "PATCH",
-            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
+            headers: _headers,
             contentType: "application/merge-patch+json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
@@ -206,6 +219,7 @@ export class Service {
         request: SeedContentTypes.RegularPatchRequest = {},
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -213,7 +227,7 @@ export class Service {
                 `regular/${encodeURIComponent(id)}`,
             ),
             method: "PATCH",
-            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",

@@ -3,12 +3,21 @@
  */
 
 import { mockServerPool } from "../../mock-server/MockServerPool";
+import { mockAuth } from "../mockAuth";
 import { SeedInferredAuthExplicitClient } from "../../../src/Client";
 
 describe("Api", () => {
     test("getSomething", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedInferredAuthExplicitClient({ environment: server.baseUrl });
+        mockAuth(server);
+
+        const client = new SeedInferredAuthExplicitClient({
+            xApiKey: "X-Api-Key",
+            clientId: "client_id",
+            clientSecret: "client_secret",
+            scope: "scope",
+            environment: server.baseUrl,
+        });
 
         server.mockEndpoint().get("/nested/get-something").respondWith().statusCode(200).build();
 

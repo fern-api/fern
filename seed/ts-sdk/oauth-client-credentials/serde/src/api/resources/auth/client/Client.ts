@@ -61,6 +61,11 @@ export class Auth {
         request: SeedOauthClientCredentials.GetTokenRequest,
         requestOptions?: Auth.RequestOptions,
     ): Promise<core.WithRawResponse<SeedOauthClientCredentials.TokenResponse>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -68,11 +73,7 @@ export class Auth {
                 "/token",
             ),
             method: "POST",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
@@ -149,6 +150,11 @@ export class Auth {
         request: SeedOauthClientCredentials.RefreshTokenRequest,
         requestOptions?: Auth.RequestOptions,
     ): Promise<core.WithRawResponse<SeedOauthClientCredentials.TokenResponse>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -156,11 +162,7 @@ export class Auth {
                 "/token",
             ),
             method: "POST",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",

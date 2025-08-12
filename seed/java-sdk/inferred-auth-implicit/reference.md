@@ -16,6 +16,7 @@
 client.auth().getTokenWithClientCredentials(
     GetTokenRequest
         .builder()
+        .xApiKey("X-Api-Key")
         .clientId("client_id")
         .clientSecret("client_secret")
         .audience("https://api.example.com")
@@ -33,6 +34,14 @@ client.auth().getTokenWithClientCredentials(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**xApiKey:** `String` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -97,6 +106,7 @@ client.auth().getTokenWithClientCredentials(
 client.auth().refreshToken(
     RefreshTokenRequest
         .builder()
+        .xApiKey("X-Api-Key")
         .clientId("client_id")
         .clientSecret("client_secret")
         .refreshToken("refresh_token")
@@ -115,6 +125,14 @@ client.auth().refreshToken(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**xApiKey:** `String` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>

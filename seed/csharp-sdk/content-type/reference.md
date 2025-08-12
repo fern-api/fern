@@ -54,7 +54,10 @@ await client.Service.PatchAsync(
 <dl>
 <dd>
 
-Update with JSON merge patch - complex types
+Update with JSON merge patch - complex types.
+This endpoint demonstrates the distinction between:
+- optional<T> fields (can be present or absent, but not null)
+- optional<nullable<T>> fields (can be present, absent, or null)
 </dd>
 </dl>
 </dd>
@@ -74,7 +77,6 @@ await client.Service.PatchComplexAsync(
     new PatchComplexRequest
     {
         Name = "name",
-        Email = "email",
         Age = 1,
         Active = true,
         Metadata = new Dictionary<string, object>()
@@ -85,6 +87,17 @@ await client.Service.PatchComplexAsync(
             },
         },
         Tags = new List<string>() { "tags", "tags" },
+        Email = "email",
+        Nickname = "nickname",
+        Bio = "bio",
+        ProfileImageUrl = "profileImageUrl",
+        Settings = new Dictionary<string, object>()
+        {
+            {
+                "settings",
+                new Dictionary<object, object?>() { { "key", "value" } }
+            },
+        },
     }
 );
 ```

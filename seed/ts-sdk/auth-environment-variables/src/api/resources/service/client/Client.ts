@@ -59,6 +59,15 @@ export class Service {
     }
 
     private async __getWithApiKey(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<string>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Another-Header": requestOptions?.xAnotherHeader,
+                "X-API-Version": requestOptions?.xApiVersion ?? "01-01-2000",
+                ...(await this._getCustomAuthorizationHeaders()),
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -66,15 +75,7 @@ export class Service {
                 "apiKey",
             ),
             method: "GET",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({
-                    "X-Another-Header": requestOptions?.xAnotherHeader,
-                    "X-API-Version": requestOptions?.xApiVersion ?? "01-01-2000",
-                    ...(await this._getCustomAuthorizationHeaders()),
-                }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             queryParameters: requestOptions?.queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
@@ -132,6 +133,16 @@ export class Service {
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const { "X-Endpoint-Header": xEndpointHeader } = request;
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Endpoint-Header": xEndpointHeader,
+                "X-Another-Header": requestOptions?.xAnotherHeader,
+                "X-API-Version": requestOptions?.xApiVersion ?? "01-01-2000",
+                ...(await this._getCustomAuthorizationHeaders()),
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -139,16 +150,7 @@ export class Service {
                 "apiKeyInHeader",
             ),
             method: "GET",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({
-                    "X-Endpoint-Header": xEndpointHeader,
-                    "X-Another-Header": requestOptions?.xAnotherHeader,
-                    "X-API-Version": requestOptions?.xApiVersion ?? "01-01-2000",
-                    ...(await this._getCustomAuthorizationHeaders()),
-                }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             queryParameters: requestOptions?.queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,

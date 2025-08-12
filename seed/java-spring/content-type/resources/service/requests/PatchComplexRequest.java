@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
-import core.TriStateOptional;
+import core.OptionalNullable;
 import java.lang.Boolean;
 import java.lang.Integer;
 import java.lang.Object;
@@ -23,58 +23,91 @@ import java.util.Optional;
     builder = PatchComplexRequest.Builder.class
 )
 public final class PatchComplexRequest {
-  private final TriStateOptional<String> name;
+  private final Optional<String> name;
 
-  private final TriStateOptional<Optional<String>> email;
+  private final Optional<Integer> age;
 
-  private final TriStateOptional<Integer> age;
+  private final Optional<Boolean> active;
 
-  private final TriStateOptional<Boolean> active;
+  private final Optional<Map<String, Object>> metadata;
 
-  private final TriStateOptional<Map<String, Object>> metadata;
+  private final Optional<List<String>> tags;
 
-  private final TriStateOptional<List<String>> tags;
+  private final OptionalNullable<String> email;
 
-  private PatchComplexRequest(TriStateOptional<String> name,
-      TriStateOptional<Optional<String>> email, TriStateOptional<Integer> age,
-      TriStateOptional<Boolean> active, TriStateOptional<Map<String, Object>> metadata,
-      TriStateOptional<List<String>> tags) {
+  private final OptionalNullable<String> nickname;
+
+  private final OptionalNullable<String> bio;
+
+  private final OptionalNullable<String> profileImageUrl;
+
+  private final OptionalNullable<Map<String, Object>> settings;
+
+  private PatchComplexRequest(Optional<String> name, Optional<Integer> age,
+      Optional<Boolean> active, Optional<Map<String, Object>> metadata, Optional<List<String>> tags,
+      OptionalNullable<String> email, OptionalNullable<String> nickname,
+      OptionalNullable<String> bio, OptionalNullable<String> profileImageUrl,
+      OptionalNullable<Map<String, Object>> settings) {
     this.name = name;
-    this.email = email;
     this.age = age;
     this.active = active;
     this.metadata = metadata;
     this.tags = tags;
+    this.email = email;
+    this.nickname = nickname;
+    this.bio = bio;
+    this.profileImageUrl = profileImageUrl;
+    this.settings = settings;
   }
 
   @JsonProperty("name")
-  public TriStateOptional<String> getName() {
+  public Optional<String> getName() {
     return name;
   }
 
-  @JsonProperty("email")
-  public TriStateOptional<Optional<String>> getEmail() {
-    return email;
-  }
-
   @JsonProperty("age")
-  public TriStateOptional<Integer> getAge() {
+  public Optional<Integer> getAge() {
     return age;
   }
 
   @JsonProperty("active")
-  public TriStateOptional<Boolean> getActive() {
+  public Optional<Boolean> getActive() {
     return active;
   }
 
   @JsonProperty("metadata")
-  public TriStateOptional<Map<String, Object>> getMetadata() {
+  public Optional<Map<String, Object>> getMetadata() {
     return metadata;
   }
 
   @JsonProperty("tags")
-  public TriStateOptional<List<String>> getTags() {
+  public Optional<List<String>> getTags() {
     return tags;
+  }
+
+  @JsonProperty("email")
+  public OptionalNullable<String> getEmail() {
+    return email;
+  }
+
+  @JsonProperty("nickname")
+  public OptionalNullable<String> getNickname() {
+    return nickname;
+  }
+
+  @JsonProperty("bio")
+  public OptionalNullable<String> getBio() {
+    return bio;
+  }
+
+  @JsonProperty("profileImageUrl")
+  public OptionalNullable<String> getProfileImageUrl() {
+    return profileImageUrl;
+  }
+
+  @JsonProperty("settings")
+  public OptionalNullable<Map<String, Object>> getSettings() {
+    return settings;
   }
 
   @Override
@@ -91,7 +124,7 @@ public final class PatchComplexRequest {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(this.name, this.email, this.age, this.active, this.metadata, this.tags);
+    return java.util.Objects.hash(this.name, this.age, this.active, this.metadata, this.tags, this.email, this.nickname, this.bio, this.profileImageUrl, this.settings);
   }
 
   @Override
@@ -107,59 +140,86 @@ public final class PatchComplexRequest {
       ignoreUnknown = true
   )
   public static final class Builder {
-    private TriStateOptional<String> name = TriStateOptional.absent();
+    private Optional<String> name;
 
-    private TriStateOptional<Optional<String>> email = TriStateOptional.absent();
+    private Optional<Integer> age;
 
-    private TriStateOptional<Integer> age = TriStateOptional.absent();
+    private Optional<Boolean> active;
 
-    private TriStateOptional<Boolean> active = TriStateOptional.absent();
+    private Optional<Map<String, Object>> metadata;
 
-    private TriStateOptional<Map<String, Object>> metadata = TriStateOptional.absent();
+    private Optional<List<String>> tags;
 
-    private TriStateOptional<List<String>> tags = TriStateOptional.absent();
+    private OptionalNullable<String> email = OptionalNullable.absent();
+
+    private OptionalNullable<String> nickname = OptionalNullable.absent();
+
+    private OptionalNullable<String> bio = OptionalNullable.absent();
+
+    private OptionalNullable<String> profileImageUrl = OptionalNullable.absent();
+
+    private OptionalNullable<Map<String, Object>> settings = OptionalNullable.absent();
 
     private Builder() {
     }
 
-    @JsonSetter("name")
-    public Builder name(String value) {
-      this.name = TriStateOptional.ofNullable(value);
+    public Builder name(Optional<String> value) {
+      this.name = value;
+      return this;
+    }
+
+    public Builder age(Optional<Integer> value) {
+      this.age = value;
+      return this;
+    }
+
+    public Builder active(Optional<Boolean> value) {
+      this.active = value;
+      return this;
+    }
+
+    public Builder metadata(Optional<Map<String, Object>> value) {
+      this.metadata = value;
+      return this;
+    }
+
+    public Builder tags(Optional<List<String>> value) {
+      this.tags = value;
       return this;
     }
 
     @JsonSetter("email")
-    public Builder email(Optional<String> value) {
-      this.email = TriStateOptional.ofNullable(value);
+    public Builder email(String value) {
+      this.email = OptionalNullable.ofNullable(value);
       return this;
     }
 
-    @JsonSetter("age")
-    public Builder age(Integer value) {
-      this.age = TriStateOptional.ofNullable(value);
+    @JsonSetter("nickname")
+    public Builder nickname(String value) {
+      this.nickname = OptionalNullable.ofNullable(value);
       return this;
     }
 
-    @JsonSetter("active")
-    public Builder active(Boolean value) {
-      this.active = TriStateOptional.ofNullable(value);
+    @JsonSetter("bio")
+    public Builder bio(String value) {
+      this.bio = OptionalNullable.ofNullable(value);
       return this;
     }
 
-    @JsonSetter("metadata")
-    public Builder metadata(Map<String, Object> value) {
-      this.metadata = TriStateOptional.ofNullable(value);
+    @JsonSetter("profileImageUrl")
+    public Builder profileImageUrl(String value) {
+      this.profileImageUrl = OptionalNullable.ofNullable(value);
       return this;
     }
 
-    @JsonSetter("tags")
-    public Builder tags(List<String> value) {
-      this.tags = TriStateOptional.ofNullable(value);
+    @JsonSetter("settings")
+    public Builder settings(Map<String, Object> value) {
+      this.settings = OptionalNullable.ofNullable(value);
       return this;
     }
 
     public PatchComplexRequest build() {
-      return new PatchComplexRequest(name, email, age, active, metadata, tags);
+      return new PatchComplexRequest(name, age, active, metadata, tags, email, nickname, bio, profileImageUrl, settings);
     }
   }
 }

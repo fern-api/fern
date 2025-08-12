@@ -12,8 +12,8 @@ import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER, LogLevel, Logger, createLogger } from "@fern-api/logger";
 
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import * as serializers from "@fern-fern/ir-sdk/serialization";
+import { FernIr, serialization } from "@fern-fern/ir-sdk";
+import { AuthScheme, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { publishPackage } from "./publishPackage";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows";
@@ -92,7 +92,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
 
             const ir = await parseIR({
                 absolutePathToIR: AbsoluteFilePath.of(config.irFilepath),
-                parse: serializers.IntermediateRepresentation.parse
+                parse: serialization.IntermediateRepresentation.parse
             });
 
             const generatorContext = new GeneratorContextImpl(logger, version);

@@ -1,0 +1,431 @@
+{
+  "info": {
+    "name": "Inferred Auth Implicit No Expiry",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": null,
+  "item": [
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Auth",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Get Token With Client Credentials",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/token",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "token"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "X-Api-Key",
+                "description": null,
+                "type": "text",
+                "value": "\"X-Api-Key\""
+              },
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"client_id\": \"client_id\",\n    \"client_secret\": \"client_secret\",\n    \"audience\": \"https://api.example.com\",\n    \"grant_type\": \"client_credentials\",\n    \"scope\": \"scope\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/token",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "token"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "X-Api-Key",
+                    "description": null,
+                    "type": "text",
+                    "value": "\"X-Api-Key\""
+                  },
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"client_id\": \"client_id\",\n    \"client_secret\": \"client_secret\",\n    \"audience\": \"https://api.example.com\",\n    \"grant_type\": \"client_credentials\",\n    \"scope\": \"scope\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"access_token\": \"access_token\",\n    \"refresh_token\": \"refresh_token\"\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Refresh Token",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/token/refresh",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "token",
+                "refresh"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "X-Api-Key",
+                "description": null,
+                "type": "text",
+                "value": "\"X-Api-Key\""
+              },
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"client_id\": \"client_id\",\n    \"client_secret\": \"client_secret\",\n    \"refresh_token\": \"refresh_token\",\n    \"audience\": \"https://api.example.com\",\n    \"grant_type\": \"refresh_token\",\n    \"scope\": \"scope\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/token/refresh",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "token",
+                    "refresh"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "X-Api-Key",
+                    "description": null,
+                    "type": "text",
+                    "value": "\"X-Api-Key\""
+                  },
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"client_id\": \"client_id\",\n    \"client_secret\": \"client_secret\",\n    \"refresh_token\": \"refresh_token\",\n    \"audience\": \"https://api.example.com\",\n    \"grant_type\": \"refresh_token\",\n    \"scope\": \"scope\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"access_token\": \"access_token\",\n    \"refresh_token\": \"refresh_token\"\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Nested No Auth",
+      "item": [
+        {
+          "_type": "container",
+          "description": null,
+          "name": "Api",
+          "item": [
+            {
+              "_type": "endpoint",
+              "name": "Get Something",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/nested-no-auth/get-something",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "nested-no-auth",
+                    "get-something"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/nested-no-auth/get-something",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "nested-no-auth",
+                        "get-something"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "GET",
+                    "auth": null,
+                    "body": null
+                  },
+                  "description": null,
+                  "body": "",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Nested",
+      "item": [
+        {
+          "_type": "container",
+          "description": null,
+          "name": "Api",
+          "item": [
+            {
+              "_type": "endpoint",
+              "name": "Get Something",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/nested/get-something",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "nested",
+                    "get-something"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/nested/get-something",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "nested",
+                        "get-something"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "GET",
+                    "auth": null,
+                    "body": null
+                  },
+                  "description": null,
+                  "body": "",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Simple",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Get Something",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/get-something",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "get-something"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/get-something",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "get-something"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

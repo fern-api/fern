@@ -68,23 +68,28 @@ class ServiceClient:
         id: str,
         *,
         name: typing.Optional[str] = OMIT,
-        email: typing.Optional[str] = OMIT,
         age: typing.Optional[int] = OMIT,
         active: typing.Optional[bool] = OMIT,
         metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
+        email: typing.Optional[str] = OMIT,
+        nickname: typing.Optional[str] = OMIT,
+        bio: typing.Optional[str] = OMIT,
+        profile_image_url: typing.Optional[str] = OMIT,
+        settings: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Update with JSON merge patch - complex types
+        Update with JSON merge patch - complex types.
+        This endpoint demonstrates the distinction between:
+        - optional<T> fields (can be present or absent, but not null)
+        - optional<nullable<T>> fields (can be present, absent, or null)
 
         Parameters
         ----------
         id : str
 
         name : typing.Optional[str]
-
-        email : typing.Optional[str]
 
         age : typing.Optional[int]
 
@@ -93,6 +98,16 @@ class ServiceClient:
         metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
 
         tags : typing.Optional[typing.Sequence[str]]
+
+        email : typing.Optional[str]
+
+        nickname : typing.Optional[str]
+
+        bio : typing.Optional[str]
+
+        profile_image_url : typing.Optional[str]
+
+        settings : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -111,21 +126,29 @@ class ServiceClient:
         client.service.patch_complex(
             id="id",
             name="name",
-            email="email",
             age=1,
             active=True,
             metadata={"metadata": {"key": "value"}},
             tags=["tags", "tags"],
+            email="email",
+            nickname="nickname",
+            bio="bio",
+            profile_image_url="profileImageUrl",
+            settings={"settings": {"key": "value"}},
         )
         """
         _response = self._raw_client.patch_complex(
             id,
             name=name,
-            email=email,
             age=age,
             active=active,
             metadata=metadata,
             tags=tags,
+            email=email,
+            nickname=nickname,
+            bio=bio,
+            profile_image_url=profile_image_url,
+            settings=settings,
             request_options=request_options,
         )
         return _response.data
@@ -241,23 +264,28 @@ class AsyncServiceClient:
         id: str,
         *,
         name: typing.Optional[str] = OMIT,
-        email: typing.Optional[str] = OMIT,
         age: typing.Optional[int] = OMIT,
         active: typing.Optional[bool] = OMIT,
         metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
+        email: typing.Optional[str] = OMIT,
+        nickname: typing.Optional[str] = OMIT,
+        bio: typing.Optional[str] = OMIT,
+        profile_image_url: typing.Optional[str] = OMIT,
+        settings: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Update with JSON merge patch - complex types
+        Update with JSON merge patch - complex types.
+        This endpoint demonstrates the distinction between:
+        - optional<T> fields (can be present or absent, but not null)
+        - optional<nullable<T>> fields (can be present, absent, or null)
 
         Parameters
         ----------
         id : str
 
         name : typing.Optional[str]
-
-        email : typing.Optional[str]
 
         age : typing.Optional[int]
 
@@ -266,6 +294,16 @@ class AsyncServiceClient:
         metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
 
         tags : typing.Optional[typing.Sequence[str]]
+
+        email : typing.Optional[str]
+
+        nickname : typing.Optional[str]
+
+        bio : typing.Optional[str]
+
+        profile_image_url : typing.Optional[str]
+
+        settings : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -289,11 +327,15 @@ class AsyncServiceClient:
             await client.service.patch_complex(
                 id="id",
                 name="name",
-                email="email",
                 age=1,
                 active=True,
                 metadata={"metadata": {"key": "value"}},
                 tags=["tags", "tags"],
+                email="email",
+                nickname="nickname",
+                bio="bio",
+                profile_image_url="profileImageUrl",
+                settings={"settings": {"key": "value"}},
             )
 
 
@@ -302,11 +344,15 @@ class AsyncServiceClient:
         _response = await self._raw_client.patch_complex(
             id,
             name=name,
-            email=email,
             age=age,
             active=active,
             metadata=metadata,
             tags=tags,
+            email=email,
+            nickname=nickname,
+            bio=bio,
+            profile_image_url=profile_image_url,
+            settings=settings,
             request_options=request_options,
         )
         return _response.data

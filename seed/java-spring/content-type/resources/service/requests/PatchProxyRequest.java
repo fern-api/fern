@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
-import core.TriStateOptional;
+import core.OptionalNullable;
 import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.Override;
@@ -19,23 +19,23 @@ import java.lang.String;
     builder = PatchProxyRequest.Builder.class
 )
 public final class PatchProxyRequest {
-  private final TriStateOptional<String> application;
+  private final OptionalNullable<String> application;
 
-  private final TriStateOptional<Boolean> requireAuth;
+  private final OptionalNullable<Boolean> requireAuth;
 
-  private PatchProxyRequest(TriStateOptional<String> application,
-      TriStateOptional<Boolean> requireAuth) {
+  private PatchProxyRequest(OptionalNullable<String> application,
+      OptionalNullable<Boolean> requireAuth) {
     this.application = application;
     this.requireAuth = requireAuth;
   }
 
   @JsonProperty("application")
-  public TriStateOptional<String> getApplication() {
+  public OptionalNullable<String> getApplication() {
     return application;
   }
 
   @JsonProperty("require_auth")
-  public TriStateOptional<Boolean> getRequireAuth() {
+  public OptionalNullable<Boolean> getRequireAuth() {
     return requireAuth;
   }
 
@@ -69,22 +69,22 @@ public final class PatchProxyRequest {
       ignoreUnknown = true
   )
   public static final class Builder {
-    private TriStateOptional<String> application = TriStateOptional.absent();
+    private OptionalNullable<String> application = OptionalNullable.absent();
 
-    private TriStateOptional<Boolean> requireAuth = TriStateOptional.absent();
+    private OptionalNullable<Boolean> requireAuth = OptionalNullable.absent();
 
     private Builder() {
     }
 
     @JsonSetter("application")
     public Builder application(String value) {
-      this.application = TriStateOptional.ofNullable(value);
+      this.application = OptionalNullable.ofNullable(value);
       return this;
     }
 
     @JsonSetter("require_auth")
     public Builder requireAuth(Boolean value) {
-      this.requireAuth = TriStateOptional.ofNullable(value);
+      this.requireAuth = OptionalNullable.ofNullable(value);
       return this;
     }
 

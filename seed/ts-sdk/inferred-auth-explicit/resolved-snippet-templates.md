@@ -1,14 +1,15 @@
 ```typescript
 import { SeedInferredAuthExplicitClient } from "@fern/inferred-auth-explicit";
 
-const client = new SeedInferredAuthExplicitClient({
-  environment: "YOUR_BASE_URL",
-});
-await client.auth.getTokenWithClientCredentials({
-  client_id: "client_id",
-  client_secret: "client_secret",
-  scope: "scope",
-});
+const client = new SeedInferredAuthExplicitClient({ environment: "YOUR_BASE_URL" });        
+await client.auth.getTokenWithClientCredentials(
+	{
+		X-Api-Key: "X-Api-Key",
+		client_id: "client_id",
+		client_secret: "client_secret",
+		scope: "scope"
+	}
+)
 
 ```
 
@@ -16,15 +17,16 @@ await client.auth.getTokenWithClientCredentials({
 ```typescript
 import { SeedInferredAuthExplicitClient } from "@fern/inferred-auth-explicit";
 
-const client = new SeedInferredAuthExplicitClient({
-  environment: "YOUR_BASE_URL",
-});
-await client.auth.refreshToken({
-  client_id: "client_id",
-  client_secret: "client_secret",
-  refresh_token: "refresh_token",
-  scope: "scope",
-});
+const client = new SeedInferredAuthExplicitClient({ environment: "YOUR_BASE_URL" });        
+await client.auth.refreshToken(
+	{
+		X-Api-Key: "X-Api-Key",
+		client_id: "client_id",
+		client_secret: "client_secret",
+		refresh_token: "refresh_token",
+		scope: "scope"
+	}
+)
 
 ```
 

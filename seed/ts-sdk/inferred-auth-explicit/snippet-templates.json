@@ -59,6 +59,22 @@
                                 {
                                     "value": {
                                         "imports": [],
+                                        "templateString": "X-Api-Key: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "HEADERS",
+                                                "path": "X-Api-Key",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
                                         "templateString": "client_id: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
@@ -172,6 +188,22 @@
                             "isOptional": true,
                             "inputDelimiter": ",\n\t\t",
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "X-Api-Key: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "HEADERS",
+                                                "path": "X-Api-Key",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],

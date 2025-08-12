@@ -47,6 +47,7 @@ export class Api {
     }
 
     private async __getSomething(requestOptions?: Api.RequestOptions): Promise<core.WithRawResponse<void>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -54,7 +55,7 @@ export class Api {
                 "/nested-no-auth/get-something",
             ),
             method: "GET",
-            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
+            headers: _headers,
             queryParameters: requestOptions?.queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,

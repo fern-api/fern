@@ -64,6 +64,15 @@ export class ReqWithHeaders {
             "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader,
             body: _body,
         } = request;
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                Authorization: await this._getAuthorizationHeader(),
+                "X-TEST-SERVICE-HEADER": xTestServiceHeader,
+                "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -71,15 +80,7 @@ export class ReqWithHeaders {
                 "/test-headers/custom-header",
             ),
             method: "POST",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({
-                    Authorization: await this._getAuthorizationHeader(),
-                    "X-TEST-SERVICE-HEADER": xTestServiceHeader,
-                    "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader,
-                }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",

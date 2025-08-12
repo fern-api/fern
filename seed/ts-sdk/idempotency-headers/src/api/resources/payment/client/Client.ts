@@ -64,6 +64,15 @@ export class Payment {
         request: SeedIdempotencyHeaders.CreatePaymentRequest,
         requestOptions?: Payment.IdempotentRequestOptions,
     ): Promise<core.WithRawResponse<string>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                Authorization: await this._getAuthorizationHeader(),
+                "Idempotency-Key": requestOptions?.idempotencyKey,
+                "Idempotency-Expiration": requestOptions?.idempotencyExpiration.toString(),
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -71,15 +80,7 @@ export class Payment {
                 "/payment",
             ),
             method: "POST",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({
-                    Authorization: await this._getAuthorizationHeader(),
-                    "Idempotency-Key": requestOptions?.idempotencyKey,
-                    "Idempotency-Expiration": requestOptions?.idempotencyExpiration.toString(),
-                }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
@@ -132,6 +133,11 @@ export class Payment {
         paymentId: string,
         requestOptions?: Payment.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -139,11 +145,7 @@ export class Payment {
                 `/payment/${encodeURIComponent(paymentId)}`,
             ),
             method: "DELETE",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             queryParameters: requestOptions?.queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,

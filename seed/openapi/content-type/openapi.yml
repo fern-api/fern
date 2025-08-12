@@ -27,7 +27,11 @@ paths:
                   nullable: true
   /complex/{id}:
     patch:
-      description: Update with JSON merge patch - complex types
+      description: |-
+        Update with JSON merge patch - complex types.
+        This endpoint demonstrates the distinction between:
+        - optional<T> fields (can be present or absent, but not null)
+        - optional<nullable<T>> fields (can be present, absent, or null)
       operationId: service_patchComplex
       tags:
         - Service
@@ -50,9 +54,6 @@ paths:
                 name:
                   type: string
                   nullable: true
-                email:
-                  type: string
-                  nullable: true
                 age:
                   type: integer
                   nullable: true
@@ -67,6 +68,22 @@ paths:
                   type: array
                   items:
                     type: string
+                  nullable: true
+                email:
+                  type: string
+                  nullable: true
+                nickname:
+                  type: string
+                  nullable: true
+                bio:
+                  type: string
+                  nullable: true
+                profileImageUrl:
+                  type: string
+                  nullable: true
+                settings:
+                  type: object
+                  additionalProperties: true
                   nullable: true
   /regular/{id}:
     patch:

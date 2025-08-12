@@ -19,7 +19,7 @@ import {
 
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams";
-import { generateHeaders } from "../endpoints/utils/generateHeaders";
+import { generateHeaders, HEADERS_VAR_NAME } from "../endpoints/utils/generateHeaders";
 import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature";
 import { FileUploadRequestParameter } from "../request-parameter/FileUploadRequestParameter";
 import { GeneratedEndpointRequest } from "./GeneratedEndpointRequest";
@@ -225,6 +225,8 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
             )
         );
 
+        statements.push(...this.initializeHeaders(context));
+
         return statements;
     }
 
@@ -232,7 +234,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
         context: SdkContext
     ): Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType" | "requestType" | "duplex"> {
         return {
-            headers: this.getHeaders(context),
+            headers: ts.factory.createIdentifier(HEADERS_VAR_NAME),
             queryParameters: this.getQueryParams(context)?.getReferenceTo(),
             contentType: this.requestBody.contentType,
             requestType: "bytes",
@@ -244,7 +246,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
         };
     }
 
-    private getHeaders(context: SdkContext): ts.Expression {
+    private initializeHeaders(context: SdkContext): ts.Statement[] {
         return generateHeaders({
             context,
             intermediateRepresentation: this.ir,

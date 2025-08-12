@@ -60,6 +60,14 @@ export class Homepage {
     ): Promise<
         core.WithRawResponse<core.APIResponse<SeedTrace.ProblemId[], SeedTrace.homepage.getHomepageProblems.Error>>
     > {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Random-Header": requestOptions?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -68,14 +76,7 @@ export class Homepage {
                 "/homepage-problems",
             ),
             method: "GET",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({
-                    Authorization: await this._getAuthorizationHeader(),
-                    "X-Random-Header": requestOptions?.xRandomHeader,
-                }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             queryParameters: requestOptions?.queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
@@ -127,6 +128,14 @@ export class Homepage {
         request: SeedTrace.ProblemId[],
         requestOptions?: Homepage.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.homepage.setHomepageProblems.Error>>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Random-Header": requestOptions?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -135,14 +144,7 @@ export class Homepage {
                 "/homepage-problems",
             ),
             method: "POST",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({
-                    Authorization: await this._getAuthorizationHeader(),
-                    "X-Random-Header": requestOptions?.xRandomHeader,
-                }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",

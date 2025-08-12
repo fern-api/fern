@@ -12,7 +12,6 @@ public class PatchComplexTest : BaseMockServerTest
         const string requestJson = """
             {
               "name": "name",
-              "email": "email",
               "age": 1,
               "active": true,
               "metadata": {
@@ -23,7 +22,16 @@ public class PatchComplexTest : BaseMockServerTest
               "tags": [
                 "tags",
                 "tags"
-              ]
+              ],
+              "email": "email",
+              "nickname": "nickname",
+              "bio": "bio",
+              "profileImageUrl": "profileImageUrl",
+              "settings": {
+                "settings": {
+                  "key": "value"
+                }
+              }
             }
             """;
 
@@ -44,7 +52,6 @@ public class PatchComplexTest : BaseMockServerTest
                 new PatchComplexRequest
                 {
                     Name = "name",
-                    Email = "email",
                     Age = 1,
                     Active = true,
                     Metadata = new Dictionary<string, object>()
@@ -55,6 +62,17 @@ public class PatchComplexTest : BaseMockServerTest
                         },
                     },
                     Tags = new List<string>() { "tags", "tags" },
+                    Email = "email",
+                    Nickname = "nickname",
+                    Bio = "bio",
+                    ProfileImageUrl = "profileImageUrl",
+                    Settings = new Dictionary<string, object>()
+                    {
+                        {
+                            "settings",
+                            new Dictionary<object, object?>() { { "key", "value" } }
+                        },
+                    },
                 }
             )
         );

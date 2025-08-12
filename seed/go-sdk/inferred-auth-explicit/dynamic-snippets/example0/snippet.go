@@ -16,6 +16,7 @@ func do() {
     client.Auth.GetTokenWithClientCredentials(
         context.TODO(),
         &fern.GetTokenRequest{
+            XApiKey: "X-Api-Key",
             ClientId: "client_id",
             ClientSecret: "client_secret",
             Scope: fern.String(
