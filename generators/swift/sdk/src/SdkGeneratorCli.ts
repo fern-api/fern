@@ -92,7 +92,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                 context.project.addSourceAsIsFile({
                     filenameWithoutExt: def.filenameWithoutExtension,
                     directory: def.directory,
-                    fileContents: [await def.loadContents()]
+                    contents: await def.loadContents()
                 });
             })
         );
@@ -110,7 +110,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             context.project.addSourceFile({
                 nameCandidateWithoutExtension: class_.name,
                 directory: RelativeFilePath.of(`Resources/${fernFilepathDir}`),
-                fileContents: [class_]
+                contents: [class_]
             });
         });
     }
@@ -133,7 +133,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                     context.project.addSourceFile({
                         nameCandidateWithoutExtension: struct.name,
                         directory: context.requestsDirectory,
-                        fileContents: [struct]
+                        contents: [struct]
                     });
                 }
             });
@@ -168,7 +168,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                     context.project.addSourceFile({
                         nameCandidateWithoutExtension: enum_.name,
                         directory: context.schemasDirectory,
-                        fileContents: [enum_]
+                        contents: [enum_]
                     });
                 },
                 object: (otd) => {
@@ -183,7 +183,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                     context.project.addSourceFile({
                         nameCandidateWithoutExtension: struct.name,
                         directory: context.schemasDirectory,
-                        fileContents: [struct]
+                        contents: [struct]
                     });
                 },
                 undiscriminatedUnion: (uutd) => {
@@ -197,7 +197,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                     context.project.addSourceFile({
                         nameCandidateWithoutExtension: enum_.name,
                         directory: context.schemasDirectory,
-                        fileContents: [enum_]
+                        contents: [enum_]
                     });
                 },
                 union: (utd) => {
@@ -211,7 +211,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                     context.project.addSourceFile({
                         nameCandidateWithoutExtension: enum_.name,
                         directory: context.schemasDirectory,
-                        fileContents: [enum_]
+                        contents: [enum_]
                     });
                 },
                 _other: noop
@@ -229,7 +229,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         context.project.addSourceFile({
             nameCandidateWithoutExtension: rootClientClass.name,
             directory: RelativeFilePath.of(""),
-            fileContents: [rootClientClass]
+            contents: [rootClientClass]
         });
     }
 
@@ -244,7 +244,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             context.project.addSourceFile({
                 nameCandidateWithoutExtension: environmentEnum.name,
                 directory: RelativeFilePath.of(""),
-                fileContents: [environmentEnum]
+                contents: [environmentEnum]
             });
         } else {
             // TODO(kafkas): Handle multiple environments

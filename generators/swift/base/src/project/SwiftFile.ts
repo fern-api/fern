@@ -6,7 +6,7 @@ export declare namespace SwiftFile {
     interface Args {
         filename: string;
         directory: RelativeFilePath;
-        fileContents: swift.FileComponent[];
+        contents: swift.FileComponent[];
     }
 }
 
@@ -21,15 +21,15 @@ export class SwiftFile extends File {
     public static createWithFoundation(args: SwiftFile.Args) {
         return new SwiftFile({
             ...args,
-            fileContents: [swift.Statement.import("Foundation"), swift.LineBreak.single(), ...args.fileContents]
+            contents: [swift.Statement.import("Foundation"), swift.LineBreak.single(), ...args.contents]
         });
     }
 
-    private static getRawContents(fileContents: swift.FileComponent[]) {
-        return fileContents.map((component) => component.toString()).join("");
+    private static getRawContents(components: swift.FileComponent[]) {
+        return components.map((component) => component.toString()).join("");
     }
 
     private constructor(args: SwiftFile.Args) {
-        super(args.filename, args.directory, SwiftFile.getRawContents(args.fileContents));
+        super(args.filename, args.directory, SwiftFile.getRawContents(args.contents));
     }
 }
