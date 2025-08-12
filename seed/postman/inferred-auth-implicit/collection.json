@@ -36,6 +36,12 @@
             },
             "header": [
               {
+                "key": "X-Api-Key",
+                "description": null,
+                "type": "text",
+                "value": "\"X-Api-Key\""
+              },
+              {
                 "type": "text",
                 "key": "Content-Type",
                 "value": "application/json"
@@ -72,6 +78,12 @@
                   "variable": []
                 },
                 "header": [
+                  {
+                    "key": "X-Api-Key",
+                    "description": null,
+                    "type": "text",
+                    "value": "\"X-Api-Key\""
+                  },
                   {
                     "type": "text",
                     "key": "Content-Type",
@@ -115,6 +127,12 @@
             },
             "header": [
               {
+                "key": "X-Api-Key",
+                "description": null,
+                "type": "text",
+                "value": "\"X-Api-Key\""
+              },
+              {
                 "type": "text",
                 "key": "Content-Type",
                 "value": "application/json"
@@ -152,6 +170,12 @@
                   "variable": []
                 },
                 "header": [
+                  {
+                    "key": "X-Api-Key",
+                    "description": null,
+                    "type": "text",
+                    "value": "\"X-Api-Key\""
+                  },
                   {
                     "type": "text",
                     "key": "Content-Type",
