@@ -128,8 +128,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
     }
 
     private async getFeaturesConfig(): Promise<string> {
-        // try to find the features.yml file
-        // in local test mode, the features.yml is relative to the generator
+        // try to find the features.yml file using the well-known paths
         for (const each of FEATURES_CONFIG_PATHS) {
             try {
                 const rawContents = await readFile(each, "utf8");
@@ -140,7 +139,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
                 // ignore
             }
         }
-        // fallback to docker features config path (this is the original default)
+        // throw an error if we can't find the features.yml file
         throw new Error("Internal error; failed to read feature configuration");
     }
 }
