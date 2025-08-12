@@ -108,8 +108,14 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
     private TypeName getFieldType(ObjectProperty property) {
         TypeReference valueType = property.getValueType();
 
-        // Check if the field is optional<nullable<T>> (tri-state: present, absent, or null)
-        boolean isOptionalNullable = valueType.visit(new TypeReference.Visitor<Boolean>() {
+        // For JSON Merge Patch, we need to handle:
+        // 1. nullable<T> -> OptionalNullable<T> (can be absent, present, or null)
+        // 2. optional<nullable<T>> -> OptionalNullable<T> (can be absent, present, or null)
+        // 3. optional<T> -> Optional<T> (can be absent or present, but not null)
+        // 4. T -> T (required, must be present)
+
+        // Check if the field is nullable or optional<nullable<T>>
+        boolean needsOptionalNullable = valueType.visit(new TypeReference.Visitor<Boolean>() {
             @Override
             public Boolean visitContainer(ContainerType containerType) {
                 return containerType.visit(new ContainerType.Visitor<Boolean>() {
@@ -181,7 +187,7 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
 
                     @Override
                     public Boolean visitNullable(TypeReference typeReference) {
-                        return false; // Just nullable<T> without optional is not tri-state
+                        return true; // nullable<T> in merge-patch context needs OptionalNullable
                     }
 
                     @Override
@@ -232,9 +238,9 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
             }
         });
 
-        if (isOptionalNullable) {
-            // For optional<nullable<T>>, use OptionalNullable wrapper
-            TypeName innerType = extractFromOptionalNullable(valueType);
+        if (needsOptionalNullable) {
+            // For nullable<T> or optional<nullable<T>>, use OptionalNullable wrapper
+            TypeName innerType = extractFromNullable(valueType);
             return ParameterizedTypeName.get(OPTIONAL_NULLABLE, innerType);
         } else {
             // For optional<T> (not nullable) or required fields, use normal type mapping
@@ -243,22 +249,22 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
         }
     }
 
-    private TypeName extractFromOptionalNullable(TypeReference typeReference) {
-        // Extract the inner type T from optional<nullable<T>>
+    private TypeName extractFromNullable(TypeReference typeReference) {
+        // Extract the inner type T from nullable<T> or optional<nullable<T>>
         return typeReference.visit(new TypeReference.Visitor<TypeName>() {
             @Override
             public TypeName visitContainer(ContainerType containerType) {
                 return containerType.visit(new ContainerType.Visitor<TypeName>() {
                     @Override
                     public TypeName visitOptional(TypeReference inner) {
-                        // Now extract from the nullable<T>
+                        // Extract from optional<nullable<T>>
                         return inner.visit(new TypeReference.Visitor<TypeName>() {
                             @Override
                             public TypeName visitContainer(ContainerType innerContainer) {
                                 return innerContainer.visit(new ContainerType.Visitor<TypeName>() {
                                     @Override
                                     public TypeName visitNullable(TypeReference innerInner) {
-                                        // Return the actual type T
+                                        // Return the actual type T from optional<nullable<T>>
                                         return generatorContext
                                                 .getPoetTypeNameMapper()
                                                 .convertToTypeName(false, innerInner);
@@ -329,73 +335,7 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
 
                     @Override
                     public TypeName visitNullable(TypeReference inner) {
-                        return generatorContext.getPoetTypeNameMapper().convertToTypeName(false, inner);
-                    }
-
-                    @Override
-                    public TypeName visitList(TypeReference typeReference) {
-                        return generatorContext.getPoetTypeNameMapper().convertToTypeName(false, typeReference);
-                    }
-
-                    @Override
-                    public TypeName visitSet(TypeReference typeReference) {
-                        return generatorContext.getPoetTypeNameMapper().convertToTypeName(false, typeReference);
-                    }
-
-                    @Override
-                    public TypeName visitMap(com.fern.ir.model.types.MapType mapType) {
-                        return generatorContext
-                                .getPoetTypeNameMapper()
-                                .convertToTypeName(false, TypeReference.container(ContainerType.map(mapType)));
-                    }
-
-                    @Override
-                    public TypeName visitLiteral(com.fern.ir.model.types.Literal literal) {
-                        return ClassName.get(String.class);
-                    }
-
-                    @Override
-                    public TypeName _visitUnknown(Object unknown) {
-                        return ClassName.get(Object.class);
-                    }
-                });
-            }
-
-            @Override
-            public TypeName visitNamed(com.fern.ir.model.types.NamedType namedType) {
-                return generatorContext.getPoetTypeNameMapper().convertToTypeName(false, typeReference);
-            }
-
-            @Override
-            public TypeName visitPrimitive(com.fern.ir.model.types.PrimitiveType primitiveType) {
-                return generatorContext.getPoetTypeNameMapper().convertToTypeName(false, typeReference);
-            }
-
-            @Override
-            public TypeName visitUnknown() {
-                return ClassName.get(Object.class);
-            }
-
-            @Override
-            public TypeName _visitUnknown(Object unknown) {
-                return ClassName.get(Object.class);
-            }
-        });
-    }
-
-    private TypeName getInnerType(TypeReference typeReference) {
-        // Extract the inner type from Optional/nullable container
-        return typeReference.visit(new TypeReference.Visitor<TypeName>() {
-            @Override
-            public TypeName visitContainer(ContainerType containerType) {
-                return containerType.visit(new ContainerType.Visitor<TypeName>() {
-                    @Override
-                    public TypeName visitOptional(TypeReference inner) {
-                        return generatorContext.getPoetTypeNameMapper().convertToTypeName(false, inner);
-                    }
-
-                    @Override
-                    public TypeName visitNullable(TypeReference inner) {
+                        // Direct nullable<T> case - extract the inner type T
                         return generatorContext.getPoetTypeNameMapper().convertToTypeName(false, inner);
                     }
 

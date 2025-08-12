@@ -6,34 +6,36 @@ package resources.service.requests;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
+import core.OptionalNullable;
 import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
-import java.util.Optional;
 
 @JsonDeserialize(
     builder = PatchProxyRequest.Builder.class
 )
 public final class PatchProxyRequest {
-  private final Optional<String> application;
+  private final OptionalNullable<String> application;
 
-  private final Optional<Boolean> requireAuth;
+  private final OptionalNullable<Boolean> requireAuth;
 
-  private PatchProxyRequest(Optional<String> application, Optional<Boolean> requireAuth) {
+  private PatchProxyRequest(OptionalNullable<String> application,
+      OptionalNullable<Boolean> requireAuth) {
     this.application = application;
     this.requireAuth = requireAuth;
   }
 
   @JsonProperty("application")
-  public Optional<String> getApplication() {
+  public OptionalNullable<String> getApplication() {
     return application;
   }
 
   @JsonProperty("require_auth")
-  public Optional<Boolean> getRequireAuth() {
+  public OptionalNullable<Boolean> getRequireAuth() {
     return requireAuth;
   }
 
@@ -67,20 +69,22 @@ public final class PatchProxyRequest {
       ignoreUnknown = true
   )
   public static final class Builder {
-    private Optional<String> application;
+    private OptionalNullable<String> application = OptionalNullable.absent();
 
-    private Optional<Boolean> requireAuth;
+    private OptionalNullable<Boolean> requireAuth = OptionalNullable.absent();
 
     private Builder() {
     }
 
-    public Builder application(Optional<String> value) {
-      this.application = value;
+    @JsonSetter("application")
+    public Builder application(String value) {
+      this.application = OptionalNullable.ofNullable(value);
       return this;
     }
 
-    public Builder requireAuth(Optional<Boolean> value) {
-      this.requireAuth = value;
+    @JsonSetter("require_auth")
+    public Builder requireAuth(Boolean value) {
+      this.requireAuth = OptionalNullable.ofNullable(value);
       return this;
     }
 

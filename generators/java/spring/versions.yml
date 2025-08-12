@@ -3,9 +3,10 @@
     - summary: |
         Improved JSON Merge Patch support with better type distinction and naming. 
         - Renamed `TriStateOptional<T>` to `OptionalNullable<T>` for better clarity
-        - Fixed type mapping to properly distinguish between:
-          - `optional<T>` → Uses standard `Optional<T>` (can be present or absent, but never null)
-          - `optional<nullable<T>>` → Uses `OptionalNullable<T>` (true tri-state: present, absent, or null)
+        - Fixed type mapping for merge-patch requests to properly handle:
+          - `nullable<T>` → Uses `OptionalNullable<T>` (tri-state: absent, present, or null)
+          - `optional<nullable<T>>` → Uses `OptionalNullable<T>` (tri-state: absent, present, or null)
+          - `optional<T>` → Uses standard `Optional<T>` (can be absent or present, but never null)
         - This provides more accurate type safety and clearer API semantics for PATCH operations
       type: fix
   createdAt: '2025-08-12'
