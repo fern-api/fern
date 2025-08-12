@@ -66,7 +66,17 @@
             ]
           },
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "key": "X-Api-Key",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
           "request": {
             "type": {
               "type": "json",
@@ -146,7 +156,9 @@
               "path": "/token",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {},
+              "headers": {
+                "X-Api-Key": "X-Api-Key"
+              },
               "requestBody": {
                 "client_id": "client_id",
                 "client_secret": "client_secret",
@@ -200,7 +212,17 @@
             ]
           },
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "key": "X-Api-Key",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
           "request": {
             "type": {
               "type": "json",
@@ -289,7 +311,9 @@
               "path": "/token/refresh",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {},
+              "headers": {
+                "X-Api-Key": "X-Api-Key"
+              },
               "requestBody": {
                 "client_id": "client_id",
                 "client_secret": "client_secret",

@@ -13,6 +13,7 @@ import {
     StatementStructures,
     StructureKind,
     ts,
+    VariableDeclarationKind,
     WriterFunction
 } from "ts-morph";
 
@@ -31,11 +32,12 @@ const AUTH_TOKEN_PARAMS_OPTION_NAME = "authTokenParameters";
 const AUTH_TOKEN_PARAMS_FIELD_NAME = "authTokenParameters";
 const AUTH_TOKEN_TYPE_NAME = "AuthTokenParameters";
 const OPTIONS_TYPE_NAME = "Options";
+const BUFFER_IN_MINUTES_VAR_NAME = "BUFFER_IN_MINUTES";
+const GET_EXPIRES_AT_FN_NAME = "getExpiresAt";
 export class InferredAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly CLASS_NAME = CLASS_NAME;
     private readonly authScheme: FernIr.InferredAuthScheme;
     private readonly packageId: PackageId;
-    private readonly service: FernIr.HttpService;
     private readonly endpoint: FernIr.HttpEndpoint;
 
     constructor(init: InferredAuthProviderGenerator.Init) {
@@ -51,8 +53,6 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         if (!service) {
             throw new Error(`Service with ID ${init.authScheme.tokenEndpoint.endpoint.serviceId} not found.`);
         }
-        this.service = service;
-
         const endpoint = service.endpoints.find(
             (endpoint) => endpoint.id === init.authScheme.tokenEndpoint.endpoint.endpointId
         );
@@ -105,6 +105,19 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         context: SdkContext;
         requestWrapper: GeneratedRequestWrapper;
     }): void {
+        if (this.authScheme.tokenEndpoint.expiryProperty) {
+            context.sourceFile.addVariableStatement({
+                kind: StructureKind.VariableStatement,
+                declarationKind: VariableDeclarationKind.Const,
+                declarations: [
+                    {
+                        name: BUFFER_IN_MINUTES_VAR_NAME,
+                        kind: StructureKind.VariableDeclaration,
+                        initializer: "2"
+                    }
+                ]
+            });
+        }
         context.sourceFile.addClass({
             name: CLASS_NAME,
             isExported: true,
@@ -196,11 +209,18 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                     ),
                     statements: this.authScheme.tokenEndpoint.expiryProperty
                         ? `
-        const authRequest = await this.getCachedAuthRequest();
-        return authRequest;
+        try {
+            const authRequest = await this.getCachedAuthRequest();
+            return authRequest;
+        } catch(e) {
+            this.authRequestPromise = undefined;${
+                this.authScheme.tokenEndpoint.expiryProperty ? `\nthis.expiresAt = undefined;` : ``
+            }
+            throw e;
+        }
         `
                         : `
-        return this.getAuthRequestFromTokenEndpoint();
+        return await this.getAuthRequestFromTokenEndpoint();
         `
                 },
                 this.generateGetAuthRequestFromTokenEndpointMethod({ context, requestWrapper })
@@ -220,8 +240,27 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                 }
             ]
         });
-    }
 
+        if (this.authScheme.tokenEndpoint.expiryProperty) {
+            const expiresInSecondsParamName = "expiresInSeconds";
+            context.sourceFile.addFunction({
+                kind: StructureKind.Function,
+                name: GET_EXPIRES_AT_FN_NAME,
+                parameters: [
+                    {
+                        name: expiresInSecondsParamName,
+                        type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword))
+                    }
+                ],
+                returnType: getTextOfTsNode(
+                    ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Date"), [])
+                ),
+                statements: [
+                    `return new Date(new Date().getTime() + ${expiresInSecondsParamName} * 1000 - ${BUFFER_IN_MINUTES_VAR_NAME} * 60 * 1000)`
+                ]
+            });
+        }
+    }
     private generateGetAuthRequestFromTokenEndpointMethod({
         context,
         requestWrapper
@@ -264,28 +303,17 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                                       ts.factory.createIdentifier("expiresAt")
                                   ),
                                   ts.factory.createToken(ts.SyntaxKind.EqualsToken),
-                                  ts.factory.createNewExpression(ts.factory.createIdentifier("Date"), undefined, [
-                                      ts.factory.createBinaryExpression(
-                                          ts.factory.createCallExpression(
-                                              ts.factory.createPropertyAccessExpression(
-                                                  ts.factory.createIdentifier("Date"),
-                                                  ts.factory.createIdentifier("now")
-                                              ),
-                                              undefined,
-                                              []
-                                          ),
-                                          ts.factory.createToken(ts.SyntaxKind.PlusToken),
-                                          ts.factory.createBinaryExpression(
-                                              getDeepProperty({
-                                                  variable: "response",
-                                                  property: this.authScheme.tokenEndpoint.expiryProperty,
-                                                  context
-                                              }),
-                                              ts.factory.createToken(ts.SyntaxKind.AsteriskToken),
-                                              ts.factory.createNumericLiteral("1000")
-                                          )
-                                      )
-                                  ])
+                                  ts.factory.createCallExpression(
+                                      ts.factory.createIdentifier(GET_EXPIRES_AT_FN_NAME),
+                                      undefined,
+                                      [
+                                          getDeepProperty({
+                                              variable: "response",
+                                              property: this.authScheme.tokenEndpoint.expiryProperty,
+                                              context
+                                          })
+                                      ]
+                                  )
                               )
                           )
                       )

@@ -1,11 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
 - changelogEntry:
+    - summary: Don't throw an error when the "expires in" property can't be found for bearer auth inference.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-08-12"
+  version: 0.66.1
+
+- changelogEntry:
     - summary: Add support for generating inferred auth in IR and expand bearer auth in Fern Definition for inference.
       type: feat
   irVersion: 59
   createdAt: "2025-08-08"
-  version: 0.66.00
+  version: 0.66.0
 
 - changelogEntry:
     - summary: |

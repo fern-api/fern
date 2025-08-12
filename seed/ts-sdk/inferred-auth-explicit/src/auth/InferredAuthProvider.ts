@@ -19,6 +19,8 @@ export namespace InferredAuthProvider {
     }
 }
 
+const BUFFER_IN_MINUTES = 2;
+
 export class InferredAuthProvider implements core.AuthProvider {
     private readonly client: SeedInferredAuthExplicitClient;
     private readonly authTokenParameters: InferredAuthProvider.AuthTokenParameters;
@@ -44,8 +46,14 @@ export class InferredAuthProvider implements core.AuthProvider {
     }
 
     public async getAuthRequest(): Promise<core.AuthRequest> {
-        const authRequest = await this.getCachedAuthRequest();
-        return authRequest;
+        try {
+            const authRequest = await this.getCachedAuthRequest();
+            return authRequest;
+        } catch (e) {
+            this.authRequestPromise = undefined;
+            this.expiresAt = undefined;
+            throw e;
+        }
     }
 
     private async getAuthRequestFromTokenEndpoint(): Promise<core.AuthRequest> {
@@ -55,11 +63,15 @@ export class InferredAuthProvider implements core.AuthProvider {
             client_secret: await core.Supplier.get(this.authTokenParameters.clientSecret),
             scope: await core.Supplier.get(this.authTokenParameters.scope),
         });
-        this.expiresAt = new Date(Date.now() + response.expires_in * 1000);
+        this.expiresAt = getExpiresAt(response.expires_in);
         return {
             headers: {
                 Authorization: `Bearer ${response.access_token}`,
             },
         };
     }
+}
+
+function getExpiresAt(expiresInSeconds: number): Date {
+    return new Date(new Date().getTime() + expiresInSeconds * 1000 - BUFFER_IN_MINUTES * 60 * 1000);
 }
