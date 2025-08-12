@@ -32,7 +32,11 @@ export class SingleUrlEnvironmentGenerator extends FileGenerator<RubyFile, SdkCu
                 })
             );
         }
-        class_.addStatement(ruby.codeblock((writer) => { writer.newLine() }));
+        class_.addStatement(
+            ruby.codeblock((writer) => {
+                writer.newLine();
+            })
+        );
 
         const rootModule = this.context.getRootModule();
         rootModule.addStatement(class_);
