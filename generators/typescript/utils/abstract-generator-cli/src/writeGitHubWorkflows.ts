@@ -10,13 +10,15 @@ export async function writeGitHubWorkflows({
     githubOutputMode,
     isPackagePrivate,
     pathToProject,
-    publishToJsr
+    publishToJsr,
+    packageManager
 }: {
     config: FernGeneratorExec.GeneratorConfig;
     githubOutputMode: FernGeneratorExec.GithubOutputMode;
     isPackagePrivate: boolean;
     pathToProject: AbsoluteFilePath;
     publishToJsr: boolean;
+    packageManager: "pnpm" | "yarn";
 }): Promise<void> {
     if (githubOutputMode.publishInfo != null && githubOutputMode.publishInfo.type !== "npm") {
         throw new Error(
@@ -27,7 +29,8 @@ export async function writeGitHubWorkflows({
         publishInfo: githubOutputMode.publishInfo,
         isPackagePrivate,
         config,
-        publishToJsr
+        publishToJsr,
+        packageManager
     });
     const githubWorkflowsDir = path.join(pathToProject, ".github", "workflows");
     await mkdir(githubWorkflowsDir, { recursive: true });
@@ -38,13 +41,16 @@ function constructWorkflowYaml({
     config,
     publishInfo,
     isPackagePrivate,
-    publishToJsr
+    publishToJsr,
+    packageManager
 }: {
     config: FernGeneratorExec.GeneratorConfig;
     publishInfo: FernGeneratorExec.NpmGithubPublishInfo | undefined;
     isPackagePrivate: boolean;
     publishToJsr: boolean;
+    packageManager: "pnpm" | "yarn";
 }) {
+    const usePnpm = packageManager === "pnpm";
     let workflowYaml = `name: ci
 
 on: [push]
@@ -58,11 +64,19 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v3${
+            usePnpm
+                ? `
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10`
+                : ""
+        }
 
       - name: Compile
-        run: yarn && yarn build
-${getTestJob({ config })}`;
+        run: ${packageManager} && ${packageManager} build
+${getTestJob({ config, packageManager })}`;
     // First condition is for resilience in the event that Fiddle isn't upgraded to include the new flag
     if (
         (publishInfo != null && publishInfo?.shouldGeneratePublishWorkflow == null) ||
@@ -78,11 +92,18 @@ ${getTestJob({ config })}`;
       - name: Checkout repo
         uses: actions/checkout@v4
       - name: Set up node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v3${
+            usePnpm
+                ? `
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10`
+                : ""
+        }
       - name: Install dependencies
-        run: yarn install
+        run: ${packageManager} install
       - name: Build
-        run: yarn build
+        run: ${packageManager} build
 
       - name: Publish to npm
         run: |
@@ -113,13 +134,21 @@ ${getTestJob({ config })}`;
         uses: actions/checkout@v4
       
       - name: Set up node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v3${
+            usePnpm
+                ? `
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10`
+                : ""
+        }
       
       - name: Install dependencies
-        run: yarn install
+        run: ${packageManager} install
       
       - name: Build
-        run: yarn build
+        run: ${packageManager} build
 
       - name: Publish to JSR
         run: npx jsr publish`;
@@ -128,7 +157,14 @@ ${getTestJob({ config })}`;
     return workflowYaml;
 }
 
-function getTestJob({ config }: { config: FernGeneratorExec.GeneratorConfig }): string {
+function getTestJob({
+    config,
+    packageManager
+}: {
+    config: FernGeneratorExec.GeneratorConfig;
+    packageManager: "pnpm" | "yarn";
+}): string {
+    const usePnpm = packageManager === "pnpm";
     //     if (config.writeUnitTests) {
     //         return `
     //   test:
@@ -139,13 +175,20 @@ function getTestJob({ config }: { config: FernGeneratorExec.GeneratorConfig }): 
     //         uses: actions/checkout@v4
 
     //       - name: Set up node
-    //         uses: actions/setup-node@v3
+    //         uses: actions/setup-node@v3${
+    //       usePnpm
+    //           ? `
+    // - uses: pnpm/action-setup@v4
+    //   with:
+    //     version: 10`
+    //           : ""
+    //   }
 
     //       - name: Test
     //         run: |
-    //           yarn
-    //           yarn fern test --command='jest --env=node'
-    //           yarn fern test --command='jest --env=jsdom'
+    //           ${packageManager}
+    //           ${packageManager} fern test --command='jest --env=node'
+    //           ${packageManager} fern test --command='jest --env=jsdom'
     // `;
     //     } else {
     return `
@@ -157,10 +200,18 @@ function getTestJob({ config }: { config: FernGeneratorExec.GeneratorConfig }): 
         uses: actions/checkout@v4
 
       - name: Set up node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v3${
+            usePnpm
+                ? `
+                
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10`
+                : ""
+        }
 
       - name: Compile
-        run: yarn && yarn test    
+        run: ${packageManager} && ${packageManager} test    
 `;
     // }
 }

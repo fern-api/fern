@@ -73,7 +73,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             fetchSupport: parsed?.fetchSupport ?? "native",
             packagePath: parsed?.packagePath,
             omitFernHeaders: parsed?.omitFernHeaders ?? false,
-            useDefaultRequestParameterValues: parsed?.useDefaultRequestParameterValues ?? false
+            useDefaultRequestParameterValues: parsed?.useDefaultRequestParameterValues ?? false,
+            packageManager: parsed?.packageManager ?? "yarn"
         };
     }
 
@@ -163,7 +164,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 fetchSupport: customConfig.fetchSupport ?? "native",
                 packagePath: customConfig.packagePath,
                 omitFernHeaders: customConfig.omitFernHeaders ?? false,
-                useDefaultRequestParameterValues: customConfig.useDefaultRequestParameterValues ?? false
+                useDefaultRequestParameterValues: customConfig.useDefaultRequestParameterValues ?? false,
+                packageManager: customConfig.packageManager
             }
         });
         const typescriptProject = await sdkGenerator.generate();
@@ -250,5 +252,9 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             default:
                 return hasGitHubOutputMode;
         }
+    }
+
+    protected getPackageManager(customConfig: SdkCustomConfig): "pnpm" | "yarn" {
+        return customConfig.packageManager;
     }
 }

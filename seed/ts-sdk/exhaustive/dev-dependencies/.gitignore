@@ -11,3 +11,6 @@ dist/
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+# pnpm
+.pnpm-store/
+.pnpm-debug.log

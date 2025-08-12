@@ -68,6 +68,9 @@ fixtures:
       outputFolder: with-partner-audience
   exhaustive:
     - customConfig:
+        packageManager: pnpm
+      outputFolder: use-pnpm
+    - customConfig:
         omitFernHeaders: true
       outputFolder: omit-fern-headers
     - customConfig:

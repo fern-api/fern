@@ -33,7 +33,8 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
             useBigInt: parsed?.useBigInt ?? false,
             noOptionalProperties: parsed?.noOptionalProperties ?? false,
             enableInlineTypes,
-            packagePath: parsed?.packagePath ?? undefined
+            packagePath: parsed?.packagePath ?? undefined,
+            packageManager: parsed?.packageManager ?? "yarn"
         };
     }
 
@@ -73,7 +74,8 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
                 requestValidationStatusCode: customConfig.requestValidationStatusCode,
                 useBigInt: customConfig.useBigInt,
                 noOptionalProperties: customConfig.noOptionalProperties,
-                packagePath: customConfig.packagePath
+                packagePath: customConfig.packagePath,
+                packageManager: customConfig.packageManager
             }
         });
 
@@ -101,5 +103,9 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
 
     protected publishToJsr(customConfig: ExpressCustomConfig): boolean {
         return false;
+    }
+
+    protected getPackageManager(customConfig: ExpressCustomConfig): "pnpm" | "yarn" {
+        return customConfig.packageManager;
     }
 }

@@ -3,9 +3,15 @@ FROM node:22.12-alpine3.20
 RUN apk --no-cache add git zip
 RUN git config --global user.name "fern" && git config --global user.email "hey@buildwithfern.com"
 
-RUN yarn init --yes
+ENV YARN_CACHE_FOLDER=/.yarn
+ENV PNPM_HOME=/.pnpm
+ENV PATH=$PNPM_HOME:$PATH
 
-RUN yarn add \
+RUN npm install -g pnpm
+
+RUN pnpm init
+
+RUN pnpm add -D \
   jest@^29.7.0 \
   @types/jest@^29.5.14 \
   node-fetch@^2.7.0 \

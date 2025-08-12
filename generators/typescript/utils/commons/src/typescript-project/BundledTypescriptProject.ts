@@ -28,13 +28,16 @@ export class BundledTypescriptProject extends TypescriptProject {
         if (this.outputJsr) {
             await this.generateJsrJson();
         }
+        if(this.packageManager === "pnpm"){
+            await this.generatePnpmWorkspace();
+        }
     }
 
-    protected getYarnFormatCommand(): string[] {
+    protected getFormatCommand(): string[] {
         return [BundledTypescriptProject.FORMAT_SCRIPT_NAME];
     }
 
-    protected getYarnBuildCommand(): string[] {
+    protected getBuildCommand(): string[] {
         return [BundledTypescriptProject.BUILD_SCRIPT_NAME];
     }
 
@@ -118,8 +121,18 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
                 "!.yarn/plugins",
                 "!.yarn/releases",
                 "!.yarn/sdks",
-                "!.yarn/versions"
+                "!.yarn/versions",
+                "# pnpm",
+                ".pnpm-store/",
+                ".pnpm-debug.log"
             ].join("\n")
+        );
+    }
+
+    private async generatePnpmWorkspace(): Promise<void> {
+        await this.writeFileToVolume(
+            RelativeFilePath.of(TypescriptProject.PNPM_WORKSPACE_FILENAME),
+            "packages: ['.']"
         );
     }
 
@@ -244,8 +257,8 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
                 [BundledTypescriptProject.COMPILE_SCRIPT_NAME]: "tsc",
                 [BundledTypescriptProject.BUNDLE_SCRIPT_NAME]: `node ${BundledTypescriptProject.BUILD_SCRIPT_FILENAME}`,
                 [BundledTypescriptProject.BUILD_SCRIPT_NAME]: [
-                    `yarn ${BundledTypescriptProject.COMPILE_SCRIPT_NAME}`,
-                    `yarn ${BundledTypescriptProject.BUNDLE_SCRIPT_NAME}`
+                    `${this.packageManager} ${BundledTypescriptProject.COMPILE_SCRIPT_NAME}`,
+                    `${this.packageManager} ${BundledTypescriptProject.BUNDLE_SCRIPT_NAME}`
                 ].join(" && ")
             }
         };

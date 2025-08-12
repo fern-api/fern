@@ -7,9 +7,9 @@ project_name=heavy_deps_project
 mkdir $project_name
 cd $project_name
 
-yarn init --yes
+pnpm init
 
-yarn add \
+pnpm add \
   @types/express@4.17.16 \
   @types/node@17.0.33 \
   @types/url-join@4.0.1 \
