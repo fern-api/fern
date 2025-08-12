@@ -14,7 +14,6 @@ $client->service->patchComplex(
     'id',
     new PatchComplexRequest([
         'name' => 'name',
-        'email' => 'email',
         'age' => 1,
         'active' => true,
         'metadata' => [
@@ -25,6 +24,15 @@ $client->service->patchComplex(
         'tags' => [
             'tags',
             'tags',
+        ],
+        'email' => 'email',
+        'nickname' => 'nickname',
+        'bio' => 'bio',
+        'profileImageUrl' => 'profileImageUrl',
+        'settings' => [
+            'settings' => [
+                'key' => "value",
+            ],
         ],
     ]),
 );
