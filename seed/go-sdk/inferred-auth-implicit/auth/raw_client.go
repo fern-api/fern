@@ -46,6 +46,7 @@ func (r *RawClient) GetTokenWithClientCredentials(
 		r.header.Clone(),
 		options.ToHeader(),
 	)
+	headers.Add("X-Api-Key", request.XApiKey)
 	var response *fern.TokenResponse
 	raw, err := r.caller.Call(
 		ctx,
@@ -87,6 +88,7 @@ func (r *RawClient) RefreshToken(
 		r.header.Clone(),
 		options.ToHeader(),
 	)
+	headers.Add("X-Api-Key", request.XApiKey)
 	var response *fern.TokenResponse
 	raw, err := r.caller.Call(
 		ctx,

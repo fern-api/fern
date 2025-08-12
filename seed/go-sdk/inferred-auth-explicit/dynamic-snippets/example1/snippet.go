@@ -16,6 +16,7 @@ func do() {
     client.Auth.RefreshToken(
         context.TODO(),
         &fern.RefreshTokenRequest{
+            XApiKey: "X-Api-Key",
             ClientId: "client_id",
             ClientSecret: "client_secret",
             RefreshToken: "refresh_token",
