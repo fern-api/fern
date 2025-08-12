@@ -66,6 +66,14 @@ export class Problem {
             core.APIResponse<SeedTrace.v2.LightweightProblemInfoV2[], SeedTrace.v2.problem.getLightweightProblems.Error>
         >
     > {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Random-Header": requestOptions?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -74,14 +82,7 @@ export class Problem {
                 "/problems-v2/lightweight-problem-info",
             ),
             method: "GET",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({
-                    Authorization: await this._getAuthorizationHeader(),
-                    "X-Random-Header": requestOptions?.xRandomHeader,
-                }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             queryParameters: requestOptions?.queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
@@ -136,6 +137,14 @@ export class Problem {
     ): Promise<
         core.WithRawResponse<core.APIResponse<SeedTrace.v2.ProblemInfoV2[], SeedTrace.v2.problem.getProblems.Error>>
     > {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Random-Header": requestOptions?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -144,14 +153,7 @@ export class Problem {
                 "/problems-v2/problem-info",
             ),
             method: "GET",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({
-                    Authorization: await this._getAuthorizationHeader(),
-                    "X-Random-Header": requestOptions?.xRandomHeader,
-                }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             queryParameters: requestOptions?.queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
@@ -209,6 +211,14 @@ export class Problem {
     ): Promise<
         core.WithRawResponse<core.APIResponse<SeedTrace.v2.ProblemInfoV2, SeedTrace.v2.problem.getLatestProblem.Error>>
     > {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Random-Header": requestOptions?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -217,14 +227,7 @@ export class Problem {
                 `/problems-v2/problem-info/${encodeURIComponent(serializers.ProblemId.jsonOrThrow(problemId, { omitUndefined: true }))}`,
             ),
             method: "GET",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({
-                    Authorization: await this._getAuthorizationHeader(),
-                    "X-Random-Header": requestOptions?.xRandomHeader,
-                }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             queryParameters: requestOptions?.queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
@@ -287,6 +290,14 @@ export class Problem {
     ): Promise<
         core.WithRawResponse<core.APIResponse<SeedTrace.v2.ProblemInfoV2, SeedTrace.v2.problem.getProblemVersion.Error>>
     > {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Random-Header": requestOptions?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -295,14 +306,7 @@ export class Problem {
                 `/problems-v2/problem-info/${encodeURIComponent(serializers.ProblemId.jsonOrThrow(problemId, { omitUndefined: true }))}/version/${encodeURIComponent(problemVersion)}`,
             ),
             method: "GET",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({
-                    Authorization: await this._getAuthorizationHeader(),
-                    "X-Random-Header": requestOptions?.xRandomHeader,
-                }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             queryParameters: requestOptions?.queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,

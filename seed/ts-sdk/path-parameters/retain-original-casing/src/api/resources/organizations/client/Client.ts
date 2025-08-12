@@ -56,6 +56,7 @@ export class Organizations {
         organization_id: string,
         requestOptions?: Organizations.RequestOptions,
     ): Promise<core.WithRawResponse<SeedPathParameters.Organization>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -63,7 +64,7 @@ export class Organizations {
                 `/${encodeURIComponent(this._options.tenant_id)}/organizations/${encodeURIComponent(organization_id)}/`,
             ),
             method: "GET",
-            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
+            headers: _headers,
             queryParameters: requestOptions?.queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
@@ -122,6 +123,7 @@ export class Organizations {
         requestOptions?: Organizations.RequestOptions,
     ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
         const { organization_id: organizationId, user_id: userId } = request;
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -129,7 +131,7 @@ export class Organizations {
                 `/${encodeURIComponent(this._options.tenant_id)}/organizations/${encodeURIComponent(organizationId)}/users/${encodeURIComponent(userId)}`,
             ),
             method: "GET",
-            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
+            headers: _headers,
             queryParameters: requestOptions?.queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
@@ -197,6 +199,7 @@ export class Organizations {
             _queryParams["limit"] = limit.toString();
         }
 
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -204,7 +207,7 @@ export class Organizations {
                 `/${encodeURIComponent(this._options.tenant_id)}/organizations/${encodeURIComponent(organization_id)}/search`,
             ),
             method: "GET",
-            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
+            headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,

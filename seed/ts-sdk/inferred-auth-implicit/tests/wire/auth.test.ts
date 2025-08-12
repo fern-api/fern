@@ -8,7 +8,6 @@ import { SeedInferredAuthImplicitClient } from "../../src/Client";
 describe("Auth", () => {
     test("getTokenWithClientCredentials", async () => {
         const server = mockServerPool.createServer();
-
         const client = new SeedInferredAuthImplicitClient({
             xApiKey: "X-Api-Key",
             clientId: "client_id",
@@ -49,7 +48,6 @@ describe("Auth", () => {
 
     test("refreshToken", async () => {
         const server = mockServerPool.createServer();
-
         const client = new SeedInferredAuthImplicitClient({
             xApiKey: "X-Api-Key",
             clientId: "client_id",

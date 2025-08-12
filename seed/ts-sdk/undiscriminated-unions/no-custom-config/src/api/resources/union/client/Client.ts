@@ -55,12 +55,13 @@ export class Union {
         request: SeedUndiscriminatedUnions.MyUnion,
         requestOptions?: Union.RequestOptions,
     ): Promise<core.WithRawResponse<SeedUndiscriminatedUnions.MyUnion>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
                 (await core.Supplier.get(this._options.environment)),
             method: "POST",
-            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
@@ -113,6 +114,7 @@ export class Union {
     private async __getMetadata(
         requestOptions?: Union.RequestOptions,
     ): Promise<core.WithRawResponse<SeedUndiscriminatedUnions.Metadata>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -120,7 +122,7 @@ export class Union {
                 "/metadata",
             ),
             method: "GET",
-            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
+            headers: _headers,
             queryParameters: requestOptions?.queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
@@ -177,6 +179,7 @@ export class Union {
         request: SeedUndiscriminatedUnions.MetadataUnion,
         requestOptions?: Union.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -184,7 +187,7 @@ export class Union {
                 "/metadata",
             ),
             method: "PUT",
-            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
@@ -246,6 +249,7 @@ export class Union {
         request: SeedUndiscriminatedUnions.Request,
         requestOptions?: Union.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -253,7 +257,7 @@ export class Union {
                 "/call",
             ),
             method: "POST",
-            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
@@ -309,6 +313,7 @@ export class Union {
         request: SeedUndiscriminatedUnions.UnionWithDuplicateTypes,
         requestOptions?: Union.RequestOptions,
     ): Promise<core.WithRawResponse<SeedUndiscriminatedUnions.UnionWithDuplicateTypes>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -316,7 +321,7 @@ export class Union {
                 "/duplicate",
             ),
             method: "POST",
-            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
@@ -377,6 +382,7 @@ export class Union {
         request: SeedUndiscriminatedUnions.NestedUnionRoot,
         requestOptions?: Union.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -384,7 +390,7 @@ export class Union {
                 "/nested",
             ),
             method: "POST",
-            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",

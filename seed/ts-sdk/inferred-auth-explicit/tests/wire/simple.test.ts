@@ -10,6 +10,7 @@ describe("Simple", () => {
     test("getSomething", async () => {
         const server = mockServerPool.createServer();
         mockAuth(server);
+
         const client = new SeedInferredAuthExplicitClient({
             xApiKey: "X-Api-Key",
             clientId: "client_id",

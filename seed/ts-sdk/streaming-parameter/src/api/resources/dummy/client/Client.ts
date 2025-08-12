@@ -48,6 +48,7 @@ export class Dummy {
         request: SeedStreaming.GenerateRequest,
         requestOptions?: Dummy.RequestOptions,
     ): Promise<core.WithRawResponse<core.Stream<SeedStreaming.StreamResponse>>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher<ReadableStream>({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -55,7 +56,7 @@ export class Dummy {
                 "generate",
             ),
             method: "POST",
-            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
+            headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
