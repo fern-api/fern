@@ -340,13 +340,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         if (mergedIr === undefined) {
             throw new Error("Failed to generate intermediate representation");
         }
-        return {
-            ...mergedIr,
-            dynamic: convertIrToDynamicSnippetsIr({
-                ir: mergedIr,
-                disableExamples: true
-            })
-        };
+        return mergedIr;
     }
 
     public async toFernWorkspace(
