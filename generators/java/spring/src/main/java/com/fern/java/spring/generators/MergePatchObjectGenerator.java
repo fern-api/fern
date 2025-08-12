@@ -42,12 +42,12 @@ import java.util.List;
 import javax.lang.model.element.Modifier;
 
 /**
- * Generates object classes for JSON Merge Patch request bodies. Uses TriStateOptional wrapper instead of Optional for
- * nullable fields.
+ * Generates object classes for JSON Merge Patch request bodies. Uses OptionalNullable wrapper for optional<nullable<T>>
+ * types and Optional for optional<T> types.
  */
 public final class MergePatchObjectGenerator extends AbstractFileGenerator {
 
-    private static final ClassName TRI_STATE_OPTIONAL = ClassName.get("core", "TriStateOptional");
+    private static final ClassName OPTIONAL_NULLABLE = ClassName.get("core", "OptionalNullable");
     private final ObjectTypeDeclaration objectTypeDeclaration;
 
     public MergePatchObjectGenerator(
@@ -108,21 +108,82 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
     private TypeName getFieldType(ObjectProperty property) {
         TypeReference valueType = property.getValueType();
 
-        // Check if the field is nullable
-        boolean isNullable = valueType.visit(new TypeReference.Visitor<Boolean>() {
-            @Override
-            public Boolean visitNamed(com.fern.ir.model.types.NamedType namedType) {
-                return false;
-            }
-
-            @Override
-            public Boolean visitPrimitive(com.fern.ir.model.types.PrimitiveType primitiveType) {
-                return false;
-            }
-
+        // Check if the field is optional<nullable<T>> (tri-state: present, absent, or null)
+        boolean isOptionalNullable = valueType.visit(new TypeReference.Visitor<Boolean>() {
             @Override
             public Boolean visitContainer(ContainerType containerType) {
                 return containerType.visit(new ContainerType.Visitor<Boolean>() {
+                    @Override
+                    public Boolean visitOptional(TypeReference inner) {
+                        // Check if the inner type is nullable
+                        return inner.visit(new TypeReference.Visitor<Boolean>() {
+                            @Override
+                            public Boolean visitContainer(ContainerType innerContainer) {
+                                return innerContainer.visit(new ContainerType.Visitor<Boolean>() {
+                                    @Override
+                                    public Boolean visitNullable(TypeReference innerInner) {
+                                        return true; // optional<nullable<T>>
+                                    }
+
+                                    @Override
+                                    public Boolean visitList(TypeReference typeReference) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public Boolean visitSet(TypeReference typeReference) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public Boolean visitMap(com.fern.ir.model.types.MapType mapType) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public Boolean visitOptional(TypeReference typeReference) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public Boolean visitLiteral(com.fern.ir.model.types.Literal literal) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public Boolean _visitUnknown(Object unknown) {
+                                        return false;
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public Boolean visitNamed(com.fern.ir.model.types.NamedType namedType) {
+                                return false;
+                            }
+
+                            @Override
+                            public Boolean visitPrimitive(com.fern.ir.model.types.PrimitiveType primitiveType) {
+                                return false;
+                            }
+
+                            @Override
+                            public Boolean visitUnknown() {
+                                return false;
+                            }
+
+                            @Override
+                            public Boolean _visitUnknown(Object unknown) {
+                                return false;
+                            }
+                        });
+                    }
+
+                    @Override
+                    public Boolean visitNullable(TypeReference typeReference) {
+                        return false; // Just nullable<T> without optional is not tri-state
+                    }
+
                     @Override
                     public Boolean visitList(TypeReference typeReference) {
                         return false;
@@ -139,16 +200,6 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
                     }
 
                     @Override
-                    public Boolean visitOptional(TypeReference typeReference) {
-                        return true;
-                    }
-
-                    @Override
-                    public Boolean visitNullable(TypeReference typeReference) {
-                        return true;
-                    }
-
-                    @Override
                     public Boolean visitLiteral(com.fern.ir.model.types.Literal literal) {
                         return false;
                     }
@@ -158,6 +209,16 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
                         return false;
                     }
                 });
+            }
+
+            @Override
+            public Boolean visitNamed(com.fern.ir.model.types.NamedType namedType) {
+                return false;
+            }
+
+            @Override
+            public Boolean visitPrimitive(com.fern.ir.model.types.PrimitiveType primitiveType) {
+                return false;
             }
 
             @Override
@@ -171,14 +232,155 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
             }
         });
 
-        if (isNullable) {
-            // For nullable fields, use TriStateOptional wrapper
-            TypeName innerType = getInnerType(valueType);
-            return ParameterizedTypeName.get(TRI_STATE_OPTIONAL, innerType);
+        if (isOptionalNullable) {
+            // For optional<nullable<T>>, use OptionalNullable wrapper
+            TypeName innerType = extractFromOptionalNullable(valueType);
+            return ParameterizedTypeName.get(OPTIONAL_NULLABLE, innerType);
         } else {
-            // For required fields, use the type directly
+            // For optional<T> (not nullable) or required fields, use normal type mapping
+            // The PoetTypeNameMapper will handle Optional<T> for optional fields
             return generatorContext.getPoetTypeNameMapper().convertToTypeName(false, valueType);
         }
+    }
+
+    private TypeName extractFromOptionalNullable(TypeReference typeReference) {
+        // Extract the inner type T from optional<nullable<T>>
+        return typeReference.visit(new TypeReference.Visitor<TypeName>() {
+            @Override
+            public TypeName visitContainer(ContainerType containerType) {
+                return containerType.visit(new ContainerType.Visitor<TypeName>() {
+                    @Override
+                    public TypeName visitOptional(TypeReference inner) {
+                        // Now extract from the nullable<T>
+                        return inner.visit(new TypeReference.Visitor<TypeName>() {
+                            @Override
+                            public TypeName visitContainer(ContainerType innerContainer) {
+                                return innerContainer.visit(new ContainerType.Visitor<TypeName>() {
+                                    @Override
+                                    public TypeName visitNullable(TypeReference innerInner) {
+                                        // Return the actual type T
+                                        return generatorContext
+                                                .getPoetTypeNameMapper()
+                                                .convertToTypeName(false, innerInner);
+                                    }
+
+                                    @Override
+                                    public TypeName visitList(TypeReference typeReference) {
+                                        return generatorContext
+                                                .getPoetTypeNameMapper()
+                                                .convertToTypeName(false, typeReference);
+                                    }
+
+                                    @Override
+                                    public TypeName visitSet(TypeReference typeReference) {
+                                        return generatorContext
+                                                .getPoetTypeNameMapper()
+                                                .convertToTypeName(false, typeReference);
+                                    }
+
+                                    @Override
+                                    public TypeName visitMap(com.fern.ir.model.types.MapType mapType) {
+                                        return generatorContext
+                                                .getPoetTypeNameMapper()
+                                                .convertToTypeName(
+                                                        false, TypeReference.container(ContainerType.map(mapType)));
+                                    }
+
+                                    @Override
+                                    public TypeName visitOptional(TypeReference typeReference) {
+                                        return generatorContext
+                                                .getPoetTypeNameMapper()
+                                                .convertToTypeName(false, typeReference);
+                                    }
+
+                                    @Override
+                                    public TypeName visitLiteral(com.fern.ir.model.types.Literal literal) {
+                                        return ClassName.get(String.class);
+                                    }
+
+                                    @Override
+                                    public TypeName _visitUnknown(Object unknown) {
+                                        return ClassName.get(Object.class);
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public TypeName visitNamed(com.fern.ir.model.types.NamedType namedType) {
+                                return generatorContext.getPoetTypeNameMapper().convertToTypeName(false, inner);
+                            }
+
+                            @Override
+                            public TypeName visitPrimitive(com.fern.ir.model.types.PrimitiveType primitiveType) {
+                                return generatorContext.getPoetTypeNameMapper().convertToTypeName(false, inner);
+                            }
+
+                            @Override
+                            public TypeName visitUnknown() {
+                                return ClassName.get(Object.class);
+                            }
+
+                            @Override
+                            public TypeName _visitUnknown(Object unknown) {
+                                return ClassName.get(Object.class);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public TypeName visitNullable(TypeReference inner) {
+                        return generatorContext.getPoetTypeNameMapper().convertToTypeName(false, inner);
+                    }
+
+                    @Override
+                    public TypeName visitList(TypeReference typeReference) {
+                        return generatorContext.getPoetTypeNameMapper().convertToTypeName(false, typeReference);
+                    }
+
+                    @Override
+                    public TypeName visitSet(TypeReference typeReference) {
+                        return generatorContext.getPoetTypeNameMapper().convertToTypeName(false, typeReference);
+                    }
+
+                    @Override
+                    public TypeName visitMap(com.fern.ir.model.types.MapType mapType) {
+                        return generatorContext
+                                .getPoetTypeNameMapper()
+                                .convertToTypeName(false, TypeReference.container(ContainerType.map(mapType)));
+                    }
+
+                    @Override
+                    public TypeName visitLiteral(com.fern.ir.model.types.Literal literal) {
+                        return ClassName.get(String.class);
+                    }
+
+                    @Override
+                    public TypeName _visitUnknown(Object unknown) {
+                        return ClassName.get(Object.class);
+                    }
+                });
+            }
+
+            @Override
+            public TypeName visitNamed(com.fern.ir.model.types.NamedType namedType) {
+                return generatorContext.getPoetTypeNameMapper().convertToTypeName(false, typeReference);
+            }
+
+            @Override
+            public TypeName visitPrimitive(com.fern.ir.model.types.PrimitiveType primitiveType) {
+                return generatorContext.getPoetTypeNameMapper().convertToTypeName(false, typeReference);
+            }
+
+            @Override
+            public TypeName visitUnknown() {
+                return ClassName.get(Object.class);
+            }
+
+            @Override
+            public TypeName _visitUnknown(Object unknown) {
+                return ClassName.get(Object.class);
+            }
+        });
     }
 
     private TypeName getInnerType(TypeReference typeReference) {
@@ -367,10 +569,10 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
             FieldSpec.Builder fieldBuilder =
                     FieldSpec.builder(fieldType, fieldName).addModifiers(Modifier.PRIVATE);
 
-            // Initialize TriStateOptional fields to absent
+            // Initialize OptionalNullable fields to absent
             if (fieldType instanceof ParameterizedTypeName
-                    && ((ParameterizedTypeName) fieldType).rawType.equals(TRI_STATE_OPTIONAL)) {
-                fieldBuilder.initializer("$T.absent()", TRI_STATE_OPTIONAL);
+                    && ((ParameterizedTypeName) fieldType).rawType.equals(OPTIONAL_NULLABLE)) {
+                fieldBuilder.initializer("$T.absent()", OPTIONAL_NULLABLE);
             }
 
             FieldSpec field = fieldBuilder.build();
@@ -403,9 +605,9 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
                 .addModifiers(Modifier.PUBLIC)
                 .returns(ClassName.get(className.packageName(), className.simpleName(), "Builder"));
 
-        // For TriStateOptional fields, create a special setter
+        // For OptionalNullable fields, create a special setter
         if (fieldType instanceof ParameterizedTypeName
-                && ((ParameterizedTypeName) fieldType).rawType.equals(TRI_STATE_OPTIONAL)) {
+                && ((ParameterizedTypeName) fieldType).rawType.equals(OPTIONAL_NULLABLE)) {
             TypeName innerType = ((ParameterizedTypeName) fieldType).typeArguments.get(0);
 
             // Add JsonSetter annotation to handle deserialization
@@ -413,9 +615,9 @@ public final class MergePatchObjectGenerator extends AbstractFileGenerator {
                     .addMember("value", "$S", property.getName().getWireValue())
                     .build());
 
-            // Accept the inner type and wrap in TriStateOptional
+            // Accept the inner type and wrap in OptionalNullable
             setter.addParameter(innerType, "value");
-            setter.addStatement("this.$N = $T.ofNullable(value)", fieldName, TRI_STATE_OPTIONAL);
+            setter.addStatement("this.$N = $T.ofNullable(value)", fieldName, OPTIONAL_NULLABLE);
         } else {
             setter.addParameter(fieldType, "value");
             setter.addStatement("this.$N = value", fieldName);

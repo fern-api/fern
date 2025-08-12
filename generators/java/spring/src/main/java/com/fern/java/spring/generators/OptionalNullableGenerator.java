@@ -30,10 +30,10 @@ import java.util.Objects;
 import java.util.Optional;
 import javax.lang.model.element.Modifier;
 
-public final class TriStateOptionalGenerator extends AbstractFileGenerator {
+public final class OptionalNullableGenerator extends AbstractFileGenerator {
 
-    public TriStateOptionalGenerator(AbstractGeneratorContext<?, ?> generatorContext) {
-        super(ClassName.get("core", "TriStateOptional"), generatorContext);
+    public OptionalNullableGenerator(AbstractGeneratorContext<?, ?> generatorContext) {
+        super(ClassName.get("core", "OptionalNullable"), generatorContext);
     }
 
     @Override
@@ -49,7 +49,7 @@ public final class TriStateOptionalGenerator extends AbstractFileGenerator {
                 .build();
 
         FieldSpec stateField = FieldSpec.builder(
-                        ClassName.get(className.packageName(), "TriStateOptional", "State"), "state")
+                        ClassName.get(className.packageName(), "OptionalNullable", "State"), "state")
                 .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
                 .build();
 
@@ -59,7 +59,7 @@ public final class TriStateOptionalGenerator extends AbstractFileGenerator {
 
         MethodSpec constructor = MethodSpec.constructorBuilder()
                 .addModifiers(Modifier.PRIVATE)
-                .addParameter(ClassName.get(className.packageName(), "TriStateOptional", "State"), "state")
+                .addParameter(ClassName.get(className.packageName(), "OptionalNullable", "State"), "state")
                 .addParameter(typeVariable, "value")
                 .addStatement("this.state = state")
                 .addStatement("this.value = value")
@@ -69,22 +69,22 @@ public final class TriStateOptionalGenerator extends AbstractFileGenerator {
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .addTypeVariable(typeVariable)
                 .returns(ParameterizedTypeName.get(className, typeVariable))
-                .addJavadoc("Creates an absent TriStateOptional (field not present).\n")
+                .addJavadoc("Creates an absent OptionalNullable (field not present).\n")
                 .addStatement(
                         "return new $T<>($T.ABSENT, null)",
                         className,
-                        ClassName.get(className.packageName(), "TriStateOptional", "State"))
+                        ClassName.get(className.packageName(), "OptionalNullable", "State"))
                 .build();
 
         MethodSpec ofNull = MethodSpec.methodBuilder("ofNull")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .addTypeVariable(typeVariable)
                 .returns(ParameterizedTypeName.get(className, typeVariable))
-                .addJavadoc("Creates a null TriStateOptional (field explicitly set to null).\n")
+                .addJavadoc("Creates a null OptionalNullable (field explicitly set to null).\n")
                 .addStatement(
                         "return new $T<>($T.NULL, null)",
                         className,
-                        ClassName.get(className.packageName(), "TriStateOptional", "State"))
+                        ClassName.get(className.packageName(), "OptionalNullable", "State"))
                 .build();
 
         MethodSpec of = MethodSpec.methodBuilder("of")
@@ -92,12 +92,12 @@ public final class TriStateOptionalGenerator extends AbstractFileGenerator {
                 .addTypeVariable(typeVariable)
                 .returns(ParameterizedTypeName.get(className, typeVariable))
                 .addParameter(typeVariable, "value")
-                .addJavadoc("Creates a TriStateOptional with a value.\n")
+                .addJavadoc("Creates an OptionalNullable with a value.\n")
                 .addStatement("$T.requireNonNull(value, $S)", Objects.class, "Use ofNull() for null values")
                 .addStatement(
                         "return new $T<>($T.PRESENT, value)",
                         className,
-                        ClassName.get(className.packageName(), "TriStateOptional", "State"))
+                        ClassName.get(className.packageName(), "OptionalNullable", "State"))
                 .build();
 
         MethodSpec ofNullable = MethodSpec.methodBuilder("ofNullable")
@@ -106,7 +106,7 @@ public final class TriStateOptionalGenerator extends AbstractFileGenerator {
                 .returns(ParameterizedTypeName.get(className, typeVariable))
                 .addParameter(typeVariable, "value")
                 .addAnnotation(ClassName.get("com.fasterxml.jackson.annotation", "JsonCreator"))
-                .addJavadoc("Creates a TriStateOptional from a nullable value.\n")
+                .addJavadoc("Creates an OptionalNullable from a nullable value.\n")
                 .addStatement("return value == null ? ofNull() : of(value)")
                 .build();
 
@@ -116,7 +116,7 @@ public final class TriStateOptionalGenerator extends AbstractFileGenerator {
                 .addJavadoc("Returns true if the field was absent from the request.\n")
                 .addStatement(
                         "return state == $T.ABSENT",
-                        ClassName.get(className.packageName(), "TriStateOptional", "State"))
+                        ClassName.get(className.packageName(), "OptionalNullable", "State"))
                 .build();
 
         MethodSpec isNull = MethodSpec.methodBuilder("isNull")
@@ -124,7 +124,7 @@ public final class TriStateOptionalGenerator extends AbstractFileGenerator {
                 .returns(boolean.class)
                 .addJavadoc("Returns true if the field was explicitly set to null.\n")
                 .addStatement(
-                        "return state == $T.NULL", ClassName.get(className.packageName(), "TriStateOptional", "State"))
+                        "return state == $T.NULL", ClassName.get(className.packageName(), "OptionalNullable", "State"))
                 .build();
 
         MethodSpec isPresent = MethodSpec.methodBuilder("isPresent")
@@ -133,7 +133,7 @@ public final class TriStateOptionalGenerator extends AbstractFileGenerator {
                 .addJavadoc("Returns true if the field has a value.\n")
                 .addStatement(
                         "return state == $T.PRESENT",
-                        ClassName.get(className.packageName(), "TriStateOptional", "State"))
+                        ClassName.get(className.packageName(), "OptionalNullable", "State"))
                 .build();
 
         MethodSpec wasSpecified = MethodSpec.methodBuilder("wasSpecified")
@@ -142,7 +142,7 @@ public final class TriStateOptionalGenerator extends AbstractFileGenerator {
                 .addJavadoc("Returns true if the field was present in the request (either null or with a value).\n")
                 .addStatement(
                         "return state != $T.ABSENT",
-                        ClassName.get(className.packageName(), "TriStateOptional", "State"))
+                        ClassName.get(className.packageName(), "OptionalNullable", "State"))
                 .build();
 
         MethodSpec get = MethodSpec.methodBuilder("get")
@@ -150,12 +150,12 @@ public final class TriStateOptionalGenerator extends AbstractFileGenerator {
                 .returns(typeVariable)
                 .addJavadoc("Gets the value if present, throws if absent or null.\n")
                 .beginControlFlow(
-                        "if (state != $T.PRESENT)", ClassName.get(className.packageName(), "TriStateOptional", "State"))
+                        "if (state != $T.PRESENT)", ClassName.get(className.packageName(), "OptionalNullable", "State"))
                 .addStatement(
                         "throw new $T($S + state + $S)",
                         IllegalStateException.class,
                         "Cannot get value from ",
-                        " TriStateOptional")
+                        " OptionalNullable")
                 .endControlFlow()
                 .addStatement("return value")
                 .build();
@@ -166,7 +166,7 @@ public final class TriStateOptionalGenerator extends AbstractFileGenerator {
                 .addJavadoc("Gets the value if present or explicitly null, throws if absent.\n")
                 .addJavadoc("This is useful for update operations where null is a valid value to set.\n")
                 .beginControlFlow(
-                        "if (state == $T.ABSENT)", ClassName.get(className.packageName(), "TriStateOptional", "State"))
+                        "if (state == $T.ABSENT)", ClassName.get(className.packageName(), "OptionalNullable", "State"))
                 .addStatement("throw new $T($S)", IllegalStateException.class, "No value set")
                 .endControlFlow()
                 .addStatement("return value")
@@ -179,11 +179,11 @@ public final class TriStateOptionalGenerator extends AbstractFileGenerator {
                 .addJavadoc(
                         "Gets the value if present, returns null if explicitly set to null, or returns the provided default if absent.\n")
                 .beginControlFlow(
-                        "if (state == $T.PRESENT)", ClassName.get(className.packageName(), "TriStateOptional", "State"))
+                        "if (state == $T.PRESENT)", ClassName.get(className.packageName(), "OptionalNullable", "State"))
                 .addStatement("return value")
                 .endControlFlow()
                 .beginControlFlow(
-                        "if (state == $T.NULL)", ClassName.get(className.packageName(), "TriStateOptional", "State"))
+                        "if (state == $T.NULL)", ClassName.get(className.packageName(), "OptionalNullable", "State"))
                 .addStatement("return null")
                 .endControlFlow()
                 .addStatement("return defaultValue")
@@ -195,7 +195,7 @@ public final class TriStateOptionalGenerator extends AbstractFileGenerator {
                 .addJavadoc("Converts to an Optional, returning empty for both absent and null states.\n")
                 .addStatement(
                         "return state == $T.PRESENT ? $T.of(value) : $T.empty()",
-                        ClassName.get(className.packageName(), "TriStateOptional", "State"),
+                        ClassName.get(className.packageName(), "OptionalNullable", "State"),
                         Optional.class,
                         Optional.class)
                 .build();
@@ -207,26 +207,29 @@ public final class TriStateOptionalGenerator extends AbstractFileGenerator {
                 .addJavadoc("For JSON serialization - serialize the actual value or null.\n")
                 .addJavadoc("Absent values should be handled by @JsonInclude(JsonInclude.Include.CUSTOM)\n")
                 .beginControlFlow(
-                        "if (state == $T.ABSENT)", ClassName.get(className.packageName(), "TriStateOptional", "State"))
+                        "if (state == $T.ABSENT)", ClassName.get(className.packageName(), "OptionalNullable", "State"))
                 .addComment("Should not be serialized - handled by custom inclusion")
                 .addStatement("throw new $T($S)", IllegalStateException.class, "Absent values should not be serialized")
                 .endControlFlow()
                 .addStatement(
                         "return state == $T.NULL ? null : value",
-                        ClassName.get(className.packageName(), "TriStateOptional", "State"))
+                        ClassName.get(className.packageName(), "OptionalNullable", "State"))
                 .build();
 
-        TypeSpec jsonMergePatchSpec = TypeSpec.classBuilder("TriStateOptional")
+        TypeSpec jsonMergePatchSpec = TypeSpec.classBuilder("OptionalNullable")
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addTypeVariable(typeVariable)
                 .addJavadoc(CodeBlock.builder()
-                        .add("A tri-state wrapper type that distinguishes between:\n")
+                        .add("An optional wrapper type that supports null values, distinguishing between:\n")
                         .add("- ABSENT: field not present (e.g., not included in request)\n")
                         .add("- NULL: field explicitly set to null\n")
                         .add("- PRESENT: field has a non-null value\n")
                         .add("\n")
                         .add("This is useful for partial updates, JSON Merge Patch (RFC 7396), and any API\n")
                         .add("that needs to differentiate between \"not specified\" and \"set to null\".\n")
+                        .add("\n")
+                        .add("Use this for optional<nullable<T>> types where null is a valid value.\n")
+                        .add("For regular optional<T> types (where null is not valid), use Optional<T> instead.\n")
                         .build())
                 .addType(stateEnum)
                 .addField(stateField)
@@ -293,9 +296,9 @@ public final class TriStateOptionalGenerator extends AbstractFileGenerator {
                 .addModifiers(Modifier.PUBLIC)
                 .returns(String.class)
                 .beginControlFlow("switch (state)")
-                .addStatement("case ABSENT: return $S", "TriStateOptional.absent()")
-                .addStatement("case NULL: return $S", "TriStateOptional.ofNull()")
-                .addStatement("case PRESENT: return $S + value + $S", "TriStateOptional.of(", ")")
+                .addStatement("case ABSENT: return $S", "OptionalNullable.absent()")
+                .addStatement("case NULL: return $S", "OptionalNullable.ofNull()")
+                .addStatement("case PRESENT: return $S + value + $S", "OptionalNullable.of(", ")")
                 .addStatement("default: throw new $T($S + state)", IllegalStateException.class, "Unknown state: ")
                 .endControlFlow()
                 .build();
