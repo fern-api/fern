@@ -4,13 +4,13 @@ require_relative "../../requests"
 require_relative "types/token_response"
 require "async"
 
-module SeedInferredAuthExplicitClient
+module SeedInferredAuthImplicitNoExpiryClient
   class AuthClient
-    # @return [SeedInferredAuthExplicitClient::RequestClient]
+    # @return [SeedInferredAuthImplicitNoExpiryClient::RequestClient]
     attr_reader :request_client
 
-    # @param request_client [SeedInferredAuthExplicitClient::RequestClient]
-    # @return [SeedInferredAuthExplicitClient::AuthClient]
+    # @param request_client [SeedInferredAuthImplicitNoExpiryClient::RequestClient]
+    # @return [SeedInferredAuthImplicitNoExpiryClient::AuthClient]
     def initialize(request_client:)
       @request_client = request_client
     end
@@ -19,11 +19,11 @@ module SeedInferredAuthExplicitClient
     # @param client_id [String]
     # @param client_secret [String]
     # @param scope [String]
-    # @param request_options [SeedInferredAuthExplicitClient::RequestOptions]
-    # @return [SeedInferredAuthExplicitClient::Auth::TokenResponse]
+    # @param request_options [SeedInferredAuthImplicitNoExpiryClient::RequestOptions]
+    # @return [SeedInferredAuthImplicitNoExpiryClient::Auth::TokenResponse]
     # @example
-    #  inferred_auth_explicit = SeedInferredAuthExplicitClient::Client.new(base_url: "https://api.example.com")
-    #  inferred_auth_explicit.auth.get_token_with_client_credentials(
+    #  inferred_auth_implicit_no_expiry = SeedInferredAuthImplicitNoExpiryClient::Client.new(base_url: "https://api.example.com")
+    #  inferred_auth_implicit_no_expiry.auth.get_token_with_client_credentials(
     #    x_api_key: "X-Api-Key",
     #    client_id: "client_id",
     #    client_secret: "client_secret",
@@ -51,7 +51,7 @@ module SeedInferredAuthExplicitClient
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/token"
       end
-      SeedInferredAuthExplicitClient::Auth::TokenResponse.from_json(json_object: response.body)
+      SeedInferredAuthImplicitNoExpiryClient::Auth::TokenResponse.from_json(json_object: response.body)
     end
 
     # @param x_api_key [String]
@@ -59,11 +59,11 @@ module SeedInferredAuthExplicitClient
     # @param client_secret [String]
     # @param refresh_token [String]
     # @param scope [String]
-    # @param request_options [SeedInferredAuthExplicitClient::RequestOptions]
-    # @return [SeedInferredAuthExplicitClient::Auth::TokenResponse]
+    # @param request_options [SeedInferredAuthImplicitNoExpiryClient::RequestOptions]
+    # @return [SeedInferredAuthImplicitNoExpiryClient::Auth::TokenResponse]
     # @example
-    #  inferred_auth_explicit = SeedInferredAuthExplicitClient::Client.new(base_url: "https://api.example.com")
-    #  inferred_auth_explicit.auth.refresh_token(
+    #  inferred_auth_implicit_no_expiry = SeedInferredAuthImplicitNoExpiryClient::Client.new(base_url: "https://api.example.com")
+    #  inferred_auth_implicit_no_expiry.auth.refresh_token(
     #    x_api_key: "X-Api-Key",
     #    client_id: "client_id",
     #    client_secret: "client_secret",
@@ -93,16 +93,16 @@ module SeedInferredAuthExplicitClient
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/token/refresh"
       end
-      SeedInferredAuthExplicitClient::Auth::TokenResponse.from_json(json_object: response.body)
+      SeedInferredAuthImplicitNoExpiryClient::Auth::TokenResponse.from_json(json_object: response.body)
     end
   end
 
   class AsyncAuthClient
-    # @return [SeedInferredAuthExplicitClient::AsyncRequestClient]
+    # @return [SeedInferredAuthImplicitNoExpiryClient::AsyncRequestClient]
     attr_reader :request_client
 
-    # @param request_client [SeedInferredAuthExplicitClient::AsyncRequestClient]
-    # @return [SeedInferredAuthExplicitClient::AsyncAuthClient]
+    # @param request_client [SeedInferredAuthImplicitNoExpiryClient::AsyncRequestClient]
+    # @return [SeedInferredAuthImplicitNoExpiryClient::AsyncAuthClient]
     def initialize(request_client:)
       @request_client = request_client
     end
@@ -111,11 +111,11 @@ module SeedInferredAuthExplicitClient
     # @param client_id [String]
     # @param client_secret [String]
     # @param scope [String]
-    # @param request_options [SeedInferredAuthExplicitClient::RequestOptions]
-    # @return [SeedInferredAuthExplicitClient::Auth::TokenResponse]
+    # @param request_options [SeedInferredAuthImplicitNoExpiryClient::RequestOptions]
+    # @return [SeedInferredAuthImplicitNoExpiryClient::Auth::TokenResponse]
     # @example
-    #  inferred_auth_explicit = SeedInferredAuthExplicitClient::Client.new(base_url: "https://api.example.com")
-    #  inferred_auth_explicit.auth.get_token_with_client_credentials(
+    #  inferred_auth_implicit_no_expiry = SeedInferredAuthImplicitNoExpiryClient::Client.new(base_url: "https://api.example.com")
+    #  inferred_auth_implicit_no_expiry.auth.get_token_with_client_credentials(
     #    x_api_key: "X-Api-Key",
     #    client_id: "client_id",
     #    client_secret: "client_secret",
@@ -144,7 +144,7 @@ module SeedInferredAuthExplicitClient
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/token"
         end
-        SeedInferredAuthExplicitClient::Auth::TokenResponse.from_json(json_object: response.body)
+        SeedInferredAuthImplicitNoExpiryClient::Auth::TokenResponse.from_json(json_object: response.body)
       end
     end
 
@@ -153,11 +153,11 @@ module SeedInferredAuthExplicitClient
     # @param client_secret [String]
     # @param refresh_token [String]
     # @param scope [String]
-    # @param request_options [SeedInferredAuthExplicitClient::RequestOptions]
-    # @return [SeedInferredAuthExplicitClient::Auth::TokenResponse]
+    # @param request_options [SeedInferredAuthImplicitNoExpiryClient::RequestOptions]
+    # @return [SeedInferredAuthImplicitNoExpiryClient::Auth::TokenResponse]
     # @example
-    #  inferred_auth_explicit = SeedInferredAuthExplicitClient::Client.new(base_url: "https://api.example.com")
-    #  inferred_auth_explicit.auth.refresh_token(
+    #  inferred_auth_implicit_no_expiry = SeedInferredAuthImplicitNoExpiryClient::Client.new(base_url: "https://api.example.com")
+    #  inferred_auth_implicit_no_expiry.auth.refresh_token(
     #    x_api_key: "X-Api-Key",
     #    client_id: "client_id",
     #    client_secret: "client_secret",
@@ -188,7 +188,7 @@ module SeedInferredAuthExplicitClient
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/token/refresh"
         end
-        SeedInferredAuthExplicitClient::Auth::TokenResponse.from_json(json_object: response.body)
+        SeedInferredAuthImplicitNoExpiryClient::Auth::TokenResponse.from_json(json_object: response.body)
       end
     end
   end
