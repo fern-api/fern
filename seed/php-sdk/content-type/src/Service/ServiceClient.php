@@ -101,7 +101,10 @@ class ServiceClient
     }
 
     /**
-     * Update with JSON merge patch - complex types
+     * Update with JSON merge patch - complex types.
+     * This endpoint demonstrates the distinction between:
+     * - optional<T> fields (can be present or absent, but not null)
+     * - optional<nullable<T>> fields (can be present, absent, or null)
      *
      * @param string $id
      * @param PatchComplexRequest $request
