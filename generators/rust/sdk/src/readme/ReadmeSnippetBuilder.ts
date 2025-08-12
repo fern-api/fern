@@ -162,7 +162,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
         // Use statements
         const useStatements = [
-            new UseStatement({ path: this.packageName, items: ["ClientError", this.context.getClientBuilderName()] })
+            new UseStatement({ path: this.packageName, items: ["ClientError", "ClientConfig", this.getClientName()] })
         ];
 
         // Main function with error handling
@@ -192,18 +192,34 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private buildErrorHandlingBody(endpoint: EndpointWithFilepath): Statement[] {
-        // Build client
-        const clientBuild = Expression.methodChain(
-            Expression.methodCall({
-                target: Expression.reference(this.context.getClientBuilderName()),
-                method: "new",
-                args: [Expression.stringLiteral("https://api.example.com")]
-            }),
-            [
-                { method: "api_key", args: [Expression.stringLiteral("your-api-key")] },
-                { method: "build", args: [] }
-            ]
-        );
+        // Build client using ClientConfig pattern
+        const configFields = [
+            {
+                name: "base_url",
+                value: Expression.methodCall({
+                    target: Expression.stringLiteral("https://api.example.com"),
+                    method: "to_string",
+                    args: []
+                })
+            },
+            {
+                name: "api_key",
+                value: Expression.functionCall("Some", [
+                    Expression.methodCall({
+                        target: Expression.stringLiteral("your-api-key"),
+                        method: "to_string",
+                        args: []
+                    })
+                ])
+            }
+        ];
+
+        const configVar = Statement.let({
+            name: "config",
+            value: Expression.structLiteral("ClientConfig", configFields)
+        });
+
+        const clientBuild = Expression.raw(`${this.getClientName()}::new(config)`);
 
         const clientVar = Statement.let({
             name: "client",
@@ -229,48 +245,36 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const matchStatement = Statement.match(methodCall, [
             {
                 pattern: "Ok(response)",
-                body: [
-                    Statement.expression(
-                        Expression.macroCall("println!", [
-                            Expression.stringLiteral("Success: {:?}"),
-                            Expression.reference("response")
-                        ])
-                    )
-                ]
+                body: [Statement.expression(Expression.raw('println!("Success: {:?}", response)'))]
             },
             {
                 pattern: "Err(ClientError::ApiError { status_code, body, .. })",
-                body: [
-                    Statement.expression(
-                        Expression.macroCall("println!", [
-                            Expression.stringLiteral("API Error {}: {:?}"),
-                            Expression.reference("status_code"),
-                            Expression.reference("body")
-                        ])
-                    )
-                ]
+                body: [Statement.expression(Expression.raw('println!("API Error {}: {:?}", status_code, body)'))]
             },
             {
                 pattern: "Err(e)",
-                body: [
-                    Statement.expression(
-                        Expression.macroCall("println!", [
-                            Expression.stringLiteral("Other error: {:?}"),
-                            Expression.reference("e")
-                        ])
-                    )
-                ]
+                body: [Statement.expression(Expression.raw('println!("Other error: {:?}", e)'))]
             }
         ]);
 
-        return [clientVar, matchStatement, Statement.return(Expression.ok(Expression.raw("()")))];
+        return [configVar, clientVar, matchStatement, Statement.return(Expression.ok(Expression.raw("()")))];
+    }
+
+    private getClientName(): string {
+        // Convert package name to client name (e.g., "my_package" -> "MyPackageClient")
+        const packageName = this.packageName;
+        const pascalCase = packageName
+            .split("_")
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join("");
+        return `${pascalCase}Client`;
     }
 
     private buildRetryCode(endpoint: EndpointWithFilepath): string {
         const writer = new Writer();
 
         const useStatements = [
-            new UseStatement({ path: this.packageName, items: [this.context.getClientBuilderName()] })
+            new UseStatement({ path: this.packageName, items: ["ClientConfig", this.getClientName()] })
         ];
 
         // Write use statements
@@ -293,19 +297,39 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private buildRetryBody(endpoint: EndpointWithFilepath): Statement[] {
-        const clientBuild = Expression.methodChain(
-            Expression.methodCall({
-                target: Expression.reference(this.context.getClientBuilderName()),
-                method: "new",
-                args: [Expression.stringLiteral("https://api.example.com")]
-            }),
-            [
-                { method: "api_key", args: [Expression.stringLiteral("your-api-key")] },
-                { method: "max_retries", args: [Expression.numberLiteral(3)] },
-                { method: "build", args: [] },
-                { method: "expect", args: [Expression.stringLiteral("Failed to build client")] }
-            ]
-        );
+        // Build client using ClientConfig pattern
+        const configFields = [
+            {
+                name: "base_url",
+                value: Expression.methodCall({
+                    target: Expression.stringLiteral("https://api.example.com"),
+                    method: "to_string",
+                    args: []
+                })
+            },
+            {
+                name: "api_key",
+                value: Expression.functionCall("Some", [
+                    Expression.methodCall({
+                        target: Expression.stringLiteral("your-api-key"),
+                        method: "to_string",
+                        args: []
+                    })
+                ])
+            },
+            { name: "max_retries", value: Expression.numberLiteral(3) }
+        ];
+
+        const configVar = Statement.let({
+            name: "config",
+            value: Expression.structLiteral("ClientConfig", configFields)
+        });
+
+        const clientBuild = Expression.methodCall({
+            target: Expression.raw(`${this.getClientName()}::new(config)`),
+            method: "expect",
+            args: [Expression.stringLiteral("Failed to build client")]
+        });
 
         const clientVar = Statement.let({
             name: "client",
@@ -335,12 +359,12 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             })
         });
 
-        return [clientVar, responseVar];
+        return [configVar, clientVar, responseVar];
     }
 
     private buildTimeoutCode(endpoint: EndpointWithFilepath): string {
         const useStatements = [
-            new UseStatement({ path: this.packageName, items: [this.context.getClientBuilderName()] }),
+            new UseStatement({ path: this.packageName, items: ["ClientConfig", this.getClientName()] }),
             new UseStatement({ path: "std::time", items: ["Duration"] })
         ];
 
@@ -366,22 +390,42 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private buildTimeoutBody(endpoint: EndpointWithFilepath): Statement[] {
-        const clientBuild = Expression.methodChain(
-            Expression.methodCall({
-                target: Expression.reference(this.context.getClientBuilderName()),
-                method: "new",
-                args: [Expression.stringLiteral("https://api.example.com")]
-            }),
-            [
-                { method: "api_key", args: [Expression.stringLiteral("your-api-key")] },
-                {
-                    method: "timeout",
-                    args: [Expression.functionCall("Duration::from_secs", [Expression.numberLiteral(30)])]
-                },
-                { method: "build", args: [] },
-                { method: "expect", args: [Expression.stringLiteral("Failed to build client")] }
-            ]
-        );
+        // Build client using ClientConfig pattern
+        const configFields = [
+            {
+                name: "base_url",
+                value: Expression.methodCall({
+                    target: Expression.stringLiteral("https://api.example.com"),
+                    method: "to_string",
+                    args: []
+                })
+            },
+            {
+                name: "api_key",
+                value: Expression.functionCall("Some", [
+                    Expression.methodCall({
+                        target: Expression.stringLiteral("your-api-key"),
+                        method: "to_string",
+                        args: []
+                    })
+                ])
+            },
+            {
+                name: "timeout",
+                value: Expression.functionCall("Duration::from_secs", [Expression.numberLiteral(30)])
+            }
+        ];
+
+        const configVar = Statement.let({
+            name: "config",
+            value: Expression.structLiteral("ClientConfig", configFields)
+        });
+
+        const clientBuild = Expression.methodCall({
+            target: Expression.raw(`${this.getClientName()}::new(config)`),
+            method: "expect",
+            args: [Expression.stringLiteral("Failed to build client")]
+        });
 
         const clientVar = Statement.let({
             name: "client",
@@ -411,7 +455,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             })
         });
 
-        return [clientVar, responseVar];
+        return [configVar, clientVar, responseVar];
     }
 
     private writeCode(code: string): string {

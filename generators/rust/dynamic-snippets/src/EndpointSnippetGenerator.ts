@@ -24,9 +24,8 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         request: FernIr.dynamic.EndpointSnippetRequest;
     }): Promise<string> {
-        const code = this.buildCodeBlock({ endpoint, snippet: request });
-        // For now, use synchronous toString since toStringAsync doesn't exist
-        return code.toString();
+        const components = this.buildCodeComponents({ endpoint, snippet: request });
+        return components.join("\n") + "\n";
     }
 
     public generateSnippetSync({
@@ -36,8 +35,8 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         request: FernIr.dynamic.EndpointSnippetRequest;
     }): string {
-        const code = this.buildCodeBlock({ endpoint, snippet: request });
-        return code.toString();
+        const components = this.buildCodeComponents({ endpoint, snippet: request });
+        return components.join("\n") + "\n";
     }
 
     private buildCodeBlock({
@@ -47,51 +46,229 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): rust.AstNode {
-        // Get the import statements
-        const imports = this.getImportStatements({ endpoint, snippet });
+        // Create use statements using AST
+        const useStatements = this.getUseStatements({ endpoint, snippet });
 
-        // Return a raw statement instead of CodeBlock to avoid outer curly braces
-        // Add a newline at the end to ensure proper markdown formatting
-        return rust.Statement.raw(`${imports}
+        // Create the main function body
+        const mainBody = rust.CodeBlock.fromStatements([
+            // Create config variable
+            rust.Statement.let({
+                name: "config",
+                value: this.getClientConfigStruct({ endpoint, snippet })
+            }),
+            // Create client variable
+            rust.Statement.let({
+                name: CLIENT_VAR_NAME,
+                value: rust.Expression.methodCall({
+                    target: rust.Expression.raw(`${this.getClientName()}::new(config)`),
+                    method: "expect",
+                    args: [rust.Expression.stringLiteral("Failed to build client")]
+                })
+            }),
+            // API method call
+            rust.Statement.expression(
+                rust.Expression.methodCall({
+                    target: rust.Expression.reference(CLIENT_VAR_NAME),
+                    method: this.getMethodName({ endpoint }),
+                    args: this.getMethodArgs({ endpoint, snippet }),
+                    isAsync: true
+                })
+            )
+        ]);
 
-#[tokio::main]
-async fn main() {
-    let ${CLIENT_VAR_NAME} = ${this.getClientBuilderCallNew({ endpoint, snippet }).toString()};
-    ${rust.Expression.methodCall({
-        target: rust.Expression.reference(CLIENT_VAR_NAME),
-        method: this.getMethodName({ endpoint }),
-        args: this.getMethodArgs({ endpoint, snippet }),
-        isAsync: true
-    }).toString()};
-}
-`);
+        // Create the standalone function
+        const mainFunction = rust.standaloneFunction({
+            name: "main",
+            attributes: [rust.attribute({ name: "tokio::main" })],
+            parameters: [],
+            isAsync: true,
+            body: mainBody
+        });
+
+        // Create code block with use statements and function
+        const statements = [
+            ...useStatements.map((use) => rust.Statement.raw(use.toString())),
+            rust.Statement.raw(""),
+            rust.Statement.raw(mainFunction.toString())
+        ];
+
+        return rust.CodeBlock.fromStatements(statements);
     }
 
-    private getImportStatements({
+    private buildCodeComponents({
         endpoint,
         snippet
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): string {
-        const imports = [`use ${this.context.getPackageName()}::${this.context.getClientBuilderName()};`];
+    }): string[] {
+        // Get use statements
+        const useStatements = this.getUseStatements({ endpoint, snippet });
 
-        // Add auth imports if needed
+        // Create the main function body
+        const mainBody = rust.CodeBlock.fromStatements([
+            // Create config variable
+            rust.Statement.let({
+                name: "config",
+                value: this.getClientConfigStruct({ endpoint, snippet })
+            }),
+            // Create client variable
+            rust.Statement.let({
+                name: CLIENT_VAR_NAME,
+                value: rust.Expression.methodCall({
+                    target: rust.Expression.raw(`${this.getClientName()}::new(config)`),
+                    method: "expect",
+                    args: [rust.Expression.stringLiteral("Failed to build client")]
+                })
+            }),
+            // API method call
+            rust.Statement.expression(
+                rust.Expression.methodCall({
+                    target: rust.Expression.reference(CLIENT_VAR_NAME),
+                    method: this.getMethodName({ endpoint }),
+                    args: this.getMethodArgs({ endpoint, snippet }),
+                    isAsync: true
+                })
+            )
+        ]);
+
+        // Create the standalone function
+        const mainFunction = rust.standaloneFunction({
+            name: "main",
+            attributes: [rust.attribute({ name: "tokio::main" })],
+            parameters: [],
+            isAsync: true,
+            body: mainBody
+        });
+
+        // Return components as strings without extra wrapping
+        const components: string[] = [];
+
+        // Add use statements
+        useStatements.forEach((useStmt) => {
+            components.push(useStmt.toString());
+        });
+
+        // Add empty line
+        components.push("");
+
+        // Add main function
+        components.push(mainFunction.toString());
+
+        return components;
+    }
+
+    private getUseStatements({
+        endpoint,
+        snippet
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): rust.UseStatement[] {
+        const imports = [
+            new rust.UseStatement({
+                path: this.context.getPackageName(),
+                items: ["ClientConfig", this.getClientName()]
+            })
+        ];
+
+        return imports;
+    }
+
+    private getClientConfigStruct({
+        endpoint,
+        snippet
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): rust.Expression {
+        const fields: Array<{ name: string; value: rust.Expression }> = [];
+
+        // Add base URL
+        const baseUrlValue = this.getBaseUrlValue({
+            baseUrl: snippet.baseURL,
+            environment: snippet.environment
+        });
+        if (baseUrlValue != null) {
+            fields.push({
+                name: "base_url",
+                value: rust.Expression.methodCall({
+                    target: rust.Expression.stringLiteral(baseUrlValue),
+                    method: "to_string",
+                    args: []
+                })
+            });
+        }
+
+        // Add auth fields
         if (endpoint.auth != null && snippet.auth != null) {
             switch (endpoint.auth.type) {
                 case "bearer":
-                    imports.push(`use ${this.context.getPackageName()}::auth::BearerAuth;`);
+                    if (snippet.auth.type === "bearer") {
+                        fields.push({
+                            name: "bearer_token",
+                            value: rust.Expression.functionCall("Some", [
+                                rust.Expression.methodCall({
+                                    target: rust.Expression.stringLiteral(snippet.auth.token),
+                                    method: "to_string",
+                                    args: []
+                                })
+                            ])
+                        });
+                    }
                     break;
                 case "basic":
-                    imports.push(`use ${this.context.getPackageName()}::auth::BasicAuth;`);
+                    if (snippet.auth.type === "basic") {
+                        fields.push({
+                            name: "username",
+                            value: rust.Expression.functionCall("Some", [
+                                rust.Expression.methodCall({
+                                    target: rust.Expression.stringLiteral(snippet.auth.username),
+                                    method: "to_string",
+                                    args: []
+                                })
+                            ])
+                        });
+                        fields.push({
+                            name: "password",
+                            value: rust.Expression.functionCall("Some", [
+                                rust.Expression.methodCall({
+                                    target: rust.Expression.stringLiteral(snippet.auth.password),
+                                    method: "to_string",
+                                    args: []
+                                })
+                            ])
+                        });
+                    }
                     break;
                 case "header":
-                    imports.push(`use ${this.context.getPackageName()}::auth::HeaderAuth;`);
+                    if (snippet.auth.type === "header") {
+                        fields.push({
+                            name: "api_key",
+                            value: rust.Expression.functionCall("Some", [
+                                rust.Expression.methodCall({
+                                    target: rust.Expression.stringLiteral(String(snippet.auth.value)),
+                                    method: "to_string",
+                                    args: []
+                                })
+                            ])
+                        });
+                    }
                     break;
             }
         }
 
-        return imports.join("\n");
+        return rust.Expression.structLiteral("ClientConfig", fields);
+    }
+
+    private getClientName(): string {
+        // Convert package name to client name (e.g., "my_package" -> "MyPackageClient")
+        const packageName = this.context.getPackageName();
+        const pascalCase = packageName
+            .split("_")
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join("");
+        return `${pascalCase}Client`;
     }
 
     private constructClientCode({
