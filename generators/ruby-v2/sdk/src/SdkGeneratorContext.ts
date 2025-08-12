@@ -1,7 +1,5 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { AbstractRubyGeneratorContext, ruby } from "@fern-api/ruby-ast";
-import { AsIsFiles, RubyProject } from "@fern-api/ruby-base";
-import { camelCase, upperFirst } from "lodash-es";
+import { AbstractRubyGeneratorContext, AsIsFiles, RubyProject } from "@fern-api/ruby-base";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import {
@@ -14,13 +12,16 @@ import {
 } from "@fern-fern/ir-sdk/api";
 
 import { RelativeFilePath } from "@fern-api/path-utils";
+import { ruby } from "@fern-api/ruby-ast";
 import { ClassReference } from "@fern-api/ruby-ast/src/ast/ClassReference";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
+import { EndpointGenerator } from "./endpoint/EndpointGenerator";
 
 const ROOT_TYPES_FOLDER = "types";
 
 export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomConfigSchema> {
     public readonly project: RubyProject;
+    public readonly endpointGenerator: EndpointGenerator;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -30,6 +31,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     ) {
         super(ir, config, customConfig, generatorNotificationService);
         this.project = new RubyProject({ context: this });
+        this.endpointGenerator = new EndpointGenerator({ context: this });
     }
 
     public getRootFolderPath(): RelativeFilePath {

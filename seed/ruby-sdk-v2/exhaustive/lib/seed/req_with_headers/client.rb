@@ -9,8 +9,10 @@ module Seed
                 @client = client
             end
 
-            # @return [void]
-            def get_with_custom_header; end
+            # @return [untyped]
+            def get_with_custom_header
+                raise NotImplementedError, 'This method is not yet implemented.'
+            end
         end
     end
 end
