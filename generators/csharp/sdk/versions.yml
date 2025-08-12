@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.1.10
+  changelogEntry:
+    - type: fix
+      summary: Generate reference.md file as long as there are some endpoints.
+  createdAt: '2025-08-11'
+  irVersion: 58
+
 - version: 2.1.8
   changelogEntry:
     - type: fix

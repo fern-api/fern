@@ -13,17 +13,20 @@ import { SingleEndpointSnippet } from "../endpoint/snippets/EndpointSnippetsGene
 export function buildReference({ context }: { context: SdkGeneratorContext }): ReferenceConfigBuilder {
     const builder = new ReferenceConfigBuilder();
     const serviceEntries = Object.entries(context.ir.services);
-
+    let hasEndpoints = false;
     serviceEntries.forEach(([serviceId, service]) => {
         const section = isRootServiceId({ context, serviceId })
             ? builder.addRootSection()
             : builder.addSection({ title: getSectionTitle({ service }) });
         const endpoints = getEndpointReferencesForService({ context, serviceId, service });
         for (const endpoint of endpoints) {
+            hasEndpoints = true;
             section.addEndpoint(endpoint);
         }
     });
-
+    if (!hasEndpoints) {
+        throw new Error(`No endpoint references found for any service while building reference.md.`);
+    }
     return builder;
 }
 
@@ -38,13 +41,21 @@ function getEndpointReferencesForService({
 }): FernGeneratorCli.EndpointReference[] {
     return service.endpoints
         .map((endpoint) => {
-            const singleEndpointSnippet = context.snippetGenerator.getSingleEndpointSnippet({
-                endpoint,
-                example: context.getExampleEndpointCallOrThrow(endpoint)
-            });
-            if (!singleEndpointSnippet) {
+            const example = context.getExampleEndpointCallIfExists(endpoint);
+            if (!example) {
+                // skip endpoints that don't have an example
                 return undefined;
             }
+            const singleEndpointSnippet = context.snippetGenerator.getSingleEndpointSnippet({
+                endpoint,
+                example
+            });
+
+            if (!singleEndpointSnippet) {
+                // skip endpoints that don't have a snippet
+                return undefined;
+            }
+            
             const endpointSignatureInfo = context.endpointGenerator.getEndpointSignatureInfo({
                 serviceId,
                 endpoint

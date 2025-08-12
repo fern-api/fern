@@ -1,4 +1,4 @@
-import { readFile } from "fs/promises";
+import { readFile, stat } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 
@@ -10,7 +10,13 @@ import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { GeneratorAgentClient } from "./GeneratorAgentClient";
 import { ReferenceConfigBuilder } from "./reference";
 
-const DOCKER_FEATURES_CONFIG_PATH = "/assets/features.yml";
+const FEATURES_CONFIG_PATHS = [
+  "/assets/features.yml",
+  path.join(__dirname, "../features.yml"),
+  path.join(__dirname, "../assets/features.yml"),  
+  path.join(__dirname, "../../features.yml"),
+  path.join(__dirname, "../../assets/features.yml"),  
+];
 
 export declare namespace AbstractGeneratorAgent {
     interface ReadmeConfigArgs<GeneratorContext extends AbstractGeneratorContext> {
@@ -107,11 +113,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
 
     private async readFeatureConfig(): Promise<FernGeneratorCli.FeatureConfig> {
         this.logger.debug("Reading feature configuration ...");
-        const rawContents = await readFile(this.getFeaturesConfigPath(), "utf8");
-        if (rawContents.length === 0) {
-            throw new Error("Internal error; failed to read feature configuration");
-        }
-        return yaml.load(rawContents) as FernGeneratorCli.FeatureConfig;
+        return yaml.load(await this.getFeaturesConfig()) as FernGeneratorCli.FeatureConfig;
     }
 
     private getRemote(): FernGeneratorCli.Remote | undefined {
@@ -125,10 +127,20 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
         return undefined;
     }
 
-    private getFeaturesConfigPath(): string {
-        if (process.env.NODE_ENV === "test") {
-            return path.join(__dirname, "../../features.yml");
+    private async getFeaturesConfig(): Promise<string> {
+        // try to find the features.yml file
+        // in local test mode, the features.yml is relative to the generator
+        for (const each of FEATURES_CONFIG_PATHS) {
+            try {
+                const rawContents = await readFile(each, "utf8");
+                if (rawContents.length !== 0) {
+                    return rawContents;
+                }                
+            } catch (error) {
+                // ignore
+            }
         }
-        return DOCKER_FEATURES_CONFIG_PATH;
+        // fallback to docker features config path (this is the original default)
+        throw new Error("Internal error; failed to read feature configuration");
     }
 }
