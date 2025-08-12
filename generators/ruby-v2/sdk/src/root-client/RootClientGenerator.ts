@@ -63,7 +63,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         return new RubyFile({
             node: astNodeToCodeBlockWithComments(rootModule, [Comments.FrozenStringLiteral]),
             directory: this.getDirectory(),
-            filename: this.getFilepath(),
+            filename: this.getFilename(),
             customConfig: this.context.customConfig
         });
     }
