@@ -169,6 +169,21 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         return CANCELLATION_TOKEN_PARAMETER_NAME;
     }
 
+    private getComputedClientName(): string {
+        return `${upperFirst(camelCase(this.config.organization))}${this.ir.apiName.pascalCase.unsafeName}`;
+    }
+
+    public getRootClientClassName(): string {
+        return `${this.getComputedClientName()}Client`;
+    }
+
+    public getRootClientClassReference(): ruby.ClassReference {
+        return ruby.classReference({
+            name: this.getRootClientClassName(),
+            modules: [this.getRootModule().name]
+        });
+    }
+
     public getCoreAsIsFiles(): string[] {
         const files = [
             // Errors

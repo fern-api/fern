@@ -2,12 +2,12 @@ import { assertNever } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/path-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
-
 import {
     AuthScheme,
     HttpHeader,
     Literal,
     OAuthScheme,
+    ObjectProperty,
     PrimitiveTypeV1,
     PrimitiveTypeV2,
     ServiceId,
@@ -17,6 +17,7 @@ import {
 import { RawClient } from "../endpoint/http/RawClient";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { fernIrNameFromString } from "../utils/fernIrNameFromString";
 
 export const CLIENT_MEMBER_NAME = "_client";
 export const GRPC_CLIENT_MEMBER_NAME = "_grpc";
@@ -62,12 +63,23 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
     }
 
     public doGenerate(): RubyFile {
+        const properties: ObjectProperty[] = [];
         const class_ = ruby.class_({
-            ...this.context.getRootClientClassReference(),
-            partial: true,
-            access: this.context.getRootClientAccess()
+            ...this.context.getRootClientClassReference()
         });
 
+        properties.push({
+            name: {
+                name: fernIrNameFromString(CLIENT_MEMBER_NAME),
+                wireValue: CLIENT_MEMBER_NAME
+            },
+            propertyAccess: undefined,
+            valueType: this.context.getRawClientClassReference(),
+            v2Examples: undefined,
+            availability: undefined,
+            docs: undefined
+        });
+        class_.addFields();
         class_.addField(
             ruby.field({
                 access: ruby.Access.Private,
