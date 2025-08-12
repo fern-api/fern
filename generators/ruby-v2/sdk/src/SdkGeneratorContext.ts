@@ -1,6 +1,7 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractRubyGeneratorContext, ruby } from "@fern-api/ruby-ast";
 import { AsIsFiles, RubyProject } from "@fern-api/ruby-base";
+import { camelCase, upperFirst } from "lodash-es";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import {
@@ -29,6 +30,10 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     ) {
         super(ir, config, customConfig, generatorNotificationService);
         this.project = new RubyProject({ context: this });
+    }
+
+    public getRootFolderPath(): RelativeFilePath {
+        return RelativeFilePath.of(["lib", this.getRootFolderName()].join("/"));
     }
 
     public getLocationForTypeId(typeId: TypeId): RelativeFilePath {
@@ -106,6 +111,13 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             name: "RawClient",
             modules: [this.getRootModule().name, "Internal", "Http"],
             fullyQualified: true
+        });
+    }
+
+    public getEnvironmentsClassReference(): ruby.ClassReference {
+        return ruby.classReference({
+            name: "Environment",
+            modules: [this.getRootModule().name]
         });
     }
 
