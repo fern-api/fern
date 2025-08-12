@@ -8,8 +8,8 @@ require (
 	github.com/hmdsefi/gograph v0.4.0
 	github.com/stretchr/testify v1.9.0
 	go.uber.org/multierr v1.11.0
-	golang.org/x/mod v0.24.0
-	golang.org/x/tools v0.32.0
+	golang.org/x/mod v0.27.0
+	golang.org/x/tools v0.36.0
 )
 
 require (
