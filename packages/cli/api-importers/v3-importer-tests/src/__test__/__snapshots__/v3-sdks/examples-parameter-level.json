@@ -556,6 +556,81 @@
     "sharedTypes": [],
     "typesReferencedOnlyByService": {}
   },
+  "dynamic": {
+    "version": "1.0.0",
+    "types": {},
+    "headers": [],
+    "endpoints": {
+      "endpoint_.get": {
+        "declaration": {
+          "name": {
+            "originalName": "get",
+            "camelCase": {
+              "unsafeName": "get",
+              "safeName": "get_"
+            },
+            "snakeCase": {
+              "unsafeName": "get",
+              "safeName": "get_"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "GET",
+              "safeName": "GET"
+            },
+            "pascalCase": {
+              "unsafeName": "Get",
+              "safeName": "Get"
+            }
+          },
+          "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+          }
+        },
+        "location": {
+          "method": "GET",
+          "path": "/simple"
+        },
+        "request": {
+          "pathParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "some-path-param",
+                  "camelCase": {
+                    "unsafeName": "somePathParam",
+                    "safeName": "somePathParam"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "some_path_param",
+                    "safeName": "some_path_param"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "SOME_PATH_PARAM",
+                    "safeName": "SOME_PATH_PARAM"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "SomePathParam",
+                    "safeName": "SomePathParam"
+                  }
+                },
+                "wireValue": "some-path-param"
+              },
+              "typeReference": {
+                "value": "STRING",
+                "type": "primitive"
+              }
+            }
+          ],
+          "type": "body"
+        },
+        "response": {
+          "type": "json"
+        }
+      }
+    },
+    "pathParameters": []
+  },
   "rootPackage": {
     "fernFilepath": {
       "allParts": [],

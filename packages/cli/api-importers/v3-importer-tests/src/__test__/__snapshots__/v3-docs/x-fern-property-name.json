@@ -114,6 +114,76 @@
     "sharedTypes": [],
     "typesReferencedOnlyByService": {}
   },
+  "dynamic": {
+    "version": "1.0.0",
+    "types": {
+      "BaseUser": {
+        "declaration": {
+          "name": {
+            "originalName": "BaseUser",
+            "camelCase": {
+              "unsafeName": "baseUser",
+              "safeName": "baseUser"
+            },
+            "snakeCase": {
+              "unsafeName": "base_user",
+              "safeName": "base_user"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "BASE_USER",
+              "safeName": "BASE_USER"
+            },
+            "pascalCase": {
+              "unsafeName": "BaseUser",
+              "safeName": "BaseUser"
+            }
+          },
+          "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+          }
+        },
+        "properties": [
+          {
+            "name": {
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              },
+              "wireValue": "id"
+            },
+            "typeReference": {
+              "value": {
+                "value": "STRING",
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "additionalProperties": false,
+        "type": "object"
+      }
+    },
+    "headers": [],
+    "endpoints": {},
+    "pathParameters": []
+  },
   "rootPackage": {
     "fernFilepath": {
       "allParts": [],

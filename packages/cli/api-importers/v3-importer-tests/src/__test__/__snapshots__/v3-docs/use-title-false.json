@@ -62,6 +62,43 @@
     "sharedTypes": [],
     "typesReferencedOnlyByService": {}
   },
+  "dynamic": {
+    "version": "1.0.0",
+    "types": {
+      "UnionJob": {
+        "declaration": {
+          "name": {
+            "originalName": "UnionJob",
+            "camelCase": {
+              "unsafeName": "unionJob",
+              "safeName": "unionJob"
+            },
+            "snakeCase": {
+              "unsafeName": "union_job",
+              "safeName": "union_job"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "UNION_JOB",
+              "safeName": "UNION_JOB"
+            },
+            "pascalCase": {
+              "unsafeName": "UnionJob",
+              "safeName": "UnionJob"
+            }
+          },
+          "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+          }
+        },
+        "types": [],
+        "type": "undiscriminatedUnion"
+      }
+    },
+    "headers": [],
+    "endpoints": {},
+    "pathParameters": []
+  },
   "rootPackage": {
     "fernFilepath": {
       "allParts": [],

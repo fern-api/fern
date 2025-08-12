@@ -598,6 +598,358 @@
     "sharedTypes": [],
     "typesReferencedOnlyByService": {}
   },
+  "dynamic": {
+    "version": "1.0.0",
+    "types": {
+      "Shape": {
+        "declaration": {
+          "name": {
+            "originalName": "Shape",
+            "camelCase": {
+              "unsafeName": "shape",
+              "safeName": "shape"
+            },
+            "snakeCase": {
+              "unsafeName": "shape",
+              "safeName": "shape"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "SHAPE",
+              "safeName": "SHAPE"
+            },
+            "pascalCase": {
+              "unsafeName": "Shape",
+              "safeName": "Shape"
+            }
+          },
+          "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+          }
+        },
+        "types": [
+          {
+            "value": "Triangle",
+            "type": "named"
+          },
+          {
+            "value": "Square",
+            "type": "named"
+          }
+        ],
+        "type": "undiscriminatedUnion"
+      },
+      "TriangleType": {
+        "declaration": {
+          "name": {
+            "originalName": "TriangleType",
+            "camelCase": {
+              "unsafeName": "triangleType",
+              "safeName": "triangleType"
+            },
+            "snakeCase": {
+              "unsafeName": "triangle_type",
+              "safeName": "triangle_type"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TRIANGLE_TYPE",
+              "safeName": "TRIANGLE_TYPE"
+            },
+            "pascalCase": {
+              "unsafeName": "TriangleType",
+              "safeName": "TriangleType"
+            }
+          },
+          "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+          }
+        },
+        "values": [
+          {
+            "name": {
+              "originalName": "triangle",
+              "camelCase": {
+                "unsafeName": "triangle",
+                "safeName": "triangle"
+              },
+              "snakeCase": {
+                "unsafeName": "triangle",
+                "safeName": "triangle"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "TRIANGLE",
+                "safeName": "TRIANGLE"
+              },
+              "pascalCase": {
+                "unsafeName": "Triangle",
+                "safeName": "Triangle"
+              }
+            },
+            "wireValue": "triangle"
+          }
+        ],
+        "type": "enum"
+      },
+      "Triangle": {
+        "declaration": {
+          "name": {
+            "originalName": "Triangle",
+            "camelCase": {
+              "unsafeName": "triangle",
+              "safeName": "triangle"
+            },
+            "snakeCase": {
+              "unsafeName": "triangle",
+              "safeName": "triangle"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TRIANGLE",
+              "safeName": "TRIANGLE"
+            },
+            "pascalCase": {
+              "unsafeName": "Triangle",
+              "safeName": "Triangle"
+            }
+          },
+          "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+          }
+        },
+        "properties": [
+          {
+            "name": {
+              "name": {
+                "originalName": "type",
+                "camelCase": {
+                  "unsafeName": "type",
+                  "safeName": "type_"
+                },
+                "snakeCase": {
+                  "unsafeName": "type",
+                  "safeName": "type_"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TYPE",
+                  "safeName": "TYPE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Type",
+                  "safeName": "Type"
+                }
+              },
+              "wireValue": "type"
+            },
+            "typeReference": {
+              "value": "TriangleType",
+              "type": "named"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "base",
+                "camelCase": {
+                  "unsafeName": "base",
+                  "safeName": "base"
+                },
+                "snakeCase": {
+                  "unsafeName": "base",
+                  "safeName": "base"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BASE",
+                  "safeName": "BASE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Base",
+                  "safeName": "Base"
+                }
+              },
+              "wireValue": "base"
+            },
+            "typeReference": {
+              "value": "DOUBLE",
+              "type": "primitive"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "height",
+                "camelCase": {
+                  "unsafeName": "height",
+                  "safeName": "height"
+                },
+                "snakeCase": {
+                  "unsafeName": "height",
+                  "safeName": "height"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "HEIGHT",
+                  "safeName": "HEIGHT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Height",
+                  "safeName": "Height"
+                }
+              },
+              "wireValue": "height"
+            },
+            "typeReference": {
+              "value": "DOUBLE",
+              "type": "primitive"
+            }
+          }
+        ],
+        "additionalProperties": false,
+        "type": "object"
+      },
+      "SquareType": {
+        "declaration": {
+          "name": {
+            "originalName": "SquareType",
+            "camelCase": {
+              "unsafeName": "squareType",
+              "safeName": "squareType"
+            },
+            "snakeCase": {
+              "unsafeName": "square_type",
+              "safeName": "square_type"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "SQUARE_TYPE",
+              "safeName": "SQUARE_TYPE"
+            },
+            "pascalCase": {
+              "unsafeName": "SquareType",
+              "safeName": "SquareType"
+            }
+          },
+          "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+          }
+        },
+        "values": [
+          {
+            "name": {
+              "originalName": "square",
+              "camelCase": {
+                "unsafeName": "square",
+                "safeName": "square"
+              },
+              "snakeCase": {
+                "unsafeName": "square",
+                "safeName": "square"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "SQUARE",
+                "safeName": "SQUARE"
+              },
+              "pascalCase": {
+                "unsafeName": "Square",
+                "safeName": "Square"
+              }
+            },
+            "wireValue": "square"
+          }
+        ],
+        "type": "enum"
+      },
+      "Square": {
+        "declaration": {
+          "name": {
+            "originalName": "Square",
+            "camelCase": {
+              "unsafeName": "square",
+              "safeName": "square"
+            },
+            "snakeCase": {
+              "unsafeName": "square",
+              "safeName": "square"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "SQUARE",
+              "safeName": "SQUARE"
+            },
+            "pascalCase": {
+              "unsafeName": "Square",
+              "safeName": "Square"
+            }
+          },
+          "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+          }
+        },
+        "properties": [
+          {
+            "name": {
+              "name": {
+                "originalName": "type",
+                "camelCase": {
+                  "unsafeName": "type",
+                  "safeName": "type_"
+                },
+                "snakeCase": {
+                  "unsafeName": "type",
+                  "safeName": "type_"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TYPE",
+                  "safeName": "TYPE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Type",
+                  "safeName": "Type"
+                }
+              },
+              "wireValue": "type"
+            },
+            "typeReference": {
+              "value": "SquareType",
+              "type": "named"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "sideLength",
+                "camelCase": {
+                  "unsafeName": "sideLength",
+                  "safeName": "sideLength"
+                },
+                "snakeCase": {
+                  "unsafeName": "side_length",
+                  "safeName": "side_length"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SIDE_LENGTH",
+                  "safeName": "SIDE_LENGTH"
+                },
+                "pascalCase": {
+                  "unsafeName": "SideLength",
+                  "safeName": "SideLength"
+                }
+              },
+              "wireValue": "sideLength"
+            },
+            "typeReference": {
+              "value": "DOUBLE",
+              "type": "primitive"
+            }
+          }
+        ],
+        "additionalProperties": false,
+        "type": "object"
+      }
+    },
+    "headers": [],
+    "endpoints": {},
+    "pathParameters": []
+  },
   "rootPackage": {
     "fernFilepath": {
       "allParts": [],

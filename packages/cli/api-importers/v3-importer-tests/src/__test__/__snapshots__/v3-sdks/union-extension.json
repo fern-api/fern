@@ -595,6 +595,337 @@
     "sharedTypes": [],
     "typesReferencedOnlyByService": {}
   },
+  "dynamic": {
+    "version": "1.0.0",
+    "types": {
+      "PartyAccount": {
+        "declaration": {
+          "name": {
+            "originalName": "PartyAccount",
+            "camelCase": {
+              "unsafeName": "partyAccount",
+              "safeName": "partyAccount"
+            },
+            "snakeCase": {
+              "unsafeName": "party_account",
+              "safeName": "party_account"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "PARTY_ACCOUNT",
+              "safeName": "PARTY_ACCOUNT"
+            },
+            "pascalCase": {
+              "unsafeName": "PartyAccount",
+              "safeName": "PartyAccount"
+            }
+          },
+          "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+          }
+        },
+        "types": [
+          {
+            "value": "IbanField",
+            "type": "named"
+          },
+          {
+            "value": "OtherField",
+            "type": "named"
+          }
+        ],
+        "type": "undiscriminatedUnion"
+      },
+      "IbanField": {
+        "declaration": {
+          "name": {
+            "originalName": "IbanField",
+            "camelCase": {
+              "unsafeName": "ibanField",
+              "safeName": "ibanField"
+            },
+            "snakeCase": {
+              "unsafeName": "iban_field",
+              "safeName": "iban_field"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "IBAN_FIELD",
+              "safeName": "IBAN_FIELD"
+            },
+            "pascalCase": {
+              "unsafeName": "IbanField",
+              "safeName": "IbanField"
+            }
+          },
+          "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+          }
+        },
+        "properties": [
+          {
+            "name": {
+              "name": {
+                "originalName": "iban",
+                "camelCase": {
+                  "unsafeName": "iban",
+                  "safeName": "iban"
+                },
+                "snakeCase": {
+                  "unsafeName": "iban",
+                  "safeName": "iban"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "IBAN",
+                  "safeName": "IBAN"
+                },
+                "pascalCase": {
+                  "unsafeName": "Iban",
+                  "safeName": "Iban"
+                }
+              },
+              "wireValue": "iban"
+            },
+            "typeReference": {
+              "value": {
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "additionalProperties": false,
+        "type": "object"
+      },
+      "OtherField": {
+        "declaration": {
+          "name": {
+            "originalName": "OtherField",
+            "camelCase": {
+              "unsafeName": "otherField",
+              "safeName": "otherField"
+            },
+            "snakeCase": {
+              "unsafeName": "other_field",
+              "safeName": "other_field"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "OTHER_FIELD",
+              "safeName": "OTHER_FIELD"
+            },
+            "pascalCase": {
+              "unsafeName": "OtherField",
+              "safeName": "OtherField"
+            }
+          },
+          "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+          }
+        },
+        "properties": [
+          {
+            "name": {
+              "name": {
+                "originalName": "other",
+                "camelCase": {
+                  "unsafeName": "other",
+                  "safeName": "other"
+                },
+                "snakeCase": {
+                  "unsafeName": "other",
+                  "safeName": "other"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "OTHER",
+                  "safeName": "OTHER"
+                },
+                "pascalCase": {
+                  "unsafeName": "Other",
+                  "safeName": "Other"
+                }
+              },
+              "wireValue": "other"
+            },
+            "typeReference": {
+              "value": {
+                "value": {
+                  "value": "Other",
+                  "type": "named"
+                },
+                "type": "nullable"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "additionalProperties": false,
+        "type": "object"
+      },
+      "Other": {
+        "declaration": {
+          "name": {
+            "originalName": "Other",
+            "camelCase": {
+              "unsafeName": "other",
+              "safeName": "other"
+            },
+            "snakeCase": {
+              "unsafeName": "other",
+              "safeName": "other"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "OTHER",
+              "safeName": "OTHER"
+            },
+            "pascalCase": {
+              "unsafeName": "Other",
+              "safeName": "Other"
+            }
+          },
+          "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+          }
+        },
+        "properties": [
+          {
+            "name": {
+              "name": {
+                "originalName": "identification",
+                "camelCase": {
+                  "unsafeName": "identification",
+                  "safeName": "identification"
+                },
+                "snakeCase": {
+                  "unsafeName": "identification",
+                  "safeName": "identification"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "IDENTIFICATION",
+                  "safeName": "IDENTIFICATION"
+                },
+                "pascalCase": {
+                  "unsafeName": "Identification",
+                  "safeName": "Identification"
+                }
+              },
+              "wireValue": "identification"
+            },
+            "typeReference": {
+              "value": {
+                "value": "STRING",
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          },
+          {
+            "name": {
+              "name": {
+                "originalName": "schemeNameCone",
+                "camelCase": {
+                  "unsafeName": "schemeNameCone",
+                  "safeName": "schemeNameCone"
+                },
+                "snakeCase": {
+                  "unsafeName": "scheme_name_cone",
+                  "safeName": "scheme_name_cone"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SCHEME_NAME_CONE",
+                  "safeName": "SCHEME_NAME_CONE"
+                },
+                "pascalCase": {
+                  "unsafeName": "SchemeNameCone",
+                  "safeName": "SchemeNameCone"
+                }
+              },
+              "wireValue": "schemeNameCone"
+            },
+            "typeReference": {
+              "value": {
+                "value": "STRING",
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "additionalProperties": false,
+        "type": "object"
+      },
+      "CounterPartyAccount": {
+        "declaration": {
+          "name": {
+            "originalName": "CounterPartyAccount",
+            "camelCase": {
+              "unsafeName": "counterPartyAccount",
+              "safeName": "counterPartyAccount"
+            },
+            "snakeCase": {
+              "unsafeName": "counter_party_account",
+              "safeName": "counter_party_account"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "COUNTER_PARTY_ACCOUNT",
+              "safeName": "COUNTER_PARTY_ACCOUNT"
+            },
+            "pascalCase": {
+              "unsafeName": "CounterPartyAccount",
+              "safeName": "CounterPartyAccount"
+            }
+          },
+          "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+          }
+        },
+        "properties": [
+          {
+            "name": {
+              "name": {
+                "originalName": "currency",
+                "camelCase": {
+                  "unsafeName": "currency",
+                  "safeName": "currency"
+                },
+                "snakeCase": {
+                  "unsafeName": "currency",
+                  "safeName": "currency"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CURRENCY",
+                  "safeName": "CURRENCY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Currency",
+                  "safeName": "Currency"
+                }
+              },
+              "wireValue": "currency"
+            },
+            "typeReference": {
+              "value": {
+                "value": "STRING",
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "additionalProperties": false,
+        "type": "object"
+      }
+    },
+    "headers": [],
+    "endpoints": {},
+    "pathParameters": []
+  },
   "rootPackage": {
     "fernFilepath": {
       "allParts": [],
