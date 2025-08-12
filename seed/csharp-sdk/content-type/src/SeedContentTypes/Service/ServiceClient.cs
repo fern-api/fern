@@ -53,7 +53,10 @@ public partial class ServiceClient
     }
 
     /// <summary>
-    /// Update with JSON merge patch - complex types
+    /// Update with JSON merge patch - complex types.
+    /// This endpoint demonstrates the distinction between:
+    /// - optional&lt;T&gt; fields (can be present or absent, but not null)
+    /// - optional&lt;nullable&lt;T&gt;&gt; fields (can be present, absent, or null)
     /// </summary>
     /// <example><code>
     /// await client.Service.PatchComplexAsync(
@@ -61,7 +64,6 @@ public partial class ServiceClient
     ///     new PatchComplexRequest
     ///     {
     ///         Name = "name",
-    ///         Email = "email",
     ///         Age = 1,
     ///         Active = true,
     ///         Metadata = new Dictionary&lt;string, object&gt;()
@@ -72,6 +74,17 @@ public partial class ServiceClient
     ///             },
     ///         },
     ///         Tags = new List&lt;string&gt;() { "tags", "tags" },
+    ///         Email = "email",
+    ///         Nickname = "nickname",
+    ///         Bio = "bio",
+    ///         ProfileImageUrl = "profileImageUrl",
+    ///         Settings = new Dictionary&lt;string, object&gt;()
+    ///         {
+    ///             {
+    ///                 "settings",
+    ///                 new Dictionary&lt;object, object?&gt;() { { "key", "value" } }
+    ///             },
+    ///         },
     ///     }
     /// );
     /// </code></example>

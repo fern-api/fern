@@ -14,6 +14,7 @@ public class Example1
 
         await client.Auth.RefreshTokenAsync(
             new RefreshTokenRequest{
+                XApiKey = "X-Api-Key",
                 ClientId = "client_id",
                 ClientSecret = "client_secret",
                 RefreshToken = "refresh_token",
