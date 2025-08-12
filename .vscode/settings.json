@@ -29,7 +29,10 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "editor.formatOnSave": false,
-  "editor.codeActionsOnSave": [],
+  "editor.codeActionsOnSave": {
+    "source.organizeImports.biome": "explicit",
+    "source.fixAll.biome": "explicit"
+  },
   "editor.defaultFormatter": null,
   "[typescript]": {
     "editor.defaultFormatter": "biomejs.biome"
