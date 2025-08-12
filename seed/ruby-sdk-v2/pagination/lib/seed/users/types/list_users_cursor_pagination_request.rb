@@ -2,10 +2,10 @@
 module Seed
     module Users
         class ListUsersCursorPaginationRequest
-            field :page, , optional: true, nullable: false
-            field :per_page, , optional: true, nullable: false
-            field :order, , optional: true, nullable: false
-            field :starting_after, , optional: true, nullable: false
+            field :page, Integer, optional: true, nullable: false
+            field :per_page, Integer, optional: true, nullable: false
+            field :order, Seed::users::Order, optional: true, nullable: false
+            field :starting_after, String, optional: true, nullable: false
         end
     end
 end

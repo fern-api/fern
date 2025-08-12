@@ -2,19 +2,19 @@
 module Seed
     module Types
         class ObjectWithOptionalField < Internal::Types::Model
-            field :string, , optional: true, nullable: false
-            field :integer, , optional: true, nullable: false
-            field :long, , optional: true, nullable: false
-            field :double, , optional: true, nullable: false
-            field :bool, , optional: true, nullable: false
-            field :datetime, , optional: true, nullable: false
-            field :date, , optional: true, nullable: false
-            field :uuid, , optional: true, nullable: false
-            field :base_64, , optional: true, nullable: false
-            field :list, , optional: true, nullable: false
-            field :set, , optional: true, nullable: false
-            field :map, , optional: true, nullable: false
-            field :bigint, , optional: true, nullable: false
+            field :string, String, optional: true, nullable: false
+            field :integer, Integer, optional: true, nullable: false
+            field :long, Integer, optional: true, nullable: false
+            field :double, Integer, optional: true, nullable: false
+            field :bool, Internal::Types::Boolean, optional: true, nullable: false
+            field :datetime, String, optional: true, nullable: false
+            field :date, String, optional: true, nullable: false
+            field :uuid, String, optional: true, nullable: false
+            field :base_64, String, optional: true, nullable: false
+            field :list, Internal::Types::Array[String], optional: true, nullable: false
+            field :set, Internal::Types::Array[String], optional: true, nullable: false
+            field :map, Internal::Types::Hash[Integer, String], optional: true, nullable: false
+            field :bigint, String, optional: true, nullable: false
         end
     end
 end

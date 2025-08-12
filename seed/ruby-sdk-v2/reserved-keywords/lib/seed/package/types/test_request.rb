@@ -2,7 +2,7 @@
 module Seed
     module Package
         class TestRequest
-            field :for_, , optional: false, nullable: false
+            field :for_, String, optional: false, nullable: false
         end
     end
 end

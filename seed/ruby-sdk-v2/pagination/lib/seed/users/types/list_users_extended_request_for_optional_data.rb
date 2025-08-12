@@ -2,7 +2,7 @@
 module Seed
     module Users
         class ListUsersExtendedRequestForOptionalData
-            field :cursor, , optional: true, nullable: false
+            field :cursor, String, optional: true, nullable: false
         end
     end
 end

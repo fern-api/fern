@@ -2,7 +2,7 @@
 module Seed
     module Types
         class Cat < Internal::Types::Model
-            field :fruit, , optional: false, nullable: false
+            field :fruit, Seed::ast::Fruit, optional: false, nullable: false
         end
     end
 end
