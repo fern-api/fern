@@ -11,7 +11,8 @@ export type GeneratorOutputSchema =
     | FernDefinition.GeneratorOutputSchema.Postman
     | FernDefinition.GeneratorOutputSchema.LocalFileSystem
     | FernDefinition.GeneratorOutputSchema.Nuget
-    | FernDefinition.GeneratorOutputSchema.Rubygems;
+    | FernDefinition.GeneratorOutputSchema.Rubygems
+    | FernDefinition.GeneratorOutputSchema.Crates;
 
 export namespace GeneratorOutputSchema {
     export interface Npm extends FernDefinition.NpmOutputLocationSchema {
@@ -40,5 +41,9 @@ export namespace GeneratorOutputSchema {
 
     export interface Rubygems extends FernDefinition.RubyGemsOutputLocationSchema {
         location: "rubygems";
+    }
+
+    export interface Crates extends FernDefinition.CratesOutputLocationSchema {
+        location: "crates";
     }
 }

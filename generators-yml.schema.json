@@ -2292,7 +2292,8 @@
             "postman",
             "local-file-system",
             "nuget",
-            "rubygems"
+            "rubygems",
+            "crates"
           ]
         }
       },
@@ -2544,6 +2545,40 @@
               "type": "string"
             },
             "api-key": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "location",
+            "package-name"
+          ]
+        },
+        {
+          "properties": {
+            "location": {
+              "const": "crates"
+            },
+            "url": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "package-name": {
+              "type": "string"
+            },
+            "token": {
               "oneOf": [
                 {
                   "type": "string"
