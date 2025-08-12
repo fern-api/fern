@@ -217,9 +217,9 @@ export async function publishDocs({
                                 });
 
                                 if (response.ok) {
-                                    console.log("File uploaded successfully");
+                                    context.logger.debug(`Uploaded dynamic IR for ${language}`);
                                 } else {
-                                    context.logger.warn("Failed to upload dynamic ir");
+                                    context.logger.warn(`Failed to upload dynamic IR for ${language}`);
                                 }
                             } else {
                                 context.logger.warn(`Could not find matching dynamic IR to upload for ${language}`);
