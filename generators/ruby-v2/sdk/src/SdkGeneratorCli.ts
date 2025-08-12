@@ -10,6 +10,7 @@ import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
 import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator";
+import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator";
 
 export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -69,6 +70,19 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
             if (subpackage.service != null && service != null) {
                 this.generateRequests(context, service, subpackage.service);
             }
+        });
+
+        context.ir.environments?.environments._visit({
+            singleBaseUrl: (value) => {
+                context.logger.info("Visiting singleBaseUrl environment case.");
+                const environments = new SingleUrlEnvironmentGenerator({
+                    context,
+                    singleUrlEnvironments: value
+                });
+                context.project.addRawFiles(environments.generate());
+            },
+            multipleBaseUrls: () => undefined,
+            _other: () => undefined
         });
 
         await context.project.persist();

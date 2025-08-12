@@ -525,6 +525,11 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     type: "string",
                     hidden: true,
                     description: "Override output mode to local-file-system with the specified path"
+                })
+                .option("dynamic-snippets", {
+                    boolean: true,
+                    description: "Use dynamic SDK snippets in docs generation",
+                    default: false
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -574,7 +579,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     preview: argv.preview,
                     brokenLinks: argv.brokenLinks,
                     strictBrokenLinks: argv.strictBrokenLinks,
-                    disableTemplates: argv.disableSnippets
+                    disableTemplates: argv.disableSnippets,
+                    dynamicSnippets: argv.dynamicSnippets
                 });
             }
             // default to loading api workspace to preserve legacy behavior
