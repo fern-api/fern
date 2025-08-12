@@ -12,6 +12,8 @@ import { ReferenceConfigBuilder } from "./reference";
 
 const FEATURES_CONFIG_PATHS = [
   "/assets/features.yml",
+  path.join(__dirname, "./features.yml"),
+  path.join(__dirname, "./assets/features.yml"), 
   path.join(__dirname, "../features.yml"),
   path.join(__dirname, "../assets/features.yml"),  
   path.join(__dirname, "../../features.yml"),
