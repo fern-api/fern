@@ -32,7 +32,6 @@ import { OpenAPILoader } from "./loaders/OpenAPILoader";
 import { ProtobufIRGenerator } from "./protobuf/ProtobufIRGenerator";
 import { MaybeValid } from "./protobuf/utils";
 import { getAllOpenAPISpecs } from "./utils/getAllOpenAPISpecs";
-import { convertIrToDynamicSnippetsIr } from "@fern-api/ir-generator";
 
 export declare namespace OSSWorkspace {
     export interface Args extends AbstractAPIWorkspace.Args {
