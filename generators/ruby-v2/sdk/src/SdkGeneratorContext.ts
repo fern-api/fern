@@ -1,7 +1,5 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { AbstractRubyGeneratorContext, ruby } from "@fern-api/ruby-ast";
-import { AsIsFiles, RubyProject } from "@fern-api/ruby-base";
-import { camelCase, upperFirst } from "lodash-es";
+import { AbstractRubyGeneratorContext, AsIsFiles, RubyProject } from "@fern-api/ruby-base";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import {
@@ -14,6 +12,7 @@ import {
 } from "@fern-fern/ir-sdk/api";
 
 import { RelativeFilePath } from "@fern-api/path-utils";
+import { ruby } from "@fern-api/ruby-ast";
 import { ClassReference } from "@fern-api/ruby-ast/src/ast/ClassReference";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator";

@@ -10,12 +10,12 @@ module Seed
                     @client = client
                 end
 
-                # @return [untyped]
+                # @return [String]
                 def get_with_path
                     raise NotImplementedError, 'This method is not yet implemented.'
                 end
 
-                # @return [untyped]
+                # @return [String]
                 def get_with_inline_path
                     raise NotImplementedError, 'This method is not yet implemented.'
                 end
@@ -40,12 +40,12 @@ module Seed
                     raise NotImplementedError, 'This method is not yet implemented.'
                 end
 
-                # @return [untyped]
+                # @return [String]
                 def modify_with_path
                     raise NotImplementedError, 'This method is not yet implemented.'
                 end
 
-                # @return [untyped]
+                # @return [String]
                 def modify_with_inline_path
                     raise NotImplementedError, 'This method is not yet implemented.'
                 end

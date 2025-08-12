@@ -10,7 +10,7 @@ module Seed
                     @client = client
                 end
 
-                # @return [untyped]
+                # @return [Seed::types::enum::WeatherReport]
                 def get_and_return_enum
                     raise NotImplementedError, 'This method is not yet implemented.'
                 end

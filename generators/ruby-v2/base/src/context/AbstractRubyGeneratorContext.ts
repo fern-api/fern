@@ -5,17 +5,19 @@ import {
 } from "@fern-api/browser-compatible-base-generator";
 import { IntermediateRepresentation, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
 
-import { BaseRubyCustomConfigSchema } from "../custom-config/BaseRubyCustomConfigSchema";
+import { BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
 
 import { RelativeFilePath } from "@fern-api/path-utils";
+import { ruby } from "@fern-api/ruby-ast";
 import { capitalize, snakeCase } from "lodash-es";
-import * as ruby from "../ruby";
+import { RubyTypeMapper } from "./RubyTypeMapper";
 
 export abstract class AbstractRubyGeneratorContext<
     CustomConfig extends BaseRubyCustomConfigSchema
 > extends AbstractGeneratorContext {
     public readonly ir: IntermediateRepresentation;
     public readonly customConfig: CustomConfig;
+    public readonly typeMapper: RubyTypeMapper;
 
     public constructor(
         ir: IntermediateRepresentation,
@@ -26,6 +28,7 @@ export abstract class AbstractRubyGeneratorContext<
         super(config, generatorNotificationService);
         this.ir = ir;
         this.customConfig = customConfig;
+        this.typeMapper = new RubyTypeMapper(this);
     }
 
     public getTypeDeclarationOrThrow(typeId: TypeId): TypeDeclaration {

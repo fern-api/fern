@@ -10,27 +10,27 @@ module Seed
                     @client = client
                 end
 
-                # @return [untyped]
+                # @return [String]
                 def test_get
                     raise NotImplementedError, 'This method is not yet implemented.'
                 end
 
-                # @return [untyped]
+                # @return [Seed::types::object::ObjectWithOptionalField]
                 def test_post
                     raise NotImplementedError, 'This method is not yet implemented.'
                 end
 
-                # @return [untyped]
+                # @return [Seed::types::object::ObjectWithOptionalField]
                 def test_put
                     raise NotImplementedError, 'This method is not yet implemented.'
                 end
 
-                # @return [untyped]
+                # @return [Seed::types::object::ObjectWithOptionalField]
                 def test_patch
                     raise NotImplementedError, 'This method is not yet implemented.'
                 end
 
-                # @return [untyped]
+                # @return [bool]
                 def test_delete
                     raise NotImplementedError, 'This method is not yet implemented.'
                 end

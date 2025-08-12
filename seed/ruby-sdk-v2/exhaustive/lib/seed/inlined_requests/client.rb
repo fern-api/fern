@@ -9,7 +9,7 @@ module Seed
                 @client = client
             end
 
-            # @return [untyped]
+            # @return [Seed::types::object::ObjectWithOptionalField]
             def post_with_object_bodyand_response
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
