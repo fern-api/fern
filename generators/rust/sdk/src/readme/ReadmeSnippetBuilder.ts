@@ -1,6 +1,6 @@
 import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
 import { isNonNullish } from "@fern-api/core-utils";
-import { rust, UseStatement, Expression, Statement, CodeBlock, Writer, PrimitiveType } from "@fern-api/rust-codegen";
+import { rust, UseStatement, Expression, Statement, CodeBlock, Writer } from "@fern-api/rust-codegen";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -162,11 +162,11 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
         // Use statements
         const useStatements = [
-            new UseStatement({ path: this.packageName, items: ["ClientError", "ApiClientBuilder"] })
+            new UseStatement({ path: this.packageName, items: ["ClientError", this.context.getClientBuilderName()] })
         ];
 
         // Main function with error handling
-        const mainFunction = rust.method({
+        const mainFunction = rust.standaloneFunction({
             name: "main",
             parameters: [],
             isAsync: true,
@@ -188,14 +188,14 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         // Write main function
         mainFunction.write(writer);
 
-        return writer.toString();
+        return writer.toString().trim() + "\n";
     }
 
     private buildErrorHandlingBody(endpoint: EndpointWithFilepath): Statement[] {
         // Build client
         const clientBuild = Expression.methodChain(
             Expression.methodCall({
-                target: Expression.reference("ApiClientBuilder"),
+                target: Expression.reference(this.context.getClientBuilderName()),
                 method: "new",
                 args: [Expression.stringLiteral("https://api.example.com")]
             }),
@@ -269,7 +269,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private buildRetryCode(endpoint: EndpointWithFilepath): string {
         const writer = new Writer();
 
-        const useStatements = [new UseStatement({ path: this.packageName, items: ["ApiClientBuilder"] })];
+        const useStatements = [
+            new UseStatement({ path: this.packageName, items: [this.context.getClientBuilderName()] })
+        ];
 
         // Write use statements
         useStatements.forEach((useStmt) => {
@@ -278,7 +280,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         });
         writer.newLine();
 
-        const mainFunction = rust.method({
+        const mainFunction = rust.standaloneFunction({
             name: "main",
             parameters: [],
             isAsync: true,
@@ -287,13 +289,13 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         });
 
         mainFunction.write(writer);
-        return writer.toString();
+        return writer.toString().trim() + "\n";
     }
 
     private buildRetryBody(endpoint: EndpointWithFilepath): Statement[] {
         const clientBuild = Expression.methodChain(
             Expression.methodCall({
-                target: Expression.reference("ApiClientBuilder"),
+                target: Expression.reference(this.context.getClientBuilderName()),
                 method: "new",
                 args: [Expression.stringLiteral("https://api.example.com")]
             }),
@@ -338,7 +340,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private buildTimeoutCode(endpoint: EndpointWithFilepath): string {
         const useStatements = [
-            new UseStatement({ path: this.packageName, items: ["ApiClientBuilder"] }),
+            new UseStatement({ path: this.packageName, items: [this.context.getClientBuilderName()] }),
             new UseStatement({ path: "std::time", items: ["Duration"] })
         ];
 
@@ -351,7 +353,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         });
         writer.newLine();
 
-        const mainFunction = rust.method({
+        const mainFunction = rust.standaloneFunction({
             name: "main",
             parameters: [],
             isAsync: true,
@@ -360,13 +362,13 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         });
 
         mainFunction.write(writer);
-        return writer.toString();
+        return writer.toString().trim() + "\n";
     }
 
     private buildTimeoutBody(endpoint: EndpointWithFilepath): Statement[] {
         const clientBuild = Expression.methodChain(
             Expression.methodCall({
-                target: Expression.reference("ApiClientBuilder"),
+                target: Expression.reference(this.context.getClientBuilderName()),
                 method: "new",
                 args: [Expression.stringLiteral("https://api.example.com")]
             }),

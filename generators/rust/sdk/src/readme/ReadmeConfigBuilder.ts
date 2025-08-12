@@ -53,17 +53,13 @@ export class ReadmeConfigBuilder {
     }
 
     private getLanguageInfo({ context }: { context: SdkGeneratorContext }): FernGeneratorCli.LanguageInfo {
-        // TODO: Update to use "rust" type once it's added to FernGeneratorCli.LanguageInfo
-        // For now, using TypeScript as a placeholder since it's closer to Rust syntax than Go
-        // This will generate a README with TypeScript-style badges/titles, but the code snippets will be correct Rust
-        // Once Rust is added to the LanguageInfo union, we should use:
-        // const packageName = context.configManager.get("packageName");
-        // const packageVersion = context.configManager.get("packageVersion");
         const packageName = context.configManager.get("packageName") || context.ir.apiName.snakeCase.safeName;
+        const packageVersion = context.configManager.get("packageVersion") || "0.1.0";
 
-        return FernGeneratorCli.LanguageInfo.typescript({
+        return FernGeneratorCli.LanguageInfo.rust({
             publishInfo: {
-                packageName: packageName
+                packageName: packageName,
+                version: packageVersion
             }
         });
     }

@@ -47,20 +47,51 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): rust.AstNode {
-        return rust.CodeBlock.fromStatements([
-            rust.Statement.raw(`use ${this.context.getPackageName()}::${this.context.getClientBuilderName()};`),
-            rust.Statement.raw(`
+        // Get the import statements
+        const imports = this.getImportStatements({ endpoint, snippet });
+
+        // Return a raw statement instead of CodeBlock to avoid outer curly braces
+        // Add a newline at the end to ensure proper markdown formatting
+        return rust.Statement.raw(`${imports}
+
 #[tokio::main]
 async fn main() {
-    let ${CLIENT_VAR_NAME} = ${this.getClientBuilderCall(this.getConstructorArgs({ endpoint, snippet })).toString()};
+    let ${CLIENT_VAR_NAME} = ${this.getClientBuilderCallNew({ endpoint, snippet }).toString()};
     ${rust.Expression.methodCall({
         target: rust.Expression.reference(CLIENT_VAR_NAME),
         method: this.getMethodName({ endpoint }),
         args: this.getMethodArgs({ endpoint, snippet }),
         isAsync: true
     }).toString()};
-}`)
-        ]);
+}
+`);
+    }
+
+    private getImportStatements({
+        endpoint,
+        snippet
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): string {
+        const imports = [`use ${this.context.getPackageName()}::${this.context.getClientBuilderName()};`];
+
+        // Add auth imports if needed
+        if (endpoint.auth != null && snippet.auth != null) {
+            switch (endpoint.auth.type) {
+                case "bearer":
+                    imports.push(`use ${this.context.getPackageName()}::auth::BearerAuth;`);
+                    break;
+                case "basic":
+                    imports.push(`use ${this.context.getPackageName()}::auth::BasicAuth;`);
+                    break;
+                case "header":
+                    imports.push(`use ${this.context.getPackageName()}::auth::HeaderAuth;`);
+                    break;
+            }
+        }
+
+        return imports.join("\n");
     }
 
     private constructClientCode({
@@ -628,6 +659,53 @@ async fn main() {
                 .join("_")}_${this.context.getMethodName(endpoint.declaration.name)}`;
         }
         return this.context.getMethodName(endpoint.declaration.name);
+    }
+
+    private getClientBuilderCallNew({
+        endpoint,
+        snippet
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): rust.Expression {
+        const methods: Array<{ method: string; args: rust.Expression[] }> = [];
+
+        // Add base URL
+        const baseUrlValue = this.getBaseUrlValue({
+            baseUrl: snippet.baseURL,
+            environment: snippet.environment
+        });
+        if (baseUrlValue != null) {
+            methods.push({ method: "base_url", args: [rust.Expression.stringLiteral(baseUrlValue)] });
+        }
+
+        // Add auth
+        if (endpoint.auth != null && snippet.auth != null) {
+            const authExpr = this.getConstructorAuthArg({ auth: endpoint.auth, values: snippet.auth });
+            methods.push({ method: "auth", args: [authExpr] });
+        }
+
+        // Add headers
+        if (this.context.ir.headers != null && snippet.headers != null) {
+            for (const header of this.context.ir.headers) {
+                const headerValues = snippet.headers.value as Record<string, unknown>;
+                const value = headerValues?.[header.name.wireValue];
+                if (value != null) {
+                    methods.push({
+                        method: "header",
+                        args: [
+                            rust.Expression.stringLiteral(header.name.wireValue),
+                            rust.Expression.stringLiteral(String(value))
+                        ]
+                    });
+                }
+            }
+        }
+
+        // Add build() at the end
+        methods.push({ method: "build", args: [] });
+
+        return rust.Expression.methodChain(rust.Expression.reference(this.context.getClientBuilderName()), methods);
     }
 
     private getClientBuilderCall(arguments_: rust.Expression[]): rust.Expression {

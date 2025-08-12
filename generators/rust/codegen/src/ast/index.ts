@@ -13,6 +13,7 @@ export { Enum } from "./Enum";
 export { EnumVariant } from "./EnumVariant";
 export { Method } from "./Method";
 export type { FunctionParameter } from "./Method";
+export { StandaloneFunction } from "./StandaloneFunction";
 export { ImplBlock } from "./ImplBlock";
 export { Module } from "./Module";
 export { UseStatement } from "./UseStatement";
