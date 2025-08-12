@@ -10,8 +10,10 @@ module Seed
                     @client = client
                 end
 
-                # @return [void]
-                def get_and_return_enum; end
+                # @return [untyped]
+                def get_and_return_enum
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
             end
         end
     end

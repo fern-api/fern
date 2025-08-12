@@ -10,8 +10,10 @@ module Seed
                     @client = client
                 end
 
-                # @return [void]
-                def add; end
+                # @return [untyped]
+                def add
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
             end
         end
     end

@@ -16,11 +16,13 @@ import {
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { ClassReference } from "@fern-api/ruby-ast/src/ast/ClassReference";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
+import { EndpointGenerator } from "./endpoint/EndpointGenerator";
 
 const ROOT_TYPES_FOLDER = "types";
 
 export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomConfigSchema> {
     public readonly project: RubyProject;
+    public readonly endpointGenerator: EndpointGenerator;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -30,6 +32,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     ) {
         super(ir, config, customConfig, generatorNotificationService);
         this.project = new RubyProject({ context: this });
+        this.endpointGenerator = new EndpointGenerator({ context: this });
     }
 
     public getRootFolderPath(): RelativeFilePath {

@@ -10,23 +10,35 @@ module Seed
                     @client = client
                 end
 
-                # @return [void]
-                def get_and_return_with_optional_field; end
+                # @return [untyped]
+                def get_and_return_with_optional_field
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
 
-                # @return [void]
-                def get_and_return_with_required_field; end
+                # @return [untyped]
+                def get_and_return_with_required_field
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
 
-                # @return [void]
-                def get_and_return_with_map_of_map; end
+                # @return [untyped]
+                def get_and_return_with_map_of_map
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
 
-                # @return [void]
-                def get_and_return_nested_with_optional_field; end
+                # @return [untyped]
+                def get_and_return_nested_with_optional_field
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
 
-                # @return [void]
-                def get_and_return_nested_with_required_field; end
+                # @return [untyped]
+                def get_and_return_nested_with_required_field
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
 
-                # @return [void]
-                def get_and_return_nested_with_required_field_as_list; end
+                # @return [untyped]
+                def get_and_return_nested_with_required_field_as_list
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
             end
         end
     end

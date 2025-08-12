@@ -10,32 +10,50 @@ module Seed
                     @client = client
                 end
 
-                # @return [void]
-                def get_and_return_string; end
+                # @return [untyped]
+                def get_and_return_string
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
 
-                # @return [void]
-                def get_and_return_int; end
+                # @return [untyped]
+                def get_and_return_int
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
 
-                # @return [void]
-                def get_and_return_long; end
+                # @return [untyped]
+                def get_and_return_long
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
 
-                # @return [void]
-                def get_and_return_double; end
+                # @return [untyped]
+                def get_and_return_double
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
 
-                # @return [void]
-                def get_and_return_bool; end
+                # @return [untyped]
+                def get_and_return_bool
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
 
-                # @return [void]
-                def get_and_return_datetime; end
+                # @return [untyped]
+                def get_and_return_datetime
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
 
-                # @return [void]
-                def get_and_return_date; end
+                # @return [untyped]
+                def get_and_return_date
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
 
-                # @return [void]
-                def get_and_return_uuid; end
+                # @return [untyped]
+                def get_and_return_uuid
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
 
-                # @return [void]
-                def get_and_return_base_64; end
+                # @return [untyped]
+                def get_and_return_base_64
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
             end
         end
     end

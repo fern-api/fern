@@ -10,26 +10,40 @@ module Seed
                     @client = client
                 end
 
-                # @return [void]
-                def get_and_return_list_of_primitives; end
+                # @return [untyped]
+                def get_and_return_list_of_primitives
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
 
-                # @return [void]
-                def get_and_return_list_of_objects; end
+                # @return [untyped]
+                def get_and_return_list_of_objects
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
 
-                # @return [void]
-                def get_and_return_set_of_primitives; end
+                # @return [untyped]
+                def get_and_return_set_of_primitives
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
 
-                # @return [void]
-                def get_and_return_set_of_objects; end
+                # @return [untyped]
+                def get_and_return_set_of_objects
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
 
-                # @return [void]
-                def get_and_return_map_prim_to_prim; end
+                # @return [untyped]
+                def get_and_return_map_prim_to_prim
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
 
-                # @return [void]
-                def get_and_return_map_of_prim_to_object; end
+                # @return [untyped]
+                def get_and_return_map_of_prim_to_object
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
 
-                # @return [void]
-                def get_and_return_optional; end
+                # @return [untyped]
+                def get_and_return_optional
+                    raise NotImplementedError, 'This method is not yet implemented.'
+                end
             end
         end
     end
