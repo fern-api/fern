@@ -1,3 +1,5 @@
+import Foundation
+
 public struct TestCaseNonHiddenGrade: Codable, Hashable, Sendable {
     public let passed: Bool
     public let actualResult: VariableValue?

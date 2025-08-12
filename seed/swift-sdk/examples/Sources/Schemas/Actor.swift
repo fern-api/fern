@@ -1,3 +1,5 @@
+import Foundation
+
 public struct Actor: Codable, Hashable, Sendable {
     public let name: String
     public let id: String

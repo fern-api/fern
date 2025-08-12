@@ -1,3 +1,5 @@
+import Foundation
+
 public enum FunctionSignatureType: Codable, Hashable, Sendable {
     case void(Void)
     case nonVoid(NonVoid)

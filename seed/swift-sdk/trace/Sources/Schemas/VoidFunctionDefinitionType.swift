@@ -1,3 +1,5 @@
+import Foundation
+
 public struct VoidFunctionDefinitionType: Codable, Hashable, Sendable {
     public let parameters: [ParameterType]
     public let code: FunctionImplementationForMultipleLanguagesType

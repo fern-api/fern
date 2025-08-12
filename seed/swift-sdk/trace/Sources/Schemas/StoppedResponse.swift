@@ -1,3 +1,5 @@
+import Foundation
+
 public struct StoppedResponse: Codable, Hashable, Sendable {
     public let submissionId: SubmissionId
     /// Additional properties that are not explicitly defined in the schema

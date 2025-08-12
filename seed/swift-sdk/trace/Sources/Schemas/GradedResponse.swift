@@ -1,3 +1,5 @@
+import Foundation
+
 public struct GradedResponse: Codable, Hashable, Sendable {
     public let submissionId: SubmissionId
     public let testCases: [String: TestCaseResultWithStdout]

@@ -1,3 +1,5 @@
+import Foundation
+
 public struct TraceResponseV2: Codable, Hashable, Sendable {
     public let submissionId: SubmissionId
     public let lineNumber: Int

@@ -1,3 +1,5 @@
+import Foundation
+
 public struct FileInfo: Codable, Hashable, Sendable {
     public let filename: String
     public let contents: String

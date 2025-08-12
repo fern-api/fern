@@ -1,3 +1,5 @@
+import Foundation
+
 public struct Json: Codable, Hashable, Sendable {
     public let docs: String
     public let raw: String

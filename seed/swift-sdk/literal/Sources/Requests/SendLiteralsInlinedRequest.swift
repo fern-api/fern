@@ -1,3 +1,5 @@
+import Foundation
+
 public struct SendLiteralsInlinedRequest: Codable, Hashable, Sendable {
     public let prompt: JSONValue
     public let context: JSONValue?

@@ -1,3 +1,5 @@
+import Foundation
+
 public struct GenericValue: Codable, Hashable, Sendable {
     public let stringifiedType: String?
     public let stringifiedValue: String

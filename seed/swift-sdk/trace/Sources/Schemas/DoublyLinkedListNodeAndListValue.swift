@@ -1,3 +1,5 @@
+import Foundation
+
 public struct DoublyLinkedListNodeAndListValue: Codable, Hashable, Sendable {
     public let nodeId: NodeId
     public let fullList: DoublyLinkedListValue

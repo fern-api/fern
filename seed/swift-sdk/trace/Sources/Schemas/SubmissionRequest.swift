@@ -1,3 +1,5 @@
+import Foundation
+
 public enum SubmissionRequest: Codable, Hashable, Sendable {
     case initializeProblemRequest(InitializeProblemRequest)
     case initializeWorkspaceRequest(InitializeWorkspaceRequest)

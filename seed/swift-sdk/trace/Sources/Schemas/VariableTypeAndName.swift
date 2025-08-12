@@ -1,3 +1,5 @@
+import Foundation
+
 public struct VariableTypeAndName: Codable, Hashable, Sendable {
     public let variableType: VariableType
     public let name: String

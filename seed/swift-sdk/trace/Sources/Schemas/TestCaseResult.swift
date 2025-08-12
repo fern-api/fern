@@ -1,3 +1,5 @@
+import Foundation
+
 public struct TestCaseResult: Codable, Hashable, Sendable {
     public let expectedResult: VariableValue
     public let actualResult: ActualResult

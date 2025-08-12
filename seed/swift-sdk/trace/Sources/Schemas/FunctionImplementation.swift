@@ -1,3 +1,5 @@
+import Foundation
+
 public struct FunctionImplementation: Codable, Hashable, Sendable {
     public let impl: String
     public let imports: String?

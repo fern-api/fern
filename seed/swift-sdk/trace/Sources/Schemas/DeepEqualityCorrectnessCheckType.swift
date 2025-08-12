@@ -1,3 +1,5 @@
+import Foundation
+
 public struct DeepEqualityCorrectnessCheckType: Codable, Hashable, Sendable {
     public let expectedValueParameterId: ParameterIdType
     /// Additional properties that are not explicitly defined in the schema

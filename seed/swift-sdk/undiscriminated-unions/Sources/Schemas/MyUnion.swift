@@ -1,3 +1,5 @@
+import Foundation
+
 /// Several different types are accepted.
 public enum MyUnion: Codable, Hashable, Sendable {
     case string(String)

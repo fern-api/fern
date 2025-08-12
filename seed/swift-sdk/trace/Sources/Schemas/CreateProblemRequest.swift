@@ -1,3 +1,5 @@
+import Foundation
+
 public struct CreateProblemRequest: Codable, Hashable, Sendable {
     public let problemName: String
     public let problemDescription: ProblemDescription

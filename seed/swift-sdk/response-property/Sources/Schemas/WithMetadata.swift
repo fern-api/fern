@@ -1,3 +1,5 @@
+import Foundation
+
 public struct WithMetadata: Codable, Hashable, Sendable {
     public let metadata: [String: String]
     /// Additional properties that are not explicitly defined in the schema

@@ -181,6 +181,11 @@ internal partial class RawClient(ClientOptions clientOptions)
         MergeHeaders(mergedHeaders, request.Headers);
         MergeHeaders(mergedHeaders, request.Options?.Headers);
 
+        if (request.Options is IIdempotentRequestOptions idempotentRequest)
+        {
+            MergeHeaders(mergedHeaders, idempotentRequest.GetIdempotencyHeaders());
+        }
+
         MergeAdditionalHeaders(mergedHeaders, request.Options?.AdditionalHeaders ?? []);
         SetHeaders(httpRequest, mergedHeaders);
         return httpRequest;

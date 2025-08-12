@@ -1,4 +1,8 @@
+import Foundation
+
 public final class ClientConfig: Sendable {
+    public typealias CredentialProvider = @Sendable () async throws -> String
+
     struct Defaults {
         static let timeout: Int = 60
         static let maxRetries: Int = 2
@@ -10,7 +14,21 @@ public final class ClientConfig: Sendable {
     }
 
     struct BearerAuth {
-        let token: String
+        let token: Token
+
+        enum Token: Sendable {
+            case staticToken(String)
+            case provider(CredentialProvider)
+
+            func retrieve() async throws -> String {
+                switch self {
+                case .staticToken(let token):
+                    return token
+                case .provider(let provider):
+                    return try await provider()
+                }
+            }
+        }
     }
 
     struct BasicAuth {

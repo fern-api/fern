@@ -1,3 +1,5 @@
+import Foundation
+
 public enum FieldValue: Codable, Hashable, Sendable {
     case primitiveValue(PrimitiveValue)
     case objectValue(ObjectValue)

@@ -1,3 +1,5 @@
+import Foundation
+
 public struct StdoutResponse: Codable, Hashable, Sendable {
     public let submissionId: SubmissionId
     public let stdout: String

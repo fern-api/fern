@@ -1,3 +1,5 @@
+import Foundation
+
 public enum WorkspaceSubmissionUpdateInfo: Codable, Hashable, Sendable {
     case running(Running)
     case ran(Ran)

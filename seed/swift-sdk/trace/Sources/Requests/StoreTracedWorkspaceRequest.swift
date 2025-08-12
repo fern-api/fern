@@ -1,3 +1,5 @@
+import Foundation
+
 public struct StoreTracedWorkspaceRequest: Codable, Hashable, Sendable {
     public let workspaceRunDetails: WorkspaceRunDetails
     public let traceResponses: [TraceResponse]

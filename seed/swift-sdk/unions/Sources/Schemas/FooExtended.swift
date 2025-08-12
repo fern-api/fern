@@ -1,3 +1,5 @@
+import Foundation
+
 public struct FooExtended: Codable, Hashable, Sendable {
     public let name: String
     public let age: Int

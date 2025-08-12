@@ -1,3 +1,5 @@
+import Foundation
+
 public final class UserClient: Sendable {
     public let events: EventsClient
     private let httpClient: HTTPClient

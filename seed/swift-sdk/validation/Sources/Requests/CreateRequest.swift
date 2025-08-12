@@ -1,3 +1,5 @@
+import Foundation
+
 public struct CreateRequest: Codable, Hashable, Sendable {
     public let decimal: Double
     public let even: Int

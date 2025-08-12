@@ -1,3 +1,5 @@
+import Foundation
+
 public enum TestSubmissionUpdateInfo: Codable, Hashable, Sendable {
     case running(Running)
     case stopped(Stopped)

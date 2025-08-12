@@ -1,3 +1,5 @@
+import Foundation
+
 public struct MyInlineType: Codable, Hashable, Sendable {
     public let bar: String
     /// Additional properties that are not explicitly defined in the schema

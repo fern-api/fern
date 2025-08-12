@@ -1,3 +1,5 @@
+import Foundation
+
 public struct RunningResponse: Codable, Hashable, Sendable {
     public let submissionId: SubmissionId
     public let state: RunningSubmissionState

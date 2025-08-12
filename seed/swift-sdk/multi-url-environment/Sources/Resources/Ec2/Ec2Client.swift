@@ -1,3 +1,5 @@
+import Foundation
+
 public final class Ec2Client: Sendable {
     private let httpClient: HTTPClient
 

@@ -1,3 +1,5 @@
+import Foundation
+
 public enum DebugVariableValue: Codable, Hashable, Sendable {
     case integerValue(IntegerValue)
     case booleanValue(BooleanValue)

@@ -7,6 +7,7 @@ import { FunctionParameter } from "./FunctionParameter";
 export declare namespace Initializer {
     interface Args {
         accessLevel?: AccessLevel;
+        convenience?: true;
         /** Whether the initializer can return `nil`. Initializers that return nil are said to be failable. */
         failable?: true;
         /** Whether the initializer can throw an error. */
@@ -20,6 +21,7 @@ export declare namespace Initializer {
 
 export class Initializer extends AstNode {
     public readonly accessLevel?: AccessLevel;
+    public readonly convenience?: true;
     public readonly failable?: true;
     public readonly throws?: true;
     public readonly parameters: FunctionParameter[];
@@ -27,9 +29,10 @@ export class Initializer extends AstNode {
     public readonly multiline?: true;
     public readonly docs?: DocComment;
 
-    constructor({ accessLevel, failable, throws, parameters, body, multiline, docs }: Initializer.Args) {
+    constructor({ accessLevel, convenience, failable, throws, parameters, body, multiline, docs }: Initializer.Args) {
         super();
         this.accessLevel = accessLevel;
+        this.convenience = convenience;
         this.failable = failable;
         this.throws = throws;
         this.parameters = parameters ?? [];
@@ -45,6 +48,9 @@ export class Initializer extends AstNode {
         if (this.accessLevel != null) {
             writer.write(this.accessLevel);
             writer.write(" ");
+        }
+        if (this.convenience) {
+            writer.write("convenience ");
         }
         writer.write("init");
         if (this.failable) {

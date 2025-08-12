@@ -1,3 +1,5 @@
+import Foundation
+
 public struct FilteredType: Codable, Hashable, Sendable {
     public let publicProperty: String?
     public let privateProperty: Int

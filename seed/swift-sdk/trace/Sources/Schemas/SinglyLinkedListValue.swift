@@ -1,3 +1,5 @@
+import Foundation
+
 public struct SinglyLinkedListValue: Codable, Hashable, Sendable {
     public let head: NodeId?
     public let nodes: [NodeId: SinglyLinkedListNodeValue]

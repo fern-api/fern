@@ -1,3 +1,5 @@
+import Foundation
+
 public enum CreateProblemResponse: Codable, Hashable, Sendable {
     case success(Success)
     case error(Error)

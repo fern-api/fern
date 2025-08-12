@@ -1,3 +1,5 @@
+import Foundation
+
 public enum DataType: Codable, Hashable, Sendable {
     case string(String)
     case base64(Base64)

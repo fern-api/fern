@@ -1,3 +1,5 @@
+import Foundation
+
 public struct InitializeProblemRequest: Codable, Hashable, Sendable {
     public let problemId: ProblemId
     public let problemVersion: Int?

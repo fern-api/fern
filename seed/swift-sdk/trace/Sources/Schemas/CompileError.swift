@@ -1,3 +1,5 @@
+import Foundation
+
 public struct CompileError: Codable, Hashable, Sendable {
     public let message: String
     /// Additional properties that are not explicitly defined in the schema

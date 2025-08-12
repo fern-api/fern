@@ -1,3 +1,5 @@
+import Foundation
+
 public enum SubmissionStatusV2: Codable, Hashable, Sendable {
     case test(Test)
     case workspace(Workspace)

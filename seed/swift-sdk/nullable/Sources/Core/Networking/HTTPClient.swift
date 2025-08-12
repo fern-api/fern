@@ -1,3 +1,5 @@
+import Foundation
+
 final class HTTPClient: Sendable {
     private let clientConfig: ClientConfig
     private let jsonEncoder = Serde.jsonEncoder
@@ -18,7 +20,7 @@ final class HTTPClient: Sendable {
     ) async throws -> T {
         let requestBody: HTTP.RequestBody? = requestBody.map { .jsonEncodable($0) }
 
-        let request = buildRequest(
+        let request = try await buildRequest(
             method: method,
             path: path,
             requestContentType: .applicationJson,
@@ -60,7 +62,7 @@ final class HTTPClient: Sendable {
     ) async throws {
         let requestBody: HTTP.RequestBody? = requestBody.map { .jsonEncodable($0) }
 
-        let request = buildRequest(
+        let request = try await buildRequest(
             method: method,
             path: path,
             requestContentType: .applicationJson,
@@ -81,7 +83,7 @@ final class HTTPClient: Sendable {
         requestOptions: RequestOptions? = nil,
         responseType: T.Type
     ) async throws -> T {
-        let request = buildRequest(
+        let request = try await buildRequest(
             method: method,
             path: path,
             requestContentType: .applicationOctetStream,
@@ -107,7 +109,7 @@ final class HTTPClient: Sendable {
         requestQueryParams: [String: QueryParameter?],
         requestBody: HTTP.RequestBody? = nil,
         requestOptions: RequestOptions? = nil
-    ) -> URLRequest {
+    ) async throws -> URLRequest {
         // Init with URL
         let url = buildRequestURL(
             path: path, requestQueryParams: requestQueryParams, requestOptions: requestOptions
@@ -124,7 +126,7 @@ final class HTTPClient: Sendable {
         request.httpMethod = method.rawValue
 
         // Set headers
-        let headers = buildRequestHeaders(
+        let headers = try await buildRequestHeaders(
             requestContentType: requestContentType,
             requestHeaders: requestHeaders,
             requestOptions: requestOptions
@@ -180,7 +182,7 @@ final class HTTPClient: Sendable {
         requestContentType: HTTP.ContentType,
         requestHeaders: [String: String],
         requestOptions: RequestOptions? = nil
-    ) -> [String: String] {
+    ) async throws -> [String: String] {
         var headers = clientConfig.headers ?? [:]
         headers["Content-Type"] = requestContentType.rawValue
         if let headerAuth = clientConfig.headerAuth {
@@ -189,8 +191,8 @@ final class HTTPClient: Sendable {
         if let basicAuthToken = clientConfig.basicAuth?.token {
             headers["Authorization"] = "Basic \(basicAuthToken)"
         }
-        if let bearerToken = requestOptions?.token ?? clientConfig.bearerAuth?.token {
-            headers["Authorization"] = "Bearer \(bearerToken)"
+        if let bearerAuthToken = try await getBearerAuthToken(requestOptions) {
+            headers["Authorization"] = "Bearer \(bearerAuthToken)"
         }
         for (key, value) in requestHeaders {
             headers[key] = value
@@ -199,6 +201,16 @@ final class HTTPClient: Sendable {
             headers[key] = value
         }
         return headers
+    }
+
+    private func getBearerAuthToken(_ requestOptions: RequestOptions?) async throws -> String? {
+        if let tokenString = requestOptions?.token {
+            return tokenString
+        }
+        if let bearerAuth = clientConfig.bearerAuth {
+            return try await bearerAuth.token.retrieve()
+        }
+        return nil
     }
 
     private func buildRequestBody(

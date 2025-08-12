@@ -1,3 +1,5 @@
+import Foundation
+
 public struct Package: Codable, Hashable, Sendable {
     public let name: String
     /// Additional properties that are not explicitly defined in the schema

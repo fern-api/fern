@@ -1,3 +1,5 @@
+import Foundation
+
 public struct SubmissionIdNotFound: Codable, Hashable, Sendable {
     public let missingSubmissionId: SubmissionId
     /// Additional properties that are not explicitly defined in the schema

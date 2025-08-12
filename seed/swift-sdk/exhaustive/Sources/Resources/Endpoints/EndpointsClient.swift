@@ -1,3 +1,5 @@
+import Foundation
+
 public final class EndpointsClient: Sendable {
     public let container: ContainerClient
     public let contentType: ContentTypeClient

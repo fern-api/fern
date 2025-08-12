@@ -1,3 +1,5 @@
+import Foundation
+
 public struct MyObjectWithOptional: Codable, Hashable, Sendable {
     public let prop: String
     public let optionalProp: String?

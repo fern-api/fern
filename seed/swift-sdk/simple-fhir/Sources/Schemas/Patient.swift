@@ -1,3 +1,5 @@
+import Foundation
+
 public struct Patient: Codable, Hashable, Sendable {
     public let id: String
     public let relatedResources: [ResourceList]

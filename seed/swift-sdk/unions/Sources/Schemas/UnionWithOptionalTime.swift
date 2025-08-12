@@ -1,3 +1,5 @@
+import Foundation
+
 public enum UnionWithOptionalTime: Codable, Hashable, Sendable {
     case date(Date)
     case datetime(Datetime)

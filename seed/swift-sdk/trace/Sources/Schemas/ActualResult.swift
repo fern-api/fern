@@ -1,3 +1,5 @@
+import Foundation
+
 public enum ActualResult: Codable, Hashable, Sendable {
     case value(Value)
     case exception(Exception)

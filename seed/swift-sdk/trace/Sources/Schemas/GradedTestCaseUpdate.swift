@@ -1,3 +1,5 @@
+import Foundation
+
 public struct GradedTestCaseUpdate: Codable, Hashable, Sendable {
     public let testCaseId: TestCaseId
     public let grade: TestCaseGrade

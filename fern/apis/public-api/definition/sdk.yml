@@ -68,6 +68,7 @@ types:
       - csharp
       - ruby
       - php
+      - rust
   
   SDKPublishingConfiguration: 
     properties:
@@ -86,6 +87,7 @@ types:
       nuget: NugetPublishingConfiguration
       rubyGems: RubyGemsPublishingConfiguration
       packagist: PackagistPublishingConfiguration
+      crates: CratesPublishingConfiguration
 
   NpmPublishingConfiguration: 
     properties: 
@@ -161,6 +163,18 @@ types:
       token:
         type: optional<string>
         docs: Packagist authentication token for publishing
+
+  CratesPublishingConfiguration:
+    properties:
+      url:
+        type: optional<string>
+        docs: Registry URL (defaults to crates.io)
+      packageName:
+        type: string
+        docs: Name of the crate to publish
+      token:
+        type: optional<string>
+        docs: Crates.io authentication token for publishing
   
   Repository: 
     union: 

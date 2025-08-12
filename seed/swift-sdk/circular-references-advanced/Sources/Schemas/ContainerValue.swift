@@ -1,3 +1,5 @@
+import Foundation
+
 public enum ContainerValue: Codable, Hashable, Sendable {
     case list(List)
     case optional(Optional)

@@ -1,3 +1,5 @@
+import Foundation
+
 public struct GetExecutionSessionStateResponse: Codable, Hashable, Sendable {
     public let states: [String: ExecutionSessionState]
     public let numWarmingInstances: Int?

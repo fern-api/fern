@@ -391,6 +391,12 @@ export class Expression extends AstNode {
         return new this({ type: "await", expression });
     }
 
+    public static rawValue(value: string): Expression {
+        return new this({ type: "raw-value", value });
+    }
+
+    // Helpers
+
     public static rawStringValue(value: string): Expression {
         return new this({ type: "raw-value", value: `"${value}"` });
     }
@@ -399,7 +405,7 @@ export class Expression extends AstNode {
         return new this({ type: "raw-value", value: "nil" });
     }
 
-    public static rawValue(value: string): Expression {
-        return new this({ type: "raw-value", value });
+    public static self(): Expression {
+        return new this({ type: "raw-value", value: "self" });
     }
 }

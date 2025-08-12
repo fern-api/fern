@@ -1,3 +1,5 @@
+import Foundation
+
 public struct Node: Codable, Hashable, Sendable {
     public let id: String
     public let label: String?
