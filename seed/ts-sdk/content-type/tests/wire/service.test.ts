@@ -25,18 +25,21 @@ describe("Service", () => {
         const client = new SeedContentTypesClient({ environment: server.baseUrl });
         const rawRequestBody = {
             name: "name",
-            email: "email",
             age: 1,
             active: true,
             metadata: { metadata: { key: "value" } },
             tags: ["tags", "tags"],
+            email: "email",
+            nickname: "nickname",
+            bio: "bio",
+            profileImageUrl: "profileImageUrl",
+            settings: { settings: { key: "value" } },
         };
 
         server.mockEndpoint().patch("/complex/id").jsonBody(rawRequestBody).respondWith().statusCode(200).build();
 
         const response = await client.service.patchComplex("id", {
             name: "name",
-            email: "email",
             age: 1,
             active: true,
             metadata: {
@@ -45,6 +48,15 @@ describe("Service", () => {
                 },
             },
             tags: ["tags", "tags"],
+            email: "email",
+            nickname: "nickname",
+            bio: "bio",
+            profileImageUrl: "profileImageUrl",
+            settings: {
+                settings: {
+                    key: "value",
+                },
+            },
         });
         expect(response).toEqual(undefined);
     });
