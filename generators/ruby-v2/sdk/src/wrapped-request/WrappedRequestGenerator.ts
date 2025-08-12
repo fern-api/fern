@@ -1,7 +1,8 @@
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
-import { HttpEndpoint, SdkRequestWrapper, ServiceId } from "@fern-fern/ir-sdk/api";
+import { generateFields } from "@fern-api/ruby-model";
+import { HttpEndpoint, ObjectProperty, SdkRequestWrapper, ServiceId } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -28,6 +29,8 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
     }
 
     protected doGenerate(): RubyFile {
+        const properties: ObjectProperty[] = [];
+
         const class_ = ruby.class_({
             name: this.wrapper.wrapperName.pascalCase.safeName
         });
@@ -44,11 +47,73 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
         }
         nestedModule.addStatement(class_);
 
+        for (const pathParameter of this.endpoint.allPathParameters) {
+            properties.push({
+                ...pathParameter,
+                name: {
+                    name: pathParameter.name, 
+                    wireValue: pathParameter.name.originalName
+                },
+                propertyAccess: undefined,
+                availability: undefined,
+            });
+        }
+
+        for (const queryParameter of this.endpoint.queryParameters) {
+            properties.push({
+                ...queryParameter,
+                propertyAccess: undefined,
+                availability: undefined,
+            });
+        }
+
+        for (const header of this.endpoint.headers) {
+            properties.push({
+                ...header,
+                propertyAccess: undefined,
+                availability: undefined,
+            });
+        }
+
+        const statements = generateFields({
+            properties,
+            context: this.context
+        });
+
+        this.endpoint.requestBody?._visit({
+            reference: (reference) => {
+                properties.push({
+                    name: {
+                        name: this.wrapper.bodyKey,
+                        wireValue: this.wrapper.bodyKey.originalName
+                    },
+                    valueType: reference.requestBodyType,
+                    propertyAccess: undefined,
+                    availability: undefined,
+                    v2Examples: reference.v2Examples,
+                    docs: reference.docs,
+                });
+            },
+            inlinedRequestBody: (request) => {
+                for (const property of [...request.properties, ...(request.extendedProperties ?? [])]) {
+                    properties.push({
+                        ...property,
+                        propertyAccess: undefined,
+                    });
+                }
+            },
+            fileUpload: () => undefined,
+            bytes: () => undefined,
+            _other: () => undefined
+        });
+
+        class_.addStatements(statements);
+
         return new RubyFile({
             node: ruby.codeblock((writer) => {
                 ruby.comment({ docs: "frozen_string_literal: true" });
                 writer.newLine();
-                class_.write(writer);
+                rootModule.write(writer);
             }),
             directory: this.getFilepath(),
             filename: `${this.wrapper.wrapperName.snakeCase.safeName}.rb`,
