@@ -28,7 +28,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         public readonly customConfig: SdkCustomConfigSchema,
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
-        super(ir, config, customConfig, generatorNotificationService);
+        super(ir, config, customConfig ?? {}, generatorNotificationService);
         this.project = new RubyProject({ context: this });
         this.endpointGenerator = new EndpointGenerator({ context: this });
     }

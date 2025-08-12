@@ -2,7 +2,7 @@
 module Seed
     module Types
         class DoubleOptional < Internal::Types::Model
-            field :optional_alias, Array, optional: true, nullable: true
+            field :optional_alias, , optional: true, nullable: false
         end
     end
 end
