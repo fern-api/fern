@@ -60,6 +60,12 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
         return false;
     }
 
+    @JsonProperty("use-default-request-parameter-values")
+    @Value.Default
+    default boolean useDefaultRequestParameterValues() {
+        return false;
+    }
+
     static ImmutableJavaSdkCustomConfig.Builder builder() {
         return ImmutableJavaSdkCustomConfig.builder();
     }
