@@ -172,7 +172,6 @@ export class Type extends AstNode {
             default:
                 assertNever(this.internalType);
         }
-        console.log(`${this.internalType?.type} not written`);
     }
 
     public writeTypeDefinition(writer: Writer): void {
