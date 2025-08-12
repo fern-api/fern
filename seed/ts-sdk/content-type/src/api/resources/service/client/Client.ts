@@ -103,7 +103,10 @@ export class Service {
     }
 
     /**
-     * Update with JSON merge patch - complex types
+     * Update with JSON merge patch - complex types.
+     * This endpoint demonstrates the distinction between:
+     * - optional<T> fields (can be present or absent, but not null)
+     * - optional<nullable<T>> fields (can be present, absent, or null)
      *
      * @param {string} id
      * @param {SeedContentTypes.PatchComplexRequest} request
@@ -112,7 +115,6 @@ export class Service {
      * @example
      *     await client.service.patchComplex("id", {
      *         name: "name",
-     *         email: "email",
      *         age: 1,
      *         active: true,
      *         metadata: {
@@ -120,7 +122,16 @@ export class Service {
      *                 "key": "value"
      *             }
      *         },
-     *         tags: ["tags", "tags"]
+     *         tags: ["tags", "tags"],
+     *         email: "email",
+     *         nickname: "nickname",
+     *         bio: "bio",
+     *         profileImageUrl: "profileImageUrl",
+     *         settings: {
+     *             "settings": {
+     *                 "key": "value"
+     *             }
+     *         }
      *     })
      */
     public patchComplex(
