@@ -89,66 +89,6 @@
     "sharedTypes": [],
     "typesReferencedOnlyByService": {}
   },
-  "dynamic": {
-    "version": "1.0.0",
-    "types": {
-      "SpeechModel": {
-        "declaration": {
-          "name": {
-            "originalName": "SpeechModel",
-            "camelCase": {
-              "unsafeName": "speechModel",
-              "safeName": "speechModel"
-            },
-            "snakeCase": {
-              "unsafeName": "speech_model",
-              "safeName": "speech_model"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "SPEECH_MODEL",
-              "safeName": "SPEECH_MODEL"
-            },
-            "pascalCase": {
-              "unsafeName": "SpeechModel",
-              "safeName": "SpeechModel"
-            }
-          },
-          "fernFilepath": {
-            "allParts": [],
-            "packagePath": []
-          }
-        },
-        "values": [
-          {
-            "name": {
-              "originalName": "Nano",
-              "camelCase": {
-                "unsafeName": "nano",
-                "safeName": "nano"
-              },
-              "snakeCase": {
-                "unsafeName": "nano",
-                "safeName": "nano"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "NANO",
-                "safeName": "NANO"
-              },
-              "pascalCase": {
-                "unsafeName": "Nano",
-                "safeName": "Nano"
-              }
-            },
-            "wireValue": "nano"
-          }
-        ],
-        "type": "enum"
-      }
-    },
-    "headers": [],
-    "endpoints": {},
-    "pathParameters": []
-  },
   "rootPackage": {
     "fernFilepath": {
       "allParts": [],
