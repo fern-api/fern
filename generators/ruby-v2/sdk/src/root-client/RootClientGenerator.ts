@@ -57,7 +57,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             if (!this.context.subPackageHasEndpoints(subpackage)) {
                 continue;
             }
-            class_.addMethod(this.getSubpackageClientGetter(subpackage, rootModule, class_));
+            class_.addMethod(this.getSubpackageClientGetter(subpackage, rootModule));
         }
         rootModule.addStatement(class_);
         return new RubyFile({
@@ -83,7 +83,6 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
     private getSubpackageClientGetter(
         subpackage: FernIr.Subpackage,
         rootModule: ruby.Module_,
-        rootClientClass: ruby.Class_
     ): ruby.Method {
         return new ruby.Method({
             name: subpackage.name.camelCase.safeName,
