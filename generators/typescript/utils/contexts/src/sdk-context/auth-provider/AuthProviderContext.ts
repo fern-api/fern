@@ -14,122 +14,125 @@ export class AuthProviderContext {
         this.context = context;
     }
 
+    public isAuthEndpoint(endpoint: FernIr.HttpEndpoint): boolean {
+        return this.context.ir.auth.schemes.some((scheme) =>
+            scheme._visit({
+                bearer: () => false,
+                basic: () => false,
+                header: () => false,
+                oauth: (scheme) => {
+                    const schemeTokenEndpoint = this.getOAuthTokenEndpoint(scheme);
+                    const schemeRefreshEndpoint = this.getOAuthRefreshEndpoint(scheme);
+                    if (schemeTokenEndpoint.id === endpoint.id) {
+                        return true;
+                    }
+                    if (!schemeRefreshEndpoint) {
+                        return false;
+                    }
+                    if (schemeRefreshEndpoint.id === endpoint.id) {
+                        return true;
+                    }
+                    return false;
+                },
+                inferred: (scheme) => {
+                    const schemeEndpoint = this.getInferredAuthTokenEndpoint(scheme);
+                    return endpoint.id === schemeEndpoint.id;
+                },
+                _other: () => false
+            })
+        );
+    }
+
+    public getOAuthTokenEndpoint(scheme: FernIr.OAuthScheme): FernIr.HttpEndpoint {
+        const tokenEndpointReference = scheme.configuration.tokenEndpoint.endpointReference;
+        const endpoint = this.getOAuthTokenService(scheme).endpoints.find(
+            (endpoint: FernIr.HttpEndpoint) => endpoint.id === tokenEndpointReference.endpointId
+        );
+        if (!endpoint) {
+            throw new Error(`failed to find endpoint with id ${tokenEndpointReference.endpointId}`);
+        }
+        return endpoint;
+    }
+
+    public getOAuthTokenService(scheme: FernIr.OAuthScheme): FernIr.HttpService {
+        const service = this.context.ir.services[scheme.configuration.tokenEndpoint.endpointReference.serviceId];
+        if (!service) {
+            throw new Error(
+                `failed to find service with id ${scheme.configuration.tokenEndpoint.endpointReference.serviceId}`
+            );
+        }
+        return service;
+    }
+
+    public getOAuthRefreshEndpoint(scheme: FernIr.OAuthScheme): FernIr.HttpEndpoint | undefined {
+        const refreshEndpointReference = scheme.configuration.refreshEndpoint?.endpointReference;
+        if (!refreshEndpointReference) {
+            return undefined;
+        }
+        const endpoint = this.getOAuthRefreshService(scheme)?.endpoints.find(
+            (endpoint: FernIr.HttpEndpoint) => endpoint.id === refreshEndpointReference?.endpointId
+        );
+        if (!endpoint) {
+            throw new Error(`failed to find endpoint with id ${refreshEndpointReference?.endpointId}`);
+        }
+        return endpoint;
+    }
+
+    public getOAuthRefreshService(scheme: FernIr.OAuthScheme): FernIr.HttpService | undefined {
+        if (!scheme.configuration.refreshEndpoint?.endpointReference) {
+            return undefined;
+        }
+        const service = this.context.ir.services[scheme.configuration.refreshEndpoint.endpointReference.serviceId];
+        if (!service) {
+            throw new Error(
+                `failed to find service with id ${scheme.configuration.refreshEndpoint.endpointReference.serviceId}`
+            );
+        }
+        return service;
+    }
+
     public getPropertiesForAuthTokenParams(
         authScheme: FernIr.AuthScheme
-    ): Array<{ name: string; type: ts.TypeNode; isOptional: boolean; docs?: string }> {
+    ): Array<{ name: string; type: ts.TypeNode; isOptional: boolean; docs: string[] | undefined }> {
         if (authScheme.type !== "inferred") {
             return [];
         }
 
-        const service = this.getInferredAuthTokenService(authScheme);
         const endpoint = this.getInferredAuthTokenEndpoint(authScheme);
+        const generatedRequestWrapper = this.context.requestWrapper.getGeneratedRequestWrapper(
+            authScheme.tokenEndpoint.endpoint.subpackageId
+                ? {
+                      isRoot: false,
+                      subpackageId: authScheme.tokenEndpoint.endpoint.subpackageId
+                  }
+                : {
+                      isRoot: true
+                  },
+            endpoint.name
+        );
+        const requestProperties = generatedRequestWrapper.getRequestProperties(this.context);
         const properties: Array<{
             name: string;
             type: ts.TypeNode;
             isOptional: boolean;
-            docs?: string;
+            docs: string[] | undefined;
         }> = [];
-        for (const pathParameter of endpoint.allPathParameters) {
-            if (!this.context.type.isLiteral(pathParameter.valueType)) {
-                const type = this.context.type.getReferenceToType(pathParameter.valueType);
-                properties.push({
-                    name: pathParameter.name.camelCase.safeName,
-                    type: type.typeNodeWithoutUndefined,
-                    isOptional: type.isOptional,
-                    docs: pathParameter.docs
-                });
-            }
-        }
-
-        for (const queryParameter of endpoint.queryParameters) {
-            if (!this.context.type.isLiteral(queryParameter.valueType)) {
-                const type = this.context.type.getReferenceToType(queryParameter.valueType);
-                properties.push({
-                    name: queryParameter.name.name.camelCase.safeName,
-                    type: queryParameter.allowMultiple
-                        ? ts.factory.createUnionTypeNode([
-                              type.typeNodeWithoutUndefined,
-                              ts.factory.createArrayTypeNode(type.typeNodeWithoutUndefined)
-                          ])
-                        : type.typeNodeWithoutUndefined,
-                    isOptional: type.isOptional,
-                    docs: queryParameter.docs
-                });
-            }
-        }
-
-        for (const header of [...service.headers, ...endpoint.headers]) {
-            if (!this.context.type.isLiteral(header.valueType)) {
-                const type = this.context.type.getReferenceToType(header.valueType);
-                properties.push({
-                    name: header.name.name.camelCase.safeName,
-                    type: type.typeNodeWithoutUndefined,
-                    isOptional: type.isOptional,
-                    docs: header.docs
-                });
-            }
-        }
-
-        if (endpoint.requestBody != null) {
-            switch (endpoint.requestBody.type) {
-                case "inlinedRequestBody":
-                    for (const property of endpoint.requestBody.properties) {
-                        if (!this.context.type.isLiteral(property.valueType)) {
-                            const type = this.context.type.getReferenceToType(property.valueType);
-                            properties.push({
-                                name: property.name.name.camelCase.safeName,
-                                type: type.typeNodeWithoutUndefined,
-                                isOptional: type.isOptional,
-                                docs: property.docs
-                            });
-                        }
-                    }
-                    break;
-                case "reference": {
-                    const resolvedRequestBodyType = this.context.type.resolveTypeReference(
-                        endpoint.requestBody.requestBodyType
-                    );
-                    if (resolvedRequestBodyType.type === "named") {
-                        const typeDeclaration = this.context.type.getTypeDeclaration(resolvedRequestBodyType.name);
-                        if (typeDeclaration.shape.type === "object") {
-                            const generatedType = this.context.type.getGeneratedType(resolvedRequestBodyType.name);
-                            if (generatedType.type === "object") {
-                                const allProperties = generatedType.getAllPropertiesIncludingExtensions(this.context, {
-                                    forceCamelCase: true
-                                });
-                                for (const property of allProperties) {
-                                    if (!this.context.type.isLiteral(property.type)) {
-                                        const type = this.context.type.getReferenceToType(property.type);
-                                        properties.push({
-                                            name: property.propertyKey,
-                                            type: type.typeNodeWithoutUndefined,
-                                            isOptional: type.isOptional,
-                                            docs: undefined
-                                        });
-                                    }
-                                }
-                            }
-                        }
-                    } else {
-                        // For non-object types, add as a single "body" property
-                        const type = this.context.type.getReferenceToType(endpoint.requestBody.requestBodyType);
-                        properties.push({
-                            name: "body",
-                            type: type.typeNodeWithoutUndefined,
-                            isOptional: type.isOptional,
-                            docs: endpoint.requestBody.docs
-                        });
-                    }
-                    break;
-                }
-            }
+        for (const property of requestProperties) {
+            properties.push({
+                name: property.safeName,
+                type: property.type,
+                isOptional: property.isOptional,
+                docs: property.docs
+            });
         }
 
         return properties;
     }
 
     private getInferredAuthTokenService(authScheme: FernIr.InferredAuthScheme): FernIr.HttpService {
-        this.context.logger.info(`Inferred auth token service for scheme ${JSON.stringify(authScheme.tokenEndpoint.endpoint)}`);
+        this.context.logger.info(
+            `Inferred auth token service for scheme ${JSON.stringify(authScheme.tokenEndpoint.endpoint)}`
+        );
         this.context.logger.info(`IR services: ${Object.keys(this.context.ir.services).join(", ")}`);
         const service = this.context.ir.services[authScheme.tokenEndpoint.endpoint.serviceId];
         if (!service) {

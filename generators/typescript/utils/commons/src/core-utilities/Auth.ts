@@ -28,7 +28,7 @@ export interface Auth {
         getHeaders: (instanceExpression: ts.Expression) => ts.Expression;
     };
 
-    AbstractAuthProvider: {
+    AuthProvider: {
         _getReferenceToType: () => ts.TypeNode;
         getAuthRequest: {
             invoke: (instanceExpression: ts.Expression) => ts.Expression;
@@ -154,11 +154,8 @@ export class AuthImpl extends CoreUtility implements Auth {
         }
     };
 
-    public readonly AbstractAuthProvider = {
-        _getReferenceToType: this.withExportedName(
-            "AbstractAuthProvider",
-            (AbstractAuthProvider) => () => AbstractAuthProvider.getTypeNode()
-        ),
+    public readonly AuthProvider = {
+        _getReferenceToType: this.withExportedName("AuthProvider", (AuthProvider) => () => AuthProvider.getTypeNode()),
         getAuthRequest: {
             invoke: (instanceExpression: ts.Expression) => {
                 return ts.factory.createAwaitExpression(

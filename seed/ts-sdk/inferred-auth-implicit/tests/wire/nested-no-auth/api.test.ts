@@ -8,7 +8,14 @@ import { SeedInferredAuthImplicitClient } from "../../../src/Client";
 describe("Api", () => {
     test("getSomething", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedInferredAuthImplicitClient({ environment: server.baseUrl });
+
+        const client = new SeedInferredAuthImplicitClient({
+            xApiKey: "X-Api-Key",
+            clientId: "client_id",
+            clientSecret: "client_secret",
+            scope: "scope",
+            environment: server.baseUrl,
+        });
 
         server.mockEndpoint().get("/nested-no-auth/get-something").respondWith().statusCode(200).build();
 

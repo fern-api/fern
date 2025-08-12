@@ -1,4 +1,10 @@
-import { ExportedFilePath, getTextOfTsNode, maybeAddDocsStructure, PackageId } from "@fern-typescript/commons";
+import {
+    ExportedFilePath,
+    getPropertyKey,
+    getTextOfTsNode,
+    maybeAddDocsStructure,
+    PackageId
+} from "@fern-typescript/commons";
 import { GeneratedRequestWrapper, SdkContext } from "@fern-typescript/contexts";
 import {
     MethodDeclarationStructure,
@@ -21,6 +27,10 @@ export declare namespace InferredAuthProviderGenerator {
     }
 }
 const CLASS_NAME = "InferredAuthProvider";
+const AUTH_TOKEN_PARAMS_OPTION_NAME = "authTokenParameters";
+const AUTH_TOKEN_PARAMS_FIELD_NAME = "authTokenParameters";
+const AUTH_TOKEN_TYPE_NAME = "AuthTokenParameters";
+const OPTIONS_TYPE_NAME = "Options";
 export class InferredAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly CLASS_NAME = CLASS_NAME;
     private readonly authScheme: FernIr.InferredAuthScheme;
@@ -75,7 +85,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     public getOptionsType(): ts.TypeNode {
-        return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.Options`);
+        return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${OPTIONS_TYPE_NAME}`);
     }
 
     public instantiate(constructorArgs: ts.Expression[]): ts.Expression {
@@ -98,7 +108,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         context.sourceFile.addClass({
             name: CLASS_NAME,
             isExported: true,
-            extends: getTextOfTsNode(context.coreUtilities.auth.AbstractAuthProvider._getReferenceToType()),
+            implements: [getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())],
             properties: [
                 {
                     name: "client",
@@ -108,8 +118,8 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                     scope: Scope.Private
                 },
                 {
-                    name: "authTokenParameters",
-                    type: getTextOfTsNode(this.getAuthTokenParametersTypeNode(context)),
+                    name: AUTH_TOKEN_PARAMS_FIELD_NAME,
+                    type: getTextOfTsNode(this.getAuthTokenParametersTypeNode()),
                     hasQuestionToken: false,
                     isReadonly: true,
                     scope: Scope.Private
@@ -204,9 +214,8 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                         }
                     ],
                     statements: [
-                        "super();",
                         `this.client = options.client;`,
-                        `this.authTokenParameters = options.authTokenParameters;`
+                        `this.${AUTH_TOKEN_PARAMS_FIELD_NAME} = options.${AUTH_TOKEN_PARAMS_OPTION_NAME};`
                     ]
                 }
             ]
@@ -359,113 +368,24 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         context: SdkContext;
         requestWrapper: GeneratedRequestWrapper;
     }): ts.Expression[] {
-        const params: ts.Expression[] = [];
-        const authPropRef = (name: string): ts.Expression => {
-            return context.coreUtilities.fetcher.Supplier.get(
-                ts.factory.createPropertyAccessExpression(
-                    ts.factory.createIdentifier("this.authTokenParameters"),
-                    ts.factory.createIdentifier(name)
-                )
-            );
-        };
-        for (const pathParameter of this.endpoint.allPathParameters) {
-            if (!context.type.isLiteral(pathParameter.valueType)) {
-                params.push(authPropRef(pathParameter.name.camelCase.safeName));
-            }
-        }
-
-        for (const queryParameter of this.endpoint.queryParameters) {
-            if (!context.type.isLiteral(queryParameter.valueType)) {
-                params.push(authPropRef(queryParameter.name.name.camelCase.safeName));
-            }
-        }
-
-        for (const header of [...this.service.headers, ...this.endpoint.headers]) {
-            if (!context.type.isLiteral(header.valueType)) {
-                params.push(authPropRef(header.name.name.camelCase.safeName));
-            }
-        }
-
-        if (this.endpoint.requestBody != null) {
-            switch (this.endpoint.requestBody.type) {
-                case "inlinedRequestBody": {
-                    params.push(
-                        ts.factory.createObjectLiteralExpression(
-                            this.endpoint.requestBody.properties
-                                .filter((property) => !context.type.isLiteral(property.valueType))
-                                .map((property) => {
-                                    return ts.factory.createPropertyAssignment(
-                                        requestWrapper.getInlinedRequestBodyPropertyKey(property),
-                                        authPropRef(property.name.name.camelCase.safeName)
-                                    );
-                                }),
-                            true
+        return [
+            ts.factory.createObjectLiteralExpression(
+                requestWrapper
+                    .getRequestProperties(context)
+                    .map((p) =>
+                        ts.factory.createPropertyAssignment(
+                            ts.factory.createIdentifier(p.name),
+                            context.coreUtilities.fetcher.Supplier.get(
+                                ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createIdentifier("this.authTokenParameters"),
+                                    ts.factory.createIdentifier(p.safeName)
+                                )
+                            )
                         )
-                    );
-                    break;
-                }
-                case "reference": {
-                    const resolvedRequestBodyType = context.type.resolveTypeReference(
-                        this.endpoint.requestBody.requestBodyType
-                    );
-                    if (resolvedRequestBodyType.type === "named") {
-                        const typeDeclaration = context.type.getTypeDeclaration(resolvedRequestBodyType.name);
-                        if (typeDeclaration.shape.type === "object") {
-                            const generatedType = context.type.getGeneratedType(resolvedRequestBodyType.name);
-                            if (generatedType.type === "object") {
-                                const allPropertiesCamelCase = generatedType.getAllPropertiesIncludingExtensions(
-                                    context,
-                                    {
-                                        forceCamelCase: true
-                                    }
-                                );
-                                const allProperties = generatedType.getAllPropertiesIncludingExtensions(context);
-
-                                // Join the two arrays by wireKey
-                                const joinedProperties: {
-                                    name: string;
-                                    camelCaseName: string;
-                                    type: FernIr.TypeReference;
-                                }[] = allProperties.map((property) => {
-                                    const camelCaseProperty = allPropertiesCamelCase.find(
-                                        (p) => p.wireKey === property.wireKey
-                                    );
-                                    if (!camelCaseProperty) {
-                                        throw new Error(
-                                            `Property ${property.wireKey} not found in camelCase properties.`
-                                        );
-                                    }
-                                    return {
-                                        name: property.propertyKey,
-                                        camelCaseName: camelCaseProperty.propertyKey,
-                                        type: property.type
-                                    };
-                                });
-
-                                params.push(
-                                    ts.factory.createObjectLiteralExpression(
-                                        joinedProperties
-                                            .filter((property) => !context.type.isLiteral(property.type))
-                                            .map((property) => {
-                                                return ts.factory.createPropertyAssignment(
-                                                    property.name,
-                                                    authPropRef(property.camelCaseName)
-                                                );
-                                            }),
-                                        true
-                                    )
-                                );
-                            }
-                        }
-                    } else {
-                        params.push(authPropRef("body"));
-                    }
-                    break;
-                }
-            }
-        }
-
-        return params;
+                    ),
+                true
+            )
+        ];
     }
 
     private getRootClientTypeNode(context: SdkContext): ts.Node {
@@ -476,18 +396,13 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         const properties = context.authProvider.getPropertiesForAuthTokenParams(
             FernIr.AuthScheme.inferred(this.authScheme)
         );
-        const tokenRequestProperties: PropertySignatureStructure[] = properties.map(
-            (prop): PropertySignatureStructure => {
-                const propStructure: PropertySignatureStructure = {
-                    kind: StructureKind.PropertySignature,
-                    name: prop.name,
-                    hasQuestionToken: prop.isOptional,
-                    type: getTextOfTsNode(context.coreUtilities.fetcher.Supplier._getReferenceToType(prop.type))
-                };
-                maybeAddDocsStructure(propStructure, prop.docs);
-                return propStructure;
-            }
-        );
+        const tokenRequestProperties: PropertySignatureStructure[] = properties.map((prop) => ({
+            kind: StructureKind.PropertySignature,
+            name: getPropertyKey(prop.name),
+            hasQuestionToken: prop.isOptional,
+            type: getTextOfTsNode(context.coreUtilities.fetcher.Supplier._getReferenceToType(prop.type)),
+            docs: prop.docs
+        }));
 
         context.sourceFile.addModule({
             name: CLASS_NAME,
@@ -496,13 +411,13 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
             statements: [
                 {
                     kind: StructureKind.Interface,
-                    name: "AuthTokenParameters",
+                    name: AUTH_TOKEN_TYPE_NAME,
                     properties: tokenRequestProperties,
                     isExported: true
                 },
                 {
                     kind: StructureKind.Interface,
-                    name: "Options",
+                    name: OPTIONS_TYPE_NAME,
                     isExported: true,
                     properties: [
                         {
@@ -511,8 +426,8 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                             hasQuestionToken: false
                         },
                         {
-                            name: "authTokenParameters",
-                            type: "AuthTokenParameters",
+                            name: AUTH_TOKEN_PARAMS_OPTION_NAME,
+                            type: AUTH_TOKEN_TYPE_NAME,
                             hasQuestionToken: false
                         }
                     ]
@@ -521,8 +436,8 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         });
     }
 
-    private getAuthTokenParametersTypeNode(context: SdkContext): ts.TypeNode {
-        return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.AuthTokenParameters`);
+    private getAuthTokenParametersTypeNode(): ts.TypeNode {
+        return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${AUTH_TOKEN_TYPE_NAME}`);
     }
 }
 

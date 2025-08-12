@@ -4,7 +4,7 @@
 
 import * as core from "../../../../core/index.js";
 import * as SeedInferredAuthImplicit from "../../../index.js";
-import { mergeHeaders } from "../../../../core/headers.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
 
 export declare namespace Auth {
@@ -43,6 +43,7 @@ export class Auth {
      *
      * @example
      *     await client.auth.getTokenWithClientCredentials({
+     *         "X-Api-Key": "X-Api-Key",
      *         client_id: "client_id",
      *         client_secret: "client_secret",
      *         scope: "scope"
@@ -59,7 +60,12 @@ export class Auth {
         request: SeedInferredAuthImplicit.GetTokenRequest,
         requestOptions?: Auth.RequestOptions,
     ): Promise<core.WithRawResponse<SeedInferredAuthImplicit.TokenResponse>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const { "X-Api-Key": xApiKey, ..._body } = request;
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ "X-Api-Key": xApiKey }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -71,7 +77,7 @@ export class Auth {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: { ...request, audience: "https://api.example.com", grant_type: "client_credentials" },
+            body: { ..._body, audience: "https://api.example.com", grant_type: "client_credentials" },
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -114,6 +120,7 @@ export class Auth {
      *
      * @example
      *     await client.auth.refreshToken({
+     *         "X-Api-Key": "X-Api-Key",
      *         client_id: "client_id",
      *         client_secret: "client_secret",
      *         refresh_token: "refresh_token",
@@ -131,7 +138,12 @@ export class Auth {
         request: SeedInferredAuthImplicit.RefreshTokenRequest,
         requestOptions?: Auth.RequestOptions,
     ): Promise<core.WithRawResponse<SeedInferredAuthImplicit.TokenResponse>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const { "X-Api-Key": xApiKey, ..._body } = request;
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ "X-Api-Key": xApiKey }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -143,7 +155,7 @@ export class Auth {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: { ...request, audience: "https://api.example.com", grant_type: "refresh_token" },
+            body: { ..._body, audience: "https://api.example.com", grant_type: "refresh_token" },
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

@@ -13,7 +13,7 @@ export declare namespace Api {
         baseUrl?: core.Supplier<string>;
         /** Additional headers to include in requests. */
         headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
-        authProvider: core.AbstractAuthProvider;
+        authProvider: core.AuthProvider;
     }
 
     export interface RequestOptions {
@@ -32,7 +32,7 @@ export declare namespace Api {
 
 export class Api {
     protected readonly _options: Api.Options;
-    protected readonly _authProvider: core.AbstractAuthProvider;
+    protected readonly _authProvider: core.AuthProvider;
 
     constructor(_options: Api.Options) {
         this._options = _options;

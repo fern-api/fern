@@ -7,6 +7,7 @@ import { SeedInferredAuthExplicitClient } from "../Client.js";
 
 export namespace InferredAuthProvider {
     export interface AuthTokenParameters {
+        xApiKey: core.Supplier<string>;
         clientId: core.Supplier<string>;
         clientSecret: core.Supplier<string>;
         scope?: core.Supplier<string>;
@@ -18,14 +19,13 @@ export namespace InferredAuthProvider {
     }
 }
 
-export class InferredAuthProvider extends core.AbstractAuthProvider {
+export class InferredAuthProvider implements core.AuthProvider {
     private readonly client: SeedInferredAuthExplicitClient;
     private readonly authTokenParameters: InferredAuthProvider.AuthTokenParameters;
     private expiresAt: Date | undefined;
     private authRequestPromise: Promise<core.AuthRequest> | undefined;
 
     constructor(options: InferredAuthProvider.Options) {
-        super();
         this.client = options.client;
         this.authTokenParameters = options.authTokenParameters;
     }
@@ -50,6 +50,7 @@ export class InferredAuthProvider extends core.AbstractAuthProvider {
 
     private async getAuthRequestFromTokenEndpoint(): Promise<core.AuthRequest> {
         const response = await this.client.auth.getTokenWithClientCredentials({
+            "X-Api-Key": await core.Supplier.get(this.authTokenParameters.xApiKey),
             client_id: await core.Supplier.get(this.authTokenParameters.clientId),
             client_secret: await core.Supplier.get(this.authTokenParameters.clientSecret),
             scope: await core.Supplier.get(this.authTokenParameters.scope),

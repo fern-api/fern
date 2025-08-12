@@ -946,6 +946,17 @@ export class SdkGenerator {
         if (this.config.generateWireTests) {
             // make sure folder is always created, even if no wire tests are generated
             this.jestTestGenerator.createWireTestDirectory();
+            this.withSourceFile({
+                filepath: this.jestTestGenerator.getMockAuthFilepath(),
+                run: ({ sourceFile, importsManager }) => {
+                    const context = this.generateSdkContext({ sourceFile, importsManager });
+                    const file = this.jestTestGenerator.buildMockAuthFile({ context });
+                    if (file) {
+                        sourceFile.replaceWithText(file.toString({ dprintOptions: { indentWidth: 4 } }));
+                    }
+                },
+                packagePath: this.getRelativeTestPath()
+            });
         }
         this.forEachService((service, packageId) => {
             if (service.endpoints.length === 0) {

@@ -620,7 +620,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             serviceClass.properties.push({
                 kind: StructureKind.Property,
                 name: AuthProviderInstance.FIELD_NAME,
-                type: getTextOfTsNode(context.coreUtilities.auth.AbstractAuthProvider._getReferenceToType()),
+                type: getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType()),
                 scope: Scope.Protected,
                 isReadonly: true
             });
@@ -1694,7 +1694,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         if (this.authProvider && this.anyEndpointWithAuth && !this.isRoot) {
             properties.push({
                 name: AuthProviderInstance.OPTIONS_PROPERTY_NAME,
-                type: getTextOfTsNode(context.coreUtilities.auth.AbstractAuthProvider._getReferenceToType())
+                type: getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())
             });
         }
 

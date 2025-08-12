@@ -43,7 +43,11 @@ export function generateHeaders({
     const statements: ts.Statement[] = [];
 
     let authProviderHeaders: ts.Expression | undefined;
-    if (generatedSdkClientClass.hasAuthProvider() && endpoint.auth) {
+    if (
+        generatedSdkClientClass.hasAuthProvider() &&
+        endpoint.auth &&
+        context.authProvider.isAuthEndpoint(endpoint) === false
+    ) {
         statements.push(
             ts.factory.createVariableStatement(
                 undefined,
@@ -52,7 +56,7 @@ export function generateHeaders({
                         "_authRequest",
                         undefined,
                         context.coreUtilities.auth.AuthRequest._getReferenceToType(),
-                        context.coreUtilities.auth.AbstractAuthProvider.getAuthRequest.invoke(
+                        context.coreUtilities.auth.AuthProvider.getAuthRequest.invoke(
                             generatedSdkClientClass.getReferenceToAuthProviderOrThrow()
                         )
                     )

@@ -15,6 +15,7 @@ export declare namespace SeedInferredAuthExplicitClient {
         environment: core.Supplier<string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
+        xApiKey: string;
         clientId: string;
         clientSecret: string;
         scope?: string;
@@ -38,7 +39,7 @@ export declare namespace SeedInferredAuthExplicitClient {
 
 export class SeedInferredAuthExplicitClient {
     protected readonly _options: SeedInferredAuthExplicitClient.Options;
-    protected readonly _authProvider: core.AbstractAuthProvider;
+    protected readonly _authProvider: core.AuthProvider;
     protected _auth: Auth | undefined;
     protected _nestedNoAuth: NestedNoAuth | undefined;
     protected _nested: Nested | undefined;
