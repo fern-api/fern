@@ -18,7 +18,6 @@ public class Example1 {
             PatchComplexRequest
                 .builder()
                 .name("name")
-                .email("email")
                 .age(1)
                 .active(true)
                 .metadata(
@@ -32,6 +31,17 @@ public class Example1 {
                     new ArrayList<String>(
                         Arrays.asList("tags", "tags")
                     )
+                )
+                .email("email")
+                .nickname("nickname")
+                .bio("bio")
+                .profileImageUrl("profileImageUrl")
+                .settings(
+                    new HashMap<String, Object>() {{
+                        put("settings", new 
+                        HashMap<String, Object>() {{put("key", "value");
+                        }});
+                    }}
                 )
                 .build()
         );

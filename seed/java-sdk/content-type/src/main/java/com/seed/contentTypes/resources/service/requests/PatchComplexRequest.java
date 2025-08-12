@@ -26,8 +26,6 @@ import java.util.Optional;
 public final class PatchComplexRequest {
     private final Optional<String> name;
 
-    private final Optional<String> email;
-
     private final Optional<Integer> age;
 
     private final Optional<Boolean> active;
@@ -36,36 +34,46 @@ public final class PatchComplexRequest {
 
     private final Optional<List<String>> tags;
 
+    private final Optional<String> email;
+
+    private final Optional<String> nickname;
+
+    private final Optional<String> bio;
+
+    private final Optional<String> profileImageUrl;
+
+    private final Optional<Map<String, Object>> settings;
+
     private final Map<String, Object> additionalProperties;
 
     private PatchComplexRequest(
             Optional<String> name,
-            Optional<String> email,
             Optional<Integer> age,
             Optional<Boolean> active,
             Optional<Map<String, Object>> metadata,
             Optional<List<String>> tags,
+            Optional<String> email,
+            Optional<String> nickname,
+            Optional<String> bio,
+            Optional<String> profileImageUrl,
+            Optional<Map<String, Object>> settings,
             Map<String, Object> additionalProperties) {
         this.name = name;
-        this.email = email;
         this.age = age;
         this.active = active;
         this.metadata = metadata;
         this.tags = tags;
+        this.email = email;
+        this.nickname = nickname;
+        this.bio = bio;
+        this.profileImageUrl = profileImageUrl;
+        this.settings = settings;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("name")
     public Optional<String> getName() {
         return name;
-    }
-
-    @JsonIgnore
-    public Optional<String> getEmail() {
-        if (email == null) {
-            return Optional.empty();
-        }
-        return email;
     }
 
     @JsonProperty("age")
@@ -88,10 +96,74 @@ public final class PatchComplexRequest {
         return tags;
     }
 
+    @JsonIgnore
+    public Optional<String> getEmail() {
+        if (email == null) {
+            return Optional.empty();
+        }
+        return email;
+    }
+
+    @JsonIgnore
+    public Optional<String> getNickname() {
+        if (nickname == null) {
+            return Optional.empty();
+        }
+        return nickname;
+    }
+
+    @JsonIgnore
+    public Optional<String> getBio() {
+        if (bio == null) {
+            return Optional.empty();
+        }
+        return bio;
+    }
+
+    @JsonIgnore
+    public Optional<String> getProfileImageUrl() {
+        if (profileImageUrl == null) {
+            return Optional.empty();
+        }
+        return profileImageUrl;
+    }
+
+    @JsonIgnore
+    public Optional<Map<String, Object>> getSettings() {
+        if (settings == null) {
+            return Optional.empty();
+        }
+        return settings;
+    }
+
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("email")
     private Optional<String> _getEmail() {
         return email;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("nickname")
+    private Optional<String> _getNickname() {
+        return nickname;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("bio")
+    private Optional<String> _getBio() {
+        return bio;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("profileImageUrl")
+    private Optional<String> _getProfileImageUrl() {
+        return profileImageUrl;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("settings")
+    private Optional<Map<String, Object>> _getSettings() {
+        return settings;
     }
 
     @java.lang.Override
@@ -107,16 +179,30 @@ public final class PatchComplexRequest {
 
     private boolean equalTo(PatchComplexRequest other) {
         return name.equals(other.name)
-                && email.equals(other.email)
                 && age.equals(other.age)
                 && active.equals(other.active)
                 && metadata.equals(other.metadata)
-                && tags.equals(other.tags);
+                && tags.equals(other.tags)
+                && email.equals(other.email)
+                && nickname.equals(other.nickname)
+                && bio.equals(other.bio)
+                && profileImageUrl.equals(other.profileImageUrl)
+                && settings.equals(other.settings);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.name, this.email, this.age, this.active, this.metadata, this.tags);
+        return Objects.hash(
+                this.name,
+                this.age,
+                this.active,
+                this.metadata,
+                this.tags,
+                this.email,
+                this.nickname,
+                this.bio,
+                this.profileImageUrl,
+                this.settings);
     }
 
     @java.lang.Override
@@ -132,8 +218,6 @@ public final class PatchComplexRequest {
     public static final class Builder {
         private Optional<String> name = Optional.empty();
 
-        private Optional<String> email = Optional.empty();
-
         private Optional<Integer> age = Optional.empty();
 
         private Optional<Boolean> active = Optional.empty();
@@ -142,6 +226,16 @@ public final class PatchComplexRequest {
 
         private Optional<List<String>> tags = Optional.empty();
 
+        private Optional<String> email = Optional.empty();
+
+        private Optional<String> nickname = Optional.empty();
+
+        private Optional<String> bio = Optional.empty();
+
+        private Optional<String> profileImageUrl = Optional.empty();
+
+        private Optional<Map<String, Object>> settings = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -149,11 +243,15 @@ public final class PatchComplexRequest {
 
         public Builder from(PatchComplexRequest other) {
             name(other.getName());
-            email(other.getEmail());
             age(other.getAge());
             active(other.getActive());
             metadata(other.getMetadata());
             tags(other.getTags());
+            email(other.getEmail());
+            nickname(other.getNickname());
+            bio(other.getBio());
+            profileImageUrl(other.getProfileImageUrl());
+            settings(other.getSettings());
             return this;
         }
 
@@ -165,28 +263,6 @@ public final class PatchComplexRequest {
 
         public Builder name(String name) {
             this.name = Optional.ofNullable(name);
-            return this;
-        }
-
-        @JsonSetter(value = "email", nulls = Nulls.SKIP)
-        public Builder email(Optional<String> email) {
-            this.email = email;
-            return this;
-        }
-
-        public Builder email(String email) {
-            this.email = Optional.ofNullable(email);
-            return this;
-        }
-
-        public Builder email(Nullable<String> email) {
-            if (email.isNull()) {
-                this.email = null;
-            } else if (email.isEmpty()) {
-                this.email = Optional.empty();
-            } else {
-                this.email = Optional.of(email.get());
-            }
             return this;
         }
 
@@ -234,8 +310,129 @@ public final class PatchComplexRequest {
             return this;
         }
 
+        @JsonSetter(value = "email", nulls = Nulls.SKIP)
+        public Builder email(Optional<String> email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder email(String email) {
+            this.email = Optional.ofNullable(email);
+            return this;
+        }
+
+        public Builder email(Nullable<String> email) {
+            if (email.isNull()) {
+                this.email = null;
+            } else if (email.isEmpty()) {
+                this.email = Optional.empty();
+            } else {
+                this.email = Optional.of(email.get());
+            }
+            return this;
+        }
+
+        @JsonSetter(value = "nickname", nulls = Nulls.SKIP)
+        public Builder nickname(Optional<String> nickname) {
+            this.nickname = nickname;
+            return this;
+        }
+
+        public Builder nickname(String nickname) {
+            this.nickname = Optional.ofNullable(nickname);
+            return this;
+        }
+
+        public Builder nickname(Nullable<String> nickname) {
+            if (nickname.isNull()) {
+                this.nickname = null;
+            } else if (nickname.isEmpty()) {
+                this.nickname = Optional.empty();
+            } else {
+                this.nickname = Optional.of(nickname.get());
+            }
+            return this;
+        }
+
+        @JsonSetter(value = "bio", nulls = Nulls.SKIP)
+        public Builder bio(Optional<String> bio) {
+            this.bio = bio;
+            return this;
+        }
+
+        public Builder bio(String bio) {
+            this.bio = Optional.ofNullable(bio);
+            return this;
+        }
+
+        public Builder bio(Nullable<String> bio) {
+            if (bio.isNull()) {
+                this.bio = null;
+            } else if (bio.isEmpty()) {
+                this.bio = Optional.empty();
+            } else {
+                this.bio = Optional.of(bio.get());
+            }
+            return this;
+        }
+
+        @JsonSetter(value = "profileImageUrl", nulls = Nulls.SKIP)
+        public Builder profileImageUrl(Optional<String> profileImageUrl) {
+            this.profileImageUrl = profileImageUrl;
+            return this;
+        }
+
+        public Builder profileImageUrl(String profileImageUrl) {
+            this.profileImageUrl = Optional.ofNullable(profileImageUrl);
+            return this;
+        }
+
+        public Builder profileImageUrl(Nullable<String> profileImageUrl) {
+            if (profileImageUrl.isNull()) {
+                this.profileImageUrl = null;
+            } else if (profileImageUrl.isEmpty()) {
+                this.profileImageUrl = Optional.empty();
+            } else {
+                this.profileImageUrl = Optional.of(profileImageUrl.get());
+            }
+            return this;
+        }
+
+        @JsonSetter(value = "settings", nulls = Nulls.SKIP)
+        public Builder settings(Optional<Map<String, Object>> settings) {
+            this.settings = settings;
+            return this;
+        }
+
+        public Builder settings(Map<String, Object> settings) {
+            this.settings = Optional.ofNullable(settings);
+            return this;
+        }
+
+        public Builder settings(Nullable<Map<String, Object>> settings) {
+            if (settings.isNull()) {
+                this.settings = null;
+            } else if (settings.isEmpty()) {
+                this.settings = Optional.empty();
+            } else {
+                this.settings = Optional.of(settings.get());
+            }
+            return this;
+        }
+
         public PatchComplexRequest build() {
-            return new PatchComplexRequest(name, email, age, active, metadata, tags, additionalProperties);
+            return new PatchComplexRequest(
+                    name,
+                    age,
+                    active,
+                    metadata,
+                    tags,
+                    email,
+                    nickname,
+                    bio,
+                    profileImageUrl,
+                    settings,
+                    additionalProperties);
         }
     }
 }
