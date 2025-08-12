@@ -2,7 +2,7 @@
 module Seed
     module Types
         class UserOptionalListContainer < Internal::Types::Model
-            field :users, , optional: true, nullable: false
+            field :users, Internal::Types::Array[Seed::users::User], optional: true, nullable: false
         end
     end
 end

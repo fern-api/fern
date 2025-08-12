@@ -2,7 +2,7 @@
 module Seed
     module Types
         class Json < Internal::Types::Model
-            field :raw, , optional: false, nullable: false
+            field :raw, String, optional: false, nullable: false
         end
     end
 end

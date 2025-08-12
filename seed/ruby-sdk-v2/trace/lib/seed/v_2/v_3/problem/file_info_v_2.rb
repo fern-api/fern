@@ -2,10 +2,10 @@
 module Seed
     module Types
         class FileInfoV2 < Internal::Types::Model
-            field :filename, , optional: false, nullable: false
-            field :directory, , optional: false, nullable: false
-            field :contents, , optional: false, nullable: false
-            field :editable, , optional: false, nullable: false
+            field :filename, String, optional: false, nullable: false
+            field :directory, String, optional: false, nullable: false
+            field :contents, String, optional: false, nullable: false
+            field :editable, Internal::Types::Boolean, optional: false, nullable: false
         end
     end
 end
