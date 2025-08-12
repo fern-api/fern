@@ -1,7 +1,7 @@
 import {
+    Class_,
     ClassInstantiation,
     ClassReference,
-    Class_,
     CodeBlock,
     Comment,
     KeywordArgument,
@@ -14,22 +14,24 @@ import {
     PositionalParameter,
     PositionalSplatParameter,
     TypeParameter,
+    Writer,
     YieldParameter
 } from "./ast";
 
 export {
+    Class_,
     ClassInstantiation,
     ClassReference,
-    Class_,
     CodeBlock,
     KeywordArgument,
     Method,
     MethodInvocation,
     Module_,
     Parameter,
+    Type,
     TypeLiteral,
     TypeParameter,
-    Type
+    Writer
 } from "./ast";
 export { AstNode } from "./ast/core/AstNode";
 
