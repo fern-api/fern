@@ -1,11 +1,10 @@
+import { AbstractProject, File } from "@fern-api/base-generator";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { loggingExeca } from "@fern-api/logging-execa";
+import { BasePhpCustomConfigSchema } from "@fern-api/php-codegen";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { cloneDeep, isArray, mergeWith, template } from "lodash-es";
 import path from "path";
-
-import { AbstractProject, File } from "@fern-api/base-generator";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
-import { loggingExeca } from "@fern-api/logging-execa";
-import { BasePhpCustomConfigSchema } from "@fern-api/php-codegen";
 
 import { AsIsFiles } from "../AsIs";
 import { AbstractPhpGeneratorContext } from "../context/AbstractPhpGeneratorContext";

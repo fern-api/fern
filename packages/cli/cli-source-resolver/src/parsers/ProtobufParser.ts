@@ -1,6 +1,5 @@
-import { readFileSync } from "fs";
-
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { readFileSync } from "fs";
 
 export interface ProtobufFileInfo {
     csharpNamespace: string | undefined;

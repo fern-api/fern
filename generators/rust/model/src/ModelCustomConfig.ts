@@ -1,5 +1,5 @@
-import { z } from "zod";
 import { BaseRustCustomConfigSchema } from "@fern-api/rust-base";
+import { z } from "zod";
 
 export const ModelCustomConfigSchema = BaseRustCustomConfigSchema.extend({
     generateBuilders: z.boolean().optional().default(false),

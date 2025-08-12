@@ -1,8 +1,7 @@
-import { HttpService, Subpackage, SubpackageId } from "@fern-fern/ir-sdk/api";
-
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
+import { HttpService, Subpackage, SubpackageId } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 

@@ -1,7 +1,3 @@
-import { GetReferenceOpts, PackageId, getPropertyKey } from "@fern-typescript/commons";
-import { GeneratedRequestWrapperExample, SdkContext } from "@fern-typescript/contexts";
-import { ts } from "ts-morph";
-
 import {
     ExampleEndpointCall,
     ExampleTypeReferenceShape,
@@ -9,6 +5,9 @@ import {
     Name,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
+import { GetReferenceOpts, getPropertyKey, PackageId } from "@fern-typescript/commons";
+import { GeneratedRequestWrapperExample, SdkContext } from "@fern-typescript/contexts";
+import { ts } from "ts-morph";
 
 export declare namespace GeneratedRequestWrapperExampleImpl {
     export interface Init {

@@ -1,5 +1,5 @@
-import { Expression } from "./Expression";
 import { AstNode, Writer } from "./core";
+import { Expression } from "./Expression";
 
 export declare namespace FunctionArgument {
     interface Args {

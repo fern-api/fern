@@ -1,7 +1,4 @@
-import { startCase } from "lodash";
-
 import { isNonNullish } from "@fern-api/core-utils";
-
 import {
     ApiAuth,
     AuthScheme,
@@ -18,6 +15,7 @@ import {
     PostmanCollectionSchema,
     PostmanHeader
 } from "@fern-fern/postman-sdk/api";
+import { startCase } from "lodash";
 
 import { convertAuth, getAuthHeaders, getVariablesForAuthScheme } from "./auth";
 import { convertExampleEndpointCall } from "./convertExampleEndpointCall";

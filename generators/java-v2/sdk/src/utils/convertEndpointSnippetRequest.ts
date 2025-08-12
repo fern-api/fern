@@ -1,4 +1,4 @@
-import { ExampleEndpointCall, HttpEndpoint, dynamic } from "@fern-fern/ir-sdk/api";
+import { dynamic, ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 
 export type EndpointSnippetRequest = Omit<dynamic.EndpointSnippetRequest, "baseUrl"> & {
     baseURL: string | undefined;

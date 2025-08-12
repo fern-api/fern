@@ -1,5 +1,3 @@
-import { OpenAPIV3 } from "openapi-types";
-
 import {
     DeclaredTypeName,
     ExampleInlinedRequestBodyProperty,
@@ -7,8 +5,9 @@ import {
     NameAndWireValue,
     TypeReference
 } from "@fern-api/ir-sdk";
+import { OpenAPIV3 } from "openapi-types";
 
-import { OpenApiComponentSchema, convertTypeReference, getReferenceFromDeclaredTypeName } from "./typeConverter";
+import { convertTypeReference, getReferenceFromDeclaredTypeName, OpenApiComponentSchema } from "./typeConverter";
 
 export interface ObjectProperty {
     docs: string | undefined;

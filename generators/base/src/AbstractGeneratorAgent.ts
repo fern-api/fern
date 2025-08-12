@@ -1,11 +1,9 @@
+import { AbstractGeneratorContext, FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
+import { Logger } from "@fern-api/logger";
+import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
-
-import { AbstractGeneratorContext, FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
-import { Logger } from "@fern-api/logger";
-
-import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 
 import { GeneratorAgentClient } from "./GeneratorAgentClient";
 import { ReferenceConfigBuilder } from "./reference";

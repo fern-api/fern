@@ -1,7 +1,6 @@
-import urlJoin from "url-join";
-
 import { generatorsYml } from "@fern-api/configuration";
 import { HttpEndpoint, HttpService, ReadmeConfig, ServiceId } from "@fern-api/ir-sdk";
+import urlJoin from "url-join";
 
 export function convertReadmeConfig({
     readme,

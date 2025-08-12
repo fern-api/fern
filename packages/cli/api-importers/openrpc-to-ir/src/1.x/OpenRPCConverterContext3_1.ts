@@ -1,3 +1,5 @@
+import { TypeReference } from "@fern-api/ir-sdk";
+import { AbstractConverterContext, DisplayNameOverrideSource } from "@fern-api/v3-importer-commons";
 import {
     ContentDescriptorObject,
     ExampleObject,
@@ -7,9 +9,6 @@ import {
     ReferenceObject
 } from "@open-rpc/meta-schema";
 import { OpenAPIV3_1 } from "openapi-types";
-
-import { TypeReference } from "@fern-api/ir-sdk";
-import { AbstractConverterContext, DisplayNameOverrideSource } from "@fern-api/v3-importer-commons";
 
 /**
  * Context class for converting OpenAPI 3.1 specifications

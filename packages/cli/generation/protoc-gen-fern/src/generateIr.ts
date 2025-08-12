@@ -3,8 +3,7 @@ import { CodeGeneratorRequest } from "@bufbuild/protobuf/wkt";
 import { FileInfo, Printable } from "@bufbuild/protoplugin";
 
 import { constructCasingsGenerator } from "@fern-api/casings-generator";
-import { IntermediateRepresentation } from "@fern-api/ir-sdk";
-import { serialization } from "@fern-api/ir-sdk";
+import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 import { ErrorCollector } from "@fern-api/v3-importer-commons";
 

@@ -1,9 +1,8 @@
-import { kebabCase } from "lodash-es";
-
 import { docsYml } from "@fern-api/configuration-loader";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
+import { kebabCase } from "lodash-es";
 
 import { NodeIdGenerator } from "../NodeIdGenerator";
 import { toRelativeFilepath } from "./toRelativeFilepath";

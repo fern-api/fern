@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import { generateModels } from "../generateModels";
 import { createSampleGeneratorContext } from "./util/createSampleGeneratorContext";

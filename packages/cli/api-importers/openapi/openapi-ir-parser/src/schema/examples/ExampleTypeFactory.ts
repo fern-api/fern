@@ -1,4 +1,4 @@
-import { Examples, assertNever, isPlainObject, noop } from "@fern-api/core-utils";
+import { assertNever, Examples, isPlainObject, noop } from "@fern-api/core-utils";
 import {
     EnumSchemaWithExample,
     FernOpenapiIr,

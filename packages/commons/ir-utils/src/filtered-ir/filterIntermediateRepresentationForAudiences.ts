@@ -1,5 +1,3 @@
-import { mapValues, pickBy } from "lodash-es";
-
 import {
     ExampleType,
     IntermediateRepresentation,
@@ -8,6 +6,7 @@ import {
     Type,
     TypeId
 } from "@fern-api/ir-sdk";
+import { mapValues, pickBy } from "lodash-es";
 
 import { FilteredIr } from "./FilteredIr";
 import { filterEndpointExample, filterExampleType } from "./filterExamples";

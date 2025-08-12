@@ -1,5 +1,5 @@
 import { ruby } from "@fern-api/ruby-ast";
-import { ObjectProperty, TypeReference, PrimitiveTypeV1 } from "@fern-fern/ir-sdk/api";
+import { ObjectProperty, PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 
 export function generateFields({

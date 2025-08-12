@@ -1,33 +1,27 @@
-import axios from "axios";
-import chalk from "chalk";
-import { readFile } from "fs/promises";
-import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
-
-import { chunk } from "lodash-es";
-import * as mime from "mime-types";
-import terminalLink from "terminal-link";
-
 import { FernToken } from "@fern-api/auth";
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
 import { MediaType } from "@fern-api/core-utils";
 import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
-import { AbsoluteFilePath, RelativeFilePath, convertToFernHostRelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, convertToFernHostRelativeFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { DynamicIntermediateRepresentation } from "@fern-api/ir-sdk/src/sdk/api/resources/dynamic";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
-
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
-
-import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { DynamicIr, DynamicIrUpload } from "@fern-fern/fdr-cjs-sdk/api/resources/api/resources/v1/resources/register";
-
+import { GeneratorLanguage } from "@fern-fern/fdr-cjs-sdk/api/resources/generators";
+import axios from "axios";
+import chalk from "chalk";
+import { readFile } from "fs/promises";
+import { chunk } from "lodash-es";
+import * as mime from "mime-types";
+import terminalLink from "terminal-link";
 import { OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
 import { measureImageSizes } from "./measureImageSizes";
-import { convertIrToDynamicSnippetsIr } from "@fern-api/ir-generator";
-import { GeneratorLanguage } from "@fern-fern/fdr-cjs-sdk/api/resources/generators";
-import { DynamicIntermediateRepresentation } from "@fern-api/ir-sdk/src/sdk/api/resources/dynamic";
-import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
 const UPLOAD_FILE_BATCH_SIZE = 10;

@@ -1,5 +1,3 @@
-import { OpenAPIV3 } from "openapi-types";
-
 import {
     DeclaredErrorName,
     DeclaredTypeName,
@@ -7,6 +5,7 @@ import {
     IntermediateRepresentation,
     TypeDeclaration
 } from "@fern-api/ir-sdk";
+import { OpenAPIV3 } from "openapi-types";
 
 import { convertServices } from "./converters/servicesConverter";
 import { convertType } from "./converters/typeConverter";

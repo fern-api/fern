@@ -1,6 +1,6 @@
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, RelativeFilePath, join, streamObjectToFile } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath, streamObjectToFile } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation, serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { createMockTaskContext } from "@fern-api/task-context";

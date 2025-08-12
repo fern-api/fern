@@ -1,8 +1,7 @@
-import { mapKeys } from "lodash-es";
-
 import { entries } from "@fern-api/core-utils";
 import { PackageMarkerFileSchema } from "@fern-api/fern-definition-schema";
-import { RelativeFilePath, join } from "@fern-api/path-utils";
+import { join, RelativeFilePath } from "@fern-api/path-utils";
+import { mapKeys } from "lodash-es";
 
 import { FernDefinition } from "../AbstractAPIWorkspace";
 import { ParsedFernFile } from "../FernFile";

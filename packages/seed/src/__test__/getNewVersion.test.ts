@@ -1,6 +1,5 @@
-import { join } from "path";
-
 import { createMockTaskContext } from "@fern-api/task-context";
+import { join } from "path";
 
 import { getNewVersion } from "../commands/publish/publishGenerator";
 import { getNewCliVersion } from "../utils/versionUtilities";

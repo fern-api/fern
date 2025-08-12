@@ -1,14 +1,13 @@
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { produce } from "immer";
 import yaml from "js-yaml";
 import { IPackageJson } from "package-json-type";
 import { CompilerOptions, ModuleKind, ModuleResolutionKind, ScriptTarget } from "ts-morph";
 
-import { RelativeFilePath } from "@fern-api/fs-utils";
-
 import { DependencyType } from "../dependency-manager/DependencyManager";
 import { JSR } from "./JSR";
-import { TypescriptProject } from "./TypescriptProject";
 import { mergeExtraConfigs } from "./mergeExtraConfigs";
+import { TypescriptProject } from "./TypescriptProject";
 
 export declare namespace SimpleTypescriptProject {
     export interface Init extends TypescriptProject.Init {

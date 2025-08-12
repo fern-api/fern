@@ -1,7 +1,7 @@
 export {
-    ExportsManager,
     type ExportDeclaration,
-    type ExportedFilePath,
     type ExportedDirectory,
-    type ExportedFilePathPart
+    type ExportedFilePath,
+    type ExportedFilePathPart,
+    ExportsManager
 } from "./ExportsManager";

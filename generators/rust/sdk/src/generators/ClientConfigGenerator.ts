@@ -1,7 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
+import { Attribute, CodeBlock, Expression, PrimitiveType, PUBLIC, rust, UseStatement } from "@fern-api/rust-codegen";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { rust, Attribute, PUBLIC, UseStatement, CodeBlock, Expression, PrimitiveType } from "@fern-api/rust-codegen";
 
 export class ClientConfigGenerator {
     private readonly context: SdkGeneratorContext;

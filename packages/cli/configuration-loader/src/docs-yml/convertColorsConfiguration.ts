@@ -1,10 +1,8 @@
-import tinycolor from "tinycolor2";
-
 import { docsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import { TaskContext } from "@fern-api/task-context";
-
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
+import tinycolor from "tinycolor2";
 
 export function convertColorsConfiguration(
     rawConfig: docsYml.RawSchemas.ColorsConfiguration = { accentPrimary: undefined, background: undefined },

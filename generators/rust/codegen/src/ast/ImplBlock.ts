@@ -1,8 +1,8 @@
 import { AstNode } from "./AstNode";
-import { Writer } from "./Writer";
-import { Type } from "./Type";
-import { Method } from "./Method";
 import { Attribute } from "./Attribute";
+import { Method } from "./Method";
+import { Type } from "./Type";
+import { Writer } from "./Writer";
 
 export declare namespace ImplBlock {
     interface Args {

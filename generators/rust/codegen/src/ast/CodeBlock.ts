@@ -1,7 +1,7 @@
 import { AstNode } from "./AstNode";
-import { Writer } from "./Writer";
-import { Statement } from "./Statement";
 import { Expression } from "./Expression";
+import { Statement } from "./Statement";
+import { Writer } from "./Writer";
 
 export declare namespace CodeBlock {
     type Args =

@@ -3,8 +3,8 @@ import { assertNever } from "@fern-api/core-utils";
 import { ClassInstantiation } from "./ClassInstantiation";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
-import { MethodInvocation } from "./MethodInvocation";
 import { AstNode, Writer } from "./core";
+import { MethodInvocation } from "./MethodInvocation";
 
 type InternalTypeLiteral =
     | Boolean_

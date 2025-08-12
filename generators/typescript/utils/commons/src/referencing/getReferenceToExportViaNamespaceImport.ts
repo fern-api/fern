@@ -2,10 +2,10 @@ import { SourceFile, ts } from "ts-morph";
 
 import { ExportedDirectory, ExportedFilePath, ExportsManager } from "../exports-manager";
 import { ImportsManager } from "../imports-manager/ImportsManager";
-import { GetReferenceOpts, Reference } from "./Reference";
 import { getEntityNameOfDirectory } from "./getEntityNameOfDirectory";
 import { getExpressionToDirectory } from "./getExpressionToDirectory";
 import { getRelativePathAsModuleSpecifierTo } from "./getRelativePathAsModuleSpecifierTo";
+import { GetReferenceOpts, Reference } from "./Reference";
 
 export function getReferenceToExportViaNamespaceImport({
     exportedName,

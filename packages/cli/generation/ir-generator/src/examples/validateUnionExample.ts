@@ -1,9 +1,8 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { isPlainObject } from "@fern-api/core-utils";
-import { RawSchemas, isRawObjectDefinition } from "@fern-api/fern-definition-schema";
-
-import { FernFileContext } from "../FernFileContext";
+import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
 import { getUnionDiscriminant } from "../converters/type-declarations/convertDiscriminatedUnionTypeDeclaration";
+import { FernFileContext } from "../FernFileContext";
 import { ExampleResolver } from "../resolvers/ExampleResolver";
 import { TypeResolver } from "../resolvers/TypeResolver";
 import { ExampleViolation } from "./exampleViolation";

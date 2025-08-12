@@ -1,11 +1,10 @@
+import { AbstractProject, File } from "@fern-api/base-generator";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbstractRubyGeneratorContext, BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
 import dedent from "dedent";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { template } from "lodash-es";
 import { join as pathJoin } from "path";
-
-import { AbstractProject, File } from "@fern-api/base-generator";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
-import { AbstractRubyGeneratorContext, BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
 
 const GEMFILE_FILENAME = "Gemfile";
 const RAKEFILE_FILENAME = "Rakefile";

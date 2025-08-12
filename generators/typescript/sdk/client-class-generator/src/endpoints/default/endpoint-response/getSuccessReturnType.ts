@@ -1,9 +1,7 @@
+import { assertNever } from "@fern-api/core-utils";
+import { HttpEndpoint, HttpResponseBody, PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
-
-import { assertNever } from "@fern-api/core-utils";
-
-import { HttpEndpoint, HttpResponseBody, PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api";
 
 import { getReadableTypeNode } from "../../../getReadableTypeNode";
 

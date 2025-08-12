@@ -1,7 +1,6 @@
+import * as FernIr from "@fern-api/ir-sdk";
 import { mergeWith } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
-
-import * as FernIr from "@fern-api/ir-sdk";
 
 import { AbstractConverter, AbstractConverterContext, Extensions } from "../..";
 import { createTypeReferenceFromFernType } from "../../utils/CreateTypeReferenceFromFernType";

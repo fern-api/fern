@@ -1,16 +1,15 @@
-import { mkdir, readFile } from "fs/promises";
-
 import { AbstractProject, FernGeneratorExec, File } from "@fern-api/base-generator";
-import { GoFile } from "./GoFile";
+import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseGoCustomConfigSchema, resolveRootImportPath } from "@fern-api/go-ast";
-import { AbstractGoGeneratorContext } from "../context/AbstractGoGeneratorContext";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { ModuleConfigWriter } from "../module/ModuleConfigWriter";
-import { ModuleConfig } from "../module/ModuleConfig";
 import { GithubOutputMode, OutputMode } from "@fern-fern/generator-exec-sdk/api";
-import { assertNever } from "@fern-api/core-utils";
+import { mkdir, readFile } from "fs/promises";
 import path from "path";
+import { AbstractGoGeneratorContext } from "../context/AbstractGoGeneratorContext";
+import { ModuleConfig } from "../module/ModuleConfig";
+import { ModuleConfigWriter } from "../module/ModuleConfigWriter";
+import { GoFile } from "./GoFile";
 
 const AS_IS_DIRECTORY = path.join(__dirname, "asIs");
 const INTERNAL_DIRECTORY = "internal";

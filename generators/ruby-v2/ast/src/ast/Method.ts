@@ -1,4 +1,6 @@
 import { Comment } from "./Comment";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 import { KeywordParameter } from "./KeywordParameter";
 import { KeywordSplatParameter } from "./KeywordSplatParameter";
 import { Parameter } from "./Parameter";
@@ -6,8 +8,6 @@ import { PositionalParameter } from "./PositionalParameter";
 import { PositionalSplatParameter } from "./PositionalSplatParameter";
 import { Type } from "./Type";
 import { YieldParameter } from "./YieldParameter";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
 
 export type MethodKind = "instance" | "class";
 export const MethodKind = { Instance: "instance", Class_: "class" } as const;

@@ -1,10 +1,10 @@
 import { AstNode } from "./AstNode";
-import { Writer } from "./Writer";
-import { Struct } from "./Struct";
-import { ImplBlock } from "./ImplBlock";
 import { Enum } from "./Enum";
-import { UseStatement } from "./UseStatement";
+import { ImplBlock } from "./ImplBlock";
 import { ModuleDeclaration } from "./ModuleDeclaration";
+import { Struct } from "./Struct";
+import { UseStatement } from "./UseStatement";
+import { Writer } from "./Writer";
 
 export declare namespace Module {
     interface Args {

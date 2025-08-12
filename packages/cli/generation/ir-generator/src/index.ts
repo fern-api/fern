@@ -20,13 +20,13 @@ export { convertIrToDynamicSnippetsIr } from "./dynamic-snippets/convertIrToDyna
 export * as ExampleValidators from "./examples";
 export { constructFernFileContext, constructRootApiFileContext, type FernFileContext } from "./FernFileContext";
 export { generateIntermediateRepresentation } from "./generateIntermediateRepresentation";
-export { EndpointResolverImpl, type EndpointResolver } from "./resolvers/EndpointResolver";
-export { ErrorResolverImpl, type ErrorResolver } from "./resolvers/ErrorResolver";
-export { ExampleResolverImpl, type ExampleResolver } from "./resolvers/ExampleResolver";
+export { type EndpointResolver, EndpointResolverImpl } from "./resolvers/EndpointResolver";
+export { type ErrorResolver, ErrorResolverImpl } from "./resolvers/ErrorResolver";
+export { type ExampleResolver, ExampleResolverImpl } from "./resolvers/ExampleResolver";
 export { type ResolvedEndpoint } from "./resolvers/ResolvedEndpoint";
 export { type ResolvedContainerType, type ResolvedType } from "./resolvers/ResolvedType";
-export { TypeResolverImpl, type TypeResolver } from "./resolvers/TypeResolver";
-export { VariableResolverImpl, type VariableResolver } from "./resolvers/VariableResolver";
+export { type TypeResolver, TypeResolverImpl } from "./resolvers/TypeResolver";
+export { type VariableResolver, VariableResolverImpl } from "./resolvers/VariableResolver";
 export { convertToFernFilepath } from "./utils/convertToFernFilepath";
 export {
     convertObjectPropertyWithPathToString,

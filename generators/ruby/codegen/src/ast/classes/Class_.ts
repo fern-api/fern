@@ -1,12 +1,12 @@
 import { BLOCK_END } from "../../utils/RubyConstants";
 import { Argument } from "../Argument";
+import { AstNode } from "../core/AstNode";
+import { Expression } from "../expressions/Expression";
+import { Function_ } from "../functions/Function_";
+import { FunctionInvocation } from "../functions/FunctionInvocation";
 import { Import } from "../Import";
 import { Property } from "../Property";
 import { Yardoc } from "../Yardoc";
-import { AstNode } from "../core/AstNode";
-import { Expression } from "../expressions/Expression";
-import { FunctionInvocation } from "../functions/FunctionInvocation";
-import { Function_ } from "../functions/Function_";
 import { ClassReference } from "./ClassReference";
 
 export declare namespace Class_ {

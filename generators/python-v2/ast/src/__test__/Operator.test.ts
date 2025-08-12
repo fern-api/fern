@@ -1,6 +1,6 @@
 import { python } from "..";
-import { OperatorType } from "../OperatorType";
 import { Writer } from "../core/Writer";
+import { OperatorType } from "../OperatorType";
 
 describe("Operator", () => {
     let writer: Writer;

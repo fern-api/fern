@@ -1,4 +1,12 @@
-import { PackageId, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
+import { SetRequired } from "@fern-api/core-utils";
+import {
+    IntermediateRepresentation,
+    NameAndWireValue,
+    QueryParameter,
+    WebSocketChannel,
+    WebSocketChannelId
+} from "@fern-fern/ir-sdk/api";
+import { getPropertyKey, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { ChannelSignature, GeneratedWebsocketImplementation, SdkContext } from "@fern-typescript/contexts";
 import {
     ClassDeclarationStructure,
@@ -8,20 +16,9 @@ import {
     StructureKind,
     ts
 } from "ts-morph";
-
-import { SetRequired } from "@fern-api/core-utils";
-
-import {
-    IntermediateRepresentation,
-    NameAndWireValue,
-    QueryParameter,
-    WebSocketChannel,
-    WebSocketChannelId
-} from "@fern-fern/ir-sdk/api";
-
-import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
-import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams";
 import { buildUrl } from "../endpoints/utils/buildUrl";
+import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams";
+import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 
 export declare namespace GeneratedDefaultWebsocketImplementation {
     export interface Init {

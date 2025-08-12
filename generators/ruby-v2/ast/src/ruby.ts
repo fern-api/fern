@@ -1,7 +1,7 @@
 import {
+    Class_,
     ClassInstantiation,
     ClassReference,
-    Class_,
     CodeBlock,
     Comment,
     KeywordArgument,
@@ -18,18 +18,18 @@ import {
 } from "./ast";
 
 export {
+    Class_,
     ClassInstantiation,
     ClassReference,
-    Class_,
     CodeBlock,
     KeywordArgument,
     Method,
     MethodInvocation,
     Module_,
     Parameter,
+    Type,
     TypeLiteral,
-    TypeParameter,
-    Type
+    TypeParameter
 } from "./ast";
 export { AstNode } from "./ast/core/AstNode";
 

@@ -1,2 +1,2 @@
-export { ModuleConfigWriter } from "./ModuleConfigWriter";
 export { ModuleConfig } from "./ModuleConfig";
+export { ModuleConfigWriter } from "./ModuleConfigWriter";

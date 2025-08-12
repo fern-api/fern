@@ -1,8 +1,8 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { RelativeFilePath } from "@fern-api/path-utils";
 import { AbstractRubyGeneratorContext, ruby } from "@fern-api/ruby-ast";
+import { ClassReference } from "@fern-api/ruby-ast/src/ast/ClassReference";
 import { AsIsFiles, RubyProject } from "@fern-api/ruby-base";
-import { camelCase, upperFirst } from "lodash-es";
-
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import {
     HttpService,
@@ -12,9 +12,7 @@ import {
     SubpackageId,
     TypeId
 } from "@fern-fern/ir-sdk/api";
-
-import { RelativeFilePath } from "@fern-api/path-utils";
-import { ClassReference } from "@fern-api/ruby-ast/src/ast/ClassReference";
+import { camelCase, upperFirst } from "lodash-es";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 
 const ROOT_TYPES_FOLDER = "types";

@@ -2,11 +2,11 @@ import { UnnamedArgument } from "@fern-api/browser-compatible-base-generator";
 
 import { CodeBlock } from "./CodeBlock";
 import { Comment } from "./Comment";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 import { GoTypeReference } from "./GoTypeReference";
 import { Parameter } from "./Parameter";
 import { Type } from "./Type";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
 import { writeArguments } from "./utils/writeArguments";
 
 export declare namespace Method {

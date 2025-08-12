@@ -1,7 +1,6 @@
+import { V2SchemaExamples } from "@fern-api/ir-sdk";
 import { camelCase } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
-
-import { V2SchemaExamples } from "@fern-api/ir-sdk";
 
 import { AbstractConverter, AbstractConverterContext } from "../..";
 import { ExampleConverter } from "../ExampleConverter";

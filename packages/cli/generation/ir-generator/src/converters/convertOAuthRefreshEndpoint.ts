@@ -3,8 +3,8 @@ import { IdGenerator } from "@fern-api/ir-utils";
 
 import { FernFileContext } from "../FernFileContext";
 import { EndpointResolver } from "../resolvers/EndpointResolver";
-import { PropertyResolver } from "../resolvers/PropertyResolver";
 import { generateEndpointIdFromResolvedEndpoint } from "../resolvers/generateEndpointIdFromResolvedEndpoint";
+import { PropertyResolver } from "../resolvers/PropertyResolver";
 import { isRootFernFilepath } from "../utils/isRootFernFilepath";
 import { RefreshTokenEndpoint } from "./convertOAuthUtils";
 

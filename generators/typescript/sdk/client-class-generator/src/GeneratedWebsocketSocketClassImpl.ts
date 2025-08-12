@@ -1,4 +1,5 @@
-import { PackageId, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
+import { WebSocketChannel, WebSocketMessage, WebSocketMessageBody } from "@fern-fern/ir-sdk/api";
+import { getPropertyKey, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { GeneratedWebsocketSocketClass, SdkContext } from "@fern-typescript/contexts";
 import { camelCase } from "lodash-es";
 import {
@@ -12,8 +13,6 @@ import {
     TypeAliasDeclarationStructure,
     ts
 } from "ts-morph";
-
-import { WebSocketChannel, WebSocketMessage, WebSocketMessageBody } from "@fern-fern/ir-sdk/api";
 
 export declare namespace GeneratedWebsocketSocketClassImpl {
     export interface Init {

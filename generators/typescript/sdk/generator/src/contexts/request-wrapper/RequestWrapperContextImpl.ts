@@ -1,12 +1,10 @@
+import { assertNever } from "@fern-api/core-utils";
+import { Name, SdkRequest } from "@fern-fern/ir-sdk/api";
 import { ExportsManager, ImportsManager, PackageId } from "@fern-typescript/commons";
 import { GeneratedRequestWrapper, RequestWrapperContext } from "@fern-typescript/contexts";
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { SourceFile, ts } from "ts-morph";
-
-import { assertNever } from "@fern-api/core-utils";
-
-import { Name, SdkRequest } from "@fern-fern/ir-sdk/api";
 
 import { RequestWrapperDeclarationReferencer } from "../../declaration-referencers/RequestWrapperDeclarationReferencer";
 

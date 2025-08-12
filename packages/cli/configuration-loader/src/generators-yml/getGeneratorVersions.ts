@@ -1,8 +1,6 @@
-import semver from "semver";
-
 import { TaskContext } from "@fern-api/task-context";
-
 import { FernRegistry, FernRegistryClient as GeneratorsClient } from "@fern-fern/generators-sdk";
+import semver from "semver";
 
 export async function getLatestGeneratorVersion({
     generatorName,

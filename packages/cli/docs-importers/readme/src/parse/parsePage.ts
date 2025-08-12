@@ -1,3 +1,4 @@
+import { Logger } from "@fern-api/logger";
 import type { Root as HastRoot } from "hast";
 import type { Root as MdastRoot } from "mdast";
 import remarkGfm from "remark-gfm";
@@ -5,8 +6,6 @@ import remarkMdx from "remark-mdx";
 import remarkStringify from "remark-stringify";
 import { unified } from "unified";
 import { CONTINUE, EXIT, visit } from "unist-util-visit";
-
-import { Logger } from "@fern-api/logger";
 
 import { unifiedRemoveBreaks } from "../cleaners/breaks";
 import { unifiedRemoveClassNames } from "../cleaners/className";

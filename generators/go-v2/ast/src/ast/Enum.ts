@@ -1,10 +1,10 @@
-import { TypeInstantiation } from "./TypeInstantiation";
 import { Comment } from "./Comment";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
-import { Method } from "./Method";
 import { Func } from "./Func";
 import { Identifier } from "./Identifier";
+import { Method } from "./Method";
+import { TypeInstantiation } from "./TypeInstantiation";
 
 export declare namespace Enum {
     interface Args {

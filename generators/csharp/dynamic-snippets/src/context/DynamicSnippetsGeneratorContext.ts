@@ -1,5 +1,3 @@
-import { camelCase, upperFirst } from "lodash-es";
-
 import {
     AbstractDynamicSnippetsGeneratorContext,
     FernGeneratorExec,
@@ -7,6 +5,7 @@ import {
 } from "@fern-api/browser-compatible-base-generator";
 import { BaseCsharpCustomConfigSchema, csharp } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
+import { camelCase, upperFirst } from "lodash-es";
 
 import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper";
 import { DynamicTypeMapper } from "./DynamicTypeMapper";

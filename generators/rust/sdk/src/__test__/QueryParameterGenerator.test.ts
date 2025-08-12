@@ -1,8 +1,8 @@
-import { describe, it, expect } from "vitest";
-import { IntermediateRepresentation, HttpEndpoint, QueryParameter } from "@fern-fern/ir-sdk/api";
+import * as FernIr from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, IntermediateRepresentation, QueryParameter } from "@fern-fern/ir-sdk/api";
+import { describe, expect, it } from "vitest";
 import { SubClientGenerator } from "../generators/SubClientGenerator";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import * as FernIr from "@fern-fern/ir-sdk/api";
 
 // Mock function to create basic IR structure
 function createMockIR(services: Record<string, unknown> = {}): IntermediateRepresentation {

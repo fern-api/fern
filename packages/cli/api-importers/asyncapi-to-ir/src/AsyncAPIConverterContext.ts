@@ -1,7 +1,6 @@
-import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
-
 import { TypeReference } from "@fern-api/ir-sdk";
 import { AbstractConverterContext, DisplayNameOverrideSource } from "@fern-api/v3-importer-commons";
+import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
 import { AsyncAPIV2 } from "./2.x";
 import { AsyncAPIV3 } from "./3.0";

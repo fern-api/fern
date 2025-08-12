@@ -1,12 +1,10 @@
 import { File, GeneratorConfig, GeneratorNotificationService } from "@fern-api/base-generator";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractGoGeneratorCli } from "@fern-api/go-base";
-
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-
+import { generateModels } from "./generateModels";
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
-import { generateModels } from "./generateModels";
-import { RelativeFilePath } from "@fern-api/fs-utils";
 
 export class ModelGeneratorCLI extends AbstractGoGeneratorCli<ModelCustomConfigSchema, ModelGeneratorContext> {
     protected constructContext({

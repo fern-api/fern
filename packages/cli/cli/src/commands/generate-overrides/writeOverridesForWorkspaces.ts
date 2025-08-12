@@ -1,13 +1,12 @@
-import { readFile, writeFile } from "fs/promises";
-import yaml from "js-yaml";
-
-import { RelativeFilePath, dirname, join } from "@fern-api/fs-utils";
-import { OSSWorkspace, OpenAPILoader, getAllOpenAPISpecs } from "@fern-api/lazy-fern-workspace";
+import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { getAllOpenAPISpecs, OpenAPILoader, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Schema } from "@fern-api/openapi-ir";
 import { parse } from "@fern-api/openapi-ir-parser";
 import { getEndpointLocation } from "@fern-api/openapi-ir-to-fern";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
+import { readFile, writeFile } from "fs/promises";
+import yaml from "js-yaml";
 
 import { CliContext } from "../../cli-context/CliContext";
 

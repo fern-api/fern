@@ -1,10 +1,7 @@
-import chalk from "chalk";
-import { mapValues } from "lodash-es";
-
 import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/api-workspace-commons";
 import {
-    NodePath,
     isRawTextType,
+    NodePath,
     parseGeneric,
     parseRawBytesType,
     parseRawFileType,
@@ -12,9 +9,10 @@ import {
 } from "@fern-api/fern-definition-schema";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { parseReferenceToTypeName } from "@fern-api/ir-generator";
-
-import { Rule, RuleViolation } from "../../Rule";
+import chalk from "chalk";
+import { mapValues } from "lodash-es";
 import { TypeReferenceLocation, visitDefinitionFileYamlAst } from "../../ast";
+import { Rule, RuleViolation } from "../../Rule";
 
 type TypeName = string;
 

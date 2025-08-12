@@ -1,7 +1,6 @@
-import { OpenAPIV3_1 } from "openapi-types";
-
 import { isNonNullish } from "@fern-api/core-utils";
 import { Type, TypeId, TypeReference } from "@fern-api/ir-sdk";
+import { OpenAPIV3_1 } from "openapi-types";
 
 import { AbstractConverter, AbstractConverterContext } from "../..";
 import { convertProperties } from "../../utils/ConvertProperties";

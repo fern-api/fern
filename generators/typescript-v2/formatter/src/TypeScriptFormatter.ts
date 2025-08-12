@@ -1,6 +1,5 @@
-import * as prettier from "prettier2";
-
 import { AbstractFormatter } from "@fern-api/base-generator";
+import * as prettier from "prettier2";
 
 export class TypeScriptFormatter extends AbstractFormatter {
     public async format(content: string): Promise<string> {
