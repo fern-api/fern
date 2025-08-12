@@ -1537,9 +1537,6 @@ importers:
       '@fern-api/ruby-ast':
         specifier: workspace:*
         version: link:../ast
-      '@fern-api/ruby-base':
-        specifier: workspace:*
-        version: 'link:'
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
         version: 58.2.0
