@@ -25,6 +25,7 @@ import com.fern.ir.model.http.PathParameterLocation;
 import com.fern.ir.model.variables.VariableId;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
+import com.fern.java.client.generators.endpoint.DefaultValueExtractor;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.squareup.javapoet.ClassName;
@@ -56,6 +57,7 @@ public final class HttpUrlBuilder {
     private final ClientGeneratorContext context;
     private final boolean hasOptionalPathParams;
     private final boolean inlinePathParams;
+    private final DefaultValueExtractor defaultValueExtractor;
 
     public HttpUrlBuilder(
             String httpUrlname,
@@ -107,6 +109,7 @@ public final class HttpUrlBuilder {
                                 .get()
                                 .getOnlyPathParameters()
                                 .orElse(false));
+        this.defaultValueExtractor = new DefaultValueExtractor(context);
     }
 
     public GeneratedHttpUrl generateBuilder(List<EnrichedObjectProperty> queryParamProperties) {
@@ -147,20 +150,47 @@ public final class HttpUrlBuilder {
         }
         queryParamProperties.forEach(queryParamProperty -> {
             boolean isOptional = isTypeNameOptional(queryParamProperty.poetTypeName());
+            
+            // Check if this parameter has a default value
+            Optional<CodeBlock> defaultValue = defaultValueExtractor.extractDefaultValue(
+                    queryParamProperty.objectProperty().getValueType());
+            
             if (isOptional) {
-                codeBlock.beginControlFlow(
-                        "if ($L.$N().isPresent())", requestName, queryParamProperty.getterProperty());
-            }
-            codeBlock.addStatement(
-                    "$T.addQueryParameter($L, $S, $L, $L)",
-                    context.getPoetClassNameFactory().getQueryStringMapperClassName(),
-                    httpUrlname,
-                    queryParamProperty.wireKey().get(),
-                    CodeBlock.of(
-                            "$L.$N()" + (isOptional ? ".get()" : ""), requestName, queryParamProperty.getterProperty()),
-                    queryParamProperty.allowMultiple());
-            if (isOptional) {
-                codeBlock.endControlFlow();
+                if (defaultValue.isPresent()) {
+                    // If optional and has default, use the value if present, otherwise use default
+                    codeBlock.addStatement(
+                            "$T.addQueryParameter($L, $S, $L.$N().orElse($L), $L)",
+                            context.getPoetClassNameFactory().getQueryStringMapperClassName(),
+                            httpUrlname,
+                            queryParamProperty.wireKey().get(),
+                            requestName,
+                            queryParamProperty.getterProperty(),
+                            defaultValue.get(),
+                            queryParamProperty.allowMultiple());
+                } else {
+                    // If optional but no default, only add if present
+                    codeBlock.beginControlFlow(
+                            "if ($L.$N().isPresent())", requestName, queryParamProperty.getterProperty());
+                    codeBlock.addStatement(
+                            "$T.addQueryParameter($L, $S, $L, $L)",
+                            context.getPoetClassNameFactory().getQueryStringMapperClassName(),
+                            httpUrlname,
+                            queryParamProperty.wireKey().get(),
+                            CodeBlock.of(
+                                    "$L.$N().get()", requestName, queryParamProperty.getterProperty()),
+                            queryParamProperty.allowMultiple());
+                    codeBlock.endControlFlow();
+                }
+            } else {
+                // Not optional, add directly
+                codeBlock.addStatement(
+                        "$T.addQueryParameter($L, $S, $L, $L)",
+                        context.getPoetClassNameFactory().getQueryStringMapperClassName(),
+                        httpUrlname,
+                        queryParamProperty.wireKey().get(),
+                        CodeBlock.of(
+                                "$L.$N()", requestName, queryParamProperty.getterProperty()),
+                        queryParamProperty.allowMultiple());
             }
         });
         return GeneratedHttpUrl.builder()

@@ -19,7 +19,6 @@ import java.util.Optional;
 
 /**
  * Utility class to detect and extract default values from PrimitiveTypeV2 types.
- * This follows the same pattern as TypeScript's hasDefaultValue and extractDefaultValue.
  */
 public final class DefaultValueExtractor {
     
