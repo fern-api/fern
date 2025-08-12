@@ -200,8 +200,9 @@ export async function publishDocs({
             if (response.ok) {
                 context.logger.debug(`Registered API Definition ${response.body.apiDefinitionId}`);
 
-                if (response.body.dynamicIRs) {
+                if (response.body.dynamicIRs && dynamicIRsByLanguage) {
                     await uploadDynamicIRs({
+                        dynmaicIRs: dynamicIRsByLanguage,
                         dynamicIRUploadUrls: response.body.dynamicIRs,
                         context,
                         apiId: response.body.apiDefinitionId
@@ -467,17 +468,19 @@ async function generateLanguageSpecificDynamicIRs({
 }
 
 async function uploadDynamicIRs({
+    dynmaicIRs,
     dynamicIRUploadUrls,
     context,
     apiId
 }: {
+    dynmaicIRs: Record<string, DynamicIr>;
     dynamicIRUploadUrls: Record<string, DynamicIrUpload>;
     context: TaskContext;
     apiId: string;
 }) {
     if (Object.keys(dynamicIRUploadUrls).length > 0) {
         for (const [language, source] of Object.entries(dynamicIRUploadUrls)) {
-            const dynamicIR = dynamicIRUploadUrls[language];
+            const dynamicIR = dynmaicIRs[language];
 
             if (dynamicIR) {
                 const response = await fetch(source.uploadUrl, {
