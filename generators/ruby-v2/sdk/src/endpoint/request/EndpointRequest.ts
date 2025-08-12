@@ -1,4 +1,3 @@
-
 import { HttpEndpoint, SdkRequest } from "@fern-fern/ir-sdk/api";
 
 import { ruby } from "@fern-api/ruby-ast";

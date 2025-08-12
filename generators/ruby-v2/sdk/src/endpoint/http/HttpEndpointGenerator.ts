@@ -16,18 +16,11 @@ export class HttpEndpointGenerator {
         this.context = context;
     }
 
-    public generate({
-        endpoint,
-    }: HttpEndpointGenerator.GenerateArgs): ruby.Method[] {
+    public generate({ endpoint }: HttpEndpointGenerator.GenerateArgs): ruby.Method[] {
         return [this.generateUnpagedMethod({ endpoint })];
     }
 
-    private generateUnpagedMethod({
-        endpoint,
-    }: {
-        endpoint: HttpEndpoint;
-    }): ruby.Method {
-
+    private generateUnpagedMethod({ endpoint }: { endpoint: HttpEndpoint }): ruby.Method {
         const returnType = getEndpointReturnType({ context: this.context, endpoint });
 
         return ruby.method({

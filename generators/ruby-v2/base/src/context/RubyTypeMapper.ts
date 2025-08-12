@@ -22,9 +22,9 @@ export declare namespace RubyTypeMapper {
 }
 
 export class RubyTypeMapper {
-    private context: AbstractRubyGeneratorContext<any>;
+    private context: AbstractRubyGeneratorContext<object>;
 
-    constructor(context: AbstractRubyGeneratorContext<any>) {
+    constructor(context: AbstractRubyGeneratorContext<object>) {
         this.context = context;
     }
 
@@ -139,13 +139,7 @@ export class RubyTypeMapper {
         }
     }
 
-    private convertNamed({
-        named,
-        fullyQualified
-    }: {
-        named: DeclaredTypeName;
-        fullyQualified?: boolean;
-    }): ruby.Type {
+    private convertNamed({ named, fullyQualified }: { named: DeclaredTypeName; fullyQualified?: boolean }): ruby.Type {
         const classReference = this.convertToClassReference(named, { fullyQualified });
         // Ruby doesn't have protobuf, but if you want to support special types, add here.
         const typeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId);

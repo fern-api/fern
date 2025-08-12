@@ -3,7 +3,6 @@ import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 
 export declare namespace RawClient {
-
     export interface CreateHttpRequestWrapperArgs {
         baseUrl: ruby.CodeBlock;
         /** the endpoint for the endpoint */
@@ -29,5 +28,4 @@ export class RawClient {
     public constructor(context: SdkGeneratorContext) {
         this.context = context;
     }
-
 }

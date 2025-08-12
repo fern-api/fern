@@ -16,7 +16,7 @@ export class EndpointGenerator {
         serviceId,
         endpoint,
         rawClientReference,
-        rawClient,
+        rawClient
     }: {
         serviceId: ServiceId;
         endpoint: HttpEndpoint;
@@ -24,7 +24,7 @@ export class EndpointGenerator {
         rawClient: RawClient;
     }): ruby.Method[] {
         return this.http.generate({
-            endpoint,
+            endpoint
         });
     }
 }
