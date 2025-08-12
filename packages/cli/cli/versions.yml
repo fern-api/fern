@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: Upload dynamic IR for generating SDK snippets in docs.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-08-12"
+  version: 0.66.12
+
+- changelogEntry:
     - summary: Allow 'securityScheme.scheme' to be case-insensitive.
       type: fix
   irVersion: 59
