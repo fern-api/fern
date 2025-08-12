@@ -1,8 +1,8 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { RelativeFilePath } from "@fern-api/path-utils";
 import { AbstractRubyGeneratorContext, ruby } from "@fern-api/ruby-ast";
+import { ClassReference } from "@fern-api/ruby-ast/src/ast/ClassReference";
 import { AsIsFiles, RubyProject } from "@fern-api/ruby-base";
-import { camelCase, upperFirst } from "lodash-es";
-
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import {
     HttpService,
@@ -12,12 +12,21 @@ import {
     SubpackageId,
     TypeId
 } from "@fern-fern/ir-sdk/api";
-
-import { RelativeFilePath } from "@fern-api/path-utils";
-import { ClassReference } from "@fern-api/ruby-ast/src/ast/ClassReference";
+import { camelCase, upperFirst } from "lodash-es";
+import { IDEMPOTENT_REQUEST_OPTIONS_CLASS_NAME } from "./options/IdempotentRequestOptionsGenerator";
+import {
+    IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME,
+    IDEMPOTENT_REQUEST_OPTIONS_PARAMETER_NAME
+} from "./options/IdempotentRequestOptionsInterfaceGenerator";
+import { REQUEST_OPTIONS_CLASS_NAME } from "./options/RequestOptionsGenerator";
+import {
+    REQUEST_OPTIONS_INTERFACE_NAME,
+    REQUEST_OPTIONS_PARAMETER_NAME
+} from "./options/RequestOptionsInterfaceGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 
 const ROOT_TYPES_FOLDER = "types";
+const CANCELLATION_TOKEN_PARAMETER_NAME = "cancellationToken";
 
 export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomConfigSchema> {
     public readonly project: RubyProject;
@@ -119,6 +128,45 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             name: "Environment",
             modules: [this.getRootModule().name]
         });
+    }
+    public getRequestOptionsClassReference(): ruby.ClassReference {
+        return ruby.classReference({
+            name: REQUEST_OPTIONS_CLASS_NAME,
+            modules: [this.getRootModule().name]
+        });
+    }
+
+    public getRequestOptionsInterfaceReference(): ruby.ClassReference {
+        return ruby.classReference({
+            name: REQUEST_OPTIONS_INTERFACE_NAME,
+            modules: [this.getRootModule().name]
+        });
+    }
+
+    public getIdempotentRequestOptionsClassReference(): ruby.ClassReference {
+        return ruby.classReference({
+            name: IDEMPOTENT_REQUEST_OPTIONS_CLASS_NAME,
+            modules: [this.getRootModule().name]
+        });
+    }
+
+    public getIdempotentRequestOptionsInterfaceClassReference(): ruby.ClassReference {
+        return ruby.classReference({
+            name: IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME,
+            modules: [this.getRootModule().name]
+        });
+    }
+
+    public getRequestOptionsParameterName(): string {
+        return REQUEST_OPTIONS_PARAMETER_NAME;
+    }
+
+    public getIdempotentRequestOptionsParameterName(): string {
+        return IDEMPOTENT_REQUEST_OPTIONS_PARAMETER_NAME;
+    }
+
+    public getCancellationTokenParameterName(): string {
+        return CANCELLATION_TOKEN_PARAMETER_NAME;
     }
 
     public getCoreAsIsFiles(): string[] {

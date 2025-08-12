@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
-import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { csharp, escapeForCSharpString } from "@fern-api/csharp-codegen";
-import { RelativeFilePath, join } from "@fern-api/fs-utils";
+import { join, RelativeFilePath } from "@fern-api/path-utils";
+import { ruby } from "@fern-api/ruby-ast";
+import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
 
 import {
     AuthScheme,
@@ -14,12 +14,9 @@ import {
     Subpackage,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-
+import { RawClient } from "../endpoint/http/RawClient";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { RawClient } from "../endpoint/http/RawClient";
-import { GrpcClientInfo } from "../grpc/GrpcClientInfo";
-import { OauthTokenProviderGenerator } from "../oauth/OauthTokenProviderGenerator";
 
 export const CLIENT_MEMBER_NAME = "_client";
 export const GRPC_CLIENT_MEMBER_NAME = "_grpc";
@@ -50,56 +47,51 @@ interface HeaderInfo {
     prefix?: string;
 }
 
-export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
+export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private rawClient: RawClient;
     private serviceId: ServiceId | undefined;
-    private grpcClientInfo: GrpcClientInfo | undefined;
-    private oauth: OAuthScheme | undefined;
 
     constructor(context: SdkGeneratorContext) {
         super(context);
-        this.oauth = context.getOauth();
         this.rawClient = new RawClient(context);
         this.serviceId = this.context.ir.rootPackage.service;
-        this.grpcClientInfo =
-            this.serviceId != null ? this.context.getGrpcClientInfoForServiceId(this.serviceId) : undefined;
     }
 
     protected getFilepath(): RelativeFilePath {
         return join(RelativeFilePath.of(this.context.getRootClientClassName() + ".cs"));
     }
 
-    public doGenerate(): CSharpFile {
-        const class_ = csharp.class_({
+    public doGenerate(): RubyFile {
+        const class_ = ruby.class_({
             ...this.context.getRootClientClassReference(),
             partial: true,
             access: this.context.getRootClientAccess()
         });
 
         class_.addField(
-            csharp.field({
-                access: csharp.Access.Private,
+            ruby.field({
+                access: ruby.Access.Private,
                 name: CLIENT_MEMBER_NAME,
-                type: csharp.Type.reference(this.context.getRawClientClassReference()),
+                type: ruby.Type.reference(this.context.getRawClientClassReference()),
                 readonly: true
             })
         );
 
         if (this.grpcClientInfo != null) {
             class_.addField(
-                csharp.field({
-                    access: csharp.Access.Private,
+                ruby.field({
+                    access: ruby.Access.Private,
                     name: GRPC_CLIENT_MEMBER_NAME,
-                    type: csharp.Type.reference(this.context.getRawGrpcClientClassReference()),
+                    type: ruby.Type.reference(this.context.getRawGrpcClientClassReference()),
                     readonly: true
                 })
             );
 
             class_.addField(
-                csharp.field({
-                    access: csharp.Access.Private,
+                ruby.field({
+                    access: ruby.Access.Private,
                     name: this.grpcClientInfo.privatePropertyName,
-                    type: csharp.Type.reference(this.grpcClientInfo.classReference)
+                    type: ruby.Type.reference(this.grpcClientInfo.classReference)
                 })
             );
         }
@@ -112,11 +104,11 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                 continue;
             }
             class_.addField(
-                csharp.field({
-                    access: csharp.Access.Public,
+                ruby.field({
+                    access: ruby.Access.Public,
                     get: true,
                     name: subpackage.name.pascalCase.safeName,
-                    type: csharp.Type.reference(this.context.getSubpackageClassReference(subpackage))
+                    type: ruby.Type.reference(this.context.getSubpackageClassReference(subpackage))
                 })
             );
         }
@@ -141,7 +133,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         if (optionalParameters.some((parameter) => parameter.environmentVariable != null)) {
             class_.addMethod(this.getFromEnvironmentOrThrowMethod());
         }
-        return new CSharpFile({
+        return new RubyFile({
             clazz: class_,
             directory: RelativeFilePath.of(""),
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
@@ -151,12 +143,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         });
     }
 
-    private getConstructorMethod(): csharp.Class.Constructor {
+    private getConstructorMethod(): ruby.Class.Constructor {
         const { requiredParameters, optionalParameters, literalParameters } = this.getConstructorParameters();
-        const parameters: csharp.Parameter[] = [];
+        const parameters: ruby.Parameter[] = [];
         for (const param of requiredParameters) {
             parameters.push(
-                csharp.parameter({
+                ruby.parameter({
                     name: param.name,
                     type: this.context.csharpTypeMapper.convert({ reference: param.typeReference }),
                     docs: param.docs
@@ -165,7 +157,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         }
         for (const param of optionalParameters) {
             parameters.push(
-                csharp.parameter({
+                ruby.parameter({
                     name: param.name,
                     type: this.context.csharpTypeMapper
                         .convert({ reference: param.typeReference })
@@ -177,19 +169,19 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         }
 
         parameters.push(
-            csharp.parameter({
+            ruby.parameter({
                 name: CLIENT_OPTIONS_PARAMETER_NAME,
-                type: csharp.Type.optional(csharp.Type.reference(this.context.getClientOptionsClassReference())),
+                type: ruby.Type.optional(ruby.Type.reference(this.context.getClientOptionsClassReference())),
                 initializer: "null"
             })
         );
 
-        const headerEntries: csharp.Dictionary.MapEntry[] = [];
+        const headerEntries: ruby.Dictionary.MapEntry[] = [];
         for (const param of [...requiredParameters, ...optionalParameters]) {
             if (param.header != null) {
                 headerEntries.push({
-                    key: csharp.codeblock(csharp.string_({ string: param.header.name })),
-                    value: csharp.codeblock(
+                    key: ruby.codeblock(ruby.string_({ string: param.header.name })),
+                    value: ruby.codeblock(
                         param.header.prefix != null ? `$"${param.header.prefix} {${param.name}}"` : param.name
                     )
                 });
@@ -199,10 +191,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         for (const param of literalParameters) {
             if (param.header != null) {
                 headerEntries.push({
-                    key: csharp.codeblock(csharp.string_({ string: param.header.name })),
-                    value: csharp.codeblock(
+                    key: ruby.codeblock(ruby.string_({ string: param.header.name })),
+                    value: ruby.codeblock(
                         param.value.type === "string"
-                            ? csharp.string_({ string: param.value.string })
+                            ? ruby.string_({ string: param.value.string })
                             : param.value
                               ? `"${true.toString()}"`
                               : `"${false.toString()}"`
@@ -213,26 +205,26 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
 
         const platformHeaders = this.context.ir.sdkConfig.platformHeaders;
         headerEntries.push({
-            key: csharp.codeblock(`"${platformHeaders.language}"`),
-            value: csharp.codeblock('"C#"')
+            key: ruby.codeblock(`"${platformHeaders.language}"`),
+            value: ruby.codeblock('"C#"')
         });
         headerEntries.push({
-            key: csharp.codeblock(`"${platformHeaders.sdkName}"`),
-            value: csharp.codeblock(`"${this.context.getNamespace()}"`)
+            key: ruby.codeblock(`"${platformHeaders.sdkName}"`),
+            value: ruby.codeblock(`"${this.context.getNamespace()}"`)
         });
         headerEntries.push({
-            key: csharp.codeblock(`"${platformHeaders.sdkVersion}"`),
+            key: ruby.codeblock(`"${platformHeaders.sdkVersion}"`),
             value: this.context.getCurrentVersionValueAccess()
         });
         if (platformHeaders.userAgent != null) {
             headerEntries.push({
-                key: csharp.codeblock(`"${platformHeaders.userAgent.header}"`),
-                value: csharp.codeblock(`"${platformHeaders.userAgent.value}"`)
+                key: ruby.codeblock(`"${platformHeaders.userAgent.header}"`),
+                value: ruby.codeblock(`"${platformHeaders.userAgent.value}"`)
             });
         }
-        const headerDictionary = csharp.dictionary({
-            keyType: csharp.Types.string(),
-            valueType: csharp.Types.string(),
+        const headerDictionary = ruby.dictionary({
+            keyType: ruby.Types.string(),
+            valueType: ruby.Types.string(),
             values: {
                 type: "entries",
                 entries: headerEntries
@@ -240,14 +232,14 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         });
 
         return {
-            access: csharp.Access.Public,
+            access: ruby.Access.Public,
             parameters,
-            body: csharp.codeblock((writer) => {
+            body: ruby.codeblock((writer) => {
                 for (const param of optionalParameters) {
                     if (param.environmentVariable != null) {
                         writer.writeLine(`${param.name} ??= ${GetFromEnvironmentOrThrow}(`);
                         writer.indent();
-                        writer.writeNode(csharp.string_({ string: param.environmentVariable }));
+                        writer.writeNode(ruby.string_({ string: param.environmentVariable }));
                         writer.writeLine(",");
                         writer.writeLine(
                             `"Please pass in ${escapeForCSharpString(param.name)} or set the environment variable ${escapeForCSharpString(param.environmentVariable)}."`
@@ -258,7 +250,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                 }
                 writer.write("var defaultHeaders = ");
                 writer.writeNodeStatement(
-                    csharp.instantiateClass({
+                    ruby.instantiateClass({
                         classReference: this.context.getHeadersClassReference(),
                         arguments_: [headerDictionary]
                     })
@@ -266,7 +258,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
 
                 writer.write("clientOptions ??= ");
                 writer.writeNodeStatement(
-                    csharp.instantiateClass({
+                    ruby.instantiateClass({
                         classReference: this.context.getClientOptionsClassReference(),
                         arguments_: []
                     })
@@ -274,7 +266,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
 
                 for (const param of literalParameters) {
                     if (param.header != null) {
-                        writer.controlFlow("if", csharp.codeblock(`clientOptions.${param.name} != null`));
+                        writer.controlFlow("if", ruby.codeblock(`clientOptions.${param.name} != null`));
                         writer.write(`defaultHeaders["${param.header.name}"] = `);
                         if (param.value.type === "string") {
                             writer.write(`clientOptions.${param.name}`);
@@ -286,41 +278,17 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     }
                 }
 
-                writer.controlFlow("foreach", csharp.codeblock("var header in defaultHeaders"));
-                writer.controlFlow("if", csharp.codeblock("!clientOptions.Headers.ContainsKey(header.Key)"));
+                writer.controlFlow("foreach", ruby.codeblock("var header in defaultHeaders"));
+                writer.controlFlow("if", ruby.codeblock("!clientOptions.Headers.ContainsKey(header.Key)"));
                 writer.writeLine("clientOptions.Headers[header.Key] = header.Value;");
                 writer.endControlFlow();
                 writer.endControlFlow();
 
-                if (this.oauth != null) {
-                    const authClientClassReference = this.context.getSubpackageClassReferenceForServiceIdOrThrow(
-                        this.oauth.configuration.tokenEndpoint.endpointReference.serviceId
-                    );
-                    const arguments_ = [csharp.codeblock("new RawClient(clientOptions.Clone())")];
-                    writer.write("var tokenProvider = new OAuthTokenProvider(clientId, clientSecret, ");
-                    writer.writeNode(
-                        csharp.instantiateClass({
-                            classReference: authClientClassReference,
-                            arguments_,
-                            forceUseConstructor: true
-                        })
-                    );
-                    writer.writeTextStatement(")");
-
-                    writer.writeNode(
-                        csharp.codeblock((writer) => {
-                            writer.write(
-                                `clientOptions.Headers["Authorization"] = new Func<string>( () => tokenProvider.${OauthTokenProviderGenerator.GET_ACCESS_TOKEN_ASYNC_METHOD_NAME}().Result );`
-                            );
-                        })
-                    );
-                }
-
                 writer.writeLine("_client = ");
                 writer.writeNodeStatement(
-                    csharp.instantiateClass({
+                    ruby.instantiateClass({
                         classReference: this.context.getRawClientClassReference(),
-                        arguments_: [csharp.codeblock("clientOptions")]
+                        arguments_: [ruby.codeblock("clientOptions")]
                     })
                 );
                 if (this.grpcClientInfo != null) {
@@ -328,13 +296,13 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     writer.write(this.grpcClientInfo.privatePropertyName);
                     writer.write(" = ");
                     writer.writeNodeStatement(
-                        csharp.instantiateClass({
+                        ruby.instantiateClass({
                             classReference: this.grpcClientInfo.classReference,
-                            arguments_: [csharp.codeblock("_grpc.Channel")]
+                            arguments_: [ruby.codeblock("_grpc.Channel")]
                         })
                     );
                 }
-                const arguments_ = [csharp.codeblock("_client")];
+                const arguments_ = [ruby.codeblock("_client")];
                 for (const subpackage of this.getSubpackages()) {
                     // skip subpackages that have no endpoints (recursively)
                     if (!this.context.subPackageHasEndpoints(subpackage)) {
@@ -342,7 +310,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     }
                     writer.writeLine(`${subpackage.name.pascalCase.safeName} = `);
                     writer.writeNodeStatement(
-                        csharp.instantiateClass({
+                        ruby.instantiateClass({
                             classReference: this.context.getSubpackageClassReference(subpackage),
                             arguments_
                         })
@@ -357,10 +325,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         includeEnvVarArguments,
         asSnippet
     }: {
-        clientOptionsArgument?: csharp.ClassInstantiation;
+        clientOptionsArgument?: ruby.ClassInstantiation;
         includeEnvVarArguments?: boolean;
         asSnippet?: boolean;
-    }): csharp.ClassInstantiation {
+    }): ruby.ClassInstantiation {
         const arguments_ = [];
         for (const header of this.context.ir.headers) {
             if (
@@ -369,7 +337,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
             ) {
                 continue;
             }
-            arguments_.push(csharp.codeblock(`"${header.name.name.screamingSnakeCase.safeName}"`));
+            arguments_.push(ruby.codeblock(`"${header.name.name.screamingSnakeCase.safeName}"`));
         }
         if (this.context.ir.auth.requirement) {
             for (const scheme of this.context.ir.auth.schemes) {
@@ -377,30 +345,30 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     case "header":
                         if (scheme.headerEnvVar == null || includeEnvVarArguments) {
                             // assuming type is string for now to avoid generating complex example types here.
-                            arguments_.push(csharp.codeblock(`"${scheme.name.name.screamingSnakeCase.safeName}"`));
+                            arguments_.push(ruby.codeblock(`"${scheme.name.name.screamingSnakeCase.safeName}"`));
                         }
                         break;
                     case "basic": {
                         if (scheme.usernameEnvVar == null || includeEnvVarArguments) {
-                            arguments_.push(csharp.codeblock(`"${scheme.username.screamingSnakeCase.safeName}"`));
+                            arguments_.push(ruby.codeblock(`"${scheme.username.screamingSnakeCase.safeName}"`));
                         }
                         if (scheme.passwordEnvVar == null || includeEnvVarArguments) {
-                            arguments_.push(csharp.codeblock(`"${scheme.password.screamingSnakeCase.safeName}"`));
+                            arguments_.push(ruby.codeblock(`"${scheme.password.screamingSnakeCase.safeName}"`));
                         }
                         break;
                     }
                     case "bearer":
                         if (scheme.tokenEnvVar == null || includeEnvVarArguments) {
-                            arguments_.push(csharp.codeblock(`"${scheme.token.screamingSnakeCase.safeName}"`));
+                            arguments_.push(ruby.codeblock(`"${scheme.token.screamingSnakeCase.safeName}"`));
                         }
                         break;
                     case "oauth": {
                         if (this.context.getOauth() != null) {
-                            arguments_.push(csharp.codeblock('"CLIENT_ID"'));
-                            arguments_.push(csharp.codeblock('"CLIENT_SECRET"'));
+                            arguments_.push(ruby.codeblock('"CLIENT_ID"'));
+                            arguments_.push(ruby.codeblock('"CLIENT_SECRET"'));
                         } else {
                             // default to bearer
-                            arguments_.push(csharp.codeblock('"TOKEN"'));
+                            arguments_.push(ruby.codeblock('"TOKEN"'));
                         }
                         break;
                     }
@@ -409,13 +377,13 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         }
         if (clientOptionsArgument != null) {
             arguments_.push(
-                csharp.codeblock((writer) => {
+                ruby.codeblock((writer) => {
                     writer.write(`${CLIENT_OPTIONS_PARAMETER_NAME}: `);
                     writer.writeNode(clientOptionsArgument);
                 })
             );
         }
-        return csharp.instantiateClass({
+        return ruby.instantiateClass({
             classReference: asSnippet
                 ? this.context.getRootClientClassReferenceForSnippets()
                 : this.context.getRootClientClassReference(),
@@ -575,26 +543,26 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         };
     }
 
-    private getFromEnvironmentOrThrowMethod(): csharp.Method {
-        return csharp.method({
-            access: csharp.Access.Private,
+    private getFromEnvironmentOrThrowMethod(): ruby.Method {
+        return ruby.method({
+            access: ruby.Access.Private,
             name: GetFromEnvironmentOrThrow,
-            return_: csharp.Types.string(),
+            return_: ruby.Types.string(),
             parameters: [
-                csharp.parameter({
+                ruby.parameter({
                     name: "env",
-                    type: csharp.Types.string()
+                    type: ruby.Types.string()
                 }),
-                csharp.parameter({
+                ruby.parameter({
                     name: "message",
-                    type: csharp.Types.string()
+                    type: ruby.Types.string()
                 })
             ],
             isAsync: false,
-            body: csharp.codeblock((writer) => {
+            body: ruby.codeblock((writer) => {
                 writer.writeLine("return Environment.GetEnvironmentVariable(env) ?? throw new Exception(message);");
             }),
-            type: csharp.MethodType.STATIC
+            type: ruby.MethodType.STATIC
         });
     }
 
