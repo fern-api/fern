@@ -55,7 +55,7 @@ function getEndpointReferencesForService({
                 // skip endpoints that don't have a snippet
                 return undefined;
             }
-            
+
             const endpointSignatureInfo = context.endpointGenerator.getEndpointSignatureInfo({
                 serviceId,
                 endpoint

@@ -11,13 +11,13 @@ import { GeneratorAgentClient } from "./GeneratorAgentClient";
 import { ReferenceConfigBuilder } from "./reference";
 
 const FEATURES_CONFIG_PATHS = [
-  "/assets/features.yml",
-  path.join(__dirname, "./features.yml"),
-  path.join(__dirname, "./assets/features.yml"), 
-  path.join(__dirname, "../features.yml"),
-  path.join(__dirname, "../assets/features.yml"),  
-  path.join(__dirname, "../../features.yml"),
-  path.join(__dirname, "../../assets/features.yml"),  
+    "/assets/features.yml",
+    path.join(__dirname, "./features.yml"),
+    path.join(__dirname, "./assets/features.yml"),
+    path.join(__dirname, "../features.yml"),
+    path.join(__dirname, "../assets/features.yml"),
+    path.join(__dirname, "../../features.yml"),
+    path.join(__dirname, "../../assets/features.yml")
 ];
 
 export declare namespace AbstractGeneratorAgent {
@@ -136,7 +136,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
                 const rawContents = await readFile(each, "utf8");
                 if (rawContents.length !== 0) {
                     return rawContents;
-                }                
+                }
             } catch (error) {
                 // ignore
             }
