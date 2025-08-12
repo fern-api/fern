@@ -3,7 +3,7 @@ module Seed
     module Endpoints
         module Params
             class GetWithInlinePath
-                field :param, String, optional: true, nullable: true
+                field :param, , optional: false, nullable: false
             end
         end
     end
