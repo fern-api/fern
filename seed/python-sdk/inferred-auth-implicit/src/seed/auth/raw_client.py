@@ -21,6 +21,7 @@ class RawAuthClient:
     def get_token_with_client_credentials(
         self,
         *,
+        x_api_key: str,
         client_id: str,
         client_secret: str,
         scope: typing.Optional[str] = OMIT,
@@ -29,6 +30,8 @@ class RawAuthClient:
         """
         Parameters
         ----------
+        x_api_key : str
+
         client_id : str
 
         client_secret : str
@@ -52,6 +55,9 @@ class RawAuthClient:
                 "audience": "https://api.example.com",
                 "grant_type": "client_credentials",
             },
+            headers={
+                "X-Api-Key": str(x_api_key) if x_api_key is not None else None,
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -73,6 +79,7 @@ class RawAuthClient:
     def refresh_token(
         self,
         *,
+        x_api_key: str,
         client_id: str,
         client_secret: str,
         refresh_token: str,
@@ -82,6 +89,8 @@ class RawAuthClient:
         """
         Parameters
         ----------
+        x_api_key : str
+
         client_id : str
 
         client_secret : str
@@ -107,6 +116,9 @@ class RawAuthClient:
                 "scope": scope,
                 "audience": "https://api.example.com",
                 "grant_type": "refresh_token",
+            },
+            headers={
+                "X-Api-Key": str(x_api_key) if x_api_key is not None else None,
             },
             request_options=request_options,
             omit=OMIT,
@@ -134,6 +146,7 @@ class AsyncRawAuthClient:
     async def get_token_with_client_credentials(
         self,
         *,
+        x_api_key: str,
         client_id: str,
         client_secret: str,
         scope: typing.Optional[str] = OMIT,
@@ -142,6 +155,8 @@ class AsyncRawAuthClient:
         """
         Parameters
         ----------
+        x_api_key : str
+
         client_id : str
 
         client_secret : str
@@ -165,6 +180,9 @@ class AsyncRawAuthClient:
                 "audience": "https://api.example.com",
                 "grant_type": "client_credentials",
             },
+            headers={
+                "X-Api-Key": str(x_api_key) if x_api_key is not None else None,
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -186,6 +204,7 @@ class AsyncRawAuthClient:
     async def refresh_token(
         self,
         *,
+        x_api_key: str,
         client_id: str,
         client_secret: str,
         refresh_token: str,
@@ -195,6 +214,8 @@ class AsyncRawAuthClient:
         """
         Parameters
         ----------
+        x_api_key : str
+
         client_id : str
 
         client_secret : str
@@ -220,6 +241,9 @@ class AsyncRawAuthClient:
                 "scope": scope,
                 "audience": "https://api.example.com",
                 "grant_type": "refresh_token",
+            },
+            headers={
+                "X-Api-Key": str(x_api_key) if x_api_key is not None else None,
             },
             request_options=request_options,
             omit=OMIT,
