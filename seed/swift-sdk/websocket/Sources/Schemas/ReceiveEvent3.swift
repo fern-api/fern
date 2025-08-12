@@ -1,3 +1,5 @@
+import Foundation
+
 public struct ReceiveEvent3: Codable, Hashable, Sendable {
     public let receiveText3: String
     /// Additional properties that are not explicitly defined in the schema

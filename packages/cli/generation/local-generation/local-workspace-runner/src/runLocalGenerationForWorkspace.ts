@@ -153,7 +153,8 @@ export async function runLocalGenerationForWorkspace({
                     includeOptionalRequestPropertyExamples: false,
                     inspect,
                     executionEnvironment: undefined, // This should use the Docker fallback with proper image name
-                    ir: intermediateRepresentation
+                    ir: intermediateRepresentation,
+                    runner
                 });
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));

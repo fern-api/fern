@@ -1,3 +1,5 @@
+import Foundation
+
 public struct Record: Codable, Hashable, Sendable {
     public let foo: [String: String]
     public let 3D: Int

@@ -1,3 +1,5 @@
+import Foundation
+
 public struct Inlined: Codable, Hashable, Sendable {
     public let name: String
     public let docs: String

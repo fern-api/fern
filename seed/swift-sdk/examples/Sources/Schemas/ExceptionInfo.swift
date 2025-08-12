@@ -1,3 +1,5 @@
+import Foundation
+
 public struct ExceptionInfo: Codable, Hashable, Sendable {
     public let exceptionType: String
     public let exceptionMessage: String

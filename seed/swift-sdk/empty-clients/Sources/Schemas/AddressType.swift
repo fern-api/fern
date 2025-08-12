@@ -1,3 +1,5 @@
+import Foundation
+
 public struct AddressType: Codable, Hashable, Sendable {
     public let line1: String
     public let line2: String?

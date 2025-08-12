@@ -1,3 +1,5 @@
+import Foundation
+
 public struct TestSubmissionState: Codable, Hashable, Sendable {
     public let problemId: ProblemId
     public let defaultTestCases: [TestCase]

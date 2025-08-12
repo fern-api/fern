@@ -1,3 +1,5 @@
+import Foundation
+
 public struct Metadata: Codable, Hashable, Sendable {
     public let id: String
     public let data: [String: String]?

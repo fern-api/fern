@@ -1,3 +1,5 @@
+import Foundation
+
 public struct TestCaseImplementationDescriptionType: Codable, Hashable, Sendable {
     public let boards: [TestCaseImplementationDescriptionBoardType]
     /// Additional properties that are not explicitly defined in the schema

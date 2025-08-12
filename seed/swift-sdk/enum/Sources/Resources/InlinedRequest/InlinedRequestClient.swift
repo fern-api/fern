@@ -1,3 +1,5 @@
+import Foundation
+
 public final class InlinedRequestClient: Sendable {
     private let httpClient: HTTPClient
 

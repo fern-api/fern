@@ -1,3 +1,5 @@
+import Foundation
+
 public struct FilesType: Codable, Hashable, Sendable {
     public let files: [FileInfoV2Type]
     /// Additional properties that are not explicitly defined in the schema

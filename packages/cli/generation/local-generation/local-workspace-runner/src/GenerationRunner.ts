@@ -220,7 +220,8 @@ export class GenerationRunner {
             includeOptionalRequestPropertyExamples: true,
             inspect,
             executionEnvironment: this.executionEnvironment,
-            ir: rawIr
+            ir: rawIr,
+            runner: undefined
         });
 
         return { ir, generatorConfig };

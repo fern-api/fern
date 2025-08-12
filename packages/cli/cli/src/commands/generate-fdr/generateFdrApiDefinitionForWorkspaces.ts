@@ -44,7 +44,8 @@ export async function generateFdrApiDefinitionForWorkspaces({
                         rubySdk: undefined,
                         goSdk: undefined,
                         csharpSdk: undefined
-                    }
+                    },
+                    context
                 });
 
                 const resolvedOutputFilePath = AbsoluteFilePath.of(path.resolve(outputFilepath));

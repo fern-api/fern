@@ -1,3 +1,5 @@
+import Foundation
+
 public struct WorkspaceFiles: Codable, Hashable, Sendable {
     public let mainFile: FileInfo
     public let readOnlyFiles: [FileInfo]

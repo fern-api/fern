@@ -1,3 +1,5 @@
+import Foundation
+
 public struct BinaryTreeNodeAndTreeValue: Codable, Hashable, Sendable {
     public let nodeId: NodeId
     public let fullTree: BinaryTreeValue

@@ -1,3 +1,5 @@
+import Foundation
+
 public struct UsernamePage: Codable, Hashable, Sendable {
     public let after: String?
     public let data: [String]

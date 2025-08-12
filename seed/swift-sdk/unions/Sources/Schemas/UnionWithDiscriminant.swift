@@ -1,3 +1,5 @@
+import Foundation
+
 public enum UnionWithDiscriminant: Codable, Hashable, Sendable {
     /// This is a Foo field.
     case foo(Foo)

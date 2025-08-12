@@ -1,3 +1,5 @@
+import Foundation
+
 /// The generated signature will include an additional param, actualResult
 public struct VoidFunctionDefinitionThatTakesActualResult: Codable, Hashable, Sendable {
     public let additionalParameters: [Parameter]

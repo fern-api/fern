@@ -9,6 +9,7 @@ types:
       bearer: BearerAuth
       header: HeaderAuth
       oauth: OAuth
+      inferred: InferredAuth
 
   AuthValues:
     union:
@@ -16,6 +17,7 @@ types:
       bearer: BearerAuthValues
       header: HeaderAuthValues
       oauth: OAuthValues
+      inferred: InferredAuthValues
 
   BasicAuth:
     properties:
@@ -26,6 +28,12 @@ types:
     properties:
       username: string
       password: string
+
+  InferredAuth: 
+    properties: {}
+
+  InferredAuthValues:
+    properties: {}
 
   BearerAuth:
     properties:

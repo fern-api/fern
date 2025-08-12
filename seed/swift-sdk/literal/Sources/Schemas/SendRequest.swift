@@ -1,3 +1,5 @@
+import Foundation
+
 public struct SendRequest: Codable, Hashable, Sendable {
     public let prompt: JSONValue
     public let query: String

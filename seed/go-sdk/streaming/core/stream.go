@@ -20,7 +20,7 @@ const (
 )
 
 const (
-	defaultMaxBufSize = 32 * 1024 // 32KB
+	defaultMaxBufSize = 64 * 1024 // 64KB
 )
 
 // defaultStreamDelimiter is the default stream delimiter used to split messages.
@@ -238,28 +238,20 @@ func newSseStreamReader(
 		options: options,
 	}
 	scanner.Buffer(make([]byte, slices.Min([]int{4096, options.maxBufSize})), options.maxBufSize)
-	scanner.Split(func(bytes []byte, atEOF bool) (int, []byte, error) {
-		if atEOF && len(bytes) == 0 {
+	scanner.Split(func(data []byte, atEOF bool) (advance int, token []byte, err error) {
+		if atEOF && len(data) == 0 {
 			return 0, nil, nil
 		}
-		n, data, err := stream.parse(bytes)
-		if stream.isTerminated(data) {
-			return 0, nil, io.EOF
+		if i := strings.Index(string(data), stream.options.delimiter+stream.options.delimiter); i >= 0 {
+			return i + 1, data[0:i], nil
 		}
-		return n, data, err
+
+		if atEOF || stream.isTerminated(data) {
+			return len(data), data, nil
+		}
+		return 0, nil, nil
 	})
 	return stream
-}
-
-func (s *SseStreamReader) parse(bytes []byte) (int, []byte, error) {
-	delimIndex := strings.Index(string(bytes), s.options.delimiter)
-	if delimIndex < 0 {
-		return len(bytes), bytes, nil
-	}
-	endIndex := delimIndex + len(s.options.delimiter)
-	parsedData := bytes[:delimIndex]
-	n := endIndex
-	return n, parsedData, nil
 }
 
 func (s *SseStreamReader) isTerminated(bytes []byte) bool {
@@ -281,19 +273,18 @@ func (s *SseStreamReader) ReadFromStream() ([]byte, error) {
 func (s *SseStreamReader) nextEvent() (*SseEvent, error) {
 
 	event := SseEvent{}
-	for s.scanner.Scan() {
-		_bytes := s.scanner.Bytes()
-		if string(_bytes) == "" {
-			return &event, nil
-		}
+	if s.scanner.Scan() {
+		rawEvent := s.scanner.Bytes()
 
-		if err := s.parseSseLine(_bytes, &event); err != nil {
-			return nil, err
+		lines := strings.Split(string(rawEvent), s.options.delimiter)
+		for _, line := range lines {
+			s.parseSseLine([]byte(line), &event)
 		}
 
 		if event.size() > s.options.maxBufSize {
 			return nil, errors.New("SseStreamReader.ReadFromStream: buffer limit exceeded")
 		}
+		return &event, nil
 	}
 	return &event, io.EOF
 }

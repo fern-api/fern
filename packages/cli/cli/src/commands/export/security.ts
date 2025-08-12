@@ -29,7 +29,7 @@ export function constructSecuritySchemes(apiAuth: ApiAuth): Record<string, OpenA
     const securitySchemes: Record<string, OpenAPIV3.SecuritySchemeObject> = {};
 
     for (const scheme of apiAuth.schemes) {
-        securitySchemes[getNameForAuthScheme(scheme)] = AuthScheme._visit<OpenAPIV3.SecuritySchemeObject>(scheme, {
+        const oasScheme = AuthScheme._visit<OpenAPIV3.SecuritySchemeObject | undefined>(scheme, {
             bearer: () => ({
                 type: "http",
                 scheme: "bearer"
@@ -47,10 +47,14 @@ export function constructSecuritySchemes(apiAuth: ApiAuth): Record<string, OpenA
                 type: "http",
                 scheme: "bearer"
             }),
+            inferred: () => undefined,
             _other: () => {
                 throw new Error("Unknown auth scheme: " + scheme.type);
             }
         });
+        if (oasScheme) {
+            securitySchemes[getNameForAuthScheme(scheme)] = oasScheme;
+        }
     }
 
     return securitySchemes;
@@ -59,6 +63,7 @@ export function constructSecuritySchemes(apiAuth: ApiAuth): Record<string, OpenA
 function getNameForAuthScheme(authScheme: AuthScheme): string {
     return AuthScheme._visit(authScheme, {
         bearer: () => "BearerAuth",
+        inferred: () => "InferredAuth",
         basic: () => "BasicAuth",
         oauth: () => "BearerAuth",
         header: (header) => `${header.name.name.pascalCase.unsafeName}Auth`,

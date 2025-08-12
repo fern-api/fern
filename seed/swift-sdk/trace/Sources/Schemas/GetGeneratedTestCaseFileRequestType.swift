@@ -1,3 +1,5 @@
+import Foundation
+
 public struct GetGeneratedTestCaseFileRequestType: Codable, Hashable, Sendable {
     public let template: TestCaseTemplateType?
     public let testCase: TestCaseV2Type

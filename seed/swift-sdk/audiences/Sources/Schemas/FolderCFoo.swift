@@ -1,3 +1,5 @@
+import Foundation
+
 public struct FolderCFoo: Codable, Hashable, Sendable {
     public let barProperty: UUID
     /// Additional properties that are not explicitly defined in the schema

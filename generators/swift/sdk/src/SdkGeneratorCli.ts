@@ -89,10 +89,10 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     private async generateSourceAsIsFiles(context: SdkGeneratorContext): Promise<void> {
         await Promise.all(
             context.getSourceAsIsFiles().map(async (def) => {
-                context.project.addSourceFile({
-                    nameCandidateWithoutExtension: def.filenameWithoutExtension,
+                context.project.addSourceAsIsFile({
+                    filenameWithoutExt: def.filenameWithoutExtension,
                     directory: def.directory,
-                    fileContents: await def.loadContents()
+                    fileContents: [await def.loadContents()]
                 });
             })
         );

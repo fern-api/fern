@@ -1,3 +1,5 @@
+import Foundation
+
 public enum SpecialEnum: String, Codable, Hashable, CaseIterable, Sendable {
     case a = ""
     case b = "Hello \"World\""

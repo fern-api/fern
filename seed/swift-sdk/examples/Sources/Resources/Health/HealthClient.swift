@@ -1,3 +1,5 @@
+import Foundation
+
 public final class HealthClient: Sendable {
     public let service: HealthServiceClient
     private let httpClient: HTTPClient

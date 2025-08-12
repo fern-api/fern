@@ -1,3 +1,5 @@
+import Foundation
+
 public struct ExecutionSessionResponse: Codable, Hashable, Sendable {
     public let sessionId: String
     public let executionSessionUrl: String?

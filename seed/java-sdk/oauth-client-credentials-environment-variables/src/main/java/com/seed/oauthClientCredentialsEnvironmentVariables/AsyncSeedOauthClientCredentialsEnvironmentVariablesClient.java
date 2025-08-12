@@ -6,6 +6,9 @@ package com.seed.oauthClientCredentialsEnvironmentVariables;
 import com.seed.oauthClientCredentialsEnvironmentVariables.core.ClientOptions;
 import com.seed.oauthClientCredentialsEnvironmentVariables.core.Suppliers;
 import com.seed.oauthClientCredentialsEnvironmentVariables.resources.auth.AsyncAuthClient;
+import com.seed.oauthClientCredentialsEnvironmentVariables.resources.nested.AsyncNestedClient;
+import com.seed.oauthClientCredentialsEnvironmentVariables.resources.nestednoauth.AsyncNestedNoAuthClient;
+import com.seed.oauthClientCredentialsEnvironmentVariables.resources.simple.AsyncSimpleClient;
 import java.util.function.Supplier;
 
 public class AsyncSeedOauthClientCredentialsEnvironmentVariablesClient {
@@ -13,13 +16,34 @@ public class AsyncSeedOauthClientCredentialsEnvironmentVariablesClient {
 
     protected final Supplier<AsyncAuthClient> authClient;
 
+    protected final Supplier<AsyncNestedNoAuthClient> nestedNoAuthClient;
+
+    protected final Supplier<AsyncNestedClient> nestedClient;
+
+    protected final Supplier<AsyncSimpleClient> simpleClient;
+
     public AsyncSeedOauthClientCredentialsEnvironmentVariablesClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.authClient = Suppliers.memoize(() -> new AsyncAuthClient(clientOptions));
+        this.nestedNoAuthClient = Suppliers.memoize(() -> new AsyncNestedNoAuthClient(clientOptions));
+        this.nestedClient = Suppliers.memoize(() -> new AsyncNestedClient(clientOptions));
+        this.simpleClient = Suppliers.memoize(() -> new AsyncSimpleClient(clientOptions));
     }
 
     public AsyncAuthClient auth() {
         return this.authClient.get();
+    }
+
+    public AsyncNestedNoAuthClient nestedNoAuth() {
+        return this.nestedNoAuthClient.get();
+    }
+
+    public AsyncNestedClient nested() {
+        return this.nestedClient.get();
+    }
+
+    public AsyncSimpleClient simple() {
+        return this.simpleClient.get();
     }
 
     public static AsyncSeedOauthClientCredentialsEnvironmentVariablesClientBuilder builder() {

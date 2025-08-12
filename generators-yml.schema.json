@@ -547,7 +547,7 @@
       ],
       "additionalProperties": false
     },
-    "fernDefinition.auth.BearerAuthSchemeSchema": {
+    "fernDefinition.auth.TokenBearerAuthSchema": {
       "type": "object",
       "properties": {
         "docs": {
@@ -578,6 +578,113 @@
         "scheme"
       ],
       "additionalProperties": false
+    },
+    "fernDefinition.auth.InferredAuthenticatedRequestHeader": {
+      "type": "object",
+      "properties": {
+        "response-property": {
+          "type": "string"
+        },
+        "header-name": {
+          "type": "string"
+        },
+        "value-prefix": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "response-property",
+        "header-name"
+      ],
+      "additionalProperties": false
+    },
+    "fernDefinition.auth.InferredGetTokenEndpointSchemaObject": {
+      "type": "object",
+      "properties": {
+        "endpoint": {
+          "type": "string"
+        },
+        "expiry-response-property": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "authenticated-request-headers": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/fernDefinition.auth.InferredAuthenticatedRequestHeader"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "endpoint"
+      ],
+      "additionalProperties": false
+    },
+    "fernDefinition.auth.InferredGetTokenEndpointSchema": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/fernDefinition.auth.InferredGetTokenEndpointSchemaObject"
+        }
+      ]
+    },
+    "fernDefinition.auth.InferredBearerAuthSchema": {
+      "type": "object",
+      "properties": {
+        "docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scheme": {
+          "const": "bearer"
+        },
+        "get-token": {
+          "$ref": "#/definitions/fernDefinition.auth.InferredGetTokenEndpointSchema"
+        }
+      },
+      "required": [
+        "scheme",
+        "get-token"
+      ],
+      "additionalProperties": false
+    },
+    "fernDefinition.auth.BearerAuthSchemeSchema": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/fernDefinition.auth.TokenBearerAuthSchema"
+        },
+        {
+          "$ref": "#/definitions/fernDefinition.auth.InferredBearerAuthSchema"
+        }
+      ]
     },
     "fernDefinition.auth.AuthSchemeDeclarationSchema": {
       "anyOf": [
@@ -2185,7 +2292,8 @@
             "postman",
             "local-file-system",
             "nuget",
-            "rubygems"
+            "rubygems",
+            "crates"
           ]
         }
       },
@@ -2437,6 +2545,40 @@
               "type": "string"
             },
             "api-key": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "location",
+            "package-name"
+          ]
+        },
+        {
+          "properties": {
+            "location": {
+              "const": "crates"
+            },
+            "url": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "package-name": {
+              "type": "string"
+            },
+            "token": {
               "oneOf": [
                 {
                   "type": "string"

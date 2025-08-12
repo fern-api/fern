@@ -1,3 +1,5 @@
+import Foundation
+
 public struct UserOptionalListContainer: Codable, Hashable, Sendable {
     public let users: [User]?
     /// Additional properties that are not explicitly defined in the schema

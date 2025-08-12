@@ -1,3 +1,5 @@
+import Foundation
+
 public struct GetShapeRequest: Codable, Hashable, Sendable {
     public let id: String
     /// Additional properties that are not explicitly defined in the schema

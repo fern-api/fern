@@ -1,3 +1,5 @@
+import Foundation
+
 public enum UnionWithSingleElement: Codable, Hashable, Sendable {
     case foo(Foo)
 

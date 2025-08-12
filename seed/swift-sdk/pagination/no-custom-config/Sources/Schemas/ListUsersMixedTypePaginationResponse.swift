@@ -1,3 +1,5 @@
+import Foundation
+
 public struct ListUsersMixedTypePaginationResponse: Codable, Hashable, Sendable {
     public let next: String
     public let data: [User]

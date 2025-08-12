@@ -1,3 +1,5 @@
+import Foundation
+
 public struct ReceiveEvent2: Codable, Hashable, Sendable {
     public let gamma: String
     public let delta: Int

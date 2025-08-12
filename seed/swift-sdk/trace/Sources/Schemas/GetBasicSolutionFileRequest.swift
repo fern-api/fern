@@ -1,3 +1,5 @@
+import Foundation
+
 public struct GetBasicSolutionFileRequest: Codable, Hashable, Sendable {
     public let methodName: String
     public let signature: NonVoidFunctionSignature

@@ -1,3 +1,5 @@
+import Foundation
+
 public struct RecordedResponseNotification: Codable, Hashable, Sendable {
     public let submissionId: SubmissionId
     public let traceResponsesSize: Int

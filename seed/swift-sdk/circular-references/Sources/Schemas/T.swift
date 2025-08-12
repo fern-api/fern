@@ -1,3 +1,5 @@
+import Foundation
+
 public struct T: Codable, Hashable, Sendable {
     public let child: TorU
     /// Additional properties that are not explicitly defined in the schema

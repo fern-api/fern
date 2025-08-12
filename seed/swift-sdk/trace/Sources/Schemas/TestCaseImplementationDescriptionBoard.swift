@@ -1,3 +1,5 @@
+import Foundation
+
 public enum TestCaseImplementationDescriptionBoard: Codable, Hashable, Sendable {
     case html(Html)
     case paramId(ParamId)

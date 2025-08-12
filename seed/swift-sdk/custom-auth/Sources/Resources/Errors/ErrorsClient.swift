@@ -1,3 +1,5 @@
+import Foundation
+
 public final class ErrorsClient: Sendable {
     private let httpClient: HTTPClient
 

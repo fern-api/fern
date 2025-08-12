@@ -1,3 +1,5 @@
+import Foundation
+
 public enum UnionWithPrimitive: Codable, Hashable, Sendable {
     case integer(Integer)
     case string(String)

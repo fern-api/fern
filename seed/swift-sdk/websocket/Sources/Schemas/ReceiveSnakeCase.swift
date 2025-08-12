@@ -1,3 +1,5 @@
+import Foundation
+
 public struct ReceiveSnakeCase: Codable, Hashable, Sendable {
     public let receiveText: String
     public let receiveInt: Int

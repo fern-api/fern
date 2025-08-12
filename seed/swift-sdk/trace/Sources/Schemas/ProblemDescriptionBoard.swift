@@ -1,3 +1,5 @@
+import Foundation
+
 public enum ProblemDescriptionBoard: Codable, Hashable, Sendable {
     case html(Html)
     case variable(Variable)

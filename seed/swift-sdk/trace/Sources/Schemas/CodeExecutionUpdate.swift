@@ -1,3 +1,5 @@
+import Foundation
+
 public enum CodeExecutionUpdate: Codable, Hashable, Sendable {
     /// Statuses if an executor for the session isn't ready (Before RunningResponse).
     case buildingExecutor(BuildingExecutor)

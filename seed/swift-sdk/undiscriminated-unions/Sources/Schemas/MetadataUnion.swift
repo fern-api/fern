@@ -1,3 +1,5 @@
+import Foundation
+
 public enum MetadataUnion: Codable, Hashable, Sendable {
     case optionalMetadata(OptionalMetadata)
     case namedMetadata(NamedMetadata)

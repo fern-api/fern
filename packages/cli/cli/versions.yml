@@ -1,5 +1,40 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- changelogEntry:
+    - summary: Allow 'securityScheme.scheme' to be case-insensitive.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-08-11"
+  version: 0.66.11
 
+- changelogEntry:
+    - summary: Add 'vendor' to set of reservved keywords for go.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-08-11"
+  version: 0.66.1
+
+- changelogEntry:
+    - summary: Improved plumbing of the --runner arg for local SDK generation.
+      type: chore
+  irVersion: 59
+  createdAt: "2025-08-11"
+  version: 0.66.01
+
+
+- changelogEntry:
+    - summary: Add support for generating inferred auth in IR and expand bearer auth in Fern Definition for inference.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-08-08"
+  version: 0.66.00
+
+- changelogEntry:
+    - summary: |
+        Handle end of line comments in .fernignore
+      type: feat
+  irVersion: 58
+  createdAt: "2025-08-08"
+  version: 0.65.48
 
 - changelogEntry:
     - summary: |

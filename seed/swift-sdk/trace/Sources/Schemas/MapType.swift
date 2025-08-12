@@ -1,3 +1,5 @@
+import Foundation
+
 public struct MapType: Codable, Hashable, Sendable {
     public let keyType: VariableType
     public let valueType: VariableType

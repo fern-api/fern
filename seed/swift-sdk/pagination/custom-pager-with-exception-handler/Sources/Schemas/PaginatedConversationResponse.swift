@@ -1,3 +1,5 @@
+import Foundation
+
 public struct PaginatedConversationResponse: Codable, Hashable, Sendable {
     public let conversations: [Conversation]
     public let pages: CursorPages?

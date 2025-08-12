@@ -1,3 +1,5 @@
+import Foundation
+
 public struct ObjectWithDocs: Codable, Hashable, Sendable {
     /// Characters that could lead to broken generated SDKs:
     /// 

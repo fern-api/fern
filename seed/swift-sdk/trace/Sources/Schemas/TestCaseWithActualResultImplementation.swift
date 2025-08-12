@@ -1,3 +1,5 @@
+import Foundation
+
 public struct TestCaseWithActualResultImplementation: Codable, Hashable, Sendable {
     public let getActualResult: NonVoidFunctionDefinition
     public let assertCorrectnessCheck: AssertCorrectnessCheck

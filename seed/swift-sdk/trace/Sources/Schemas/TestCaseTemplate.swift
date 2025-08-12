@@ -1,3 +1,5 @@
+import Foundation
+
 public struct TestCaseTemplate: Codable, Hashable, Sendable {
     public let templateId: TestCaseTemplateId
     public let name: String

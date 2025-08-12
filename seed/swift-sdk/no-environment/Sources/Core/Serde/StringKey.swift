@@ -1,3 +1,5 @@
+import Foundation
+
 struct StringKey: CodingKey, Hashable {
     var stringValue: String
     var intValue: Int? { Int(stringValue) }

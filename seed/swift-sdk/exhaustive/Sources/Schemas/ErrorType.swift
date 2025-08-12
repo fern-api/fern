@@ -1,3 +1,5 @@
+import Foundation
+
 public struct ErrorType: Codable, Hashable, Sendable {
     public let category: ErrorCategory
     public let code: ErrorCode

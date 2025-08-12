@@ -1,3 +1,5 @@
+import Foundation
+
 /// A simple type with just a name.
 public struct Type: Codable, Hashable, Sendable {
     public let name: String

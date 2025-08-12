@@ -1,0 +1,7 @@
+imports:
+  commons: ../commons.yml
+types:
+  Declaration:
+    properties:
+      fernFilepath: commons.FernFilepath
+      name: commons.Name

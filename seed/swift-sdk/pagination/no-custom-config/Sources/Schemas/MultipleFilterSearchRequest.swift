@@ -1,3 +1,5 @@
+import Foundation
+
 public struct MultipleFilterSearchRequest: Codable, Hashable, Sendable {
     public let `operator`: MultipleFilterSearchRequestOperator?
     public let value: MultipleFilterSearchRequestValue?

@@ -1,3 +1,5 @@
+import Foundation
+
 public struct TestCaseImplementation: Codable, Hashable, Sendable {
     public let description: TestCaseImplementationDescription
     public let function: TestCaseFunction

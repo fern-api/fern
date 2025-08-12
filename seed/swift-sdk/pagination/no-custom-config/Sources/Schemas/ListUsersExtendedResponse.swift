@@ -1,3 +1,5 @@
+import Foundation
+
 public struct ListUsersExtendedResponse: Codable, Hashable, Sendable {
     public let data: UserListContainer
     public let next: UUID?

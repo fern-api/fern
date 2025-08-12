@@ -1,3 +1,5 @@
+import Foundation
+
 public struct ObjectValue: Codable, Hashable, Sendable {
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]

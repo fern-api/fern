@@ -1,3 +1,5 @@
+import Foundation
+
 public struct WorkspaceRunDetails: Codable, Hashable, Sendable {
     public let exceptionV2: ExceptionV2?
     public let exception: ExceptionInfo?

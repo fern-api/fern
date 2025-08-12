@@ -1,3 +1,5 @@
+import Foundation
+
 public struct TestCaseExpectsType: Codable, Hashable, Sendable {
     public let expectedStdout: String?
     /// Additional properties that are not explicitly defined in the schema

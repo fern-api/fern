@@ -1,3 +1,5 @@
+import Foundation
+
 public struct ExpressionLocation: Codable, Hashable, Sendable {
     public let start: Int
     public let offset: Int

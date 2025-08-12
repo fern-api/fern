@@ -1,3 +1,5 @@
+import Foundation
+
 public struct Migration: Codable, Hashable, Sendable {
     public let name: String
     public let status: MigrationStatus

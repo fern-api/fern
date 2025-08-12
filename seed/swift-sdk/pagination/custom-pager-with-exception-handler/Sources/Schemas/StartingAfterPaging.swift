@@ -1,3 +1,5 @@
+import Foundation
+
 public struct StartingAfterPaging: Codable, Hashable, Sendable {
     public let perPage: Int
     public let startingAfter: String?

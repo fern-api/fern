@@ -163,6 +163,106 @@ client.auth.refresh_token(
 </dl>
 </details>
 
+## NestedNoAuth Api
+<details><summary><code>client.nested_no_auth.api.<a href="src/seed/nested_no_auth/api/client.py">get_something</a>()</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedOauthClientCredentialsWithVariables
+
+client = SeedOauthClientCredentialsWithVariables(
+    root_variable="YOUR_ROOT_VARIABLE",
+    base_url="https://yourhost.com/path/to/api",
+    client_id="YOUR_CLIENT_ID",
+    client_secret="YOUR_CLIENT_SECRET",
+)
+client.nested_no_auth.api.get_something()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Nested Api
+<details><summary><code>client.nested.api.<a href="src/seed/nested/api/client.py">get_something</a>()</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedOauthClientCredentialsWithVariables
+
+client = SeedOauthClientCredentialsWithVariables(
+    root_variable="YOUR_ROOT_VARIABLE",
+    base_url="https://yourhost.com/path/to/api",
+    client_id="YOUR_CLIENT_ID",
+    client_secret="YOUR_CLIENT_SECRET",
+)
+client.nested.api.get_something()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Service
 <details><summary><code>client.service.<a href="src/seed/service/client.py">post</a>()</code></summary>
 <dl>
@@ -186,6 +286,56 @@ client = SeedOauthClientCredentialsWithVariables(
     client_secret="YOUR_CLIENT_SECRET",
 )
 client.service.post()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Simple
+<details><summary><code>client.simple.<a href="src/seed/simple/client.py">get_something</a>()</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedOauthClientCredentialsWithVariables
+
+client = SeedOauthClientCredentialsWithVariables(
+    root_variable="YOUR_ROOT_VARIABLE",
+    base_url="https://yourhost.com/path/to/api",
+    client_id="YOUR_CLIENT_ID",
+    client_secret="YOUR_CLIENT_SECRET",
+)
+client.simple.get_something()
 
 ```
 </dd>

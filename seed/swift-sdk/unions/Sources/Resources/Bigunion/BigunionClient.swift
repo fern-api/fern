@@ -1,3 +1,5 @@
+import Foundation
+
 public final class BigunionClient: Sendable {
     private let httpClient: HTTPClient
 

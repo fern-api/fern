@@ -1,3 +1,5 @@
+import Foundation
+
 public struct TracedTestCase: Codable, Hashable, Sendable {
     public let result: TestCaseResultWithStdout
     public let traceResponsesSize: Int
