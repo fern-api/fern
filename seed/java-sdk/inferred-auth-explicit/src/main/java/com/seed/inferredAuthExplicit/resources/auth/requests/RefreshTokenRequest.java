@@ -21,6 +21,8 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = RefreshTokenRequest.Builder.class)
 public final class RefreshTokenRequest {
+    private final String xApiKey;
+
     private final String clientId;
 
     private final String clientSecret;
@@ -32,16 +34,23 @@ public final class RefreshTokenRequest {
     private final Map<String, Object> additionalProperties;
 
     private RefreshTokenRequest(
+            String xApiKey,
             String clientId,
             String clientSecret,
             String refreshToken,
             Optional<String> scope,
             Map<String, Object> additionalProperties) {
+        this.xApiKey = xApiKey;
         this.clientId = clientId;
         this.clientSecret = clientSecret;
         this.refreshToken = refreshToken;
         this.scope = scope;
         this.additionalProperties = additionalProperties;
+    }
+
+    @JsonProperty("X-Api-Key")
+    public String getXApiKey() {
+        return xApiKey;
     }
 
     @JsonProperty("client_id")
@@ -86,7 +95,8 @@ public final class RefreshTokenRequest {
     }
 
     private boolean equalTo(RefreshTokenRequest other) {
-        return clientId.equals(other.clientId)
+        return xApiKey.equals(other.xApiKey)
+                && clientId.equals(other.clientId)
                 && clientSecret.equals(other.clientSecret)
                 && refreshToken.equals(other.refreshToken)
                 && scope.equals(other.scope);
@@ -94,7 +104,7 @@ public final class RefreshTokenRequest {
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.clientId, this.clientSecret, this.refreshToken, this.scope);
+        return Objects.hash(this.xApiKey, this.clientId, this.clientSecret, this.refreshToken, this.scope);
     }
 
     @java.lang.Override
@@ -102,14 +112,18 @@ public final class RefreshTokenRequest {
         return ObjectMappers.stringify(this);
     }
 
-    public static ClientIdStage builder() {
+    public static XApiKeyStage builder() {
         return new Builder();
+    }
+
+    public interface XApiKeyStage {
+        ClientIdStage xApiKey(@NotNull String xApiKey);
+
+        Builder from(RefreshTokenRequest other);
     }
 
     public interface ClientIdStage {
         ClientSecretStage clientId(@NotNull String clientId);
-
-        Builder from(RefreshTokenRequest other);
     }
 
     public interface ClientSecretStage {
@@ -129,7 +143,10 @@ public final class RefreshTokenRequest {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements ClientIdStage, ClientSecretStage, RefreshTokenStage, _FinalStage {
+    public static final class Builder
+            implements XApiKeyStage, ClientIdStage, ClientSecretStage, RefreshTokenStage, _FinalStage {
+        private String xApiKey;
+
         private String clientId;
 
         private String clientSecret;
@@ -145,10 +162,18 @@ public final class RefreshTokenRequest {
 
         @java.lang.Override
         public Builder from(RefreshTokenRequest other) {
+            xApiKey(other.getXApiKey());
             clientId(other.getClientId());
             clientSecret(other.getClientSecret());
             refreshToken(other.getRefreshToken());
             scope(other.getScope());
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("X-Api-Key")
+        public ClientIdStage xApiKey(@NotNull String xApiKey) {
+            this.xApiKey = Objects.requireNonNull(xApiKey, "xApiKey must not be null");
             return this;
         }
 
@@ -188,7 +213,7 @@ public final class RefreshTokenRequest {
 
         @java.lang.Override
         public RefreshTokenRequest build() {
-            return new RefreshTokenRequest(clientId, clientSecret, refreshToken, scope, additionalProperties);
+            return new RefreshTokenRequest(xApiKey, clientId, clientSecret, refreshToken, scope, additionalProperties);
         }
     }
 }

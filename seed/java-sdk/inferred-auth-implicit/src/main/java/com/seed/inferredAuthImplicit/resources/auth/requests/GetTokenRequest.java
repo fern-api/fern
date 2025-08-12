@@ -21,6 +21,8 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetTokenRequest.Builder.class)
 public final class GetTokenRequest {
+    private final String xApiKey;
+
     private final String clientId;
 
     private final String clientSecret;
@@ -30,11 +32,21 @@ public final class GetTokenRequest {
     private final Map<String, Object> additionalProperties;
 
     private GetTokenRequest(
-            String clientId, String clientSecret, Optional<String> scope, Map<String, Object> additionalProperties) {
+            String xApiKey,
+            String clientId,
+            String clientSecret,
+            Optional<String> scope,
+            Map<String, Object> additionalProperties) {
+        this.xApiKey = xApiKey;
         this.clientId = clientId;
         this.clientSecret = clientSecret;
         this.scope = scope;
         this.additionalProperties = additionalProperties;
+    }
+
+    @JsonProperty("X-Api-Key")
+    public String getXApiKey() {
+        return xApiKey;
     }
 
     @JsonProperty("client_id")
@@ -74,12 +86,15 @@ public final class GetTokenRequest {
     }
 
     private boolean equalTo(GetTokenRequest other) {
-        return clientId.equals(other.clientId) && clientSecret.equals(other.clientSecret) && scope.equals(other.scope);
+        return xApiKey.equals(other.xApiKey)
+                && clientId.equals(other.clientId)
+                && clientSecret.equals(other.clientSecret)
+                && scope.equals(other.scope);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.clientId, this.clientSecret, this.scope);
+        return Objects.hash(this.xApiKey, this.clientId, this.clientSecret, this.scope);
     }
 
     @java.lang.Override
@@ -87,14 +102,18 @@ public final class GetTokenRequest {
         return ObjectMappers.stringify(this);
     }
 
-    public static ClientIdStage builder() {
+    public static XApiKeyStage builder() {
         return new Builder();
+    }
+
+    public interface XApiKeyStage {
+        ClientIdStage xApiKey(@NotNull String xApiKey);
+
+        Builder from(GetTokenRequest other);
     }
 
     public interface ClientIdStage {
         ClientSecretStage clientId(@NotNull String clientId);
-
-        Builder from(GetTokenRequest other);
     }
 
     public interface ClientSecretStage {
@@ -110,7 +129,9 @@ public final class GetTokenRequest {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements ClientIdStage, ClientSecretStage, _FinalStage {
+    public static final class Builder implements XApiKeyStage, ClientIdStage, ClientSecretStage, _FinalStage {
+        private String xApiKey;
+
         private String clientId;
 
         private String clientSecret;
@@ -124,9 +145,17 @@ public final class GetTokenRequest {
 
         @java.lang.Override
         public Builder from(GetTokenRequest other) {
+            xApiKey(other.getXApiKey());
             clientId(other.getClientId());
             clientSecret(other.getClientSecret());
             scope(other.getScope());
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("X-Api-Key")
+        public ClientIdStage xApiKey(@NotNull String xApiKey) {
+            this.xApiKey = Objects.requireNonNull(xApiKey, "xApiKey must not be null");
             return this;
         }
 
@@ -159,7 +188,7 @@ public final class GetTokenRequest {
 
         @java.lang.Override
         public GetTokenRequest build() {
-            return new GetTokenRequest(clientId, clientSecret, scope, additionalProperties);
+            return new GetTokenRequest(xApiKey, clientId, clientSecret, scope, additionalProperties);
         }
     }
 }

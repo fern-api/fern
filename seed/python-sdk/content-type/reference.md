@@ -77,7 +77,10 @@ client.service.patch(
 <dl>
 <dd>
 
-Update with JSON merge patch - complex types
+Update with JSON merge patch - complex types.
+This endpoint demonstrates the distinction between:
+- optional<T> fields (can be present or absent, but not null)
+- optional<nullable<T>> fields (can be present, absent, or null)
 </dd>
 </dl>
 </dd>
@@ -100,11 +103,15 @@ client = SeedContentTypes(
 client.service.patch_complex(
     id="id",
     name="name",
-    email="email",
     age=1,
     active=True,
     metadata={"metadata": {"key": "value"}},
     tags=["tags", "tags"],
+    email="email",
+    nickname="nickname",
+    bio="bio",
+    profile_image_url="profileImageUrl",
+    settings={"settings": {"key": "value"}},
 )
 
 ```
@@ -137,14 +144,6 @@ client.service.patch_complex(
 <dl>
 <dd>
 
-**email:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **age:** `typing.Optional[int]` 
     
 </dd>
@@ -170,6 +169,46 @@ client.service.patch_complex(
 <dd>
 
 **tags:** `typing.Optional[typing.Sequence[str]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**nickname:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bio:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**profile_image_url:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` 
     
 </dd>
 </dl>

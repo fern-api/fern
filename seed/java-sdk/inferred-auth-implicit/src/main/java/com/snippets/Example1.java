@@ -13,6 +13,7 @@ public class Example1 {
         client.auth().refreshToken(
             RefreshTokenRequest
                 .builder()
+                .xApiKey("X-Api-Key")
                 .clientId("client_id")
                 .clientSecret("client_secret")
                 .refreshToken("refresh_token")
