@@ -1,18 +1,21 @@
 package com.fern.java.client.generators.endpoint;
 
+import com.fern.ir.model.commons.TypeId;
+import com.fern.ir.model.types.AliasTypeDeclaration;
 import com.fern.ir.model.types.BigIntegerType;
 import com.fern.ir.model.types.BooleanType;
 import com.fern.ir.model.types.ContainerType;
 import com.fern.ir.model.types.DoubleType;
-import com.fern.ir.model.types.FloatType;
 import com.fern.ir.model.types.IntegerType;
 import com.fern.ir.model.types.LongType;
+import com.fern.ir.model.types.MapType;
+import com.fern.ir.model.types.NamedType;
 import com.fern.ir.model.types.PrimitiveType;
 import com.fern.ir.model.types.PrimitiveTypeV2;
 import com.fern.ir.model.types.StringType;
+import com.fern.ir.model.types.Type;
+import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.TypeReference;
-import com.fern.ir.model.types.UintType;
-import com.fern.ir.model.types.Uint64Type;
 import com.fern.java.client.ClientGeneratorContext;
 import com.squareup.javapoet.CodeBlock;
 import java.util.Optional;
@@ -65,13 +68,18 @@ public final class DefaultValueExtractor {
                     }
                     
                     @Override
-                    public Boolean visitMap(ContainerType.Map map) {
+                    public Boolean visitMap(MapType map) {
                         return false;
                     }
                     
                     @Override
-                    public Boolean visitLiteral(ContainerType.Literal literal) {
+                    public Boolean visitLiteral(com.fern.ir.model.types.Literal literal) {
                         return false;
+                    }
+                    
+                    @Override
+                    public Boolean visitNullable(TypeReference nullable) {
+                        return hasDefaultValueInternal(nullable);
                     }
                     
                     @Override
@@ -82,17 +90,14 @@ public final class DefaultValueExtractor {
             }
             
             @Override
-            public Boolean visitNamed(com.fern.ir.model.commons.TypeId typeId) {
-                return context.getTypeDeclarations().get(typeId)
-                    .map(typeDeclaration -> {
-                        if (typeDeclaration.getShape().getAlias().isPresent()) {
-                            return hasDefaultValueInternal(
-                                typeDeclaration.getShape().getAlias().get().getAliasOf()
-                            );
-                        }
-                        return false;
-                    })
-                    .orElse(false);
+            public Boolean visitNamed(NamedType namedType) {
+                TypeId typeId = namedType.getTypeId();
+                TypeDeclaration typeDeclaration = context.getTypeDeclarations().get(typeId);
+                if (typeDeclaration != null && typeDeclaration.getShape().isAlias()) {
+                    AliasTypeDeclaration alias = typeDeclaration.getShape().getAlias().get();
+                    return hasDefaultValueInternal(alias.getAliasOf());
+                }
+                return false;
             }
             
             @Override
@@ -142,13 +147,18 @@ public final class DefaultValueExtractor {
                     }
                     
                     @Override
-                    public Optional<CodeBlock> visitMap(ContainerType.Map map) {
+                    public Optional<CodeBlock> visitMap(MapType map) {
                         return Optional.empty();
                     }
                     
                     @Override
-                    public Optional<CodeBlock> visitLiteral(ContainerType.Literal literal) {
+                    public Optional<CodeBlock> visitLiteral(com.fern.ir.model.types.Literal literal) {
                         return Optional.empty();
+                    }
+                    
+                    @Override
+                    public Optional<CodeBlock> visitNullable(TypeReference nullable) {
+                        return extractDefaultValueInternal(nullable);
                     }
                     
                     @Override
@@ -159,16 +169,14 @@ public final class DefaultValueExtractor {
             }
             
             @Override
-            public Optional<CodeBlock> visitNamed(com.fern.ir.model.commons.TypeId typeId) {
-                return context.getTypeDeclarations().get(typeId)
-                    .flatMap(typeDeclaration -> {
-                        if (typeDeclaration.getShape().getAlias().isPresent()) {
-                            return extractDefaultValueInternal(
-                                typeDeclaration.getShape().getAlias().get().getAliasOf()
-                            );
-                        }
-                        return Optional.empty();
-                    });
+            public Optional<CodeBlock> visitNamed(NamedType namedType) {
+                TypeId typeId = namedType.getTypeId();
+                TypeDeclaration typeDeclaration = context.getTypeDeclarations().get(typeId);
+                if (typeDeclaration != null && typeDeclaration.getShape().isAlias()) {
+                    AliasTypeDeclaration alias = typeDeclaration.getShape().getAlias().get();
+                    return extractDefaultValueInternal(alias.getAliasOf());
+                }
+                return Optional.empty();
             }
             
             @Override
@@ -200,11 +208,6 @@ public final class DefaultValueExtractor {
         }
         
         @Override
-        public Boolean visitFloat(FloatType floatType) {
-            return floatType.getDefault().isPresent();
-        }
-        
-        @Override
         public Boolean visitBoolean(BooleanType booleanType) {
             return booleanType.getDefault().isPresent();
         }
@@ -219,17 +222,22 @@ public final class DefaultValueExtractor {
             return bigIntegerType.getDefault().isPresent();
         }
         
+        // Float, Uint, Uint64, Date, DateTime, UUID, Base64 don't support defaults in our IR version
         @Override
-        public Boolean visitUint(UintType uintType) {
-            return uintType.getDefault().isPresent();
+        public Boolean visitFloat(com.fern.ir.model.types.FloatType floatType) {
+            return false;
         }
         
         @Override
-        public Boolean visitUint64(Uint64Type uint64Type) {
-            return uint64Type.getDefault().isPresent();
+        public Boolean visitUint(com.fern.ir.model.types.UintType uintType) {
+            return false;
         }
         
-        // Date, DateTime, UUID, Base64 don't support defaults in PrimitiveTypeV2
+        @Override
+        public Boolean visitUint64(com.fern.ir.model.types.Uint64Type uint64Type) {
+            return false;
+        }
+        
         @Override
         public Boolean visitDate(com.fern.ir.model.types.DateType dateType) {
             return false;
@@ -276,12 +284,6 @@ public final class DefaultValueExtractor {
         }
         
         @Override
-        public Optional<CodeBlock> visitFloat(FloatType floatType) {
-            return floatType.getDefault()
-                .map(defaultValue -> CodeBlock.of("$Lf", defaultValue));
-        }
-        
-        @Override
         public Optional<CodeBlock> visitBoolean(BooleanType booleanType) {
             return booleanType.getDefault()
                 .map(defaultValue -> CodeBlock.of("$L", defaultValue));
@@ -300,16 +302,20 @@ public final class DefaultValueExtractor {
                     java.math.BigInteger.class, defaultValue));
         }
         
+        // Float, Uint, Uint64 don't support defaults in our IR version
         @Override
-        public Optional<CodeBlock> visitUint(UintType uintType) {
-            return uintType.getDefault()
-                .map(defaultValue -> CodeBlock.of("$L", defaultValue));
+        public Optional<CodeBlock> visitFloat(com.fern.ir.model.types.FloatType floatType) {
+            return Optional.empty();
         }
         
         @Override
-        public Optional<CodeBlock> visitUint64(Uint64Type uint64Type) {
-            return uint64Type.getDefault()
-                .map(defaultValue -> CodeBlock.of("$LL", defaultValue));
+        public Optional<CodeBlock> visitUint(com.fern.ir.model.types.UintType uintType) {
+            return Optional.empty();
+        }
+        
+        @Override
+        public Optional<CodeBlock> visitUint64(com.fern.ir.model.types.Uint64Type uint64Type) {
+            return Optional.empty();
         }
         
         @Override
