@@ -1,11 +1,8 @@
 import { assertNever } from "@fern-api/core-utils";
-import { RubyFile, FileGenerator } from "@fern-api/ruby-base";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
-import { RelativeFilePath, join } from "@fern-api/fs-utils";
+import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { astNodeToCodeBlockWithComments } from "../utils/astNodeToCodeBlockWithComments";
-import { Comments } from "../utils/comments";
-
 import {
     AuthScheme,
     HttpHeader,
@@ -17,9 +14,10 @@ import {
     Subpackage,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { astNodeToCodeBlockWithComments } from "../utils/astNodeToCodeBlockWithComments";
+import { Comments } from "../utils/comments";
 
 export const CLIENT_MEMBER_NAME = "_client";
 export const GRPC_CLIENT_MEMBER_NAME = "_grpc";
@@ -52,7 +50,6 @@ interface HeaderInfo {
 
 export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     public doGenerate(): RubyFile {
-
         const rootModule = this.context.getRootModule();
         const class_ = ruby.class_({ name: this.context.getRootClientClassName() });
         for (const subpackage of this.getSubpackages()) {
@@ -79,13 +76,14 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
     }
 
     public getFilepath(): RelativeFilePath {
-        return join(
-            this.getDirectory(),
-            RelativeFilePath.of(this.getFilename())
-        );
+        return join(this.getDirectory(), RelativeFilePath.of(this.getFilename()));
     }
 
-    private getSubpackageClientGetter(subpackage: FernIr.Subpackage, rootModule: ruby.Module_, rootClientClass: ruby.Class_): ruby.Method {
+    private getSubpackageClientGetter(
+        subpackage: FernIr.Subpackage,
+        rootModule: ruby.Module_,
+        rootClientClass: ruby.Class_
+    ): ruby.Method {
         return new ruby.Method({
             name: subpackage.name.camelCase.safeName,
             kind: ruby.MethodKind.Instance,
@@ -95,13 +93,13 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 ruby.codeblock((writer) => {
                     writer.writeLine(
                         `@${subpackage.name.camelCase.safeName} ||= ` +
-                        `${rootModule.name}::` +
-                        `${subpackage.name.pascalCase.safeName}::` +
-                        `Client.new(client: @raw_client)`
-                    )
+                            `${rootModule.name}::` +
+                            `${subpackage.name.pascalCase.safeName}::` +
+                            `Client.new(client: @raw_client)`
+                    );
                 })
             ]
-        })
+        });
     }
 
     private getSubpackages(): Subpackage[] {
