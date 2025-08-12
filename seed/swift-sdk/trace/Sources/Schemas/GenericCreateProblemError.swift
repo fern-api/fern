@@ -1,3 +1,5 @@
+import Foundation
+
 public struct GenericCreateProblemError: Codable, Hashable, Sendable {
     public let message: String
     public let type: String

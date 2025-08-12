@@ -1,3 +1,5 @@
+import Foundation
+
 public struct WorkspaceSubmitRequest: Codable, Hashable, Sendable {
     public let submissionId: SubmissionId
     public let language: Language

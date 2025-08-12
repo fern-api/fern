@@ -1,3 +1,5 @@
+import Foundation
+
 public enum UnionWithLiteral: Codable, Hashable, Sendable {
     case fern(Fern)
 

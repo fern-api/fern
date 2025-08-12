@@ -1,3 +1,5 @@
+import Foundation
+
 public enum TestSubmissionStatus: Codable, Hashable, Sendable {
     case stopped(Stopped)
     case errored(Errored)

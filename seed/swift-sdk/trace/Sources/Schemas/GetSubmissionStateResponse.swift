@@ -1,3 +1,5 @@
+import Foundation
+
 public struct GetSubmissionStateResponse: Codable, Hashable, Sendable {
     public let timeSubmitted: Date?
     public let submission: String

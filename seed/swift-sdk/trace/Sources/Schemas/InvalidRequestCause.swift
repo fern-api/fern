@@ -1,3 +1,5 @@
+import Foundation
+
 public enum InvalidRequestCause: Codable, Hashable, Sendable {
     /// The submission request references a submission id that doesn't exist.
     case submissionIdNotFound(SubmissionIdNotFound)

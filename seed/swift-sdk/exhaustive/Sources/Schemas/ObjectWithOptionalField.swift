@@ -1,3 +1,5 @@
+import Foundation
+
 public struct ObjectWithOptionalField: Codable, Hashable, Sendable {
     /// This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
     public let string: String?

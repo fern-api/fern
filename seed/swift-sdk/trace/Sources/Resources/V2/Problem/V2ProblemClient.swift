@@ -1,3 +1,5 @@
+import Foundation
+
 public final class V2ProblemClient: Sendable {
     private let httpClient: HTTPClient
 

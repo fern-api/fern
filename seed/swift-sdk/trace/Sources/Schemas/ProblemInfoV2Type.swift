@@ -1,3 +1,5 @@
+import Foundation
+
 public struct ProblemInfoV2Type: Codable, Hashable, Sendable {
     public let problemId: ProblemId
     public let problemDescription: ProblemDescription

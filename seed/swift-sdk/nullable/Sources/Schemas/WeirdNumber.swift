@@ -1,3 +1,5 @@
+import Foundation
+
 public enum WeirdNumber: Codable, Hashable, Sendable {
     case int(Int)
     case json(JSONValue)

@@ -1,3 +1,5 @@
+import Foundation
+
 public enum UnionWithDuplicatePrimitive: Codable, Hashable, Sendable {
     case integer1(Integer1)
     case integer2(Integer2)

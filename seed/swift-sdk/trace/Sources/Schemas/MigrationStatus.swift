@@ -1,3 +1,5 @@
+import Foundation
+
 public enum MigrationStatus: String, Codable, Hashable, CaseIterable, Sendable {
     /// The migration is running
     case running = "RUNNING"

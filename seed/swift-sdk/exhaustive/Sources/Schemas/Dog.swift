@@ -1,3 +1,5 @@
+import Foundation
+
 public struct Dog: Codable, Hashable, Sendable {
     public let name: String
     public let likesToWoof: Bool

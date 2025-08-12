@@ -1,3 +1,5 @@
+import Foundation
+
 /// Tests enum name and value can be 
 /// different.
 public enum Operand: String, Codable, Hashable, CaseIterable, Sendable {

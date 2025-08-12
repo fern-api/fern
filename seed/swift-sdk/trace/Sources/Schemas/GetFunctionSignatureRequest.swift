@@ -1,3 +1,5 @@
+import Foundation
+
 public struct GetFunctionSignatureRequest: Codable, Hashable, Sendable {
     public let functionSignature: FunctionSignature
     /// Additional properties that are not explicitly defined in the schema

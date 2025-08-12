@@ -1,3 +1,5 @@
+import Foundation
+
 /// Nested union root.
 public enum NestedUnionRoot: Codable, Hashable, Sendable {
     case string(String)

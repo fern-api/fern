@@ -1,3 +1,5 @@
+import Foundation
+
 public final class AClient: Sendable {
     public let b: BClient
     public let c: CClient

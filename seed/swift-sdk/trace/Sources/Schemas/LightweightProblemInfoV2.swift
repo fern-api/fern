@@ -1,3 +1,5 @@
+import Foundation
+
 public struct LightweightProblemInfoV2: Codable, Hashable, Sendable {
     public let problemId: ProblemId
     public let problemName: String

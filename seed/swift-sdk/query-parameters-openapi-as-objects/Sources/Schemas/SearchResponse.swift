@@ -1,3 +1,5 @@
+import Foundation
+
 public struct SearchResponse: Codable, Hashable, Sendable {
     public let results: [String]?
     /// Additional properties that are not explicitly defined in the schema

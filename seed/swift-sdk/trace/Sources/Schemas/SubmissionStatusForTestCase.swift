@@ -1,3 +1,5 @@
+import Foundation
+
 public enum SubmissionStatusForTestCase: Codable, Hashable, Sendable {
     case graded(Graded)
     case gradedV2(GradedV2)

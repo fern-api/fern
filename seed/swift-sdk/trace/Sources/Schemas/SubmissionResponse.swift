@@ -1,3 +1,5 @@
+import Foundation
+
 public enum SubmissionResponse: Codable, Hashable, Sendable {
     case serverInitialized(ServerInitialized)
     case problemInitialized(ProblemInitialized)

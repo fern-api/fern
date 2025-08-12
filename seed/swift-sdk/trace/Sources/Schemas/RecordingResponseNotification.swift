@@ -1,3 +1,5 @@
+import Foundation
+
 public struct RecordingResponseNotification: Codable, Hashable, Sendable {
     public let submissionId: SubmissionId
     public let testCaseId: String?

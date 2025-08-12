@@ -1,3 +1,5 @@
+import Foundation
+
 public struct GetBasicSolutionFileResponse: Codable, Hashable, Sendable {
     public let solutionFileByLanguage: [Language: FileInfoV2]
     /// Additional properties that are not explicitly defined in the schema

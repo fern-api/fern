@@ -1,3 +1,5 @@
+import Foundation
+
 /// A user object. This type is used throughout the following APIs:
 ///   - createUser
 ///   - getUser

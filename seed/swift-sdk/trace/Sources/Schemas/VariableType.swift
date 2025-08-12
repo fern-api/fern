@@ -1,3 +1,5 @@
+import Foundation
+
 public enum VariableType: Codable, Hashable, Sendable {
     case integerType(IntegerType)
     case doubleType(DoubleType)

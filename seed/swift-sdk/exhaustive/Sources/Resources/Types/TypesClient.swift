@@ -1,3 +1,5 @@
+import Foundation
+
 public final class TypesClient: Sendable {
     public let docs: DocsClient
     public let `enum`: TypesEnumClient

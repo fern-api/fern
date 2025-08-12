@@ -1,3 +1,5 @@
+import Foundation
+
 public enum BigUnion: Codable, Hashable, Sendable {
     case normalSweet(NormalSweet)
     case thankfulFactor(ThankfulFactor)

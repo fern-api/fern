@@ -1,3 +1,5 @@
+import Foundation
+
 public struct CreateMovieRequest: Codable, Hashable, Sendable {
     public let title: String
     public let rating: Double

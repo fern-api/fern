@@ -1,3 +1,5 @@
+import Foundation
+
 public struct Memo: Codable, Hashable, Sendable {
     public let description: String
     public let account: Account?

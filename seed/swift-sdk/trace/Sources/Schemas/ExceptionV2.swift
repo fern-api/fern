@@ -1,3 +1,5 @@
+import Foundation
+
 public enum ExceptionV2: Codable, Hashable, Sendable {
     case generic(Generic)
     case timeout(Timeout)

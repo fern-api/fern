@@ -1,3 +1,5 @@
+import Foundation
+
 public struct DefaultProvidedFile: Codable, Hashable, Sendable {
     public let file: FileInfoV2
     public let relatedTypes: [VariableType]

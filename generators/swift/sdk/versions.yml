@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.3.0
+  createdAt: "2025-08-11"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Removed implicit Foundation import by deleting Prelude.swift and adding explicit imports to all source files.
+  irVersion: 58
+
 - version: 0.2.0
   createdAt: "2025-08-10"
   changelogEntry:

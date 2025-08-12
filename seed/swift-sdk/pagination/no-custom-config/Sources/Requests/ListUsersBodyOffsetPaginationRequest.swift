@@ -1,3 +1,5 @@
+import Foundation
+
 public struct ListUsersBodyOffsetPaginationRequest: Codable, Hashable, Sendable {
     /// The object that contains the offset used for pagination
     /// in order to fetch the next page of results.

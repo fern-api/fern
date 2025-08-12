@@ -1,3 +1,5 @@
+import Foundation
+
 public enum Status: Codable, Hashable, Sendable {
     case active(Active)
     case archived(Archived)

@@ -1,3 +1,5 @@
+import Foundation
+
 public struct PatchProxyRequest: Codable, Hashable, Sendable {
     public let application: JSONValue
     public let requireAuth: JSONValue

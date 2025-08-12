@@ -1,3 +1,5 @@
+import Foundation
+
 public struct EchoRequest: Codable, Hashable, Sendable {
     public let name: String
     public let size: Int

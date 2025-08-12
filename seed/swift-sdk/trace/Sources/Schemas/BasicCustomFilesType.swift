@@ -1,3 +1,5 @@
+import Foundation
+
 public struct BasicCustomFilesType: Codable, Hashable, Sendable {
     public let methodName: String
     public let signature: NonVoidFunctionSignatureType

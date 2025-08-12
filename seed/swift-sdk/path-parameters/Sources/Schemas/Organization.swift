@@ -1,3 +1,5 @@
+import Foundation
+
 public struct Organization: Codable, Hashable, Sendable {
     public let name: String
     public let tags: [String]

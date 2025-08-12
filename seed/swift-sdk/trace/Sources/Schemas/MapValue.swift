@@ -1,3 +1,5 @@
+import Foundation
+
 public struct MapValue: Codable, Hashable, Sendable {
     public let keyValuePairs: [KeyValuePair]
     /// Additional properties that are not explicitly defined in the schema

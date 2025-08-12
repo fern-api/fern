@@ -1,3 +1,5 @@
+import Foundation
+
 public final class MetadataClient: Sendable {
     private let httpClient: HTTPClient
 

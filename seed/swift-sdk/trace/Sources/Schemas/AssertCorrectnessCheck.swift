@@ -1,3 +1,5 @@
+import Foundation
+
 public enum AssertCorrectnessCheck: Codable, Hashable, Sendable {
     case deepEquality(DeepEquality)
     case custom(Custom)

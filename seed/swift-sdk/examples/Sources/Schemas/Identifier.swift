@@ -1,3 +1,5 @@
+import Foundation
+
 public struct Identifier: Codable, Hashable, Sendable {
     public let type: Type
     public let value: String

@@ -1,3 +1,5 @@
+import Foundation
+
 public struct UpdatePlaylistRequest: Codable, Hashable, Sendable {
     public let name: String
     /// The problems that make up the playlist.

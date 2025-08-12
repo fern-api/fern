@@ -1,3 +1,5 @@
+import Foundation
+
 public struct WorkspaceTracedUpdate: Codable, Hashable, Sendable {
     public let traceResponsesSize: Int
     /// Additional properties that are not explicitly defined in the schema

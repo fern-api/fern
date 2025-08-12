@@ -1,3 +1,5 @@
+import Foundation
+
 public struct GeneratedFilesType: Codable, Hashable, Sendable {
     public let generatedTestCaseFiles: [Language: FilesType]
     public let generatedTemplateFiles: [Language: FilesType]

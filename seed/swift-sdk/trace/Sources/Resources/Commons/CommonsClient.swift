@@ -1,3 +1,5 @@
+import Foundation
+
 public final class CommonsClient: Sendable {
     private let httpClient: HTTPClient
 

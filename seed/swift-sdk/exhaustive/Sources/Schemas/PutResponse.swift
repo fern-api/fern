@@ -1,3 +1,5 @@
+import Foundation
+
 public struct PutResponse: Codable, Hashable, Sendable {
     public let errors: [ErrorType]?
     /// Additional properties that are not explicitly defined in the schema

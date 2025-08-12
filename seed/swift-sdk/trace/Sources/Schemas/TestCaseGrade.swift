@@ -1,3 +1,5 @@
+import Foundation
+
 public enum TestCaseGrade: Codable, Hashable, Sendable {
     case hidden(Hidden)
     case nonHidden(NonHidden)

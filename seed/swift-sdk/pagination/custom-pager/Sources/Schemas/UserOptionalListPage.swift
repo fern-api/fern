@@ -1,3 +1,5 @@
+import Foundation
+
 public struct UserOptionalListPage: Codable, Hashable, Sendable {
     public let data: UserOptionalListContainer
     public let next: UUID?

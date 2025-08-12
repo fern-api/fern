@@ -1,3 +1,5 @@
+import Foundation
+
 public struct InvalidRequestResponse: Codable, Hashable, Sendable {
     public let request: SubmissionRequest
     public let cause: InvalidRequestCause

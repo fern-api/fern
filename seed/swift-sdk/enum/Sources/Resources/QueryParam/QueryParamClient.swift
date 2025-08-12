@@ -1,3 +1,5 @@
+import Foundation
+
 public final class QueryParamClient: Sendable {
     private let httpClient: HTTPClient
 

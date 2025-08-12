@@ -1,3 +1,5 @@
+import Foundation
+
 public struct SendSnakeCase: Codable, Hashable, Sendable {
     public let sendText: String
     public let sendParam: Int
