@@ -1,3 +1,5 @@
+import Foundation
+
 public enum TestCaseFunction: Codable, Hashable, Sendable {
     case withActualResult(WithActualResult)
     case custom(Custom)

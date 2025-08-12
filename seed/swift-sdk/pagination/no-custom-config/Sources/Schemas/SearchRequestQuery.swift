@@ -1,3 +1,5 @@
+import Foundation
+
 public enum SearchRequestQuery: Codable, Hashable, Sendable {
     case singleFilterSearchRequest(SingleFilterSearchRequest)
     case multipleFilterSearchRequest(MultipleFilterSearchRequest)

@@ -130,7 +130,10 @@ class RawClient
     ): array {
         return match (get_class($request)) {
             JsonApiRequest::class => array_merge(
-                ["Content-Type" => "application/json"],
+                [
+                    "Content-Type" => "application/json",
+                    "Accept" => "*/*",
+                ],
                 $this->headers,
                 $request->headers,
                 $options['headers'] ?? [],

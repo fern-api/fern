@@ -37,6 +37,10 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
         this.rootFiles.push(...files);
     }
 
+    /**
+     * Adds a source file to the project. Conflicts will be resolved by appending underscores to duplicate names.
+     * The file will include a Foundation import.
+     */
     public addSourceFile({
         nameCandidateWithoutExtension,
         directory,
@@ -44,14 +48,33 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
     }: {
         nameCandidateWithoutExtension: string;
         directory: RelativeFilePath;
-        fileContents: string | swift.FileComponent[];
+        fileContents: swift.FileComponent[];
     }): SwiftFile {
         let filenameWithoutExt = nameCandidateWithoutExtension;
         while (this.srcFileNamesWithoutExtension.has(filenameWithoutExt)) {
             filenameWithoutExt += "_";
         }
         this.srcFileNamesWithoutExtension.add(filenameWithoutExt);
-        const file = new SwiftFile({
+        const file = SwiftFile.createWithFoundation({
+            filename: filenameWithoutExt + ".swift",
+            directory,
+            fileContents
+        });
+        this.srcFiles.push(file);
+        return file;
+    }
+
+    public addSourceAsIsFile({
+        filenameWithoutExt,
+        directory,
+        fileContents
+    }: {
+        filenameWithoutExt: string;
+        directory: RelativeFilePath;
+        fileContents: swift.FileComponent[];
+    }): SwiftFile {
+        this.srcFileNamesWithoutExtension.add(filenameWithoutExt);
+        const file = SwiftFile.create({
             filename: filenameWithoutExt + ".swift",
             directory,
             fileContents

@@ -1,3 +1,5 @@
+import Foundation
+
 public enum Node: Codable, Hashable, Sendable {
     case branchNode(BranchNode)
     case leafNode(LeafNode)

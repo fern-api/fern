@@ -1,3 +1,5 @@
+import Foundation
+
 public final class PropertyBasedErrorClient: Sendable {
     private let httpClient: HTTPClient
 

@@ -1,3 +1,5 @@
+import Foundation
+
 public struct GenerateStreamRequest: Codable, Hashable, Sendable {
     public let stream: JSONValue
     public let numEvents: Int

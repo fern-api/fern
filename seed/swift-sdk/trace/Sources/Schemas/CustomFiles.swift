@@ -1,3 +1,5 @@
+import Foundation
+
 public enum CustomFiles: Codable, Hashable, Sendable {
     case basic(Basic)
     case custom(Custom)

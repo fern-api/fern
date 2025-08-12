@@ -1,3 +1,5 @@
+import Foundation
+
 public struct TypeWithOptionalUnion: Codable, Hashable, Sendable {
     public let myUnion: MyUnion?
     /// Additional properties that are not explicitly defined in the schema

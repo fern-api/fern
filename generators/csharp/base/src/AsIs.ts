@@ -73,7 +73,8 @@ export const AsIsFiles = {
             AdditionalParametersTests: "test/RawClientTests/AdditionalParametersTests.Template.cs",
             MultipartFormTests: "test/RawClientTests/MultipartFormTests.Template.cs",
             RetriesTests: "test/RawClientTests/RetriesTests.Template.cs",
-            QueryParameterTests: "test/RawClientTests/QueryParameterTests.Template.cs"
+            QueryParameterTests: "test/RawClientTests/QueryParameterTests.Template.cs",
+            IdempotentHeadersTests: "test/RawClientTests/IdempotentHeadersTests.Template.cs"
         },
         Utils: {
             JsonElementComparer: "test/Utils/JsonElementComparer.Template.cs",

@@ -1,3 +1,5 @@
+import Foundation
+
 public struct StackFrame: Codable, Hashable, Sendable {
     public let methodName: String
     public let lineNumber: Int

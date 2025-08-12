@@ -61,6 +61,7 @@ types:
       local-file-system: LocalFileSystemOutputLocationSchema
       nuget: NugetOutputLocationSchema
       rubygems: RubyGemsOutputLocationSchema
+      crates: CratesOutputLocationSchema
   
   GithubConfigurationSchema:
     discriminated: false
@@ -180,3 +181,12 @@ types:
       url: optional<string>
       package-name: string
       api-key: optional<string>
+
+  CratesOutputLocationSchema:
+    docs: |
+      Configuration for publishing Rust crates to crates.io or a custom registry.
+      API tokens can be created at https://crates.io/settings/tokens with appropriate permissions.
+    properties:
+      url: optional<string>
+      package-name: string
+      token: optional<string>

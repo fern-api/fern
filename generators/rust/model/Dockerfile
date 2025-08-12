@@ -1,7 +1,7 @@
 FROM node:22.12-alpine3.20
 
-RUN apk --no-cache add git
+COPY generators/rust/model/dist /dist
 
-COPY generators/rust/model/dist/cli.cjs /dist/cli.cjs
+RUN npm install -f -g @fern-api/generator-cli
 
-ENTRYPOINT ["node", "--enable-source-maps", "/dist/cli.cjs"] 
+ENTRYPOINT ["node", "--enable-source-maps", "/dist/cli.cjs", "rust-model"]

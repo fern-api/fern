@@ -1,3 +1,5 @@
+import Foundation
+
 public enum ColorOrOperand: Codable, Hashable, Sendable {
     case color(Color)
     case operand(Operand)

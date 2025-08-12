@@ -1,3 +1,5 @@
+import Foundation
+
 public enum JsonLike: Codable, Hashable, Sendable {
     case jsonLikeArray([JsonLike])
     case stringToJsonLikeDictionary([String: JsonLike])

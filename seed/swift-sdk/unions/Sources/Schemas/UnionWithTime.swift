@@ -1,3 +1,5 @@
+import Foundation
+
 public enum UnionWithTime: Codable, Hashable, Sendable {
     case value(Value)
     case date(Date)

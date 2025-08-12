@@ -1,3 +1,5 @@
+import Foundation
+
 /// Exercises all of the built-in types.
 public struct Type: Codable, Hashable, Sendable {
     public let one: Int

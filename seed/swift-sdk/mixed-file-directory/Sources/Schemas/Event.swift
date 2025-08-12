@@ -1,3 +1,5 @@
+import Foundation
+
 public struct Event: Codable, Hashable, Sendable {
     public let id: Id
     public let name: String

@@ -1,3 +1,5 @@
+import Foundation
+
 public enum Key: Codable, Hashable, Sendable {
     case keyType(KeyType)
     case json(JSONValue)

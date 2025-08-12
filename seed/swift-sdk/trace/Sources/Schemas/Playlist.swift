@@ -1,3 +1,5 @@
+import Foundation
+
 public struct Playlist: Codable, Hashable, Sendable {
     public let name: String
     public let problems: [ProblemId]

@@ -269,6 +269,7 @@ export const RESERVED_KEYWORDS: Record<generatorsYml.GenerationLanguage, Set<str
         "switch",
         "type",
         "var",
+        "vendor",
         // Technically allowed as identifiers, but should be avoided.
         "any",
         "bool",

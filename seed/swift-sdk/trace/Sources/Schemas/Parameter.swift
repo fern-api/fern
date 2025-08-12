@@ -1,3 +1,5 @@
+import Foundation
+
 public struct Parameter: Codable, Hashable, Sendable {
     public let parameterId: ParameterId
     public let name: String

@@ -1,3 +1,5 @@
+import Foundation
+
 public enum ErrorCode: String, Codable, Hashable, CaseIterable, Sendable {
     case internalServerError = "INTERNAL_SERVER_ERROR"
     case unauthorized = "UNAUTHORIZED"

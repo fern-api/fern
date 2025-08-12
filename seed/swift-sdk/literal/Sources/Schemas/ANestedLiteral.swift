@@ -1,3 +1,5 @@
+import Foundation
+
 public struct ANestedLiteral: Codable, Hashable, Sendable {
     public let myLiteral: JSONValue
     /// Additional properties that are not explicitly defined in the schema

@@ -1,3 +1,5 @@
+import Foundation
+
 public struct NonVoidFunctionSignatureType: Codable, Hashable, Sendable {
     public let parameters: [ParameterType]
     public let returnType: VariableType

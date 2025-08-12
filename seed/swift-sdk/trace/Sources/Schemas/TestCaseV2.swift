@@ -1,3 +1,5 @@
+import Foundation
+
 public struct TestCaseV2: Codable, Hashable, Sendable {
     public let metadata: TestCaseMetadata
     public let implementation: TestCaseImplementationReference

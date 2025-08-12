@@ -1,3 +1,5 @@
+import Foundation
+
 public struct NodesWrapper: Codable, Hashable, Sendable {
     public let nodes: [[Node]]
     /// Additional properties that are not explicitly defined in the schema

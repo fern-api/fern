@@ -1,3 +1,5 @@
+import Foundation
+
 public struct VoidFunctionSignatureThatTakesActualResultType: Codable, Hashable, Sendable {
     public let parameters: [ParameterType]
     public let actualResultType: VariableType

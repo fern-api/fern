@@ -1,3 +1,5 @@
+import Foundation
+
 public struct Metadata: Codable, Hashable, Sendable {
     public let createdAt: Date
     public let updatedAt: Date

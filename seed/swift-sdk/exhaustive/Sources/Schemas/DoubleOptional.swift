@@ -1,3 +1,5 @@
+import Foundation
+
 public struct DoubleOptional: Codable, Hashable, Sendable {
     public let optionalAlias: OptionalAlias?
     /// Additional properties that are not explicitly defined in the schema

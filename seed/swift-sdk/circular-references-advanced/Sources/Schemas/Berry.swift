@@ -1,3 +1,5 @@
+import Foundation
+
 public struct Berry: Codable, Hashable, Sendable {
     public let animal: Animal
     /// Additional properties that are not explicitly defined in the schema

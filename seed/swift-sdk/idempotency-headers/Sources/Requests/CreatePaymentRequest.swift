@@ -1,3 +1,5 @@
+import Foundation
+
 public struct CreatePaymentRequest: Codable, Hashable, Sendable {
     public let amount: Int
     public let currency: Currency

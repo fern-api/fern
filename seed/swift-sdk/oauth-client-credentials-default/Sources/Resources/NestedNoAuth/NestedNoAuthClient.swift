@@ -1,3 +1,5 @@
+import Foundation
+
 public final class NestedNoAuthClient: Sendable {
     public let api: ApiClient
     private let httpClient: HTTPClient

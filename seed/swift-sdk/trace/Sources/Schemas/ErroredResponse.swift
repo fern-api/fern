@@ -1,3 +1,5 @@
+import Foundation
+
 public struct ErroredResponse: Codable, Hashable, Sendable {
     public let submissionId: SubmissionId
     public let errorInfo: ErrorInfo

@@ -1,3 +1,5 @@
+import Foundation
+
 public struct BuildingExecutorResponse: Codable, Hashable, Sendable {
     public let submissionId: SubmissionId
     public let status: ExecutionSessionStatus

@@ -1,3 +1,5 @@
+import Foundation
+
 public enum PlaylistIdNotFoundErrorBody: Codable, Hashable, Sendable {
     case playlistId(PlaylistId)
 

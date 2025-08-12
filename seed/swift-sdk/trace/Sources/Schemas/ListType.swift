@@ -1,3 +1,5 @@
+import Foundation
+
 public struct ListType: Codable, Hashable, Sendable {
     public let valueType: VariableType
     /// Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.

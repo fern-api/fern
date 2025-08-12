@@ -1,3 +1,5 @@
+import Foundation
+
 public struct GetFunctionSignatureResponse: Codable, Hashable, Sendable {
     public let functionByLanguage: [Language: String]
     /// Additional properties that are not explicitly defined in the schema

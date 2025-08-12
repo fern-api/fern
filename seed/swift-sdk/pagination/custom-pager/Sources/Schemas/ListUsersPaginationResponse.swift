@@ -1,3 +1,5 @@
+import Foundation
+
 public struct ListUsersPaginationResponse: Codable, Hashable, Sendable {
     public let hasNextPage: Bool?
     public let page: Page?

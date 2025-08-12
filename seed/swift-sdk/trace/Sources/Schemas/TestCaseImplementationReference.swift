@@ -1,3 +1,5 @@
+import Foundation
+
 public enum TestCaseImplementationReference: Codable, Hashable, Sendable {
     case templateId(TemplateId)
     case implementation(Implementation)

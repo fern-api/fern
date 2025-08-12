@@ -1,3 +1,5 @@
+import Foundation
+
 public struct RefreshTokenRequest: Codable, Hashable, Sendable {
     public let ttl: Int
     /// Additional properties that are not explicitly defined in the schema

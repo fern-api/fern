@@ -1,3 +1,5 @@
+import Foundation
+
 public struct PatchComplexRequest: Codable, Hashable, Sendable {
     public let name: String?
     public let email: JSONValue?

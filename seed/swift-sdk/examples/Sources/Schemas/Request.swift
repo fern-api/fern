@@ -1,3 +1,5 @@
+import Foundation
+
 public struct Request: Codable, Hashable, Sendable {
     public let request: JSONValue
     /// Additional properties that are not explicitly defined in the schema

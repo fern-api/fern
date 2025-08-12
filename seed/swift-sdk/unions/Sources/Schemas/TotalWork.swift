@@ -1,3 +1,5 @@
+import Foundation
+
 public struct TotalWork: Codable, Hashable, Sendable {
     public let value: String
     /// Additional properties that are not explicitly defined in the schema

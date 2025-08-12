@@ -1,3 +1,5 @@
+import Foundation
+
 public struct BigEntity: Codable, Hashable, Sendable {
     public let castMember: CastMember?
     public let extendedMovie: ExtendedMovie?

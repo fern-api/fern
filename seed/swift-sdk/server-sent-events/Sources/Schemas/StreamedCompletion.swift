@@ -1,3 +1,5 @@
+import Foundation
+
 public struct StreamedCompletion: Codable, Hashable, Sendable {
     public let delta: String
     public let tokens: Int?

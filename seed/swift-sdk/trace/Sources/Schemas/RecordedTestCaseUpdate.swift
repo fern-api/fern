@@ -1,3 +1,5 @@
+import Foundation
+
 public struct RecordedTestCaseUpdate: Codable, Hashable, Sendable {
     public let testCaseId: TestCaseId
     public let traceResponsesSize: Int

@@ -1,3 +1,5 @@
+import Foundation
+
 public struct StuntDouble: Codable, Hashable, Sendable {
     public let name: String
     public let actorOrActressId: String

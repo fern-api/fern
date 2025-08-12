@@ -1,3 +1,5 @@
+import Foundation
+
 public enum CreateProblemError: Codable, Hashable, Sendable {
     case generic(Generic)
 

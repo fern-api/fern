@@ -1,3 +1,5 @@
+import Foundation
+
 public struct NestedObjectWithRequiredField: Codable, Hashable, Sendable {
     public let string: String
     public let nestedObject: ObjectWithOptionalField

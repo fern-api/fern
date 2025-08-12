@@ -1,3 +1,5 @@
+import Foundation
+
 public struct WithPage: Codable, Hashable, Sendable {
     public let page: Int?
     /// Additional properties that are not explicitly defined in the schema

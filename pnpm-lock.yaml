@@ -1961,9 +1961,6 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
-      '@fern-api/fern-rust-model':
-        specifier: workspace:*
-        version: link:../model
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
@@ -1976,6 +1973,9 @@ importers:
       '@fern-api/rust-codegen':
         specifier: workspace:*
         version: link:../codegen
+      '@fern-api/rust-model':
+        specifier: workspace:*
+        version: link:../model
       '@fern-fern/generator-cli-sdk':
         specifier: 0.0.28
         version: 0.0.28

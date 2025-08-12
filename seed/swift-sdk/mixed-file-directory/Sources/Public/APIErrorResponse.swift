@@ -1,3 +1,5 @@
+import Foundation
+
 public struct APIErrorResponse: Codable, Sendable {
     public let code: Int
     public let type: String?

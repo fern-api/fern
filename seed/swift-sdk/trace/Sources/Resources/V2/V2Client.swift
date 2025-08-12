@@ -1,3 +1,5 @@
+import Foundation
+
 public final class V2Client: Sendable {
     public let problem: V2ProblemClient
     public let v3: V3Client

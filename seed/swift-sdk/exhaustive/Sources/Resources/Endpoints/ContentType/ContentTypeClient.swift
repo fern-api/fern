@@ -1,3 +1,5 @@
+import Foundation
+
 public final class ContentTypeClient: Sendable {
     private let httpClient: HTTPClient
 

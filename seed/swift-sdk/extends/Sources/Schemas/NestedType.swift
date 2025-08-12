@@ -1,3 +1,5 @@
+import Foundation
+
 public struct NestedType: Codable, Hashable, Sendable {
     public let raw: String
     public let docs: String

@@ -1,3 +1,5 @@
+import Foundation
+
 public struct FunctionImplementationForMultipleLanguages: Codable, Hashable, Sendable {
     public let codeByLanguage: [Language: FunctionImplementation]
     /// Additional properties that are not explicitly defined in the schema

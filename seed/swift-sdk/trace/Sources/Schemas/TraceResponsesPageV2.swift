@@ -1,3 +1,5 @@
+import Foundation
+
 public struct TraceResponsesPageV2: Codable, Hashable, Sendable {
     /// If present, use this to load subsequent pages.
     /// The offset is the id of the next trace response to load.

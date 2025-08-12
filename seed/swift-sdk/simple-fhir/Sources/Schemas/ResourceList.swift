@@ -1,3 +1,5 @@
+import Foundation
+
 public enum ResourceList: Codable, Hashable, Sendable {
     case account(Account)
     case patient(Patient)

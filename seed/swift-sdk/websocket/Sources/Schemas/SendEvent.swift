@@ -1,3 +1,5 @@
+import Foundation
+
 public struct SendEvent: Codable, Hashable, Sendable {
     public let sendText: String
     public let sendParam: Int

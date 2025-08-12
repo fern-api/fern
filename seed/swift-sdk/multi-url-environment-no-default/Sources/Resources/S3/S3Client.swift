@@ -1,3 +1,5 @@
+import Foundation
+
 public final class S3Client: Sendable {
     private let httpClient: HTTPClient
 

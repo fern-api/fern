@@ -1,3 +1,5 @@
+import Foundation
+
 public struct WorkspaceSubmissionState: Codable, Hashable, Sendable {
     public let status: WorkspaceSubmissionStatus
     /// Additional properties that are not explicitly defined in the schema
