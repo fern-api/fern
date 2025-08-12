@@ -2,7 +2,7 @@
 module Seed
     module Types
         class ObjectWithRequiredField < Internal::Types::Model
-            field :string, String, optional: true, nullable: true
+            field :string, , optional: false, nullable: false
         end
     end
 end

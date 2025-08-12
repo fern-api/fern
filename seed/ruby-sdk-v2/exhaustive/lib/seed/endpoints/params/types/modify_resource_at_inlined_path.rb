@@ -3,7 +3,7 @@ module Seed
     module Endpoints
         module Params
             class ModifyResourceAtInlinedPath
-                field :param, String, optional: true, nullable: trueend
+                field :param, , optional: false, nullable: falseend
         end
     end
 end

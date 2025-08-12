@@ -3,8 +3,8 @@ module Seed
     module Endpoints
         module Params
             class GetWithMultipleQuery
-                field :query, String, optional: true, nullable: true
-                field :number, Integer, optional: true, nullable: true
+                field :query, , optional: false, nullable: false
+                field :number, , optional: false, nullable: false
             end
         end
     end

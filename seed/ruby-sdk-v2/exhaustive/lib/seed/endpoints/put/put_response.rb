@@ -2,7 +2,7 @@
 module Seed
     module Types
         class PutResponse < Internal::Types::Model
-            field :errors, Array, optional: true, nullable: true
+            field :errors, , optional: true, nullable: false
         end
     end
 end
