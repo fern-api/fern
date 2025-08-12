@@ -15,7 +15,6 @@ export declare namespace WrappedRequestGenerator {
     }
 }
 
-
 export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private serviceId: ServiceId;
     private wrapper: SdkRequestWrapper;
@@ -51,11 +50,11 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
             properties.push({
                 ...pathParameter,
                 name: {
-                    name: pathParameter.name, 
+                    name: pathParameter.name,
                     wireValue: pathParameter.name.originalName
                 },
                 propertyAccess: undefined,
-                availability: undefined,
+                availability: undefined
             });
         }
 
@@ -63,7 +62,7 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
             properties.push({
                 ...queryParameter,
                 propertyAccess: undefined,
-                availability: undefined,
+                availability: undefined
             });
         }
 
@@ -71,7 +70,7 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
             properties.push({
                 ...header,
                 propertyAccess: undefined,
-                availability: undefined,
+                availability: undefined
             });
         }
 
@@ -91,14 +90,14 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
                     propertyAccess: undefined,
                     availability: undefined,
                     v2Examples: reference.v2Examples,
-                    docs: reference.docs,
+                    docs: reference.docs
                 });
             },
             inlinedRequestBody: (request) => {
                 for (const property of [...request.properties, ...(request.extendedProperties ?? [])]) {
                     properties.push({
                         ...property,
-                        propertyAccess: undefined,
+                        propertyAccess: undefined
                     });
                 }
             },
@@ -123,12 +122,14 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
 
     protected getFilepath(): RelativeFilePath {
         const subpackage = this.context.getSubpackageForServiceId(this.serviceId);
-        const serviceDir = RelativeFilePath.of([
-            "lib",
-            this.context.getRootFolderName(),
-            ...subpackage.fernFilepath.allParts.map((path) => path.snakeCase.safeName),
-            "types"
-        ].join("/"));
+        const serviceDir = RelativeFilePath.of(
+            [
+                "lib",
+                this.context.getRootFolderName(),
+                ...subpackage.fernFilepath.allParts.map((path) => path.snakeCase.safeName),
+                "types"
+            ].join("/")
+        );
         return serviceDir;
     }
 }

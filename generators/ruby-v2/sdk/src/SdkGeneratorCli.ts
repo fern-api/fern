@@ -88,5 +88,4 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
             }
         });
     }
-
 }
