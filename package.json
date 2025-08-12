@@ -32,6 +32,8 @@
     "format:fix": "biome format --fix",
     "format:check": "biome format",
     "format:package-json": "sort-package-json \"generators/**/package.json\" \"packages/**/package.json\" --ignore \"**/dist\" --ignore \"**lib\" --ignore \"**/node_modules\"",
+    "check:biome": "biome check",
+    "check:biome:fix": "biome check --fix",
     "depcheck": "turbo depcheck",
     "codegen:local": "pnpm fern:local generate",
     "fern": "FERN_NO_VERSION_REDIRECTION=true node --enable-source-maps ./packages/cli/cli/dist/prod/cli.cjs",
