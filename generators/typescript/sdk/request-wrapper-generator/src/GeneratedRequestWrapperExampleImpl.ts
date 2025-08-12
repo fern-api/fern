@@ -143,6 +143,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
                                 return ts.factory.createPropertyAssignment(
                                     getPropertyKey(
                                         generatedType.getInlinedRequestBodyPropertyKeyFromName(property.name)
+                                            .propertyName
                                     ),
                                     context.type.getGeneratedExample(property.value).build(context, opts)
                                 );

@@ -5,22 +5,14 @@
 import * as serializers from "../../../../../index";
 import * as FernDefinition from "../../../../../../api/index";
 import * as core from "../../../../../../core";
-import { AuthVariable } from "./AuthVariable";
-import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
+import { TokenBearerAuthSchema } from "./TokenBearerAuthSchema";
+import { InferredBearerAuthSchema } from "./InferredBearerAuthSchema";
 
-export const BearerAuthSchemeSchema: core.serialization.ObjectSchema<
+export const BearerAuthSchemeSchema: core.serialization.Schema<
     serializers.fernDefinition.BearerAuthSchemeSchema.Raw,
     FernDefinition.fernDefinition.BearerAuthSchemeSchema
-> = core.serialization
-    .object({
-        scheme: core.serialization.stringLiteral("bearer"),
-        token: AuthVariable.optional(),
-    })
-    .extend(WithDocsSchema);
+> = core.serialization.undiscriminatedUnion([TokenBearerAuthSchema, InferredBearerAuthSchema]);
 
 export declare namespace BearerAuthSchemeSchema {
-    export interface Raw extends WithDocsSchema.Raw {
-        scheme: "bearer";
-        token?: AuthVariable.Raw | null;
-    }
+    export type Raw = TokenBearerAuthSchema.Raw | InferredBearerAuthSchema.Raw;
 }

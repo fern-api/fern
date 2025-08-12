@@ -128,7 +128,7 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
                 key: {
                     parsed: context.requestWrapper
                         .getGeneratedRequestWrapper(this.packageId, this.endpoint.name)
-                        .getInlinedRequestBodyPropertyKey(property),
+                        .getInlinedRequestBodyPropertyKey(property).propertyName,
                     raw: property.name.wireValue
                 },
                 value: context.typeSchema.getSchemaOfTypeReference(property.valueType)

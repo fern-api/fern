@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.7.0
+  changelogEntry:
+    - summary: Implement inferred bearer authentication.
+      type: feat
+  createdAt: "2025-08-12"
+  irVersion: 58
+
 - version: 2.6.8
   changelogEntry:
     - summary: Export BinaryResponse using `export type { BinaryResponse } ...` syntax to fix an issue with the SWC compiler.

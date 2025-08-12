@@ -55,6 +55,7 @@ export class Service {
         ResourceID: string,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<SeedMixedCase.Resource>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -62,7 +63,7 @@ export class Service {
                 `/resource/${encodeURIComponent(ResourceID)}`,
             ),
             method: "GET",
-            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
+            headers: _headers,
             queryParameters: requestOptions?.queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
@@ -122,6 +123,7 @@ export class Service {
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["page_limit"] = pageLimit.toString();
         _queryParams["beforeDate"] = beforeDate;
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -129,7 +131,7 @@ export class Service {
                 "/resource",
             ),
             method: "GET",
-            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
+            headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,

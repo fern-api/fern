@@ -1,4 +1,3 @@
-import { ExportsManager } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -17,6 +16,7 @@ import { RequestParameter } from "../../request-parameter/RequestParameter";
 import { getLiteralValueForHeader } from "./isLiteralHeader";
 import { REQUEST_OPTIONS_PARAMETER_NAME } from "./requestOptionsParameter";
 
+export const HEADERS_VAR_NAME = "_headers";
 export function generateHeaders({
     context,
     intermediateRepresentation,
@@ -39,7 +39,33 @@ export function generateHeaders({
     additionalHeaders?: GeneratedHeader[];
     additionalSpreadHeaders?: ts.Expression[];
     headersToMergeAfterClientOptionsHeaders?: ts.Expression[];
-}): ts.Expression {
+}): ts.Statement[] {
+    const statements: ts.Statement[] = [];
+
+    let authProviderHeaders: ts.Expression | undefined;
+    if (
+        generatedSdkClientClass.hasAuthProvider() &&
+        endpoint.auth &&
+        context.authProvider.isAuthEndpoint(endpoint) === false
+    ) {
+        statements.push(
+            ts.factory.createVariableStatement(
+                undefined,
+                ts.factory.createVariableDeclarationList([
+                    ts.factory.createVariableDeclaration(
+                        "_authRequest",
+                        undefined,
+                        context.coreUtilities.auth.AuthRequest._getReferenceToType(),
+                        context.coreUtilities.auth.AuthProvider.getAuthRequest.invoke(
+                            generatedSdkClientClass.getReferenceToAuthProviderOrThrow()
+                        )
+                    )
+                ])
+            )
+        );
+        authProviderHeaders = ts.factory.createIdentifier("_authRequest.headers");
+    }
+
     const elements: GeneratedHeader[] = [];
 
     const authorizationHeaderValue = generatedSdkClientClass.getAuthorizationHeaderValue();
@@ -94,6 +120,11 @@ export function generateHeaders({
     });
 
     const mergeHeadersArgs = [];
+
+    if (authProviderHeaders) {
+        mergeHeadersArgs.push(authProviderHeaders);
+    }
+
     mergeHeadersArgs.push(
         ts.factory.createPropertyAccessChain(
             ts.factory.createPropertyAccessChain(
@@ -126,7 +157,24 @@ export function generateHeaders({
         )
     );
 
-    return ts.factory.createCallExpression(ts.factory.createIdentifier("mergeHeaders"), undefined, mergeHeadersArgs);
+    statements.push(
+        ts.factory.createVariableStatement(undefined, [
+            ts.factory.createVariableDeclaration(
+                HEADERS_VAR_NAME,
+                undefined,
+                ts.factory.createIndexedAccessTypeNode(
+                    context.coreUtilities.fetcher.Fetcher.Args._getReferenceToType(),
+                    ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral("headers"))
+                ),
+                ts.factory.createCallExpression(
+                    ts.factory.createIdentifier("mergeHeaders"),
+                    undefined,
+                    mergeHeadersArgs
+                )
+            )
+        ])
+    );
+    return statements;
 }
 
 function getValueExpressionForHeader({

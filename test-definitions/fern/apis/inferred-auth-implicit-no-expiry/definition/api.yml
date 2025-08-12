@@ -1,0 +1,7 @@
+name: inferred-auth-implicit-no-expiry
+
+auth: InferredAuthScheme
+auth-schemes:
+  InferredAuthScheme:
+    scheme: bearer
+    get-token: POST /token

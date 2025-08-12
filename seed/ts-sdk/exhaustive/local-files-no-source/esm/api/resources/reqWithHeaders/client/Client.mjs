@@ -35,14 +35,15 @@ export class ReqWithHeaders {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b;
             const { "X-TEST-SERVICE-HEADER": xTestServiceHeader, "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader, body: _body, } = request;
+            var _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({
+                Authorization: yield this._getAuthorizationHeader(),
+                "X-TEST-SERVICE-HEADER": xTestServiceHeader,
+                "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader,
+            }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
-                url: core.url.join((_a = (yield core.Supplier.get(this._options.baseUrl))) !== null && _a !== void 0 ? _a : (yield core.Supplier.get(this._options.environment)), "/test-headers/custom-header"),
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/test-headers/custom-header"),
                 method: "POST",
-                headers: mergeHeaders((_b = this._options) === null || _b === void 0 ? void 0 : _b.headers, mergeOnlyDefinedHeaders({
-                    Authorization: yield this._getAuthorizationHeader(),
-                    "X-TEST-SERVICE-HEADER": xTestServiceHeader,
-                    "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader,
-                }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers),
+                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
                 requestType: "json",

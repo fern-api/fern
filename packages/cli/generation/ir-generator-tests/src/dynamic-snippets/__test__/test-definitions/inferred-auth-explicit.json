@@ -301,7 +301,36 @@
                 },
                 "pathParameters": [],
                 "queryParameters": [],
-                "headers": [],
+                "headers": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "X-Api-Key",
+                                "camelCase": {
+                                    "unsafeName": "xAPIKey",
+                                    "safeName": "xAPIKey"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "x_api_key",
+                                    "safeName": "x_api_key"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "X_API_KEY",
+                                    "safeName": "X_API_KEY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "XAPIKey",
+                                    "safeName": "XAPIKey"
+                                }
+                            },
+                            "wireValue": "X-Api-Key"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    }
+                ],
                 "body": {
                     "type": "properties",
                     "value": [
@@ -606,7 +635,36 @@
                 },
                 "pathParameters": [],
                 "queryParameters": [],
-                "headers": [],
+                "headers": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "X-Api-Key",
+                                "camelCase": {
+                                    "unsafeName": "xAPIKey",
+                                    "safeName": "xAPIKey"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "x_api_key",
+                                    "safeName": "x_api_key"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "X_API_KEY",
+                                    "safeName": "X_API_KEY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "XAPIKey",
+                                    "safeName": "XAPIKey"
+                                }
+                            },
+                            "wireValue": "X-Api-Key"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    }
+                ],
                 "body": {
                     "type": "properties",
                     "value": [
