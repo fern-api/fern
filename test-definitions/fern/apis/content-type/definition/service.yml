@@ -15,9 +15,13 @@ service:
       source:
         openapi: ../specs/vault/swagger.json
     
-    # Test with more complex types
+    # Test with more complex types - properly distinguishing optional vs optional<nullable>
     patchComplex:
-      docs: Update with JSON merge patch - complex types
+      docs: |
+        Update with JSON merge patch - complex types.
+        This endpoint demonstrates the distinction between:
+        - optional<T> fields (can be present or absent, but not null)
+        - optional<nullable<T>> fields (can be present, absent, or null)
       method: PATCH
       path: /complex/{id}
       path-parameters:
@@ -25,12 +29,19 @@ service:
       request:
         body:
           properties:
+            # These fields can be present or absent, but NOT null
             name: optional<string>
-            email: optional<nullable<string>>
             age: optional<integer>
             active: optional<boolean>
             metadata: optional<map<string, unknown>>
             tags: optional<list<string>>
+            
+            # These fields can be present, absent, OR null (true tri-state)
+            email: optional<nullable<string>>
+            nickname: optional<nullable<string>>
+            bio: optional<nullable<string>>
+            profileImageUrl: optional<nullable<string>>
+            settings: optional<nullable<map<string, unknown>>>
         content-type: application/merge-patch+json
         name: PatchComplexRequest
     

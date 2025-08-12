@@ -11,20 +11,28 @@ export const PatchComplexRequest: core.serialization.Schema<
     SeedContentTypes.PatchComplexRequest
 > = core.serialization.object({
     name: core.serialization.string().optional(),
-    email: core.serialization.string().optionalNullable(),
     age: core.serialization.number().optional(),
     active: core.serialization.boolean().optional(),
     metadata: core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional(),
     tags: core.serialization.list(core.serialization.string()).optional(),
+    email: core.serialization.string().optionalNullable(),
+    nickname: core.serialization.string().optionalNullable(),
+    bio: core.serialization.string().optionalNullable(),
+    profileImageUrl: core.serialization.string().optionalNullable(),
+    settings: core.serialization.record(core.serialization.string(), core.serialization.unknown()).optionalNullable(),
 });
 
 export declare namespace PatchComplexRequest {
     export interface Raw {
         name?: string | null;
-        email?: (string | null) | null;
         age?: number | null;
         active?: boolean | null;
         metadata?: Record<string, unknown> | null;
         tags?: string[] | null;
+        email?: (string | null) | null;
+        nickname?: (string | null) | null;
+        bio?: (string | null) | null;
+        profileImageUrl?: (string | null) | null;
+        settings?: (Record<string, unknown> | null) | null;
     }
 }

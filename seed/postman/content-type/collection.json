@@ -96,7 +96,7 @@
           "_type": "endpoint",
           "name": "Patch Complex",
           "request": {
-            "description": "Update with JSON merge patch - complex types",
+            "description": "Update with JSON merge patch - complex types.\nThis endpoint demonstrates the distinction between:\n- optional<T> fields (can be present or absent, but not null)\n- optional<nullable<T>> fields (can be present, absent, or null)",
             "url": {
               "raw": "{{baseUrl}}/complex/:id",
               "host": [
@@ -126,7 +126,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"name\": \"name\",\n    \"email\": \"email\",\n    \"age\": 1,\n    \"active\": true,\n    \"metadata\": {\n        \"metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    \"tags\": [\n        \"tags\",\n        \"tags\"\n    ]\n}",
+              "raw": "{\n    \"name\": \"name\",\n    \"age\": 1,\n    \"active\": true,\n    \"metadata\": {\n        \"metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    \"tags\": [\n        \"tags\",\n        \"tags\"\n    ],\n    \"email\": \"email\",\n    \"nickname\": \"nickname\",\n    \"bio\": \"bio\",\n    \"profileImageUrl\": \"profileImageUrl\",\n    \"settings\": {\n        \"settings\": {\n            \"key\": \"value\"\n        }\n    }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -140,7 +140,7 @@
               "status": "OK",
               "code": 200,
               "originalRequest": {
-                "description": "Update with JSON merge patch - complex types",
+                "description": "Update with JSON merge patch - complex types.\nThis endpoint demonstrates the distinction between:\n- optional<T> fields (can be present or absent, but not null)\n- optional<nullable<T>> fields (can be present, absent, or null)",
                 "url": {
                   "raw": "{{baseUrl}}/complex/:id",
                   "host": [
@@ -170,7 +170,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"name\": \"name\",\n    \"email\": \"email\",\n    \"age\": 1,\n    \"active\": true,\n    \"metadata\": {\n        \"metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    \"tags\": [\n        \"tags\",\n        \"tags\"\n    ]\n}",
+                  "raw": "{\n    \"name\": \"name\",\n    \"age\": 1,\n    \"active\": true,\n    \"metadata\": {\n        \"metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    \"tags\": [\n        \"tags\",\n        \"tags\"\n    ],\n    \"email\": \"email\",\n    \"nickname\": \"nickname\",\n    \"bio\": \"bio\",\n    \"profileImageUrl\": \"profileImageUrl\",\n    \"settings\": {\n        \"settings\": {\n            \"key\": \"value\"\n        }\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"

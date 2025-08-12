@@ -1,6 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Improved JSON Merge Patch support with better type distinction and naming. 
+        - Renamed `TriStateOptional<T>` to `OptionalNullable<T>` for better clarity
+        - Fixed type mapping for merge-patch requests to properly handle:
+          - `nullable<T>` → Uses `OptionalNullable<T>` (tri-state: absent, present, or null)
+          - `optional<nullable<T>>` → Uses `OptionalNullable<T>` (tri-state: absent, present, or null)
+          - `optional<T>` → Uses standard `Optional<T>` (can be absent or present, but never null)
+        - This provides more accurate type safety and clearer API semantics for PATCH operations
+      type: fix
+  createdAt: '2025-08-12'
+  irVersion: 58
+  version: 1.7.2
+- changelogEntry:
+    - summary: |
         Fix missing service-level path parameters in generated Spring interface methods. 
         Service-level path parameters defined in the base-path are now correctly included 
         in all endpoint method signatures, ensuring Spring can properly inject these values at runtime.

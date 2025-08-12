@@ -12,51 +12,54 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * A tri-state wrapper type that distinguishes between:
+ * An optional wrapper type that supports null values, distinguishing between:
  * - ABSENT: field not present (e.g., not included in request)
  * - NULL: field explicitly set to null
  * - PRESENT: field has a non-null value
  *
  * This is useful for partial updates, JSON Merge Patch (RFC 7396), and any API
  * that needs to differentiate between "not specified" and "set to null".
+ *
+ * Use this for optional<nullable<T>> types where null is a valid value.
+ * For regular optional<T> types (where null is not valid), use Optional<T> instead.
  */
-public final class TriStateOptional<T> {
+public final class OptionalNullable<T> {
   private final State state;
 
   private final T value;
 
-  private TriStateOptional(State state, T value) {
+  private OptionalNullable(State state, T value) {
     this.state = state;
     this.value = value;
   }
 
   /**
-   * Creates an absent TriStateOptional (field not present).
+   * Creates an absent OptionalNullable (field not present).
    */
-  public static <T> TriStateOptional<T> absent() {
-    return new TriStateOptional<>(State.ABSENT, null);
+  public static <T> OptionalNullable<T> absent() {
+    return new OptionalNullable<>(State.ABSENT, null);
   }
 
   /**
-   * Creates a null TriStateOptional (field explicitly set to null).
+   * Creates a null OptionalNullable (field explicitly set to null).
    */
-  public static <T> TriStateOptional<T> ofNull() {
-    return new TriStateOptional<>(State.NULL, null);
+  public static <T> OptionalNullable<T> ofNull() {
+    return new OptionalNullable<>(State.NULL, null);
   }
 
   /**
-   * Creates a TriStateOptional with a value.
+   * Creates an OptionalNullable with a value.
    */
-  public static <T> TriStateOptional<T> of(T value) {
+  public static <T> OptionalNullable<T> of(T value) {
     requireNonNull(value, "Use ofNull() for null values");
-    return new TriStateOptional<>(State.PRESENT, value);
+    return new OptionalNullable<>(State.PRESENT, value);
   }
 
   /**
-   * Creates a TriStateOptional from a nullable value.
+   * Creates an OptionalNullable from a nullable value.
    */
   @JsonCreator
-  public static <T> TriStateOptional<T> ofNullable(T value) {
+  public static <T> OptionalNullable<T> ofNullable(T value) {
     return value == null ? ofNull() : of(value);
   }
 
@@ -93,7 +96,7 @@ public final class TriStateOptional<T> {
    */
   public T get() {
     if (state != State.PRESENT) {
-      throw new IllegalStateException("Cannot get value from " + state + " TriStateOptional");
+      throw new IllegalStateException("Cannot get value from " + state + " OptionalNullable");
     }
     return value;
   }
@@ -150,7 +153,7 @@ public final class TriStateOptional<T> {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    TriStateOptional<?> that = (TriStateOptional<?>) o;
+    OptionalNullable<?> that = (OptionalNullable<?>) o;
     return state == that.state && Objects.equals(value, that.value);
   }
 
@@ -162,9 +165,9 @@ public final class TriStateOptional<T> {
   @Override
   public String toString() {
     switch (state) {
-      case ABSENT: return "TriStateOptional.absent()";
-      case NULL: return "TriStateOptional.ofNull()";
-      case PRESENT: return "TriStateOptional.of(" + value + ")";
+      case ABSENT: return "OptionalNullable.absent()";
+      case NULL: return "OptionalNullable.ofNull()";
+      case PRESENT: return "OptionalNullable.of(" + value + ")";
       default: throw new IllegalStateException("Unknown state: " + state);
     }
   }
