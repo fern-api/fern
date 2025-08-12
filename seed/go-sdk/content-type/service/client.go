@@ -50,7 +50,10 @@ func (c *Client) Patch(
 	return nil
 }
 
-// Update with JSON merge patch - complex types
+// Update with JSON merge patch - complex types.
+// This endpoint demonstrates the distinction between:
+// - optional<T> fields (can be present or absent, but not null)
+// - optional<nullable<T>> fields (can be present, absent, or null)
 func (c *Client) PatchComplex(
 	ctx context.Context,
 	id string,

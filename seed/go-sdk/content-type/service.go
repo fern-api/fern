@@ -8,12 +8,16 @@ type PatchProxyRequest struct {
 }
 
 type PatchComplexRequest struct {
-	Name     *string                `json:"name,omitempty" url:"-"`
-	Email    *string                `json:"email,omitempty" url:"-"`
-	Age      *int                   `json:"age,omitempty" url:"-"`
-	Active   *bool                  `json:"active,omitempty" url:"-"`
-	Metadata map[string]interface{} `json:"metadata,omitempty" url:"-"`
-	Tags     []string               `json:"tags,omitempty" url:"-"`
+	Name            *string                `json:"name,omitempty" url:"-"`
+	Age             *int                   `json:"age,omitempty" url:"-"`
+	Active          *bool                  `json:"active,omitempty" url:"-"`
+	Metadata        map[string]interface{} `json:"metadata,omitempty" url:"-"`
+	Tags            []string               `json:"tags,omitempty" url:"-"`
+	Email           *string                `json:"email,omitempty" url:"-"`
+	Nickname        *string                `json:"nickname,omitempty" url:"-"`
+	Bio             *string                `json:"bio,omitempty" url:"-"`
+	ProfileImageUrl *string                `json:"profileImageUrl,omitempty" url:"-"`
+	Settings        map[string]interface{} `json:"settings,omitempty" url:"-"`
 }
 
 type RegularPatchRequest struct {

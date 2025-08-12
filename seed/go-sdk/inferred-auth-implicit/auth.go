@@ -9,6 +9,7 @@ import (
 )
 
 type GetTokenRequest struct {
+	XApiKey      string  `json:"-" url:"-"`
 	ClientId     string  `json:"client_id" url:"-"`
 	ClientSecret string  `json:"client_secret" url:"-"`
 	Scope        *string `json:"scope,omitempty" url:"-"`
@@ -51,6 +52,7 @@ func (g *GetTokenRequest) MarshalJSON() ([]byte, error) {
 }
 
 type RefreshTokenRequest struct {
+	XApiKey      string  `json:"-" url:"-"`
 	ClientId     string  `json:"client_id" url:"-"`
 	ClientSecret string  `json:"client_secret" url:"-"`
 	RefreshToken string  `json:"refresh_token" url:"-"`
