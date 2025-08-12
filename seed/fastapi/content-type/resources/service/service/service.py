@@ -31,7 +31,10 @@ class AbstractServiceService(AbstractFernService):
     @abc.abstractmethod
     def patch_complex(self, *, body: PatchComplexRequest, id: str) -> None:
         """
-        Update with JSON merge patch - complex types
+        Update with JSON merge patch - complex types.
+        This endpoint demonstrates the distinction between:
+        - optional<T> fields (can be present or absent, but not null)
+        - optional<nullable<T>> fields (can be present, absent, or null)
         """
         ...
 

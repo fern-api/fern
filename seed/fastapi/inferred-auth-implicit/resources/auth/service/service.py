@@ -25,10 +25,10 @@ class AbstractAuthService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def get_token_with_client_credentials(self, *, body: GetTokenRequest) -> TokenResponse: ...
+    def get_token_with_client_credentials(self, *, body: GetTokenRequest, x_api_key: str) -> TokenResponse: ...
 
     @abc.abstractmethod
-    def refresh_token(self, *, body: RefreshTokenRequest) -> TokenResponse: ...
+    def refresh_token(self, *, body: RefreshTokenRequest, x_api_key: str) -> TokenResponse: ...
 
     """
     Below are internal methods used by Fern to register your implementation.
@@ -49,6 +49,8 @@ class AbstractAuthService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            elif parameter_name == "x_api_key":
+                new_parameters.append(parameter.replace(default=fastapi.Header(alias="X-Api-Key")))
             else:
                 new_parameters.append(parameter)
         setattr(
@@ -87,6 +89,8 @@ class AbstractAuthService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            elif parameter_name == "x_api_key":
+                new_parameters.append(parameter.replace(default=fastapi.Header(alias="X-Api-Key")))
             else:
                 new_parameters.append(parameter)
         setattr(cls.refresh_token, "__signature__", endpoint_function.replace(parameters=new_parameters))
