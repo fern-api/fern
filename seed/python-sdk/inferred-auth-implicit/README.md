@@ -26,6 +26,7 @@ client = SeedInferredAuthImplicit(
     base_url="https://yourhost.com/path/to/api",
 )
 client.auth.get_token_with_client_credentials(
+    x_api_key="X-Api-Key",
     client_id="client_id",
     client_secret="client_secret",
     scope="scope",
@@ -48,6 +49,7 @@ client = AsyncSeedInferredAuthImplicit(
 
 async def main() -> None:
     await client.auth.get_token_with_client_credentials(
+        x_api_key="X-Api-Key",
         client_id="client_id",
         client_secret="client_secret",
         scope="scope",
