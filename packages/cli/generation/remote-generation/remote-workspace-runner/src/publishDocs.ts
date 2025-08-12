@@ -415,7 +415,7 @@ async function generateLanguageSpecificDynamicIRs({
 
     let generatorLanguages = new Set<GeneratorLanguage>();
     if (workspace.generatorsConfiguration?.groups) {
-        for (const group of workspace.generatorsConfiguration?.groups) {
+        for (const group of workspace.generatorsConfiguration.groups) {
             for (const generator of group.generators) {
                 generator.language && generatorLanguages.add(generator.language);
             }
