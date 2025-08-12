@@ -481,7 +481,7 @@ async function uploadDynamicIRs({
     if (Object.keys(dynamicIRUploadUrls).length > 0) {
         for (const [language, source] of Object.entries(dynamicIRUploadUrls)) {
             const dynamicIR = dynmaicIRs[language];
-            
+
             if (dynamicIR) {
                 const response = await fetch(source.uploadUrl, {
                     method: "PUT",
