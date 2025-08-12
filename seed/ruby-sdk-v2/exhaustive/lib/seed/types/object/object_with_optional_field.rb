@@ -15,6 +15,6 @@ module Seed
             field :set, , optional: true, nullable: false
             field :map, , optional: true, nullable: false
             field :bigint, , optional: true, nullable: false
-        end
+
     end
 end

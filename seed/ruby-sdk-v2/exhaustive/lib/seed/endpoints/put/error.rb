@@ -6,6 +6,6 @@ module Seed
             field :code, , optional: false, nullable: false
             field :detail, , optional: true, nullable: false
             field :field, , optional: true, nullable: false
-        end
+
     end
 end

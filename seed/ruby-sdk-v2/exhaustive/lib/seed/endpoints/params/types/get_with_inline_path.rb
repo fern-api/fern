@@ -4,7 +4,7 @@ module Seed
         module Params
             class GetWithInlinePath
                 field :param, , optional: false, nullable: false
-            end
+
         end
     end
 end

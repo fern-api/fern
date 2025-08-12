@@ -5,7 +5,7 @@ module Seed
             class GetWithPathAndQuery
                 field :param, , optional: false, nullable: false
                 field :query, , optional: false, nullable: false
-            end
+
         end
     end
 end

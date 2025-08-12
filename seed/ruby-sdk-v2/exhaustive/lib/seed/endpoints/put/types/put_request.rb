@@ -4,7 +4,7 @@ module Seed
         module Put
             class PutRequest
                 field :id, , optional: false, nullable: false
-            end
+
         end
     end
 end

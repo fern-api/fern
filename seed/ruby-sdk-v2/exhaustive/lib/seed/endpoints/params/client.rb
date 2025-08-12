@@ -49,7 +49,7 @@ module Seed
                 def modify_with_inline_path
                     raise NotImplementedError, 'This method is not yet implemented.'
                 end
-            end
+
         end
     end
 end

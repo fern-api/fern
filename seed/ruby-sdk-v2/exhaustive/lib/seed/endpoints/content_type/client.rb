@@ -19,7 +19,7 @@ module Seed
                 def post_json_patch_content_with_charset_type
                     raise NotImplementedError, 'This method is not yet implemented.'
                 end
-            end
+
         end
     end
 end

@@ -5,7 +5,7 @@ module Seed
             class GetWithMultipleQuery
                 field :query, , optional: false, nullable: false
                 field :number, , optional: false, nullable: false
-            end
+
         end
     end
 end

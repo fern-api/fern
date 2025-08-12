@@ -54,7 +54,7 @@ module Seed
                 def get_and_return_base_64
                     raise NotImplementedError, 'This method is not yet implemented.'
                 end
-            end
+
         end
     end
 end
