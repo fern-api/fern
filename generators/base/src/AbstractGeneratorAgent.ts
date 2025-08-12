@@ -1,4 +1,4 @@
-import { readFile, stat } from "fs/promises";
+import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 
