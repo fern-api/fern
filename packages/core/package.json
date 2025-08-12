@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@fern-api/venus-api-sdk": "0.14.3-1-g14981f0",
-    "@fern-fern/fdr-cjs-sdk": "0.139.5-0b0fae69f",
+    "@fern-fern/fdr-cjs-sdk": "0.139.7-2ad8a5785",
     "@fern-fern/fdr-test-sdk": "^0.0.5297",
     "@fern-fern/fiddle-sdk": "0.0.584",
     "@fern-fern/generators-sdk": "0.114.0-5745f9e74"

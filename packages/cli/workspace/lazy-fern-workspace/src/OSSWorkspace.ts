@@ -32,6 +32,7 @@ import { OpenAPILoader } from "./loaders/OpenAPILoader";
 import { ProtobufIRGenerator } from "./protobuf/ProtobufIRGenerator";
 import { MaybeValid } from "./protobuf/utils";
 import { getAllOpenAPISpecs } from "./utils/getAllOpenAPISpecs";
+import { convertIrToDynamicSnippetsIr } from "@fern-api/ir-generator";
 
 export declare namespace OSSWorkspace {
     export interface Args extends AbstractAPIWorkspace.Args {
@@ -339,7 +340,13 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         if (mergedIr === undefined) {
             throw new Error("Failed to generate intermediate representation");
         }
-        return mergedIr;
+        return {
+            ...mergedIr,
+            dynamic: convertIrToDynamicSnippetsIr({
+                ir: mergedIr,
+                disableExamples: true
+            })
+        };
     }
 
     public async toFernWorkspace(

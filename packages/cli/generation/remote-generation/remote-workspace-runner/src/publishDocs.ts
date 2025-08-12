@@ -17,8 +17,13 @@ import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader"
 
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 
+import { DynamicIr } from "@fern-fern/fdr-cjs-sdk/api/resources/api/resources/v1/resources/register";
+
 import { OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
 import { measureImageSizes } from "./measureImageSizes";
+import { convertIrToDynamicSnippetsIr } from "@fern-api/ir-generator";
+import { GeneratorLanguage } from "@fern-fern/fdr-cjs-sdk/api/resources/generators";
+import { DynamicIntermediateRepresentation } from "@fern-api/ir-sdk/src/sdk/api/resources/dynamic";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
 const UPLOAD_FILE_BATCH_SIZE = 10;
@@ -162,6 +167,22 @@ export async function publishDocs({
         },
         async ({ ir, snippetsConfig, playgroundConfig, apiName }) => {
             const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context });
+
+            let dynamicIr: Record<string, DynamicIntermediateRepresentation> = {};
+            const languages: GeneratorLanguage[] = ["typescript", "python"];
+            for (const language of languages) {
+                try {
+                    // generate language-specific dynm-irs
+                    dynamicIr[language] = convertIrToDynamicSnippetsIr({
+                        ir,
+                        disableExamples: true,
+                        generationLanguage: language
+                    });
+                } catch (error) {
+                    context.logger.debug(`Failed to create dynamic IR for ${language}: ${error}`);
+                }
+            }
+
             const response = await fdr.api.v1.register.registerApiDefinition({
                 orgId: CjsFdrSdk.OrgId(organization),
                 apiId: CjsFdrSdk.ApiId(ir.apiName.originalName),
@@ -169,11 +190,42 @@ export async function publishDocs({
                     ...apiDefinition,
                     snippetsConfiguration: preview ? undefined : apiDefinition.snippetsConfiguration
                 },
-                definitionV2: undefined
+                definitionV2: undefined,
+                dynamicIr: Object.entries(dynamicIr).map(([language, dynamicIr]) => ({
+                    language,
+                    dynamicIr
+                }))
             });
 
             if (response.ok) {
                 context.logger.debug(`Registered API Definition ${response.body.apiDefinitionId}`);
+
+                const responseSources = response.body.sources;
+                if (responseSources) {
+                    for (const [language, source] of Object.entries(responseSources)) {
+                        const sourceDynamicIr = dynamicIr[language];
+
+                        if (sourceDynamicIr) {
+                            const response = await fetch(source.uploadUrl, {
+                                method: "PUT",
+                                body: JSON.stringify(sourceDynamicIr), // File content as Buffer, Blob, or string
+                                headers: {
+                                    "Content-Type": "application/octet-stream", // Adjust based on file type
+                                    "Content-Length": JSON.stringify(sourceDynamicIr).length.toString()
+                                }
+                            });
+
+                            if (response.ok) {
+                                console.log("File uploaded successfully");
+                            } else {
+                                context.logger.warn("Failed to upload dynamic ir");
+                            }
+                        } else {
+                            context.logger.warn(`Could not find matching dynamic IR to upload for ${language}`);
+                        }
+                    }
+                }
+
                 return response.body.apiDefinitionId;
             } else {
                 switch (response.error.error) {
