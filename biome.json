@@ -345,7 +345,8 @@
 				"generators/**/lib/**"
 			],
 			"formatter": { "enabled": false },
-			"assist": { "enabled": false }
+			"assist": { "enabled": false },
+			"linter": { "enabled": false }
 		}
 	],
 	"assist": {
