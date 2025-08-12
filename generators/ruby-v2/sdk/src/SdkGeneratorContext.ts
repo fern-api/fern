@@ -122,12 +122,8 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         });
     }
 
-    private getComputedClientName(): string {
-        return `${upperFirst(camelCase(this.config.organization))}${this.ir.apiName.pascalCase.unsafeName}`;
-    }
-
     public getRootClientClassName(): string {
-        return `${this.getComputedClientName()}Client`;
+        return `Client`;
     }
 
     public getCoreAsIsFiles(): string[] {

@@ -69,8 +69,9 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
     }
 
     private getDirectory(): RelativeFilePath {
-        return RelativeFilePath.of("");
+        return this.context.getRootFolderPath();
     }
+
     private getFilename(): string {
         return this.context.getRootClientClassName() + ".rb";
     }

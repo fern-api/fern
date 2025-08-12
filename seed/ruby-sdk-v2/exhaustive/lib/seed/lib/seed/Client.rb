@@ -1,7 +1,7 @@
 
 
 module Seed
-    class SeedExhaustiveClient
+    class Client
         # @return [String]
         def endpoints
             @endpoints ||= Seed::Endpoints::Client.new(client: @raw_client)
