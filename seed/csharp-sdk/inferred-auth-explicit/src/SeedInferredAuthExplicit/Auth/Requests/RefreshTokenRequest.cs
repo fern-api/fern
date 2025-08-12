@@ -6,6 +6,9 @@ namespace SeedInferredAuthExplicit;
 [Serializable]
 public record RefreshTokenRequest
 {
+    [JsonIgnore]
+    public required string XApiKey { get; set; }
+
     [JsonPropertyName("client_id")]
     public required string ClientId { get; set; }
 

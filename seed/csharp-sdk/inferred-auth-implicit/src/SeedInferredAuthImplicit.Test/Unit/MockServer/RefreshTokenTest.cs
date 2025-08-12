@@ -35,6 +35,7 @@ public class RefreshTokenTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/token/refresh")
+                    .WithHeader("X-Api-Key", "X-Api-Key")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )
@@ -48,6 +49,7 @@ public class RefreshTokenTest : BaseMockServerTest
         var response = await Client.Auth.RefreshTokenAsync(
             new RefreshTokenRequest
             {
+                XApiKey = "X-Api-Key",
                 ClientId = "client_id",
                 ClientSecret = "client_secret",
                 RefreshToken = "refresh_token",

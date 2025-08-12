@@ -18,6 +18,7 @@ public partial class AuthClient
     /// await client.Auth.GetTokenWithClientCredentialsAsync(
     ///     new GetTokenRequest
     ///     {
+    ///         XApiKey = "X-Api-Key",
     ///         ClientId = "client_id",
     ///         ClientSecret = "client_secret",
     ///         Audience = "https://api.example.com",
@@ -32,6 +33,9 @@ public partial class AuthClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = new Headers(
+            new Dictionary<string, string>() { { "X-Api-Key", request.XApiKey } }
+        );
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -40,6 +44,7 @@ public partial class AuthClient
                     Method = HttpMethod.Post,
                     Path = "/token",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
@@ -72,6 +77,7 @@ public partial class AuthClient
     /// await client.Auth.RefreshTokenAsync(
     ///     new RefreshTokenRequest
     ///     {
+    ///         XApiKey = "X-Api-Key",
     ///         ClientId = "client_id",
     ///         ClientSecret = "client_secret",
     ///         RefreshToken = "refresh_token",
@@ -87,6 +93,9 @@ public partial class AuthClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = new Headers(
+            new Dictionary<string, string>() { { "X-Api-Key", request.XApiKey } }
+        );
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -95,6 +104,7 @@ public partial class AuthClient
                     Method = HttpMethod.Post,
                     Path = "/token/refresh",
                     Body = request,
+                    Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
