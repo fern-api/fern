@@ -142,8 +142,6 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             };
         });
 
-        context.sourceFile.addInterface(requestInterface);
-
         const requestBody = this.endpoint.requestBody;
         if (requestBody != null) {
             HttpRequestBody._visit(requestBody, {
@@ -167,12 +165,17 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                     throw new Error("Unknown HttpRequestBody: " + this.endpoint.requestBody?.type);
                 }
             });
+        }
 
-            requestInterface.extends = interfaceExtends;
-            const iModule = this.generateModule(requestBody, context);
-            if (iModule) {
-                context.sourceFile.addModule(iModule);
-            }
+        requestInterface.extends = interfaceExtends;
+
+        context.sourceFile.addInterface(requestInterface);
+        if (requestBody == null) {
+            return;
+        }
+        const iModule = this.generateModule(requestBody, context);
+        if (iModule) {
+            context.sourceFile.addModule(iModule);
         }
     }
 

@@ -291,11 +291,10 @@ describe("test", () => {
         );
         const authScheme = this.ir.auth.schemes.find((s) => s.type === "inferred");
         if (!authScheme) {
-            throw new Error("Inferred auth scheme not found");
+            return undefined;
         }
         const endpointId = authScheme.tokenEndpoint.endpoint.endpointId;
         const serviceId = authScheme.tokenEndpoint.endpoint.serviceId;
-        const subpackageId = authScheme.tokenEndpoint.endpoint.subpackageId;
 
         const service = this.ir.services[serviceId];
         if (!service) {
@@ -678,7 +677,7 @@ describe("${serviceName}", () => {
 
         let mockAuthSnippet: Code | undefined;
         if (this.shouldBuildMockAuthFile({ context }) && endpoint.auth) {
-            mockAuthSnippet = code`mockAuth(server);`;
+            mockAuthSnippet = code`mockAuth(server);\n`;
             context.importsManager.addImportFromRoot(
                 "wire/mockAuth",
                 {
@@ -690,8 +689,7 @@ describe("${serviceName}", () => {
 
         return code`
     test("${endpoint.name.originalName}", async () => {
-        const server = mockServerPool.createServer();
-        ${mockAuthSnippet ? mockAuthSnippet : ""}
+        const server = mockServerPool.createServer();${mockAuthSnippet ? mockAuthSnippet : ""}
         const client = new ${getTextOfTsNode(importStatement.getEntityName())}(${literalOf(options)});
         ${rawRequestBody ? code`const rawRequestBody = ${rawRequestBody};` : ""}
         ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
