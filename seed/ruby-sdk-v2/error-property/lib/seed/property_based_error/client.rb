@@ -13,7 +13,14 @@ module Seed
             #
             # @return [String]
             def throw_error(request_options: {}, **params)
+<<<<<<< HEAD
                 raise NotImplementedError, 'This method is not yet implemented.'
+=======
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: GET,
+                    path: "property-based-error"
+                )
+>>>>>>> ca21b06d09 (fix)
             end
 
     end

@@ -10,7 +10,11 @@ module Seed
                     @client = client
                 end
 
+<<<<<<< HEAD
                 # @return [Seed::Types::Object_::ObjectWithOptionalField]
+=======
+                # @return [Seed::types::object::ObjectWithOptionalField]
+>>>>>>> ca21b06d09 (fix)
                 def get_and_return_with_optional_field(request_options: {}, **params)
                     _request = Seed::Internal::Http::JSONRequest.new(
                         method: POST,
@@ -18,7 +22,11 @@ module Seed
                     )
                 end
 
+<<<<<<< HEAD
                 # @return [Seed::Types::Object_::ObjectWithRequiredField]
+=======
+                # @return [Seed::types::object::ObjectWithRequiredField]
+>>>>>>> ca21b06d09 (fix)
                 def get_and_return_with_required_field(request_options: {}, **params)
                     _request = Seed::Internal::Http::JSONRequest.new(
                         method: POST,
@@ -26,7 +34,11 @@ module Seed
                     )
                 end
 
+<<<<<<< HEAD
                 # @return [Seed::Types::Object_::ObjectWithMapOfMap]
+=======
+                # @return [Seed::types::object::ObjectWithMapOfMap]
+>>>>>>> ca21b06d09 (fix)
                 def get_and_return_with_map_of_map(request_options: {}, **params)
                     _request = Seed::Internal::Http::JSONRequest.new(
                         method: POST,
@@ -34,7 +46,11 @@ module Seed
                     )
                 end
 
+<<<<<<< HEAD
                 # @return [Seed::Types::Object_::NestedObjectWithOptionalField]
+=======
+                # @return [Seed::types::object::NestedObjectWithOptionalField]
+>>>>>>> ca21b06d09 (fix)
                 def get_and_return_nested_with_optional_field(request_options: {}, **params)
                     _request = Seed::Internal::Http::JSONRequest.new(
                         method: POST,
@@ -42,7 +58,11 @@ module Seed
                     )
                 end
 
+<<<<<<< HEAD
                 # @return [Seed::Types::Object_::NestedObjectWithRequiredField]
+=======
+                # @return [Seed::types::object::NestedObjectWithRequiredField]
+>>>>>>> ca21b06d09 (fix)
                 def get_and_return_nested_with_required_field(request_options: {}, **params)
                     _request = Seed::Internal::Http::JSONRequest.new(
                         method: POST,
@@ -50,7 +70,11 @@ module Seed
                     )
                 end
 
+<<<<<<< HEAD
                 # @return [Seed::Types::Object_::NestedObjectWithRequiredField]
+=======
+                # @return [Seed::types::object::NestedObjectWithRequiredField]
+>>>>>>> ca21b06d09 (fix)
                 def get_and_return_nested_with_required_field_as_list(request_options: {}, **params)
                     _request = Seed::Internal::Http::JSONRequest.new(
                         method: POST,

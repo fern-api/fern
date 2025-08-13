@@ -9,9 +9,18 @@ module Seed
                 @client = client
             end
 
+<<<<<<< HEAD
             # @return [Seed::Types::Movie]
             def get_movie(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
+=======
+            # @return [Seed::types::Movie]
+            def get_movie(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: GET,
+                    path: "/movie/#{params[:movieId]}"
+                )
+>>>>>>> ca21b06d09 (fix)
             end
 
             # @return [String]
@@ -20,6 +29,7 @@ module Seed
                     method: POST,
                     path: "/movie"
                 )
+<<<<<<< HEAD
             end
 
             # @return [Seed::Types::Metadata]
@@ -28,6 +38,19 @@ module Seed
             end
 
             # @return [Seed::Types::Response]
+=======
+            end
+
+            # @return [Seed::types::Metadata]
+            def get_metadata(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: GET,
+                    path: "/metadata"
+                )
+            end
+
+            # @return [Seed::types::Response]
+>>>>>>> ca21b06d09 (fix)
             def create_big_entity(request_options: {}, **params)
                 _request = Seed::Internal::Http::JSONRequest.new(
                     method: POST,

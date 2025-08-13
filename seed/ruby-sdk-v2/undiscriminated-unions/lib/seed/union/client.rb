@@ -9,7 +9,11 @@ module Seed
                 @client = client
             end
 
+<<<<<<< HEAD
             # @return [Seed::Union::MyUnion]
+=======
+            # @return [Seed::union::MyUnion]
+>>>>>>> ca21b06d09 (fix)
             def get(request_options: {}, **params)
                 _request = Seed::Internal::Http::JSONRequest.new(
                     method: POST,
@@ -17,9 +21,18 @@ module Seed
                 )
             end
 
+<<<<<<< HEAD
             # @return [Hash[Seed::Union::Key, String]]
             def get_metadata(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
+=======
+            # @return [Hash[Seed::union::Key, String]]
+            def get_metadata(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: GET,
+                    path: "/metadata"
+                )
+>>>>>>> ca21b06d09 (fix)
             end
 
             # @return [bool]
@@ -38,7 +51,11 @@ module Seed
                 )
             end
 
+<<<<<<< HEAD
             # @return [Seed::Union::UnionWithDuplicateTypes]
+=======
+            # @return [Seed::union::UnionWithDuplicateTypes]
+>>>>>>> ca21b06d09 (fix)
             def duplicate_types_union(request_options: {}, **params)
                 _request = Seed::Internal::Http::JSONRequest.new(
                     method: POST,

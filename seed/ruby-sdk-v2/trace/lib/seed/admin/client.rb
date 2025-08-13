@@ -15,6 +15,7 @@ module Seed
                     method: POST,
                     path: "/admin/store-test-submission-status/#{params[:submissionId]}"
                 )
+<<<<<<< HEAD
             end
 
             # @return [untyped]
@@ -60,6 +61,59 @@ module Seed
             end
 
             # @return [untyped]
+=======
+            end
+
+            # @return [untyped]
+            def send_test_submission_update(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: POST,
+                    path: "/admin/store-test-submission-status-v2/#{params[:submissionId]}"
+                )
+            end
+
+            # @return [untyped]
+            def update_workspace_submission_status(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: POST,
+                    path: "/admin/store-workspace-submission-status/#{params[:submissionId]}"
+                )
+            end
+
+            # @return [untyped]
+            def send_workspace_submission_update(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: POST,
+                    path: "/admin/store-workspace-submission-status-v2/#{params[:submissionId]}"
+                )
+            end
+
+            # @return [untyped]
+            def store_traced_test_case(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: POST,
+                    path: "/admin/store-test-trace/submission/#{params[:submissionId]}/testCase/#{params[:testCaseId]}"
+                )
+            end
+
+            # @return [untyped]
+            def store_traced_test_case_v_2(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: POST,
+                    path: "/admin/store-test-trace-v2/submission/#{params[:submissionId]}/testCase/#{params[:testCaseId]}"
+                )
+            end
+
+            # @return [untyped]
+            def store_traced_workspace(request_options: {}, **params)
+                _request = Seed::Internal::Http::JSONRequest.new(
+                    method: POST,
+                    path: "/admin/store-workspace-trace/submission/#{params[:submissionId]}"
+                )
+            end
+
+            # @return [untyped]
+>>>>>>> ca21b06d09 (fix)
             def store_traced_workspace_v_2(request_options: {}, **params)
                 _request = Seed::Internal::Http::JSONRequest.new(
                     method: POST,
