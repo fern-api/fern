@@ -8,5 +8,5 @@ export function astNodeToCodeBlockWithComments(node: ruby.AstNode, comments: str
         }
         writer.newLine();
         node.write(writer);
-    })
+    });
 }

@@ -6,7 +6,6 @@ import { Module_ } from "./Module";
 import { Method, MethodKind } from "./Method";
 import { Type } from "./Type";
 
-
 export declare namespace Class_ {
     export interface Args extends Module_.Args {
         /* The superclass of this class. */
@@ -96,10 +95,7 @@ export class Class_ extends Module_ {
     }
 
     private hasBody(): boolean {
-        return (
-            this.statements.length > 0 ||
-            this.methods.length > 0
-        );
+        return this.statements.length > 0 || this.methods.length > 0;
     }
 
     public writeTypeDefinition(writer: Writer): void {

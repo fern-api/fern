@@ -80,10 +80,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         return join(this.getDirectory(), RelativeFilePath.of(this.getFilename()));
     }
 
-    private getSubpackageClientGetter(
-        subpackage: FernIr.Subpackage,
-        rootModule: ruby.Module_,
-    ): ruby.Method {
+    private getSubpackageClientGetter(subpackage: FernIr.Subpackage, rootModule: ruby.Module_): ruby.Method {
         return new ruby.Method({
             name: subpackage.name.camelCase.safeName,
             kind: ruby.MethodKind.Instance,
