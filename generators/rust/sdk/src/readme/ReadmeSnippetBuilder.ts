@@ -116,7 +116,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             }
             // For now, we'll accept any snippet type and try to extract the client code
             // This is because Rust may not be officially supported in the union type yet
-            const snippet = endpointSnippet.snippet as any;
+            const snippet = endpointSnippet.snippet as { type?: string; client?: string };
             if (snippet.type === "rust" && snippet.client) {
                 snippets[endpointSnippet.id.identifierOverride] = snippet.client;
             } else if (snippet.client) {

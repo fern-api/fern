@@ -17,6 +17,6 @@ export function convertIr(
 ): FernIr.dynamic.DynamicIntermediateRepresentation {
     return {
         ...ir,
-        endpoints: convertEndpoints(ir.endpoints) as any
+        endpoints: convertEndpoints(ir.endpoints) as Record<EndpointId, FernIr.dynamic.Endpoint>
     } as FernIr.dynamic.DynamicIntermediateRepresentation;
 }

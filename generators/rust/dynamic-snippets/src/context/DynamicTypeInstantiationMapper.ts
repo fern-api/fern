@@ -68,7 +68,7 @@ export class DynamicTypeInstantiationMapper {
         literal,
         value
     }: {
-        literal: any; // Simplified type
+        literal: FernIr.dynamic.LiteralType;
         value: unknown;
     }): rust.Expression {
         if (typeof literal?.value === "boolean") {
