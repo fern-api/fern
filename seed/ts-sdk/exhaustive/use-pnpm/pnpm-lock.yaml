@@ -533,10 +533,10 @@ packages:
                 integrity: sha512-GQ7Nw5G2lTu/BtHTKfXhKHok2WGetd4XYcVKGx00SjAk8GMwgJM3zr6zORiPGuOE+/vkc90KtTosSSvaCjKb2Q==,
             }
 
-    "@mswjs/interceptors@0.39.5":
+    "@mswjs/interceptors@0.39.6":
         resolution:
             {
-                integrity: sha512-B9nHSJYtsv79uo7QdkZ/b/WoKm20IkVSmTc/WCKarmDtFwM0dRx2ouEniqwNkzCSLn3fydzKmnMzjtfdOWt3VQ==,
+                integrity: sha512-bndDP83naYYkfayr/qhBHMhk0YGwS1iv6vaEGcr0SQbO0IZtbOPqjKjds/WcG+bJA+1T5vCx6kprKOzn5Bg+Vw==,
             }
         engines: { node: ">=18" }
 
@@ -3470,7 +3470,7 @@ snapshots:
             "@jridgewell/resolve-uri": 3.1.2
             "@jridgewell/sourcemap-codec": 1.5.5
 
-    "@mswjs/interceptors@0.39.5":
+    "@mswjs/interceptors@0.39.6":
         dependencies:
             "@open-draft/deferred-promise": 2.2.0
             "@open-draft/logger": 0.3.0
@@ -4645,7 +4645,7 @@ snapshots:
             "@bundled-es-modules/statuses": 1.0.1
             "@bundled-es-modules/tough-cookie": 0.1.6
             "@inquirer/confirm": 5.1.14(@types/node@18.19.122)
-            "@mswjs/interceptors": 0.39.5
+            "@mswjs/interceptors": 0.39.6
             "@open-draft/deferred-promise": 2.2.0
             "@open-draft/until": 2.1.0
             "@types/cookie": 0.6.0

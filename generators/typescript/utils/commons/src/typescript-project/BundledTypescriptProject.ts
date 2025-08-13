@@ -28,7 +28,7 @@ export class BundledTypescriptProject extends TypescriptProject {
         if (this.outputJsr) {
             await this.generateJsrJson();
         }
-        if(this.packageManager === "pnpm"){
+        if (this.packageManager === "pnpm") {
             await this.generatePnpmWorkspace();
         }
     }
@@ -130,10 +130,7 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
     }
 
     private async generatePnpmWorkspace(): Promise<void> {
-        await this.writeFileToVolume(
-            RelativeFilePath.of(TypescriptProject.PNPM_WORKSPACE_FILENAME),
-            "packages: ['.']"
-        );
+        await this.writeFileToVolume(RelativeFilePath.of(TypescriptProject.PNPM_WORKSPACE_FILENAME), "packages: ['.']");
     }
 
     private async generatePrettierRc(): Promise<void> {

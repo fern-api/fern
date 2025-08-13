@@ -39,7 +39,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
         if (this.outputJsr) {
             await this.generateJsrJson();
         }
-        if(this.packageManager === "pnpm"){
+        if (this.packageManager === "pnpm") {
             await this.generatePnpmWorkspace();
         }
     }
@@ -60,10 +60,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
     }
 
     private async generatePnpmWorkspace(): Promise<void> {
-        await this.writeFileToVolume(
-            RelativeFilePath.of(TypescriptProject.PNPM_WORKSPACE_FILENAME),
-            "packages: ['.']"
-        );
+        await this.writeFileToVolume(RelativeFilePath.of(TypescriptProject.PNPM_WORKSPACE_FILENAME), "packages: ['.']");
     }
 
     private async generateNpmIgnore(): Promise<void> {

@@ -81,3 +81,7 @@ CLAUDE.md
 
 # Preview
 **/.preview/
+
+# cache folders used for package managers
+.yarn-cache
+.pnpm-cache
