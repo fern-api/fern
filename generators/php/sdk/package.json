@@ -49,7 +49,7 @@
     "@fern-api/php-codegen": "workspace:*",
     "@fern-api/php-dynamic-snippets": "workspace:*",
     "@fern-api/php-model": "workspace:*",
-    "@fern-fern/generator-cli-sdk": "0.0.33",
+    "@fern-fern/generator-cli-sdk": "0.0.28",
     "@fern-fern/generator-exec-sdk": "^0.0.1045",
     "@fern-fern/ir-sdk": "^58.2.0",
     "@types/lodash-es": "^4.17.12",
