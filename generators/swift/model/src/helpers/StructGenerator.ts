@@ -1,4 +1,4 @@
-import { assertDefined, noop } from "@fern-api/core-utils";
+import { noop } from "@fern-api/core-utils";
 import { swift } from "@fern-api/swift-codegen";
 import { TypeReference } from "@fern-fern/ir-sdk/api";
 import { camelCase } from "lodash-es";
