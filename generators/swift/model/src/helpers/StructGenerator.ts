@@ -5,7 +5,7 @@ import { camelCase } from "lodash-es";
 
 import { StringEnumGenerator } from "../enum";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { pascalCase } from "./pascal-case";
+import { LocalSymbolRegistry } from "./LocalSymbolRegistry";
 
 export declare namespace StructGenerator {
     interface ConstantPropertyDefinition {
@@ -23,6 +23,18 @@ export declare namespace StructGenerator {
         docsContent?: string;
     }
 
+    interface LocalContext {
+        readonly additionalPropertiesMetadata?: {
+            /**
+             * The name of the property that will be used to store additional properties that are not explicitly defined in the schema.
+             */
+            propertyName: string;
+            swiftType: swift.Type;
+        };
+        readonly stringLiteralEnums: Map<string, swift.EnumWithRawValues>;
+        readonly symbolRegistry: LocalSymbolRegistry;
+    }
+
     interface Args {
         name: string;
         constantPropertyDefinitions: ConstantPropertyDefinition[];
@@ -37,10 +49,9 @@ export class StructGenerator {
     private readonly name: string;
     private readonly constantPropertyDefinitions: StructGenerator.ConstantPropertyDefinition[];
     private readonly dataPropertyDefinitions: StructGenerator.DataPropertyDefinition[];
-    private readonly additionalPropertiesInfo;
-    private readonly inlineStringLiteralEnums;
     private readonly docsContent?: string;
-    private readonly context: ModelGeneratorContext;
+    private readonly generatorContext: ModelGeneratorContext;
+    private readonly localContext: StructGenerator.LocalContext;
 
     public constructor({
         name,
@@ -53,74 +64,79 @@ export class StructGenerator {
         this.name = name;
         this.constantPropertyDefinitions = constantPropertyDefinitions;
         this.dataPropertyDefinitions = dataPropertyDefinitions;
-        this.additionalPropertiesInfo = additionalProperties ? this.getAdditionalPropertiesInfo() : undefined;
-        this.inlineStringLiteralEnums = this.getInlineStringLiteralEnums();
         this.docsContent = docsContent;
-        this.context = context;
+        this.generatorContext = context;
+        this.localContext = this.buildLocalContext(additionalProperties);
     }
 
-    private getAdditionalPropertiesInfo = () => {
-        const otherPropertyNames = [
-            ...this.constantPropertyDefinitions.map((p) => p.unsafeName),
-            ...this.dataPropertyDefinitions.map((p) => p.unsafeName)
-        ];
-        const otherPropertyNamesSet = new Set(otherPropertyNames);
-        let propertyName = "additionalProperties";
-        while (otherPropertyNamesSet.has(propertyName)) {
-            propertyName = "_" + propertyName;
-        }
-        return {
-            propertyName,
-            swiftType: swift.Type.dictionary(swift.Type.string(), swift.Type.jsonValue())
+    private buildLocalContext(hasAdditionalProperties: boolean): StructGenerator.LocalContext {
+        const symbolRegistry = LocalSymbolRegistry.create();
+
+        const computeAdditionalPropertiesMetadata = () => {
+            const otherPropertyNames = [
+                ...this.constantPropertyDefinitions.map((p) => p.unsafeName),
+                ...this.dataPropertyDefinitions.map((p) => p.unsafeName)
+            ];
+            const otherPropertyNamesSet = new Set(otherPropertyNames);
+            let propertyName = "additionalProperties";
+            while (otherPropertyNamesSet.has(propertyName)) {
+                propertyName = "_" + propertyName;
+            }
+            return {
+                propertyName,
+                swiftType: swift.Type.dictionary(swift.Type.string(), swift.Type.jsonValue())
+            };
         };
-    };
 
-    private getInlineStringLiteralEnums = () => {
-        const enumsByLiteralValue = new Map<string, swift.EnumWithRawValues>();
-        for (const def of [...this.constantPropertyDefinitions, ...this.dataPropertyDefinitions]) {
-            if (def.type instanceof swift.Type) {
-                continue;
+        const generateStringLiteralEnums = (): Map<string, swift.EnumWithRawValues> => {
+            const enumsByLiteralValue = new Map<string, swift.EnumWithRawValues>();
+            for (const def of [...this.constantPropertyDefinitions, ...this.dataPropertyDefinitions]) {
+                if (def.type instanceof swift.Type) {
+                    continue;
+                }
+                if (
+                    def.type.type === "container" &&
+                    def.type.container.type === "literal" &&
+                    def.type.container.literal.type === "string"
+                ) {
+                    const literalValue = def.type.container.literal.string;
+                    const enumName = symbolRegistry.registerStringLiteralSymbol(literalValue);
+                    const stringEnumGenerator = new StringEnumGenerator({
+                        name: enumName,
+                        source: {
+                            type: "custom",
+                            values: [
+                                {
+                                    unsafeName: camelCase(literalValue),
+                                    rawValue: literalValue
+                                }
+                            ]
+                        }
+                    });
+                    enumsByLiteralValue.set(literalValue, stringEnumGenerator.generate());
+                }
             }
-            if (
-                def.type.type === "container" &&
-                def.type.container.type === "literal" &&
-                def.type.container.literal.type === "string"
-            ) {
-                const literalValue = def.type.container.literal.string;
-                const enum_ = this.generateInlineStringLiteralEnum(literalValue);
-                enumsByLiteralValue.set(literalValue, enum_);
-            }
-        }
-        return enumsByLiteralValue;
-    };
+            return enumsByLiteralValue;
+        };
 
-    private generateInlineStringLiteralEnum(literalValue: string) {
-        const stringEnumGenerator = new StringEnumGenerator({
-            name: pascalCase(literalValue),
-            source: {
-                type: "custom",
-                values: [
-                    {
-                        unsafeName: camelCase(literalValue),
-                        rawValue: literalValue
-                    }
-                ]
-            }
-        });
-        return stringEnumGenerator.generate();
+        return {
+            additionalPropertiesMetadata: hasAdditionalProperties ? computeAdditionalPropertiesMetadata() : undefined,
+            stringLiteralEnums: generateStringLiteralEnums(),
+            symbolRegistry
+        };
     }
 
     public generate(): swift.Struct {
         const constantProperties = this.generateConstantProperties();
         const dataProperties = this.generateDataProperties();
         const properties = [...constantProperties, ...dataProperties];
-        if (this.additionalPropertiesInfo) {
+        if (this.localContext.additionalPropertiesMetadata) {
             properties.push(
                 swift.property({
-                    unsafeName: this.additionalPropertiesInfo.propertyName,
+                    unsafeName: this.localContext.additionalPropertiesMetadata.propertyName,
                     accessLevel: swift.AccessLevel.Public,
                     declarationType: swift.DeclarationType.Let,
-                    type: this.additionalPropertiesInfo.swiftType,
+                    type: this.localContext.additionalPropertiesMetadata.swiftType,
                     docs: swift.docComment({
                         summary: "Additional properties that are not explicitly defined in the schema"
                     })
@@ -176,16 +192,15 @@ export class StructGenerator {
             definition.type.container.literal.type === "string"
         ) {
             const literalValue = definition.type.container.literal.string;
-            const enum_ = this.inlineStringLiteralEnums.get(literalValue);
-            assertDefined(enum_, `Enum for literal value "${literalValue}" not found.`);
-            return swift.Type.custom(enum_.name);
+            const enumName = this.localContext.symbolRegistry.getStringLiteralSymbolOrThrow(literalValue);
+            return swift.Type.custom(enumName);
         }
-        return this.context.getSwiftTypeForTypeReference(definition.type);
+        return this.generatorContext.getSwiftTypeForTypeReference(definition.type);
     }
 
     private generateInitializers(dataProperties: swift.Property[]): swift.Initializer[] {
         const initializers = [this.generatePrimaryInitializer(dataProperties)];
-        if (this.additionalPropertiesInfo) {
+        if (this.localContext.additionalPropertiesMetadata) {
             initializers.push(this.generateInitializerForDecoder(dataProperties));
         }
         return initializers;
@@ -200,12 +215,12 @@ export class StructGenerator {
                 defaultValue: p.type.isOptional ? swift.Expression.rawValue("nil") : undefined
             });
         });
-        if (this.additionalPropertiesInfo) {
+        if (this.localContext.additionalPropertiesMetadata) {
             parameters.push(
                 swift.functionParameter({
-                    argumentLabel: this.additionalPropertiesInfo.propertyName,
-                    unsafeName: this.additionalPropertiesInfo.propertyName,
-                    type: this.additionalPropertiesInfo.swiftType,
+                    argumentLabel: this.localContext.additionalPropertiesMetadata.propertyName,
+                    unsafeName: this.localContext.additionalPropertiesMetadata.propertyName,
+                    type: this.localContext.additionalPropertiesMetadata.swiftType,
                     defaultValue: swift.Expression.contextualMethodCall({ methodName: "init" })
                 })
             );
@@ -213,11 +228,11 @@ export class StructGenerator {
         const bodyStatements = dataProperties.map((p) =>
             swift.Statement.propertyAssignment(p.unsafeName, swift.Expression.reference(p.unsafeName))
         );
-        if (this.additionalPropertiesInfo) {
+        if (this.localContext.additionalPropertiesMetadata) {
             bodyStatements.push(
                 swift.Statement.propertyAssignment(
-                    this.additionalPropertiesInfo.propertyName,
-                    swift.Expression.reference(this.additionalPropertiesInfo.propertyName)
+                    this.localContext.additionalPropertiesMetadata.propertyName,
+                    swift.Expression.reference(this.localContext.additionalPropertiesMetadata.propertyName)
                 )
             );
         }
@@ -277,10 +292,10 @@ export class StructGenerator {
             });
         }
 
-        if (this.additionalPropertiesInfo) {
+        if (this.localContext.additionalPropertiesMetadata) {
             bodyStatements.push(
                 swift.Statement.propertyAssignment(
-                    this.additionalPropertiesInfo.propertyName,
+                    this.localContext.additionalPropertiesMetadata.propertyName,
                     swift.Expression.try(
                         swift.Expression.methodCall({
                             target: swift.Expression.reference("decoder"),
@@ -318,7 +333,7 @@ export class StructGenerator {
 
     private generateMethods(constantProperties: swift.Property[], dataProperties: swift.Property[]) {
         const methods: swift.Method[] = [];
-        if (this.additionalPropertiesInfo) {
+        if (this.localContext.additionalPropertiesMetadata) {
             methods.push(this.generateEncodeMethod(constantProperties, dataProperties));
         }
         return methods;
@@ -345,7 +360,7 @@ export class StructGenerator {
             );
         }
 
-        if (this.additionalPropertiesInfo) {
+        if (this.localContext.additionalPropertiesMetadata) {
             bodyStatements.push(
                 swift.Statement.expressionStatement(
                     swift.Expression.try(
@@ -356,7 +371,7 @@ export class StructGenerator {
                                 swift.functionArgument({
                                     value: swift.Expression.memberAccess({
                                         target: swift.Expression.rawValue("self"),
-                                        memberName: this.additionalPropertiesInfo.propertyName
+                                        memberName: this.localContext.additionalPropertiesMetadata.propertyName
                                     })
                                 })
                             ]
@@ -409,7 +424,7 @@ export class StructGenerator {
 
     private generateNestedTypes(dataProperties: swift.Property[]) {
         const nestedTypes: (swift.Struct | swift.EnumWithRawValues)[] = [];
-        this.inlineStringLiteralEnums.forEach((enum_) => {
+        this.localContext.stringLiteralEnums.forEach((enum_) => {
             nestedTypes.push(enum_);
         });
         if (dataProperties.length > 0) {
