@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedContentTypesClient } from \"@fern/content-type\";\n\nconst client = new SeedContentTypesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.patchComplex(\"id\", {\n    name: \"name\",\n    email: \"email\",\n    age: 1,\n    active: true,\n    metadata: {\n        \"metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    tags: [\"tags\", \"tags\"]\n});\n"
+                "client": "import { SeedContentTypesClient } from \"@fern/content-type\";\n\nconst client = new SeedContentTypesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.patchComplex(\"id\", {\n    name: \"name\",\n    age: 1,\n    active: true,\n    metadata: {\n        \"metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    tags: [\"tags\", \"tags\"],\n    email: \"email\",\n    nickname: \"nickname\",\n    bio: \"bio\",\n    profileImageUrl: \"profileImageUrl\",\n    settings: {\n        \"settings\": {\n            \"key\": \"value\"\n        }\n    }\n});\n"
             }
         },
         {

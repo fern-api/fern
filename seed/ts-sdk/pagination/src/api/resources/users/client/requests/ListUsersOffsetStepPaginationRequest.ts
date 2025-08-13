@@ -13,9 +13,7 @@ import * as SeedPagination from "../../../../index.js";
  *     }
  */
 export interface ListUsersOffsetStepPaginationRequest {
-    /**
-     * Defaults to first page
-     */
+    /** Defaults to first page */
     page?: number;
     /**
      * The maximum number of elements to return.

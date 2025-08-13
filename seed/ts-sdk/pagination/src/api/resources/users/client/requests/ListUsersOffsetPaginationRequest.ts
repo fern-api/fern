@@ -14,13 +14,9 @@ import * as SeedPagination from "../../../../index.js";
  *     }
  */
 export interface ListUsersOffsetPaginationRequest {
-    /**
-     * Defaults to first page
-     */
+    /** Defaults to first page */
     page?: number;
-    /**
-     * Defaults to per page
-     */
+    /** Defaults to per page */
     per_page?: number;
     order?: SeedPagination.Order;
     /**

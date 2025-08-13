@@ -24,6 +24,7 @@ import { SeedInferredAuthImplicitClient } from "@fern/inferred-auth-implicit";
 
 const client = new SeedInferredAuthImplicitClient({ environment: "YOUR_BASE_URL" });
 await client.auth.getTokenWithClientCredentials({
+    "X-Api-Key": "X-Api-Key",
     client_id: "client_id",
     client_secret: "client_secret",
     scope: "scope",

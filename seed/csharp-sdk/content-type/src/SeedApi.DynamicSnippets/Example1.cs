@@ -16,7 +16,6 @@ public class Example1
             "id",
             new PatchComplexRequest{
                 Name = "name",
-                Email = "email",
                 Age = 1,
                 Active = true,
                 Metadata = new Dictionary<string, object>(){
@@ -27,6 +26,15 @@ public class Example1
                 Tags = new List<string>(){
                     "tags",
                     "tags",
+                },
+                Email = "email",
+                Nickname = "nickname",
+                Bio = "bio",
+                ProfileImageUrl = "profileImageUrl",
+                Settings = new Dictionary<string, object>(){
+                    ["settings"] = new Dictionary<string, object>() {
+                        ["key"] = "value",
+                    },
                 }
             }
         );

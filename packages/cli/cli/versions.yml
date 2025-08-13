@@ -1,5 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: Upload dynamic IR JSON instead of upload URL.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-08-12"
+  version: 0.66.13
+
+- changelogEntry:
+    - summary: Upload dynamic IR for generating SDK snippets in docs.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-08-12"
+  version: 0.66.12
+
+- changelogEntry:
     - summary: Allow 'securityScheme.scheme' to be case-insensitive.
       type: fix
   irVersion: 59
@@ -22,11 +36,18 @@
 
 
 - changelogEntry:
+    - summary: Don't throw an error when the "expires in" property can't be found for bearer auth inference.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-08-12"
+  version: 0.66.1
+
+- changelogEntry:
     - summary: Add support for generating inferred auth in IR and expand bearer auth in Fern Definition for inference.
       type: feat
   irVersion: 59
   createdAt: "2025-08-08"
-  version: 0.66.00
+  version: 0.66.0
 
 - changelogEntry:
     - summary: |

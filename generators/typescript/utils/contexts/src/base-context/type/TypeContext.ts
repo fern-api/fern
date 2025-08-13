@@ -4,7 +4,6 @@ import { ts } from "ts-morph";
 import {
     DeclaredTypeName,
     ExampleTypeReference,
-    ObjectProperty,
     ResolvedTypeReference,
     TypeDeclaration,
     TypeId,
@@ -37,5 +36,6 @@ export interface TypeContext {
     getGeneratedExample: (example: ExampleTypeReference) => GeneratedTypeReferenceExample;
     isNullable: (typeReference: TypeReference) => boolean;
     isOptional: (typeReference: TypeReference) => boolean;
+    isLiteral: (typeReference: TypeReference) => boolean;
     hasDefaultValue: (typeReference: TypeReference) => boolean;
 }

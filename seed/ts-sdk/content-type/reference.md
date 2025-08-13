@@ -65,12 +65,15 @@ await client.service.patch({
 <dl>
 <dd>
 
-Update with JSON merge patch - complex types
+Update with JSON merge patch - complex types.
+This endpoint demonstrates the distinction between:
 
-</dd>
-</dl>
-</dd>
-</dl>
+- optional<T> fields (can be present or absent, but not null)
+- optional<nullable<T>> fields (can be present, absent, or null)
+  </dd>
+  </dl>
+  </dd>
+  </dl>
 
 #### 🔌 Usage
 
@@ -83,7 +86,6 @@ Update with JSON merge patch - complex types
 ```typescript
 await client.service.patchComplex("id", {
     name: "name",
-    email: "email",
     age: 1,
     active: true,
     metadata: {
@@ -92,6 +94,15 @@ await client.service.patchComplex("id", {
         },
     },
     tags: ["tags", "tags"],
+    email: "email",
+    nickname: "nickname",
+    bio: "bio",
+    profileImageUrl: "profileImageUrl",
+    settings: {
+        settings: {
+            key: "value",
+        },
+    },
 });
 ```
 

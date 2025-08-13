@@ -26,6 +26,7 @@ var client = new SeedInferredAuthImplicitClient();
 await client.Auth.GetTokenWithClientCredentialsAsync(
     new GetTokenRequest
     {
+        XApiKey = "X-Api-Key",
         ClientId = "client_id",
         ClientSecret = "client_secret",
         Audience = "https://api.example.com",

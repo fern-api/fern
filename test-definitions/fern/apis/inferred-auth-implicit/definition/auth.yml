@@ -16,6 +16,8 @@ service:
       method: POST
       request:
         name: GetTokenRequest
+        headers: 
+          X-Api-Key: string
         body:
           properties:
             client_id: string
@@ -30,6 +32,8 @@ service:
       method: POST
       request: 
         name: RefreshTokenRequest
+        headers: 
+          X-Api-Key: string
         body:
           properties:
             client_id: string

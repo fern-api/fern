@@ -9,8 +9,10 @@ module Seed
                 @client = client
             end
 
-            # @return [void]
-            def post_with_no_auth; end
-        end
+            # @return [bool]
+            def post_with_no_auth
+                raise NotImplementedError, 'This method is not yet implemented.'
+            end
+
     end
 end

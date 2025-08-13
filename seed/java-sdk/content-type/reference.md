@@ -66,7 +66,10 @@ client.service().patch(
 <dl>
 <dd>
 
-Update with JSON merge patch - complex types
+Update with JSON merge patch - complex types.
+This endpoint demonstrates the distinction between:
+- optional<T> fields (can be present or absent, but not null)
+- optional<nullable<T>> fields (can be present, absent, or null)
 </dd>
 </dl>
 </dd>
@@ -86,7 +89,6 @@ client.service().patchComplex(
     PatchComplexRequest
         .builder()
         .name("name")
-        .email("email")
         .age(1)
         .active(true)
         .metadata(
@@ -100,6 +102,17 @@ client.service().patchComplex(
             new ArrayList<String>(
                 Arrays.asList("tags", "tags")
             )
+        )
+        .email("email")
+        .nickname("nickname")
+        .bio("bio")
+        .profileImageUrl("profileImageUrl")
+        .settings(
+            new HashMap<String, Object>() {{
+                put("settings", new 
+                HashMap<String, Object>() {{put("key", "value");
+                }});
+            }}
         )
         .build()
 );
@@ -133,14 +146,6 @@ client.service().patchComplex(
 <dl>
 <dd>
 
-**email:** `Optional<String>` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **age:** `Optional<Integer>` 
     
 </dd>
@@ -166,6 +171,46 @@ client.service().patchComplex(
 <dd>
 
 **tags:** `Optional<List<String>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**nickname:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bio:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**profileImageUrl:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `Optional<Map<String, Object>>` 
     
 </dd>
 </dl>

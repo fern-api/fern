@@ -1,6 +1,5 @@
 
 module Seed
     module InlinedRequests
-        class PostWithObjectBody; end
-    end
+        class PostWithObjectBody; endend
 end

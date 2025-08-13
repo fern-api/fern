@@ -13,6 +13,7 @@ public class Example0 {
         client.auth().getTokenWithClientCredentials(
             GetTokenRequest
                 .builder()
+                .xApiKey("X-Api-Key")
                 .clientId("client_id")
                 .clientSecret("client_secret")
                 .audience("https://api.example.com")

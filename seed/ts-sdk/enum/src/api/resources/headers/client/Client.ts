@@ -62,6 +62,21 @@ export class Headers {
         requestOptions?: Headers.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                operand: operand,
+                maybeOperand: maybeOperand != null ? maybeOperand : undefined,
+                operandOrColor: typeof operandOrColor === "string" ? operandOrColor : toJson(operandOrColor),
+                maybeOperandOrColor:
+                    maybeOperandOrColor != null
+                        ? typeof maybeOperandOrColor === "string"
+                            ? maybeOperandOrColor
+                            : toJson(maybeOperandOrColor)
+                        : undefined,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -69,21 +84,7 @@ export class Headers {
                 "headers",
             ),
             method: "POST",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({
-                    operand: operand,
-                    maybeOperand: maybeOperand != null ? maybeOperand : undefined,
-                    operandOrColor: typeof operandOrColor === "string" ? operandOrColor : toJson(operandOrColor),
-                    maybeOperandOrColor:
-                        maybeOperandOrColor != null
-                            ? typeof maybeOperandOrColor === "string"
-                                ? maybeOperandOrColor
-                                : toJson(maybeOperandOrColor)
-                            : undefined,
-                }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             queryParameters: requestOptions?.queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,

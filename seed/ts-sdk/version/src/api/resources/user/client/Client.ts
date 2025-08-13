@@ -59,6 +59,11 @@ export class User {
         userId: SeedVersion.UserId,
         requestOptions?: User.RequestOptions,
     ): Promise<core.WithRawResponse<SeedVersion.User>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ "X-API-Version": requestOptions?.xApiVersion }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -66,11 +71,7 @@ export class User {
                 `/users/${encodeURIComponent(userId)}`,
             ),
             method: "GET",
-            headers: mergeHeaders(
-                this._options?.headers,
-                mergeOnlyDefinedHeaders({ "X-API-Version": requestOptions?.xApiVersion }),
-                requestOptions?.headers,
-            ),
+            headers: _headers,
             queryParameters: requestOptions?.queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
