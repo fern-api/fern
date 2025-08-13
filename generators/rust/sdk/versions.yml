@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.0.5
+  createdAt: "2025-08-13"
+  changelogEntry:
+    - type: chore
+      summary: enable git and git config
+  irVersion: 58
+
 - version: 0.0.4
   createdAt: "2025-08-13"
   changelogEntry:
