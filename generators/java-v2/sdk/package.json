@@ -49,7 +49,7 @@
     "@fern-api/java-base": "workspace:*",
     "@fern-api/java-dynamic-snippets": "workspace:*",
     "@fern-api/logger": "workspace:*",
-    "@fern-fern/generator-cli-sdk": "0.0.28",
+    "@fern-fern/generator-cli-sdk": "0.0.30",
     "@fern-fern/generator-exec-sdk": "^0.0.1045",
     "@fern-fern/ir-sdk": "^58.2.0",
     "@types/lodash-es": "^4.17.12",
