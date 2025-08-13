@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.4.0
+  createdAt: "2025-08-13"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Added support for string literal types.
+  irVersion: 58
+
 - version: 0.3.0
   createdAt: "2025-08-11"
   changelogEntry:
