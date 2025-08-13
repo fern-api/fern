@@ -6,6 +6,6 @@ module Seed
             field :name, String, optional: false, nullable: false
             field :patient, Seed::Patient, optional: true, nullable: false
             field :practitioner, Seed::Practitioner, optional: true, nullable: false
-        end
+
     end
 end

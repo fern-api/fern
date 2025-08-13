@@ -13,6 +13,6 @@ module Seed
             def get_attempted_migrations
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
-        end
+
     end
 end

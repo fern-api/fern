@@ -12,6 +12,6 @@ module Seed
             field :testcases, Internal::Types::Array[Seed::commons::TestCaseWithExpectedResult], optional: false, nullable: false
             field :method_name, String, optional: false, nullable: false
             field :supports_custom_test_cases, Internal::Types::Boolean, optional: false, nullable: false
-        end
+
     end
 end

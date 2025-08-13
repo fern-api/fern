@@ -1,6 +1,5 @@
 
 module Seed
     module Dummy
-        class GenerateRequest; end
-    end
+        class GenerateRequest; endend
 end

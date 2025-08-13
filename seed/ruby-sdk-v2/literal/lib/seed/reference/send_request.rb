@@ -9,6 +9,6 @@ module Seed
             field :context, String, optional: false, nullable: false
             field :maybe_context, String, optional: true, nullable: false
             field :container_object, Seed::reference::ContainerObject, optional: false, nullable: false
-        end
+
     end
 end

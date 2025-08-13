@@ -1,6 +1,5 @@
 
 module Seed
     module Auth
-        class RefreshTokenRequest; end
-    end
+        class RefreshTokenRequest; endend
 end

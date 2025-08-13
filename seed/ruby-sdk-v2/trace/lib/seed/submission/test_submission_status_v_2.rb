@@ -6,6 +6,6 @@ module Seed
             field :problem_id, String, optional: false, nullable: false
             field :problem_version, Integer, optional: false, nullable: false
             field :problem_info, Seed::v_2::problem::ProblemInfoV2, optional: false, nullable: false
-        end
+
     end
 end

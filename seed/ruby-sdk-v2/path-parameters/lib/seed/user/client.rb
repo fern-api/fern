@@ -28,6 +28,6 @@ module Seed
             def search_users
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
-        end
+
     end
 end

@@ -1,6 +1,5 @@
 
 module Seed
     module Auth
-        class GetTokenRequest; end
-    end
+        class GetTokenRequest; endend
 end

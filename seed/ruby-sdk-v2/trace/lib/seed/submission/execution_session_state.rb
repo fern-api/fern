@@ -8,6 +8,6 @@ module Seed
             field :aws_task_id, String, optional: true, nullable: false
             field :language, Seed::commons::Language, optional: false, nullable: false
             field :status, Seed::submission::ExecutionSessionStatus, optional: false, nullable: false
-        end
+
     end
 end

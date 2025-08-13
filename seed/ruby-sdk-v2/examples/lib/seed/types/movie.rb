@@ -12,6 +12,6 @@ module Seed
             field :book, String, optional: true, nullable: false
             field :metadata, Internal::Types::Hash[String, Internal::Types::Hash[String, ]], optional: false, nullable: false
             field :revenue, Integer, optional: false, nullable: false
-        end
+
     end
 end

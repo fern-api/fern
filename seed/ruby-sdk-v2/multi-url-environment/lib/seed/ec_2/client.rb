@@ -13,6 +13,6 @@ module Seed
             def boot_instance
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
-        end
+
     end
 end

@@ -6,6 +6,6 @@ module Seed
             field :signature, Seed::v_2::v_3::problem::NonVoidFunctionSignature, optional: false, nullable: false
             field :additional_files, Internal::Types::Hash[Seed::commons::Language, Seed::v_2::v_3::problem::Files], optional: false, nullable: false
             field :basic_test_case_template, Seed::v_2::v_3::problem::BasicTestCaseTemplate, optional: false, nullable: false
-        end
+
     end
 end

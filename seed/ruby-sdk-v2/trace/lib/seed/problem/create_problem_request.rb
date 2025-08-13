@@ -9,6 +9,6 @@ module Seed
             field :output_type, Seed::commons::VariableType, optional: false, nullable: false
             field :testcases, Internal::Types::Array[Seed::commons::TestCaseWithExpectedResult], optional: false, nullable: false
             field :method_name, String, optional: false, nullable: false
-        end
+
     end
 end

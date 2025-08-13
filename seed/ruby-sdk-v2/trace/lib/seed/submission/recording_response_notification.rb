@@ -7,6 +7,6 @@ module Seed
             field :line_number, Integer, optional: false, nullable: false
             field :lightweight_stack_info, Seed::submission::LightweightStackframeInformation, optional: false, nullable: false
             field :traced_file, Seed::submission::TracedFile, optional: true, nullable: false
-        end
+
     end
 end

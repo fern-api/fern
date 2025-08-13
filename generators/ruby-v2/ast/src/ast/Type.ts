@@ -119,7 +119,7 @@ export class Type extends AstNode {
                 _writer.write("String");
                 return;
             case "class":
-                _writer.write(this.internalType.reference.toString(_writer));
+                _writer.writeNode(this.internalType.reference);
                 return;
             case "instance":
                 break;

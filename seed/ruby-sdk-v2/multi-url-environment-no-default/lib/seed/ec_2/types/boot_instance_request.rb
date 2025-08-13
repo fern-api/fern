@@ -1,6 +1,5 @@
 
 module Seed
     module Ec2
-        class BootInstanceRequest; end
-    end
+        class BootInstanceRequest; endend
 end

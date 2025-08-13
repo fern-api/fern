@@ -6,6 +6,6 @@ module Seed
             field :language, Seed::commons::Language, optional: false, nullable: false
             field :submission_files, Internal::Types::Array[Seed::submission::SubmissionFileInfo], optional: false, nullable: false
             field :user_id, String, optional: true, nullable: false
-        end
+
     end
 end
