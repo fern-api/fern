@@ -1,4 +1,6 @@
+using global::System.Threading.Tasks;
 using NUnit.Framework;
+using SeedClientSideParams;
 using SeedClientSideParams.Core;
 
 namespace SeedClientSideParams.Test.Unit.MockServer;
@@ -7,7 +9,7 @@ namespace SeedClientSideParams.Test.Unit.MockServer;
 public class ListResourcesTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             [

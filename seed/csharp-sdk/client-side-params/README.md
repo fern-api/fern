@@ -22,9 +22,9 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedClientSideParams;
 
-var client = new SeedClientSideParams.SeedClientSideParamsClient();
+var client = new SeedClientSideParamsClient();
 await client.Service.SearchResourcesAsync(
-    new SeedClientSideParams.SearchResourcesRequest
+    new SearchResourcesRequest
     {
         Limit = 1,
         Offset = 1,
