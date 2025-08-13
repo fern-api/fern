@@ -291,6 +291,13 @@ export class Type extends AstNode {
         });
     }
 
+    public static reference(reference: ClassReference): Type {
+        return new this({
+            type: "class",
+            reference
+        });
+    }
+
     public isCollection(): boolean {
         return (
             this.internalType?.type === "array" ||

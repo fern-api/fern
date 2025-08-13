@@ -3,6 +3,7 @@ import { RubyFile } from "@fern-api/ruby-base";
 import { EnumGenerator } from "./enum/EnumGenerator";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { ObjectGenerator } from "./object/ObjectGenerator";
+import { UnionGenerator } from "./union/UnionGenerator";
 
 export function generateModels({ context }: { context: ModelGeneratorContext }): RubyFile[] {
     const files: RubyFile[] = [];
@@ -16,7 +17,10 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
                 return new ObjectGenerator(context, typeDeclaration, otd).generate();
             },
             undiscriminatedUnion: () => undefined,
-            union: () => undefined,
+            union: (unionDeclaration) => {
+                return new UnionGenerator(context, typeDeclaration, unionDeclaration).generate();
+            },
+            // union: () => undefined,
             _other: () => undefined
         });
         if (file != null) {

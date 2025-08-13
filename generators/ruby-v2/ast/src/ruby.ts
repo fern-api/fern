@@ -1,4 +1,5 @@
 import {
+    AstNode,
     Class_,
     ClassInstantiation,
     ClassReference,
@@ -33,7 +34,6 @@ export {
     MethodKind,
     Module_,
     Parameter,
-    Type,
     Type,
     TypeLiteral,
     TypeParameter,
@@ -127,3 +127,14 @@ export function invokeMethod(args: MethodInvocation.Args): MethodInvocation {
 export function positionalArgument(args: PositionalArgument.Args): PositionalArgument {
     return new PositionalArgument(args);
 }
+
+export function withComments(node: AstNode, comments: Comment[]): CodeBlock {
+    return new CodeBlock((writer) => {
+        for (const comment of comments) {
+            comment.write(writer);
+        }
+        node.write(writer);
+    });
+}
+
+export const frozenStringLiteral: Comment = new Comment({ docs: "frozen_string_literal: true" });
