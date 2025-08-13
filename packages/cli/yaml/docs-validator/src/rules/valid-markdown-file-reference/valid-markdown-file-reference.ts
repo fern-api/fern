@@ -1,9 +1,8 @@
+import { getReplacedHref, parseMarkdownToTree, trimAnchor } from "@fern-api/docs-markdown-utils";
+import { AbsoluteFilePath, doesPathExistSync } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 import grayMatter from "gray-matter";
 import { visit } from "unist-util-visit";
-
-import { getReplacedHref, parseMarkdownToTree, trimAnchor } from "@fern-api/docs-markdown-utils";
-import { AbsoluteFilePath, doesPathExistSync } from "@fern-api/fs-utils";
 
 import { Rule, RuleViolation } from "../../Rule";
 

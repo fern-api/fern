@@ -1,14 +1,13 @@
 import { runDocker } from "@fern-api/docker-utils";
-
-import { ExecutionEnvironment } from "./ExecutionEnvironment";
 import {
+    DEFAULT_NODE_DEBUG_PORT,
     DOCKER_CODEGEN_OUTPUT_DIRECTORY,
     DOCKER_GENERATOR_CONFIG_PATH,
     DOCKER_PATH_TO_IR,
     DOCKER_PATH_TO_SNIPPET,
-    DOCKER_PATH_TO_SNIPPET_TEMPLATES,
-    DEFAULT_NODE_DEBUG_PORT
+    DOCKER_PATH_TO_SNIPPET_TEMPLATES
 } from "./constants";
+import { ExecutionEnvironment } from "./ExecutionEnvironment";
 
 export class DockerExecutionEnvironment implements ExecutionEnvironment {
     private readonly dockerImage: string;

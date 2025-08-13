@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/api-workspace-commons";
-import { NodePath, isGeneric, parseGeneric, visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
-
-import { Rule, RuleViolation } from "../../Rule";
+import { isGeneric, NodePath, parseGeneric, visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
 import { visitDefinitionFileYamlAst } from "../../ast";
+import { Rule, RuleViolation } from "../../Rule";
 
 type GenericDeclaration = string;
 type PropertyBasedTypeDeclaration = "object" | "discriminatedUnion";

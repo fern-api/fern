@@ -1,6 +1,6 @@
 import {
-    ClassReferenceFactory,
     Class_,
+    ClassReferenceFactory,
     DiscriminatedUnion,
     Enum,
     Expression,

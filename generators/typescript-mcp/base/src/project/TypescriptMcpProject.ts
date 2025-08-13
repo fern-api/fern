@@ -1,13 +1,11 @@
+import { AbstractProject, File } from "@fern-api/base-generator";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { createLoggingExecutable } from "@fern-api/logging-execa";
+import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
+import { FernFilepath, Name } from "@fern-fern/ir-sdk/api";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { capitalize, kebabCase } from "lodash-es";
 import path from "path";
-
-import { AbstractProject, File } from "@fern-api/base-generator";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
-import { createLoggingExecutable } from "@fern-api/logging-execa";
-import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
-
-import { FernFilepath, Name } from "@fern-fern/ir-sdk/api";
 
 import { Logger } from "../../../../../packages/cli/logger/src/Logger";
 import { AbstractTypescriptMcpGeneratorContext } from "../context/AbstractTypescriptMcpGeneratorContext";

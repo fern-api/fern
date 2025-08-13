@@ -1,11 +1,9 @@
-import path from "path";
-import semver from "semver";
-
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
-
 import { GeneratorReleaseRequest } from "@fern-fern/generators-sdk/api/resources/generators";
+import path from "path";
+import semver from "semver";
 
 import { PublishDockerConfiguration } from "../../config/api";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";

@@ -1,9 +1,8 @@
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { cp, mkdir, readFile, writeFile } from "fs/promises";
 import { glob } from "glob";
 import path, { join } from "path";
 import { SourceFile } from "ts-morph";
-
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { DependencyManager } from "../dependency-manager/DependencyManager";
 import { ExportsManager } from "../exports-manager";

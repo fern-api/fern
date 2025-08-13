@@ -1,9 +1,8 @@
-import { camelCase, compact, isEqual } from "lodash-es";
-import { OpenAPIV3_1 } from "openapi-types";
-
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { HttpHeader, HttpMethod, HttpRequestBody, PathParameter, QueryParameter } from "@fern-api/ir-sdk";
 import { AbstractConverter, Converters, Extensions } from "@fern-api/v3-importer-commons";
+import { camelCase, compact, isEqual } from "lodash-es";
+import { OpenAPIV3_1 } from "openapi-types";
 
 import { FernStreamingExtension } from "../../../extensions/x-fern-streaming";
 import { GroupNameAndLocation } from "../../../types/GroupNameAndLocation";

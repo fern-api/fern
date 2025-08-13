@@ -4,8 +4,8 @@ import {
     ClassReferenceFactory,
     EnvironmentVariable,
     Expression,
-    FunctionInvocation,
     Function_,
+    FunctionInvocation,
     Import,
     MethodClassReference,
     Parameter,
@@ -22,9 +22,8 @@ import {
     HttpHeader,
     OAuthScheme
 } from "@fern-fern/ir-sdk/api";
-
-import { isTypeOptional } from "./TypeUtilities";
 import { OauthTokenProvider } from "./oauth/OauthTokenProvider";
+import { isTypeOptional } from "./TypeUtilities";
 
 export interface BasicAuth {
     username: string;

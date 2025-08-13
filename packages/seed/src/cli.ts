@@ -1,14 +1,10 @@
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
+import { askToLogin } from "@fern-api/login";
+import { FernRegistryClient as FdrClient } from "@fern-fern/generators-sdk";
 import { writeFile } from "fs/promises";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
-
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
-import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
-import { askToLogin } from "@fern-api/login";
-
-import { FernRegistryClient as FdrClient } from "@fern-fern/generators-sdk";
-
-import { Semaphore } from "./Semaphore";
 import { generateCliChangelog } from "./commands/generate/generateCliChangelog";
 import { generateGeneratorChangelog } from "./commands/generate/generateGeneratorChangelog";
 import { getLatestCli } from "./commands/latest/getLatestCli";
@@ -18,13 +14,14 @@ import { publishGenerator } from "./commands/publish/publishGenerator";
 import { registerCliRelease } from "./commands/register/registerCliRelease";
 import { registerGenerator } from "./commands/register/registerGenerator";
 import { runWithCustomFixture } from "./commands/run/runWithCustomFixture";
+import { DockerScriptRunner, LocalScriptRunner, ScriptRunner } from "./commands/test";
 import { TaskContextFactory } from "./commands/test/TaskContextFactory";
 import { DockerTestRunner, LocalTestRunner, TestRunner } from "./commands/test/test-runner";
 import { FIXTURES, testGenerator } from "./commands/test/testWorkspaceFixtures";
 import { validateCliRelease } from "./commands/validate/validateCliChangelog";
 import { validateGenerator } from "./commands/validate/validateGeneratorChangelog";
 import { GeneratorWorkspace, loadGeneratorWorkspaces } from "./loadGeneratorWorkspaces";
-import { ScriptRunner, DockerScriptRunner, LocalScriptRunner } from "./commands/test";
+import { Semaphore } from "./Semaphore";
 
 void tryRunCli();
 

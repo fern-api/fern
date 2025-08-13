@@ -1,5 +1,3 @@
-import { snakeCase, camelCase } from "lodash-es";
-
 import {
     AbstractDynamicSnippetsGeneratorContext,
     FernGeneratorExec,
@@ -7,6 +5,7 @@ import {
 } from "@fern-api/browser-compatible-base-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { rust } from "@fern-api/rust-codegen";
+import { camelCase, snakeCase } from "lodash-es";
 
 import { DynamicTypeInstantiationMapper } from "./DynamicTypeInstantiationMapper";
 import { DynamicTypeMapper } from "./DynamicTypeMapper";

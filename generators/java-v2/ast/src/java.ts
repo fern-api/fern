@@ -31,14 +31,13 @@ export function parameter(args: Parameter.Args): Parameter {
     return new Parameter(args);
 }
 
-export { AstNode } from "./ast/core/AstNode";
 export {
     Access,
     type BuilderParameter,
-    CodeBlock,
     Class,
     ClassInstantiation,
     ClassReference,
+    CodeBlock,
     type ConstructorParameter,
     Method,
     MethodInvocation,
@@ -47,3 +46,4 @@ export {
     TypeLiteral,
     Writer
 } from "./ast";
+export { AstNode } from "./ast/core/AstNode";

@@ -1,5 +1,3 @@
-import { readFile } from "fs/promises";
-
 import {
     AbstractGeneratorContext,
     AbstractGeneratorNotificationService,
@@ -9,6 +7,7 @@ import {
     NopGeneratorNotificationService
 } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
+import { readFile } from "fs/promises";
 
 export declare namespace AbstractGeneratorCli {
     interface Options {

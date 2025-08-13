@@ -1,8 +1,7 @@
-import { Browser } from "puppeteer";
-
 import { docsYml } from "@fern-api/configuration";
 import { stripLeadingSlash } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { Browser } from "puppeteer";
 
 import { findLogosFromHtml } from "../../extract/logo";
 

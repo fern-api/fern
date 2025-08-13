@@ -1,10 +1,10 @@
 /* eslint-disable jest/expect-expect */
 /* eslint-disable jest/valid-describe-callback */
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import path from "path";
 
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
+import path from "path";
 
 import { loadApisOrThrow } from "../../loadApisOrThrow";
 import { generateAndSnapshotIR, generateAndSnapshotIRFromPath } from "./generateAndSnapshotIR";

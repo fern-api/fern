@@ -1,9 +1,8 @@
-import { mapValues } from "lodash-es";
-
 import { CasingsGenerator } from "@fern-api/casings-generator";
 import { DefinitionFileSchema, RawSchemas, RootApiFileSchema } from "@fern-api/fern-definition-schema";
 import { FernFilepath, TypeReference } from "@fern-api/ir-sdk";
 import { RelativeFilePath } from "@fern-api/path-utils";
+import { mapValues } from "lodash-es";
 
 import { convertToFernFilepath } from "./utils/convertToFernFilepath";
 import { parseInlineType } from "./utils/parseInlineType";

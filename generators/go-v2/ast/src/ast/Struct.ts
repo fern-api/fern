@@ -1,10 +1,10 @@
 import { Comment } from "./Comment";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 import { Field } from "./Field";
 import { GoTypeReference } from "./GoTypeReference";
 import { Method } from "./Method";
 import { Parameter } from "./Parameter";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
 
 export declare namespace Struct {
     interface Args {

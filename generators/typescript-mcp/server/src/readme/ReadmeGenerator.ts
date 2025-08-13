@@ -1,5 +1,5 @@
 import { File } from "@fern-api/base-generator";
-import { RelativeFilePath, join } from "@fern-api/fs-utils";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast";
 import { FileGenerator } from "@fern-api/typescript-mcp-base";
 

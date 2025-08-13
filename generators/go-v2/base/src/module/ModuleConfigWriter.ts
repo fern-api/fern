@@ -1,11 +1,9 @@
-import dedent from "dedent";
-
 import { File } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { FileGenerator } from "../FileGenerator";
-
 import { BaseGoCustomConfigSchema } from "@fern-api/go-ast";
+import dedent from "dedent";
 import { AbstractGoGeneratorContext } from "../context/AbstractGoGeneratorContext";
+import { FileGenerator } from "../FileGenerator";
 
 import { ModuleConfig } from "./ModuleConfig";
 

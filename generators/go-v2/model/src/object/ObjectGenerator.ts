@@ -1,5 +1,5 @@
-import { GoFile } from "@fern-api/go-base";
 import { go } from "@fern-api/go-ast";
+import { GoFile } from "@fern-api/go-base";
 
 import {
     Literal,
@@ -10,9 +10,8 @@ import {
     TypeDeclaration,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import { AbstractModelGenerator } from "../AbstractModelGenerator";
+import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 const EMBED_TYPE_NAME = "embed";
 const MARSHALER_TYPE_NAME = "marshaler";

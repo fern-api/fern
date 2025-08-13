@@ -1,10 +1,10 @@
 import { AstNode } from "./AstNode";
-import { Writer } from "./Writer";
-import { Type } from "./Type";
 import { Attribute } from "./Attribute";
+import { CodeBlock } from "./CodeBlock";
+import { Type } from "./Type";
 import { Visibility } from "./types";
 import { writeVisibility } from "./utils/writeVisibility";
-import { CodeBlock } from "./CodeBlock";
+import { Writer } from "./Writer";
 
 export declare namespace StandaloneFunction {
     interface Args {

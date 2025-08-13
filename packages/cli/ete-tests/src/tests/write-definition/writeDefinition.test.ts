@@ -1,7 +1,6 @@
+import { AbsoluteFilePath, doesPathExist, getDirectoryContentsForSnapshot } from "@fern-api/fs-utils";
 import { rm } from "fs/promises";
 import path from "path";
-
-import { AbsoluteFilePath, doesPathExist, getDirectoryContentsForSnapshot } from "@fern-api/fs-utils";
 
 import { runFernCli } from "../../utils/runFernCli";
 

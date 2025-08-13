@@ -1,9 +1,8 @@
 import { NodePath, PackageMarkerFileSchema } from "@fern-api/fern-definition-schema";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-
+import { PackageMarkerAstNodeTypes, PackageMarkerAstNodeVisitor, PackageMarkerAstVisitor } from "./ast";
 import { RuleVisitors } from "./Rule";
 import { ValidationViolation } from "./ValidationViolation";
-import { PackageMarkerAstNodeTypes, PackageMarkerAstNodeVisitor, PackageMarkerAstVisitor } from "./ast";
 
 export function createPackageMarkerAstVisitorForRules({
     relativeFilepath,

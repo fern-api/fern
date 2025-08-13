@@ -1,12 +1,11 @@
-import { describe, it, expect } from "vitest";
-
 import {
-    IntermediateRepresentation,
-    SingleBaseUrlEnvironment,
-    MultipleBaseUrlsEnvironment,
     EnvironmentBaseUrlWithId,
-    EnvironmentsConfig
+    EnvironmentsConfig,
+    IntermediateRepresentation,
+    MultipleBaseUrlsEnvironment,
+    SingleBaseUrlEnvironment
 } from "@fern-fern/ir-sdk/api";
+import { describe, expect, it } from "vitest";
 import { EnvironmentGenerator } from "../environment/EnvironmentGenerator";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 

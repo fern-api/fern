@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { RawSchemas, isRawObjectDefinition } from "@fern-api/fern-definition-schema";
+import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
 import { ObjectProperty } from "@fern-api/ir-sdk";
 
 import { FernFileContext } from "../../FernFileContext";

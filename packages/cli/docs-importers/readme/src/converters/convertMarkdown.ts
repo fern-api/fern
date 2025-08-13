@@ -1,9 +1,7 @@
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { FernRegistry as CjsFdrSdk, FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 import { readFile } from "fs/promises";
 import grayMatter from "gray-matter";
-
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-
-import { FernRegistry as CjsFdrSdk, FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 
 import { ParsedFrontmatter } from "../types/parsedFrontmatter";
 

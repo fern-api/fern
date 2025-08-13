@@ -3,9 +3,8 @@ import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast";
 import { AbstractTypescriptMcpGeneratorCli } from "@fern-api/typescript-mcp-base";
 
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-
-import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { generateModels } from "./generateModels";
+import { ModelGeneratorContext } from "./ModelGeneratorContext";
 
 export class ModelGeneratorCLI extends AbstractTypescriptMcpGeneratorCli<
     TypescriptCustomConfigSchema,

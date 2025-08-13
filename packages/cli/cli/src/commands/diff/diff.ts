@@ -1,11 +1,9 @@
-import { readFile } from "fs/promises";
-import semver from "semver";
-
-import { AbsoluteFilePath, cwd, doesPathExist } from "@fern-api/fs-utils";
-import { resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, cwd, doesPathExist, resolve } from "@fern-api/fs-utils";
 import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
 import { IntermediateRepresentationChangeDetector } from "@fern-api/ir-utils";
 import { FernCliError } from "@fern-api/task-context";
+import { readFile } from "fs/promises";
+import semver from "semver";
 
 import { CliContext } from "../../cli-context/CliContext";
 

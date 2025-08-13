@@ -1,4 +1,4 @@
-import { EndpointId, dynamic } from "@fern-fern/ir-sdk/api";
+import { dynamic, EndpointId } from "@fern-fern/ir-sdk/api";
 
 export interface Endpoint extends Omit<dynamic.Endpoint, "id"> {
     id: string;

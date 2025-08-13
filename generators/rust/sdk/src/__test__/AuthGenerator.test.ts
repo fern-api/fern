@@ -1,10 +1,10 @@
-import { describe, it, expect } from "vitest";
+import * as FernIr from "@fern-fern/ir-sdk/api";
 
-import { IntermediateRepresentation, HttpEndpoint, HttpService, Subpackage } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, HttpService, IntermediateRepresentation, Subpackage } from "@fern-fern/ir-sdk/api";
+import { describe, expect, it } from "vitest";
 import { RootClientGenerator } from "../generators/RootClientGenerator";
 import { SubClientGenerator } from "../generators/SubClientGenerator";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import * as FernIr from "@fern-fern/ir-sdk/api";
 
 // Mock function to create IR with specific auth configurations
 interface MockAuthConfig {

@@ -17,9 +17,6 @@ import {
     WithInline
 } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
-
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
-import { State } from "./State";
 import {
     buildArrayTypeReference,
     buildLiteralTypeReference,
@@ -31,6 +28,8 @@ import {
     buildTypeReference,
     buildUnknownTypeReference
 } from "./buildTypeReference";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { State } from "./State";
 import { convertAvailability } from "./utils/convertAvailability";
 import { convertToEncodingSchema } from "./utils/convertToEncodingSchema";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema";

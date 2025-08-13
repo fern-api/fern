@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { visitAllDefinitionFiles } from "@fern-api/api-workspace-commons";
 import { parseGeneric, visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
-
-import { Rule, RuleViolation } from "../../Rule";
 import { visitDefinitionFileYamlAst } from "../../ast";
+import { Rule, RuleViolation } from "../../Rule";
 
 export const NoUnusedGenericRule: Rule = {
     name: "no-unused-generic",

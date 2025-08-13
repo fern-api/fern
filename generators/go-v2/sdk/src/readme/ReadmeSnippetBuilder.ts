@@ -1,11 +1,9 @@
-import dedent from "dedent";
-
 import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { EndpointId, FeatureId, FernFilepath, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import dedent from "dedent";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 

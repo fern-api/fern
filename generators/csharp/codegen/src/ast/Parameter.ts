@@ -1,7 +1,7 @@
-import { Type } from "./Type";
-import { TypeParameter } from "./TypeParameter";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+import { Type } from "./Type";
+import { TypeParameter } from "./TypeParameter";
 
 export declare namespace Parameter {
     interface Args {

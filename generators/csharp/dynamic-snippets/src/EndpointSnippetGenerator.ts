@@ -1,11 +1,8 @@
-import { upperFirst } from "lodash-es";
-import { camelCase } from "lodash-es";
-
-import { NamedArgument, Options, Scope, Style } from "@fern-api/browser-compatible-base-generator";
-import { Severity } from "@fern-api/browser-compatible-base-generator";
+import { NamedArgument, Options, Scope, Severity, Style } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { csharp } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
+import { camelCase, upperFirst } from "lodash-es";
 
 import { Config } from "./Config";
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";

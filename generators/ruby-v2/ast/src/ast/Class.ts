@@ -2,8 +2,8 @@ import { ClassReference } from "./ClassReference";
 import { Comment } from "./Comment";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
-import { Module_ } from "./Module";
 import { Method, MethodKind } from "./Method";
+import { Module_ } from "./Module";
 import { Type } from "./Type";
 
 export declare namespace Class_ {

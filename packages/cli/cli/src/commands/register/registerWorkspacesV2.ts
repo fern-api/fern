@@ -1,8 +1,7 @@
-import chalk from "chalk";
-
 import { FernToken } from "@fern-api/auth";
 import { Project } from "@fern-api/project-loader";
 import { registerApi } from "@fern-api/register";
+import chalk from "chalk";
 
 import { CliContext } from "../../cli-context/CliContext";
 

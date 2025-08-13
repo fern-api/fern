@@ -1,4 +1,4 @@
-import { TypeReferenceNode, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
+import { getPropertyKey, getTextOfTsNode, TypeReferenceNode } from "@fern-typescript/commons";
 import { ModelContext } from "@fern-typescript/contexts";
 import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 

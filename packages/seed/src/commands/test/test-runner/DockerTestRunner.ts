@@ -1,8 +1,7 @@
-import path from "path";
-
 import { generatorsYml } from "@fern-api/configuration";
 import { runContainerizedGenerationForSeed } from "@fern-api/local-workspace-runner";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
+import path from "path";
 
 import { runScript } from "../../../runScript";
 import { ALL_AUDIENCES, DUMMY_ORGANIZATION } from "../../../utils/constants";

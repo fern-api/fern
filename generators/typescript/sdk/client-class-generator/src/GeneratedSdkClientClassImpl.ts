@@ -1,12 +1,34 @@
+import { assertNever, SetRequired } from "@fern-api/core-utils";
+import { FernIr } from "@fern-fern/ir-sdk";
+import {
+    AuthScheme,
+    BasicAuthScheme,
+    BearerAuthScheme,
+    ExampleEndpointCall,
+    HeaderAuthScheme,
+    HttpEndpoint,
+    HttpHeader,
+    HttpRequestBody,
+    HttpResponseBody,
+    HttpService,
+    InferredAuthScheme,
+    IntermediateRepresentation,
+    OAuthScheme,
+    Package,
+    PathParameter,
+    SubpackageId,
+    VariableDeclaration,
+    VariableId
+} from "@fern-fern/ir-sdk/api";
 import {
     ExportsManager,
-    ImportsManager,
-    NpmPackage,
-    PackageId,
     getParameterNameForRootPathParameter,
     getPropertyKey,
     getTextOfTsNode,
-    maybeAddDocsStructure
+    ImportsManager,
+    maybeAddDocsStructure,
+    NpmPackage,
+    PackageId
 } from "@fern-typescript/commons";
 import {
     EndpointSampleCode,
@@ -28,47 +50,22 @@ import {
     ts
 } from "ts-morph";
 import { Code, code } from "ts-poet";
-
-import { SetRequired, assertNever } from "@fern-api/core-utils";
-
-import {
-    AuthScheme,
-    BasicAuthScheme,
-    BearerAuthScheme,
-    ExampleEndpointCall,
-    HeaderAuthScheme,
-    HttpEndpoint,
-    HttpHeader,
-    HttpRequestBody,
-    HttpResponseBody,
-    HttpService,
-    InferredAuthScheme,
-    IntermediateRepresentation,
-    OAuthScheme,
-    Package,
-    PathParameter,
-    SubpackageId,
-    VariableDeclaration,
-    VariableId
-} from "@fern-fern/ir-sdk/api";
-import { FernIr } from "@fern-fern/ir-sdk";
-
-import { GeneratedHeader } from "./GeneratedHeader";
-import { GeneratedWrappedService } from "./GeneratedWrappedService";
+import { AuthProviderInstance, InferredAuthProviderInstance } from "./auth-provider";
 import { GeneratedBytesEndpointRequest } from "./endpoint-request/GeneratedBytesEndpointRequest";
 import { GeneratedDefaultEndpointRequest } from "./endpoint-request/GeneratedDefaultEndpointRequest";
 import { GeneratedFileUploadEndpointRequest } from "./endpoint-request/GeneratedFileUploadEndpointRequest";
-import { GeneratedFileDownloadEndpointImplementation } from "./endpoints/GeneratedFileDownloadEndpointImplementation";
-import { GeneratedStreamingEndpointImplementation } from "./endpoints/GeneratedStreamingEndpointImplementation";
-import { GeneratedDefaultEndpointImplementation } from "./endpoints/default/GeneratedDefaultEndpointImplementation";
 import { GeneratedNonThrowingEndpointResponse } from "./endpoints/default/endpoint-response/GeneratedNonThrowingEndpointResponse";
 import { GeneratedThrowingEndpointResponse } from "./endpoints/default/endpoint-response/GeneratedThrowingEndpointResponse";
+import { GeneratedDefaultEndpointImplementation } from "./endpoints/default/GeneratedDefaultEndpointImplementation";
+import { GeneratedFileDownloadEndpointImplementation } from "./endpoints/GeneratedFileDownloadEndpointImplementation";
+import { GeneratedStreamingEndpointImplementation } from "./endpoints/GeneratedStreamingEndpointImplementation";
 import { getNonVariablePathParameters } from "./endpoints/utils/getNonVariablePathParameters";
 import { getLiteralValueForHeader, isLiteralHeader } from "./endpoints/utils/isLiteralHeader";
 import { REQUEST_OPTIONS_ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME } from "./endpoints/utils/requestOptionsParameter";
+import { GeneratedHeader } from "./GeneratedHeader";
+import { GeneratedWrappedService } from "./GeneratedWrappedService";
 import { OAuthTokenProviderGenerator } from "./oauth-generator/OAuthTokenProviderGenerator";
 import { GeneratedDefaultWebsocketImplementation } from "./websocket/GeneratedDefaultWebsocketImplementation";
-import { AuthProviderInstance, InferredAuthProviderInstance } from "./auth-provider";
 
 export declare namespace GeneratedSdkClientClassImpl {
     export interface Init {

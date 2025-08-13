@@ -2,8 +2,8 @@ import {
     ClassReferenceFactory,
     ConditionalStatement,
     Expression,
-    FunctionInvocation,
     Function_,
+    FunctionInvocation,
     Property,
     Variable
 } from "@fern-api/ruby-codegen";

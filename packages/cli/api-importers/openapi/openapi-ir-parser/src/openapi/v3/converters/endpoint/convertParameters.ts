@@ -1,5 +1,3 @@
-import { OpenAPIV3 } from "openapi-types";
-
 import {
     HeaderWithExample,
     HttpMethod,
@@ -10,6 +8,7 @@ import {
     SchemaWithExample,
     Source
 } from "@fern-api/openapi-ir";
+import { OpenAPIV3 } from "openapi-types";
 
 import { getExtension } from "../../../../getExtension";
 import { convertAvailability } from "../../../../schema/convertAvailability";

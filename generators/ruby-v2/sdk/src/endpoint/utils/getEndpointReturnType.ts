@@ -1,6 +1,5 @@
-import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
-
 import { ruby } from "@fern-api/ruby-ast";
+import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 
 export function getEndpointReturnType({

@@ -1,6 +1,5 @@
-import { mapValues } from "lodash-es";
-
 import { GeneratorName } from "@fern-api/configuration-loader";
+import { mapValues } from "lodash-es";
 
 import { IrMigrationContext } from "../../IrMigrationContext";
 import { IrVersions } from "../../ir-versions";

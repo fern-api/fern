@@ -1,8 +1,7 @@
 import { BaseCsharpCustomConfigSchema, csharp, dependencies } from "@fern-api/csharp-codegen";
-import { RelativeFilePath, join } from "@fern-api/fs-utils";
-
-import { FileGenerator } from "./FileGenerator";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractCsharpGeneratorContext } from "./context/AbstractCsharpGeneratorContext";
+import { FileGenerator } from "./FileGenerator";
 import { CSharpFile } from "./project";
 
 export class TestFileGenerator extends FileGenerator<

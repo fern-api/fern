@@ -5,7 +5,7 @@ import {
 } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-
+import { BaseGoCustomConfigSchema, go, resolveRootImportPath } from "@fern-api/go-ast";
 import {
     EnumTypeDeclaration,
     ErrorDeclaration,
@@ -23,13 +23,11 @@ import {
     TypeId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-
-import { BaseGoCustomConfigSchema, go, resolveRootImportPath } from "@fern-api/go-ast";
 import { GoProject } from "../project/GoProject";
+import { GoFieldMapper } from "./GoFieldMapper";
 import { GoTypeMapper } from "./GoTypeMapper";
 import { GoValueFormatter } from "./GoValueFormatter";
 import { GoZeroValueMapper } from "./GoZeroValueMapper";
-import { GoFieldMapper } from "./GoFieldMapper";
 
 export interface FileLocation {
     importPath: string;

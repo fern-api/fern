@@ -1,9 +1,7 @@
-import { Request } from "express";
-
 import { ExampleEndpointCall } from "@fern-api/ir-sdk";
-
-import { EqualResponse } from "./EqualRequestResponse";
+import { Request } from "express";
 import { bodyEqual } from "./bodyEqual";
+import { EqualResponse } from "./EqualRequestResponse";
 import { headersEqual } from "./headersEqual";
 import { pathParametersEqual } from "./pathParametersEqual";
 import { queryParametersEqual } from "./queryParametersEqual";

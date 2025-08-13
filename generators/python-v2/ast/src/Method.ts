@@ -1,10 +1,10 @@
 import { python } from ".";
 import { CodeBlock } from "./CodeBlock";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 import { Decorator } from "./Decorator";
 import { Parameter } from "./Parameter";
 import { Type } from "./Type";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
 
 export enum ClassMethodType {
     STATIC,

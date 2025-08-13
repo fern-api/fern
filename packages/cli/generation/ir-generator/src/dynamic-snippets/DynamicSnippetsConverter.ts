@@ -1,6 +1,3 @@
-import urlJoin from "url-join";
-import { v4 as uuidv4 } from "uuid";
-
 import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator";
 import { generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
@@ -10,6 +7,7 @@ import {
     ContainerType,
     DeclaredTypeName,
     dynamic as DynamicSnippets,
+    dynamic,
     EndpointId,
     EnumTypeDeclaration,
     FernFilepath,
@@ -36,9 +34,10 @@ import {
     TypeId,
     TypeReference,
     UndiscriminatedUnionTypeDeclaration,
-    UnionTypeDeclaration,
-    dynamic
+    UnionTypeDeclaration
 } from "@fern-api/ir-sdk";
+import urlJoin from "url-join";
+import { v4 as uuidv4 } from "uuid";
 
 import { Version } from "./version";
 

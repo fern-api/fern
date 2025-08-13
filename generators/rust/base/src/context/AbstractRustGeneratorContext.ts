@@ -1,9 +1,8 @@
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { RustProject } from "../project";
 import { AsIsFileDefinition } from "../AsIs";
-import { RustConfigurationManager } from "../config";
-import { BaseRustCustomConfigSchema } from "../config";
+import { BaseRustCustomConfigSchema, RustConfigurationManager } from "../config";
+import { RustProject } from "../project";
 
 export abstract class AbstractRustGeneratorContext<
     CustomConfig extends BaseRustCustomConfigSchema

@@ -1,8 +1,3 @@
-import { PackageId, Stream, getFullPathForEndpoint, getTextOfTsNode } from "@fern-typescript/commons";
-import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
-import { ErrorResolver } from "@fern-typescript/resolvers";
-import { ts } from "ts-morph";
-
 import {
     ContainerType,
     CursorPagination,
@@ -18,6 +13,10 @@ import {
     ResponseError,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
+import { getFullPathForEndpoint, getTextOfTsNode, PackageId, Stream } from "@fern-typescript/commons";
+import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
+import { ErrorResolver } from "@fern-typescript/resolvers";
+import { ts } from "ts-morph";
 
 import { GeneratedSdkClientClassImpl } from "../../../GeneratedSdkClientClassImpl";
 import { GeneratedStreamingEndpointImplementation } from "../../GeneratedStreamingEndpointImplementation";
@@ -27,8 +26,8 @@ import {
     CONTENT_LENGTH_RESPONSE_KEY,
     CONTENT_LENGTH_VARIABLE_NAME,
     CONTENT_TYPE_RESPONSE_KEY,
-    READABLE_RESPONSE_KEY,
-    getSuccessReturnType
+    getSuccessReturnType,
+    READABLE_RESPONSE_KEY
 } from "./getSuccessReturnType";
 
 export declare namespace GeneratedThrowingEndpointResponse {

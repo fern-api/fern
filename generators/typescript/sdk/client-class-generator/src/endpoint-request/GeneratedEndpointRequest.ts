@@ -1,8 +1,7 @@
+import { ExampleEndpointCall } from "@fern-fern/ir-sdk/api";
 import { Fetcher, GetReferenceOpts } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
-
-import { ExampleEndpointCall } from "@fern-fern/ir-sdk/api";
 
 export interface GeneratedEndpointRequest {
     getBuildRequestStatements: (context: SdkContext) => ts.Statement[];
