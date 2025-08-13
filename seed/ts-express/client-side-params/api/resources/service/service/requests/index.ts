@@ -1,0 +1,1 @@
+export { SearchResourcesRequest } from "./SearchResourcesRequest";
