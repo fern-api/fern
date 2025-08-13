@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedClientSideParams;\n\nvar client = new SeedClientSideParams.SeedClientSideParamsClient();\nawait client.Service.ListResourcesAsync(\n    new SeedClientSideParams.ListResourcesRequest\n    {\n        Page = 1,\n        PerPage = 1,\n        Sort = \"created_at\",\n        Order = \"desc\",\n        IncludeTotals = true,\n        Fields = \"fields\",\n        Search = \"search\",\n    }\n);\n"
+                "client": "using SeedClientSideParams;\n\nvar client = new SeedClientSideParamsClient();\nawait client.Service.ListResourcesAsync(\n    new ListResourcesRequest\n    {\n        Page = 1,\n        PerPage = 1,\n        Sort = \"created_at\",\n        Order = \"desc\",\n        IncludeTotals = true,\n        Fields = \"fields\",\n        Search = \"search\",\n    }\n);\n"
             }
         },
         {
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedClientSideParams;\n\nvar client = new SeedClientSideParams.SeedClientSideParamsClient();\nawait client.Service.GetResourceAsync(\n    \"resourceId\",\n    new SeedClientSideParams.GetResourceRequest { IncludeMetadata = true, Format = \"json\" }\n);\n"
+                "client": "using SeedClientSideParams;\n\nvar client = new SeedClientSideParamsClient();\nawait client.Service.GetResourceAsync(\n    \"resourceId\",\n    new GetResourceRequest { IncludeMetadata = true, Format = \"json\" }\n);\n"
             }
         },
         {
@@ -34,7 +34,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedClientSideParams;\n\nvar client = new SeedClientSideParams.SeedClientSideParamsClient();\nawait client.Service.SearchResourcesAsync(\n    new SeedClientSideParams.SearchResourcesRequest\n    {\n        Limit = 1,\n        Offset = 1,\n        Query = \"query\",\n        Filters = new Dictionary<string, object>()\n        {\n            {\n                \"filters\",\n                new Dictionary<object, object?>() { { \"key\", \"value\" } }\n            },\n        },\n    }\n);\n"
+                "client": "using SeedClientSideParams;\n\nvar client = new SeedClientSideParamsClient();\nawait client.Service.SearchResourcesAsync(\n    new SearchResourcesRequest\n    {\n        Limit = 1,\n        Offset = 1,\n        Query = \"query\",\n        Filters = new Dictionary<string, object>()\n        {\n            {\n                \"filters\",\n                new Dictionary<object, object?>() { { \"key\", \"value\" } }\n            },\n        },\n    }\n);\n"
             }
         }
     ]

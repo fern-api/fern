@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">ListResourcesAsync</a>(SeedClientSideParams.ListResourcesRequest { ... }) -> IEnumerable<SeedClientSideParams.Resource></code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">ListResourcesAsync</a>(ListResourcesRequest { ... }) -> IEnumerable<Resource></code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,7 @@ List resources with pagination
 
 ```csharp
 await client.Service.ListResourcesAsync(
-    new SeedClientSideParams.ListResourcesRequest
+    new ListResourcesRequest
     {
         Page = 1,
         PerPage = 1,
@@ -53,7 +53,7 @@ await client.Service.ListResourcesAsync(
 <dl>
 <dd>
 
-**request:** `SeedClientSideParams.ListResourcesRequest` 
+**request:** `ListResourcesRequest` 
     
 </dd>
 </dl>
@@ -65,7 +65,7 @@ await client.Service.ListResourcesAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">GetResourceAsync</a>(resourceId, SeedClientSideParams.GetResourceRequest { ... }) -> SeedClientSideParams.Resource</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">GetResourceAsync</a>(resourceId, GetResourceRequest { ... }) -> Resource</code></summary>
 <dl>
 <dd>
 
@@ -94,7 +94,7 @@ Get a single resource
 ```csharp
 await client.Service.GetResourceAsync(
     "resourceId",
-    new SeedClientSideParams.GetResourceRequest { IncludeMetadata = true, Format = "json" }
+    new GetResourceRequest { IncludeMetadata = true, Format = "json" }
 );
 ```
 </dd>
@@ -118,7 +118,7 @@ await client.Service.GetResourceAsync(
 <dl>
 <dd>
 
-**request:** `SeedClientSideParams.GetResourceRequest` 
+**request:** `GetResourceRequest` 
     
 </dd>
 </dl>
@@ -130,7 +130,7 @@ await client.Service.GetResourceAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">SearchResourcesAsync</a>(SeedClientSideParams.SearchResourcesRequest { ... }) -> SeedClientSideParams.SearchResponse</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">SearchResourcesAsync</a>(SearchResourcesRequest { ... }) -> SearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -158,7 +158,7 @@ Search resources with complex parameters
 
 ```csharp
 await client.Service.SearchResourcesAsync(
-    new SeedClientSideParams.SearchResourcesRequest
+    new SearchResourcesRequest
     {
         Limit = 1,
         Offset = 1,
@@ -186,7 +186,7 @@ await client.Service.SearchResourcesAsync(
 <dl>
 <dd>
 
-**request:** `SeedClientSideParams.SearchResourcesRequest` 
+**request:** `SearchResourcesRequest` 
     
 </dd>
 </dl>

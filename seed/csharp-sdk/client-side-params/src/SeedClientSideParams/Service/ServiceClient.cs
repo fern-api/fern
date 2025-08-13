@@ -19,7 +19,7 @@ public partial class ServiceClient
     /// </summary>
     /// <example><code>
     /// await client.Service.ListResourcesAsync(
-    ///     new SeedClientSideParams.ListResourcesRequest
+    ///     new ListResourcesRequest
     ///     {
     ///         Page = 1,
     ///         PerPage = 1,
@@ -93,7 +93,7 @@ public partial class ServiceClient
     /// <example><code>
     /// await client.Service.GetResourceAsync(
     ///     "resourceId",
-    ///     new SeedClientSideParams.GetResourceRequest { IncludeMetadata = true, Format = "json" }
+    ///     new GetResourceRequest { IncludeMetadata = true, Format = "json" }
     /// );
     /// </code></example>
     public async Task<Resource> GetResourceAsync(
@@ -150,7 +150,7 @@ public partial class ServiceClient
     /// </summary>
     /// <example><code>
     /// await client.Service.SearchResourcesAsync(
-    ///     new SeedClientSideParams.SearchResourcesRequest
+    ///     new SearchResourcesRequest
     ///     {
     ///         Limit = 1,
     ///         Offset = 1,
