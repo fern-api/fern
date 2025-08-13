@@ -1,0 +1,4 @@
+name: client-side-params
+base-path: /api
+error-discrimination:
+  strategy: status-code

@@ -271,7 +271,8 @@
               "type": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "integer",
+                  "default": 25
                 }
               }
             },

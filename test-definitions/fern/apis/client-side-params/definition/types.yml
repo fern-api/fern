@@ -1,0 +1,15 @@
+types:
+  Resource:
+    properties:
+      id: string
+      name: string
+      description: optional<string>
+      created_at: datetime
+      updated_at: datetime
+      metadata: optional<map<string, unknown>>
+
+  SearchResponse:
+    properties:
+      results: list<Resource>
+      total: optional<integer>
+      next_offset: optional<integer>

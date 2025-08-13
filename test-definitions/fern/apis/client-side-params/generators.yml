@@ -1,0 +1,8 @@
+groups:
+  java-sdk:
+    generators:
+      - name: fernapi/fern-java-sdk
+        version: latest
+        config:
+          use-default-request-parameter-values: true
+          wrapped-aliases: true
