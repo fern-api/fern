@@ -14,7 +14,7 @@ const basePropertiesClassName = "BaseProperties";
 interface UnionMember {
     keyName: string;
     typeReference: ruby.ClassReference | ruby.Type;
-};
+}
 
 export class UnionGenerator extends FileGenerator<RubyFile, ModelCustomConfigSchema, ModelGeneratorContext> {
     private readonly typeDeclaration: TypeDeclaration;
@@ -44,17 +44,21 @@ export class UnionGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
             docstring: this.typeDeclaration.docs ?? undefined
         });
 
-        classNode.addStatement(ruby.codeblock((writer) => {
-            writer.newLine();
-            writer.writeLine(`discriminant :${this.discriminantPropertyName}`);
-        }));
+        classNode.addStatement(
+            ruby.codeblock((writer) => {
+                writer.newLine();
+                writer.writeLine(`discriminant :${this.discriminantPropertyName}`);
+            })
+        );
 
         for (const unionMember of this.unionMembers) {
-            classNode.addStatement(ruby.codeblock((writer) => {
-                writer.write("member -> { ");
-                writer.writeNode(unionMember.typeReference);
-                writer.write(` }, key: "${unionMember.keyName}"`);
-            }));
+            classNode.addStatement(
+                ruby.codeblock((writer) => {
+                    writer.write("member -> { ");
+                    writer.writeNode(unionMember.typeReference);
+                    writer.write(` }, key: "${unionMember.keyName}"`);
+                })
+            );
         }
 
         const classWithTypesModule = this.context.getTypesModule();
@@ -101,4 +105,4 @@ export class UnionGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
     private getFilename(): string {
         return `${this.typeDeclaration.name.name.snakeCase.safeName}.rb`;
     }
-};
+}

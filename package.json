@@ -13,7 +13,7 @@
   "scripts": {
     "bootstrap": "./scripts/bootstrap.sh",
     "clean": "turbo clean",
-    "compile": "turbo compile --filter=!@fern-api/rust-sdk",
+    "compile": "turbo compile",
     "compile:debug": "turbo compile:debug",
     "compile:win": "pnpm -r compile",
     "test": "turbo test --filter=!@fern-api/ete-tests",
