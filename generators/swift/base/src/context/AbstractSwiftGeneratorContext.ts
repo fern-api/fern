@@ -141,7 +141,7 @@ export abstract class AbstractSwiftGeneratorContext<
                 return typeReference.container._visit({
                     literal: (literal) =>
                         literal._visit({
-                            boolean: () => swift.Type.jsonValue(), // TODO(kafkas): Handle this case
+                            boolean: () => swift.Type.jsonValue(), // TODO(kafkas): Implement boolean literals
                             string: (literalValue) =>
                                 localTypeRegistry?.getSwiftTypeForStringLiteral?.(literalValue) ??
                                 swift.Type.jsonValue(),
@@ -152,9 +152,8 @@ export abstract class AbstractSwiftGeneratorContext<
                             this.getSwiftTypeForTypeReference(type.keyType, localTypeRegistry),
                             this.getSwiftTypeForTypeReference(type.valueType, localTypeRegistry)
                         ),
-                    // TODO(kafkas): Handle these cases
-                    set: () => swift.Type.jsonValue(),
-                    nullable: () => swift.Type.jsonValue(),
+                    set: () => swift.Type.jsonValue(), // TODO(kafkas): Implement set type
+                    nullable: () => swift.Type.jsonValue(), // TODO(kafkas): Implement nullable types
                     optional: (ref) => swift.Type.optional(this.getSwiftTypeForTypeReference(ref, localTypeRegistry)),
                     list: (ref) => swift.Type.array(this.getSwiftTypeForTypeReference(ref, localTypeRegistry)),
                     _other: () => swift.Type.jsonValue()
@@ -169,8 +168,7 @@ export abstract class AbstractSwiftGeneratorContext<
                     long: () => swift.Type.int64(),
                     float: () => swift.Type.float(),
                     double: () => swift.Type.double(),
-                    // TODO(kafkas): We may need to implement our own value type for this
-                    bigInteger: () => swift.Type.string(),
+                    bigInteger: () => swift.Type.string(), // TODO(kafkas): We may need to implement our own value type for this
                     date: () => swift.Type.date(),
                     dateTime: () => swift.Type.date(),
                     base64: () => swift.Type.string(),

@@ -169,7 +169,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                 contents: [enum_]
                             });
                         } else if (literalType.type === "boolean") {
-                            // TODO(kafkas): Handle boolean literals
+                            // TODO(kafkas): Implement boolean literals
                             const generator = new AliasGenerator({
                                 name,
                                 typeDeclaration: atd,
