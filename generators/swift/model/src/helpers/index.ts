@@ -1,2 +1,1 @@
-export * from "./pascal-case";
-export * from "./StructGenerator";
+export * from "./struct-generator";

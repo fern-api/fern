@@ -3,8 +3,8 @@ import { swift } from "@fern-api/swift-codegen";
 import { TypeReference } from "@fern-fern/ir-sdk/api";
 import { camelCase } from "lodash-es";
 
-import { StringEnumGenerator } from "../enum";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { StringEnumGenerator } from "../../enum";
+import { ModelGeneratorContext } from "../../ModelGeneratorContext";
 import { LocalSymbolRegistry } from "./LocalSymbolRegistry";
 
 export declare namespace StructGenerator {
