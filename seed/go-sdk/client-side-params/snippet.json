@@ -1,0 +1,37 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/api/resources",
+                "method": "GET",
+                "identifier_override": "endpoint_service.listResources"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/client-side-params/fern\"\n\tfernclient \"github.com/client-side-params/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.ListResources(\n\tcontext.TODO(),\n\t\u0026fern.ListResourcesRequest{\n\t\tPage:          1,\n\t\tPerPage:       1,\n\t\tSort:          \"created_at\",\n\t\tOrder:         \"desc\",\n\t\tIncludeTotals: true,\n\t\tFields: fern.String(\n\t\t\t\"fields\",\n\t\t),\n\t\tSearch: fern.String(\n\t\t\t\"search\",\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/resources/search",
+                "method": "POST",
+                "identifier_override": "endpoint_service.searchResources"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/client-side-params/fern\"\n\tfernclient \"github.com/client-side-params/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.SearchResources(\n\tcontext.TODO(),\n\t\u0026fern.SearchResourcesRequest{\n\t\tLimit:  1,\n\t\tOffset: 1,\n\t\tQuery:  \"query\",\n\t\tFilters: map[string]interface{}{\n\t\t\t\"filters\": map[string]interface{}{\n\t\t\t\t\"key\": \"value\",\n\t\t\t},\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/resources/{resourceId}",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getResource"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/client-side-params/fern\"\n\tfernclient \"github.com/client-side-params/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.GetResource(\n\tcontext.TODO(),\n\t\"resourceId\",\n\t\u0026fern.GetResourceRequest{\n\t\tIncludeMetadata: true,\n\t\tFormat:          \"json\",\n\t},\n)\n"
+            }
+        }
+    ]
+}
