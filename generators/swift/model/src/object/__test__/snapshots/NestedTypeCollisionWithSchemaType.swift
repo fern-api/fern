@@ -39,7 +39,7 @@ public struct Account: Codable, Hashable, Sendable {
     public let addressType: Country
     public let name: String
     public let isOpen: Bool
-    public let country: Country // This needs to be fixed
+    public let country: NestedTypeCollisionWithSchemaType.Country
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
@@ -47,7 +47,7 @@ public struct Account: Codable, Hashable, Sendable {
         addressType: Country,
         name: String,
         isOpen: Bool,
-        country: Country,
+        country: NestedTypeCollisionWithSchemaType.Country,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.addressType = addressType
@@ -62,7 +62,7 @@ public struct Account: Codable, Hashable, Sendable {
         self.addressType = try container.decode(Country.self, forKey: .addressType)
         self.name = try container.decode(String.self, forKey: .name)
         self.isOpen = try container.decode(Bool.self, forKey: .isOpen)
-        self.country = try container.decode(Country.self, forKey: .country)
+        self.country = try container.decode(NestedTypeCollisionWithSchemaType.Country.self, forKey: .country)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

@@ -19,8 +19,13 @@ import {
 import { AsIsFileDefinition, AsIsFiles } from "../AsIs";
 import { SwiftProject } from "../project";
 
-interface LocalTypeRegistry {
+/**
+ * Registry for local type information used by individual generators to resolve type references
+ * and handle nested type collisions within their specific context.
+ */
+export interface LocalTypeRegistry {
     getSwiftTypeForStringLiteral?: (literalValue: string) => swift.Type;
+    hasNestedTypeWithName?: (symbolName: string) => boolean;
 }
 
 export abstract class AbstractSwiftGeneratorContext<
@@ -174,12 +179,19 @@ export abstract class AbstractSwiftGeneratorContext<
                 });
             case "named": {
                 const symbolName = this.project.symbolRegistry.getSchemaTypeSymbolOrThrow(typeReference.typeId);
-                return swift.Type.custom(symbolName);
+                const hasNestedTypeWithSameName = localTypeRegistry?.hasNestedTypeWithName?.(symbolName);
+                return swift.Type.custom(
+                    hasNestedTypeWithSameName ? this.getFullyQualifiedNameForSchemaType(symbolName) : symbolName
+                );
             }
             case "unknown":
                 return swift.Type.jsonValue();
             default:
                 assertNever(typeReference);
         }
+    }
+
+    public getFullyQualifiedNameForSchemaType(symbolName: string): string {
+        return `${this.targetName}.${symbolName}`;
     }
 }

@@ -225,6 +225,11 @@ export class StructGenerator {
             getSwiftTypeForStringLiteral: (literalValue) => {
                 const enumName = this.localContext.symbolRegistry.getStringLiteralSymbolOrThrow(literalValue);
                 return swift.Type.custom(enumName);
+            },
+            hasNestedTypeWithName: (symbolName) => {
+                return Array.from(this.localContext.stringLiteralEnums.values()).some(
+                    (enum_) => enum_.name === symbolName
+                );
             }
         });
     }
