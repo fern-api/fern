@@ -24,9 +24,13 @@ export class LocalSymbolRegistry {
         return symbol;
     }
 
-    public registerStringLiteralSymbol(literalValue: string): string {
+    public registerStringLiteralSymbolIfNotExists(literalValue: string): string {
+        let symbolName = this.stringLiteralEnumSymbols.get(literalValue);
+        if (symbolName != null) {
+            return symbolName;
+        }
         const literalValuePascalCase = pascalCase(literalValue);
-        const symbolName = this.getAvailableSymbolName([
+        symbolName = this.getAvailableSymbolName([
             literalValuePascalCase,
             `${literalValuePascalCase}Literal`,
             `${literalValuePascalCase}Enum`,

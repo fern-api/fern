@@ -1,4 +1,4 @@
-import { assertDefined } from "@fern-api/core-utils";
+import { assertDefined, noop } from "@fern-api/core-utils";
 import { swift } from "@fern-api/swift-codegen";
 import { TypeReference } from "@fern-fern/ir-sdk/api";
 import { camelCase } from "lodash-es";
@@ -90,32 +90,67 @@ export class StructGenerator {
 
         const generateStringLiteralEnums = (): Map<string, swift.EnumWithRawValues> => {
             const enumsByLiteralValue = new Map<string, swift.EnumWithRawValues>();
+
+            const generateStringLiteralEnumsForTypeReference = (typeReference: TypeReference) => {
+                typeReference._visit({
+                    container: (container) => {
+                        container._visit({
+                            literal: (literal) => {
+                                literal._visit({
+                                    string: (literalValue) => {
+                                        const enumName =
+                                            symbolRegistry.registerStringLiteralSymbolIfNotExists(literalValue);
+                                        const stringEnumGenerator = new StringEnumGenerator({
+                                            name: enumName,
+                                            source: {
+                                                type: "custom",
+                                                values: [
+                                                    {
+                                                        unsafeName: camelCase(literalValue),
+                                                        rawValue: literalValue
+                                                    }
+                                                ]
+                                            }
+                                        });
+                                        enumsByLiteralValue.set(literalValue, stringEnumGenerator.generate());
+                                    },
+                                    boolean: noop,
+                                    _other: noop
+                                });
+                            },
+                            map: (mapType) => {
+                                generateStringLiteralEnumsForTypeReference(mapType.keyType);
+                                generateStringLiteralEnumsForTypeReference(mapType.valueType);
+                            },
+                            set: (ref) => {
+                                generateStringLiteralEnumsForTypeReference(ref);
+                            },
+                            nullable: (ref) => {
+                                generateStringLiteralEnumsForTypeReference(ref);
+                            },
+                            optional: (ref) => {
+                                generateStringLiteralEnumsForTypeReference(ref);
+                            },
+                            list: (ref) => {
+                                generateStringLiteralEnumsForTypeReference(ref);
+                            },
+                            _other: noop
+                        });
+                    },
+                    primitive: noop,
+                    unknown: noop,
+                    named: noop,
+                    _other: noop
+                });
+            };
+
             for (const def of [...this.constantPropertyDefinitions, ...this.dataPropertyDefinitions]) {
                 if (def.type instanceof swift.Type) {
                     continue;
                 }
-                if (
-                    def.type.type === "container" &&
-                    def.type.container.type === "literal" &&
-                    def.type.container.literal.type === "string"
-                ) {
-                    const literalValue = def.type.container.literal.string;
-                    const enumName = symbolRegistry.registerStringLiteralSymbol(literalValue);
-                    const stringEnumGenerator = new StringEnumGenerator({
-                        name: enumName,
-                        source: {
-                            type: "custom",
-                            values: [
-                                {
-                                    unsafeName: camelCase(literalValue),
-                                    rawValue: literalValue
-                                }
-                            ]
-                        }
-                    });
-                    enumsByLiteralValue.set(literalValue, stringEnumGenerator.generate());
-                }
+                generateStringLiteralEnumsForTypeReference(def.type);
             }
+
             return enumsByLiteralValue;
         };
 
@@ -186,16 +221,12 @@ export class StructGenerator {
         if (definition.type instanceof swift.Type) {
             return definition.type;
         }
-        if (
-            definition.type.type === "container" &&
-            definition.type.container.type === "literal" &&
-            definition.type.container.literal.type === "string"
-        ) {
-            const literalValue = definition.type.container.literal.string;
-            const enumName = this.localContext.symbolRegistry.getStringLiteralSymbolOrThrow(literalValue);
-            return swift.Type.custom(enumName);
-        }
-        return this.generatorContext.getSwiftTypeForTypeReference(definition.type);
+        return this.generatorContext.getSwiftTypeForTypeReference(definition.type, {
+            getSwiftTypeForStringLiteral: (literalValue) => {
+                const enumName = this.localContext.symbolRegistry.getStringLiteralSymbolOrThrow(literalValue);
+                return swift.Type.custom(enumName);
+            }
+        });
     }
 
     private generateInitializers(dataProperties: swift.Property[]): swift.Initializer[] {

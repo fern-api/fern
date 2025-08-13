@@ -47,4 +47,18 @@ describe("ObjectGenerator", () => {
         const object = generator.generate();
         await expect(object.toString()).toMatchFileSnapshot(`snapshots/${objectName}.swift`);
     });
+
+    it(`correctly generates literals in container types`, async () => {
+        const context = await createSampleGeneratorContext("literals-in-container-types");
+        const objectName = "ObjectWithLiteralsInContainerTypes";
+        const declaration = getObjectTypeDeclarationOrThrow(context, objectName);
+        const generator = new ObjectGenerator({
+            name: objectName,
+            properties: declaration.properties,
+            extendedProperties: declaration.extendedProperties,
+            context
+        });
+        const object = generator.generate();
+        await expect(object.toString()).toMatchFileSnapshot(`snapshots/${objectName}.swift`);
+    });
 });

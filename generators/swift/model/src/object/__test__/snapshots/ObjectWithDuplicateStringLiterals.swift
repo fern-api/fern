@@ -2,8 +2,9 @@ public struct ObjectWithDuplicateStringLiterals: Codable, Hashable, Sendable {
     public let field1: String
     public let field2: String?
     public let literalField1: Usa
-    public let literalField2: UsaLiteral
-    public let literalField3: UsaEnum
+    public let literalField2: Usa
+    public let literalField3: UsaLiteral
+    public let literalField4: UsaEnum
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
@@ -11,8 +12,9 @@ public struct ObjectWithDuplicateStringLiterals: Codable, Hashable, Sendable {
         field1: String,
         field2: String? = nil,
         literalField1: Usa,
-        literalField2: UsaLiteral,
-        literalField3: UsaEnum,
+        literalField2: Usa,
+        literalField3: UsaLiteral,
+        literalField4: UsaEnum,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.field1 = field1
@@ -20,6 +22,7 @@ public struct ObjectWithDuplicateStringLiterals: Codable, Hashable, Sendable {
         self.literalField1 = literalField1
         self.literalField2 = literalField2
         self.literalField3 = literalField3
+        self.literalField4 = literalField4
         self.additionalProperties = additionalProperties
     }
 
@@ -28,8 +31,9 @@ public struct ObjectWithDuplicateStringLiterals: Codable, Hashable, Sendable {
         self.field1 = try container.decode(String.self, forKey: .field1)
         self.field2 = try container.decodeIfPresent(String.self, forKey: .field2)
         self.literalField1 = try container.decode(Usa.self, forKey: .literalField1)
-        self.literalField2 = try container.decode(UsaLiteral.self, forKey: .literalField2)
-        self.literalField3 = try container.decode(UsaEnum.self, forKey: .literalField3)
+        self.literalField2 = try container.decode(Usa.self, forKey: .literalField2)
+        self.literalField3 = try container.decode(UsaLiteral.self, forKey: .literalField3)
+        self.literalField4 = try container.decode(UsaEnum.self, forKey: .literalField4)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -41,6 +45,7 @@ public struct ObjectWithDuplicateStringLiterals: Codable, Hashable, Sendable {
         try container.encode(self.literalField1, forKey: .literalField1)
         try container.encode(self.literalField2, forKey: .literalField2)
         try container.encode(self.literalField3, forKey: .literalField3)
+        try container.encode(self.literalField4, forKey: .literalField4)
     }
 
     public enum Usa: String, Codable, Hashable, CaseIterable, Sendable {
@@ -62,5 +67,6 @@ public struct ObjectWithDuplicateStringLiterals: Codable, Hashable, Sendable {
         case literalField1
         case literalField2
         case literalField3
+        case literalField4
     }
 }

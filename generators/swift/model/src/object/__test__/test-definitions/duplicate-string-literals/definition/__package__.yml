@@ -6,5 +6,6 @@ types:
       field1: string
       field2: optional<string>
       literalField1: literal<"usa">
-      literalField2: literal<"USA">
-      literalField3: literal<"Usa">
+      literalField2: literal<"usa">
+      literalField3: literal<"USA">
+      literalField4: literal<"Usa">

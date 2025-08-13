@@ -19,6 +19,10 @@ import {
 import { AsIsFileDefinition, AsIsFiles } from "../AsIs";
 import { SwiftProject } from "../project";
 
+interface LocalTypeRegistry {
+    getSwiftTypeForStringLiteral?: (literalValue: string) => swift.Type;
+}
+
 export abstract class AbstractSwiftGeneratorContext<
     CustomConfig extends BaseSwiftCustomConfigSchema
 > extends AbstractGeneratorContext {
@@ -123,26 +127,31 @@ export abstract class AbstractSwiftGeneratorContext<
         return Object.values(AsIsFiles);
     }
 
-    public getSwiftTypeForTypeReference(typeReference: TypeReference): swift.Type {
+    public getSwiftTypeForTypeReference(
+        typeReference: TypeReference,
+        localTypeRegistry?: LocalTypeRegistry
+    ): swift.Type {
         switch (typeReference.type) {
             case "container":
                 return typeReference.container._visit({
                     literal: (literal) =>
                         literal._visit({
-                            boolean: () => swift.Type.jsonValue(), // TODO(kafkas): Handle this
-                            string: () => swift.Type.jsonValue(),
+                            boolean: () => swift.Type.jsonValue(), // TODO(kafkas): Handle this case
+                            string: (literalValue) =>
+                                localTypeRegistry?.getSwiftTypeForStringLiteral?.(literalValue) ??
+                                swift.Type.jsonValue(),
                             _other: () => swift.Type.jsonValue()
                         }),
                     map: (type) =>
                         swift.Type.dictionary(
-                            this.getSwiftTypeForTypeReference(type.keyType),
-                            this.getSwiftTypeForTypeReference(type.valueType)
+                            this.getSwiftTypeForTypeReference(type.keyType, localTypeRegistry),
+                            this.getSwiftTypeForTypeReference(type.valueType, localTypeRegistry)
                         ),
                     // TODO(kafkas): Handle these cases
                     set: () => swift.Type.jsonValue(),
                     nullable: () => swift.Type.jsonValue(),
-                    optional: (ref) => swift.Type.optional(this.getSwiftTypeForTypeReference(ref)),
-                    list: (ref) => swift.Type.array(this.getSwiftTypeForTypeReference(ref)),
+                    optional: (ref) => swift.Type.optional(this.getSwiftTypeForTypeReference(ref, localTypeRegistry)),
+                    list: (ref) => swift.Type.array(this.getSwiftTypeForTypeReference(ref, localTypeRegistry)),
                     _other: () => swift.Type.jsonValue()
                 });
             case "primitive":
