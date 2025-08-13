@@ -53,7 +53,7 @@ await client.Bigunion.GetAsync("id");
 <dd>
 
 ```csharp
-await client.Bigunion.UpdateAsync(new NormalSweet { Value = "value" });
+await client.Bigunion.UpdateAsync(new SeedUnions.NormalSweet { Value = "value" });
 ```
 </dd>
 </dl>
@@ -96,8 +96,8 @@ await client.Bigunion.UpdateAsync(new NormalSweet { Value = "value" });
 await client.Bigunion.UpdateManyAsync(
     new List<object>()
     {
-        new NormalSweet { Value = "value" },
-        new NormalSweet { Value = "value" },
+        new SeedUnions.NormalSweet { Value = "value" },
+        new SeedUnions.NormalSweet { Value = "value" },
     }
 );
 ```
@@ -180,7 +180,7 @@ await client.Union.GetAsync("id");
 <dd>
 
 ```csharp
-await client.Union.UpdateAsync(new Circle { Radius = 1.1 });
+await client.Union.UpdateAsync(new SeedUnions.Circle { Radius = 1.1 });
 ```
 </dd>
 </dl>

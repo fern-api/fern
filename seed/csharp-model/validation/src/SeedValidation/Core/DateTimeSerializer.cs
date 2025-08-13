@@ -8,7 +8,7 @@ internal class DateTimeSerializer : JsonConverter<DateTime>
 {
     public override DateTime Read(
         ref Utf8JsonReader reader,
-        global::System.Type typeToConvert,
+        System.Type typeToConvert,
         JsonSerializerOptions options
     )
     {

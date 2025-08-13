@@ -1,5 +1,4 @@
 using NUnit.Framework;
-using SeedOauthClientCredentialsDefault.Test.Unit.MockServer;
 
 namespace SeedOauthClientCredentialsDefault.Test.Unit.MockServer.NestedNoAuth;
 

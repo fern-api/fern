@@ -1,12 +1,11 @@
 using NUnit.Framework;
-using SeedTrace;
 
 namespace SeedTrace.Test.Unit.MockServer;
 
 [TestFixture]
 public class SetNumWarmInstancesTest : BaseMockServerTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public void MockServerTest()
     {
         Server

@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedAliasExtends/SeedAliasExtendsClient.cs">ExtendedInlineRequestBodyAsync</a>(InlinedChildRequest { ... })</code></summary>
+<details><summary><code>client.<a href="/src/SeedAliasExtends/SeedAliasExtendsClient.cs">ExtendedInlineRequestBodyAsync</a>(SeedAliasExtends.InlinedChildRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 
 ```csharp
 await client.ExtendedInlineRequestBodyAsync(
-    new InlinedChildRequest { Child = "child", Parent = "parent" }
+    new SeedAliasExtends.InlinedChildRequest { Child = "child", Parent = "parent" }
 );
 ```
 </dd>
@@ -29,7 +29,7 @@ await client.ExtendedInlineRequestBodyAsync(
 <dl>
 <dd>
 
-**request:** `InlinedChildRequest` 
+**request:** `SeedAliasExtends.InlinedChildRequest` 
     
 </dd>
 </dl>

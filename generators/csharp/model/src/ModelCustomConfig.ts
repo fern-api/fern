@@ -9,7 +9,8 @@ export const ModelCustomConfigSchema = z.object({
     "enable-forward-compatible-enums": z.boolean().optional(),
     "additional-properties": z.boolean().optional(),
     "package-id": z.string().optional(),
-    "use-discriminated-unions": z.boolean().optional()
+    "use-discriminated-unions": z.boolean().optional(),
+    "skip-dotnet-format": z.boolean().optional()
 });
 
 export type ModelCustomConfigSchema = z.infer<typeof ModelCustomConfigSchema>;

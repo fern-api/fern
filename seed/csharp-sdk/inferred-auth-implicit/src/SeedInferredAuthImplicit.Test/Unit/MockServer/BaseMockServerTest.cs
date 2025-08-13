@@ -1,5 +1,4 @@
 using NUnit.Framework;
-using SeedInferredAuthImplicit;
 using WireMock.Logging;
 using WireMock.Server;
 using WireMock.Settings;

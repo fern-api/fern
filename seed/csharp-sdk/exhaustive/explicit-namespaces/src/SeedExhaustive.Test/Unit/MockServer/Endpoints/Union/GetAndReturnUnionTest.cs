@@ -1,7 +1,5 @@
-using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedExhaustive.Core;
-using SeedExhaustive.Test.Unit.MockServer;
 using SeedExhaustive.Types.Union;
 
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Union;
@@ -10,7 +8,7 @@ namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Union;
 public class GetAndReturnUnionTest : BaseMockServerTest
 {
     [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    public async Task MockServerTest()
     {
         const string requestJson = """
             {

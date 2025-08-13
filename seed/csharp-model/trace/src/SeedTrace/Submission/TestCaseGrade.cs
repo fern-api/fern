@@ -8,7 +8,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-[JsonConverter(typeof(TestCaseGrade.JsonConverter))]
+[JsonConverter(typeof(JsonConverter))]
 [Serializable]
 public record TestCaseGrade
 {
@@ -19,18 +19,18 @@ public record TestCaseGrade
     }
 
     /// <summary>
-    /// Create an instance of TestCaseGrade with <see cref="TestCaseGrade.Hidden"/>.
+    /// Create an instance of TestCaseGrade with <see cref="Hidden"/>.
     /// </summary>
-    public TestCaseGrade(TestCaseGrade.Hidden value)
+    public TestCaseGrade(Hidden value)
     {
         Type = "hidden";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of TestCaseGrade with <see cref="TestCaseGrade.NonHidden"/>.
+    /// Create an instance of TestCaseGrade with <see cref="NonHidden"/>.
     /// </summary>
-    public TestCaseGrade(TestCaseGrade.NonHidden value)
+    public TestCaseGrade(NonHidden value)
     {
         Type = "nonHidden";
         Value = value.Value;
@@ -58,26 +58,26 @@ public record TestCaseGrade
     public bool IsNonHidden => Type == "nonHidden";
 
     /// <summary>
-    /// Returns the value as a <see cref="SeedTrace.TestCaseHiddenGrade"/> if <see cref="Type"/> is 'hidden', otherwise throws an exception.
+    /// Returns the value as a <see cref="TestCaseHiddenGrade"/> if <see cref="Type"/> is 'hidden', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'hidden'.</exception>
-    public SeedTrace.TestCaseHiddenGrade AsHidden() =>
+    public TestCaseHiddenGrade AsHidden() =>
         IsHidden
-            ? (SeedTrace.TestCaseHiddenGrade)Value!
-            : throw new Exception("TestCaseGrade.Type is not 'hidden'");
+            ? (TestCaseHiddenGrade)Value!
+            : throw new Exception("SeedTrace.TestCaseGrade.Type is not 'hidden'");
 
     /// <summary>
-    /// Returns the value as a <see cref="SeedTrace.TestCaseNonHiddenGrade"/> if <see cref="Type"/> is 'nonHidden', otherwise throws an exception.
+    /// Returns the value as a <see cref="TestCaseNonHiddenGrade"/> if <see cref="Type"/> is 'nonHidden', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'nonHidden'.</exception>
-    public SeedTrace.TestCaseNonHiddenGrade AsNonHidden() =>
+    public TestCaseNonHiddenGrade AsNonHidden() =>
         IsNonHidden
-            ? (SeedTrace.TestCaseNonHiddenGrade)Value!
-            : throw new Exception("TestCaseGrade.Type is not 'nonHidden'");
+            ? (TestCaseNonHiddenGrade)Value!
+            : throw new Exception("SeedTrace.TestCaseGrade.Type is not 'nonHidden'");
 
     public T Match<T>(
-        Func<SeedTrace.TestCaseHiddenGrade, T> onHidden,
-        Func<SeedTrace.TestCaseNonHiddenGrade, T> onNonHidden,
+        Func<TestCaseHiddenGrade, T> onHidden,
+        Func<TestCaseNonHiddenGrade, T> onNonHidden,
         Func<string, object?, T> onUnknown_
     )
     {
@@ -90,8 +90,8 @@ public record TestCaseGrade
     }
 
     public void Visit(
-        Action<SeedTrace.TestCaseHiddenGrade> onHidden,
-        Action<SeedTrace.TestCaseNonHiddenGrade> onNonHidden,
+        Action<TestCaseHiddenGrade> onHidden,
+        Action<TestCaseNonHiddenGrade> onNonHidden,
         Action<string, object?> onUnknown_
     )
     {
@@ -110,13 +110,13 @@ public record TestCaseGrade
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="SeedTrace.TestCaseHiddenGrade"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="TestCaseHiddenGrade"/> and returns true if successful.
     /// </summary>
-    public bool TryAsHidden(out SeedTrace.TestCaseHiddenGrade? value)
+    public bool TryAsHidden(out TestCaseHiddenGrade? value)
     {
         if (Type == "hidden")
         {
-            value = (SeedTrace.TestCaseHiddenGrade)Value!;
+            value = (TestCaseHiddenGrade)Value!;
             return true;
         }
         value = null;
@@ -124,13 +124,13 @@ public record TestCaseGrade
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="SeedTrace.TestCaseNonHiddenGrade"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="TestCaseNonHiddenGrade"/> and returns true if successful.
     /// </summary>
-    public bool TryAsNonHidden(out SeedTrace.TestCaseNonHiddenGrade? value)
+    public bool TryAsNonHidden(out TestCaseNonHiddenGrade? value)
     {
         if (Type == "nonHidden")
         {
-            value = (SeedTrace.TestCaseNonHiddenGrade)Value!;
+            value = (TestCaseNonHiddenGrade)Value!;
             return true;
         }
         value = null;
@@ -139,19 +139,19 @@ public record TestCaseGrade
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator TestCaseGrade(TestCaseGrade.Hidden value) => new(value);
+    public static implicit operator TestCaseGrade(Hidden value) => new(value);
 
-    public static implicit operator TestCaseGrade(TestCaseGrade.NonHidden value) => new(value);
+    public static implicit operator TestCaseGrade(NonHidden value) => new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<TestCaseGrade>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(Type typeToConvert) =>
             typeof(TestCaseGrade).IsAssignableFrom(typeToConvert);
 
         public override TestCaseGrade Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -178,11 +178,11 @@ public record TestCaseGrade
 
             var value = discriminator switch
             {
-                "hidden" => json.Deserialize<SeedTrace.TestCaseHiddenGrade>(options)
+                "hidden" => json.Deserialize<TestCaseHiddenGrade>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.TestCaseHiddenGrade"
                     ),
-                "nonHidden" => json.Deserialize<SeedTrace.TestCaseNonHiddenGrade>(options)
+                "nonHidden" => json.Deserialize<TestCaseNonHiddenGrade>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.TestCaseNonHiddenGrade"
                     ),
@@ -215,16 +215,16 @@ public record TestCaseGrade
     [Serializable]
     public struct Hidden
     {
-        public Hidden(SeedTrace.TestCaseHiddenGrade value)
+        public Hidden(TestCaseHiddenGrade value)
         {
             Value = value;
         }
 
-        internal SeedTrace.TestCaseHiddenGrade Value { get; set; }
+        internal TestCaseHiddenGrade Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Hidden(SeedTrace.TestCaseHiddenGrade value) => new(value);
+        public static implicit operator Hidden(TestCaseHiddenGrade value) => new(value);
     }
 
     /// <summary>
@@ -233,16 +233,15 @@ public record TestCaseGrade
     [Serializable]
     public struct NonHidden
     {
-        public NonHidden(SeedTrace.TestCaseNonHiddenGrade value)
+        public NonHidden(TestCaseNonHiddenGrade value)
         {
             Value = value;
         }
 
-        internal SeedTrace.TestCaseNonHiddenGrade Value { get; set; }
+        internal TestCaseNonHiddenGrade Value { get; set; }
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator NonHidden(SeedTrace.TestCaseNonHiddenGrade value) =>
-            new(value);
+        public static implicit operator NonHidden(TestCaseNonHiddenGrade value) => new(value);
     }
 }

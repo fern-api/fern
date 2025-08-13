@@ -1,5 +1,4 @@
 using NUnit.Framework;
-using SeedEnum;
 
 namespace SeedEnum.Test.Unit.MockServer;
 

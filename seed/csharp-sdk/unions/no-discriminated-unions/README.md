@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedUnions;
 
-var client = new SeedUnionsClient();
+var client = new SeedUnions.SeedUnionsClient();
 await client.Bigunion.GetAsync("id");
 ```
 

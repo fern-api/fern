@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExtends;\n\nvar client = new SeedExtendsClient();\nawait client.ExtendedInlineRequestBodyAsync(\n    new Inlined\n    {\n        Unique = \"unique\",\n        Name = \"name\",\n        Docs = \"docs\",\n    }\n);\n"
+                "client": "using SeedExtends;\n\nvar client = new SeedExtends.SeedExtendsClient();\nawait client.ExtendedInlineRequestBodyAsync(\n    new SeedExtends.Inlined\n    {\n        Unique = \"unique\",\n        Name = \"name\",\n        Docs = \"docs\",\n    }\n);\n"
             }
         }
     ]

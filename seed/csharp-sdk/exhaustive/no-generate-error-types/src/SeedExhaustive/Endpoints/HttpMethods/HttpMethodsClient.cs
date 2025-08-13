@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types;
 
@@ -64,7 +63,9 @@ public partial class HttpMethodsClient
     }
 
     /// <example><code>
-    /// await client.Endpoints.HttpMethods.TestPostAsync(new ObjectWithRequiredField { String = "string" });
+    /// await client.Endpoints.HttpMethods.TestPostAsync(
+    ///     new SeedExhaustive.Types.ObjectWithRequiredField { String = "string" }
+    /// );
     /// </code></example>
     public async Task<ObjectWithOptionalField> TestPostAsync(
         ObjectWithRequiredField request,
@@ -111,7 +112,7 @@ public partial class HttpMethodsClient
     /// <example><code>
     /// await client.Endpoints.HttpMethods.TestPutAsync(
     ///     "id",
-    ///     new ObjectWithRequiredField { String = "string" }
+    ///     new SeedExhaustive.Types.ObjectWithRequiredField { String = "string" }
     /// );
     /// </code></example>
     public async Task<ObjectWithOptionalField> TestPutAsync(
@@ -163,7 +164,7 @@ public partial class HttpMethodsClient
     /// <example><code>
     /// await client.Endpoints.HttpMethods.TestPatchAsync(
     ///     "id",
-    ///     new ObjectWithOptionalField
+    ///     new SeedExhaustive.Types.ObjectWithOptionalField
     ///     {
     ///         String = "string",
     ///         Integer = 1,

@@ -15,7 +15,9 @@ public partial class S3Client
     }
 
     /// <example><code>
-    /// await client.S3.GetPresignedUrlAsync(new GetPresignedUrlRequest { S3Key = "s3Key" });
+    /// await client.S3.GetPresignedUrlAsync(
+    ///     new SeedMultiUrlEnvironmentNoDefault.GetPresignedUrlRequest { S3Key = "s3Key" }
+    /// );
     /// </code></example>
     public async Task<string> GetPresignedUrlAsync(
         GetPresignedUrlRequest request,

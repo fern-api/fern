@@ -1,6 +1,6 @@
 # Reference
 ## Organizations
-<details><summary><code>client.Organizations.<a href="/src/SeedPathParameters/Organizations/OrganizationsClient.cs">GetOrganizationAsync</a>(tenantId, organizationId) -> Organization</code></summary>
+<details><summary><code>client.Organizations.<a href="/src/SeedPathParameters/Organizations/OrganizationsClient.cs">GetOrganizationAsync</a>(tenantId, organizationId) -> SeedPathParameters.Organization</code></summary>
 <dl>
 <dd>
 
@@ -48,7 +48,7 @@ await client.Organizations.GetOrganizationAsync("tenant_id", "organization_id");
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.<a href="/src/SeedPathParameters/Organizations/OrganizationsClient.cs">GetOrganizationUserAsync</a>(GetOrganizationUserRequest { ... }) -> User</code></summary>
+<details><summary><code>client.Organizations.<a href="/src/SeedPathParameters/Organizations/OrganizationsClient.cs">GetOrganizationUserAsync</a>(SeedPathParameters.GetOrganizationUserRequest { ... }) -> SeedPathParameters.User</code></summary>
 <dl>
 <dd>
 
@@ -62,7 +62,7 @@ await client.Organizations.GetOrganizationAsync("tenant_id", "organization_id");
 
 ```csharp
 await client.Organizations.GetOrganizationUserAsync(
-    new GetOrganizationUserRequest
+    new SeedPathParameters.GetOrganizationUserRequest
     {
         TenantId = "tenant_id",
         OrganizationId = "organization_id",
@@ -83,7 +83,7 @@ await client.Organizations.GetOrganizationUserAsync(
 <dl>
 <dd>
 
-**request:** `GetOrganizationUserRequest` 
+**request:** `SeedPathParameters.GetOrganizationUserRequest` 
     
 </dd>
 </dl>
@@ -95,7 +95,7 @@ await client.Organizations.GetOrganizationUserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.<a href="/src/SeedPathParameters/Organizations/OrganizationsClient.cs">SearchOrganizationsAsync</a>(tenantId, organizationId, SearchOrganizationsRequest { ... }) -> IEnumerable<Organization></code></summary>
+<details><summary><code>client.Organizations.<a href="/src/SeedPathParameters/Organizations/OrganizationsClient.cs">SearchOrganizationsAsync</a>(tenantId, organizationId, SeedPathParameters.SearchOrganizationsRequest { ... }) -> IEnumerable<SeedPathParameters.Organization></code></summary>
 <dl>
 <dd>
 
@@ -111,7 +111,7 @@ await client.Organizations.GetOrganizationUserAsync(
 await client.Organizations.SearchOrganizationsAsync(
     "tenant_id",
     "organization_id",
-    new SearchOrganizationsRequest { Limit = 1 }
+    new SeedPathParameters.SearchOrganizationsRequest { Limit = 1 }
 );
 ```
 </dd>
@@ -143,7 +143,7 @@ await client.Organizations.SearchOrganizationsAsync(
 <dl>
 <dd>
 
-**request:** `SearchOrganizationsRequest` 
+**request:** `SeedPathParameters.SearchOrganizationsRequest` 
     
 </dd>
 </dl>
@@ -156,7 +156,7 @@ await client.Organizations.SearchOrganizationsAsync(
 </details>
 
 ## User
-<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">GetUserAsync</a>(GetUsersRequest { ... }) -> User</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">GetUserAsync</a>(SeedPathParameters.GetUsersRequest { ... }) -> SeedPathParameters.User</code></summary>
 <dl>
 <dd>
 
@@ -169,7 +169,9 @@ await client.Organizations.SearchOrganizationsAsync(
 <dd>
 
 ```csharp
-await client.User.GetUserAsync(new GetUsersRequest { TenantId = "tenant_id", UserId = "user_id" });
+await client.User.GetUserAsync(
+    new SeedPathParameters.GetUsersRequest { TenantId = "tenant_id", UserId = "user_id" }
+);
 ```
 </dd>
 </dl>
@@ -184,7 +186,7 @@ await client.User.GetUserAsync(new GetUsersRequest { TenantId = "tenant_id", Use
 <dl>
 <dd>
 
-**request:** `GetUsersRequest` 
+**request:** `SeedPathParameters.GetUsersRequest` 
     
 </dd>
 </dl>
@@ -196,7 +198,7 @@ await client.User.GetUserAsync(new GetUsersRequest { TenantId = "tenant_id", Use
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">CreateUserAsync</a>(tenantId, User { ... }) -> User</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">CreateUserAsync</a>(tenantId, SeedPathParameters.User { ... }) -> SeedPathParameters.User</code></summary>
 <dl>
 <dd>
 
@@ -211,7 +213,7 @@ await client.User.GetUserAsync(new GetUsersRequest { TenantId = "tenant_id", Use
 ```csharp
 await client.User.CreateUserAsync(
     "tenant_id",
-    new User
+    new SeedPathParameters.User
     {
         Name = "name",
         Tags = new List<string>() { "tags", "tags" },
@@ -239,7 +241,7 @@ await client.User.CreateUserAsync(
 <dl>
 <dd>
 
-**request:** `User` 
+**request:** `SeedPathParameters.User` 
     
 </dd>
 </dl>
@@ -251,7 +253,7 @@ await client.User.CreateUserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">UpdateUserAsync</a>(UpdateUserRequest { ... }) -> User</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">UpdateUserAsync</a>(SeedPathParameters.UpdateUserRequest { ... }) -> SeedPathParameters.User</code></summary>
 <dl>
 <dd>
 
@@ -265,11 +267,11 @@ await client.User.CreateUserAsync(
 
 ```csharp
 await client.User.UpdateUserAsync(
-    new UpdateUserRequest
+    new SeedPathParameters.UpdateUserRequest
     {
         TenantId = "tenant_id",
         UserId = "user_id",
-        Body = new User
+        Body = new SeedPathParameters.User
         {
             Name = "name",
             Tags = new List<string>() { "tags", "tags" },
@@ -290,7 +292,7 @@ await client.User.UpdateUserAsync(
 <dl>
 <dd>
 
-**request:** `UpdateUserRequest` 
+**request:** `SeedPathParameters.UpdateUserRequest` 
     
 </dd>
 </dl>
@@ -302,7 +304,7 @@ await client.User.UpdateUserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">SearchUsersAsync</a>(SearchUsersRequest { ... }) -> IEnumerable<User></code></summary>
+<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">SearchUsersAsync</a>(SeedPathParameters.SearchUsersRequest { ... }) -> IEnumerable<SeedPathParameters.User></code></summary>
 <dl>
 <dd>
 
@@ -316,7 +318,7 @@ await client.User.UpdateUserAsync(
 
 ```csharp
 await client.User.SearchUsersAsync(
-    new SearchUsersRequest
+    new SeedPathParameters.SearchUsersRequest
     {
         TenantId = "tenant_id",
         UserId = "user_id",
@@ -337,7 +339,7 @@ await client.User.SearchUsersAsync(
 <dl>
 <dd>
 
-**request:** `SearchUsersRequest` 
+**request:** `SeedPathParameters.SearchUsersRequest` 
     
 </dd>
 </dl>

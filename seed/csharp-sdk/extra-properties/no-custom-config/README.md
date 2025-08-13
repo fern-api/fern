@@ -22,9 +22,9 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedExtraProperties;
 
-var client = new SeedExtraPropertiesClient();
+var client = new SeedExtraProperties.SeedExtraPropertiesClient();
 await client.User.CreateUserAsync(
-    new CreateUserRequest
+    new SeedExtraProperties.CreateUserRequest
     {
         Type = "CreateUserRequest",
         Version = "v1",

@@ -16,7 +16,7 @@ public partial class HeadersClient
 
     /// <example><code>
     /// await client.Headers.SendAsync(
-    ///     new SendLiteralsInHeadersRequest
+    ///     new SeedLiteral.SendLiteralsInHeadersRequest
     ///     {
     ///         EndpointVersion = "02-12-2024",
     ///         Async = true,

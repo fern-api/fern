@@ -1,5 +1,4 @@
 using NUnit.Framework;
-using SeedContentTypes;
 
 namespace SeedContentTypes.Test.Unit.MockServer;
 

@@ -8,7 +8,7 @@ using SeedUnions.Core;
 
 namespace SeedUnions;
 
-[JsonConverter(typeof(UnionWithPrimitive.JsonConverter))]
+[JsonConverter(typeof(JsonConverter))]
 [Serializable]
 public record UnionWithPrimitive
 {
@@ -19,18 +19,18 @@ public record UnionWithPrimitive
     }
 
     /// <summary>
-    /// Create an instance of UnionWithPrimitive with <see cref="UnionWithPrimitive.Integer"/>.
+    /// Create an instance of UnionWithPrimitive with <see cref="Integer"/>.
     /// </summary>
-    public UnionWithPrimitive(UnionWithPrimitive.Integer value)
+    public UnionWithPrimitive(Integer value)
     {
         Type = "integer";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of UnionWithPrimitive with <see cref="UnionWithPrimitive.String"/>.
+    /// Create an instance of UnionWithPrimitive with <see cref="String"/>.
     /// </summary>
-    public UnionWithPrimitive(UnionWithPrimitive.String value)
+    public UnionWithPrimitive(String value)
     {
         Type = "string";
         Value = value.Value;
@@ -62,14 +62,18 @@ public record UnionWithPrimitive
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'integer'.</exception>
     public int AsInteger() =>
-        IsInteger ? (int)Value! : throw new Exception("UnionWithPrimitive.Type is not 'integer'");
+        IsInteger
+            ? (int)Value!
+            : throw new Exception("SeedUnions.UnionWithPrimitive.Type is not 'integer'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'string', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'string'.</exception>
     public string AsString() =>
-        IsString ? (string)Value! : throw new Exception("UnionWithPrimitive.Type is not 'string'");
+        IsString
+            ? (string)Value!
+            : throw new Exception("SeedUnions.UnionWithPrimitive.Type is not 'string'");
 
     public T Match<T>(
         Func<int, T> onInteger,
@@ -135,21 +139,19 @@ public record UnionWithPrimitive
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator UnionWithPrimitive(UnionWithPrimitive.Integer value) =>
-        new(value);
+    public static implicit operator UnionWithPrimitive(Integer value) => new(value);
 
-    public static implicit operator UnionWithPrimitive(UnionWithPrimitive.String value) =>
-        new(value);
+    public static implicit operator UnionWithPrimitive(String value) => new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithPrimitive>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(Type typeToConvert) =>
             typeof(UnionWithPrimitive).IsAssignableFrom(typeToConvert);
 
         public override UnionWithPrimitive Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            Type typeToConvert,
             JsonSerializerOptions options
         )
         {

@@ -7,7 +7,7 @@ namespace SeedExamples.Test;
 [TestFixture]
 public class FileTest
 {
-    [NUnit.Framework.Test]
+    [Test]
     public void TestDeserialization_1()
     {
         var json = """
@@ -21,7 +21,7 @@ public class FileTest
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestSerialization_1()
     {
         var expectedJson = """
@@ -36,7 +36,7 @@ public class FileTest
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestDeserialization_2()
     {
         var json = """
@@ -50,7 +50,7 @@ public class FileTest
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
-    [NUnit.Framework.Test]
+    [Test]
     public void TestSerialization_2()
     {
         var expectedJson = """

@@ -16,7 +16,7 @@ public partial class NullableClient
 
     /// <example><code>
     /// await client.Nullable.GetUsersAsync(
-    ///     new GetUsersRequest
+    ///     new SeedNullable.GetUsersRequest
     ///     {
     ///         Usernames = ["usernames"],
     ///         Avatar = "avatar",
@@ -84,17 +84,17 @@ public partial class NullableClient
 
     /// <example><code>
     /// await client.Nullable.CreateUserAsync(
-    ///     new CreateUserRequest
+    ///     new SeedNullable.CreateUserRequest
     ///     {
     ///         Username = "username",
     ///         Tags = new List&lt;string&gt;() { "tags", "tags" },
-    ///         Metadata = new Metadata
+    ///         Metadata = new SeedNullable.Metadata
     ///         {
     ///             CreatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),
     ///             UpdatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),
     ///             Avatar = "avatar",
     ///             Activated = true,
-    ///             Status = new Status(new Status.Active()),
+    ///             Status = new SeedNullable.Status(new SeedNullable.Status.Active()),
     ///             Values = new Dictionary&lt;string, string?&gt;() { { "values", "values" } },
     ///         },
     ///         Avatar = "avatar",
@@ -144,7 +144,7 @@ public partial class NullableClient
     }
 
     /// <example><code>
-    /// await client.Nullable.DeleteUserAsync(new DeleteUserRequest { Username = "xy" });
+    /// await client.Nullable.DeleteUserAsync(new SeedNullable.DeleteUserRequest { Username = "xy" });
     /// </code></example>
     public async Task<bool> DeleteUserAsync(
         DeleteUserRequest request,

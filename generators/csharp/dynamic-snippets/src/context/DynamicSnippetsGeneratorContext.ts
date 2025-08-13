@@ -35,7 +35,14 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         super({ ir, config, options });
         this.ir = ir;
         this.customConfig =
-            config.customConfig != null ? (config.customConfig as BaseCsharpCustomConfigSchema) : undefined;
+            config.customConfig != null
+                ? (config.customConfig as BaseCsharpCustomConfigSchema)
+                : ({} as BaseCsharpCustomConfigSchema);
+
+        // force the dynamic snippet generator to not use dotnet-format to compress namespaces
+        // and just have the code generator do what was explicity asked.
+        this.customConfig["skip-dotnet-format"] = true;
+
         this.dynamicTypeMapper = new DynamicTypeMapper({ context: this });
         this.dynamicTypeLiteralMapper = new DynamicTypeLiteralMapper({ context: this });
         this.filePropertyMapper = new FilePropertyMapper({ context: this });
@@ -105,6 +112,10 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public shouldUseDiscriminatedUnions(): boolean {
         return this.customConfig?.["use-discriminated-unions"] ?? true;
+    }
+
+    public skipDotnetFormat(): boolean {
+        return this.customConfig?.["skip-dotnet-format"] ?? false;
     }
 
     public getRootClientClassName(): string {
