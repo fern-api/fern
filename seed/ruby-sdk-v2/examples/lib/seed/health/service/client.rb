@@ -15,6 +15,7 @@ module Seed
                 # @return [untyped]
                 def check(request_options: {}, **params)
 <<<<<<< HEAD
+<<<<<<< HEAD
                     raise NotImplementedError, 'This method is not yet implemented.'
 =======
                     _request = Seed::Internal::Http::JSONRequest.new(
@@ -22,12 +23,16 @@ module Seed
                         path: "/check/#{params[:id]}"
                     )
 >>>>>>> ca21b06d09 (fix)
+=======
+                    raise NotImplementedError, 'This method is not yet implemented.'
+>>>>>>> 51153df442 (fix)
                 end
 
                 # This endpoint checks the health of the service.
                 #
                 # @return [bool]
                 def ping(request_options: {}, **params)
+<<<<<<< HEAD
 <<<<<<< HEAD
                     raise NotImplementedError, 'This method is not yet implemented.'
 =======
@@ -36,6 +41,9 @@ module Seed
                         path: "/ping"
                     )
 >>>>>>> ca21b06d09 (fix)
+=======
+                    raise NotImplementedError, 'This method is not yet implemented.'
+>>>>>>> 51153df442 (fix)
                 end
 
         end

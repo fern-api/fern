@@ -13,6 +13,7 @@ module Seed
                 # List all user events.
                 #
 <<<<<<< HEAD
+<<<<<<< HEAD
                 # @return [Array[Seed::User::Events::Event]]
                 def list_events(request_options: {}, **params)
                     raise NotImplementedError, 'This method is not yet implemented.'
@@ -24,6 +25,11 @@ module Seed
                         path: "/users/events/"
                     )
 >>>>>>> ca21b06d09 (fix)
+=======
+                # @return [Array[Seed::User::Events::Event]]
+                def list_events(request_options: {}, **params)
+                    raise NotImplementedError, 'This method is not yet implemented.'
+>>>>>>> 51153df442 (fix)
                 end
 
         end

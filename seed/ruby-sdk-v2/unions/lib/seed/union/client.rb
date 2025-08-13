@@ -12,6 +12,7 @@ module Seed
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             # @return [Seed::Union::Shape]
             def get
                 raise NotImplementedError, 'This method is not yet implemented.'
@@ -29,18 +30,27 @@ module Seed
                 raise NotImplementedError, 'This method is not yet implemented.'
 >>>>>>> 591a1624b0 (fix)
 =======
+=======
+>>>>>>> 2f201d7634 (fix)
             # @return [Seed::Union::Shape]
+<<<<<<< HEAD
             def get(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
 =======
             # @return [Seed::union::Shape]
+=======
+>>>>>>> 51153df442 (fix)
             def get(request_options: {}, **params)
+<<<<<<< HEAD
                 _request = Seed::Internal::Http::JSONRequest.new(
                     method: GET,
                     path: "/#{params[:id]}"
                 )
 >>>>>>> b7b4afb47e (fix(ruby): add basic endpoint implementation)
 >>>>>>> 84556af643 (fix)
+=======
+                raise NotImplementedError, 'This method is not yet implemented.'
+>>>>>>> 2f201d7634 (fix)
             end
 
             # @return [bool]

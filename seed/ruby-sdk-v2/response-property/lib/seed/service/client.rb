@@ -10,10 +10,14 @@ module Seed
             end
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             # @return [Seed::Service::Response]
 =======
             # @return [Seed::service::Response]
 >>>>>>> ca21b06d09 (fix)
+=======
+            # @return [Seed::Service::Response]
+>>>>>>> 51153df442 (fix)
             def get_movie(request_options: {}, **params)
                 _request = Seed::Internal::Http::JSONRequest.new(
                     method: POST,
@@ -22,10 +26,14 @@ module Seed
             end
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             # @return [Seed::Service::Response]
 =======
             # @return [Seed::service::Response]
 >>>>>>> ca21b06d09 (fix)
+=======
+            # @return [Seed::Service::Response]
+>>>>>>> 51153df442 (fix)
             def get_movie_docs(request_options: {}, **params)
                 _request = Seed::Internal::Http::JSONRequest.new(
                     method: POST,
@@ -42,10 +50,14 @@ module Seed
             end
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             # @return [Seed::Service::Response]
 =======
             # @return [Seed::service::Response]
 >>>>>>> ca21b06d09 (fix)
+=======
+            # @return [Seed::Service::Response]
+>>>>>>> 51153df442 (fix)
             def get_movie_metadata(request_options: {}, **params)
                 _request = Seed::Internal::Http::JSONRequest.new(
                     method: POST,
@@ -54,10 +66,14 @@ module Seed
             end
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             # @return [Seed::Service::Response | nil]
 =======
             # @return [Seed::service::Response | nil]
 >>>>>>> ca21b06d09 (fix)
+=======
+            # @return [Seed::Service::Response | nil]
+>>>>>>> 51153df442 (fix)
             def get_optional_movie(request_options: {}, **params)
                 _request = Seed::Internal::Http::JSONRequest.new(
                     method: POST,
@@ -66,10 +82,14 @@ module Seed
             end
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             # @return [Seed::Service::WithDocs | nil]
 =======
             # @return [Seed::service::WithDocs | nil]
 >>>>>>> ca21b06d09 (fix)
+=======
+            # @return [Seed::Service::WithDocs | nil]
+>>>>>>> 51153df442 (fix)
             def get_optional_movie_docs(request_options: {}, **params)
                 _request = Seed::Internal::Http::JSONRequest.new(
                     method: POST,

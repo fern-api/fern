@@ -12,6 +12,7 @@ module Seed
             # @return [untyped]
             def create_username(request_options: {}, **params)
 <<<<<<< HEAD
+<<<<<<< HEAD
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 
@@ -23,15 +24,22 @@ module Seed
                     method: POST,
                     path: "/user/username"
                 )
+=======
+                raise NotImplementedError, 'This method is not yet implemented.'
+>>>>>>> 51153df442 (fix)
             end
 
-            # @return [Seed::user::User]
+            # @return [Seed::User::User]
             def get_username(request_options: {}, **params)
+<<<<<<< HEAD
                 _request = Seed::Internal::Http::JSONRequest.new(
                     method: GET,
                     path: "/user"
                 )
 >>>>>>> ca21b06d09 (fix)
+=======
+                raise NotImplementedError, 'This method is not yet implemented.'
+>>>>>>> 51153df442 (fix)
             end
 
     end

@@ -11,6 +11,7 @@ module Seed
                 end
 
 <<<<<<< HEAD
+<<<<<<< HEAD
                 # @return [Seed::FolderD::Service::Response]
                 def get_direct_thread(request_options: {}, **params)
                     raise NotImplementedError, 'This method is not yet implemented.'
@@ -22,6 +23,11 @@ module Seed
                         path: ""
                     )
 >>>>>>> ca21b06d09 (fix)
+=======
+                # @return [Seed::FolderD::Service::Response]
+                def get_direct_thread(request_options: {}, **params)
+                    raise NotImplementedError, 'This method is not yet implemented.'
+>>>>>>> 51153df442 (fix)
                 end
 
         end

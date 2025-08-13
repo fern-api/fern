@@ -12,6 +12,7 @@ module Seed
             # @return [untyped]
             def set_num_warm_instances(request_options: {}, **params)
 <<<<<<< HEAD
+<<<<<<< HEAD
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
 
@@ -23,15 +24,22 @@ module Seed
                     method: PUT,
                     path: "/sysprop/num-warm-instances/#{params[:language]}/#{params[:numWarmInstances]}"
                 )
+=======
+                raise NotImplementedError, 'This method is not yet implemented.'
+>>>>>>> 51153df442 (fix)
             end
 
-            # @return [Hash[Seed::commons::Language, Integer]]
+            # @return [Hash[Seed::Commons::Language, Integer]]
             def get_num_warm_instances(request_options: {}, **params)
+<<<<<<< HEAD
                 _request = Seed::Internal::Http::JSONRequest.new(
                     method: GET,
                     path: "/sysprop/num-warm-instances"
                 )
 >>>>>>> ca21b06d09 (fix)
+=======
+                raise NotImplementedError, 'This method is not yet implemented.'
+>>>>>>> 51153df442 (fix)
             end
 
     end

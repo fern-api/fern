@@ -11,10 +11,14 @@ module Seed
                 end
 
 <<<<<<< HEAD
+<<<<<<< HEAD
                 # @return [Seed::Types::Union::Animal]
 =======
                 # @return [Seed::types::union::Animal]
 >>>>>>> ca21b06d09 (fix)
+=======
+                # @return [Seed::Types::Union::Animal]
+>>>>>>> 51153df442 (fix)
                 def get_and_return_union(request_options: {}, **params)
                     _request = Seed::Internal::Http::JSONRequest.new(
                         method: POST,

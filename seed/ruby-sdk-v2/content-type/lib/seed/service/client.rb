@@ -12,6 +12,7 @@ module Seed
             # @return [untyped]
             def patch(request_options: {}, **params)
 <<<<<<< HEAD
+<<<<<<< HEAD
                 raise NotImplementedError, 'This method is not yet implemented.'
 =======
                 _request = Seed::Internal::Http::JSONRequest.new(
@@ -19,6 +20,9 @@ module Seed
                     path: ""
                 )
 >>>>>>> ca21b06d09 (fix)
+=======
+                raise NotImplementedError, 'This method is not yet implemented.'
+>>>>>>> 51153df442 (fix)
             end
 
             # Update with JSON merge patch - complex types.
@@ -29,6 +33,7 @@ module Seed
             # @return [untyped]
             def patch_complex(request_options: {}, **params)
 <<<<<<< HEAD
+<<<<<<< HEAD
                 raise NotImplementedError, 'This method is not yet implemented.'
 =======
                 _request = Seed::Internal::Http::JSONRequest.new(
@@ -36,12 +41,16 @@ module Seed
                     path: "complex/#{params[:id]}"
                 )
 >>>>>>> ca21b06d09 (fix)
+=======
+                raise NotImplementedError, 'This method is not yet implemented.'
+>>>>>>> 51153df442 (fix)
             end
 
             # Regular PATCH endpoint without merge-patch semantics
             #
             # @return [untyped]
             def regular_patch(request_options: {}, **params)
+<<<<<<< HEAD
 <<<<<<< HEAD
                 raise NotImplementedError, 'This method is not yet implemented.'
 =======
@@ -50,6 +59,9 @@ module Seed
                     path: "regular/#{params[:id]}"
                 )
 >>>>>>> ca21b06d09 (fix)
+=======
+                raise NotImplementedError, 'This method is not yet implemented.'
+>>>>>>> 51153df442 (fix)
             end
 
     end

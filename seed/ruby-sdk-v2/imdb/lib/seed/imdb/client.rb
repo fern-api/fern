@@ -20,6 +20,7 @@ module Seed
             end
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             # @return [Seed::Imdb::Movie]
             def get_movie(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
@@ -31,6 +32,11 @@ module Seed
                     path: "/movies/#{params[:movieId]}"
                 )
 >>>>>>> ca21b06d09 (fix)
+=======
+            # @return [Seed::Imdb::Movie]
+            def get_movie(request_options: {}, **params)
+                raise NotImplementedError, 'This method is not yet implemented.'
+>>>>>>> 51153df442 (fix)
             end
 
     end

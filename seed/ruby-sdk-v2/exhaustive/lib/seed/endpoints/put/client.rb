@@ -11,6 +11,7 @@ module Seed
                 end
 
 <<<<<<< HEAD
+<<<<<<< HEAD
                 # @return [Seed::Endpoints::Put::PutResponse]
                 def add(request_options: {}, **params)
                     raise NotImplementedError, 'This method is not yet implemented.'
@@ -22,6 +23,11 @@ module Seed
                         path: "#{params[:id]}"
                     )
 >>>>>>> ca21b06d09 (fix)
+=======
+                # @return [Seed::Endpoints::Put::PutResponse]
+                def add(request_options: {}, **params)
+                    raise NotImplementedError, 'This method is not yet implemented.'
+>>>>>>> 51153df442 (fix)
                 end
 
         end

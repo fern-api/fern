@@ -10,6 +10,7 @@ module Seed
             end
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             # @return [Array[Seed::Nullable::User]]
             def get_users(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
@@ -20,24 +21,29 @@ module Seed
                 raise NotImplementedError, 'This method is not yet implemented.'
 =======
             # @return [Array[Seed::nullable::User]]
+=======
+            # @return [Array[Seed::Nullable::User]]
+>>>>>>> 51153df442 (fix)
             def get_users(request_options: {}, **params)
-                _request = Seed::Internal::Http::JSONRequest.new(
-                    method: GET,
-                    path: "/users"
-                )
+                raise NotImplementedError, 'This method is not yet implemented.'
             end
 
-            # @return [Seed::nullable::User]
+            # @return [Seed::Nullable::User]
             def create_user(request_options: {}, **params)
+<<<<<<< HEAD
                 _request = Seed::Internal::Http::JSONRequest.new(
                     method: POST,
                     path: "/users"
                 )
 >>>>>>> ca21b06d09 (fix)
+=======
+                raise NotImplementedError, 'This method is not yet implemented.'
+>>>>>>> 51153df442 (fix)
             end
 
             # @return [bool]
             def delete_user(request_options: {}, **params)
+<<<<<<< HEAD
 <<<<<<< HEAD
                 raise NotImplementedError, 'This method is not yet implemented.'
 =======
@@ -46,6 +52,9 @@ module Seed
                     path: "/users"
                 )
 >>>>>>> ca21b06d09 (fix)
+=======
+                raise NotImplementedError, 'This method is not yet implemented.'
+>>>>>>> 51153df442 (fix)
             end
 
     end

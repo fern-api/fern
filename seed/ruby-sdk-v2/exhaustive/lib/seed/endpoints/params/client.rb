@@ -15,6 +15,7 @@ module Seed
                 # @return [String]
                 def get_with_path(request_options: {}, **params)
 <<<<<<< HEAD
+<<<<<<< HEAD
                     raise NotImplementedError, 'This method is not yet implemented.'
 =======
                     _request = Seed::Internal::Http::JSONRequest.new(
@@ -22,6 +23,9 @@ module Seed
                         path: "/params/path/#{params[:param]}"
                     )
 >>>>>>> ca21b06d09 (fix)
+=======
+                    raise NotImplementedError, 'This method is not yet implemented.'
+>>>>>>> 51153df442 (fix)
                 end
 
                 # GET with path param
@@ -29,6 +33,7 @@ module Seed
                 # @return [String]
                 def get_with_inline_path(request_options: {}, **params)
 <<<<<<< HEAD
+<<<<<<< HEAD
                     raise NotImplementedError, 'This method is not yet implemented.'
 =======
                     _request = Seed::Internal::Http::JSONRequest.new(
@@ -36,6 +41,9 @@ module Seed
                         path: "/params/path/#{params[:param]}"
                     )
 >>>>>>> ca21b06d09 (fix)
+=======
+                    raise NotImplementedError, 'This method is not yet implemented.'
+>>>>>>> 51153df442 (fix)
                 end
 
                 # GET with query param
@@ -43,6 +51,7 @@ module Seed
                 # @return [untyped]
                 def get_with_query(request_options: {}, **params)
 <<<<<<< HEAD
+<<<<<<< HEAD
                     raise NotImplementedError, 'This method is not yet implemented.'
 =======
                     _request = Seed::Internal::Http::JSONRequest.new(
@@ -50,6 +59,9 @@ module Seed
                         path: "/params"
                     )
 >>>>>>> ca21b06d09 (fix)
+=======
+                    raise NotImplementedError, 'This method is not yet implemented.'
+>>>>>>> 51153df442 (fix)
                 end
 
                 # GET with multiple of same query param
@@ -57,6 +69,7 @@ module Seed
                 # @return [untyped]
                 def get_with_allow_multiple_query(request_options: {}, **params)
 <<<<<<< HEAD
+<<<<<<< HEAD
                     raise NotImplementedError, 'This method is not yet implemented.'
 =======
                     _request = Seed::Internal::Http::JSONRequest.new(
@@ -64,6 +77,9 @@ module Seed
                         path: "/params"
                     )
 >>>>>>> ca21b06d09 (fix)
+=======
+                    raise NotImplementedError, 'This method is not yet implemented.'
+>>>>>>> 51153df442 (fix)
                 end
 
                 # GET with path and query params
@@ -71,19 +87,6 @@ module Seed
                 # @return [untyped]
                 def get_with_path_and_query(request_options: {}, **params)
 <<<<<<< HEAD
-                    raise NotImplementedError, 'This method is not yet implemented.'
-=======
-                    _request = Seed::Internal::Http::JSONRequest.new(
-                        method: GET,
-                        path: "/params/path-query/#{params[:param]}"
-                    )
->>>>>>> ca21b06d09 (fix)
-                end
-
-                # GET with path and query params
-                #
-                # @return [untyped]
-                def get_with_inline_path_and_query(request_options: {}, **params)
 <<<<<<< HEAD
                     raise NotImplementedError, 'This method is not yet implemented.'
 =======
@@ -92,6 +95,27 @@ module Seed
                         path: "/params/path-query/#{params[:param]}"
                     )
 >>>>>>> ca21b06d09 (fix)
+=======
+                    raise NotImplementedError, 'This method is not yet implemented.'
+>>>>>>> 51153df442 (fix)
+                end
+
+                # GET with path and query params
+                #
+                # @return [untyped]
+                def get_with_inline_path_and_query(request_options: {}, **params)
+<<<<<<< HEAD
+<<<<<<< HEAD
+                    raise NotImplementedError, 'This method is not yet implemented.'
+=======
+                    _request = Seed::Internal::Http::JSONRequest.new(
+                        method: GET,
+                        path: "/params/path-query/#{params[:param]}"
+                    )
+>>>>>>> ca21b06d09 (fix)
+=======
+                    raise NotImplementedError, 'This method is not yet implemented.'
+>>>>>>> 51153df442 (fix)
                 end
 
                 # PUT to update with path param
@@ -109,6 +133,7 @@ module Seed
                 # @return [String]
                 def modify_with_inline_path(request_options: {}, **params)
 <<<<<<< HEAD
+<<<<<<< HEAD
                     raise NotImplementedError, 'This method is not yet implemented.'
 =======
                     _request = Seed::Internal::Http::JSONRequest.new(
@@ -116,6 +141,9 @@ module Seed
                         path: "/params/path/#{params[:param]}"
                     )
 >>>>>>> ca21b06d09 (fix)
+=======
+                    raise NotImplementedError, 'This method is not yet implemented.'
+>>>>>>> 51153df442 (fix)
                 end
 
         end

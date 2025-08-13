@@ -14,6 +14,7 @@ module Seed
                     # Returns lightweight versions of all problems
                     #
 <<<<<<< HEAD
+<<<<<<< HEAD
                     # @return [Array[Seed::V2::V3::Problem::LightweightProblemInfoV2]]
                     def get_lightweight_problems(request_options: {}, **params)
                         raise NotImplementedError, 'This method is not yet implemented.'
@@ -25,10 +26,16 @@ module Seed
                             path: "/problems-v2/lightweight-problem-info"
                         )
 >>>>>>> ca21b06d09 (fix)
+=======
+                    # @return [Array[Seed::V2::V3::Problem::LightweightProblemInfoV2]]
+                    def get_lightweight_problems(request_options: {}, **params)
+                        raise NotImplementedError, 'This method is not yet implemented.'
+>>>>>>> 51153df442 (fix)
                     end
 
                     # Returns latest versions of all problems
                     #
+<<<<<<< HEAD
 <<<<<<< HEAD
                     # @return [Array[Seed::V2::V3::Problem::ProblemInfoV2]]
                     def get_problems(request_options: {}, **params)
@@ -41,10 +48,16 @@ module Seed
                             path: "/problems-v2/problem-info"
                         )
 >>>>>>> ca21b06d09 (fix)
+=======
+                    # @return [Array[Seed::V2::V3::Problem::ProblemInfoV2]]
+                    def get_problems(request_options: {}, **params)
+                        raise NotImplementedError, 'This method is not yet implemented.'
+>>>>>>> 51153df442 (fix)
                     end
 
                     # Returns latest version of a problem
                     #
+<<<<<<< HEAD
 <<<<<<< HEAD
                     # @return [Seed::V2::V3::Problem::ProblemInfoV2]
                     def get_latest_problem(request_options: {}, **params)
@@ -57,10 +70,16 @@ module Seed
                             path: "/problems-v2/problem-info/#{params[:problemId]}"
                         )
 >>>>>>> ca21b06d09 (fix)
+=======
+                    # @return [Seed::V2::V3::Problem::ProblemInfoV2]
+                    def get_latest_problem(request_options: {}, **params)
+                        raise NotImplementedError, 'This method is not yet implemented.'
+>>>>>>> 51153df442 (fix)
                     end
 
                     # Returns requested version of a problem
                     #
+<<<<<<< HEAD
 <<<<<<< HEAD
                     # @return [Seed::V2::V3::Problem::ProblemInfoV2]
                     def get_problem_version(request_options: {}, **params)
@@ -73,6 +92,11 @@ module Seed
                             path: "/problems-v2/problem-info/#{params[:problemId]}/version/#{params[:problemVersion]}"
                         )
 >>>>>>> ca21b06d09 (fix)
+=======
+                    # @return [Seed::V2::V3::Problem::ProblemInfoV2]
+                    def get_problem_version(request_options: {}, **params)
+                        raise NotImplementedError, 'This method is not yet implemented.'
+>>>>>>> 51153df442 (fix)
                     end
 
             end

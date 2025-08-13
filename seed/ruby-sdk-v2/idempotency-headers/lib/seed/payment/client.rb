@@ -12,6 +12,7 @@ module Seed
             # @return [String]
             def create(request_options: {}, **params)
 <<<<<<< HEAD
+<<<<<<< HEAD
                 raise NotImplementedError, 'This method is not yet implemented.'
 =======
                 _request = Seed::Internal::Http::JSONRequest.new(
@@ -19,10 +20,14 @@ module Seed
                     path: "/payment"
                 )
 >>>>>>> ca21b06d09 (fix)
+=======
+                raise NotImplementedError, 'This method is not yet implemented.'
+>>>>>>> 51153df442 (fix)
             end
 
             # @return [untyped]
             def delete(request_options: {}, **params)
+<<<<<<< HEAD
 <<<<<<< HEAD
                 raise NotImplementedError, 'This method is not yet implemented.'
 =======
@@ -31,6 +36,9 @@ module Seed
                     path: "/payment/#{params[:paymentId]}"
                 )
 >>>>>>> ca21b06d09 (fix)
+=======
+                raise NotImplementedError, 'This method is not yet implemented.'
+>>>>>>> 51153df442 (fix)
             end
 
     end

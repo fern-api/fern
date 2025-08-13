@@ -10,6 +10,7 @@ module Seed
             end
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             # @return [Seed::User::User]
             def get(request_options: {}, **params)
                 raise NotImplementedError, 'This method is not yet implemented.'
@@ -21,6 +22,11 @@ module Seed
                     path: "/users/#{params[:id]}"
                 )
 >>>>>>> ca21b06d09 (fix)
+=======
+            # @return [Seed::User::User]
+            def get(request_options: {}, **params)
+                raise NotImplementedError, 'This method is not yet implemented.'
+>>>>>>> 51153df442 (fix)
             end
 
     end
