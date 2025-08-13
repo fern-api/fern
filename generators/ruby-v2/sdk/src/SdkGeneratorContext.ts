@@ -136,7 +136,11 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
         return ruby.classReference({
             name: typeDeclaration.name.name.pascalCase.safeName,
-            modules: [this.getRootModule().name, ...typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName), "Types"]
+            modules: [
+                this.getRootModule().name,
+                ...typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName),
+                "Types"
+            ]
         });
     }
 
