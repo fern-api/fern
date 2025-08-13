@@ -1,1 +1,2 @@
-export * from "./StructGenerator";
+export { LocalContext } from "./LocalContext";
+export { StructGenerator } from "./StructGenerator";

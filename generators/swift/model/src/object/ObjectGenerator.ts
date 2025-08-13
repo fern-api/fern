@@ -1,7 +1,7 @@
 import { swift } from "@fern-api/swift-codegen";
 import { InlinedRequestBodyProperty, ObjectProperty } from "@fern-fern/ir-sdk/api";
 
-import { StructGenerator } from "../helpers";
+import { StructGenerator } from "../helpers/struct-generator/StructGenerator";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 export declare namespace ObjectGenerator {

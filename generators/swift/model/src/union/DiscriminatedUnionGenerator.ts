@@ -2,7 +2,7 @@ import { assertNever, noop } from "@fern-api/core-utils";
 import { swift } from "@fern-api/swift-codegen";
 import { ObjectProperty, TypeId, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
-import { StructGenerator } from "../helpers";
+import { StructGenerator } from "../helpers/struct-generator/StructGenerator";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 export declare namespace DiscriminatedUnionGenerator {
