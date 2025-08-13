@@ -9,7 +9,7 @@ module Seed
                 @client = client
             end
 
-            # @return [Seed::union::Shape]
+            # @return [Seed::Union::Shape]
             def get
                 raise NotImplementedError, 'This method is not yet implemented.'
             end
