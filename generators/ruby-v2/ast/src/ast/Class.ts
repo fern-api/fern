@@ -1,15 +1,27 @@
 import { ClassReference } from "./ClassReference";
+import { CodeBlock } from "./CodeBlock";
 import { Comment } from "./Comment";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
-import { Module_ } from "./Module";
+import { Field } from "./Field";
 import { Method, MethodKind } from "./Method";
+import { Module_ } from "./Module";
+import { Parameter } from "./Parameter";
 import { Type } from "./Type";
 
 export declare namespace Class_ {
     export interface Args extends Module_.Args {
         /* The superclass of this class. */
         superclass?: ClassReference;
+        /* The fields for this class. */
+        fields?: Field[];
+        /* The methods for this class. */
+        methods?: Method[];
+    }
+
+    export interface Constructor extends Method {
+        method: "instance";
+        name: "initialize";
     }
 }
 
@@ -17,12 +29,16 @@ export class Class_ extends Module_ {
     public readonly superclass: ClassReference | undefined;
     public readonly statements: AstNode[];
     public readonly methods: Method[] = [];
+    public readonly fields: Field[] = [];
+    public readonly constructors: Class_.Constructor[] = [];
 
-    constructor({ name, superclass, typeParameters, docstring, statements }: Class_.Args) {
+    constructor({ name, superclass, typeParameters, docstring, statements, fields, methods }: Class_.Args) {
         super({ name, docstring, typeParameters });
 
         this.superclass = superclass;
         this.statements = statements ?? [];
+        this.fields = fields ?? [];
+        this.methods = methods ?? [];
     }
 
     public addStatement(statement: AstNode): void {
@@ -49,6 +65,18 @@ export class Class_ extends Module_ {
 
     public addMethods(methods: Method[]): void {
         methods.forEach((method) => this.addMethod(method));
+    }
+
+    public addField(field: Field): void {
+        this.fields.push(field);
+    }
+
+    public addFields(fields: Field[]): void {
+        fields.forEach((field) => this.addField(field));
+    }
+
+    public addConstructor(constructor: Class_.Constructor): void {
+        this.constructors.push(constructor);
     }
 
     public write(writer: Writer): void {
@@ -82,6 +110,15 @@ export class Class_ extends Module_ {
             writer.dedent();
         }
 
+        if (this.fields.length) {
+            writer.newLine();
+            writer.indent();
+            this.fields.forEach((field) => {
+                field.write(writer);
+            });
+            writer.dedent();
+        }
+
         if (this.methods.length) {
             writer.newLine();
             writer.indent();
@@ -95,7 +132,7 @@ export class Class_ extends Module_ {
     }
 
     private hasBody(): boolean {
-        return this.statements.length > 0 || this.methods.length > 0;
+        return this.statements.length > 0 || this.methods.length > 0 || this.fields.length > 0;
     }
 
     public writeTypeDefinition(writer: Writer): void {

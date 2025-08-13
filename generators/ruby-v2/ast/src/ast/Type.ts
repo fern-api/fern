@@ -1,9 +1,9 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, isNonNullish } from "@fern-api/core-utils";
 
 import { ClassReference } from "./ClassReference";
-import { TypeParameter } from "./TypeParameter";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+import { TypeParameter } from "./TypeParameter";
 
 interface Self {
     type: "self";
@@ -289,6 +289,27 @@ export class Type extends AstNode {
                 fullyQualified: true
             })
         });
+    }
+
+    public isCollection(): boolean {
+        return (
+            this.internalType?.type === "array" ||
+            this.internalType?.type === "hash" ||
+            this.internalType?.type === "tuple"
+        );
+    }
+
+    public getCollectionItemType(): Type | undefined {
+        switch (this.internalType?.type) {
+            case "array":
+                return this.internalType.elem;
+            case "hash":
+                throw new Error("TODO: Collection item type is not supported for hash");
+            case "tuple":
+                throw new Error("TODO: Collection item type is not supported for tuple");
+            default:
+                return undefined;
+        }
     }
 
     public static instance(): Type {

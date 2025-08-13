@@ -1,38 +1,38 @@
 import {
+    Class_,
     ClassInstantiation,
     ClassReference,
-    Class_,
     CodeBlock,
     Comment,
+    Field,
     KeywordArgument,
     KeywordParameter,
     KeywordSplatParameter,
     Method,
     MethodInvocation,
-    MethodKind,
     Module_,
     PositionalArgument,
     PositionalParameter,
     PositionalSplatParameter,
     TypeParameter,
-    Writer,
     YieldParameter
 } from "./ast";
 
 export {
+    Class_,
     ClassInstantiation,
     ClassReference,
-    Class_,
     CodeBlock,
+    Field,
     KeywordArgument,
     Method,
     MethodInvocation,
     MethodKind,
     Module_,
     Parameter,
+    Type,
     TypeLiteral,
     TypeParameter,
-    Type,
     Writer
 } from "./ast";
 export { AstNode } from "./ast/core/AstNode";
@@ -73,6 +73,26 @@ export function module(args: Module_.Args): Module_ {
 
 export function method(args: Method.Args): Method {
     return new Method(args);
+}
+
+export function field(args: Field.Args): Field {
+    return new Field(args);
+}
+
+export function positionalParameter(args: PositionalParameter.Args): PositionalParameter {
+    return new PositionalParameter(args);
+}
+
+export function keywordParameter(args: KeywordParameter.Args): KeywordParameter {
+    return new KeywordParameter(args);
+}
+
+export function keywordSplatParameter(args: KeywordSplatParameter.Args): KeywordSplatParameter {
+    return new KeywordSplatParameter(args);
+}
+
+export function positionalSplatParameter(args: PositionalSplatParameter.Args): PositionalSplatParameter {
+    return new PositionalSplatParameter(args);
 }
 
 export function comment(args: Comment.Args): Comment {

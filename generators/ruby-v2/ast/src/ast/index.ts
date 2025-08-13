@@ -5,6 +5,7 @@ export { CodeBlock } from "./CodeBlock";
 export { Comment } from "./Comment";
 export { AstNode } from "./core/AstNode";
 export { Writer } from "./core/Writer";
+export { Field } from "./Field";
 export { KeywordArgument } from "./KeywordArgument";
 export { KeywordParameter } from "./KeywordParameter";
 export { KeywordSplatParameter } from "./KeywordSplatParameter";
